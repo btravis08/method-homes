@@ -215,7 +215,7 @@ S.listItem()
 
 export default defineConfig({
   basePath: "/studio",
-  title: "Sun Day Red",
+  title: designops.site.name,
   projectId,
   dataset,
   theme,
