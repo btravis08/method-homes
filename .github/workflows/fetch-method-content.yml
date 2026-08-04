@@ -1,0 +1,35 @@
+name: fetch-method-content
+
+# Captures methodhomes.net content (pages, structure, imagery) into
+# design/method-content + public/method for the platform rebuild —
+# the dev sandbox can't reach the site, Actions runners can.
+# Resumable: re-dispatch until the crawl log shows convergence.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: fetch-method-content
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Crawl
+        run: node scripts/fetch-method-content.mjs
+      - name: Commit captures
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add design/method-content public/method
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Capture methodhomes.net content (scheduled)"
+          git push
