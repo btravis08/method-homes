@@ -1,0 +1,35 @@
+name: import-method-content
+
+# Imports the methodhomes.net capture into the Sanity dataset from a
+# runner (the dev sandbox can't reach sanity.io). The write token
+# arrives as a dispatch input and is masked in logs; idempotent, so
+# re-runs after new capture passes just add what's new.
+
+on:
+  workflow_dispatch:
+    inputs:
+      sanity_token:
+        description: "Sanity write token"
+        required: true
+        type: string
+
+concurrency:
+  group: import-method-content
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Mask token
+        run: echo "::add-mask::${{ inputs.sanity_token }}"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Import
+        env:
+          SANITY_TOKEN: ${{ inputs.sanity_token }}
+        run: npx -y tsx scripts/import-method-content.ts

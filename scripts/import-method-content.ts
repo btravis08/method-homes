@@ -16,9 +16,20 @@
 */
 import { readFileSync, createReadStream, existsSync } from "node:fs";
 import path from "node:path";
+import { createClient } from "@sanity/client";
 import { getCliClient } from "sanity/cli";
 
-const client = getCliClient({ apiVersion: "2026-07-01" });
+/* two ways in: `sanity exec --with-user-token` locally, or a
+   SANITY_TOKEN env (the CI import workflow passes the write token) */
+const client = process.env.SANITY_TOKEN
+  ? createClient({
+      projectId: process.env.SANITY_PROJECT_ID ?? "i2wd5pr1",
+      dataset: process.env.SANITY_DATASET ?? "production",
+      apiVersion: "2026-07-01",
+      token: process.env.SANITY_TOKEN,
+      useCdn: false,
+    })
+  : getCliClient({ apiVersion: "2026-07-01" });
 
 const DATA = JSON.parse(
   readFileSync("design/method-content/pages.json", "utf8"),
