@@ -1,0 +1,65 @@
+name: dataset-backup
+
+# Nightly export of the production dataset (documents as ndjson) so a
+# bad bulk edit or accidental re-seed is recoverable. Runs before the
+# rest of the nightly chain. Restore with:
+#   npx sanity dataset import <file>.ndjson production --replace
+on:
+  schedule:
+    - cron: "45 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Export production dataset
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          AUTH=()
+          if [ -n "${SANITY_AUTH_TOKEN:-}" ]; then
+            AUTH=(-H "Authorization: Bearer $SANITY_AUTH_TOKEN")
+          fi
+          out="production-$(date -u +%F).ndjson.gz"
+          curl -fsSL "${AUTH[@]}" \
+            "https://alsdve2t.api.sanity.io/v2026-07-01/data/export/production" \
+            | gzip > "$out"
+          size=$(wc -c < "$out")
+          docs=$(gzip -dc "$out" | wc -l)
+          echo "exported $docs documents, $size bytes (gzip)"
+          # an empty/near-empty export means the request failed silently
+          if [ "$docs" -lt 100 ]; then
+            echo "::error::export looks wrong ($docs docs) — refusing to archive it"
+            exit 1
+          fi
+          echo "BACKUP_FILE=$out" >> "$GITHUB_ENV"
+          printf '{"generatedAt":"%s","docs":%d,"bytes":%d}\n' \
+            "$(date -u +%FT%TZ)" "$docs" "$size" > src/design/backup.status.json
+
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: sanity-production-${{ github.run_id }}
+          path: ${{ env.BACKUP_FILE }}
+          retention-days: 90
+
+      - name: Commit status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/backup.status.json
+          git diff --cached --quiet && echo "No changes" || {
+            git commit -m "Refresh backup status (scheduled)"
+            # concurrent nightly jobs push to the same branch — rebase and retry
+            for i in 1 2 3; do
+              git pull --rebase && git push && break
+              sleep $((i * 3))
+            done
+            git push origin HEAD:main || echo "main diverged; skipping mirror"
+          }

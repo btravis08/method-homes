@@ -1,0 +1,43 @@
+name: lighthouse-history
+
+# Nightly mobile Lighthouse across every key production page,
+# appended to src/design/perf.history.json — the Studio's Performance
+# ticker reads it (score, trend arrow, sparkline per page). The data
+# commit is pushed to BOTH branches so the deployed Studio rebuilds
+# with fresh numbers each night.
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly, 08:30 UTC — before the section audit (09:00)
+    - cron: "30 8 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lighthouse-history
+  cancel-in-progress: false
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Collect scores
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+        run: node scripts/collect-lighthouse.mjs
+      - name: Commit history
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/perf.history.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh Lighthouse history (scheduled)"
+          git push
+          # data-only commit: mirror to the deploy branch so the
+          # live Studio picks it up (skip quietly if main diverged)
+          git push origin HEAD:main || echo "main diverged — audit data lands with the next sync"

@@ -1,0 +1,856 @@
+[
+  {
+    "generatedAt": "2026-08-01T01:45:52.440Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 14.7,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 24.9,
+        "offToken": 0
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T01:48:58.790Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 14.7,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 24.9,
+        "offToken": 0
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T01:57:09.735Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 14.7,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 24.9,
+        "offToken": 0
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T02:06:42.692Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 14.7,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 24.9,
+        "offToken": 0
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T02:11:13.986Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 14.7,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 24.9,
+        "offToken": 0
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T02:53:21.143Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 42.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.9,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T03:11:43.127Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.9,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-01T10:48:37.815Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.9,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-02T10:48:44.185Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 31.9,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-02T15:48:10.719Z",
+    "sections": {
+      "hero": {
+        "layout": 46.9,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 63,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-02T16:09:41.191Z",
+    "sections": {
+      "hero": {
+        "layout": 53.6,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": 63,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-03T03:07:45.452Z",
+    "sections": {
+      "hero": {
+        "layout": null,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": null,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-03T12:34:52.701Z",
+    "sections": {
+      "hero": {
+        "layout": null,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": null,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  },
+  {
+    "generatedAt": "2026-08-04T11:34:01.836Z",
+    "sections": {
+      "hero": {
+        "layout": null,
+        "offToken": 1
+      },
+      "full-width": {
+        "layout": null,
+        "offToken": 1
+      },
+      "fifty-fifty": {
+        "layout": 60.6,
+        "offToken": 2
+      },
+      "info-slider": {
+        "layout": 52.5,
+        "offToken": 10
+      },
+      "product-slider": {
+        "layout": 59.2,
+        "offToken": 54
+      },
+      "carousel": {
+        "layout": 49.8,
+        "offToken": 1
+      },
+      "gallery": {
+        "layout": null,
+        "offToken": 2
+      },
+      "tech-specs": {
+        "layout": 71.6,
+        "offToken": 7
+      },
+      "reviews": {
+        "layout": 84.9,
+        "offToken": 13
+      },
+      "legacy-hero": {
+        "layout": 51.6,
+        "offToken": 1
+      },
+      "split-text": {
+        "layout": 76.6,
+        "offToken": 2
+      },
+      "floating-gallery": {
+        "layout": 39.8,
+        "offToken": 1
+      },
+      "full-bleed-carousel": {
+        "layout": 51.1,
+        "offToken": 10
+      },
+      "product-swirl": {
+        "layout": 66.7,
+        "offToken": 2
+      }
+    }
+  }
+]

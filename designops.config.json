@@ -1,0 +1,41 @@
+{
+  "site": {
+    "name": "Method Homes",
+    "baseUrl": "https://method-homes.vercel.app",
+    "perfPages": [
+      "/",
+      "/journal",
+      "/projects"
+    ]
+  },
+  "figma": {
+    "fileKey": "REPLACE_WITH_YOUR_FIGMA_FILE_KEY"
+  },
+  "audit": {
+    "breakpoints": {
+      "desktop": 1440,
+      "tablet": 1024,
+      "mobile": 428
+    },
+    "historyCap": 60,
+    "bands": {
+      "match": 85,
+      "partial": 50
+    },
+    "timedSections": [
+      "legacy-hero",
+      "floating-gallery",
+      "full-bleed-carousel",
+      "carousel"
+    ]
+  },
+  "alerts": {
+    "perfDrop": 10,
+    "backupStaleHours": 36
+  },
+  "features": {
+    "commerce": false,
+    "blog": true,
+    "projects": true
+  }
+}

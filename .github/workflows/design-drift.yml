@@ -1,0 +1,46 @@
+name: design-drift
+
+# The alarm pointed at Figma: re-renders each registered section's
+# node via the Figma REST API and compares it against the committed
+# comp with the same metric the audit uses. A low score = the design
+# changed since the comp was exported — the library badges the
+# section DESIGN MOVED.
+#
+# Needs the FIGMA_TOKEN repo secret (a Figma personal access token
+# with file read access). Without it the job exits quietly.
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly, 09:30 UTC — between the audit (09:00) and any
+    # improvement pass
+    - cron: "30 9 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: design-drift
+  cancel-in-progress: false
+
+jobs:
+  drift:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install sharp
+        run: npm install --no-save sharp
+      - name: Check drift
+        env:
+          FIGMA_TOKEN: ${{ secrets.FIGMA_TOKEN }}
+        run: npm run drift
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/design-drift.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh design-drift check (scheduled)"
+          git push

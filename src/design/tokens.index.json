@@ -1,0 +1,4364 @@
+{
+  "generatedAt": "2026-07-31T07:12:38.145Z",
+  "sources": {
+    "figma": {
+      "dir": "design/figma-tokens",
+      "modes": [
+        {
+          "name": "Brand Mode Dark",
+          "file": "Brand_Mode_Dark.tokens.json",
+          "updatedAt": "2026-07-17T04:55:11+00:00"
+        },
+        {
+          "name": "Brand Mode Light",
+          "file": "Brand_Mode_Light.tokens.json",
+          "updatedAt": "2026-07-17T04:55:11+00:00"
+        },
+        {
+          "name": "Dark mode",
+          "file": "Dark_mode.tokens.json",
+          "updatedAt": "2026-07-17T04:55:11+00:00"
+        },
+        {
+          "name": "Light mode",
+          "file": "Light_mode.tokens.json",
+          "updatedAt": "2026-07-17T04:55:11+00:00"
+        },
+        {
+          "name": "Medium Dark Mode",
+          "file": "Medium_Dark_Mode.tokens.json",
+          "updatedAt": "2026-07-17T04:55:11+00:00"
+        }
+      ],
+      "updatedAt": "2026-07-17T04:55:11+00:00"
+    },
+    "css": {
+      "file": "src/app/globals.css",
+      "updatedAt": "2026-07-26T01:47:38+00:00"
+    }
+  },
+  "css": {
+    "modes": [
+      "light",
+      "light-mid",
+      "dark-mid",
+      "dark"
+    ],
+    "semantic": [
+      {
+        "path": "--surface",
+        "name": "--surface",
+        "type": "color",
+        "values": {
+          "light": "#f7f8f4",
+          "light-mid": "#e1e1de",
+          "dark-mid": "#cacbc8",
+          "dark": "#000000"
+        },
+        "aliasOf": {},
+        "utility": "bg-surface · text-surface · border-surface"
+      },
+      {
+        "path": "--surface-2",
+        "name": "--surface-2",
+        "type": "color",
+        "values": {
+          "light": "#e6e5e2",
+          "light-mid": "#f7f8f4",
+          "dark-mid": "#e1e1de",
+          "dark": "#161716"
+        },
+        "aliasOf": {},
+        "utility": "bg-surface-2 · text-surface-2 · border-surface-2"
+      },
+      {
+        "path": "--ink",
+        "name": "--ink",
+        "type": "color",
+        "values": {
+          "light": "#161716",
+          "light-mid": "#161716",
+          "dark-mid": "#161716",
+          "dark": "#ffffff"
+        },
+        "aliasOf": {},
+        "utility": "bg-ink · text-ink · border-ink"
+      },
+      {
+        "path": "--ink-2",
+        "name": "--ink-2",
+        "type": "color",
+        "values": {
+          "light": "rgba(0, 0, 0, 0.5)",
+          "light-mid": "rgba(0, 0, 0, 0.5)",
+          "dark-mid": "rgba(0, 0, 0, 0.5)",
+          "dark": "rgba(255, 255, 255, 0.5)"
+        },
+        "aliasOf": {},
+        "utility": "bg-ink-2 · text-ink-2 · border-ink-2"
+      },
+      {
+        "path": "--ink-3",
+        "name": "--ink-3",
+        "type": "color",
+        "values": {
+          "light": "#70716f",
+          "light-mid": "#70716f",
+          "dark-mid": "#70716f",
+          "dark": "#878785"
+        },
+        "aliasOf": {},
+        "utility": "bg-ink-3 · text-ink-3 · border-ink-3"
+      },
+      {
+        "path": "--ink-disabled",
+        "name": "--ink-disabled",
+        "type": "color",
+        "values": {
+          "light": "#70716f",
+          "light-mid": "#70716f",
+          "dark-mid": "#70716f",
+          "dark": "#70716f"
+        },
+        "aliasOf": {},
+        "utility": "bg-ink-disabled · text-ink-disabled · border-ink-disabled"
+      },
+      {
+        "path": "--line",
+        "name": "--line",
+        "type": "color",
+        "values": {
+          "light": "#dbdbd7",
+          "light-mid": "rgba(0, 0, 0, 0.14)",
+          "dark-mid": "rgba(0, 0, 0, 0.14)",
+          "dark": "#2d2d2c"
+        },
+        "aliasOf": {},
+        "utility": "bg-line · text-line · border-line"
+      },
+      {
+        "path": "--line-2",
+        "name": "--line-2",
+        "type": "color",
+        "values": {
+          "light": "rgba(0, 0, 0, 0.14)",
+          "light-mid": "rgba(0, 0, 0, 0.14)",
+          "dark-mid": "rgba(0, 0, 0, 0.14)",
+          "dark": "rgba(255, 255, 255, 0.15)"
+        },
+        "aliasOf": {},
+        "utility": "bg-line-2 · text-line-2 · border-line-2"
+      },
+      {
+        "path": "--wash",
+        "name": "--wash",
+        "type": "color",
+        "values": {
+          "light": "rgba(0, 0, 0, 0.06)",
+          "light-mid": "rgba(0, 0, 0, 0.06)",
+          "dark-mid": "rgba(0, 0, 0, 0.06)",
+          "dark": "rgba(255, 255, 255, 0.1)"
+        },
+        "aliasOf": {},
+        "utility": "bg-wash · text-wash · border-wash"
+      },
+      {
+        "path": "--btn",
+        "name": "--btn",
+        "type": "color",
+        "values": {
+          "light": "#000000",
+          "light-mid": "#000000",
+          "dark-mid": "#000000",
+          "dark": "#ffffff"
+        },
+        "aliasOf": {},
+        "utility": "bg-btn · text-btn · border-btn"
+      },
+      {
+        "path": "--btn-fg",
+        "name": "--btn-fg",
+        "type": "color",
+        "values": {
+          "light": "#ffffff",
+          "light-mid": "#ffffff",
+          "dark-mid": "#ffffff",
+          "dark": "#000000"
+        },
+        "aliasOf": {},
+        "utility": "bg-btn-fg · text-btn-fg · border-btn-fg"
+      },
+      {
+        "path": "--btn-2-fg",
+        "name": "--btn-2-fg",
+        "type": "color",
+        "values": {
+          "light": "#c65541",
+          "light-mid": "#c65541",
+          "dark-mid": "#c65541",
+          "dark": "#9d9e9b"
+        },
+        "aliasOf": {},
+        "utility": "bg-btn-2-fg · text-btn-2-fg · border-btn-2-fg"
+      }
+    ],
+    "spacing": [
+      {
+        "path": "--spacing-xxs",
+        "name": "xxs",
+        "type": "spacing",
+        "value": "0.125rem",
+        "utility": "p-xxs · gap-xxs · m-xxs",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-xs",
+        "name": "xs",
+        "type": "spacing",
+        "value": "0.25rem",
+        "utility": "p-xs · gap-xs · m-xs",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-sm",
+        "name": "sm",
+        "type": "spacing",
+        "value": "0.375rem",
+        "utility": "p-sm · gap-sm · m-sm",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-md",
+        "name": "md",
+        "type": "spacing",
+        "value": "0.5rem",
+        "utility": "p-md · gap-md · m-md",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-lg",
+        "name": "lg",
+        "type": "spacing",
+        "value": "0.75rem",
+        "utility": "p-lg · gap-lg · m-lg",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-xl",
+        "name": "xl",
+        "type": "spacing",
+        "value": "1rem",
+        "utility": "p-xl · gap-xl · m-xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-2xl",
+        "name": "2xl",
+        "type": "spacing",
+        "value": "1.5rem",
+        "utility": "p-2xl · gap-2xl · m-2xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-4xl",
+        "name": "4xl",
+        "type": "spacing",
+        "value": "2rem",
+        "utility": "p-4xl · gap-4xl · m-4xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-6xl",
+        "name": "6xl",
+        "type": "spacing",
+        "value": "3rem",
+        "utility": "p-6xl · gap-6xl · m-6xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-8xl",
+        "name": "8xl",
+        "type": "spacing",
+        "value": "5rem",
+        "utility": "p-8xl · gap-8xl · m-8xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-9xl",
+        "name": "9xl",
+        "type": "spacing",
+        "value": "6rem",
+        "utility": "p-9xl · gap-9xl · m-9xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-10xl",
+        "name": "10xl",
+        "type": "spacing",
+        "value": "8rem",
+        "utility": "p-10xl · gap-10xl · m-10xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-11xl",
+        "name": "11xl",
+        "type": "spacing",
+        "value": "10rem",
+        "utility": "p-11xl · gap-11xl · m-11xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-section-s",
+        "name": "section-s",
+        "type": "spacing",
+        "value": "clamp(1rem, 0.5771rem + 1.581vw, 2rem)",
+        "utility": "p-section-s · gap-section-s · m-section-s",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-section-m",
+        "name": "section-m",
+        "type": "spacing",
+        "value": "clamp(1.5rem, 0.4427rem + 3.9526vw, 4rem)",
+        "utility": "p-section-m · gap-section-m · m-section-m",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-section-l",
+        "name": "section-l",
+        "type": "spacing",
+        "value": "clamp(3rem, 1.7312rem + 4.7431vw, 6rem)",
+        "utility": "p-section-l · gap-section-l · m-section-l",
+        "detail": {}
+      }
+    ],
+    "type": [
+      {
+        "path": "--text-label-sm",
+        "name": "label-sm",
+        "type": "fontSize",
+        "value": "0.75rem",
+        "utility": "text-label-sm",
+        "detail": {
+          "lineHeight": "1.3",
+          "letterSpacing": "0"
+        }
+      },
+      {
+        "path": "--text-label-md",
+        "name": "label-md",
+        "type": "fontSize",
+        "value": "clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem)",
+        "utility": "text-label-md",
+        "detail": {
+          "lineHeight": "1",
+          "letterSpacing": "0.02em"
+        }
+      },
+      {
+        "path": "--text-body-sm",
+        "name": "body-sm",
+        "type": "fontSize",
+        "value": "clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem)",
+        "utility": "text-body-sm",
+        "detail": {
+          "lineHeight": "1.43"
+        }
+      },
+      {
+        "path": "--text-body-md",
+        "name": "body-md",
+        "type": "fontSize",
+        "value": "clamp(0.9375rem, 0.9111rem + 0.0988vw, 1rem)",
+        "utility": "text-body-md",
+        "detail": {
+          "lineHeight": "1.5"
+        }
+      },
+      {
+        "path": "--text-title-xs",
+        "name": "title-xs",
+        "type": "fontSize",
+        "value": "1.125rem",
+        "utility": "text-title-xs",
+        "detail": {
+          "lineHeight": "1.1"
+        }
+      },
+      {
+        "path": "--text-title-sm",
+        "name": "title-sm",
+        "type": "fontSize",
+        "value": "clamp(1.125rem, 1.0721rem + 0.1976vw, 1.25rem)",
+        "utility": "text-title-sm",
+        "detail": {
+          "lineHeight": "1.1"
+        }
+      },
+      {
+        "path": "--text-title-md",
+        "name": "title-md",
+        "type": "fontSize",
+        "value": "clamp(1.25rem, 1.1443rem + 0.3953vw, 1.5rem)",
+        "utility": "text-title-md",
+        "detail": {
+          "lineHeight": "1.333"
+        }
+      },
+      {
+        "path": "--text-title-lg",
+        "name": "title-lg",
+        "type": "fontSize",
+        "value": "clamp(1.5rem, 1.3943rem + 0.3953vw, 1.75rem)",
+        "utility": "text-title-lg",
+        "detail": {
+          "lineHeight": "1.143"
+        }
+      },
+      {
+        "path": "--text-headline-sm",
+        "name": "headline-sm",
+        "type": "fontSize",
+        "value": "clamp(1.5rem, 1.2885rem + 0.7905vw, 2rem)",
+        "utility": "text-headline-sm",
+        "detail": {
+          "lineHeight": "1.1875"
+        }
+      },
+      {
+        "path": "--text-headline-md",
+        "name": "headline-md",
+        "type": "fontSize",
+        "value": "clamp(2rem, 1.7885rem + 0.7905vw, 2.5rem)",
+        "utility": "text-headline-md",
+        "detail": {
+          "lineHeight": "1.1",
+          "letterSpacing": "-0.02em"
+        }
+      },
+      {
+        "path": "--text-headline-lg",
+        "name": "headline-lg",
+        "type": "fontSize",
+        "value": "clamp(2rem, 1.5771rem + 1.581vw, 3rem)",
+        "utility": "text-headline-lg",
+        "detail": {
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.02em"
+        }
+      },
+      {
+        "path": "--text-display-xl",
+        "name": "display-xl",
+        "type": "fontSize",
+        "value": "clamp(2.5rem, 1.8656rem + 2.3715vw, 4rem)",
+        "utility": "text-display-xl",
+        "detail": {
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.02em"
+        }
+      }
+    ],
+    "radius": [
+      {
+        "path": "--radius-xs",
+        "name": "xs",
+        "type": "radius",
+        "value": "1px",
+        "utility": "rounded-xs",
+        "detail": {}
+      }
+    ],
+    "fonts": [
+      {
+        "path": "--font-display",
+        "name": "display",
+        "type": "font",
+        "value": "var(--font-feature-deck)",
+        "utility": "font-display",
+        "detail": {}
+      },
+      {
+        "path": "--font-sans",
+        "name": "sans",
+        "type": "font",
+        "value": "var(--font-maison)",
+        "utility": "font-sans",
+        "detail": {}
+      },
+      {
+        "path": "--font-mono",
+        "name": "mono",
+        "type": "font",
+        "value": "var(--font-maison-mono)",
+        "utility": "font-mono",
+        "detail": {}
+      }
+    ]
+  },
+  "figma": {
+    "modes": [
+      "Brand Mode Dark",
+      "Brand Mode Light",
+      "Dark mode",
+      "Light mode",
+      "Medium Dark Mode"
+    ],
+    "tokens": [
+      {
+        "path": "Colors/Text/text-primary",
+        "group": "Colors/Text",
+        "name": "text-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.98)",
+          "Brand Mode Light": "#121212",
+          "Dark mode": "#ffffff",
+          "Light mode": "#161716",
+          "Medium Dark Mode": "#161716"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-100"
+        }
+      },
+      {
+        "path": "Colors/Text/text-primary-on-brand",
+        "group": "Colors/Text",
+        "name": "text-primary-on-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#e1e1de",
+          "Brand Mode Light": "#e1e1de",
+          "Dark mode": "#e1e1de",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-secondary",
+        "group": "Colors/Text",
+        "name": "text-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.5)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.7)",
+          "Dark mode": "rgba(255, 255, 255, 0.5)",
+          "Light mode": "rgba(0, 0, 0, 0.5)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.5)"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-70",
+          "Light mode": "Component colors/Alpha/alpha-black-50",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-50"
+        }
+      },
+      {
+        "path": "Colors/Text/text-secondary-hover",
+        "group": "Colors/Text",
+        "name": "text-secondary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#343432",
+          "Medium Dark Mode": "#343432"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-secondary-on-brand",
+        "group": "Colors/Text",
+        "name": "text-secondary-on-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-tertiary",
+        "group": "Colors/Text",
+        "name": "text-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.56)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.6)",
+          "Dark mode": "#878785",
+          "Light mode": "#5a5a59",
+          "Medium Dark Mode": "#5a5a59"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-60"
+        }
+      },
+      {
+        "path": "Colors/Text/text-tertiary-hover",
+        "group": "Colors/Text",
+        "name": "text-tertiary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#434443",
+          "Medium Dark Mode": "#434443"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-tertiary-on-brand",
+        "group": "Colors/Text",
+        "name": "text-tertiary-on-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-quaternary",
+        "group": "Colors/Text",
+        "name": "text-quaternary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-quaternary-on-brand",
+        "group": "Colors/Text",
+        "name": "text-quaternary-on-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-white",
+        "group": "Colors/Text",
+        "name": "text-white",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-disabled",
+        "group": "Colors/Text",
+        "name": "text-disabled",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#70716f",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-placeholder",
+        "group": "Colors/Text",
+        "name": "text-placeholder",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.5)",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Alpha/alpha-black-50"
+        }
+      },
+      {
+        "path": "Colors/Text/text-placeholder-subtle",
+        "group": "Colors/Text",
+        "name": "text-placeholder-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-brand-primary",
+        "group": "Colors/Text",
+        "name": "text-brand-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#e1e1de",
+          "Brand Mode Light": "#e1e1de",
+          "Dark mode": "#e1e1de",
+          "Light mode": "#7d3b30",
+          "Medium Dark Mode": "#7d3b30"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-brand-secondary",
+        "group": "Colors/Text",
+        "name": "text-brand-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-brand-tertiary",
+        "group": "Colors/Text",
+        "name": "text-brand-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-brand-tertiary-alt",
+        "group": "Colors/Text",
+        "name": "text-brand-tertiary-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#e1e1de",
+          "Brand Mode Light": "#e1e1de",
+          "Dark mode": "#e1e1de",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-error-primary",
+        "group": "Colors/Text",
+        "name": "text-error-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f97066",
+          "Brand Mode Light": "#f97066",
+          "Dark mode": "#f97066",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-warning-primary",
+        "group": "Colors/Text",
+        "name": "text-warning-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fdb022",
+          "Brand Mode Light": "#fdb022",
+          "Dark mode": "#fdb022",
+          "Light mode": "#dc6803",
+          "Medium Dark Mode": "#dc6803"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Text/text-success-primary",
+        "group": "Colors/Text",
+        "name": "text-success-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#47cd89",
+          "Brand Mode Light": "#47cd89",
+          "Dark mode": "#47cd89",
+          "Light mode": "#079455",
+          "Medium Dark Mode": "#079455"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-primary",
+        "group": "Colors/Border",
+        "name": "border-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.08)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.5)",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#dbdbd7",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.14)"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-50",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-20"
+        }
+      },
+      {
+        "path": "Colors/Border/border-secondary",
+        "group": "Colors/Border",
+        "name": "border-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.35)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.5)",
+          "Dark mode": "rgba(255, 255, 255, 0.35)",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-50"
+        }
+      },
+      {
+        "path": "Colors/Border/border-tertiary",
+        "group": "Colors/Border",
+        "name": "border-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.35)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.5)",
+          "Dark mode": "rgba(255, 255, 255, 0.35)",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-white-50"
+        }
+      },
+      {
+        "path": "Colors/Border/border-disabled",
+        "group": "Colors/Border",
+        "name": "border-disabled",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {
+          "Light mode": "Component colors/Alpha/alpha-black-10",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-10"
+        }
+      },
+      {
+        "path": "Colors/Border/border-disabled-subtle",
+        "group": "Colors/Border",
+        "name": "border-disabled-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#b4b4b1",
+          "Medium Dark Mode": "#b4b4b1"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-brand-primary",
+        "group": "Colors/Border",
+        "name": "border-brand-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f6a192",
+          "Brand Mode Light": "#f6a192",
+          "Dark mode": "#f6a192",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-brand-secondary",
+        "group": "Colors/Border",
+        "name": "border-brand-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-brand-tertiary",
+        "group": "Colors/Border",
+        "name": "border-brand-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-error",
+        "group": "Colors/Border",
+        "name": "border-error",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f97066",
+          "Brand Mode Light": "#f97066",
+          "Dark mode": "#f97066",
+          "Light mode": "#fda29b",
+          "Medium Dark Mode": "#fda29b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Border/border-error-solid",
+        "group": "Colors/Border",
+        "name": "border-error-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f04438",
+          "Brand Mode Light": "#f04438",
+          "Dark mode": "#f04438",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-primary",
+        "group": "Colors/Foreground",
+        "name": "fg-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#121212",
+          "Dark mode": "#ffffff",
+          "Light mode": "#161716",
+          "Medium Dark Mode": "#161716"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-secondary",
+        "group": "Colors/Foreground",
+        "name": "fg-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#434443",
+          "Medium Dark Mode": "#434443"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-secondary-hover",
+        "group": "Colors/Foreground",
+        "name": "fg-secondary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#343432",
+          "Medium Dark Mode": "#343432"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-tertiary",
+        "group": "Colors/Foreground",
+        "name": "fg-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#5a5a59",
+          "Medium Dark Mode": "#5a5a59"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-tertiary-hover",
+        "group": "Colors/Foreground",
+        "name": "fg-tertiary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#434443",
+          "Medium Dark Mode": "#434443"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-quaternary",
+        "group": "Colors/Foreground",
+        "name": "fg-quaternary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-quaternary-hover",
+        "group": "Colors/Foreground",
+        "name": "fg-quaternary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#5a5a59",
+          "Medium Dark Mode": "#5a5a59"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-quinary",
+        "group": "Colors/Foreground",
+        "name": "fg-quinary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#70716f",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#878785",
+          "Medium Dark Mode": "#878785"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-quinary-hover",
+        "group": "Colors/Foreground",
+        "name": "fg-quinary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-white",
+        "group": "Colors/Foreground",
+        "name": "fg-white",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-disabled",
+        "group": "Colors/Foreground",
+        "name": "fg-disabled",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#70716f",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#878785",
+          "Medium Dark Mode": "#878785"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-disabled-subtle",
+        "group": "Colors/Foreground",
+        "name": "fg-disabled-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5a5a59",
+          "Brand Mode Light": "#5a5a59",
+          "Dark mode": "#5a5a59",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-brand-primary",
+        "group": "Colors/Foreground",
+        "name": "fg-brand-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-brand-secondary",
+        "group": "Colors/Foreground",
+        "name": "fg-brand-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#df858e",
+          "Medium Dark Mode": "#df858e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-error",
+        "group": "Colors/Foreground",
+        "name": "fg-error",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f04438",
+          "Brand Mode Light": "#f04438",
+          "Dark mode": "#f04438",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-warning",
+        "group": "Colors/Foreground",
+        "name": "fg-warning",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f79009",
+          "Brand Mode Light": "#f79009",
+          "Dark mode": "#f79009",
+          "Light mode": "#dc6803",
+          "Medium Dark Mode": "#dc6803"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Foreground/fg-success",
+        "group": "Colors/Foreground",
+        "name": "fg-success",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#17b26a",
+          "Brand Mode Light": "#17b26a",
+          "Dark mode": "#17b26a",
+          "Light mode": "#079455",
+          "Medium Dark Mode": "#079455"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-primary",
+        "group": "Colors/Background",
+        "name": "bg-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#000000",
+          "Light mode": "#f7f8f4",
+          "Medium Dark Mode": "#cacbc8"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-primary-alt",
+        "group": "Colors/Background",
+        "name": "bg-primary-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#161716",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-secondary",
+          "Brand Mode Light": "Colors/Background/bg-secondary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-primary-hover",
+        "group": "Colors/Background",
+        "name": "bg-primary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-primary-solid",
+        "group": "Colors/Background",
+        "name": "bg-primary-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#161716",
+          "Light mode": "#121212",
+          "Medium Dark Mode": "#121212"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-secondary",
+          "Brand Mode Light": "Colors/Background/bg-secondary",
+          "Dark mode": "Colors/Background/bg-secondary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-secondary",
+        "group": "Colors/Background",
+        "name": "bg-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#161716",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-secondary-alt",
+        "group": "Colors/Background",
+        "name": "bg-secondary-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#000000",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-primary",
+          "Brand Mode Light": "Colors/Background/bg-primary",
+          "Dark mode": "Colors/Background/bg-primary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-secondary-hover",
+        "group": "Colors/Background",
+        "name": "bg-secondary-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#cacbc8",
+          "Medium Dark Mode": "#cacbc8"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-secondary-subtle",
+        "group": "Colors/Background",
+        "name": "bg-secondary-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#161716",
+          "Brand Mode Light": "#161716",
+          "Dark mode": "#161716",
+          "Light mode": "#f7f8f4",
+          "Medium Dark Mode": "#f7f8f4"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-secondary-solid",
+        "group": "Colors/Background",
+        "name": "bg-secondary-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5a5a59",
+          "Brand Mode Light": "#5a5a59",
+          "Dark mode": "#5a5a59",
+          "Light mode": "#5a5a59",
+          "Medium Dark Mode": "#5a5a59"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-tertiary",
+        "group": "Colors/Background",
+        "name": "bg-tertiary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9e4738",
+          "Brand Mode Light": "#f6a192",
+          "Dark mode": "#161716",
+          "Light mode": "#b4b4b1",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.04)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-quaternary",
+        "group": "Colors/Background",
+        "name": "bg-quaternary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#b4b4b1",
+          "Medium Dark Mode": "#b4b4b1"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-active",
+        "group": "Colors/Background",
+        "name": "bg-active",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-disabled",
+        "group": "Colors/Background",
+        "name": "bg-disabled",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {
+          "Light mode": "Component colors/Alpha/alpha-black-10",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-10"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-disabled-subtle",
+        "group": "Colors/Background",
+        "name": "bg-disabled-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#161716",
+          "Brand Mode Light": "#161716",
+          "Dark mode": "#161716",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-overlay",
+        "group": "Colors/Background",
+        "name": "bg-overlay",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#121212",
+          "Medium Dark Mode": "#121212"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-brand-primary",
+        "group": "Colors/Background",
+        "name": "bg-brand-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-brand-primary-alt",
+        "group": "Colors/Background",
+        "name": "bg-brand-primary-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#161716",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-secondary",
+          "Brand Mode Light": "Colors/Background/bg-secondary",
+          "Dark mode": "Colors/Background/bg-secondary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-brand-secondary",
+        "group": "Colors/Background",
+        "name": "bg-brand-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#74292e",
+          "Dark mode": "#74292e",
+          "Light mode": "#ffeeeb",
+          "Medium Dark Mode": "#ffeeeb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-brand-solid",
+        "group": "Colors/Background",
+        "name": "bg-brand-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#74292e",
+          "Dark mode": "#74292e",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-brand-solid-hover",
+        "group": "Colors/Background",
+        "name": "bg-brand-solid-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-brand-section",
+        "group": "Colors/Background",
+        "name": "bg-brand-section",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#161716",
+          "Light mode": "#9e4738",
+          "Medium Dark Mode": "#9e4738"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-secondary",
+          "Brand Mode Light": "Colors/Background/bg-secondary",
+          "Dark mode": "Colors/Background/bg-secondary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-brand-section-subtle",
+        "group": "Colors/Background",
+        "name": "bg-brand-section-subtle",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#000000",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Colors/Background/bg-primary",
+          "Brand Mode Light": "Colors/Background/bg-primary",
+          "Dark mode": "Colors/Background/bg-primary"
+        }
+      },
+      {
+        "path": "Colors/Background/bg-error-primary",
+        "group": "Colors/Background",
+        "name": "bg-error-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f04438",
+          "Brand Mode Light": "#f04438",
+          "Dark mode": "#f04438",
+          "Light mode": "#fef3f2",
+          "Medium Dark Mode": "#fef3f2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-error-secondary",
+        "group": "Colors/Background",
+        "name": "bg-error-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#d92d20",
+          "Brand Mode Light": "#d92d20",
+          "Dark mode": "#d92d20",
+          "Light mode": "#fee4e2",
+          "Medium Dark Mode": "#fee4e2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-error-solid",
+        "group": "Colors/Background",
+        "name": "bg-error-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#d92d20",
+          "Brand Mode Light": "#d92d20",
+          "Dark mode": "#d92d20",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-warning-primary",
+        "group": "Colors/Background",
+        "name": "bg-warning-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f79009",
+          "Brand Mode Light": "#f79009",
+          "Dark mode": "#f79009",
+          "Light mode": "#fffaeb",
+          "Medium Dark Mode": "#fffaeb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-warning-secondary",
+        "group": "Colors/Background",
+        "name": "bg-warning-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#dc6803",
+          "Brand Mode Light": "#dc6803",
+          "Dark mode": "#dc6803",
+          "Light mode": "#fef0c7",
+          "Medium Dark Mode": "#fef0c7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-warning-solid",
+        "group": "Colors/Background",
+        "name": "bg-warning-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#dc6803",
+          "Brand Mode Light": "#dc6803",
+          "Dark mode": "#dc6803",
+          "Light mode": "#dc6803",
+          "Medium Dark Mode": "#dc6803"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-success-primary",
+        "group": "Colors/Background",
+        "name": "bg-success-primary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#17b26a",
+          "Brand Mode Light": "#17b26a",
+          "Dark mode": "#17b26a",
+          "Light mode": "#ecfdf3",
+          "Medium Dark Mode": "#ecfdf3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-success-secondary",
+        "group": "Colors/Background",
+        "name": "bg-success-secondary",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#079455",
+          "Brand Mode Light": "#079455",
+          "Dark mode": "#079455",
+          "Light mode": "#dcfae6",
+          "Medium Dark Mode": "#dcfae6"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Colors/Background/bg-success-solid",
+        "group": "Colors/Background",
+        "name": "bg-success-solid",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#079455",
+          "Brand Mode Light": "#079455",
+          "Dark mode": "#079455",
+          "Light mode": "#079455",
+          "Medium Dark Mode": "#079455"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-10",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-10",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.06)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.06)",
+          "Dark mode": "rgba(12, 17, 29, 0.06)",
+          "Light mode": "rgba(255, 255, 255, 0.06)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.06)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-20",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-20",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.14)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.14)",
+          "Dark mode": "rgba(12, 17, 29, 0.14)",
+          "Light mode": "rgba(255, 255, 255, 0.14)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.14)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-30",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-30",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.3)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.3)",
+          "Dark mode": "rgba(12, 17, 29, 0.3)",
+          "Light mode": "rgba(255, 255, 255, 0.3)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.3)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-40",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-40",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.4)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.4)",
+          "Dark mode": "rgba(12, 17, 29, 0.4)",
+          "Light mode": "rgba(255, 255, 255, 0.4)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.4)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-50",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.5)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.5)",
+          "Dark mode": "rgba(12, 17, 29, 0.5)",
+          "Light mode": "rgba(255, 255, 255, 0.5)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.5)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-60",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-60",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.6)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.6)",
+          "Dark mode": "rgba(12, 17, 29, 0.6)",
+          "Light mode": "rgba(255, 255, 255, 0.6)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.6)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-70",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-70",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.7)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.7)",
+          "Dark mode": "rgba(12, 17, 29, 0.7)",
+          "Light mode": "rgba(255, 255, 255, 0.7)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.7)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-80",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-80",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.8)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.8)",
+          "Dark mode": "rgba(12, 17, 29, 0.8)",
+          "Light mode": "rgba(255, 255, 255, 0.8)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.8)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-90",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-90",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(12, 17, 29, 0.9)",
+          "Brand Mode Light": "rgba(12, 17, 29, 0.9)",
+          "Dark mode": "rgba(12, 17, 29, 0.9)",
+          "Light mode": "rgba(255, 255, 255, 0.9)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0.9)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-white-100",
+        "group": "Component colors/Alpha",
+        "name": "alpha-white-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#121212",
+          "Brand Mode Light": "#121212",
+          "Dark mode": "#121212",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-10",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-10",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.06)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.06)",
+          "Dark mode": "rgba(255, 255, 255, 0.1)",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-20",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-20",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.15)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.15)",
+          "Dark mode": "rgba(255, 255, 255, 0.15)",
+          "Light mode": "rgba(0, 0, 0, 0.14)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.14)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-30",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-30",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.3)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.3)",
+          "Dark mode": "rgba(255, 255, 255, 0.3)",
+          "Light mode": "rgba(0, 0, 0, 0.3)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.3)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-40",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-40",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.4)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.4)",
+          "Dark mode": "rgba(255, 255, 255, 0.4)",
+          "Light mode": "rgba(0, 0, 0, 0.4)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.4)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-50",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.5)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.5)",
+          "Dark mode": "rgba(255, 255, 255, 0.5)",
+          "Light mode": "rgba(0, 0, 0, 0.5)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.5)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-60",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-60",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.6)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.6)",
+          "Dark mode": "rgba(255, 255, 255, 0.6)",
+          "Light mode": "rgba(0, 0, 0, 0.6)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.6)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-70",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-70",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.7)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.7)",
+          "Dark mode": "rgba(255, 255, 255, 0.7)",
+          "Light mode": "rgba(0, 0, 0, 0.7)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.7)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-80",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-80",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.8)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.8)",
+          "Dark mode": "rgba(255, 255, 255, 0.8)",
+          "Light mode": "rgba(0, 0, 0, 0.8)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.8)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-90",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-90",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.9)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.9)",
+          "Dark mode": "rgba(255, 255, 255, 0.9)",
+          "Light mode": "rgba(0, 0, 0, 0.9)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.9)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Alpha/alpha-black-100",
+        "group": "Component colors/Alpha",
+        "name": "alpha-black-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-50",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5f261c",
+          "Brand Mode Light": "#5f261c",
+          "Dark mode": "#5f261c",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-50-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-50-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#161716",
+          "Brand Mode Light": "#161716",
+          "Dark mode": "#161716",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-50",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-50",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-50"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-100",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7d3b30",
+          "Brand Mode Light": "#7d3b30",
+          "Dark mode": "#7d3b30",
+          "Light mode": "#ffeeeb",
+          "Medium Dark Mode": "#ffeeeb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-100-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-100-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#ffeeeb",
+          "Medium Dark Mode": "#ffeeeb"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-100",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-100",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-100"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-200",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9e4738",
+          "Brand Mode Light": "#9e4738",
+          "Dark mode": "#9e4738",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-200-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-200-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-200",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-200",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-200"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-300",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#c65541",
+          "Dark mode": "#c65541",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-300-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-300-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-300",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-300",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-300"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-400",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#74292e",
+          "Dark mode": "#74292e",
+          "Light mode": "#f6a192",
+          "Medium Dark Mode": "#f6a192"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-400-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-400-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5a5a59",
+          "Brand Mode Light": "#5a5a59",
+          "Dark mode": "#5a5a59",
+          "Light mode": "#f6a192",
+          "Medium Dark Mode": "#f6a192"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-400",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-400",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-400"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-500",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#df858e",
+          "Brand Mode Light": "#df858e",
+          "Dark mode": "#df858e",
+          "Light mode": "#df858e",
+          "Medium Dark Mode": "#df858e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-500-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-500-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#70716f",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#df858e",
+          "Medium Dark Mode": "#df858e"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-500",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-500",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-500"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-600",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f6a192",
+          "Brand Mode Light": "#f6a192",
+          "Dark mode": "#f6a192",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-600-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-600-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-600",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-600",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-600"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-700",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fbc5bb",
+          "Brand Mode Light": "#fbc5bb",
+          "Dark mode": "#fbc5bb",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-700-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-700-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-700",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-700",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-700"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-800",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-800",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#feddd7",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#feddd7",
+          "Light mode": "#9e4738",
+          "Medium Dark Mode": "#9e4738"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-800-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-800-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#9e4738",
+          "Medium Dark Mode": "#9e4738"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-800",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-800",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-800"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-900",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-900",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffeeeb",
+          "Brand Mode Light": "#ffeeeb",
+          "Dark mode": "#ffeeeb",
+          "Light mode": "#7d3b30",
+          "Medium Dark Mode": "#7d3b30"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand/utility-brand-900-alt",
+        "group": "Component colors/Utility/Brand",
+        "name": "utility-brand-900-alt",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#cacbc8",
+          "Brand Mode Light": "#cacbc8",
+          "Dark mode": "#cacbc8",
+          "Light mode": "#7d3b30",
+          "Medium Dark Mode": "#7d3b30"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Utility/Gray/utility-gray-900",
+          "Brand Mode Light": "Component colors/Utility/Gray/utility-gray-900",
+          "Dark mode": "Component colors/Utility/Gray/utility-gray-900"
+        }
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-50",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#052e1c",
+          "Brand Mode Light": "#052e1c",
+          "Dark mode": "#052e1c",
+          "Light mode": "#edfcf2",
+          "Medium Dark Mode": "#edfcf2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-100",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#084c2e",
+          "Brand Mode Light": "#084c2e",
+          "Dark mode": "#084c2e",
+          "Light mode": "#d3f8df",
+          "Medium Dark Mode": "#d3f8df"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-200",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#095c37",
+          "Brand Mode Light": "#095c37",
+          "Dark mode": "#095c37",
+          "Light mode": "#aaf0c4",
+          "Medium Dark Mode": "#aaf0c4"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-300",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#087443",
+          "Brand Mode Light": "#087443",
+          "Dark mode": "#087443",
+          "Light mode": "#73e2a3",
+          "Medium Dark Mode": "#73e2a3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-400",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#099250",
+          "Brand Mode Light": "#099250",
+          "Dark mode": "#099250",
+          "Light mode": "#3ccb7f",
+          "Medium Dark Mode": "#3ccb7f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-500",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#16b364",
+          "Brand Mode Light": "#16b364",
+          "Dark mode": "#16b364",
+          "Light mode": "#16b364",
+          "Medium Dark Mode": "#16b364"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-600",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#3ccb7f",
+          "Brand Mode Light": "#3ccb7f",
+          "Dark mode": "#3ccb7f",
+          "Light mode": "#099250",
+          "Medium Dark Mode": "#099250"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 01/utility-brand01-700",
+        "group": "Component colors/Utility/Brand secondary 01",
+        "name": "utility-brand01-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#73e2a3",
+          "Brand Mode Light": "#73e2a3",
+          "Dark mode": "#73e2a3",
+          "Light mode": "#087443",
+          "Medium Dark Mode": "#087443"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-50",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#102a56",
+          "Brand Mode Light": "#102a56",
+          "Dark mode": "#102a56",
+          "Light mode": "#eff8ff",
+          "Medium Dark Mode": "#eff8ff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-100",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#194185",
+          "Brand Mode Light": "#194185",
+          "Dark mode": "#194185",
+          "Light mode": "#d1e9ff",
+          "Medium Dark Mode": "#d1e9ff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-200",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#1849a9",
+          "Brand Mode Light": "#1849a9",
+          "Dark mode": "#1849a9",
+          "Light mode": "#b2ddff",
+          "Medium Dark Mode": "#b2ddff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-300",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#175cd3",
+          "Brand Mode Light": "#175cd3",
+          "Dark mode": "#175cd3",
+          "Light mode": "#84caff",
+          "Medium Dark Mode": "#84caff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-400",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#1570ef",
+          "Brand Mode Light": "#1570ef",
+          "Dark mode": "#1570ef",
+          "Light mode": "#53b1fd",
+          "Medium Dark Mode": "#53b1fd"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-500",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2e90fa",
+          "Brand Mode Light": "#2e90fa",
+          "Dark mode": "#2e90fa",
+          "Light mode": "#2e90fa",
+          "Medium Dark Mode": "#2e90fa"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-600",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#53b1fd",
+          "Brand Mode Light": "#53b1fd",
+          "Dark mode": "#53b1fd",
+          "Light mode": "#1570ef",
+          "Medium Dark Mode": "#1570ef"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 02/utility-brand02-700",
+        "group": "Component colors/Utility/Brand secondary 02",
+        "name": "utility-brand02-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#84caff",
+          "Brand Mode Light": "#84caff",
+          "Dark mode": "#84caff",
+          "Light mode": "#175cd3",
+          "Medium Dark Mode": "#175cd3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-50",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2e125e",
+          "Brand Mode Light": "#2e125e",
+          "Dark mode": "#2e125e",
+          "Light mode": "#f5f3ff",
+          "Medium Dark Mode": "#f5f3ff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-100",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#491c96",
+          "Brand Mode Light": "#491c96",
+          "Dark mode": "#491c96",
+          "Light mode": "#ece9fe",
+          "Medium Dark Mode": "#ece9fe"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-200",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5720b7",
+          "Brand Mode Light": "#5720b7",
+          "Dark mode": "#5720b7",
+          "Light mode": "#ddd6fe",
+          "Medium Dark Mode": "#ddd6fe"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-300",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#6927da",
+          "Brand Mode Light": "#6927da",
+          "Dark mode": "#6927da",
+          "Light mode": "#c3b5fd",
+          "Medium Dark Mode": "#c3b5fd"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-400",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7839ee",
+          "Brand Mode Light": "#7839ee",
+          "Dark mode": "#7839ee",
+          "Light mode": "#a48afb",
+          "Medium Dark Mode": "#a48afb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-500",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#875bf7",
+          "Brand Mode Light": "#875bf7",
+          "Dark mode": "#875bf7",
+          "Light mode": "#875bf7",
+          "Medium Dark Mode": "#875bf7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-600",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#a48afb",
+          "Brand Mode Light": "#a48afb",
+          "Dark mode": "#a48afb",
+          "Light mode": "#7839ee",
+          "Medium Dark Mode": "#7839ee"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 03/utility-brand03-700",
+        "group": "Component colors/Utility/Brand secondary 03",
+        "name": "utility-brand03-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c3b5fd",
+          "Brand Mode Light": "#c3b5fd",
+          "Dark mode": "#c3b5fd",
+          "Light mode": "#6927da",
+          "Medium Dark Mode": "#6927da"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-50",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#510b24",
+          "Brand Mode Light": "#510b24",
+          "Dark mode": "#510b24",
+          "Light mode": "#fff1f3",
+          "Medium Dark Mode": "#fff1f3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-100",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#89123e",
+          "Brand Mode Light": "#89123e",
+          "Dark mode": "#89123e",
+          "Light mode": "#ffe4e8",
+          "Medium Dark Mode": "#ffe4e8"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-200",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#a11043",
+          "Brand Mode Light": "#a11043",
+          "Dark mode": "#a11043",
+          "Light mode": "#fecdd6",
+          "Medium Dark Mode": "#fecdd6"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-300",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c01048",
+          "Brand Mode Light": "#c01048",
+          "Dark mode": "#c01048",
+          "Light mode": "#fea3b4",
+          "Medium Dark Mode": "#fea3b4"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-400",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#e31b54",
+          "Brand Mode Light": "#e31b54",
+          "Dark mode": "#e31b54",
+          "Light mode": "#fd6f8e",
+          "Medium Dark Mode": "#fd6f8e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-500",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f63d68",
+          "Brand Mode Light": "#f63d68",
+          "Dark mode": "#f63d68",
+          "Light mode": "#f63d68",
+          "Medium Dark Mode": "#f63d68"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-600",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fd6f8e",
+          "Brand Mode Light": "#fd6f8e",
+          "Dark mode": "#fd6f8e",
+          "Light mode": "#e31b54",
+          "Medium Dark Mode": "#e31b54"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 04/utility-brand04-700",
+        "group": "Component colors/Utility/Brand secondary 04",
+        "name": "utility-brand04-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fea3b4",
+          "Brand Mode Light": "#fea3b4",
+          "Dark mode": "#fea3b4",
+          "Light mode": "#c01048",
+          "Medium Dark Mode": "#c01048"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-50",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#511c10",
+          "Brand Mode Light": "#511c10",
+          "Dark mode": "#511c10",
+          "Light mode": "#fef6ee",
+          "Medium Dark Mode": "#fef6ee"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-100",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#772917",
+          "Brand Mode Light": "#772917",
+          "Dark mode": "#772917",
+          "Light mode": "#fdead7",
+          "Medium Dark Mode": "#fdead7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-200",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#932f19",
+          "Brand Mode Light": "#932f19",
+          "Dark mode": "#932f19",
+          "Light mode": "#f9dbaf",
+          "Medium Dark Mode": "#f9dbaf"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-300",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b93815",
+          "Brand Mode Light": "#b93815",
+          "Dark mode": "#b93815",
+          "Light mode": "#f7b27a",
+          "Medium Dark Mode": "#f7b27a"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-400",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#e04f16",
+          "Brand Mode Light": "#e04f16",
+          "Dark mode": "#e04f16",
+          "Light mode": "#f38744",
+          "Medium Dark Mode": "#f38744"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-500",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ef6820",
+          "Brand Mode Light": "#ef6820",
+          "Dark mode": "#ef6820",
+          "Light mode": "#ef6820",
+          "Medium Dark Mode": "#ef6820"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-600",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f38744",
+          "Brand Mode Light": "#f38744",
+          "Dark mode": "#f38744",
+          "Light mode": "#e04f16",
+          "Medium Dark Mode": "#e04f16"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 05/utility-brand05-700",
+        "group": "Component colors/Utility/Brand secondary 05",
+        "name": "utility-brand05-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f7b27a",
+          "Brand Mode Light": "#f7b27a",
+          "Dark mode": "#f7b27a",
+          "Light mode": "#b93815",
+          "Medium Dark Mode": "#b93815"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-50",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#542c0d",
+          "Brand Mode Light": "#542c0d",
+          "Dark mode": "#542c0d",
+          "Light mode": "#fefbe8",
+          "Medium Dark Mode": "#fefbe8"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-100",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#713b12",
+          "Brand Mode Light": "#713b12",
+          "Dark mode": "#713b12",
+          "Light mode": "#fef7c3",
+          "Medium Dark Mode": "#fef7c3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-200",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#854a0e",
+          "Brand Mode Light": "#854a0e",
+          "Dark mode": "#854a0e",
+          "Light mode": "#feee95",
+          "Medium Dark Mode": "#feee95"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-300",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#a15c07",
+          "Brand Mode Light": "#a15c07",
+          "Dark mode": "#a15c07",
+          "Light mode": "#fde272",
+          "Medium Dark Mode": "#fde272"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-400",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ca8504",
+          "Brand Mode Light": "#ca8504",
+          "Dark mode": "#ca8504",
+          "Light mode": "#fac515",
+          "Medium Dark Mode": "#fac515"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-500",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#eaaa08",
+          "Brand Mode Light": "#eaaa08",
+          "Dark mode": "#eaaa08",
+          "Light mode": "#eaaa08",
+          "Medium Dark Mode": "#eaaa08"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-600",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fac515",
+          "Brand Mode Light": "#fac515",
+          "Dark mode": "#fac515",
+          "Light mode": "#ca8504",
+          "Medium Dark Mode": "#ca8504"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Brand secondary 06/utility-brand06-700",
+        "group": "Component colors/Utility/Brand secondary 06",
+        "name": "utility-brand06-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fde272",
+          "Brand Mode Light": "#fde272",
+          "Dark mode": "#fde272",
+          "Light mode": "#a15c07",
+          "Medium Dark Mode": "#a15c07"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-50",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#55160c",
+          "Brand Mode Light": "#55160c",
+          "Dark mode": "#55160c",
+          "Light mode": "#fef3f2",
+          "Medium Dark Mode": "#fef3f2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-100",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7a271a",
+          "Brand Mode Light": "#7a271a",
+          "Dark mode": "#7a271a",
+          "Light mode": "#fee4e2",
+          "Medium Dark Mode": "#fee4e2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-200",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#912018",
+          "Brand Mode Light": "#912018",
+          "Dark mode": "#912018",
+          "Light mode": "#fecdca",
+          "Medium Dark Mode": "#fecdca"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-300",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b42318",
+          "Brand Mode Light": "#b42318",
+          "Dark mode": "#b42318",
+          "Light mode": "#fda29b",
+          "Medium Dark Mode": "#fda29b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-400",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#d92d20",
+          "Brand Mode Light": "#d92d20",
+          "Dark mode": "#d92d20",
+          "Light mode": "#f97066",
+          "Medium Dark Mode": "#f97066"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-500",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f04438",
+          "Brand Mode Light": "#f04438",
+          "Dark mode": "#f04438",
+          "Light mode": "#f04438",
+          "Medium Dark Mode": "#f04438"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-600",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f97066",
+          "Brand Mode Light": "#f97066",
+          "Dark mode": "#f97066",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Error/utility-error-700",
+        "group": "Component colors/Utility/Error",
+        "name": "utility-error-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fda29b",
+          "Brand Mode Light": "#fda29b",
+          "Dark mode": "#fda29b",
+          "Light mode": "#b42318",
+          "Medium Dark Mode": "#b42318"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-50",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#4e1d09",
+          "Brand Mode Light": "#4e1d09",
+          "Dark mode": "#4e1d09",
+          "Light mode": "#fffaeb",
+          "Medium Dark Mode": "#fffaeb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-100",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7a2e0e",
+          "Brand Mode Light": "#7a2e0e",
+          "Dark mode": "#7a2e0e",
+          "Light mode": "#fef0c7",
+          "Medium Dark Mode": "#fef0c7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-200",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#93370d",
+          "Brand Mode Light": "#93370d",
+          "Dark mode": "#93370d",
+          "Light mode": "#fedf89",
+          "Medium Dark Mode": "#fedf89"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-300",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b54708",
+          "Brand Mode Light": "#b54708",
+          "Dark mode": "#b54708",
+          "Light mode": "#fec84b",
+          "Medium Dark Mode": "#fec84b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-400",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#dc6803",
+          "Brand Mode Light": "#dc6803",
+          "Dark mode": "#dc6803",
+          "Light mode": "#fdb022",
+          "Medium Dark Mode": "#fdb022"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-500",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f79009",
+          "Brand Mode Light": "#f79009",
+          "Dark mode": "#f79009",
+          "Light mode": "#f79009",
+          "Medium Dark Mode": "#f79009"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-600",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fdb022",
+          "Brand Mode Light": "#fdb022",
+          "Dark mode": "#fdb022",
+          "Light mode": "#dc6803",
+          "Medium Dark Mode": "#dc6803"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Warning/utility-warning-700",
+        "group": "Component colors/Utility/Warning",
+        "name": "utility-warning-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fec84b",
+          "Brand Mode Light": "#fec84b",
+          "Dark mode": "#fec84b",
+          "Light mode": "#b54708",
+          "Medium Dark Mode": "#b54708"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-50",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#161716",
+          "Brand Mode Light": "#161716",
+          "Dark mode": "#161716",
+          "Light mode": "#e1e1de",
+          "Medium Dark Mode": "#e1e1de"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-100",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#cacbc8",
+          "Medium Dark Mode": "#cacbc8"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-200",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#b4b4b1",
+          "Medium Dark Mode": "#b4b4b1"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-300",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-400",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#5a5a59",
+          "Brand Mode Light": "#5a5a59",
+          "Dark mode": "#5a5a59",
+          "Light mode": "#878785",
+          "Medium Dark Mode": "#878785"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-500",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#70716f",
+          "Brand Mode Light": "#70716f",
+          "Dark mode": "#70716f",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-600",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#5a5a59",
+          "Medium Dark Mode": "#5a5a59"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-700",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#434443",
+          "Medium Dark Mode": "#434443"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-800",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-800",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#343432",
+          "Medium Dark Mode": "#343432"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Gray/utility-gray-900",
+        "group": "Component colors/Utility/Gray",
+        "name": "utility-gray-900",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#cacbc8",
+          "Brand Mode Light": "#cacbc8",
+          "Dark mode": "#cacbc8",
+          "Light mode": "#161716",
+          "Medium Dark Mode": "#161716"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-50",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-50",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#053321",
+          "Brand Mode Light": "#053321",
+          "Dark mode": "#053321",
+          "Light mode": "#ecfdf3",
+          "Medium Dark Mode": "#ecfdf3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-100",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-100",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#074d31",
+          "Brand Mode Light": "#074d31",
+          "Dark mode": "#074d31",
+          "Light mode": "#dcfae6",
+          "Medium Dark Mode": "#dcfae6"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-200",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-200",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#085d3a",
+          "Brand Mode Light": "#085d3a",
+          "Dark mode": "#085d3a",
+          "Light mode": "#abefc6",
+          "Medium Dark Mode": "#abefc6"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-300",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-300",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#067647",
+          "Brand Mode Light": "#067647",
+          "Dark mode": "#067647",
+          "Light mode": "#75e0a7",
+          "Medium Dark Mode": "#75e0a7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-400",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-400",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#079455",
+          "Brand Mode Light": "#079455",
+          "Dark mode": "#079455",
+          "Light mode": "#47cd89",
+          "Medium Dark Mode": "#47cd89"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-500",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-500",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#17b26a",
+          "Brand Mode Light": "#17b26a",
+          "Dark mode": "#17b26a",
+          "Light mode": "#17b26a",
+          "Medium Dark Mode": "#17b26a"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-600",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-600",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#47cd89",
+          "Brand Mode Light": "#47cd89",
+          "Dark mode": "#47cd89",
+          "Light mode": "#079455",
+          "Medium Dark Mode": "#079455"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Utility/Success/utility-success-700",
+        "group": "Component colors/Utility/Success",
+        "name": "utility-success-700",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#75e0a7",
+          "Brand Mode Light": "#75e0a7",
+          "Dark mode": "#75e0a7",
+          "Light mode": "#067647",
+          "Medium Dark Mode": "#067647"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-fg",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#000000",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#000000",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-fg-hover",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#000000",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#000000",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-bg",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#f7f8f4",
+          "Brand Mode Light": "#121212",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-bg-hover",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#c65541",
+          "Dark mode": "#e1e1de",
+          "Light mode": "#121212",
+          "Medium Dark Mode": "#121212"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-border",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#74292e",
+          "Brand Mode Light": "#74292e",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary/button-primary-border-hover",
+        "group": "Component colors/Components/Buttons/Primary",
+        "name": "button-primary-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#c65541",
+          "Brand Mode Light": "#c65541",
+          "Dark mode": "#e1e1de",
+          "Light mode": "#121212",
+          "Medium Dark Mode": "#121212"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-fg",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#000000",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-fg-hover",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#000000",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#000000",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-bg",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#833237",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.15)",
+          "Dark mode": "#161716",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {
+          "Brand Mode Light": "Component colors/Alpha/alpha-black-20",
+          "Light mode": "Component colors/Alpha/alpha-black-10",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-10"
+        }
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-bg-hover",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-border",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#161716",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary/button-secondary-border-hover",
+        "group": "Component colors/Components/Buttons/Secondary",
+        "name": "button-secondary-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-fg",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-fg-hover",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#cacbc8",
+          "Brand Mode Light": "#cacbc8",
+          "Dark mode": "#cacbc8",
+          "Light mode": "#9e4738",
+          "Medium Dark Mode": "#9e4738"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-bg",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#161716",
+          "Brand Mode Light": "#161716",
+          "Dark mode": "#161716",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-bg-hover",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-border",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary Color/button-secondary-color-border-hover",
+        "group": "Component colors/Components/Buttons/Secondary Color",
+        "name": "button-secondary-color-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#fbc5bb",
+          "Medium Dark Mode": "#fbc5bb"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-fg",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#000000",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-fg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#000000",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#000000",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-bg",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0)",
+          "Dark mode": "rgba(255, 255, 255, 0)",
+          "Light mode": "rgba(255, 255, 255, 0)",
+          "Medium Dark Mode": "rgba(255, 255, 255, 0)"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-bg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.15)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.15)",
+          "Dark mode": "rgba(255, 255, 255, 0.15)",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Alpha/alpha-black-20",
+          "Brand Mode Light": "Component colors/Alpha/alpha-black-20",
+          "Dark mode": "Component colors/Alpha/alpha-black-20",
+          "Light mode": "Component colors/Alpha/alpha-black-10",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-10"
+        }
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-border",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.15)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.15)",
+          "Dark mode": "rgba(255, 255, 255, 0.15)",
+          "Light mode": "rgba(0, 0, 0, 0.06)",
+          "Medium Dark Mode": "rgba(0, 0, 0, 0.06)"
+        },
+        "aliasOf": {
+          "Brand Mode Dark": "Component colors/Alpha/alpha-black-20",
+          "Brand Mode Light": "Component colors/Alpha/alpha-black-20",
+          "Dark mode": "Component colors/Alpha/alpha-black-20",
+          "Light mode": "Component colors/Alpha/alpha-black-10",
+          "Medium Dark Mode": "Component colors/Alpha/alpha-black-10"
+        }
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary/button-tertiary-border-hover",
+        "group": "Component colors/Components/Buttons/Tertiary",
+        "name": "button-tertiary-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#000000",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary color/button-tertiary-color-fg",
+        "group": "Component colors/Components/Buttons/Tertiary color",
+        "name": "button-tertiary-color-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#c65541",
+          "Medium Dark Mode": "#c65541"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary color/button-tertiary-color-fg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary color",
+        "name": "button-tertiary-color-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#cacbc8",
+          "Brand Mode Light": "#cacbc8",
+          "Dark mode": "#cacbc8",
+          "Light mode": "#9e4738",
+          "Medium Dark Mode": "#9e4738"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary color/button-tertiary-color-bg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary color",
+        "name": "button-tertiary-color-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#2d2d2c",
+          "Brand Mode Light": "#2d2d2c",
+          "Dark mode": "#2d2d2c",
+          "Light mode": "#fff7f5",
+          "Medium Dark Mode": "#fff7f5"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-fg",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-fg-hover",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-bg",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#d92d20",
+          "Brand Mode Light": "#d92d20",
+          "Dark mode": "#d92d20",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-bg-hover",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b42318",
+          "Brand Mode Light": "#b42318",
+          "Dark mode": "#b42318",
+          "Light mode": "#b42318",
+          "Medium Dark Mode": "#b42318"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-border",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#d92d20",
+          "Brand Mode Light": "#d92d20",
+          "Dark mode": "#d92d20",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Primary error/button-primary-error-border-hover",
+        "group": "Component colors/Components/Buttons/Primary error",
+        "name": "button-primary-error-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b42318",
+          "Brand Mode Light": "#b42318",
+          "Dark mode": "#b42318",
+          "Light mode": "#b42318",
+          "Medium Dark Mode": "#b42318"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-fg",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fecdca",
+          "Brand Mode Light": "#fecdca",
+          "Dark mode": "#fecdca",
+          "Light mode": "#b42318",
+          "Medium Dark Mode": "#b42318"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-fg-hover",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fee4e2",
+          "Brand Mode Light": "#fee4e2",
+          "Dark mode": "#fee4e2",
+          "Light mode": "#912018",
+          "Medium Dark Mode": "#912018"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-bg",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#55160c",
+          "Brand Mode Light": "#55160c",
+          "Dark mode": "#55160c",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-bg-hover",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7a271a",
+          "Brand Mode Light": "#7a271a",
+          "Dark mode": "#7a271a",
+          "Light mode": "#fef3f2",
+          "Medium Dark Mode": "#fef3f2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-border",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#912018",
+          "Brand Mode Light": "#912018",
+          "Dark mode": "#912018",
+          "Light mode": "#fda29b",
+          "Medium Dark Mode": "#fda29b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Secondary error/button-secondary-error-border-hover",
+        "group": "Component colors/Components/Buttons/Secondary error",
+        "name": "button-secondary-error-border-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b42318",
+          "Brand Mode Light": "#b42318",
+          "Dark mode": "#b42318",
+          "Light mode": "#fda29b",
+          "Medium Dark Mode": "#fda29b"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary error/button-tertiary-error-fg",
+        "group": "Component colors/Components/Buttons/Tertiary error",
+        "name": "button-tertiary-error-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fda29b",
+          "Brand Mode Light": "#fda29b",
+          "Dark mode": "#fda29b",
+          "Light mode": "#b42318",
+          "Medium Dark Mode": "#b42318"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary error/button-tertiary-error-fg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary error",
+        "name": "button-tertiary-error-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fecdca",
+          "Brand Mode Light": "#fecdca",
+          "Dark mode": "#fecdca",
+          "Light mode": "#912018",
+          "Medium Dark Mode": "#912018"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Buttons/Tertiary error/button-tertiary-error-bg-hover",
+        "group": "Component colors/Components/Buttons/Tertiary error",
+        "name": "button-tertiary-error-bg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#7a271a",
+          "Brand Mode Light": "#7a271a",
+          "Dark mode": "#7a271a",
+          "Light mode": "#fef3f2",
+          "Medium Dark Mode": "#fef3f2"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Footers ⛔️/footer-button-fg",
+        "group": "Component colors/Components/Footers ⛔️",
+        "name": "footer-button-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Footers ⛔️/footer-button-fg-hover",
+        "group": "Component colors/Components/Footers ⛔️",
+        "name": "footer-button-fg-hover",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#cacbc8",
+          "Brand Mode Light": "#cacbc8",
+          "Dark mode": "#cacbc8",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Footers ⛔️/footer-badge-fg",
+        "group": "Component colors/Components/Footers ⛔️",
+        "name": "footer-badge-fg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#067647",
+          "Medium Dark Mode": "#067647"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Footers ⛔️/footer-badge-bg",
+        "group": "Component colors/Components/Footers ⛔️",
+        "name": "footer-badge-bg",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.1)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.1)",
+          "Dark mode": "rgba(255, 255, 255, 0.1)",
+          "Light mode": "#ecfdf3",
+          "Medium Dark Mode": "#ecfdf3"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Footers ⛔️/footer-badge-border",
+        "group": "Component colors/Components/Footers ⛔️",
+        "name": "footer-badge-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "rgba(255, 255, 255, 0.3)",
+          "Brand Mode Light": "rgba(255, 255, 255, 0.3)",
+          "Dark mode": "rgba(255, 255, 255, 0.3)",
+          "Light mode": "#abefc6",
+          "Medium Dark Mode": "#abefc6"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Icons/icon-fg-brand",
+        "group": "Component colors/Components/Icons/Icons",
+        "name": "icon-fg-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Icons/icon-fg-brand-on-brand",
+        "group": "Component colors/Components/Icons/Icons",
+        "name": "icon-fg-brand-on-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#878785",
+          "Brand Mode Light": "#878785",
+          "Dark mode": "#878785",
+          "Light mode": "#feddd7",
+          "Medium Dark Mode": "#feddd7"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Light/featured-icon-light-fg-brand",
+        "group": "Component colors/Components/Icons/Featured icons/Light",
+        "name": "featured-icon-light-fg-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#feddd7",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#feddd7",
+          "Light mode": "#74292e",
+          "Medium Dark Mode": "#74292e"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Light/featured-icon-light-fg-gray",
+        "group": "Component colors/Components/Icons/Featured icons/Light",
+        "name": "featured-icon-light-fg-gray",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#70716f",
+          "Medium Dark Mode": "#70716f"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Light/featured-icon-light-fg-error",
+        "group": "Component colors/Components/Icons/Featured icons/Light",
+        "name": "featured-icon-light-fg-error",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fecdca",
+          "Brand Mode Light": "#fecdca",
+          "Dark mode": "#fecdca",
+          "Light mode": "#d92d20",
+          "Medium Dark Mode": "#d92d20"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Light/featured-icon-light-fg-warning",
+        "group": "Component colors/Components/Icons/Featured icons/Light",
+        "name": "featured-icon-light-fg-warning",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fedf89",
+          "Brand Mode Light": "#fedf89",
+          "Dark mode": "#fedf89",
+          "Light mode": "#dc6803",
+          "Medium Dark Mode": "#dc6803"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Light/featured-icon-light-fg-success",
+        "group": "Component colors/Components/Icons/Featured icons/Light",
+        "name": "featured-icon-light-fg-success",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#abefc6",
+          "Brand Mode Light": "#abefc6",
+          "Dark mode": "#abefc6",
+          "Light mode": "#079455",
+          "Medium Dark Mode": "#079455"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Dark/featured-icon-dark-fg-brand",
+        "group": "Component colors/Components/Icons/Featured icons/Dark",
+        "name": "featured-icon-dark-fg-brand",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#feddd7",
+          "Brand Mode Light": "#feddd7",
+          "Dark mode": "#feddd7",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Dark/featured-icon-dark-fg-gray",
+        "group": "Component colors/Components/Icons/Featured icons/Dark",
+        "name": "featured-icon-dark-fg-gray",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#b4b4b1",
+          "Brand Mode Light": "#b4b4b1",
+          "Dark mode": "#b4b4b1",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Dark/featured-icon-dark-fg-error",
+        "group": "Component colors/Components/Icons/Featured icons/Dark",
+        "name": "featured-icon-dark-fg-error",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fecdca",
+          "Brand Mode Light": "#fecdca",
+          "Dark mode": "#fecdca",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Dark/featured-icon-dark-fg-warning",
+        "group": "Component colors/Components/Icons/Featured icons/Dark",
+        "name": "featured-icon-dark-fg-warning",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#fedf89",
+          "Brand Mode Light": "#fedf89",
+          "Dark mode": "#fedf89",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Dark/featured-icon-dark-fg-success",
+        "group": "Component colors/Components/Icons/Featured icons/Dark",
+        "name": "featured-icon-dark-fg-success",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#abefc6",
+          "Brand Mode Light": "#abefc6",
+          "Dark mode": "#abefc6",
+          "Light mode": "#ffffff",
+          "Medium Dark Mode": "#ffffff"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Featured icons/Modern/featured-icon-modern-border",
+        "group": "Component colors/Components/Icons/Featured icons/Modern",
+        "name": "featured-icon-modern-border",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#434443",
+          "Brand Mode Light": "#434443",
+          "Dark mode": "#434443",
+          "Light mode": "#b4b4b1",
+          "Medium Dark Mode": "#b4b4b1"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-x",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-x",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#242e36",
+          "Medium Dark Mode": "#242e36"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-instagram",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-instagram",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000100",
+          "Medium Dark Mode": "#000100"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-apple",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-apple",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-github",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-github",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-angellist",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-angellist",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#000000",
+          "Medium Dark Mode": "#000000"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Icons/Social icons/social-icon-fg-tumblr",
+        "group": "Component colors/Components/Icons/Social icons",
+        "name": "social-icon-fg-tumblr",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#ffffff",
+          "Brand Mode Light": "#ffffff",
+          "Dark mode": "#ffffff",
+          "Light mode": "#001935",
+          "Medium Dark Mode": "#001935"
+        },
+        "aliasOf": {}
+      },
+      {
+        "path": "Component colors/Components/Tooltips ✅/tooltip-supporting-text",
+        "group": "Component colors/Components/Tooltips ✅",
+        "name": "tooltip-supporting-text",
+        "type": "color",
+        "values": {
+          "Brand Mode Dark": "#9d9e9b",
+          "Brand Mode Light": "#9d9e9b",
+          "Dark mode": "#9d9e9b",
+          "Light mode": "#9d9e9b",
+          "Medium Dark Mode": "#9d9e9b"
+        },
+        "aliasOf": {}
+      }
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+{
+  "title": "Architecture studio",
+  "blurb": "Portfolio-led studio site: 8 projects, a small journal, pages built from the section library. Commerce off.",
+  "features": { "commerce": false, "blog": true, "projects": true }
+}

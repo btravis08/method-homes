@@ -1,0 +1,55 @@
+name: section-audit
+
+# The design dashboard's data source: builds the site, serves it,
+# screenshots every registered section, diffs against the Figma
+# comps, sweeps for off-token values, and commits the refreshed
+# status + history back — so /library's scores update nightly and on
+# demand instead of when someone remembers to run the audit locally.
+on:
+  workflow_dispatch:
+  schedule:
+    # nightly, 09:00 UTC (~2am PT)
+    - cron: "0 9 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: section-audit
+  cancel-in-progress: false
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: |
+          npm ci
+          npm install --no-save playwright-core
+      - name: Build
+        run: npm run build
+      - name: Serve
+        run: |
+          npm start &
+          for i in $(seq 1 60); do
+            curl -sf -o /dev/null http://localhost:3000/library && break
+            sleep 2
+          done
+      - name: Audit
+        env:
+          # the runner ships Chrome; playwright-core just drives it
+          AUDIT_CHROMIUM: /usr/bin/google-chrome
+        run: npm run audit
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/library.status.json src/design/library.history.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh section audit (scheduled)"
+          git push

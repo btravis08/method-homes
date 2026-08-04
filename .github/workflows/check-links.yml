@@ -1,0 +1,70 @@
+name: check-links
+
+# Nightly sweep of production: every sitemap URL must respond 2xx/3xx,
+# and every internal href found on the homepage + shop-all must
+# resolve. Fails red when anything is broken, and commits the result
+# to src/design/links.status.json for the Studio's Overview pane.
+on:
+  schedule:
+    - cron: "15 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Crawl sitemap + key pages
+        run: |
+          set -uo pipefail
+          BASE=$(node -p "require('./designops.config.json').site.baseUrl")
+          : > /tmp/broken.txt
+          checked=0
+
+          check() {
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L --max-time 30 "$1")
+            checked=$((checked+1))
+            if [ "$code" -ge 400 ] || [ "$code" = "000" ]; then
+              echo "::error::$code $1"
+              echo "{\"url\":\"$1\",\"code\":$code}" >> /tmp/broken.txt
+            fi
+          }
+
+          urls=$(curl -fsSL "$BASE/sitemap.xml" | grep -oE "<loc>[^<]+" | sed 's/<loc>//')
+          echo "checking $(echo "$urls" | wc -l) sitemap URLs"
+          for u in $urls; do check "$u"; done
+
+          for page in "/" "/collections/shop-all"; do
+            hrefs=$(curl -fsSL "$BASE$page" \
+              | grep -oE 'href="/[^"#?]*' | sed 's/href="//' | sort -u | head -80)
+            for h in $hrefs; do check "$BASE$h"; done
+          done
+
+          broken=$(paste -sd, /tmp/broken.txt)
+          printf '{"generatedAt":"%s","checked":%d,"broken":[%s]}\n' \
+            "$(date -u +%FT%TZ)" "$checked" "$broken" > src/design/links.status.json
+          fails=$(wc -l < /tmp/broken.txt)
+          echo "checked $checked, broken: $fails"
+          echo "FAILS=$fails" >> "$GITHUB_ENV"
+
+      - name: Commit status
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/links.status.json
+          git diff --cached --quiet && echo "No changes" || {
+            git commit -m "Refresh link-check status (scheduled)"
+            # concurrent nightly jobs push to the same branch — rebase and retry
+            for i in 1 2 3; do
+              git pull --rebase && git push && break
+              sleep $((i * 3))
+            done
+            git push origin HEAD:main || echo "main diverged; skipping mirror"
+          }
+
+      - name: Fail on broken links
+        run: |
+          [ "$FAILS" -eq 0 ]

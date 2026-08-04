@@ -1,0 +1,84 @@
+{
+  "$description": "Resolved variable values pulled via the Figma MCP get_variable_defs from the desktop PDP node (33296:15687) in file CMeh0gCtTQAnIRc9iXjGbr ('[i] Design Library — SDR', current copy). Values are resolved in the node's active mode (light). Unlike the *_mode.tokens.json collection exports, this is a flat name → value map of only the tokens the PDP consumes.",
+  "spacing": {
+    "spacing-xxs": 2,
+    "spacing-xs": 4,
+    "spacing-sm": 6,
+    "spacing-md": 8,
+    "spacing-lg": 12,
+    "spacing-xl": 16,
+    "spacing-4xl": 32,
+    "spacing-6xl": 48,
+    "spacing-8xl": 80,
+    "spacing-9xl": 96,
+    "spacing-10xl": 128,
+    "spacing-11xl": 160,
+    "space/small": 24
+  },
+  "radius": {
+    "radius-none": 0
+  },
+  "colors": {
+    "Colors/Background/bg-primary": "#f7f8f4",
+    "Colors/Background/bg-secondary": "#e1e1de",
+    "Colors/Text/text-primary": "#161716",
+    "Colors/Text/text-secondary": "#00000080",
+    "Colors/Text/text-placeholder": "#70716f",
+    "Colors/Border/border-primary": "#dbdbd7",
+    "Colors/Foreground/fg-primary": "#161716",
+    "Colors/Foreground/fg-disabled": "#878785",
+    "Colors/Foreground/fg-disabled-subtle": "#9d9e9b",
+    "Colors/Base/white": "#ffffff",
+    "Component colors/Alpha/alpha-black-10": "#0000000f",
+    "Component colors/Components/Buttons/Primary/button-primary-bg": "#000000",
+    "Component colors/Components/Buttons/Primary/button-primary-fg": "#ffffff",
+    "Component colors/Components/Buttons/Secondary/button-secondary-bg": "#0000000f",
+    "Component colors/Components/Buttons/Secondary/button-secondary-fg": "#000000",
+    "Component colors/Components/Buttons/Secondary Color/button-secondary-color-fg": "#9d9e9b",
+    "Component colors/Components/Buttons/Tertiary/button-tertiary-fg": "#000000",
+    "Component colors/Components/Buttons/Quaternary/button-quaternary-bg": "#0000000f",
+    "Component colors/Components/Buttons/Quaternary/button-quaternary-fg": "#000000",
+    "Component colors/Components/Buttons/Quaternary/button-quaternary-fg-hover": "#000000",
+    "Component colors/Components/Buttons/Quaternary/button-quaternary-border": "#ffffff00"
+  },
+  "typography": {
+    "Font family/font-family-display": "Feature Deck Trial",
+    "Font family/font-family-body": "Maison Neue",
+    "Font family/font-family-mono": "Maison Neue",
+    "Font size/label-sm": 12,
+    "Font size/body-xs": 12,
+    "Font size/body-sm": 14,
+    "Font size/body-md": 16,
+    "Font size/title-xs": 18,
+    "Font size/title-sm": 20,
+    "Font size/title-md": 24,
+    "Font size/title-lg": 28,
+    "Font size/headline-sm": 32,
+    "Line height/text-sm": 20,
+    "Line height/text-base": 24,
+    "Line height/display-xs": 32,
+    "Line height/display-sm": 38,
+    "styles": {
+      "Label Small/Medium": { "family": "Maison Neue", "weight": 500, "size": 12, "lineHeight": 1.3 },
+      "Label Small/Mono": { "family": "Maison Neue Mono", "weight": 400, "size": 12, "lineHeight": 1 },
+      "Body Small/Regular": { "family": "Maison Neue", "weight": 400, "size": 14, "lineHeight": 20 },
+      "Body Medium/Medium": { "family": "Maison Neue", "weight": 500, "size": 16, "lineHeight": 24 },
+      "Title XSmall/Regular": { "family": "Feature Deck Trial", "weight": 400, "size": 18, "lineHeight": 1.1 },
+      "Title Small/Regular": { "family": "Feature Deck Trial", "weight": 400, "size": 20, "lineHeight": 1.1 },
+      "Title Medium/Regular": { "family": "Feature Deck Trial", "weight": 400, "size": 24, "lineHeight": 32 },
+      "Title Large/Regular": { "family": "Feature Deck Trial", "weight": 400, "size": 28, "lineHeight": 32 },
+      "Headline Small/Regular": { "family": "Feature Deck Trial", "weight": 400, "size": 32, "lineHeight": 38 }
+    }
+  },
+  "effects": {
+    "Backdrop blurs/backdrop-blur-md": { "type": "BACKGROUND_BLUR", "radius": 16 },
+    "Backdrop blurs/backdrop-blur-lg": { "type": "BACKGROUND_BLUR", "radius": 24 },
+    "Shadows/Portfolio mockup shadows/shadow-overlay-left-lg": {
+      "type": "DROP_SHADOW",
+      "color": "#3440541F",
+      "offset": [100, 100],
+      "radius": 150,
+      "spread": 0
+    }
+  }
+}

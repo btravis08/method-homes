@@ -1,0 +1,448 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/*
+  Design tokens from the Figma "[i] Design Library — SDR" variable
+  collection (exports in design/figma-tokens/). The collection has six
+  modes; the four neutral ones map to the site's section color modes:
+
+    Light mode        → data-mode="light"
+    Medium Light Mode → data-mode="light-mid"   (export pending)
+    Medium Dark Mode  → data-mode="dark-mid"
+    Dark mode         → data-mode="dark"
+
+  (Brand Mode Light / Brand Mode Dark exist in the exports but aren't
+  wired as section modes yet.)
+
+  Semantic mapping per mode:
+    --surface   ← Colors/Background/bg-primary
+    --surface-2 ← Colors/Background/bg-secondary
+    --ink       ← Colors/Text/text-primary
+    --ink-2     ← Colors/Text/text-secondary
+    --ink-3     ← Colors/Text/text-quaternary
+    --ink-disabled ← Colors/Text/text-disabled
+    --line      ← Colors/Border/border-primary
+    --line-2    ← Component colors/Alpha/alpha-black-20
+    --wash      ← Component colors/Alpha/alpha-black-10
+    --btn / --btn-fg ← Buttons/Primary bg + fg
+    --btn-2-fg  ← Buttons/Secondary Color fg
+
+  Every block defines the full set so a nested section can't inherit a
+  stray variable from a differently-moded ancestor.
+*/
+:root,
+[data-mode="light"] {
+  --surface: #f7f8f4;
+  --surface-2: #e6e5e2;
+  --ink: #161716;
+  --ink-2: rgba(0, 0, 0, 0.5);
+  --ink-3: #70716f;
+  --ink-disabled: #70716f;
+  --line: #dbdbd7;
+  --line-2: rgba(0, 0, 0, 0.14);
+  --wash: rgba(0, 0, 0, 0.06);
+  --btn: #000000;
+  --btn-fg: #ffffff;
+  --btn-2-fg: #c65541;
+}
+
+/* PROVISIONAL — the Medium Light Mode export is missing; these follow
+   the Medium Dark pattern one step lighter (bg = gray-50, everything
+   else light-mode treatment). Replace when the export lands. */
+[data-mode="light-mid"] {
+  --surface: #e1e1de;
+  --surface-2: #f7f8f4;
+  --ink: #161716;
+  --ink-2: rgba(0, 0, 0, 0.5);
+  --ink-3: #70716f;
+  --ink-disabled: #70716f;
+  --line: rgba(0, 0, 0, 0.14);
+  --line-2: rgba(0, 0, 0, 0.14);
+  --wash: rgba(0, 0, 0, 0.06);
+  --btn: #000000;
+  --btn-fg: #ffffff;
+  --btn-2-fg: #c65541;
+}
+
+/* Medium Dark Mode: mid gray canvas, light-mode content treatment */
+[data-mode="dark-mid"] {
+  --surface: #cacbc8;
+  --surface-2: #e1e1de;
+  --ink: #161716;
+  --ink-2: rgba(0, 0, 0, 0.5);
+  --ink-3: #70716f;
+  --ink-disabled: #70716f;
+  --line: rgba(0, 0, 0, 0.14);
+  --line-2: rgba(0, 0, 0, 0.14);
+  --wash: rgba(0, 0, 0, 0.06);
+  --btn: #000000;
+  --btn-fg: #ffffff;
+  --btn-2-fg: #c65541;
+}
+
+[data-mode="dark"] {
+  --surface: #000000;
+  --surface-2: #161716;
+  --ink: #ffffff;
+  --ink-2: rgba(255, 255, 255, 0.5);
+  --ink-3: #878785;
+  --ink-disabled: #70716f;
+  --line: #2d2d2c;
+  --line-2: rgba(255, 255, 255, 0.15);
+  --wash: rgba(255, 255, 255, 0.1);
+  --btn: #ffffff;
+  --btn-fg: #000000;
+  --btn-2-fg: #9d9e9b;
+}
+
+@theme inline {
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-ink-3: var(--ink-3);
+  --color-ink-disabled: var(--ink-disabled);
+  --color-line: var(--line);
+  --color-line-2: var(--line-2);
+  --color-wash: var(--wash);
+  --color-btn: var(--btn);
+  --color-btn-fg: var(--btn-fg);
+  --color-btn-2-fg: var(--btn-2-fg);
+
+  --font-display: var(--font-feature-deck);
+  --font-sans: var(--font-maison);
+  --font-mono: var(--font-maison-mono);
+
+  /*
+    Figma spacing scale (design/figma-tokens/pdp-desktop.resolved
+    .tokens.json): named steps ride alongside Tailwind's numeric
+    scale, so `gap-sm`, `pt-6xl`, `px-4xl` resolve to the library's
+    exact values. Only steps confirmed in the file are defined —
+    2xl/3xl/5xl/7xl aren't used by any pulled node yet.
+  */
+  --spacing-xxs: 0.125rem; /* 2 */
+  --spacing-xs: 0.25rem; /* 4 */
+  --spacing-sm: 0.375rem; /* 6 */
+  --spacing-md: 0.5rem; /* 8 */
+  --spacing-lg: 0.75rem; /* 12 */
+  --spacing-xl: 1rem; /* 16 */
+  /* 24 — the page gutter, by far the most-used spacing value on the
+     site. Figma carries it as the variable "space/small" (a separate
+     group from the spacing-* ladder, and NOT the same thing as
+     spacing-sm = 6). It's mapped into the 2xl slot because that's
+     where 24 sits between xl and 4xl; if the library ever publishes
+     an explicit spacing-2xl with a different value, this mapping is
+     what needs revisiting. */
+  --spacing-2xl: 1.5rem; /* 24 — Figma "space/small" */
+  --spacing-4xl: 2rem; /* 32 */
+  --spacing-6xl: 3rem; /* 48 */
+  --spacing-8xl: 5rem; /* 80 */
+  --spacing-9xl: 6rem; /* 96 */
+  --spacing-10xl: 8rem; /* 128 */
+  --spacing-11xl: 10rem; /* 160 */
+
+  /*
+    Fluid section padding (CMS S/M/L): interpolates 428px -> 1440px
+    like the type scale — S 16→32, M 24→64, L 48→96 (~24/48/72 at
+    the 1024 tablet frame).
+  */
+  --spacing-section-s: clamp(1rem, 0.5771rem + 1.581vw, 2rem);
+  --spacing-section-m: clamp(1.5rem, 0.4427rem + 3.9526vw, 4rem);
+  --spacing-section-l: clamp(3rem, 1.7312rem + 4.7431vw, 6rem);
+
+  /*
+    Fluid type scale from the Figma text styles.
+
+    Sizes interpolate linearly between the library's device frames —
+    mobile 428px (26.75rem) and desktop 1440px (90rem) — via clamp():
+      slope = (max − min) / 63.25
+      preferred = (min − slope × 26.75) + slope × 100vw
+    Values are rem so user zoom scales correctly; line-heights are
+    unitless and tracking is em so both ride along with the size.
+    Micro labels (12px mono) intentionally stay fixed.
+  */
+  /* Label Small/Medium carries zero tracking in the current library
+     export (was 0.02em in the older file) */
+  --text-label-sm: 0.75rem;
+  --text-label-sm--line-height: 1.3;
+  --text-label-sm--letter-spacing: 0;
+  /* 13 → 14 */
+  --text-label-md: clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem);
+  --text-label-md--line-height: 1;
+  --text-label-md--letter-spacing: 0.02em;
+  /* 13 → 14 */
+  --text-body-sm: clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem);
+  --text-body-sm--line-height: 1.43;
+  /* 15 → 16 */
+  --text-body-md: clamp(0.9375rem, 0.9111rem + 0.0988vw, 1rem);
+  --text-body-md--line-height: 1.5;
+  /* Title XSmall/Regular — fixed 18 (the scale's smallest serif) */
+  --text-title-xs: 1.125rem;
+  --text-title-xs--line-height: 1.1;
+  /* 18 → 20 */
+  --text-title-sm: clamp(1.125rem, 1.0721rem + 0.1976vw, 1.25rem);
+  --text-title-sm--line-height: 1.1;
+  /* 20 → 24 */
+  --text-title-md: clamp(1.25rem, 1.1443rem + 0.3953vw, 1.5rem);
+  --text-title-md--line-height: 1.333;
+  /* 24 → 28 — Title Large/Regular (28/32 at desktop in the current
+     library; mobile end PROVISIONAL until the 428px PDP frame is
+     pulled) */
+  --text-title-lg: clamp(1.5rem, 1.3943rem + 0.3953vw, 1.75rem);
+  --text-title-lg--line-height: 1.143;
+  /* 24 → 32 */
+  --text-headline-sm: clamp(1.5rem, 1.2885rem + 0.7905vw, 2rem);
+  --text-headline-sm--line-height: 1.1875;
+  /* 32 → 40 — Headline Medium/Regular (journal article titles) */
+  --text-headline-md: clamp(2rem, 1.7885rem + 0.7905vw, 2.5rem);
+  --text-headline-md--line-height: 1.1;
+  --text-headline-md--letter-spacing: -0.02em;
+  /* 32 → 48 */
+  --text-headline-lg: clamp(2rem, 1.5771rem + 1.581vw, 3rem);
+  --text-headline-lg--line-height: 1.2;
+  --text-headline-lg--letter-spacing: -0.02em;
+  /* 40 → 64 */
+  --text-display-xl: clamp(2.5rem, 1.8656rem + 2.3715vw, 4rem);
+  --text-display-xl--line-height: 1.2;
+  --text-display-xl--letter-spacing: -0.02em;
+
+  /* Subtle 1px rounding on tiles, buttons, cards, and media wells */
+  --radius-xs: 1px;
+}
+
+/*
+  Proportional scaling on large screens: every layout value in the
+  system is rem-based, so growing the root font-size past 1920px zooms
+  the whole design — type, button padding, card padding, gaps — as one
+  unit. 0.83333vw = 16px at 1920, so the handoff is seamless; a 2560px
+  screen renders the design at exactly 4/3. Hairline borders stay px
+  on purpose so they remain crisp.
+*/
+html {
+  font-size: max(100%, 0.83333vw);
+}
+
+/* The window NEVER scrolls sideways (desktop or mobile): every
+   intended horizontal scroll lives inside a rail's own track
+   (overflow-x-auto). clip, not hidden — hidden would turn html/body
+   into scroll containers and break position: sticky (hero CTA hold,
+   PDP arrows). */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* dark journal routes (field + articles): hold the page wrapper and
+   body dark so route fades between dark pages never blink light
+   (Navigation stamps the attribute by pathname) */
+html[data-journal-dark] body,
+html[data-journal-dark] #top {
+  background: #0b0b0b;
+}
+
+/* the journal field is a self-contained canvas — no legacy band or
+   revealed footer below it (Navigation stamps the attribute) */
+html[data-journal-no-footer] [data-legacy-band],
+html[data-journal-no-footer] footer[data-mode] {
+  display: none;
+}
+html[data-journal-no-footer] #top {
+  margin-bottom: 0;
+}
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-maison), Arial, Helvetica, sans-serif;
+}
+
+/* Label Small/Medium — the design system's workhorse text style.
+   Maison Neue Medium; the mono cut stays available as an alternative
+   via the font-mono utility (--font-mono token). */
+@utility label {
+  font-family: var(--font-maison), Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+/* Hide the native scrollbar on slider tracks (custom progress bar instead) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Tailwind v4 preflight sets buttons to cursor:default — every
+   enabled clickable gets the hand cursor back */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* SPA route changes flip the nav's color mode (data-mode) while the
+     chrome stays mounted — ease the light/dark cross-fade. Only
+     elements that DIRECTLY bind a mode color (text-ink / bg-* /
+     border-*) get the transition: their var flips instantly, so the
+     parallel 300ms eases stay in lockstep. Everything else (icons on
+     currentColor, plain text) inherits the animating value frame by
+     frame — giving descendants their own transition would re-smooth
+     an already-animating color and make deeper elements (like the
+     hamburger icon) visibly lag the text. In the base layer on
+     purpose: elements with their own transition utilities override
+     this and keep their behavior. */
+  [data-nav-root],
+  [data-navbar],
+  [data-purchase-dock],
+  :is([data-nav-root], [data-navbar], [data-purchase-dock])
+    :is(
+      [class*="text-ink"],
+      [class*="text-btn"],
+      [class*="bg-surface"],
+      [class*="bg-wash"],
+      [class*="bg-btn"],
+      [class*="bg-line"],
+      [class*="border-line"],
+      [class*="border-ink"]
+    ) {
+    transition-property: color, background-color, border-color, fill, stroke;
+    transition-duration: 300ms;
+    /* same curve as the transition-colors utility on the bar, so
+       every element's ease is frame-identical */
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/*
+  Homepage hero CTA hold line: the stack sticks 80px above the
+  viewport bottom — 16px gap + 48px bar + 16px bar offset, above the
+  safe area — so it rides 16px clear of the fixed mobile control bar
+  until its flow position (16px above the hero's bottom edge) catches
+  up, where it anchors and scrolls away with the section.
+*/
+.hero-cta {
+  bottom: calc(5rem + env(safe-area-inset-bottom, 0px));
+}
+
+/*
+  Touch-device parallax: same ±6.5% drift as the desktop JS scrub, but
+  compositor-driven off the element's own view() timeline so iOS
+  momentum scrolling can't stair-step it. The animation owns transform
+  while active (it outranks Motion's inline entrance scale — opacity
+  still fades in via Motion); browsers without scroll-driven
+  animations skip it and keep the static entrance.
+*/
+@supports (animation-timeline: view()) {
+  /* the overflow-hidden mask is itself a scroll container, so view()
+     on the inner layer would resolve against it (a zero-length range).
+     Name the timeline on the mask — tracked against the viewport — and
+     drive the layer from that. */
+  .sdr-parallax-frame {
+    view-timeline: --sdr-media block;
+  }
+  /* when frames nest (a clipping panel wrapper around the media
+     wrapper), only the outermost may own the name — an inner frame's
+     range is degenerate inside its clipped parent */
+  .sdr-parallax-frame .sdr-parallax-frame {
+    view-timeline-name: none;
+  }
+  .sdr-parallax {
+    animation: sdr-parallax-scrub linear both;
+    animation-timeline: --sdr-media;
+  }
+}
+@keyframes sdr-parallax-scrub {
+  from {
+    transform: translateY(-6.5%) scale(1.15);
+  }
+  to {
+    transform: translateY(6.5%) scale(1.15);
+  }
+}
+
+/*
+  Hero overlay text reveal — CSS, not Motion, ON PURPOSE: the hero
+  headline is the page's LCP element on mobile, and a JS-driven fade
+  makes its paint wait for hydration (measured: ~3s of elementRender-
+  Delay under Lighthouse's 4x CPU throttle). A CSS animation starts
+  the moment styles apply — same 300ms delay + 700ms ease-in-out the
+  Motion fade used, no hydration dependency. Below-fold overlays keep
+  the Motion fade (they need the in-view gate; they're never the LCP).
+*/
+.sdr-text-reveal {
+  animation: sdr-text-reveal 0.7s ease-in-out 0.3s backwards;
+}
+@keyframes sdr-text-reveal {
+  /* 0.011, not 0: LCP only counts painted (non-zero opacity) frames.
+     Starting imperceptibly visible registers the headline's paint at
+     first render instead of after the fade — measured locally: the
+     LCP entry moves ~1.1s earlier with no visible difference. */
+  from {
+    opacity: 0.011;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sdr-text-reveal {
+    animation: none;
+  }
+}
+
+/* Media overlay: 20% scrim + bottom gradient (Figma content-overlay mask) */
+@utility media-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.56),
+      rgba(0, 0, 0, 0.14) 45%,
+      rgba(0, 0, 0, 0) 70%
+    ),
+    rgba(0, 0, 0, 0.2);
+}
+
+/* Lenis smooth-scroll support rules (inlined from lenis/dist/lenis.css —
+   the package-subpath CSS import doesn't resolve under Turbopack dev) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+
+.lenis [data-lenis-prevent],
+.lenis [data-lenis-prevent-wheel],
+.lenis [data-lenis-prevent-touch],
+.lenis [data-lenis-prevent-vertical],
+.lenis [data-lenis-prevent-horizontal] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+.lenis.lenis-autoToggle {
+  transition-property: overflow;
+  transition-duration: 1ms;
+  transition-behavior: allow-discrete;
+}
+
+/* Below-fold sections skip layout/paint until they approach the
+   viewport (the home page is ~12,700px of design). The intrinsic
+   size placeholder keeps the scrollbar stable; `auto` remembers the
+   real size once rendered. */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 50rem;
+}
