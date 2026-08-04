@@ -32,4 +32,6 @@ jobs:
           git add design/method-content public/method
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "Capture methodhomes.net content (scheduled)"
+          # survive commits that landed on main while the crawl ran
+          git pull --rebase origin main
           git push
