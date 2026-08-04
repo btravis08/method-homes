@@ -1,0 +1,17 @@
+name: probe
+
+on:
+  workflow_dispatch:
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Inspect live responses
+        run: |
+          for path in "/" "/studio" "/journal" "/api/forms"; do
+            echo "=== GET $path"
+            curl -sS -o body.txt -w "status %{http_code} in %{time_total}s\n" \
+              --max-time 30 "https://method-homes.vercel.app$path" || true
+            head -c 600 body.txt | tr -d '\0'; echo; echo
+          done
