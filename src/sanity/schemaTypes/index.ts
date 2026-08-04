@@ -15,6 +15,7 @@ import { project } from "./project";
 import { sectionTypes } from "./sections";
 import { siteSettings } from "./siteSettings";
 import { story } from "./story";
+import { teamMember } from "./teamMember";
 import { storeSettings } from "./storeSettings";
 
 /*
@@ -40,7 +41,7 @@ const base = [
 
 const commerce = [product, collection, discount, story, storeSettings];
 const blog = [post, author, postCategory];
-const projects = [project];
+const projects = [project, teamMember];
 
 export const schemaTypes = [
   ...base,

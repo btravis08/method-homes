@@ -181,6 +181,15 @@ S.listItem()
         .icon(icons["case"])
         .schemaType("project")
         .child(S.documentTypeList("project").title("Projects")),
+S.listItem()
+        .title("Team")
+        .icon(icons["users"])
+        .schemaType("teamMember")
+        .child(
+          S.documentTypeList("teamMember")
+            .title("Team")
+            .defaultOrdering([{ field: "order", direction: "asc" }]),
+        ),
               ]
         : []),
       S.divider(),
