@@ -26,7 +26,8 @@ export const project = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Residential", value: "residential" },
+          { title: "Custom residential", value: "residential" },
+          { title: "Predesigned", value: "predesigned" },
           { title: "Commercial", value: "commercial" },
         ],
         layout: "radio",

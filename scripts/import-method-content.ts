@@ -109,12 +109,19 @@ function parseSpecs(page: CapturedPage) {
   };
 }
 
+const PORTFOLIOS: [prefix: string, category: string][] = [
+  ["/custom-portfolio/", "residential"],
+  ["/predesigned-portfolio/", "predesigned"],
+  ["/commercial-portfolio/", "commercial"],
+];
+
 async function importProjects() {
-  const entries = Object.entries(DATA.pages).filter(
-    ([p]) => p.startsWith("/predesigned-portfolio/"),
-  );
+  const entries = Object.entries(DATA.pages).flatMap(([p, page]) => {
+    const hit = PORTFOLIOS.find(([prefix]) => p.startsWith(prefix));
+    return hit ? [[p, page, hit[1]] as const] : [];
+  });
   console.log(`\nprojects: ${entries.length}`);
-  for (const [pathName, page] of entries) {
+  for (const [pathName, page, category] of entries) {
     const slug = pathName.split("/").pop()!;
     const h1 = page.headings.find((h) => h.level === "h1")?.text ?? page.title;
     const tagline = page.headings.filter((h) => h.level === "h1")[1]?.text;
@@ -134,14 +141,14 @@ async function importProjects() {
       _type: "project",
       title: h1,
       slug: slugField(slug),
-      category: "residential",
+      category,
       summary: tagline ?? page.metaDesc ?? paras[0]?.slice(0, 200),
       ...(mainAsset ? { mainImage: imageRef(mainAsset, main!.alt) } : {}),
       ...(gallery.length ? { gallery } : {}),
       ...specs,
       body: paras.map(block),
     });
-    console.log(`  project ${slug}${specs.squareFeet ? ` (${specs.squareFeet} sqft)` : ""}`);
+    console.log(`  project ${slug} [${category}]${specs.squareFeet ? ` (${specs.squareFeet} sqft)` : ""}`);
   }
 }
 
@@ -179,6 +186,9 @@ async function importTeam() {
     console.log("\nteam: /about not captured yet — skipping");
     return;
   }
+  /* methodhomes.net publishes no individual roster (verified across
+     the full capture) — team members are entered by hand in the
+     Studio. The detector below stays for a future re-crawl. */
   /* roster pattern: portrait images whose alt is a person's name;
      role often rides in the heading right after the name */
   const members: { name: string; role?: string; img?: CapturedImage }[] = [];
@@ -213,6 +223,12 @@ async function importTeam() {
 }
 
 /* ---------- core marketing pages ---------- */
+const LANDING_PREFIXES = [
+  "/predesigned-series/",
+  "/custom-regions/",
+  "/commercial-project-types/",
+];
+
 const CORE_PAGES = [
   "/about",
   "/custom-residential",
@@ -227,7 +243,10 @@ const CORE_PAGES = [
 
 async function importPages() {
   console.log(`\npages:`);
-  for (const pathName of CORE_PAGES) {
+  const landing = Object.keys(DATA.pages).filter((p) =>
+    LANDING_PREFIXES.some((prefix) => p.startsWith(prefix)),
+  );
+  for (const pathName of [...CORE_PAGES, ...landing]) {
     const page = DATA.pages[pathName];
     if (!page) continue;
     const slug = pathName.replace(/^\//, "").replace(/[^a-z0-9-]/g, "-");
