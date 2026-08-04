@@ -1,6 +1,12 @@
 import { icons } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+import designops from "../../../designops.config.json";
+
+/* commerce off = no collection/product types; those references must
+   vanish with the flag or schema validation fails */
+const COMMERCE = designops.features.commerce;
+
 /*
   Navigation singleton, modeled on Shopify's menu methodology: a menu
   of items, each item optionally opening a dropdown. Links can carry a
@@ -26,13 +32,17 @@ const link = defineArrayMember({
       type: "string",
       initialValue: "#",
     }),
-    defineField({
-      name: "collection",
-      title: "Or link a collection",
-      description: "Takes over the label (if empty) and destination.",
-      type: "reference",
-      to: [{ type: "collection" }],
-    }),
+    ...(COMMERCE
+      ? [
+          defineField({
+            name: "collection",
+            title: "Or link a collection",
+            description: "Takes over the label (if empty) and destination.",
+            type: "reference",
+            to: [{ type: "collection" }],
+          }),
+        ]
+      : []),
   ],
   preview: {
     select: { title: "label", subtitle: "url", collection: "collection.title" },
@@ -104,14 +114,18 @@ export const navigation = defineType({
                 }),
               ],
             }),
-            defineField({
-              name: "products",
-              title: "Product grid",
-              description: "Products shown as tiles with MEN'S / WOMEN'S links.",
-              type: "array",
-              of: [defineArrayMember({ type: "reference", to: [{ type: "product" }] })],
-              hidden: ({ parent }) => parent?.layout !== "products",
-            }),
+            ...(COMMERCE
+              ? [
+                  defineField({
+                    name: "products",
+                    title: "Product grid",
+                    description: "Products shown as tiles with MEN'S / WOMEN'S links.",
+                    type: "array",
+                    of: [defineArrayMember({ type: "reference", to: [{ type: "product" }] })],
+                    hidden: ({ parent }) => parent?.layout !== "products",
+                  }),
+                ]
+              : []),
             defineField({
               name: "cards",
               title: "Image cards",
@@ -134,15 +148,19 @@ export const navigation = defineType({
                 }),
               ],
             }),
-            defineField({
-              name: "imageCollection",
-              title: "Image card — collection",
-              description:
-                "The dropdown's image card takes this collection's title and image.",
-              type: "reference",
-              to: [{ type: "collection" }],
-              hidden: ({ parent }) => parent?.layout !== "columns",
-            }),
+            ...(COMMERCE
+              ? [
+                  defineField({
+                    name: "imageCollection",
+                    title: "Image card — collection",
+                    description:
+                      "The dropdown's image card takes this collection's title and image.",
+                    type: "reference",
+                    to: [{ type: "collection" }],
+                    hidden: ({ parent }) => parent?.layout !== "columns",
+                  }),
+                ]
+              : []),
             defineField({
               name: "imageTitle",
               title: "Image card — title override",

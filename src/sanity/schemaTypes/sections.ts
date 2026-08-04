@@ -1,4 +1,6 @@
 import { icons } from "@sanity/icons";
+
+import designops from "../../../designops.config.json";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import type { SanityClient } from "sanity";
 
@@ -14,6 +16,11 @@ import type { SanityClient } from "sanity";
 */
 
 const API = { apiVersion: "2026-07-01" };
+
+/* commerce off = no product/collection types exist; every reference
+   to them must vanish with the flag or schema validation fails
+   (found the hard way: first commerce-less scaffold 500'd /studio) */
+const COMMERCE = designops.features.commerce;
 
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
@@ -110,8 +117,10 @@ const MEDIA_KIND_OPTIONS = [
 ];
 
 const mediaBlockFields = (
-  allowed: string[] = ["image", "look", "videoPlayer", "videoAutoplay"],
-) => [
+  allowedIn: string[] = ["image", "look", "videoPlayer", "videoAutoplay"],
+) => {
+  const allowed = COMMERCE ? allowedIn : allowedIn.filter((k) => k !== "look");
+  return [
   defineField({
     name: "mediaKind",
     title: "Media type",
@@ -149,6 +158,7 @@ const mediaBlockFields = (
       ]
     : []),
 ];
+};
 
 /* Shared fields for hero / full-width campaign sections: three texts
    sit on the media's vertical center — they load clustered in the
@@ -740,7 +750,9 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionFullWidth" }),
                 defineArrayMember({ type: "sectionCarousel" }),
                 defineArrayMember({ type: "sectionFiftyFifty" }),
-                defineArrayMember({ type: "sectionProductSlider" }),
+                ...(COMMERCE
+                  ? [defineArrayMember({ type: "sectionProductSlider" })]
+                  : []),
                 defineArrayMember({ type: "sectionRichText" }),
                 defineArrayMember({ type: "sectionTechSpecs" }),
                 defineArrayMember({ type: "sectionGallery" }),
@@ -799,7 +811,7 @@ export const sectionTypes = [
   sectionHero,
   sectionFullWidth,
   sectionInfoSlider,
-  sectionProductSlider,
+  ...(COMMERCE ? [sectionProductSlider] : []),
   sectionCarousel,
   sectionFiftyFifty,
   sectionRichText,

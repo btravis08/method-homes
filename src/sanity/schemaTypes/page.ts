@@ -1,6 +1,8 @@
 import { icons } from "@sanity/icons";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
+import designops from "../../../designops.config.json";
+
 export const page = defineType({
   name: "page",
   icon: icons["documents"],
@@ -42,7 +44,9 @@ export const page = defineType({
         defineArrayMember({ type: "sectionFullWidth" }),
         defineArrayMember({ type: "sectionCarousel" }),
         defineArrayMember({ type: "sectionFiftyFifty" }),
-        defineArrayMember({ type: "sectionProductSlider" }),
+        ...(designops.features.commerce
+          ? [defineArrayMember({ type: "sectionProductSlider" })]
+          : []),
         defineArrayMember({ type: "sectionRichText" }),
         defineArrayMember({ type: "sectionTechSpecs" }),
         defineArrayMember({ type: "sectionGallery" }),
