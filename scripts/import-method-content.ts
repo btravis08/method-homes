@@ -56,6 +56,23 @@ interface CapturedPage {
 const IMG_ROOT = "public/method";
 const key = () => `k${Math.random().toString(36).slice(2, 10)}`;
 
+/* transient-network resilience: one dropped socket must not kill a
+   40-minute run. Exponential backoff, then give up on that item. */
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+async function withRetry<T>(label: string, fn: () => Promise<T>): Promise<T> {
+  let lastErr: unknown;
+  for (let attempt = 1; attempt <= 4; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      lastErr = err;
+      console.log(`  retry ${attempt}/3 ${label}: ${String(err).slice(0, 80)}`);
+      await sleep(1500 * 2 ** (attempt - 1));
+    }
+  }
+  throw lastErr;
+}
+
 /* ---------- image upload, deduped by filename ---------- */
 const assetCache = new Map<string, string>();
 async function uploadImage(img: CapturedImage): Promise<string | null> {
@@ -63,20 +80,27 @@ async function uploadImage(img: CapturedImage): Promise<string | null> {
   if (!existsSync(abs)) return null;
   const filename = path.basename(img.file);
   if (assetCache.has(filename)) return assetCache.get(filename)!;
-  const existing = await client.fetch<string | null>(
-    `*[_type == "sanity.imageAsset" && originalFilename == $fn][0]._id`,
-    { fn: filename },
-  );
-  if (existing) {
-    assetCache.set(filename, existing);
-    return existing;
+  try {
+    const existing = await withRetry(`lookup ${filename}`, () =>
+      client.fetch<string | null>(
+        `*[_type == "sanity.imageAsset" && originalFilename == $fn][0]._id`,
+        { fn: filename },
+      ),
+    );
+    if (existing) {
+      assetCache.set(filename, existing);
+      return existing;
+    }
+    const asset = await withRetry(`upload ${filename}`, () =>
+      client.assets.upload("image", createReadStream(abs), { filename }),
+    );
+    assetCache.set(filename, asset._id);
+    console.log(`  uploaded ${filename}`);
+    return asset._id;
+  } catch (err) {
+    console.log(`  SKIP image ${filename}: ${String(err).slice(0, 100)}`);
+    return null;
   }
-  const asset = await client.assets.upload("image", createReadStream(abs), {
-    filename,
-  });
-  assetCache.set(filename, asset._id);
-  console.log(`  uploaded ${filename}`);
-  return asset._id;
 }
 
 const imageRef = (assetId: string, alt?: string) => ({
@@ -147,7 +171,7 @@ async function importProjects() {
       if (id) gallery.push({ ...imageRef(id, img.alt), _key: key() });
     }
 
-    await client.createOrReplace({
+    await withRetry(`doc`, () => client.createOrReplace({
       _id: `method-project-${slug}`,
       _type: "project",
       title: h1,
@@ -158,7 +182,7 @@ async function importProjects() {
       ...(gallery.length ? { gallery } : {}),
       ...specs,
       body: paras.map(block),
-    });
+    }));
     console.log(`  project ${slug} [${category}]${specs.squareFeet ? ` (${specs.squareFeet} sqft)` : ""}`);
   }
 }
@@ -176,7 +200,7 @@ async function importPosts() {
     const paras = uniqueParas(page.paragraphs);
     const hero = page.images[0];
     const heroAsset = hero ? await uploadImage(hero) : null;
-    await client.createOrReplace({
+    await withRetry(`doc`, () => client.createOrReplace({
       _id: `method-post-${slug}`.slice(0, 120),
       _type: "post",
       title: h1,
@@ -185,7 +209,7 @@ async function importPosts() {
       excerpt: page.metaDesc || paras[0]?.slice(0, 240),
       body: paras.map(block),
       publishedAt: DATA.pages[pathName] ? new Date().toISOString() : undefined,
-    });
+    }));
     console.log(`  post ${slug}`);
   }
 }
@@ -220,7 +244,7 @@ async function importTeam() {
   for (const [i, m] of members.entries()) {
     const slug = m.name.toLowerCase().replace(/[^a-z0-9]+/g, "-");
     const photo = m.img ? await uploadImage(m.img) : null;
-    await client.createOrReplace({
+    await withRetry(`doc`, () => client.createOrReplace({
       _id: `method-team-${slug}`,
       _type: "teamMember",
       name: m.name,
@@ -228,7 +252,7 @@ async function importTeam() {
       ...(m.role ? { role: m.role } : {}),
       ...(photo ? { photo: imageRef(photo) } : {}),
       order: (i + 1) * 10,
-    });
+    }));
     console.log(`  team ${m.name}${m.role ? ` — ${m.role}` : ""}`);
   }
 }
@@ -287,7 +311,7 @@ async function importPages() {
       },
     ];
 
-    await client.createOrReplace({
+    await withRetry(`doc`, () => client.createOrReplace({
       _id: `method-page-${slug}`,
       _type: "page",
       title: h1 || slug,
@@ -296,7 +320,7 @@ async function importPages() {
         ? { _type: "seo", description: page.metaDesc }
         : undefined,
       sections,
-    });
+    }));
     console.log(`  page /${slug} (${paras.length} paras)`);
   }
 }
