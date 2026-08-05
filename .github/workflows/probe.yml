@@ -7,62 +7,66 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Robots and sitemap
+      - name: Head recheck (attribute-order-agnostic) and homepage weight breakdown
         run: |
-          echo "=== robots.txt"
-          curl -sS --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" https://www.methodhomes.net/robots.txt || true
-          echo; echo "=== sitemap.xml (loc count + first 40)"
-          curl -sS --max-time 30 -A "Mozilla/5.0" https://www.methodhomes.net/sitemap.xml -o sitemap.xml || true
-          grep -o '<loc>[^<]*</loc>' sitemap.xml | wc -l
-          grep -o '<loc>[^<]*</loc>' sitemap.xml | head -40
-      - name: Redirect and status matrix
-        run: |
-          for u in "http://methodhomes.net/" "https://methodhomes.net/" "http://www.methodhomes.net/" "https://www.methodhomes.net/peninsula/" "https://www.methodhomes.net/Peninsula" "https://www.methodhomes.net/no-such-page-xyz-123" "https://www.methodhomes.net/residential-survey-copy" "https://www.methodhomes.net/project/calistoga"; do
-            echo "=== $u"
-            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
-          done
-      - name: Head inspection per page
-        run: |
-          cat > inspect.py <<'EOF'
-          import re, sys, urllib.request
+          cat > inspect2.py <<'EOF'
+          import re, urllib.request
           UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
-          pages = ["/", "/custom-residential", "/predesigned-residential", "/about", "/pricing", "/faq", "/blog", "/peninsula", "/custom-portfolio/calistoga-custom", "/blog/backyard-cottages", "/predesigned-series/annata", "/commercial"]
+          def fetch(p):
+              req = urllib.request.Request("https://www.methodhomes.net" + p, headers=UA)
+              return urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+          def tag_with(html, tagname, **attrs):
+              out = []
+              for m in re.finditer(r"<" + tagname + r"\b[^>]*>", html, re.I):
+                  t = m.group(0)
+                  ok = True
+                  for k, v in attrs.items():
+                      am = re.search(k + r'=["\']([^"\']*)["\']', t, re.I)
+                      if not am or am.group(1).lower() != v.lower():
+                          ok = False; break
+                  if ok: out.append(t)
+              return out
+          def attr(t, name):
+              m = re.search(name + r'=["\']([^"\']*)["\']', t, re.I)
+              return m.group(1) if m else None
+          pages = ["/", "/custom-residential", "/about", "/pricing", "/peninsula", "/custom-portfolio/calistoga-custom", "/blog/backyard-cottages", "/predesigned-series/annata", "/faq"]
           for p in pages:
-              url = "https://www.methodhomes.net" + p
-              try:
-                  req = urllib.request.Request(url, headers=UA)
-                  html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+              try: html = fetch(p)
               except Exception as e:
-                  print(f"\n##### {p}: FETCH ERROR {e}")
-                  continue
-              print(f"\n##### {p}  ({len(html)} bytes)")
-              def one(pat, label):
-                  m = re.search(pat, html, re.I | re.S)
-                  print(f"{label}: {m.group(1).strip()[:220] if m else 'NONE'}")
-              one(r"<title[^>]*>(.*?)</title>", "title")
-              one(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', "meta-desc")
-              one(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\'](.*?)["\']', "canonical")
-              one(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'](.*?)["\']', "meta-robots")
-              one(r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\'](.*?)["\']', "og:title")
-              one(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](.*?)["\']', "og:image")
-              one(r'<html[^>]+lang=["\'](.*?)["\']', "html-lang")
-              ld = re.findall(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', html, re.I | re.S)
-              print(f"json-ld blocks: {len(ld)}")
-              for b in ld[:3]:
-                  print("  LD:", re.sub(r"\s+", " ", b)[:300])
-              h1s = re.findall(r"<h1[^>]*>(.*?)</h1>", html, re.I | re.S)
-              print(f"h1 count: {len(h1s)} | {[re.sub('<[^>]+>','',h)[:60] for h in h1s[:4]]}")
-              imgs = re.findall(r"<img[^>]*>", html, re.I)
-              noalt = [i for i in imgs if not re.search(r'alt=["\'][^"\']+["\']', i)]
-              print(f"imgs: {len(imgs)} | empty/no alt: {len(noalt)}")
-              print(f"scripts: {len(re.findall(r'<script', html, re.I))}")
-              lazy = len(re.findall(r'loading=["\']lazy["\']', html, re.I))
-              print(f"loading=lazy imgs: {lazy}")
-              hero = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', html)
-              print(f"first img src: {hero.group(1)[:160] if hero else 'NONE'}")
+                  print(f"\n##### {p}: FETCH ERROR {e}"); continue
+              print(f"\n##### {p} ({len(html)} bytes)")
+              md = tag_with(html, "meta", name="description")
+              print("meta-desc:", (attr(md[0], "content") or "")[:160] if md else "NONE")
+              can = tag_with(html, "link", rel="canonical")
+              print("canonical:", attr(can[0], "href") if can else "NONE")
+              rob = tag_with(html, "meta", name="robots")
+              print("meta-robots:", attr(rob[0], "content") if rob else "NONE")
+              for prop in ["og:title", "og:image", "og:description", "twitter:card"]:
+                  tags = [t for t in re.findall(r"<meta\b[^>]*>", html, re.I) if (attr(t, "property") or attr(t, "name") or "").lower() == prop]
+                  print(f"{prop}:", (attr(tags[0], "content") or "")[:120] if tags else "NONE")
+              srcset = len(re.findall(r'<img[^>]+srcset=', html, re.I))
+              imgs = len(re.findall(r"<img\b", html, re.I))
+              print(f"imgs: {imgs} | with srcset: {srcset}")
+          # homepage weight breakdown
+          html = fetch("/")
+          print("\n===== HOMEPAGE 2.2MB BREAKDOWN =====")
+          print("total bytes:", len(html))
+          for pat, label in [(r"<svg\b.*?</svg>", "inline svg"), (r"<style\b.*?</style>", "inline style"), (r"<script\b.*?</script>", "inline+ext script tags")]:
+              blocks = re.findall(pat, html, re.I | re.S)
+              print(f"{label}: {len(blocks)} blocks, {sum(len(b) for b in blocks)} bytes")
+          # biggest single elements
+          divs = re.findall(r'data:image/[^"\')]{200,}', html)
+          print("data-uri images >200ch:", len(divs), "bytes:", sum(len(d) for d in divs))
+          videos = re.findall(r"<video\b[^>]*>", html, re.I)
+          print("video tags:", len(videos))
+          for v in videos[:4]: print("  ", v[:200])
+          bgs = len(re.findall(r"background-image", html, re.I))
+          print("background-image occurrences:", bgs)
           EOF
-          python3 inspect.py
-      - name: Response headers
+          python3 inspect2.py
+      - name: Blog scan for canonicals and thin pages
         run: |
-          echo "=== headers for /"
-          curl -sSI --max-time 30 -A "Mozilla/5.0" https://www.methodhomes.net/ || true
+          for u in "https://www.methodhomes.net/press" "https://www.methodhomes.net/search" "https://www.methodhomes.net/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects" "https://www.methodhomes.net/commercial-project-types/multi-family-housing-units" "https://www.methodhomes.net/custom-regions/california"; do
+            echo "=== $u"
+            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0" -w "status %{http_code}\n" "$u" || true
+          done
