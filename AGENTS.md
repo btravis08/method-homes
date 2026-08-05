@@ -1,221 +1,105 @@
-<!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
 
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
-<!-- END:nextjs-agent-rules -->
 
-# Project: Sun Day Red (SDR) design library implementation
+# Project: Method Homes (client rebuild on the SDR-derived template)
 
-An e-commerce-style site implementing the Figma "[i] Design Library — SDR"
-exactly: Next.js 16 (App Router, Turbopack) + Tailwind v4 + Sanity v6
-embedded at /studio, with Motion (framer-motion) for interactions.
+Method Homes (methodhomes.net, custom/prefab modular builder) rebuilt
+on the design-library template scaffolded from btravis08/claude_test:
+Next.js 16 (App Router, Turbopack) + Tailwind v4 + Sanity v6 embedded
+at /studio, with Motion for interactions. Scaffolded 2026-08-04 by
+packages/create-sdr-site (architecture pack skipped in favor of the
+real content migration below).
 
 ## Working agreements
 
-- Work happens on the session's `claude/*` branch (repo
-  btravis08/claude_test). Push every change to BOTH the session
-  branch and `main` (`git push origin <branch>:main`) without asking
-  — `main` is the deploy branch and Vercel builds it to the staging
-  site. Never open a PR unless asked.
-- Match the Figma design exactly — don't adapt or reinterpret it.
-  GOTCHA: the homepage is the V1 design and stays V1 — the V2 frames
-  (hero 33585:48542, full-width 33638:56658) were explicitly rejected
-  (2026-08-02). Never rebuild homepage sections toward V2 comps; their
-  registry comps are disabled for exactly this reason.
-- Verify changes with `npm run build`, then drive the real page (in
-  Claude's remote sandbox, Playwright with
-  `executablePath: '/opt/pw-browsers/chromium'`) before pushing.
-- After every push to `main`, notify the user (PushNotification) once
-  the changes reach production. The sandbox cannot observe Vercel
-  (egress blocks vercel.app; WebFetch gets 403 from Vercel's bot
-  protection; GitHub tools don't expose deploy statuses), so
-  time-base it: schedule a `send_later` check-in ~5 min after the
-  push, then push-notify that the deploy window has elapsed and the
-  changes should be live on sundayred.vercel.app. Batch rapid
-  successive pushes into one notification.
-
-## designops.config.json (single source for the ops apparatus)
-
-Every project-specific constant the monitoring/dashboard apparatus
-needs lives in `designops.config.json` at the repo root: site name +
-base URL, the Lighthouse page list, the Figma file key, audit
-breakpoints/bands/history cap, the timed-section exemption list, and
-the Overview alert thresholds. The collectors, audit, drift check,
-link checker, sitemap, registry, and Studio Overview all read it —
-edit the config, never the consumers. This is the portability seam:
-pointing this apparatus at a new project starts with this one file.
-
-## Feature modules & the scaffold manifest
-
-The codebase is organized as BASE (pages/sections, navigation,
-settings, the design-ops apparatus) plus three feature modules —
-commerce, blog, projects — gated by `features` flags in
-designops.config.json (they compose the Studio schema + desk;
-existing dataset documents are untouched by a flag flip).
-`scaffold.manifest.json` maps every file to its module and marks
-SDR-only content (legacy page, catalog, figma exports) that a
-scaffold replaces with a sample pack — it is the copier spec for the
-future create-CLI. When adding files, keep them inside one module's
-boundary and list new top-level paths in the manifest.
-
-## CMS roadmap (agreed 2026-08-03 — work top to bottom)
-
-Features from the WordPress/Webflow/Framer comparison, to build in
-order. Strike items through as they ship.
-
-- ~~A1 Forms + submissions inbox: formSubmission docs, /api/forms
-  (honeypot + rate limit, needs SANITY_API_WRITE_TOKEN in Vercel),
-  footer newsletter wired, Studio Submissions view.~~
-- ~~A2 Yoast-style SEO editor: seo object (metaTitle/metaDescription
-  with counters, ogImage override, noindex, canonical) on
-  page/post/product/collection, Studio Google+social preview,
-  generateMetadata wiring, robots.ts.~~
-- ~~A3 Announcement bar: schedulable, dismissible strip above the nav,
-  managed from siteSettings; SSR'd, zero CLS.~~
-- ~~B1 Blog completion: RSS, related posts (shared category), post
-  tags, paginated category archives.~~
-- ~~B2 Content calendar: Studio month-grid tool of posts + scheduled
-  releases.~~
-- ~~C1 Gated pages: protected flag + shared passphrase on page docs.~~
-- ~~D1 A/B section testing (flagship): section variants, cookie split,
-  conversion logging, results in the Overview pane — edge-safe split
-  that must not break caching or the perf standings.~~
-- D2 Localization: field-level i18n + locale routing. Biggest lift;
-  only when a real project needs it.
-
-## Design source (Figma)
-
-- File: `CMeh0gCtTQAnIRc9iXjGbr` ("[i] Design Library — SDR"), desktop
-  PDP design node `33296:15687` (`device=desktop`, 1440 × ~12700) on
-  the "❖ DESIGN" page. (Supersedes the old file
-  `0IzKylxJcpsuACWsXu7gnu`, which the current Figma account cannot
-  access; old node IDs in git history refer to that file.)
-- The PDP node is too large for one `get_design_context` call (the
-  response truncates at ~100KB) — pull child sections individually
-  (known ids: hero `33298:30429`, about/pairs `33298:29697`, tech
-  specs `33298:30224`). Resolved tokens the PDP consumes are saved in
-  `design/figma-tokens/pdp-desktop.resolved.tokens.json`; the spacing
-  scale + Title Large live in `globals.css` (`--spacing-*`,
-  `--text-title-lg`).
-- The "❖ DESIGN" page is an empty sidebar header — real frames live
-  on "↳ UI Design (WIP)" (page `33184:11289`). Remote `get_metadata`
-  doesn't expand children; enumerate via read-only `use_figma`
-  scripts instead. PLP ids: section `33195:4082`, device instances
-  `33592:53549/53550/53551` (1440/1024/428), Story Card V2 set
-  `33795:57807`, Filter+Sort row `33416:33779`, filter modal
-  `33453:76463` (applied state `33454:77058`), Filter group set
-  `33187:6859`, Load More `33416:34482`, collection landing set
-  `33195:4849`.
-- Read it through the official Figma MCP connector (claude.ai
-  connectors), authorized as bryce@weareenvoy.com (Envoy Group org
-  seat). The account needs edit access on a Pro-or-better seat
-  (rate limit ~200 tool calls/day, 15/min).
-- Exported imagery lives in `public/figma/`. Claude's sandbox egress
-  policy blocks figma.com, so new assets are fetched by the
-  `fetch-figma-assets` GitHub Actions workflow (mint fresh URLs via the
-  MCP `download_assets` tool, update `scripts/fetch-figma-assets.sh`,
-  push — the workflow commits the files back).
-- Color variables: the Figma variable collection (6 modes) is exported
-  to `design/figma-tokens/*.tokens.json`; `src/app/globals.css` maps
-  them to the site's section modes (light / light-mid / dark-mid /
-  dark — see the mapping comment there). TODO: the Medium Light Mode
-  export is missing, so the `light-mid` block is PROVISIONAL — replace
-  it when the user exports that mode. Brand Mode Light/Dark exist in
-  the exports but aren't wired as section modes. Still to wire:
-  `--btn-2-fg`/`--ink-disabled` consumers, tokenize hardcoded on-media
-  UI colors (MediaBlock, meganav image card), mode-aware
-  FullWidth/50-50 gap color (`bg-white`).
+- Repo btravis08/method-homes, branch `main` only; pushes deploy via
+  Vercel to https://method-homes.vercel.app (staging). Never open a
+  PR unless asked.
+- The site currently wears the TEMPLATE's design system (SDR-derived
+  fonts/sections) with Method's real content. The visual rebrand
+  happens from Method's own Figma library (below) — match that file
+  exactly once it's readable.
+- The design system is token-only (see Design tokens). Verify with
+  `npm run build` + Playwright before pushing.
 
 ## Sanity CMS
 
-- Project `alsdve2t`, dataset `production`, apiVersion 2026-07-01;
-  config in `sanity.config.ts` / `sanity.cli.ts`, schema in
-  `src/sanity/schemaTypes/`, GROQ in `src/sanity/lib/queries.ts`.
-- Claude's sandbox CANNOT reach *.sanity.io (egress-blocked): pages
-  render fallbacks during remote builds, and dataset writes must run on
-  the user's machine: `npx sanity exec scripts/seed.ts --with-user-token`
-  (idempotent: uploads imagery, creates 120 tagged products, rebuilds
-  the "home" page). WARNING: re-seeding OVERWRITES the home page and
-  seeded products — never suggest re-running it after the user has
-  edited content in the Studio.
-- Content model: `page` documents are built from a reorderable
-  `sections[]` array (hero, info slider, full width, carousel, 50/50,
-  product slider, rich text). Every section has a `colorMode`
-  (light/dark) matching the Figma variable modes. Full Width sections
-  and 50/50 columns are media blocks (image / shop-the-look with
-  product refs / click-to-play video / autoplay video); 50/50 carries
-  a ratio (5:4, 1:1, flex = 100vh). New sections arrive pre-filled
-  with lorem copy and a placeholder image resolved from the dataset by
-  filename (sdr-placeholder.png).
-- Commerce model (Shopify-shaped): `product` has status (only Active
-  renders), vendor/productType/gender/tags/postedAt, pricing {price,
-  compareAtPrice, costPerItem}, options (Color/Size), variants with
-  SKU/barcode/tracked inventory + per-variant price overrides and the
-  SDR colorway visuals (swatch, image, hoverImage), shipping, SEO, up
-  to 6 images (first = card thumbnail, second = hover). `collection`
-  is manual (ordered refs) or smart (whitelisted rules compiled to
-  parameterized GROQ in `src/sanity/lib/commerce.ts`). `discount`
-  mirrors Shopify (code/automatic × percentage/fixed/BOGO/free
-  shipping, scheduling, minimums, usage limits); active automatic
-  price discounts are applied to displayed card prices (best wins,
-  original struck). `storeSettings` singleton = currency/locale +
-  display toggles. Sliders source by tag, collection, or manual refs.
-  The Studio desk mirrors the Shopify admin sidebar. `navigation`
-  singleton = Shopify-style menu (items → dropdown layout: columns +
-  collection-fed image card / product grid / image cards; links can
-  reference collections); Navigation.tsx falls back to hardcoded
-  defaults when the document is missing.
-- GOTCHA: `tag` is a reserved Sanity fetch-option name — GROQ params
-  use `$productTag`.
+- Project `i2wd5pr1` ("Method Homes"), dataset `production`,
+  apiVersion 2026-07-01; defaults baked into src/sanity/env.ts. CORS:
+  localhost:3000 + method-homes.vercel.app (credentials on).
+- Vercel env: SANITY_API_READ_TOKEN (draft preview) and
+  SANITY_API_WRITE_TOKEN (forms inbox + A/B logging). The write token
+  was also passed as a workflow_dispatch input to import runs —
+  rotate at manage.sanity.io if that ever worries anyone.
+- Content state (imported from the live site, 2026-08-05): 93+
+  `project` docs across categories residential (custom) / predesigned
+  / commercial, 182 `post` docs, 24 section-built `page` docs, ~800
+  image assets. Deterministic ids: method-project-<slug>,
+  method-post-<slug>, method-page-<slug> — NEVER put a dot in an id
+  (dots make ids invisible to the published perspective).
+- `teamMember` documents (projects module, Team desk list) are
+  MANUAL: methodhomes.net publishes no individual roster (verified
+  across the full capture).
+- Features: commerce OFF, blog + projects ON
+  (designops.config.json). Commerce type references
+  (product/collection) are feature-gated in the schemas — with the
+  flag off they must not exist or schema validation 500s /studio
+  (found the hard way on first deploy).
 
-## Real product catalog (captured from sundayred.com)
+## Content pipeline (methodhomes.net → dataset)
 
-- `design/sdr-catalog/products.json` = the complete live catalog:
-  483 colorway captures grouping into 164 products; imagery in
-  `public/sdr/<sku>/<n>.jpg` (~435MB, up to 6 shots each, 1200w).
-  `urls.json` seeds the crawler; `crawl-debug.json` explains counts.
-- `scripts/fetch-sdr-catalog.mjs` (v5) re-captures: seeded, resumable
-  (skips what products.json already has), stops after 20 consecutive
-  refusals (Akamai rate-limits mid-run) and commits partial progress
-  — re-run until converged. Runs on the fetch-sdr-catalog.yml Actions
-  workflow (fresh runner IP per run) or the user's machine; the
-  sitemap undercounts, so discovery walks category PLPs + an a-z
-  search sweep. 14 URLs never capture (11 content pages, 3 that 500).
-- Import chain (all idempotent, run with
-  `npx sanity exec scripts/<x> --with-user-token` when the Sanity MCP
-  is absent): `import-sdr-catalog.ts` (products.json → 164 product
-  docs, one variant per colorway, sharp-sampled swatch colors),
-  `retire-lorem.ts` (drafts the 120 lorem products),
-  `wire-nav-collections.ts` (collections + nav links + chips),
-  `fix-catalog-ids.ts` (diagnoses raw-vs-published visibility).
-- CRITICAL Sanity rule: document _ids must NEVER contain a dot —
-  `sdr.foo` is a path/namespaced id, invisible to the `published`
-  perspective the site queries with (Studio still shows it, so the
-  break is silent). Catalog ids are `sdr-<slug>`.
-- Dataset state: 164 `sdr-*` products + the `product-presidio`
-  showcase are Active; lorem `product-seed-*` are Draft; `page-home`
-  (slug "home", 9 sections) drives the homepage; collections =
-  shop-all + 10 category smarts + gender trees + manual gear sets
-  (vessel/headcovers/gloves/bags/on-course/training/summer-picks).
-- The Sanity MCP connector (claude.ai) can read AND write the dataset
-  when connected — prefer it over user-run scripts; remember MCP
-  patches land as drafts and need publish_documents. SDR content is
-  TaylorMade's copyrighted material: staging/design use only.
+Client's copyrighted content, migrated for the platform rebuild —
+staging/design use.
 
-## GitHub Actions = the network escape hatch
+- `scripts/fetch-method-content.mjs` + fetch-method-content.yml
+  (workflow_dispatch): crawls the live site on an Actions runner (the
+  sandbox cannot reach methodhomes.net — 403s). Resumable across
+  passes; stores each page's internal links so later passes re-enqueue
+  the frontier; force-refreshes the portfolio indexes; downloads
+  imagery AND PDF documents (floor plans). Output:
+  design/method-content/pages.json + public/method/<slug>/.
+- `scripts/import-method-content.ts` + import-method-content.yml:
+  maps the capture into the dataset. Portfolios → projects (specs
+  parsed to sqft/bed/bath; /project/* detail pages = featured:true
+  with plan PDFs attached), core pages → section-built pages, /blog →
+  posts. Idempotent (createOrReplace + filename-deduped uploads) —
+  re-run after any new capture pass. Runs in CI with the write token
+  as a masked dispatch input, or locally via
+  `npx sanity exec scripts/import-method-content.ts --with-user-token`.
+- Every remote call retries 4x with backoff (one ECONNRESET killed a
+  40-minute run once).
 
-- The sandbox cannot reach sundayred.com, *.sanity.io, vercel.app, or
-  figma.com — Actions runners can. Workflows live on the repo DEFAULT
-  branch `claude/sanity-github-app-setup-x49xa8` (workflow_dispatch
-  only registers there) and commit results back to that branch:
-  - `lighthouse.yml` → design/perf/lighthouse-mobile.json (mobile
-    Lighthouse against production — the perf measurement loop)
-  - `probe.yml` → prints curl/grep inspection of live HTML or the
-    Sanity API to the job log (edit its steps per question)
-  - `fetch-sdr-catalog.yml` / `fetch-figma-assets` → data captures
-- Pattern: edit workflow on that branch via a worktree, dispatch via
-  the GitHub MCP, read job logs or fetch the committed file. Runner
-  queue occasionally starves — re-dispatch rather than wait forever.
+## Design source (Figma) — THE REBRAND
+
+- File `9nqsOUuF2UrgukNYok3Oko` ("[i] Design Library — Method"),
+  entry node 31158:18043; designops.figma.fileKey already points at
+  it (arms drift-check + comp tooling).
+- BLOCKER: the Figma MCP connector (authorized as
+  bryce@weareenvoy.com) needs EDIT access to this file — currently
+  denied. Once granted: pull variable collections with
+  get_variable_defs, map them into src/app/globals.css (replacing the
+  SDR-derived palette), export tokens to design/figma-tokens/, run
+  `npm run tokens`, swap fonts + Logo, and re-comp the section
+  library against Method frames.
+- Until the rebrand, fonts are SDR's TRIAL cuts (Feature Deck /
+  Maison Neue) — licensing must be resolved before production.
+
+## Ops apparatus
+
+- designops.config.json is the single config seam (site name/URL,
+  perf pages, figma key, features).
+- Nightly workflows (lighthouse-history, audit, check-links,
+  dataset-backup, design-drift) run against method-homes.vercel.app
+  and commit status JSONs the Studio Overview reads. They started
+  EMPTY at scaffold time — dashboards fill as runs land.
+- The Studio: Overview leads the nav; tool panes are plain @sanity/ui
+  (lazy-loaded chunks); workspace title reads designops.site.name;
+  the Sections tool passes the Studio's scheme + exact background
+  into /library so it matches; Calendar day-click creates a dated
+  post; the global Create menu is a curated allowlist.
+- probe.yml exists for live-response inspection (edit steps per
+  question, dispatch, read the log).
 
 ## Frontend architecture
 
@@ -456,20 +340,6 @@ Verification (before pushing perf-relevant work)
   `probe.yml` greps live HTML (product hrefs, image URLs). The
   sandbox cannot reach vercel.app/sanity.io — runners can.
 
-## Deployment (Vercel staging)
-
-- The repo deploys on Vercel via the GitHub integration: pushes to
-  `main` build automatically and go live on the project's
-  `*.vercel.app` domain (the staging site); every other branch gets a
-  preview deployment URL on push.
-- No env vars are required — the Sanity project id/dataset default in
-  `src/sanity/env.ts` (`NEXT_PUBLIC_SANITY_PROJECT_ID` /
-  `NEXT_PUBLIC_SANITY_DATASET` override them if ever needed). Node is
-  pinned to 22.x via package.json engines.
-- The embedded Studio (/studio) on the deployed domain needs that
-  domain added to the Sanity project's CORS origins (with
-  credentials) at manage.sanity.io → API.
-
 ## Verification recipes (sandbox)
 
 - Browser checks: playwright-core with
@@ -503,3 +373,11 @@ Verification (before pushing perf-relevant work)
 Two terminals: one runs `npm run dev` (localhost:3000), the other runs
 git/seeds. Restart the dev server after dependency or Sanity schema
 changes. Node >= 22.12 required (Sanity CLI).
+
+
+## Session-history note
+
+This file is the durable memory. The founding session's full history
+lives in the Sun Day Red template repo's session (claude.ai/code) —
+deep template rationale (perf war stories, design-ops architecture)
+is documented in btravis08/claude_test AGENTS.md.
