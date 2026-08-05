@@ -7,11 +7,62 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Inspect live responses
+      - name: Robots and sitemap
         run: |
-          for path in "/" "/studio" "/journal" "/api/forms"; do
-            echo "=== GET $path"
-            curl -sS -o body.txt -w "status %{http_code} in %{time_total}s\n" \
-              --max-time 30 "https://method-homes.vercel.app$path" || true
-            head -c 600 body.txt | tr -d '\0'; echo; echo
+          echo "=== robots.txt"
+          curl -sS --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" https://www.methodhomes.net/robots.txt || true
+          echo; echo "=== sitemap.xml (loc count + first 40)"
+          curl -sS --max-time 30 -A "Mozilla/5.0" https://www.methodhomes.net/sitemap.xml -o sitemap.xml || true
+          grep -o '<loc>[^<]*</loc>' sitemap.xml | wc -l
+          grep -o '<loc>[^<]*</loc>' sitemap.xml | head -40
+      - name: Redirect and status matrix
+        run: |
+          for u in "http://methodhomes.net/" "https://methodhomes.net/" "http://www.methodhomes.net/" "https://www.methodhomes.net/peninsula/" "https://www.methodhomes.net/Peninsula" "https://www.methodhomes.net/no-such-page-xyz-123" "https://www.methodhomes.net/residential-survey-copy" "https://www.methodhomes.net/project/calistoga"; do
+            echo "=== $u"
+            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
           done
+      - name: Head inspection per page
+        run: |
+          cat > inspect.py <<'EOF'
+          import re, sys, urllib.request
+          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
+          pages = ["/", "/custom-residential", "/predesigned-residential", "/about", "/pricing", "/faq", "/blog", "/peninsula", "/custom-portfolio/calistoga-custom", "/blog/backyard-cottages", "/predesigned-series/annata", "/commercial"]
+          for p in pages:
+              url = "https://www.methodhomes.net" + p
+              try:
+                  req = urllib.request.Request(url, headers=UA)
+                  html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+              except Exception as e:
+                  print(f"\n##### {p}: FETCH ERROR {e}")
+                  continue
+              print(f"\n##### {p}  ({len(html)} bytes)")
+              def one(pat, label):
+                  m = re.search(pat, html, re.I | re.S)
+                  print(f"{label}: {m.group(1).strip()[:220] if m else 'NONE'}")
+              one(r"<title[^>]*>(.*?)</title>", "title")
+              one(r'<meta[^>]+name=["\']description["\'][^>]+content=["\'](.*?)["\']', "meta-desc")
+              one(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\'](.*?)["\']', "canonical")
+              one(r'<meta[^>]+name=["\']robots["\'][^>]+content=["\'](.*?)["\']', "meta-robots")
+              one(r'<meta[^>]+property=["\']og:title["\'][^>]+content=["\'](.*?)["\']', "og:title")
+              one(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\'](.*?)["\']', "og:image")
+              one(r'<html[^>]+lang=["\'](.*?)["\']', "html-lang")
+              ld = re.findall(r'<script[^>]+application/ld\+json[^>]*>(.*?)</script>', html, re.I | re.S)
+              print(f"json-ld blocks: {len(ld)}")
+              for b in ld[:3]:
+                  print("  LD:", re.sub(r"\s+", " ", b)[:300])
+              h1s = re.findall(r"<h1[^>]*>(.*?)</h1>", html, re.I | re.S)
+              print(f"h1 count: {len(h1s)} | {[re.sub('<[^>]+>','',h)[:60] for h in h1s[:4]]}")
+              imgs = re.findall(r"<img[^>]*>", html, re.I)
+              noalt = [i for i in imgs if not re.search(r'alt=["\'][^"\']+["\']', i)]
+              print(f"imgs: {len(imgs)} | empty/no alt: {len(noalt)}")
+              print(f"scripts: {len(re.findall(r'<script', html, re.I))}")
+              lazy = len(re.findall(r'loading=["\']lazy["\']', html, re.I))
+              print(f"loading=lazy imgs: {lazy}")
+              hero = re.search(r'<img[^>]+src=["\']([^"\']+)["\']', html)
+              print(f"first img src: {hero.group(1)[:160] if hero else 'NONE'}")
+          EOF
+          python3 inspect.py
+      - name: Response headers
+        run: |
+          echo "=== headers for /"
+          curl -sSI --max-time 30 -A "Mozilla/5.0" https://www.methodhomes.net/ || true
