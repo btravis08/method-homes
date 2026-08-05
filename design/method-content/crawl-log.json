@@ -1,1 +1,22 @@
-[]
+[
+  {
+    "url": "https://www.methodhomes.net/predesigned-portfolio",
+    "ok": true,
+    "images": 24
+  },
+  {
+    "url": "https://www.methodhomes.net/commercial-portfolio",
+    "ok": true,
+    "images": 15
+  },
+  {
+    "url": "https://www.methodhomes.net/custom-portfolio",
+    "ok": true,
+    "images": 24
+  },
+  {
+    "url": "https://www.methodhomes.net/featured-projects",
+    "ok": true,
+    "images": 12
+  }
+]

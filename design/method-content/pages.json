@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-08-04T23:23:47.705Z",
+  "fetchedAt": "2026-08-05T00:20:14.958Z",
   "pages": {
     "/": {
       "url": "https://www.methodhomes.net",
@@ -1171,294 +1171,6 @@
           "alt": "",
           "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/67d86501015dedbdd2a93126_Screenshot%202025-03-17%20at%2010.49.06%E2%80%AFAM.png",
           "bytes": 167189
-        }
-      ]
-    },
-    "/predesigned-portfolio": {
-      "url": "https://www.methodhomes.net/predesigned-portfolio",
-      "slug": "predesigned-portfolio",
-      "title": "Predesigned Homes Portfolio",
-      "metaDesc": "Explore our portfolio of predesigned residential projects. Phinney Option - Seattle, WA | Camano Shift - Camando Island, WA | Bryant Option - Seattle WA | Santa Rosa Annata - Santa Rosa, CA",
-      "headings": [
-        {
-          "level": "h1",
-          "text": "Predesigned Portfolio"
-        },
-        {
-          "level": "h4",
-          "text": "Phinney Option"
-        },
-        {
-          "level": "h4",
-          "text": "Camano Shift"
-        },
-        {
-          "level": "h4",
-          "text": "Bryant Option"
-        },
-        {
-          "level": "h4",
-          "text": "Santa Rosa Annata"
-        },
-        {
-          "level": "h4",
-          "text": "Glacier Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Paradigm I"
-        },
-        {
-          "level": "h4",
-          "text": "Seattle Element 3"
-        },
-        {
-          "level": "h4",
-          "text": "Santa Barbara Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Tahoe Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Big Creek Ranch Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Orcas Island Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Peninsula Shift"
-        },
-        {
-          "level": "h4",
-          "text": "Coastal Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Deming M2"
-        },
-        {
-          "level": "h4",
-          "text": "Spencer Lake Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Custom Elemental 5"
-        },
-        {
-          "level": "h4",
-          "text": "Hood Canal M Series"
-        },
-        {
-          "level": "h4",
-          "text": "Lopez Island Cabin 2"
-        },
-        {
-          "level": "h4",
-          "text": "Sonoma Elemental"
-        },
-        {
-          "level": "h4",
-          "text": "Big Creek Ranch Cabin II"
-        },
-        {
-          "level": "h4",
-          "text": "Lake Whatcom Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "San Juan Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Obstruction Island Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Marrowstone Island Elemental"
-        },
-        {
-          "level": "h4",
-          "text": "White Rock II"
-        },
-        {
-          "level": "h4",
-          "text": "Modern Monogram Elemental"
-        },
-        {
-          "level": "h4",
-          "text": "Lid Park"
-        },
-        {
-          "level": "h4",
-          "text": "Seattle Option"
-        },
-        {
-          "level": "h4",
-          "text": "Vashon Island Cabin"
-        },
-        {
-          "level": "h4",
-          "text": "Bainbridge Island Option"
-        },
-        {
-          "level": "h2",
-          "text": "Filters"
-        }
-      ],
-      "paragraphs": [
-        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
-        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
-        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
-        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
-      ],
-      "images": [
-        {
-          "file": "predesigned-portfolio/01-a4dabe70.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/6582f01cece248054cd5a54d_Orcas%20Retreat%205.webp",
-          "bytes": 511902
-        },
-        {
-          "file": "predesigned-portfolio/02-79d9cb5b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e6495ea8779a2cfb24ab69_Phinney%20Option.webp",
-          "bytes": 892854
-        },
-        {
-          "file": "predesigned-portfolio/03-4819d4be.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e4c20c9dfb1e57e750777c_camano%202m%20shift%20prefabricated%20home%20by%20method%20homes.webp",
-          "bytes": 276528
-        },
-        {
-          "file": "predesigned-portfolio/04-c9a719f7.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6590a0b5bf12377084528ef7_Grouparchitect_Bryant_Optioan_1648-018.webp",
-          "bytes": 219242
-        },
-        {
-          "file": "predesigned-portfolio/05-0e4b0877.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6590a30011b41d11bc0136d2_oaklandC_5-1%20copy.webp",
-          "bytes": 232214
-        },
-        {
-          "file": "predesigned-portfolio/06-eb26bcd6.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31abad7c64851ec284ca1_Method-Cabin-11.webp",
-          "bytes": 251716
-        },
-        {
-          "file": "predesigned-portfolio/07-731cebb5.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e260c24510dd44565f75dd_138.webp",
-          "bytes": 85454
-        },
-        {
-          "file": "predesigned-portfolio/08-a4c1854b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e07bfef3a1c0611bfcb152_seattle_element3.webp",
-          "bytes": 150868
-        },
-        {
-          "file": "predesigned-portfolio/09-1b9eaa84.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e260457d4560da0677e4cc_sb_cabin1-1.webp",
-          "bytes": 61138
-        },
-        {
-          "file": "predesigned-portfolio/10-739f1098.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31c312688029857aa0440_tahoe_cabin.webp",
-          "bytes": 211016
-        },
-        {
-          "file": "predesigned-portfolio/11-d50bb90e.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e324a7746dd3ee8ae0b713_69.webp",
-          "bytes": 126726
-        },
-        {
-          "file": "predesigned-portfolio/12-1b8837b5.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31cb5bba950cd2559c175_158.webp",
-          "bytes": 234988
-        },
-        {
-          "file": "predesigned-portfolio/13-4a5fb487.jpg",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a3ee224d028050611a36fa9_Peninsual%20Shift%20-%20Exterior--4_Edit.jpg",
-          "bytes": 2683444
-        },
-        {
-          "file": "predesigned-portfolio/14-ae2d370b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e25f967aaf5c2c6286b9ad_Cove_Beach_Aerial-0053.webp",
-          "bytes": 230944
-        },
-        {
-          "file": "predesigned-portfolio/15-c92482fb.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31a4c8aa7b3b27a1baf33_slider4.webp",
-          "bytes": 260932
-        },
-        {
-          "file": "predesigned-portfolio/16-017ec14b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e320c6d7c64851ec2b1ffc_lannieboesiger_lo_23.webp",
-          "bytes": 112080
-        },
-        {
-          "file": "predesigned-portfolio/17-14b41fb0.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32677b726d93dd0ee5edc_IMG_9349.webp",
-          "bytes": 88664
-        },
-        {
-          "file": "predesigned-portfolio/18-f10de457.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e327047c25d085e7959298_Quilcene_5_smaller.webp",
-          "bytes": 216470
-        },
-        {
-          "file": "predesigned-portfolio/19-8e0033f7.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32ad478346d12b7144deb_Lopez_Cabin2-3.webp",
-          "bytes": 78040
-        },
-        {
-          "file": "predesigned-portfolio/20-4599f6de.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32b382c3b542344348205_Cloverdale34.webp",
-          "bytes": 104388
-        },
-        {
-          "file": "predesigned-portfolio/21-12a7ce11.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e325a6061034866969bac1_316.webp",
-          "bytes": 114924
-        },
-        {
-          "file": "predesigned-portfolio/22-b3a524e9.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e3298ab8f69754a4ec2e73_Lake-Whatcom-1.webp",
-          "bytes": 199026
-        },
-        {
-          "file": "predesigned-portfolio/23-0e1704ec.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e3254bcd2f1bebcdddaa9f_150.webp",
-          "bytes": 157656
-        },
-        {
-          "file": "predesigned-portfolio/24-836d8f77.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32452fdd2f9e0105ee34d_224.webp",
-          "bytes": 170212
         }
       ]
     },
@@ -2655,544 +2367,6 @@
         }
       ]
     },
-    "/custom-portfolio": {
-      "url": "https://www.methodhomes.net/custom-portfolio",
-      "slug": "custom-portfolio",
-      "title": "Custom Residential Homes Portfolio",
-      "metaDesc": "Browse our portfolio of custom residential projects. Explore our modern, efficient, sustainable, custom-designed homes. Martis 416 - Tahoe, CA | Truckee Custom - Truckee, CA",
-      "headings": [
-        {
-          "level": "h1",
-          "text": "Custom Residential Portfolio"
-        },
-        {
-          "level": "h4",
-          "text": "Martis 416"
-        },
-        {
-          "level": "h4",
-          "text": "Truckee Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Peninsula Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Chimney Rock"
-        },
-        {
-          "level": "h4",
-          "text": "Carmel Valley Residence"
-        },
-        {
-          "level": "h4",
-          "text": "Martis 663"
-        },
-        {
-          "level": "h4",
-          "text": "Idaho Mountain Home"
-        },
-        {
-          "level": "h4",
-          "text": "Fish Creek Passage"
-        },
-        {
-          "level": "h4",
-          "text": "Tahoe Custom"
-        },
-        {
-          "level": "h4",
-          "text": "SV Residence"
-        },
-        {
-          "level": "h4",
-          "text": "Friday Harbor"
-        },
-        {
-          "level": "h4",
-          "text": "Portola Valley"
-        },
-        {
-          "level": "h4",
-          "text": "Calistoga Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Santa Rosa Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Beehive Guesthouse"
-        },
-        {
-          "level": "h4",
-          "text": "Snowflake Lodge"
-        },
-        {
-          "level": "h4",
-          "text": "Oakland Custom"
-        },
-        {
-          "level": "h4",
-          "text": "JH Mountainview"
-        },
-        {
-          "level": "h4",
-          "text": "Jackson Hole"
-        },
-        {
-          "level": "h4",
-          "text": "Truckee Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Martis Camp"
-        },
-        {
-          "level": "h4",
-          "text": "Martis 476"
-        },
-        {
-          "level": "h4",
-          "text": "San Juan Island"
-        },
-        {
-          "level": "h4",
-          "text": "Belmont Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Portola Custom"
-        },
-        {
-          "level": "h4",
-          "text": "HOMB Portland"
-        },
-        {
-          "level": "h4",
-          "text": "Ketchikan Custom"
-        },
-        {
-          "level": "h4",
-          "text": "HOIF Seattle"
-        },
-        {
-          "level": "h4",
-          "text": "Brittania Beach"
-        },
-        {
-          "level": "h4",
-          "text": "Pacific Palisades Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Jackson Hole"
-        },
-        {
-          "level": "h4",
-          "text": "Venice Beach"
-        },
-        {
-          "level": "h4",
-          "text": "Lid Park"
-        },
-        {
-          "level": "h4",
-          "text": "Bainbridge Island"
-        },
-        {
-          "level": "h4",
-          "text": "Palisades Tahoe Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Sun Valley"
-        },
-        {
-          "level": "h4",
-          "text": "Mercer Island 3"
-        },
-        {
-          "level": "h4",
-          "text": "Burlingame Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Menlo Park"
-        },
-        {
-          "level": "h4",
-          "text": "San Juan"
-        },
-        {
-          "level": "h4",
-          "text": "Olympic Valley"
-        },
-        {
-          "level": "h4",
-          "text": "Greenville Fire Rebuilds"
-        },
-        {
-          "level": "h4",
-          "text": "Guemes Tidelands"
-        },
-        {
-          "level": "h4",
-          "text": "Orcas Retreat Washington"
-        },
-        {
-          "level": "h4",
-          "text": "West End Wetlands Custom"
-        },
-        {
-          "level": "h4",
-          "text": "Canopy House"
-        },
-        {
-          "level": "h4",
-          "text": "Moose Wilson Stream"
-        },
-        {
-          "level": "h4",
-          "text": "Mountain Village"
-        },
-        {
-          "level": "h4",
-          "text": "Jefferson Knoll"
-        },
-        {
-          "level": "h4",
-          "text": "Vineyard Court"
-        },
-        {
-          "level": "h4",
-          "text": "Creekbend"
-        },
-        {
-          "level": "h2",
-          "text": "Filters"
-        }
-      ],
-      "paragraphs": [
-        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
-        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
-        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
-        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
-      ],
-      "images": [
-        {
-          "file": "custom-portfolio/01-c00565bb.webp",
-          "alt": "Modern two-story black house with large windows and outdoor seating fire pit surrounded by tall pine trees at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/65e4fd4b8aeed86e7d8e7bae_truckee%20custom%20residential%20project.webp",
-          "bytes": 488658
-        },
-        {
-          "file": "custom-portfolio/02-751f350b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09fc30c97f93ae7253a_65e4c2a2cff7f8be3f19d4aa_Martis%2520416.webp",
-          "bytes": 553316
-        },
-        {
-          "file": "custom-portfolio/03-1c3c43a2.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e22216e428451d008_6564e2e3ccb8951116bc647d_truckee%2520feature%2520img.webp",
-          "bytes": 332734
-        },
-        {
-          "file": "custom-portfolio/04-81bfc8d8.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e3d82264ea85a2369_65e4c2642742f182a71058f9_Peninsula%2520custom.webp",
-          "bytes": 175362
-        },
-        {
-          "file": "custom-portfolio/05-109e1a4d.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e6fa8b47bafddffd0_654e331e65088acbdee4d10e_Chimney%2520Rock%2520in%2520Napa%2520California%2520by%2520Method%2520Homes.webp",
-          "bytes": 156172
-        },
-        {
-          "file": "custom-portfolio/06-d07ce635.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69939f9d8a861828ace92a64_schicketanz-carmel-home-under-trees.webp",
-          "bytes": 678678
-        },
-        {
-          "file": "custom-portfolio/07-bb0cda4d.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9fea27279938c0965fb10_martis-camp-front-door-full.webp",
-          "bytes": 182640
-        },
-        {
-          "file": "custom-portfolio/08-c07e621a.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9fd6175f33ab0b5b8df14_Exterior%2001.webp",
-          "bytes": 465512
-        },
-        {
-          "file": "custom-portfolio/09-3e76e81d.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994cde6cc444d453cc5516f_fish-creek-diagonal-illuminated.webp",
-          "bytes": 197454
-        },
-        {
-          "file": "custom-portfolio/10-f50bd9b1.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a345e7e47e1aa211c0_65e35d3f8aa7b3b27a3e7dd4_tahoe.webp",
-          "bytes": 147146
-        },
-        {
-          "file": "custom-portfolio/11-caad40f2.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6993ab6e009eda1a0ae57505_SV%20Residence%20%20less%20red%20for%20WEB.webp",
-          "bytes": 342892
-        },
-        {
-          "file": "custom-portfolio/12-419b4ba0.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e033bb60c681df4c0_6564e8ac457aac9713156960_Friday%252BHarbor%252BCustom%252B2%2520(1).webp",
-          "bytes": 605030
-        },
-        {
-          "file": "custom-portfolio/13-a84680bb.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a72476e3c71e2882634fad4_sagemodern-portola-valley.webp",
-          "bytes": 462926
-        },
-        {
-          "file": "custom-portfolio/14-33f57f41.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a4af86928c02f535df_65e3626382880d081d7782d7_Calistoga%252BCustom%252BPrefabricated%252BHome%252Bby%252BMethod.webp",
-          "bytes": 103982
-        },
-        {
-          "file": "custom-portfolio/15-e066e5ac.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9ff67638a6d73990a9a06_santa-rosa-custom-twighlight.webp",
-          "bytes": 835742
-        },
-        {
-          "file": "custom-portfolio/16-ed9b652d.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69ab174cf5017ffff28ab6ad_Beehive-Guesthouse-Exterior-1.webp",
-          "bytes": 79872
-        },
-        {
-          "file": "custom-portfolio/17-9d0dae97.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69b08b7cd4252ca810c99485_snowflake-lodge-durability.webp",
-          "bytes": 43822
-        },
-        {
-          "file": "custom-portfolio/18-8cbe9bdf.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a07d44d52903d40f07_65e32cb19e2ce4ad8729a6c4_santaRosa_1-1.webp",
-          "bytes": 170330
-        },
-        {
-          "file": "custom-portfolio/19-fea163d7.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a7093353a0d464a207_65e371cd92a2687a5eda1ea1_Damon_01.webp",
-          "bytes": 525146
-        },
-        {
-          "file": "custom-portfolio/20-864d19eb.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09fe19ff83ca2d931e4_65e32bbd746dd3ee8ae4701d_Method-Jackson-Hole-October-10.webp",
-          "bytes": 104240
-        },
-        {
-          "file": "custom-portfolio/21-13996c15.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a38e8cce0ba76a502b_65e3645e67b227d8dfdd8521_65e35f4122809c85fb5176a7_094MartisCamp23%2520copy.webp",
-          "bytes": 87882
-        },
-        {
-          "file": "custom-portfolio/22-edb2afa4.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a23d82264ea85a2663_65e35b454f33f6583b8a12ec_martis_camp.webp",
-          "bytes": 163240
-        },
-        {
-          "file": "custom-portfolio/23-9f64e3ea.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a298c3bb8e345b7871_65e35cd20fb615e1944d26ba_martis476_3.webp",
-          "bytes": 279878
-        },
-        {
-          "file": "custom-portfolio/24-84b04f79.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a48a01eeba4c8820de_65e3601ea7e652925576bd42_San%252BJuan%252BIsland%252BCustom%252BPrefabricated%252Bhome%252Bby%252BMethod%252BHomes%252B-%252Boutside%252Bat%252Bsunsest.webp",
-          "bytes": 236002
-        }
-      ]
-    },
-    "/commercial-portfolio": {
-      "url": "https://www.methodhomes.net/commercial-portfolio",
-      "slug": "commercial-portfolio",
-      "title": "Commercial Portfolio",
-      "metaDesc": "Explore our portfolio of built commercial projects. Northstar Yoga Studio - Tahoe, CA | SEED Classroom - Seattle, WA | Skylodge - Powder Mountain, UT | West Seattle Townhomes - West Seattle",
-      "headings": [
-        {
-          "level": "h1",
-          "text": "Commercial Portfolio"
-        },
-        {
-          "level": "h4",
-          "text": "Fish Bay Cottages Lopez Island"
-        },
-        {
-          "level": "h4",
-          "text": "Seed Classroom"
-        },
-        {
-          "level": "h4",
-          "text": "Skylodge"
-        },
-        {
-          "level": "h4",
-          "text": "Northstar Yoga Studio"
-        },
-        {
-          "level": "h4",
-          "text": "Village North"
-        },
-        {
-          "level": "h4",
-          "text": "West Seattle Townhomes"
-        },
-        {
-          "level": "h4",
-          "text": "Rico Workforce Development"
-        },
-        {
-          "level": "h4",
-          "text": "Taproot Theater"
-        },
-        {
-          "level": "h4",
-          "text": "Village Walk Northstar Tahoe"
-        },
-        {
-          "level": "h4",
-          "text": "Tahoe Park Concession"
-        },
-        {
-          "level": "h4",
-          "text": "Make it Right"
-        },
-        {
-          "level": "h4",
-          "text": "Chartwell School Addition"
-        },
-        {
-          "level": "h4",
-          "text": "The Valley School"
-        },
-        {
-          "level": "h2",
-          "text": "Filters"
-        }
-      ],
-      "paragraphs": [
-        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
-        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
-        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
-        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
-      ],
-      "images": [
-        {
-          "file": "commercial-portfolio/01-c0efcffd.webp",
-          "alt": "Interior view of a cozy wooden lodge with a sofa, large windows overlooking a deck with picnic tables and mountains in the distance.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/65e650ae29d21803c12d2464_skylodge%20by%20method%20homes%20commercial%20project.webp",
-          "bytes": 507172
-        },
-        {
-          "file": "commercial-portfolio/02-acd1f86f.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994c593d9bbf28478558f39_fishbay-cottages-wide.webp",
-          "bytes": 321350
-        },
-        {
-          "file": "commercial-portfolio/03-988cd6b1.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f68287b2cf19820b0ce3_65e64fba4e75f450e3c2bf07_SEED%2520classroom%2520commercial%2520project%2520by%2520Method%2520Homes.webp",
-          "bytes": 1156960
-        },
-        {
-          "file": "commercial-portfolio/04-c0afa7df.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682352f235fde92fa91_65949eb36065064afab4a0f5_Skylodge%2520patio.webp",
-          "bytes": 312958
-        },
-        {
-          "file": "commercial-portfolio/05-8f6b9318.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682b5da08b3d24fc5cf_65e64fa649866f065f34ca34_Northstar%2520Yoga%2520Studio%2520commercial%2520project%2520by%2520Method%2520Homes.webp",
-          "bytes": 689256
-        },
-        {
-          "file": "commercial-portfolio/06-e8bc226e.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994c08fb8c12ac02171a5ef_village-north-housing-lopez.webp",
-          "bytes": 339994
-        },
-        {
-          "file": "commercial-portfolio/07-d91e1a21.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f68291658685c1d5e05c_65949fdd0b07e0284dab6e12_141010-07f.webp",
-          "bytes": 943504
-        },
-        {
-          "file": "commercial-portfolio/08-ae630430.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a171fea2ba04773f2c60b41_rico-affordable-workforce-housing-pano.webp",
-          "bytes": 974804
-        },
-        {
-          "file": "commercial-portfolio/09-a9f91c17.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f6823f025fc7535f99a6_65e3656c683fe19430f48153_Taproot_Old_and_New.webp",
-          "bytes": 159590
-        },
-        {
-          "file": "commercial-portfolio/10-13b8e5bd.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a5558df244d7bd5cff1b6e0_village-walk-hero.webp",
-          "bytes": 778568
-        },
-        {
-          "file": "commercial-portfolio/11-68dac2cb.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682acdca762bbf2b5ae_65e36773b726d93dd00e36a8_Adventure%252BParks%252BLake%252BTahoe%252Bside%252Bperspective.webp",
-          "bytes": 284542
-        },
-        {
-          "file": "commercial-portfolio/12-66515a96.jpg",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a2af9c5ff3b3d79e866eff7_make-it-right-exterior.jpeg",
-          "bytes": 755327
-        },
-        {
-          "file": "commercial-portfolio/13-ab0e5b7a.png",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a32f1d86d152527125e6b11_chartwell-school-addition-1.png",
-          "bytes": 534324
-        },
-        {
-          "file": "commercial-portfolio/14-f6c993b9.png",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a32f7863c7150c6d3e2a10a_the-valley-school.png",
-          "bytes": 3557766
-        },
-        {
-          "file": "commercial-portfolio/17-d1808ea1.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/691e92e33b737ea4554e82d9_green-yt.webp",
-          "bytes": 70832
-        }
-      ]
-    },
     "/method-process": {
       "url": "https://www.methodhomes.net/method-process",
       "slug": "method-process",
@@ -4043,107 +3217,6 @@
         },
         {
           "file": "sv-residence/16-d1808ea1.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/691e92e33b737ea4554e82d9_green-yt.webp",
-          "bytes": 70832
-        }
-      ]
-    },
-    "/featured-projects": {
-      "url": "https://www.methodhomes.net/featured-projects",
-      "slug": "featured-projects",
-      "title": "Featured Projects",
-      "metaDesc": "Browse our featured custom homes. Chimney Rock Estate - Napa, CA | SV Residence - Ketchum, ID | Martis 416 - Nevada County, CA | Calistoga Custom - Calistoga, CA | Peninsula Custom - Los Altos Hills, CA",
-      "headings": [
-        {
-          "level": "h1",
-          "text": "Featured Projects"
-        }
-      ],
-      "paragraphs": [
-        "A modern luxury farmhouse with views of vineyards and the valley. Built for outdoor entertaining, communal gathering, and modern living.",
-        "A peaceful single level home set along the riverfront. This home blends clean lines, natural materials, and serene views.",
-        "A modern home embracing the beauty of its natural surroundings. This home strikes a balance between cozy and contemporary.",
-        "A rustic, yet elegant home defined by its cantilevered roof and open interior. This home maintains a private feel while being located just minutes away from all that Martis Camp has to offer.",
-        "A sleek and striking residence surrounded by woodlands in the back, a running creek below, and valley views all around. This home’s clean and minimalist exterior is complemented by a bold and eclectic interior.",
-        "A peaceful and contemporary home in the hills. Its open layout and great room are perfect for gathering and entertaining.",
-        "A serene and elegant retreat built for relaxation and recreation. This home welcomes the outdoors in, inviting guests to unwind in its peaceful and private forest setting.",
-        "A fire rebuild for an art collector. With a modern interior displaying fine art and a spacious outdoor area for lounging, this home brings new life and beauty to the property.",
-        "A cozy three module home, embracing the charm of the Salish Sea Coast. Though it is compact, the home maintains an open layout and welcomes in the stunning views of its surroundings.",
-        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
-        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
-        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
-        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
-      ],
-      "images": [
-        {
-          "file": "featured-projects/01-fb3f091b.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/68d59a59f44a113334af8da3_eea1d883baaabe04a4e4bc8d3861a842c38b5568%20(1).webp",
-          "bytes": 223496
-        },
-        {
-          "file": "featured-projects/02-1a785b31.webp",
-          "alt": "",
-          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/68d521c8c177fde0bdb82329_Peninsula%20Custom%2004%20(1).webp",
-          "bytes": 297564
-        },
-        {
-          "file": "featured-projects/03-40810a50.avif",
-          "alt": "Modern house with glass walls next to a rectangular pool and landscaped yard with trees and shrubs, overlooking distant hills under a cloudy sky.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d12719fa475fc558116da3_9%203.avif",
-          "bytes": 42039
-        },
-        {
-          "file": "featured-projects/04-1d424819.webp",
-          "alt": "Modern two-story house with wood and black metal siding, large glass windows, and outdoor lighting in a landscaped yard at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/69654db7bb20111690f065e6_55341498a7b70a1fc8b5ea5a9018ff87_GabeBorder-Wilson-19%20for%20web.webp",
-          "bytes": 324274
-        },
-        {
-          "file": "featured-projects/05-9df8a897.avif",
-          "alt": "Modern two-story house with wood and black metal siding, large glass windows, and outdoor lighting in a landscaped yard at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d152bb4dd1b9d4d83814dc_WSR%20Residence%20%20less%20red%202.avif",
-          "bytes": 54662
-        },
-        {
-          "file": "featured-projects/06-110ae255.avif",
-          "alt": "Modern wooden house with large windows and outdoor seating surrounded by tall pine trees at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d152f4d60ec7ffb905bc42_martis%20416%204.avif",
-          "bytes": 104743
-        },
-        {
-          "file": "featured-projects/07-da3504ad.avif",
-          "alt": "Modern two-story house with large glass windows, wooden paneling, outdoor seating area, and a reflecting pool at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d1531e0838388259684956_FranzValleyResidence_PhotoByBruceDamonte_15%20(2)%201%20(2).avif",
-          "bytes": 21738
-        },
-        {
-          "file": "featured-projects/08-6629cf75.avif",
-          "alt": "Modern house with a covered patio and outdoor seating beside a rectangular swimming pool and green lawn under a clear blue sky.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153499f8fcba746d1f453_DSC01327%204.avif",
-          "bytes": 59911
-        },
-        {
-          "file": "featured-projects/09-6f50a2ec.avif",
-          "alt": "Modern house entrance with large wooden door, glass panels, and surrounded by tall pine trees.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153741f8900104cfd1111_MartisCamp1275_Final%201.avif",
-          "bytes": 94650
-        },
-        {
-          "file": "featured-projects/10-896d1c8e.avif",
-          "alt": "Modern house with wood, glass, and concrete exterior, lit stairs, and landscaped garden at dusk.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153b7d39fcb9536605ed6_080724-758%20(1)%201.avif",
-          "bytes": 43074
-        },
-        {
-          "file": "featured-projects/11-be628999.webp",
-          "alt": "Modern house with large sliding glass doors opening to a wooden deck surrounded by tall trees.",
-          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68ffc425e062a526f0dd7138_Orcas%20Retreat%2007.webp",
-          "bytes": 957110
-        },
-        {
-          "file": "featured-projects/14-d1808ea1.webp",
           "alt": "",
           "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/691e92e33b737ea4554e82d9_green-yt.webp",
           "bytes": 70832
@@ -41954,6 +41027,1130 @@
           "bytes": 70832
         }
       ]
+    },
+    "/predesigned-portfolio": {
+      "url": "https://www.methodhomes.net/predesigned-portfolio",
+      "slug": "predesigned-portfolio",
+      "title": "Predesigned Homes Portfolio",
+      "metaDesc": "Explore our portfolio of predesigned residential projects. Phinney Option - Seattle, WA | Camano Shift - Camando Island, WA | Bryant Option - Seattle WA | Santa Rosa Annata - Santa Rosa, CA",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Predesigned Portfolio"
+        },
+        {
+          "level": "h4",
+          "text": "Phinney Option"
+        },
+        {
+          "level": "h4",
+          "text": "Camano Shift"
+        },
+        {
+          "level": "h4",
+          "text": "Bryant Option"
+        },
+        {
+          "level": "h4",
+          "text": "Santa Rosa Annata"
+        },
+        {
+          "level": "h4",
+          "text": "Glacier Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Paradigm I"
+        },
+        {
+          "level": "h4",
+          "text": "Seattle Element 3"
+        },
+        {
+          "level": "h4",
+          "text": "Santa Barbara Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Tahoe Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Big Creek Ranch Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Orcas Island Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Peninsula Shift"
+        },
+        {
+          "level": "h4",
+          "text": "Coastal Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Deming M2"
+        },
+        {
+          "level": "h4",
+          "text": "Spencer Lake Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Custom Elemental 5"
+        },
+        {
+          "level": "h4",
+          "text": "Hood Canal M Series"
+        },
+        {
+          "level": "h4",
+          "text": "Lopez Island Cabin 2"
+        },
+        {
+          "level": "h4",
+          "text": "Sonoma Elemental"
+        },
+        {
+          "level": "h4",
+          "text": "Big Creek Ranch Cabin II"
+        },
+        {
+          "level": "h4",
+          "text": "Lake Whatcom Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "San Juan Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Obstruction Island Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Marrowstone Island Elemental"
+        },
+        {
+          "level": "h4",
+          "text": "White Rock II"
+        },
+        {
+          "level": "h4",
+          "text": "Modern Monogram Elemental"
+        },
+        {
+          "level": "h4",
+          "text": "Lid Park"
+        },
+        {
+          "level": "h4",
+          "text": "Seattle Option"
+        },
+        {
+          "level": "h4",
+          "text": "Vashon Island Cabin"
+        },
+        {
+          "level": "h4",
+          "text": "Bainbridge Island Option"
+        },
+        {
+          "level": "h2",
+          "text": "Filters"
+        }
+      ],
+      "paragraphs": [
+        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
+        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
+        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
+        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
+      ],
+      "images": [
+        {
+          "file": "predesigned-portfolio/01-a4dabe70.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/6582f01cece248054cd5a54d_Orcas%20Retreat%205.webp",
+          "bytes": 511902
+        },
+        {
+          "file": "predesigned-portfolio/02-79d9cb5b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e6495ea8779a2cfb24ab69_Phinney%20Option.webp",
+          "bytes": 892854
+        },
+        {
+          "file": "predesigned-portfolio/03-4819d4be.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e4c20c9dfb1e57e750777c_camano%202m%20shift%20prefabricated%20home%20by%20method%20homes.webp",
+          "bytes": 276528
+        },
+        {
+          "file": "predesigned-portfolio/04-c9a719f7.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6590a0b5bf12377084528ef7_Grouparchitect_Bryant_Optioan_1648-018.webp",
+          "bytes": 219242
+        },
+        {
+          "file": "predesigned-portfolio/05-0e4b0877.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6590a30011b41d11bc0136d2_oaklandC_5-1%20copy.webp",
+          "bytes": 232214
+        },
+        {
+          "file": "predesigned-portfolio/06-eb26bcd6.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31abad7c64851ec284ca1_Method-Cabin-11.webp",
+          "bytes": 251716
+        },
+        {
+          "file": "predesigned-portfolio/07-731cebb5.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e260c24510dd44565f75dd_138.webp",
+          "bytes": 85454
+        },
+        {
+          "file": "predesigned-portfolio/08-a4c1854b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e07bfef3a1c0611bfcb152_seattle_element3.webp",
+          "bytes": 150868
+        },
+        {
+          "file": "predesigned-portfolio/09-1b9eaa84.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e260457d4560da0677e4cc_sb_cabin1-1.webp",
+          "bytes": 61138
+        },
+        {
+          "file": "predesigned-portfolio/10-739f1098.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31c312688029857aa0440_tahoe_cabin.webp",
+          "bytes": 211016
+        },
+        {
+          "file": "predesigned-portfolio/11-d50bb90e.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e324a7746dd3ee8ae0b713_69.webp",
+          "bytes": 126726
+        },
+        {
+          "file": "predesigned-portfolio/12-1b8837b5.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31cb5bba950cd2559c175_158.webp",
+          "bytes": 234988
+        },
+        {
+          "file": "predesigned-portfolio/13-4a5fb487.jpg",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a3ee224d028050611a36fa9_Peninsual%20Shift%20-%20Exterior--4_Edit.jpg",
+          "bytes": 2683444
+        },
+        {
+          "file": "predesigned-portfolio/14-ae2d370b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e25f967aaf5c2c6286b9ad_Cove_Beach_Aerial-0053.webp",
+          "bytes": 230944
+        },
+        {
+          "file": "predesigned-portfolio/15-c92482fb.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e31a4c8aa7b3b27a1baf33_slider4.webp",
+          "bytes": 260932
+        },
+        {
+          "file": "predesigned-portfolio/16-017ec14b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e320c6d7c64851ec2b1ffc_lannieboesiger_lo_23.webp",
+          "bytes": 112080
+        },
+        {
+          "file": "predesigned-portfolio/17-14b41fb0.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32677b726d93dd0ee5edc_IMG_9349.webp",
+          "bytes": 88664
+        },
+        {
+          "file": "predesigned-portfolio/18-f10de457.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e327047c25d085e7959298_Quilcene_5_smaller.webp",
+          "bytes": 216470
+        },
+        {
+          "file": "predesigned-portfolio/19-8e0033f7.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32ad478346d12b7144deb_Lopez_Cabin2-3.webp",
+          "bytes": 78040
+        },
+        {
+          "file": "predesigned-portfolio/20-4599f6de.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32b382c3b542344348205_Cloverdale34.webp",
+          "bytes": 104388
+        },
+        {
+          "file": "predesigned-portfolio/21-12a7ce11.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e325a6061034866969bac1_316.webp",
+          "bytes": 114924
+        },
+        {
+          "file": "predesigned-portfolio/22-b3a524e9.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e3298ab8f69754a4ec2e73_Lake-Whatcom-1.webp",
+          "bytes": 199026
+        },
+        {
+          "file": "predesigned-portfolio/23-0e1704ec.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e3254bcd2f1bebcdddaa9f_150.webp",
+          "bytes": 157656
+        },
+        {
+          "file": "predesigned-portfolio/24-836d8f77.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/65e32452fdd2f9e0105ee34d_224.webp",
+          "bytes": 170212
+        }
+      ],
+      "links": [
+        "https://www.methodhomes.net",
+        "https://www.methodhomes.net/custom-residential",
+        "https://www.methodhomes.net/predesigned-residential",
+        "https://www.methodhomes.net/featured-projects",
+        "https://www.methodhomes.net/custom-portfolio",
+        "https://www.methodhomes.net/commercial",
+        "https://www.methodhomes.net/commercial-portfolio",
+        "https://www.methodhomes.net/about",
+        "https://www.methodhomes.net/arc",
+        "https://www.methodhomes.net/what-is-prefab",
+        "https://www.methodhomes.net/faq",
+        "https://www.methodhomes.net/process-services",
+        "https://www.methodhomes.net/pricing",
+        "https://www.methodhomes.net/sustainability",
+        "https://www.methodhomes.net/blog",
+        "https://www.methodhomes.net/get-started",
+        "https://www.methodhomes.net/predesigned-portfolio/phinney-option",
+        "https://www.methodhomes.net/predesigned-portfolio/camano-shift",
+        "https://www.methodhomes.net/predesigned-portfolio/bryant-option",
+        "https://www.methodhomes.net/predesigned-portfolio/santa-rosa-annata",
+        "https://www.methodhomes.net/predesigned-portfolio/glacier-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/paradigm-i",
+        "https://www.methodhomes.net/predesigned-portfolio/seattle-element-3",
+        "https://www.methodhomes.net/predesigned-portfolio/santa-barbara-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/tahoe-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/orcas-island-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/peninsula-shift",
+        "https://www.methodhomes.net/predesigned-portfolio/coastal-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/deming-m2",
+        "https://www.methodhomes.net/predesigned-portfolio/spencer-lake-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/custom-elemental-5",
+        "https://www.methodhomes.net/predesigned-portfolio/hood-canal-m-series",
+        "https://www.methodhomes.net/predesigned-portfolio/lopez-island-cabin-2",
+        "https://www.methodhomes.net/predesigned-portfolio/sonoma-elemental",
+        "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin-ii",
+        "https://www.methodhomes.net/predesigned-portfolio/lake-whatcom-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/san-juan-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/obstruction-island-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/marrowstone-island-elemental",
+        "https://www.methodhomes.net/predesigned-portfolio/white-rock-ii-custom",
+        "https://www.methodhomes.net/predesigned-portfolio/modern-monogram-elemental",
+        "https://www.methodhomes.net/predesigned-portfolio/lid-park-custom",
+        "https://www.methodhomes.net/predesigned-portfolio/seattle-option",
+        "https://www.methodhomes.net/predesigned-portfolio/vashon-island-cabin",
+        "https://www.methodhomes.net/predesigned-portfolio/bainbridge-island-option",
+        "https://www.methodhomes.net/predesigned-portfolio",
+        "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+        "https://www.methodhomes.net/press",
+        "https://www.methodhomes.net/privacy-policy"
+      ],
+      "files": []
+    },
+    "/commercial-portfolio": {
+      "url": "https://www.methodhomes.net/commercial-portfolio",
+      "slug": "commercial-portfolio",
+      "title": "Commercial Portfolio",
+      "metaDesc": "Explore our portfolio of built commercial projects. Northstar Yoga Studio - Tahoe, CA | SEED Classroom - Seattle, WA | Skylodge - Powder Mountain, UT | West Seattle Townhomes - West Seattle",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Commercial Portfolio"
+        },
+        {
+          "level": "h4",
+          "text": "Fish Bay Cottages Lopez Island"
+        },
+        {
+          "level": "h4",
+          "text": "Seed Classroom"
+        },
+        {
+          "level": "h4",
+          "text": "Skylodge"
+        },
+        {
+          "level": "h4",
+          "text": "Northstar Yoga Studio"
+        },
+        {
+          "level": "h4",
+          "text": "Village North"
+        },
+        {
+          "level": "h4",
+          "text": "West Seattle Townhomes"
+        },
+        {
+          "level": "h4",
+          "text": "Rico Workforce Development"
+        },
+        {
+          "level": "h4",
+          "text": "Taproot Theater"
+        },
+        {
+          "level": "h4",
+          "text": "Village Walk Northstar Tahoe"
+        },
+        {
+          "level": "h4",
+          "text": "Tahoe Park Concession"
+        },
+        {
+          "level": "h4",
+          "text": "Make it Right"
+        },
+        {
+          "level": "h4",
+          "text": "Chartwell School Addition"
+        },
+        {
+          "level": "h4",
+          "text": "The Valley School"
+        },
+        {
+          "level": "h2",
+          "text": "Filters"
+        }
+      ],
+      "paragraphs": [
+        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
+        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
+        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
+        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
+      ],
+      "images": [
+        {
+          "file": "commercial-portfolio/01-c0efcffd.webp",
+          "alt": "Interior view of a cozy wooden lodge with a sofa, large windows overlooking a deck with picnic tables and mountains in the distance.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/65e650ae29d21803c12d2464_skylodge%20by%20method%20homes%20commercial%20project.webp",
+          "bytes": 507172
+        },
+        {
+          "file": "commercial-portfolio/02-acd1f86f.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994c593d9bbf28478558f39_fishbay-cottages-wide.webp",
+          "bytes": 321350
+        },
+        {
+          "file": "commercial-portfolio/03-988cd6b1.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f68287b2cf19820b0ce3_65e64fba4e75f450e3c2bf07_SEED%2520classroom%2520commercial%2520project%2520by%2520Method%2520Homes.webp",
+          "bytes": 1156960
+        },
+        {
+          "file": "commercial-portfolio/04-c0afa7df.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682352f235fde92fa91_65949eb36065064afab4a0f5_Skylodge%2520patio.webp",
+          "bytes": 312958
+        },
+        {
+          "file": "commercial-portfolio/05-8f6b9318.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682b5da08b3d24fc5cf_65e64fa649866f065f34ca34_Northstar%2520Yoga%2520Studio%2520commercial%2520project%2520by%2520Method%2520Homes.webp",
+          "bytes": 689256
+        },
+        {
+          "file": "commercial-portfolio/06-e8bc226e.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994c08fb8c12ac02171a5ef_village-north-housing-lopez.webp",
+          "bytes": 339994
+        },
+        {
+          "file": "commercial-portfolio/07-d91e1a21.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f68291658685c1d5e05c_65949fdd0b07e0284dab6e12_141010-07f.webp",
+          "bytes": 943504
+        },
+        {
+          "file": "commercial-portfolio/08-ae630430.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a171fea2ba04773f2c60b41_rico-affordable-workforce-housing-pano.webp",
+          "bytes": 974804
+        },
+        {
+          "file": "commercial-portfolio/09-a9f91c17.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f6823f025fc7535f99a6_65e3656c683fe19430f48153_Taproot_Old_and_New.webp",
+          "bytes": 159590
+        },
+        {
+          "file": "commercial-portfolio/10-13b8e5bd.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a5558df244d7bd5cff1b6e0_village-walk-hero.webp",
+          "bytes": 778568
+        },
+        {
+          "file": "commercial-portfolio/11-68dac2cb.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6637f682acdca762bbf2b5ae_65e36773b726d93dd00e36a8_Adventure%252BParks%252BLake%252BTahoe%252Bside%252Bperspective.webp",
+          "bytes": 284542
+        },
+        {
+          "file": "commercial-portfolio/12-66515a96.jpg",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a2af9c5ff3b3d79e866eff7_make-it-right-exterior.jpeg",
+          "bytes": 755327
+        },
+        {
+          "file": "commercial-portfolio/13-ab0e5b7a.png",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a32f1d86d152527125e6b11_chartwell-school-addition-1.png",
+          "bytes": 534324
+        },
+        {
+          "file": "commercial-portfolio/14-f6c993b9.png",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a32f7863c7150c6d3e2a10a_the-valley-school.png",
+          "bytes": 3557766
+        },
+        {
+          "file": "commercial-portfolio/17-d1808ea1.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/691e92e33b737ea4554e82d9_green-yt.webp",
+          "bytes": 70832
+        }
+      ],
+      "links": [
+        "https://www.methodhomes.net",
+        "https://www.methodhomes.net/custom-residential",
+        "https://www.methodhomes.net/commercial",
+        "https://www.methodhomes.net/about",
+        "https://www.methodhomes.net/get-started",
+        "https://www.methodhomes.net/predesigned-residential",
+        "https://www.methodhomes.net/featured-projects",
+        "https://www.methodhomes.net/custom-portfolio",
+        "https://www.methodhomes.net/commercial-portfolio",
+        "https://www.methodhomes.net/arc",
+        "https://www.methodhomes.net/what-is-prefab",
+        "https://www.methodhomes.net/faq",
+        "https://www.methodhomes.net/process-services",
+        "https://www.methodhomes.net/pricing",
+        "https://www.methodhomes.net/sustainability",
+        "https://www.methodhomes.net/blog",
+        "https://www.methodhomes.net/commercial-portfolio/fish-bay-cottages-lopez-island",
+        "https://www.methodhomes.net/commercial-portfolio/seed-classroom-designed-by-stacy-smedley",
+        "https://www.methodhomes.net/commercial-portfolio/skylodge",
+        "https://www.methodhomes.net/commercial-portfolio/northstar-yoga-studio",
+        "https://www.methodhomes.net/commercial-portfolio/village-north-affordable-workforce-housing-with-housing-lopez",
+        "https://www.methodhomes.net/commercial-portfolio/west-seattle-townhomes-commercial",
+        "https://www.methodhomes.net/commercial-portfolio/rico-workforce-development-designed-by-lda-architects",
+        "https://www.methodhomes.net/commercial-portfolio/taproot-theatre-commercial",
+        "https://www.methodhomes.net/commercial-portfolio/village-walk-northstar-tahoe-commercial",
+        "https://www.methodhomes.net/commercial-portfolio/tahoe-park-concession-commercial",
+        "https://www.methodhomes.net/commercial-portfolio/make-it-right-fort-peck-sustainable-village",
+        "https://www.methodhomes.net/commercial-portfolio/chartwell-school-addition-with-grouparchitect",
+        "https://www.methodhomes.net/commercial-portfolio/the-valley-school-with-workshop-ad",
+        "https://www.methodhomes.net/predesigned-portfolio",
+        "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+        "https://www.methodhomes.net/press",
+        "https://www.methodhomes.net/privacy-policy"
+      ],
+      "files": []
+    },
+    "/custom-portfolio": {
+      "url": "https://www.methodhomes.net/custom-portfolio",
+      "slug": "custom-portfolio",
+      "title": "Custom Residential Homes Portfolio",
+      "metaDesc": "Browse our portfolio of custom residential projects. Explore our modern, efficient, sustainable, custom-designed homes. Martis 416 - Tahoe, CA | Truckee Custom - Truckee, CA",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Custom Residential Portfolio"
+        },
+        {
+          "level": "h4",
+          "text": "Martis 416"
+        },
+        {
+          "level": "h4",
+          "text": "Truckee Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Peninsula Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Chimney Rock"
+        },
+        {
+          "level": "h4",
+          "text": "Carmel Valley Residence"
+        },
+        {
+          "level": "h4",
+          "text": "Martis 663"
+        },
+        {
+          "level": "h4",
+          "text": "Idaho Mountain Home"
+        },
+        {
+          "level": "h4",
+          "text": "Fish Creek Passage"
+        },
+        {
+          "level": "h4",
+          "text": "Tahoe Custom"
+        },
+        {
+          "level": "h4",
+          "text": "SV Residence"
+        },
+        {
+          "level": "h4",
+          "text": "Friday Harbor"
+        },
+        {
+          "level": "h4",
+          "text": "Portola Valley"
+        },
+        {
+          "level": "h4",
+          "text": "Calistoga Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Santa Rosa Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Beehive Guesthouse"
+        },
+        {
+          "level": "h4",
+          "text": "Snowflake Lodge"
+        },
+        {
+          "level": "h4",
+          "text": "Oakland Custom"
+        },
+        {
+          "level": "h4",
+          "text": "JH Mountainview"
+        },
+        {
+          "level": "h4",
+          "text": "Jackson Hole"
+        },
+        {
+          "level": "h4",
+          "text": "Truckee Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Martis Camp"
+        },
+        {
+          "level": "h4",
+          "text": "Martis 476"
+        },
+        {
+          "level": "h4",
+          "text": "San Juan Island"
+        },
+        {
+          "level": "h4",
+          "text": "Belmont Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Portola Custom"
+        },
+        {
+          "level": "h4",
+          "text": "HOMB Portland"
+        },
+        {
+          "level": "h4",
+          "text": "Ketchikan Custom"
+        },
+        {
+          "level": "h4",
+          "text": "HOIF Seattle"
+        },
+        {
+          "level": "h4",
+          "text": "Brittania Beach"
+        },
+        {
+          "level": "h4",
+          "text": "Pacific Palisades Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Jackson Hole"
+        },
+        {
+          "level": "h4",
+          "text": "Venice Beach"
+        },
+        {
+          "level": "h4",
+          "text": "Lid Park"
+        },
+        {
+          "level": "h4",
+          "text": "Bainbridge Island"
+        },
+        {
+          "level": "h4",
+          "text": "Palisades Tahoe Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Sun Valley"
+        },
+        {
+          "level": "h4",
+          "text": "Mercer Island 3"
+        },
+        {
+          "level": "h4",
+          "text": "Burlingame Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Menlo Park"
+        },
+        {
+          "level": "h4",
+          "text": "San Juan"
+        },
+        {
+          "level": "h4",
+          "text": "Olympic Valley"
+        },
+        {
+          "level": "h4",
+          "text": "Greenville Fire Rebuilds"
+        },
+        {
+          "level": "h4",
+          "text": "Guemes Tidelands"
+        },
+        {
+          "level": "h4",
+          "text": "Orcas Retreat Washington"
+        },
+        {
+          "level": "h4",
+          "text": "West End Wetlands Custom"
+        },
+        {
+          "level": "h4",
+          "text": "Canopy House"
+        },
+        {
+          "level": "h4",
+          "text": "Moose Wilson Stream"
+        },
+        {
+          "level": "h4",
+          "text": "Mountain Village"
+        },
+        {
+          "level": "h4",
+          "text": "Jefferson Knoll"
+        },
+        {
+          "level": "h4",
+          "text": "Vineyard Court"
+        },
+        {
+          "level": "h4",
+          "text": "Creekbend"
+        },
+        {
+          "level": "h2",
+          "text": "Filters"
+        }
+      ],
+      "paragraphs": [
+        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
+        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
+        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
+        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
+      ],
+      "images": [
+        {
+          "file": "custom-portfolio/01-c00565bb.webp",
+          "alt": "Modern two-story black house with large windows and outdoor seating fire pit surrounded by tall pine trees at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/65e4fd4b8aeed86e7d8e7bae_truckee%20custom%20residential%20project.webp",
+          "bytes": 488658
+        },
+        {
+          "file": "custom-portfolio/02-751f350b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09fc30c97f93ae7253a_65e4c2a2cff7f8be3f19d4aa_Martis%2520416.webp",
+          "bytes": 553316
+        },
+        {
+          "file": "custom-portfolio/03-1c3c43a2.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e22216e428451d008_6564e2e3ccb8951116bc647d_truckee%2520feature%2520img.webp",
+          "bytes": 332734
+        },
+        {
+          "file": "custom-portfolio/04-81bfc8d8.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e3d82264ea85a2369_65e4c2642742f182a71058f9_Peninsula%2520custom.webp",
+          "bytes": 175362
+        },
+        {
+          "file": "custom-portfolio/05-109e1a4d.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e6fa8b47bafddffd0_654e331e65088acbdee4d10e_Chimney%2520Rock%2520in%2520Napa%2520California%2520by%2520Method%2520Homes.webp",
+          "bytes": 156172
+        },
+        {
+          "file": "custom-portfolio/06-d07ce635.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69939f9d8a861828ace92a64_schicketanz-carmel-home-under-trees.webp",
+          "bytes": 678678
+        },
+        {
+          "file": "custom-portfolio/07-bb0cda4d.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9fea27279938c0965fb10_martis-camp-front-door-full.webp",
+          "bytes": 182640
+        },
+        {
+          "file": "custom-portfolio/08-c07e621a.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9fd6175f33ab0b5b8df14_Exterior%2001.webp",
+          "bytes": 465512
+        },
+        {
+          "file": "custom-portfolio/09-3e76e81d.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6994cde6cc444d453cc5516f_fish-creek-diagonal-illuminated.webp",
+          "bytes": 197454
+        },
+        {
+          "file": "custom-portfolio/10-f50bd9b1.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a345e7e47e1aa211c0_65e35d3f8aa7b3b27a3e7dd4_tahoe.webp",
+          "bytes": 147146
+        },
+        {
+          "file": "custom-portfolio/11-caad40f2.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6993ab6e009eda1a0ae57505_SV%20Residence%20%20less%20red%20for%20WEB.webp",
+          "bytes": 342892
+        },
+        {
+          "file": "custom-portfolio/12-419b4ba0.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09e033bb60c681df4c0_6564e8ac457aac9713156960_Friday%252BHarbor%252BCustom%252B2%2520(1).webp",
+          "bytes": 605030
+        },
+        {
+          "file": "custom-portfolio/13-a84680bb.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6a72476e3c71e2882634fad4_sagemodern-portola-valley.webp",
+          "bytes": 462926
+        },
+        {
+          "file": "custom-portfolio/14-33f57f41.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a4af86928c02f535df_65e3626382880d081d7782d7_Calistoga%252BCustom%252BPrefabricated%252BHome%252Bby%252BMethod.webp",
+          "bytes": 103982
+        },
+        {
+          "file": "custom-portfolio/15-e066e5ac.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69a9ff67638a6d73990a9a06_santa-rosa-custom-twighlight.webp",
+          "bytes": 835742
+        },
+        {
+          "file": "custom-portfolio/16-ed9b652d.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69ab174cf5017ffff28ab6ad_Beehive-Guesthouse-Exterior-1.webp",
+          "bytes": 79872
+        },
+        {
+          "file": "custom-portfolio/17-9d0dae97.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/69b08b7cd4252ca810c99485_snowflake-lodge-durability.webp",
+          "bytes": 43822
+        },
+        {
+          "file": "custom-portfolio/18-8cbe9bdf.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a07d44d52903d40f07_65e32cb19e2ce4ad8729a6c4_santaRosa_1-1.webp",
+          "bytes": 170330
+        },
+        {
+          "file": "custom-portfolio/19-fea163d7.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a7093353a0d464a207_65e371cd92a2687a5eda1ea1_Damon_01.webp",
+          "bytes": 525146
+        },
+        {
+          "file": "custom-portfolio/20-864d19eb.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b09fe19ff83ca2d931e4_65e32bbd746dd3ee8ae4701d_Method-Jackson-Hole-October-10.webp",
+          "bytes": 104240
+        },
+        {
+          "file": "custom-portfolio/21-13996c15.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a38e8cce0ba76a502b_65e3645e67b227d8dfdd8521_65e35f4122809c85fb5176a7_094MartisCamp23%2520copy.webp",
+          "bytes": 87882
+        },
+        {
+          "file": "custom-portfolio/22-edb2afa4.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a23d82264ea85a2663_65e35b454f33f6583b8a12ec_martis_camp.webp",
+          "bytes": 163240
+        },
+        {
+          "file": "custom-portfolio/23-9f64e3ea.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a298c3bb8e345b7871_65e35cd20fb615e1944d26ba_martis476_3.webp",
+          "bytes": 279878
+        },
+        {
+          "file": "custom-portfolio/24-84b04f79.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/6633b0a48a01eeba4c8820de_65e3601ea7e652925576bd42_San%252BJuan%252BIsland%252BCustom%252BPrefabricated%252Bhome%252Bby%252BMethod%252BHomes%252B-%252Boutside%252Bat%252Bsunsest.webp",
+          "bytes": 236002
+        }
+      ],
+      "links": [
+        "https://www.methodhomes.net",
+        "https://www.methodhomes.net/custom-residential",
+        "https://www.methodhomes.net/predesigned-residential",
+        "https://www.methodhomes.net/featured-projects",
+        "https://www.methodhomes.net/custom-portfolio",
+        "https://www.methodhomes.net/commercial",
+        "https://www.methodhomes.net/commercial-portfolio",
+        "https://www.methodhomes.net/about",
+        "https://www.methodhomes.net/arc",
+        "https://www.methodhomes.net/what-is-prefab",
+        "https://www.methodhomes.net/faq",
+        "https://www.methodhomes.net/process-services",
+        "https://www.methodhomes.net/pricing",
+        "https://www.methodhomes.net/sustainability",
+        "https://www.methodhomes.net/blog",
+        "https://www.methodhomes.net/get-started",
+        "https://www.methodhomes.net/custom-portfolio/martis-416-custom-home-designed-by-sagemodern-architects",
+        "https://www.methodhomes.net/custom-portfolio/truckee-custom",
+        "https://www.methodhomes.net/custom-portfolio/peninsula-custom-by-studio-s2",
+        "https://www.methodhomes.net/custom-portfolio/chimney-rock-designed-by-nick-noyes-architects",
+        "https://www.methodhomes.net/custom-portfolio/carmel-valley-residence-by-studio-schicketanz",
+        "https://www.methodhomes.net/custom-portfolio/martis-663-by-sagemodern",
+        "https://www.methodhomes.net/custom-portfolio/idaho-mountain-home",
+        "https://www.methodhomes.net/custom-portfolio/fish-creek-passage-by-method-arc",
+        "https://www.methodhomes.net/custom-portfolio/tahoe-custom",
+        "https://www.methodhomes.net/custom-portfolio/sv-residence-custom",
+        "https://www.methodhomes.net/custom-portfolio/friday-harbor-custom-by-fish-mackay-architects",
+        "https://www.methodhomes.net/custom-portfolio/portola-valley-custom",
+        "https://www.methodhomes.net/custom-portfolio/calistoga-custom",
+        "https://www.methodhomes.net/custom-portfolio/santa-rosa-custom-by-tobylongdesign",
+        "https://www.methodhomes.net/custom-portfolio/beehive-guesthouse-designed-by-method-arc",
+        "https://www.methodhomes.net/custom-portfolio/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+        "https://www.methodhomes.net/custom-portfolio/oakland-custom",
+        "https://www.methodhomes.net/custom-portfolio/jh-mountainview",
+        "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom",
+        "https://www.methodhomes.net/custom-portfolio/truckee-custom-by-clever-homes",
+        "https://www.methodhomes.net/custom-portfolio/martis-camp-custom",
+        "https://www.methodhomes.net/custom-portfolio/martis-476-custom",
+        "https://www.methodhomes.net/custom-portfolio/san-juan-island-custom",
+        "https://www.methodhomes.net/custom-portfolio/belmont-custom",
+        "https://www.methodhomes.net/custom-portfolio/portola-custom",
+        "https://www.methodhomes.net/custom-portfolio/homb-portland",
+        "https://www.methodhomes.net/custom-portfolio/ketchikan-custom",
+        "https://www.methodhomes.net/custom-portfolio/house-of-the-immediate-future-seattle-custom",
+        "https://www.methodhomes.net/custom-portfolio/brittania-beach-custom",
+        "https://www.methodhomes.net/custom-portfolio/pacific-palisades-custom",
+        "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom-d1348",
+        "https://www.methodhomes.net/custom-portfolio/venice-beach-custom",
+        "https://www.methodhomes.net/custom-portfolio/lid-park-custom",
+        "https://www.methodhomes.net/custom-portfolio/bainbridge-island-custom",
+        "https://www.methodhomes.net/custom-portfolio/palisades-tahoe-custom",
+        "https://www.methodhomes.net/custom-portfolio/sun-valley-custom",
+        "https://www.methodhomes.net/custom-portfolio/mercer-island-3-custom",
+        "https://www.methodhomes.net/custom-portfolio/burlingame-custom-designed-by-clever-homes",
+        "https://www.methodhomes.net/custom-portfolio/menlo-park-custom-by-clever-homes",
+        "https://www.methodhomes.net/custom-portfolio/san-juan-custom",
+        "https://www.methodhomes.net/custom-portfolio/olympic-valley-custom-home",
+        "https://www.methodhomes.net/custom-portfolio/greenville-fire-rebuilds-custom",
+        "https://www.methodhomes.net/custom-portfolio/guemes-tidelands-custom",
+        "https://www.methodhomes.net/custom-portfolio/orcas-retreat-washington",
+        "https://www.methodhomes.net/custom-portfolio/west-end-wetlands-custom",
+        "https://www.methodhomes.net/custom-portfolio/canopy-house",
+        "https://www.methodhomes.net/custom-portfolio/moose-crossing-custom",
+        "https://www.methodhomes.net/custom-portfolio/mountain-village-peak-custom",
+        "https://www.methodhomes.net/custom-portfolio/jefferson-knoll-custom",
+        "https://www.methodhomes.net/custom-portfolio/vineyard-court",
+        "https://www.methodhomes.net/custom-portfolio/creekbend-residence",
+        "https://www.methodhomes.net/predesigned-portfolio",
+        "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+        "https://www.methodhomes.net/press",
+        "https://www.methodhomes.net/privacy-policy"
+      ],
+      "files": []
+    },
+    "/featured-projects": {
+      "url": "https://www.methodhomes.net/featured-projects",
+      "slug": "featured-projects",
+      "title": "Featured Projects",
+      "metaDesc": "Browse our featured custom homes. Chimney Rock Estate - Napa, CA | SV Residence - Ketchum, ID | Martis 416 - Nevada County, CA | Calistoga Custom - Calistoga, CA | Peninsula Custom - Los Altos Hills, CA",
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Featured Projects"
+        }
+      ],
+      "paragraphs": [
+        "A modern luxury farmhouse with views of vineyards and the valley. Built for outdoor entertaining, communal gathering, and modern living.",
+        "A peaceful single level home set along the riverfront. This home blends clean lines, natural materials, and serene views.",
+        "A modern home embracing the beauty of its natural surroundings. This home strikes a balance between cozy and contemporary.",
+        "A rustic, yet elegant home defined by its cantilevered roof and open interior. This home maintains a private feel while being located just minutes away from all that Martis Camp has to offer.",
+        "A sleek and striking residence surrounded by woodlands in the back, a running creek below, and valley views all around. This home’s clean and minimalist exterior is complemented by a bold and eclectic interior.",
+        "A peaceful and contemporary home in the hills. Its open layout and great room are perfect for gathering and entertaining.",
+        "A serene and elegant retreat built for relaxation and recreation. This home welcomes the outdoors in, inviting guests to unwind in its peaceful and private forest setting.",
+        "A fire rebuild for an art collector. With a modern interior displaying fine art and a spacious outdoor area for lounging, this home brings new life and beauty to the property.",
+        "A cozy three module home, embracing the charm of the Salish Sea Coast. Though it is compact, the home maintains an open layout and welcomes in the stunning views of its surroundings.",
+        "Fill out an intake survey to get in touch with one of our project managers and start your project.",
+        "Sign up for our infrequent, but informational newsletter to receive project updates, company news, and more information about what we do.",
+        "Fill out our intake survey to get in touch with a knowledgeable sales representative.",
+        "Sign up for our infrequent but informational newsletter to receive project updates, company news, and more information about what we do."
+      ],
+      "images": [
+        {
+          "file": "featured-projects/01-fb3f091b.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/68d59a59f44a113334af8da3_eea1d883baaabe04a4e4bc8d3861a842c38b5568%20(1).webp",
+          "bytes": 223496
+        },
+        {
+          "file": "featured-projects/02-1a785b31.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/654e2d17ca02e3904b4df6c0/68d521c8c177fde0bdb82329_Peninsula%20Custom%2004%20(1).webp",
+          "bytes": 297564
+        },
+        {
+          "file": "featured-projects/03-40810a50.avif",
+          "alt": "Modern house with glass walls next to a rectangular pool and landscaped yard with trees and shrubs, overlooking distant hills under a cloudy sky.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d12719fa475fc558116da3_9%203.avif",
+          "bytes": 42039
+        },
+        {
+          "file": "featured-projects/04-1d424819.webp",
+          "alt": "Modern two-story house with wood and black metal siding, large glass windows, and outdoor lighting in a landscaped yard at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/69654db7bb20111690f065e6_55341498a7b70a1fc8b5ea5a9018ff87_GabeBorder-Wilson-19%20for%20web.webp",
+          "bytes": 324274
+        },
+        {
+          "file": "featured-projects/05-9df8a897.avif",
+          "alt": "Modern two-story house with wood and black metal siding, large glass windows, and outdoor lighting in a landscaped yard at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d152bb4dd1b9d4d83814dc_WSR%20Residence%20%20less%20red%202.avif",
+          "bytes": 54662
+        },
+        {
+          "file": "featured-projects/06-110ae255.avif",
+          "alt": "Modern wooden house with large windows and outdoor seating surrounded by tall pine trees at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d152f4d60ec7ffb905bc42_martis%20416%204.avif",
+          "bytes": 104743
+        },
+        {
+          "file": "featured-projects/07-da3504ad.avif",
+          "alt": "Modern two-story house with large glass windows, wooden paneling, outdoor seating area, and a reflecting pool at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d1531e0838388259684956_FranzValleyResidence_PhotoByBruceDamonte_15%20(2)%201%20(2).avif",
+          "bytes": 21738
+        },
+        {
+          "file": "featured-projects/08-6629cf75.avif",
+          "alt": "Modern house with a covered patio and outdoor seating beside a rectangular swimming pool and green lawn under a clear blue sky.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153499f8fcba746d1f453_DSC01327%204.avif",
+          "bytes": 59911
+        },
+        {
+          "file": "featured-projects/09-6f50a2ec.avif",
+          "alt": "Modern house entrance with large wooden door, glass panels, and surrounded by tall pine trees.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153741f8900104cfd1111_MartisCamp1275_Final%201.avif",
+          "bytes": 94650
+        },
+        {
+          "file": "featured-projects/10-896d1c8e.avif",
+          "alt": "Modern house with wood, glass, and concrete exterior, lit stairs, and landscaped garden at dusk.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68d153b7d39fcb9536605ed6_080724-758%20(1)%201.avif",
+          "bytes": 43074
+        },
+        {
+          "file": "featured-projects/11-be628999.webp",
+          "alt": "Modern house with large sliding glass doors opening to a wooden deck surrounded by tall trees.",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/68ffc425e062a526f0dd7138_Orcas%20Retreat%2007.webp",
+          "bytes": 957110
+        },
+        {
+          "file": "featured-projects/14-d1808ea1.webp",
+          "alt": "",
+          "source": "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/691e92e33b737ea4554e82d9_green-yt.webp",
+          "bytes": 70832
+        }
+      ],
+      "links": [
+        "https://www.methodhomes.net",
+        "https://www.methodhomes.net/custom-residential",
+        "https://www.methodhomes.net/predesigned-residential",
+        "https://www.methodhomes.net/featured-projects",
+        "https://www.methodhomes.net/custom-portfolio",
+        "https://www.methodhomes.net/commercial",
+        "https://www.methodhomes.net/commercial-portfolio",
+        "https://www.methodhomes.net/about",
+        "https://www.methodhomes.net/arc",
+        "https://www.methodhomes.net/what-is-prefab",
+        "https://www.methodhomes.net/faq",
+        "https://www.methodhomes.net/process-services",
+        "https://www.methodhomes.net/pricing",
+        "https://www.methodhomes.net/sustainability",
+        "https://www.methodhomes.net/blog",
+        "https://www.methodhomes.net/get-started",
+        "https://www.methodhomes.net/project/calistoga",
+        "https://www.methodhomes.net/project/peninsula",
+        "https://www.methodhomes.net/chimney-rock-estate",
+        "https://www.methodhomes.net/fish-creek",
+        "https://www.methodhomes.net/sv-residence",
+        "https://www.methodhomes.net/martis-camp-416",
+        "https://www.methodhomes.net/calistoga",
+        "https://www.methodhomes.net/peninsula",
+        "https://www.methodhomes.net/martis-camp-663",
+        "https://www.methodhomes.net/santa-rosa",
+        "https://www.methodhomes.net/orcas-cabin-retreat",
+        "https://www.methodhomes.net/predesigned-portfolio",
+        "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+        "https://www.methodhomes.net/press",
+        "https://www.methodhomes.net/privacy-policy"
+      ],
+      "files": []
     }
   }
 }
