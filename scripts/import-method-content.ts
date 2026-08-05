@@ -43,6 +43,11 @@ interface CapturedImage {
   source: string;
   bytes: number;
 }
+interface CapturedFile {
+  file: string;
+  source: string;
+  bytes: number;
+}
 interface CapturedPage {
   url: string;
   slug: string;
@@ -51,6 +56,7 @@ interface CapturedPage {
   headings: { level: string; text: string }[];
   paragraphs: string[];
   images: CapturedImage[];
+  files?: CapturedFile[];
 }
 
 const IMG_ROOT = "public/method";
@@ -103,6 +109,35 @@ async function uploadImage(img: CapturedImage): Promise<string | null> {
   }
 }
 
+async function uploadPdf(f: CapturedFile): Promise<string | null> {
+  const abs = path.join(IMG_ROOT, f.file);
+  if (!existsSync(abs)) return null;
+  const filename = path.basename(f.file);
+  const cacheKey = `file:${filename}`;
+  if (assetCache.has(cacheKey)) return assetCache.get(cacheKey)!;
+  try {
+    const existing = await withRetry(`lookup ${filename}`, () =>
+      client.fetch<string | null>(
+        `*[_type == "sanity.fileAsset" && originalFilename == $fn][0]._id`,
+        { fn: filename },
+      ),
+    );
+    if (existing) {
+      assetCache.set(cacheKey, existing);
+      return existing;
+    }
+    const asset = await withRetry(`upload ${filename}`, () =>
+      client.assets.upload("file", createReadStream(abs), { filename }),
+    );
+    assetCache.set(cacheKey, asset._id);
+    console.log(`  uploaded ${filename}`);
+    return asset._id;
+  } catch (err) {
+    console.log(`  SKIP file ${filename}: ${String(err).slice(0, 100)}`);
+    return null;
+  }
+}
+
 const imageRef = (assetId: string, alt?: string) => ({
   _type: "image" as const,
   asset: { _type: "reference" as const, _ref: assetId },
@@ -148,6 +183,8 @@ const PORTFOLIOS: [prefix: string, category: string][] = [
   ["/custom-portfolio/", "residential"],
   ["/predesigned-portfolio/", "predesigned"],
   ["/commercial-portfolio/", "commercial"],
+  /* the featured-projects index links these detail pages */
+  ["/project/", "residential"],
 ];
 
 async function importProjects() {
@@ -165,10 +202,24 @@ async function importProjects() {
 
     const [main, ...rest] = page.images;
     const mainAsset = main ? await uploadImage(main) : null;
-    const gallery = [];
+    const gallery: Array<ReturnType<typeof imageRef> & { _key: string }> = [];
     for (const img of rest) {
       const id = await uploadImage(img);
       if (id) gallery.push({ ...imageRef(id, img.alt), _key: key() });
+    }
+    const plans: Array<{
+      _type: "file";
+      _key: string;
+      asset: { _type: "reference"; _ref: string };
+    }> = [];
+    for (const f of page.files ?? []) {
+      const id = await uploadPdf(f);
+      if (id)
+        plans.push({
+          _type: "file" as const,
+          _key: key(),
+          asset: { _type: "reference" as const, _ref: id },
+        });
     }
 
     await withRetry(`doc`, () => client.createOrReplace({
@@ -180,6 +231,8 @@ async function importProjects() {
       summary: tagline ?? page.metaDesc ?? paras[0]?.slice(0, 200),
       ...(mainAsset ? { mainImage: imageRef(mainAsset, main!.alt) } : {}),
       ...(gallery.length ? { gallery } : {}),
+      ...(plans.length ? { plans } : {}),
+      featured: pathName.startsWith("/project/"),
       ...specs,
       body: paras.map(block),
     }));

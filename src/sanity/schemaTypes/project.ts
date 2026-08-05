@@ -104,6 +104,19 @@ export const project = defineType({
       hidden: ({ document }) => document?.category !== "residential",
     }),
     defineField({
+      name: "plans",
+      title: "Floor plans & documents",
+      description: "PDFs: floor plans, spec sheets.",
+      type: "array",
+      of: [
+        {
+          type: "file",
+          options: { accept: "application/pdf" },
+          fields: [defineField({ name: "label", title: "Label", type: "string" })],
+        },
+      ],
+    }),
+    defineField({
       name: "completedYear",
       title: "Year completed",
       type: "number",

@@ -123,18 +123,24 @@ function extract(html, pageUrl) {
     if (abs && !seen.has(abs)) images.unshift({ url: abs, alt: "" });
   }
 
-  /* internal links, for crawl discovery */
+  /* internal links, for crawl discovery; PDFs (floor plans, spec
+     sheets) collected separately for download */
   const links = new Set();
-  for (const m of html.matchAll(/<a[^>]+href=["']([^"'#?]*)["']/gi)) {
-    const abs = absolutize(m[1], pageUrl);
+  const docs = new Set();
+  for (const m of html.matchAll(/<a[^>]+href=["']([^"'#]*)["']/gi)) {
+    const abs = absolutize(m[1].split("?")[0], pageUrl);
     if (!abs) continue;
     const u = new URL(abs);
+    if (/\.pdf$/i.test(u.pathname)) {
+      docs.add(abs);
+      continue;
+    }
     if (u.origin !== new URL(ORIGIN).origin) continue;
-    if (/\.(pdf|jpg|jpeg|png|webp|zip|mp4)$/i.test(u.pathname)) continue;
+    if (/\.(jpg|jpeg|png|webp|zip|mp4)$/i.test(u.pathname)) continue;
     links.add(u.origin + u.pathname.replace(/\/$/, ""));
   }
 
-  return { title, metaDesc, headings, paragraphs, images, links: [...links] };
+  return { title, metaDesc, headings, paragraphs, images, links: [...links], docs: [...docs] };
 }
 
 const slugFor = (url) => {
@@ -183,9 +189,23 @@ async function main() {
     : { fetchedAt: null, pages: {} };
   const log = [];
 
+  const FORCE_REFRESH = [
+    "/featured-projects",
+    "/custom-portfolio",
+    "/commercial-portfolio",
+    "/predesigned-portfolio",
+  ];
   const queue = (await discover())
     .map((u) => u.replace(/\/$/, "") || ORIGIN)
     .filter((u, i, a) => a.indexOf(u) === i);
+  /* links remembered from prior passes rejoin the frontier */
+  for (const page of Object.values(existing.pages)) {
+    for (const link of page.links ?? []) queue.push(link);
+  }
+  for (const path_ of FORCE_REFRESH) {
+    delete existing.pages[path_];
+    queue.unshift(ORIGIN + path_);
+  }
   const visited = new Set(Object.keys(existing.pages));
   let fetched = 0;
 
@@ -221,6 +241,22 @@ async function main() {
         }
       }
 
+      /* floor plans / spec sheets */
+      const keptFiles = [];
+      for (const docUrl of (data.docs ?? []).slice(0, 10)) {
+        try {
+          const buf = await get(docUrl, true);
+          if (buf.length < 10_000) continue;
+          mkdirSync(dir, { recursive: true });
+          const name = `doc-${createHash("md5").update(docUrl).digest("hex").slice(0, 8)}.pdf`;
+          writeFileSync(path.join(dir, name), buf);
+          keptFiles.push({ file: `${slug}/${name}`, source: docUrl, bytes: buf.length });
+          await sleep(250);
+        } catch (e) {
+          log.push({ url: docUrl, error: String(e).slice(0, 120) });
+        }
+      }
+
       existing.pages[key] = {
         url,
         slug,
@@ -229,6 +265,8 @@ async function main() {
         headings: data.headings,
         paragraphs: data.paragraphs,
         images: kept,
+        links: data.links,
+        files: keptFiles,
       };
       fetched += 1;
       console.log(`ok ${key} — ${data.paragraphs.length} paras, ${kept.length} images`);
