@@ -22,10 +22,11 @@ export default async function SectionPage({
   searchParams,
 }: {
   params: Promise<{ slug: string }>;
-  searchParams: Promise<{ frame?: string; mode?: string; audit?: string; scheme?: string }>;
+  searchParams: Promise<{ frame?: string; mode?: string; audit?: string; scheme?: string; bg?: string }>;
 }) {
   const { slug } = await params;
-  const { frame, mode, audit, scheme } = await searchParams;
+  const { frame, mode, audit, scheme, bg } = await searchParams;
+  const ground = bg && /^(#[0-9a-fA-F]{3,8}|rgba?\([\d.,\s%]+\))$/.test(bg) ? bg : undefined;
   const entry = bySlug(slug);
   if (!entry) notFound();
 
@@ -56,6 +57,7 @@ export default async function SectionPage({
         offToken: statusFor(entry.slug)?.tokens?.offToken,
       }}
       scheme={scheme === "dark" ? "dark" : "light"}
+      ground={ground}
     />
   );
 }

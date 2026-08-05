@@ -66,11 +66,13 @@ type Compare = "off" | "overlay" | "difference";
 export function SectionViewer({
   entry,
   scheme = "light",
+  ground,
 }: {
   entry: ViewerEntry;
   /* chrome scheme (Studio embed passes its appearance) — the frame's
      own section mode stays independently switchable */
   scheme?: "light" | "dark";
+  ground?: string;
 }) {
   const [mode, setMode] = useState<Mode>(entry.modes[0]);
   const [vp, setVp] = useState<Breakpoint>("desktop");
@@ -88,10 +90,14 @@ export function SectionViewer({
     setOffset((o) => ({ x: o.x + dx, y: o.y + dy }));
 
   return (
-    <div data-mode={scheme} className="flex h-screen w-full flex-col bg-surface text-ink">
+    <div
+      data-mode={scheme}
+      className="flex h-screen w-full flex-col bg-surface text-ink"
+      style={ground ? { backgroundColor: ground } : undefined}
+    >
       <header className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-line px-6 py-4">
         <Link
-          href={scheme === "dark" ? "/library?scheme=dark" : "/library"}
+          href={`/library?scheme=${scheme}${ground ? `&bg=${encodeURIComponent(ground)}` : ""}`}
           className="label font-medium text-ink-3 hover:text-ink"
         >
           ← LIBRARY

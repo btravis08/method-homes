@@ -11,14 +11,19 @@ import { auditedAt, summaries } from "@/library/status";
 export default async function LibraryIndex({
   searchParams,
 }: {
-  searchParams: Promise<{ scheme?: string }>;
+  searchParams: Promise<{ scheme?: string; bg?: string }>;
 }) {
-  /* the Studio's Sections tool passes its appearance scheme so the
-     embedded library chrome matches */
-  const { scheme } = await searchParams;
+  /* the Studio's Sections tool passes its appearance scheme (and its
+     exact background color) so the embedded library chrome matches */
+  const { scheme, bg } = await searchParams;
   const chrome = scheme === "dark" ? "dark" : "light";
+  const ground = bg && /^(#[0-9a-fA-F]{3,8}|rgba?\([\d.,\s%]+\))$/.test(bg) ? bg : undefined;
   return (
-    <div data-mode={chrome} className="min-h-screen w-full bg-surface text-ink">
+    <div
+      data-mode={chrome}
+      className="min-h-screen w-full bg-surface text-ink"
+      style={ground ? { backgroundColor: ground } : undefined}
+    >
       <header className="border-b border-line px-6 py-8">
         <p className="label font-medium text-ink-3">SUN DAY RED</p>
         <h1 className="mt-2 font-display text-headline-md">Section library</h1>
@@ -35,6 +40,7 @@ export default async function LibraryIndex({
         groups={[...GROUPS]}
         generatedAt={auditedAt}
         scheme={chrome}
+        ground={ground}
       />
     </div>
   );
