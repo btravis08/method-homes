@@ -69,6 +69,84 @@
             "totalMs": 53
           }
         }
+      },
+      {
+        "t": "2026-08-06T11:02:13.596Z",
+        "mobile": {
+          "benchmarkIndex": 1731,
+          "perf": 64,
+          "a11y": 95,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 2831.1504999999997,
+          "cls": 0,
+          "tbt": 2462.5,
+          "lcpElement": {
+            "selector": "div.flex > div.hero-cta > div.flex > span.sdr-text-reveal",
+            "snippet": "<span class=\"sdr-text-reveal font-display text-headline-lg\">"
+          },
+          "opportunities": [
+            {
+              "id": "unused-javascript",
+              "savingsMs": 300
+            },
+            {
+              "id": "legacy-javascript",
+              "savingsMs": 150
+            }
+          ],
+          "bootup": [
+            {
+              "url": "",
+              "totalMs": 2056
+            },
+            {
+              "url": "Unattributable",
+              "totalMs": 1403
+            },
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 1250
+            }
+          ],
+          "longTasks": {
+            "count": 20,
+            "totalMs": 4435
+          }
+        },
+        "desktop": {
+          "benchmarkIndex": 2388,
+          "perf": 100,
+          "a11y": 91,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 490.08500000000004,
+          "cls": 0.00007076977349911941,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div.pointer-events-none > div.absolute > div.grid > span.sdr-text-reveal",
+            "snippet": "<span class=\"sdr-text-reveal col-start-2 justify-self-center font-display text-headline…\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 219
+            },
+            {
+              "url": "",
+              "totalMs": 95
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 69
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
       }
     ],
     "/journal": [
@@ -138,6 +216,75 @@
             {
               "url": "journal",
               "totalMs": 147
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
+      },
+      {
+        "t": "2026-08-06T11:02:53.671Z",
+        "mobile": {
+          "benchmarkIndex": 2356,
+          "perf": 96,
+          "a11y": 96,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 2496.846,
+          "cls": 0,
+          "tbt": 132.5,
+          "lcpElement": {
+            "selector": "div > div.bg-surface > header.flex > p.label",
+            "snippet": "<p class=\"label max-w-[22.875rem] text-center\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 692
+            },
+            {
+              "url": "journal",
+              "totalMs": 502
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 495
+            }
+          ],
+          "longTasks": {
+            "count": 4,
+            "totalMs": 396
+          }
+        },
+        "desktop": {
+          "benchmarkIndex": 2344,
+          "perf": 100,
+          "a11y": 91,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 575.2235000000001,
+          "cls": 0.0002493272999057179,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div > div.bg-surface > header.flex > p.label",
+            "snippet": "<p class=\"label max-w-[22.875rem] text-center\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 163
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 132
+            },
+            {
+              "url": "journal",
+              "totalMs": 120
             }
           ],
           "longTasks": {
@@ -222,6 +369,80 @@
             },
             {
               "url": "projects",
+              "totalMs": 79
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
+      },
+      {
+        "t": "2026-08-06T11:03:33.379Z",
+        "mobile": {
+          "benchmarkIndex": 2289,
+          "perf": 96,
+          "a11y": 94,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 2715.6639999999998,
+          "cls": 0,
+          "tbt": 67,
+          "lcpElement": {
+            "selector": "div.grid > a.group > div.relative > img.object-cover",
+            "snippet": "<img alt=\"West Seattle Townhomes\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover transition-transform duration-500 group-hover:scale-[1.03"
+          },
+          "opportunities": [
+            {
+              "id": "uses-responsive-images",
+              "savingsMs": 110
+            }
+          ],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 397
+            },
+            {
+              "url": "Unattributable",
+              "totalMs": 270
+            },
+            {
+              "url": "projects",
+              "totalMs": 260
+            }
+          ],
+          "longTasks": {
+            "count": 3,
+            "totalMs": 221
+          }
+        },
+        "desktop": {
+          "benchmarkIndex": 2328,
+          "perf": 100,
+          "a11y": 89,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 584.524,
+          "cls": 0,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div.grid > a.group > div.relative > img.object-cover",
+            "snippet": "<img alt=\"Village Walk Northstar Tahoe\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover transition-transform duration-500 group-hover:scale"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 127
+            },
+            {
+              "url": "Unattributable",
+              "totalMs": 85
+            },
+            {
+              "url": "2nsq1ek51g625.js",
               "totalMs": 79
             }
           ],
