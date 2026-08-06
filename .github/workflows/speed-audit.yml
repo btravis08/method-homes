@@ -1,0 +1,63 @@
+name: speed-audit
+
+# Lighthouse sweep of all captured methodhomes.net URLs, mobile + desktop,
+# sharded across parallel runners. Aggregate job commits the merged results
+# to design/perf/method-speed-sweep.json.
+on:
+  workflow_dispatch:
+
+jobs:
+  sweep:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install lighthouse
+        run: npm install --no-save lighthouse chrome-launcher
+      - name: Sweep shard
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARDS: "8"
+        run: node scripts/lighthouse-sweep.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sweep-${{ matrix.shard }}
+          path: sweep-*.json
+
+  aggregate:
+    needs: sweep
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+      - name: Merge
+        run: |
+          node -e "
+          const fs = require('fs');
+          const all = [];
+          for (const f of fs.readdirSync('artifacts').filter(f => f.endsWith('.json')))
+            all.push(...JSON.parse(fs.readFileSync('artifacts/' + f, 'utf8')));
+          all.sort((a, b) => a.url.localeCompare(b.url) || a.form.localeCompare(b.form));
+          fs.mkdirSync('design/perf', { recursive: true });
+          fs.writeFileSync('design/perf/method-speed-sweep.json', JSON.stringify({ ranAt: new Date().toISOString(), runs: all }, null, 1));
+          console.log('merged', all.length, 'runs');
+          "
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add design/perf/method-speed-sweep.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Lighthouse sweep of methodhomes.net (mobile+desktop, all pages)"
+          git push
