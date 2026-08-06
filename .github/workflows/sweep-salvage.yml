@@ -1,0 +1,69 @@
+name: sweep-salvage
+
+# Merge Lighthouse sweep shard artifacts from prior speed-audit runs
+# (completed shards across runs 1-3 cover all 331 URLs) and commit the
+# merged results. Newest run wins per (url, form).
+on:
+  workflow_dispatch:
+
+jobs:
+  salvage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          run-id: 31073743991
+          github-token: ${{ github.token }}
+          path: artifacts/r1
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          run-id: 31076577957
+          github-token: ${{ github.token }}
+          path: artifacts/r2
+          merge-multiple: true
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with:
+          run-id: 31078247852
+          github-token: ${{ github.token }}
+          path: artifacts/r3
+          merge-multiple: true
+      - name: Merge (newest run wins)
+        run: |
+          node -e "
+          const fs = require('fs');
+          const map = new Map();
+          for (const dir of ['artifacts/r1', 'artifacts/r2', 'artifacts/r3']) {
+            if (!fs.existsSync(dir)) { console.log('missing', dir); continue; }
+            for (const f of fs.readdirSync(dir).filter(f => f.endsWith('.json'))) {
+              const runs = JSON.parse(fs.readFileSync(dir + '/' + f, 'utf8'));
+              for (const r of runs) {
+                const key = r.url + '|' + r.form;
+                const prev = map.get(key);
+                // overwrite unless it would replace a real score with a null
+                if (!prev || r.score != null || prev.score == null) map.set(key, r);
+              }
+              console.log(dir + '/' + f, runs.length, 'runs');
+            }
+          }
+          const all = [...map.values()].sort((a, b) => a.url.localeCompare(b.url) || a.form.localeCompare(b.form));
+          fs.mkdirSync('design/perf', { recursive: true });
+          fs.writeFileSync('design/perf/method-speed-sweep.json', JSON.stringify({ ranAt: 'salvaged-2026-08-06', runs: all }, null, 1));
+          console.log('merged', all.length, 'unique url+form entries;', all.filter(r => r.score == null).length, 'null scores');
+          "
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          git add design/perf/method-speed-sweep.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Merge Lighthouse sweep artifacts (runs 1-3, newest wins)"
+          git push
