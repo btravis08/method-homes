@@ -1,0 +1,5301 @@
+{
+ "ranAt": "salvaged-2026-08-06",
+ "runs": [
+  {
+   "url": "https://www.methodhomes.net",
+   "form": "desktop",
+   "score": 74,
+   "lcp": 2643.0946000000004,
+   "cls": 0.00100387814275581,
+   "tbt": 21.64350000000013
+  },
+  {
+   "url": "https://www.methodhomes.net",
+   "form": "mobile",
+   "score": 28,
+   "lcp": 13612.773999999994,
+   "cls": 0.00006873532956485689,
+   "tbt": 1819.2714999999998
+  },
+  {
+   "url": "https://www.methodhomes.net/about",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1844.4133,
+   "cls": 0.0009101886004171069,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/about",
+   "form": "mobile",
+   "score": 51,
+   "lcp": 3497.7110000000002,
+   "cls": 0.3297349440181133,
+   "tbt": 866.5
+  },
+  {
+   "url": "https://www.methodhomes.net/arc",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 967.8727,
+   "cls": 0.001224531768860136,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/arc",
+   "form": "mobile",
+   "score": 41,
+   "lcp": 8199.501,
+   "cls": 0.2694547339050374,
+   "tbt": 741
+  },
+  {
+   "url": "https://www.methodhomes.net/blog",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 2351.6586749999997,
+   "cls": 0.0013015939315635515,
+   "tbt": 28
+  },
+  {
+   "url": "https://www.methodhomes.net/blog",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 8578.323,
+   "cls": 0.013076714364921145,
+   "tbt": 388
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/2013-green-washington-awards",
+   "form": "desktop",
+   "score": 85,
+   "lcp": 812.4804999999999,
+   "cls": 0.25048545369753566,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/2013-green-washington-awards",
+   "form": "mobile",
+   "score": 49,
+   "lcp": 3309.9034999999994,
+   "cls": 0.23312972702872722,
+   "tbt": 1237.000000000001
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/2014-palm-springs-modernism-week-in-review",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 683.6626500000001,
+   "cls": 0.13527572996251702,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/2014-palm-springs-modernism-week-in-review",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 3168.9735,
+   "cls": 0.15468003714390022,
+   "tbt": 916
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/783",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 730.7321000000001,
+   "cls": 0.019267353323287318,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/783",
+   "form": "mobile",
+   "score": 65,
+   "lcp": 3745.8734999999992,
+   "cls": 0.0019320983777985625,
+   "tbt": 645
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/793",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 713.0537499999998,
+   "cls": 0.007242066138191473,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/793",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 11880.507,
+   "cls": 0.001362289886601551,
+   "tbt": 87
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+   "form": "desktop",
+   "score": 81,
+   "lcp": 1411.9689999999998,
+   "cls": 0.23524786462535022,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 2682.6958,
+   "cls": 0.2666884094573248,
+   "tbt": 246.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 726.5829000000001,
+   "cls": 0.01863453274400306,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2727.014325,
+   "cls": 0.04433953017798194,
+   "tbt": 250.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1200.0058,
+   "cls": 0.0030959093816658174,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+   "form": "mobile",
+   "score": 53,
+   "lcp": 5493.4761499999995,
+   "cls": 0.2631570841960584,
+   "tbt": 287.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/alaska-custom-cabin-girdwood-prefab-set",
+   "form": "desktop",
+   "score": 81,
+   "lcp": 746.3065000000001,
+   "cls": 0.3356795249979631,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/alaska-custom-cabin-girdwood-prefab-set",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2521.5663000000004,
+   "cls": 0.0048724197388866995,
+   "tbt": 210.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1147.96,
+   "cls": 0.22210664713051428,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3087.0313,
+   "cls": 0.13394445743888328,
+   "tbt": 270.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/annata-display-2017-dwell-on-design",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 713.3091,
+   "cls": 0.0041215932048243534,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/annata-display-2017-dwell-on-design",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2613.1976,
+   "cls": 0.04241245760922683,
+   "tbt": 286.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1508.3215,
+   "cls": 0.2800454854703645,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+   "form": "mobile",
+   "score": 58,
+   "lcp": 5783.0860999999995,
+   "cls": 0.1781836197018423,
+   "tbt": 305.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/architectural-record-modular-classroom-makeover",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 715.7938999999999,
+   "cls": 0.1236043872439513,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/architectural-record-modular-classroom-makeover",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2599.96105,
+   "cls": 0.16266628959780302,
+   "tbt": 262.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/backyard-cottage-design-challenge-and-the-winners-are",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 871.6961999999999,
+   "cls": 0.20689403862700914,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/backyard-cottage-design-challenge-and-the-winners-are",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2676.409,
+   "cls": 0.17639403839713805,
+   "tbt": 226.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/backyard-cottages",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 668.1732999999999,
+   "cls": 0.18265511693226222,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/backyard-cottages",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 2725.2935999999995,
+   "cls": 0.20962194168276593,
+   "tbt": 228.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bainbridge-island-option",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 755.8568,
+   "cls": 0.002092439108731227,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bainbridge-island-option",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2466.782790930176,
+   "cls": 0.02419086060083492,
+   "tbt": 249.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/balance-s-m-l-series-prefab-studio",
+   "form": "desktop",
+   "score": 85,
+   "lcp": 739.19155,
+   "cls": 0.23713297451704674,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/balance-s-m-l-series-prefab-studio",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2756.890625,
+   "cls": 0.17592944384087153,
+   "tbt": 215.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bccustom-off-grid-cabin",
+   "form": "desktop",
+   "score": 82,
+   "lcp": 808.7562,
+   "cls": 0.295203571111729,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bccustom-off-grid-cabin",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 3233.15375,
+   "cls": 0.2216506956339656,
+   "tbt": 264.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bellingham-herald",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 710.8750000000001,
+   "cls": 0.012024732906556864,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/bellingham-herald",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2512.0236000000004,
+   "cls": 0.00849828194643962,
+   "tbt": 247
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/berkshires-custom-install-video",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 745.8481,
+   "cls": 0.0023616490305567723,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/berkshires-custom-install-video",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 5778.2819,
+   "cls": 0.23133723858240826,
+   "tbt": 303.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1023.3273,
+   "cls": 0.0030836355848370273,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+   "form": "mobile",
+   "score": 50,
+   "lcp": 6843.4347,
+   "cls": 0.28592770804871365,
+   "tbt": 216.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/best-of-install-photos",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1055.7740999999996,
+   "cls": 0.002540047405555988,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/best-of-install-photos",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3940.5949,
+   "cls": 0.0029074627828179532,
+   "tbt": 237
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blog-kickoff",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 801.4395,
+   "cls": 0.010595812933898375,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blog-kickoff",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2579.990075,
+   "cls": 0.004689491040098725,
+   "tbt": 223
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blown-in-cellulose",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 708.6914,
+   "cls": 0.0086653037975033,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blown-in-cellulose",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2515.543,
+   "cls": 0.004851026455471791,
+   "tbt": 236
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blue-ridge-cabin-foundation",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 707.59575,
+   "cls": 0.018916803210068216,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/blue-ridge-cabin-foundation",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2745.5858749999998,
+   "cls": 0.015016622231825589,
+   "tbt": 207.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/cabinets-being-installed-in-method-factory",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 768.80885,
+   "cls": 0.14989280492379986,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/cabinets-being-installed-in-method-factory",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2560.1985,
+   "cls": 0.04673418014530719,
+   "tbt": 210.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/carmel-valley-residence-in-dwell-magazine",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 1487.8087999999998,
+   "cls": 0.018350698520227672,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/carmel-valley-residence-in-dwell-magazine",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 4154.523099999999,
+   "cls": 0.002684714625854694,
+   "tbt": 246
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/carmel-valley-residence-on-america-bydesign",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 2667.2735000000002,
+   "cls": 0.0030836355848370273,
+   "tbt": 9
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/carmel-valley-residence-on-america-bydesign",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 3260.3027999999995,
+   "cls": 0.002642583833039105,
+   "tbt": 270.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/chimney-rock-residence-featured-in-2025-residential-design-awards",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1073.795825,
+   "cls": 0.00330340473583254,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/chimney-rock-residence-featured-in-2025-residential-design-awards",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 3127.7484999999997,
+   "cls": 0.04250516900428722,
+   "tbt": 255.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/coastal-large-time-lapse-video",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 798.5692500000002,
+   "cls": 0.006418562558739778,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/coastal-large-time-lapse-video",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2609.9856249999993,
+   "cls": 0.014113655177191788,
+   "tbt": 218.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-celebrate-design-in-san-francisco-june-10-11",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 768.8966499999999,
+   "cls": 0.003314522875571207,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-celebrate-design-in-san-francisco-june-10-11",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 3546.066674999999,
+   "cls": 0.16846710773537127,
+   "tbt": 222.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 778.6563249999999,
+   "cls": 0.021144528728284005,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2613.1032909301757,
+   "cls": 0.042664102824390725,
+   "tbt": 238.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-method-dwell-design-may-29-31",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 900.059,
+   "cls": 0.2777416966595814,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-method-dwell-design-may-29-31",
+   "form": "mobile",
+   "score": 53,
+   "lcp": 4801.7009,
+   "cls": 0.4545911592944313,
+   "tbt": 220
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-modern-monogram-house-built-method-tour-now",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 785.020625,
+   "cls": 0.27773477525217266,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/come-see-modern-monogram-house-built-method-tour-now",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 3120.5707749999997,
+   "cls": 0.21817195491551497,
+   "tbt": 152
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-seattle",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 663.3602000000001,
+   "cls": 0.005264280154752173,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-seattle",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2164.434690930176,
+   "cls": 0.003124077168289544,
+   "tbt": 261
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-taproots-modular-addition-unveiled-this-friday",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 753.9964000000001,
+   "cls": 0.0058241517688861905,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-taproots-modular-addition-unveiled-this-friday",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 2401.4460999999997,
+   "cls": 0.14953213229600734,
+   "tbt": 242.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-watch-west-seattle-townhomes-fall-into-place",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 719.7604,
+   "cls": 0.007885557565653501,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/curbed-watch-west-seattle-townhomes-fall-into-place",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2747.057175,
+   "cls": 0.042777942326488676,
+   "tbt": 278.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/custom-annata-iii-available-for-rent-in-the-heart-of-wine-country",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 867.9293,
+   "cls": 0.003320951719447033,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/custom-annata-iii-available-for-rent-in-the-heart-of-wine-country",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2928.2320499999996,
+   "cls": 0.003209763852982375,
+   "tbt": 239.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/deep-water-survey",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 744.255,
+   "cls": 0.010475555989062198,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/deep-water-survey",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2572.883075,
+   "cls": 0.00825548850464346,
+   "tbt": 229
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-challenge-for-sustainable-backyard-cottages",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 716.7077999999999,
+   "cls": 0.016074568925766055,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-challenge-for-sustainable-backyard-cottages",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2667.468,
+   "cls": 0.04433953017798194,
+   "tbt": 212.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-milk",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 732.1709000000001,
+   "cls": 0.00195358256495959,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-milk",
+   "form": "mobile",
+   "score": 75,
+   "lcp": 2818.7793409301757,
+   "cls": 0.2037581957238747,
+   "tbt": 224.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-milk-what-to-do-and-see-during-modernism-week",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 765.7801999999999,
+   "cls": 0.0034067965746558135,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/design-milk-what-to-do-and-see-during-modernism-week",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 2995.5712249999997,
+   "cls": 0.1608501136108771,
+   "tbt": 227.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-in-la-2018",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 962.9431,
+   "cls": 0.01926519653445385,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-in-la-2018",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2609.4539000000004,
+   "cls": 0.042220412576601744,
+   "tbt": 260
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-method-homes-makes-bespoke-prefabs-that-dont-have-a-factory-feel",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1253.863475,
+   "cls": 0.0031939488310691005,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-method-homes-makes-bespoke-prefabs-that-dont-have-a-factory-feel",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3280.7507,
+   "cls": 0.003384780262024936,
+   "tbt": 291.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-monogram-invite-monogram-modern-home",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 828.53765,
+   "cls": 0.01826603191146138,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-monogram-invite-monogram-modern-home",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2662.0640999999996,
+   "cls": 0.003384780262024936,
+   "tbt": 259.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-on-design",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1042.494025,
+   "cls": 0.001618121514226031,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-on-design",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 3169.7356,
+   "cls": 0.002544013473425393,
+   "tbt": 244.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-on-design-2013-in-review",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 703.6365999999999,
+   "cls": 0.02606746721391471,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/dwell-on-design-2013-in-review",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2575.5301500000005,
+   "cls": 0.0048724197388866995,
+   "tbt": 208.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/east-coast-availibilty",
+   "form": "desktop",
+   "score": 88,
+   "lcp": 710.8488249999998,
+   "cls": 0.19253357602244142,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/east-coast-availibilty",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2504.7677000000003,
+   "cls": 0.1091240190695787,
+   "tbt": 244
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/first-layer-of-insulation-on-lake-whatcom-cabin",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 702.8089500000001,
+   "cls": 0.012084624489230684,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/first-layer-of-insulation-on-lake-whatcom-cabin",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2598.9811,
+   "cls": 0.0048724197388866995,
+   "tbt": 212
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/girdwood-construction-update",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 847.0614750000002,
+   "cls": 0.0024657710314891466,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/girdwood-construction-update",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 3096.702800000001,
+   "cls": 0.2777463922771781,
+   "tbt": 222
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/girdwood-custom-cabin-install",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 662.4402409301757,
+   "cls": 0.0024109394309430373,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/girdwood-custom-cabin-install",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 3465.7256,
+   "cls": 0.16907862170693402,
+   "tbt": 346.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/gizmag",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 769.0834,
+   "cls": 0.004428869981358469,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/gizmag",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2274.228390930176,
+   "cls": 0.1429858979305557,
+   "tbt": 235
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/h-o-m-e",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 945.4462000000001,
+   "cls": 0.019473837836579487,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/h-o-m-e",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2325.3068409301754,
+   "cls": 0.03443826351356378,
+   "tbt": 269.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/habitat-for-humanity-celebrates-completion-of-hybrid-modular-net-zero-home-prototype",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 922.4617749999998,
+   "cls": 0.01996776083445776,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/habitat-for-humanity-celebrates-completion-of-hybrid-modular-net-zero-home-prototype",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2776.4681,
+   "cls": 0.11232289837293082,
+   "tbt": 232
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/habitat-for-humanity-hoif-ribbon-cutting",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 990.2324499999997,
+   "cls": 0.01926505640958603,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/habitat-for-humanity-hoif-ribbon-cutting",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3790.7943000000005,
+   "cls": 0.0029074627828179532,
+   "tbt": 261
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/homb-public-open-house",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 710.7969999999999,
+   "cls": 0.007541850440654656,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/homb-public-open-house",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2500.7116,
+   "cls": 0.015229455838221308,
+   "tbt": 234
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/house-of-the-immediate-future-update",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 748.205125,
+   "cls": 0.16600091434647343,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/house-of-the-immediate-future-update",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2743.922975,
+   "cls": 0.09599767887175105,
+   "tbt": 244.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/houzz-features-method-homes",
+   "form": "desktop",
+   "score": 86,
+   "lcp": 838.8404999999998,
+   "cls": 0.2444286040015275,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/houzz-features-method-homes",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 3843.868775,
+   "cls": 0.17919796189879872,
+   "tbt": 243.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/how-this-prefab-retreat-weathers-the-winter-with-bifold-glass-doors",
+   "form": "desktop",
+   "score": 88,
+   "lcp": 1961.06875,
+   "cls": 0.0039817447534503695,
+   "tbt": 1.1368683772161603e-13
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/how-this-prefab-retreat-weathers-the-winter-with-bifold-glass-doors",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 7713.9846,
+   "cls": 0.003384780262024936,
+   "tbt": 287
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/ilfi-ramp-up-event-getting-ready-for-the-seed-classroom",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 730.80065,
+   "cls": 0.1253228427336377,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/ilfi-ramp-up-event-getting-ready-for-the-seed-classroom",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2744.1483000000003,
+   "cls": 0.14027271228684143,
+   "tbt": 256
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/in-the-shop-jackson-hole-custom",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1418.9699,
+   "cls": 0.31613245974655757,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/in-the-shop-jackson-hole-custom",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 6370.281649999999,
+   "cls": 0.24750879492394218,
+   "tbt": 272
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/inhabitat",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 817.297975,
+   "cls": 0.167320874372833,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/inhabitat",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2629.9963500000003,
+   "cls": 0.12914358476143234,
+   "tbt": 237.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/interview-with-method-designer-and-methods-fireplace-vendor-partner-european-home",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 743.9158500000001,
+   "cls": 0.00413393165458071,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/interview-with-method-designer-and-methods-fireplace-vendor-partner-european-home",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 3256.85825,
+   "cls": 0.0037348130801100558,
+   "tbt": 260.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/jackson-hole-custom-modular-set",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 760.7683000000001,
+   "cls": 0.002092253739871539,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/jackson-hole-custom-modular-set",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3340.8492250000004,
+   "cls": 0.04278992543197268,
+   "tbt": 241
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/just-in-time-for-the-holidays-seattles-taproot-theatre-unwraps-a-brand-new-modular-building",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 916.8744,
+   "cls": 0.2144711437904985,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/just-in-time-for-the-holidays-seattles-taproot-theatre-unwraps-a-brand-new-modular-building",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 2993.7948499999993,
+   "cls": 0.1211941102441691,
+   "tbt": 239.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/la-house-aka-eagle-rock",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 741.0770249999998,
+   "cls": 0.01918471647322272,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/la-house-aka-eagle-rock",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 2590.9708,
+   "cls": 0.14297174066993404,
+   "tbt": 222
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-cabin-nearing-completion",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 743.5596499999999,
+   "cls": 0.04217696254278734,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-cabin-nearing-completion",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2702.033925,
+   "cls": 0.0048405985736062335,
+   "tbt": 238
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-cabin-set",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 725.0880000000002,
+   "cls": 0.009513770110031846,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-cabin-set",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 2915.8573,
+   "cls": 0.0048724197388866995,
+   "tbt": 298.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-project-moving-right-along",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 699.174,
+   "cls": 0.04217111758983438,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-project-moving-right-along",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2600.35995,
+   "cls": 0.0048724197388866995,
+   "tbt": 256.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-slab-prep-and-radiant-tubing",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 790.3186000000001,
+   "cls": 0.04217111758983438,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lake-whatcom-slab-prep-and-radiant-tubing",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2602.5004499999995,
+   "cls": 0.004625805707963091,
+   "tbt": 234.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/leed-whiterock-homes-prefab-set",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 678.40595,
+   "cls": 0.0036836856082624694,
+   "tbt": 5.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/leed-whiterock-homes-prefab-set",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3580.5545999999995,
+   "cls": 0.001362289886601551,
+   "tbt": 280
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-almost-complete",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 695.87175,
+   "cls": 0.011042242844379617,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-almost-complete",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2507.415,
+   "cls": 0.0048724197388866995,
+   "tbt": 245
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-finally-at-home-in-seattle",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 749.7959000000001,
+   "cls": 0.01872060444406242,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-finally-at-home-in-seattle",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2598.9272999999994,
+   "cls": 0.015016622231825589,
+   "tbt": 213
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-floor-framing-complete",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 764.2619750000001,
+   "cls": 0.011864157801045369,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-floor-framing-complete",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2599.1053,
+   "cls": 0.004903660382908669,
+   "tbt": 229.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-floor-sheathing-complete",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 772.540225,
+   "cls": 0.01780980880789999,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-floor-sheathing-complete",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2179.3073909301756,
+   "cls": 0.0446309088481717,
+   "tbt": 229
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-starts-finishes-on-monday",
+   "form": "desktop",
+   "score": 85,
+   "lcp": 758.8711,
+   "cls": 0.23418612335524894,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/lid-park-starts-finishes-on-monday",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 2749.4541,
+   "cls": 0.22720257614380213,
+   "tbt": 231.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/los-angeles-times-method-homes-prefab-in-venice-take-a-look-inside-and-out",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 741.11665,
+   "cls": 0.01708608278022063,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/los-angeles-times-method-homes-prefab-in-venice-take-a-look-inside-and-out",
+   "form": "mobile",
+   "score": 57,
+   "lcp": 4548.581824999999,
+   "cls": 0.35811863771769237,
+   "tbt": 253.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-foundation",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 788.997075,
+   "cls": 0.016330457192076722,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-foundation",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2527.1839,
+   "cls": 0.005779251895996764,
+   "tbt": 247.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-glacier-cabin-post-set-pics",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 731.1176499999999,
+   "cls": 0.012319485864474924,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-glacier-cabin-post-set-pics",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2580.9164,
+   "cls": 0.0048724197388866995,
+   "tbt": 224.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-well-under-way",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 673.9309499999999,
+   "cls": 0.016612871028713505,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/m2-well-under-way",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2515.5295000000006,
+   "cls": 0.00762231103404138,
+   "tbt": 243.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/martis-camp-set-in-truckee-california",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 877.918625,
+   "cls": 0.0021954900087537005,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/martis-camp-set-in-truckee-california",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 4274.3334,
+   "cls": 0.2373328769779273,
+   "tbt": 178.86324999999806
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-completes-20-homes-make-right-foundation-ft-peck-reservation",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 782.834675,
+   "cls": 0.27652275275675914,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-completes-20-homes-make-right-foundation-ft-peck-reservation",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3028.63655,
+   "cls": 0.16448491376292199,
+   "tbt": 232.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-delivers-prefab-home-alaska",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 828.0638999999999,
+   "cls": 0.0022228560298312265,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-delivers-prefab-home-alaska",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2757.1044,
+   "cls": 0.002684714625854694,
+   "tbt": 251
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-featured-in-san-francisco-chronicle",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1271.9625,
+   "cls": 0.19529273532397198,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-featured-in-san-francisco-chronicle",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 2264.4508999999994,
+   "cls": 0.15013276524541283,
+   "tbt": 255
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-friday-harbor-cabin-ii-shop-update",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 681.88455,
+   "cls": 0.03465424742873107,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-friday-harbor-cabin-ii-shop-update",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 2668.09465,
+   "cls": 0.2432951464314347,
+   "tbt": 247
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-2013-recap",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 777.8580000000001,
+   "cls": 0.0021304161563077233,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-2013-recap",
+   "form": "mobile",
+   "score": 53,
+   "lcp": 8113.167100000001,
+   "cls": 0.3264378598685324,
+   "tbt": 193.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-announces-strategic-partnership-haiku-home",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 870.3292,
+   "cls": 0.0033086779226182434,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-announces-strategic-partnership-haiku-home",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2975.8608249999997,
+   "cls": 0.003384780262024936,
+   "tbt": 234.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-announces-the-simpatico-series-by-swatt-miers",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 921.069875,
+   "cls": 0.004595067392003123,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-announces-the-simpatico-series-by-swatt-miers",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2952.2829500000007,
+   "cls": 0.0034802437578663322,
+   "tbt": 257.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-big-creek-ranch-cabins-timelapse",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 699.475875,
+   "cls": 0.003989566272351376,
+   "tbt": 5.999999999999886
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-big-creek-ranch-cabins-timelapse",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 2904.45745,
+   "cls": 0.002706129410056954,
+   "tbt": 272.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-builds-wet-cores-for-house-of-the-immediate-future",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 753.6022,
+   "cls": 0.01140144778535556,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-builds-wet-cores-for-house-of-the-immediate-future",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2721.4050499999994,
+   "cls": 0.004896801631743487,
+   "tbt": 234
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-featured-in-puget-sound-business-journal",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 666.0906409301758,
+   "cls": 0.006861442060978642,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-featured-in-puget-sound-business-journal",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2462.715790930176,
+   "cls": 0.003957561237073315,
+   "tbt": 255
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-launches-new-model",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1283.0787909301757,
+   "cls": 0.31457901777839864,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-launches-new-model",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 5766.848299999999,
+   "cls": 0.2529547082433997,
+   "tbt": 266
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-ny-to-la-prefab-tour",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 733.460875,
+   "cls": 0.008614663020957846,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-ny-to-la-prefab-tour",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2678.3375499999997,
+   "cls": 0.0048724197388866995,
+   "tbt": 255.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-pittsburgh-m2",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 719.0400749999999,
+   "cls": 0.015198456656647517,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-pittsburgh-m2",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2525.4103999999998,
+   "cls": 0.0048724197388866995,
+   "tbt": 241
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-showcases-a-green-prefab-home-at-modernism-week-2014",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 890.38075,
+   "cls": 0.003830658761475242,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-showcases-a-green-prefab-home-at-modernism-week-2014",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2977.41605,
+   "cls": 0.042472057791765654,
+   "tbt": 217.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-summer-2013-recap",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 711.4609,
+   "cls": 0.06808593934436186,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-homes-summer-2013-recap",
+   "form": "mobile",
+   "score": 92,
+   "lcp": 2503.2506000000003,
+   "cls": 0.0048724197388866995,
+   "tbt": 79.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-in-professional-builder-magazine",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 712.7006,
+   "cls": 0.003745174039488053,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-in-professional-builder-magazine",
+   "form": "mobile",
+   "score": 65,
+   "lcp": 3793.2820500000007,
+   "cls": 0.32985710275715063,
+   "tbt": 213.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-in-sonoma-county",
+   "form": "desktop",
+   "score": 81,
+   "lcp": 1058.5605999999998,
+   "cls": 0.29256279552692765,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-in-sonoma-county",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 3006.6823999999997,
+   "cls": 0.21493964479939598,
+   "tbt": 324.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-launch",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 752.605525,
+   "cls": 0.017191244367025075,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-launch",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2315.770440930176,
+   "cls": 0.006234679222031135,
+   "tbt": 252
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-offers-zero-net-energy",
+   "form": "desktop",
+   "score": 77,
+   "lcp": 1325.6597000000002,
+   "cls": 0.3341019621062961,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-offers-zero-net-energy",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 5072.416699999999,
+   "cls": 0.21968893176878515,
+   "tbt": 231
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prefab-on-orcas-island-cottage-style",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 752.7575499999998,
+   "cls": 0.009140436110297821,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prefab-on-orcas-island-cottage-style",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2592.46445,
+   "cls": 0.0048724197388866995,
+   "tbt": 246.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prefab-sets-taproot-theatre-annex",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 707.19455,
+   "cls": 0.027556591401795474,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prefab-sets-taproot-theatre-annex",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2759.9455999999996,
+   "cls": 0.002947454247292051,
+   "tbt": 286.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prepares-to-set-custom-venice-beach-prefab",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 701.5204000000001,
+   "cls": 0.009479397466052924,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-prepares-to-set-custom-venice-beach-prefab",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2794.5789999999997,
+   "cls": 0.04433953017798194,
+   "tbt": 79
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-to-build-first-homb",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 804.6840500000001,
+   "cls": 0.015255492850050274,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-to-build-first-homb",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2656.6714000000006,
+   "cls": 0.0048724197388866995,
+   "tbt": 233
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-unveils-custom-bainbridge-island-prefab",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 746.6256500000001,
+   "cls": 0.011768460574622384,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/method-unveils-custom-bainbridge-island-prefab",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2596.8449250000003,
+   "cls": 0.0048724197388866995,
+   "tbt": 209.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/methods-new-facility-energy-efficient-modular-facility",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1092.4058,
+   "cls": 0.22893193695694153,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/methods-new-facility-energy-efficient-modular-facility",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3600.7146249999996,
+   "cls": 0.16295958990086232,
+   "tbt": 230.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/modular-townhomes-to-go-up-in-west-seattle-over-2-days",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 780.7191,
+   "cls": 0.003089480537789991,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/modular-townhomes-to-go-up-in-west-seattle-over-2-days",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2460.1130454650875,
+   "cls": 0.003034747443939815,
+   "tbt": 255
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/monogram-modern-home-boston",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 816.8586500000001,
+   "cls": 0.29559237370966496,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/monogram-modern-home-boston",
+   "form": "mobile",
+   "score": 59,
+   "lcp": 4782.7717999999995,
+   "cls": 0.2871700282451901,
+   "tbt": 255
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-glacier-cabin",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 743.7308499999999,
+   "cls": 0.012019914304838893,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-glacier-cabin",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2521.6394,
+   "cls": 0.0077113942832194365,
+   "tbt": 232.00000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-home-drops-in-in-ketchum",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 847.2940249999999,
+   "cls": 0.0033086779226182434,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-home-drops-in-in-ketchum",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3679.5685,
+   "cls": 0.015522063748737958,
+   "tbt": 240
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-m2-cabin",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 745.1917000000001,
+   "cls": 0.016316218849077902,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-m2-cabin",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2581.921875,
+   "cls": 0.005962038991943038,
+   "tbt": 235
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-urban-series-in-the-works",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 712.4777999999999,
+   "cls": 0.017846748722535746,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/new-urban-series-in-the-works",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2802.7532000000006,
+   "cls": 0.0048724197388866995,
+   "tbt": 232.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/northstar-yoga-studio-wins-a-sunset-magazine-mountain-magic-architecture-award",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 1780.7764499999998,
+   "cls": 0.00388955025700005,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/northstar-yoga-studio-wins-a-sunset-magazine-mountain-magic-architecture-award",
+   "form": "mobile",
+   "score": 75,
+   "lcp": 4797.5527999999995,
+   "cls": 0.04212107893903705,
+   "tbt": 230.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/now-underway-west-seattle-townhomes",
+   "form": "desktop",
+   "score": 85,
+   "lcp": 792.9796499999999,
+   "cls": 0.24232830086958002,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/now-underway-west-seattle-townhomes",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2885.6076000000003,
+   "cls": 0.15698905238676875,
+   "tbt": 221.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/off-the-grid-b-c-site-work",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 929.3329000000001,
+   "cls": 0.0018680978429724022,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/off-the-grid-b-c-site-work",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 3007.6036999999997,
+   "cls": 0.02292265222457108,
+   "tbt": 236.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/on-the-set-greenwoods-taproot-theatre",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 726.7536000000002,
+   "cls": 0.15696512552815436,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/on-the-set-greenwoods-taproot-theatre",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2595.7571000000003,
+   "cls": 0.05687983858869792,
+   "tbt": 259.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/open-house-happy-hour-april-30",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 822.88625,
+   "cls": 0.002384055429681939,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/open-house-happy-hour-april-30",
+   "form": "mobile",
+   "score": 57,
+   "lcp": 6018.665875000001,
+   "cls": 0.2568527447746565,
+   "tbt": 266
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/open-houses-sunday-september-20th",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 759.6202999999999,
+   "cls": 0.1604341139474832,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/open-houses-sunday-september-20th",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2757.5982749999994,
+   "cls": 0.014730581132095869,
+   "tbt": 222.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-custom-prefab",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 696.1972499999999,
+   "cls": 0.014923152814002813,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-custom-prefab",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2580.4687,
+   "cls": 0.0048724197388866995,
+   "tbt": 224
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-home",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 712.5288249999999,
+   "cls": 0.016227366364301374,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-home",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2661.2998,
+   "cls": 0.0048724197388866995,
+   "tbt": 240
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-method-home-set",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 696.3531250000001,
+   "cls": 0.009977244537157271,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-method-home-set",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 2906.816425,
+   "cls": 0.0446309088481717,
+   "tbt": 350.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-set-update",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 759.8468250000001,
+   "cls": 0.01772067260384238,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/orcas-island-prefab-set-update",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2699.0747000000006,
+   "cls": 0.004022801792827385,
+   "tbt": 76.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/paradigm-prototype-now-available",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 714.0469,
+   "cls": 0.06412787625317742,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/paradigm-prototype-now-available",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2161.893,
+   "cls": 0.12299496434449181,
+   "tbt": 247.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/past-current-and-upcoming-projects",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 732.7096000000001,
+   "cls": 0.011394481618945119,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/past-current-and-upcoming-projects",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2551.7587,
+   "cls": 0.0048724197388866995,
+   "tbt": 237.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/peninsula-shift-prefab",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 717.5394999999999,
+   "cls": 0.09017577135083657,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/peninsula-shift-prefab",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 2666.81095,
+   "cls": 0.14700348387873471,
+   "tbt": 245
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/peninsula-shift-set",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1490.40105,
+   "cls": 0.0029676349158396457,
+   "tbt": 4
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/peninsula-shift-set",
+   "form": "mobile",
+   "score": 63,
+   "lcp": 5598.0620499999995,
+   "cls": 0.002580263800900301,
+   "tbt": 407.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/plain-magazine-studio-schicketanz-designs-an-eco-friendly-residential-compound-in-california",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1514.03425,
+   "cls": 0.0038837053040470864,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/plain-magazine-studio-schicketanz-designs-an-eco-friendly-residential-compound-in-california",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 4403.625050000001,
+   "cls": 0.041624410751213564,
+   "tbt": 235.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/portland-homb-arrives-at-site",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 712.4373249999999,
+   "cls": 0.03231801652130391,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/portland-homb-arrives-at-site",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2504.1025,
+   "cls": 0.0048724197388866995,
+   "tbt": 223.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefab-homebuyer-seminar",
+   "form": "desktop",
+   "score": 80,
+   "lcp": 999.2677999999999,
+   "cls": 0.3114177896801841,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefab-homebuyer-seminar",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 4194.707350000001,
+   "cls": 0.22298641345896547,
+   "tbt": 223
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefab-homebuyers-seminar-june-9-10",
+   "form": "desktop",
+   "score": 80,
+   "lcp": 997.9612,
+   "cls": 0.3143168948881433,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefab-homebuyers-seminar-june-9-10",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 3228.7550999999994,
+   "cls": 0.25910175607931535,
+   "tbt": 228
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefabricated-home-shipments-on-the-rise-in-a-pricey-property-market",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 750.272,
+   "cls": 0.02596389602197588,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefabricated-home-shipments-on-the-rise-in-a-pricey-property-market",
+   "form": "mobile",
+   "score": 91,
+   "lcp": 2237.235590930176,
+   "cls": 0.041292194918913866,
+   "tbt": 255.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefabulous-sustainable",
+   "form": "desktop",
+   "score": 86,
+   "lcp": 713.4934499999999,
+   "cls": 0.21472939806296396,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/prefabulous-sustainable",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2795.0867999999996,
+   "cls": 0.04075612721016806,
+   "tbt": 238.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/presale-2017-monogram-modern-home-dwell",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1348.9006999999997,
+   "cls": 0.31250048976551253,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/presale-2017-monogram-modern-home-dwell",
+   "form": "mobile",
+   "score": 66,
+   "lcp": 3974.1190250000004,
+   "cls": 0.27032533880322557,
+   "tbt": 236
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/professional-builder-magazine-design-awards",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 842.2496000000001,
+   "cls": 0.005532800317884976,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/professional-builder-magazine-design-awards",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 3147.9301000000005,
+   "cls": 0.002893852784424348,
+   "tbt": 292.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/project-spotlight-mountain-living-with-a-modern-twist",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 956.1284,
+   "cls": 0.003089480537789991,
+   "tbt": 0.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/project-spotlight-mountain-living-with-a-modern-twist",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 2976.033625,
+   "cls": 0.0426442360968778,
+   "tbt": 193
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/project-updates-seed-peninsula-shift-and-girdwood-alaska",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 740.8993499999999,
+   "cls": 0.01567388276159701,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/project-updates-seed-peninsula-shift-and-girdwood-alaska",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2499.6239,
+   "cls": 0.0048724197388866995,
+   "tbt": 247
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/puget-sound-business-journal-method-homes-opens-east-coast-factory",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 746.0219749999999,
+   "cls": 0.003089480537789991,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/puget-sound-business-journal-method-homes-opens-east-coast-factory",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 3047.763925,
+   "cls": 0.003384780262024936,
+   "tbt": 228.00000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/rebuilding-greenville",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 870.06185,
+   "cls": 0.0038113422350677475,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/rebuilding-greenville",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 3008.06735,
+   "cls": 0.003717064180151255,
+   "tbt": 190.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/rent-a-new-method-cabin-in-oregon",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 902.7356,
+   "cls": 0.0029156017493821218,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/rent-a-new-method-cabin-in-oregon",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2767.5011000000004,
+   "cls": 0.003185897979022026,
+   "tbt": 251
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/s-m-l-prefab-series-by-balance-associates",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 726.7303000000002,
+   "cls": 0.0557593918916499,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/s-m-l-prefab-series-by-balance-associates",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2707.7001999999998,
+   "cls": 0.0048724197388866995,
+   "tbt": 243.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/san-juan-island-method-cabin-prefab-set",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 753.267,
+   "cls": 0.042322379879027344,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/san-juan-island-method-cabin-prefab-set",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2186.8073909301756,
+   "cls": 0.0048724197388866995,
+   "tbt": 339.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-business-magazine-recognizes-method-homes-as-leader-in-sustainability-at-the-2013-green-washington-awards",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 771.2912499999999,
+   "cls": 0.0038897434043567935,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-business-magazine-recognizes-method-homes-as-leader-in-sustainability-at-the-2013-green-washington-awards",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2422.2623159301756,
+   "cls": 0.040427676927219845,
+   "tbt": 252.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-business-the-washington-green",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 704.4394,
+   "cls": 0.0024774463970150874,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-business-the-washington-green",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2881.3094249999995,
+   "cls": 0.002684714625854694,
+   "tbt": 239.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-daily-journal-of-commerce",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 684.1058,
+   "cls": 0.020501643445334734,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-daily-journal-of-commerce",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2654.8449499999997,
+   "cls": 0.012944403670789289,
+   "tbt": 250
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-daily-journal-of-commerce-modular-townhomes-come-to-west-seattle",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 763.4365500000001,
+   "cls": 0.021388319137296406,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-daily-journal-of-commerce-modular-townhomes-come-to-west-seattle",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 2827.0268999999994,
+   "cls": 0.1777076527408408,
+   "tbt": 238.00000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-djc",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 784.2217,
+   "cls": 0.01202032972694603,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-djc",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2345.9283409301756,
+   "cls": 0.08177141012928181,
+   "tbt": 263
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-met",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 643.2398909301758,
+   "cls": 0.011417673916748219,
+   "tbt": 2.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seattle-met",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2330.891990930176,
+   "cls": 0.004144467581521347,
+   "tbt": 254.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seed-collaborative-and-method-featured-in-seattle-daily-journal-of-commerce",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 689.0246499999998,
+   "cls": 0.02083968551144681,
+   "tbt": 2
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/seed-collaborative-and-method-featured-in-seattle-daily-journal-of-commerce",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2492.1411000000003,
+   "cls": 0.06857617625754917,
+   "tbt": 266
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sheetrock-hung-in-method-factory",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 720.359725,
+   "cls": 0.01885147760106226,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sheetrock-hung-in-method-factory",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2579.1722250000003,
+   "cls": 0.0048724197388866995,
+   "tbt": 250
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/siding-on-lake-whatcom-cabin",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 796.513825,
+   "cls": 0.017507356891323086,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/siding-on-lake-whatcom-cabin",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2816.7481,
+   "cls": 0.003510129852285148,
+   "tbt": 229.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/skylab-architecture-and-urban-series-update",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 2388.93735,
+   "cls": 0.0013015939315635515,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/skylab-architecture-and-urban-series-update",
+   "form": "mobile",
+   "score": 58,
+   "lcp": 8831.223599999998,
+   "cls": 0.014534503582009672,
+   "tbt": 362.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/solar-decathalon-on-the-mall-in-dc",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 708.594825,
+   "cls": 0.09760494250179745,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/solar-decathalon-on-the-mall-in-dc",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2503.2659,
+   "cls": 0.04849429450896266,
+   "tbt": 246.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-ca-home-complete",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 848.1379000000001,
+   "cls": 0.0021650637180156405,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-ca-home-complete",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 3729.4919250000003,
+   "cls": 0.22298641345896547,
+   "tbt": 239.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-county-element-3-pre-and-post-install",
+   "form": "desktop",
+   "score": 80,
+   "lcp": 1173.846725,
+   "cls": 0.2927396591969965,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-county-element-3-pre-and-post-install",
+   "form": "mobile",
+   "score": 75,
+   "lcp": 3176.2539,
+   "cls": 0.20276254084665832,
+   "tbt": 221
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-element-3-install-video",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 835.6085500000002,
+   "cls": 0.002263272177185284,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/sonoma-element-3-install-video",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2610.5909409301757,
+   "cls": 0.0023346818077695734,
+   "tbt": 358.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/south-bay-digs",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 739.3544,
+   "cls": 0.002082689368909829,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/south-bay-digs",
+   "form": "mobile",
+   "score": 50,
+   "lcp": 4695.696999999999,
+   "cls": 0.4647006816332799,
+   "tbt": 324.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 723.0728500000002,
+   "cls": 0.012528992864823821,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2600.66355,
+   "cls": 0.0045822451127886165,
+   "tbt": 259.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake-method-cabin-set",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 752.761,
+   "cls": 0.016685596730479445,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake-method-cabin-set",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2599.7539749999996,
+   "cls": 0.003516988603450329,
+   "tbt": 237.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake-prefab-home-video",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 700.7879,
+   "cls": 0.007740314101680215,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/spencer-lake-prefab-home-video",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2733.1524499999996,
+   "cls": 0.015483204547081119,
+   "tbt": 231
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/studio-29-discusses-the-new-method-cottage-series",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 714.3803250000001,
+   "cls": 0.009668808514070534,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/studio-29-discusses-the-new-method-cottage-series",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2513.987,
+   "cls": 0.04433953017798194,
+   "tbt": 235
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-ready-to-ship",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 711.4566,
+   "cls": 0.007104895094003043,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-ready-to-ship",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2793.0653,
+   "cls": 0.015335872641419168,
+   "tbt": 223.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-almost-complete",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 763.5325500000001,
+   "cls": 0.21211650021056036,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-almost-complete",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 2553.8066999999996,
+   "cls": 0.16394335439474017,
+   "tbt": 222
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-grand-opening-celebration",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1001.1379750000001,
+   "cls": 0.01937860485772178,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-grand-opening-celebration",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2987.5971250000002,
+   "cls": 0.007117616781472749,
+   "tbt": 252
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-in-progress",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 725.7121,
+   "cls": 0.01736387630152722,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/taproot-theatre-in-progress",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2574.0872,
+   "cls": 0.0048724197388866995,
+   "tbt": 249
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/telluride-shelter-home-delivery-custom-engineering-and-sustainable-designs-put-the-fab-in-method-homes-prefabs",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1359.8635,
+   "cls": 0.00388955025700005,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/telluride-shelter-home-delivery-custom-engineering-and-sustainable-designs-put-the-fab-in-method-homes-prefabs",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 3747.264624999999,
+   "cls": 0.042040665994341815,
+   "tbt": 245.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/the-oregonian",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 751.5969750000002,
+   "cls": 0.007997351347138693,
+   "tbt": 2.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/the-oregonian",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2408.8619659301758,
+   "cls": 0.011583052203969027,
+   "tbt": 255
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/the-press-democrat-prefabulous---6-stunning-sonoma-county-prefab-homes",
+   "form": "desktop",
+   "score": 77,
+   "lcp": 1247.7944,
+   "cls": 0.38429382994690786,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/the-press-democrat-prefabulous---6-stunning-sonoma-county-prefab-homes",
+   "form": "mobile",
+   "score": 92,
+   "lcp": 2793.8462999999992,
+   "cls": 0.0037348130801100558,
+   "tbt": 87.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/tough-comute-home-today",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 753.2153999999999,
+   "cls": 0.007216572095438316,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/tough-comute-home-today",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2512.3126999999995,
+   "cls": 0.015442289444617039,
+   "tbt": 240.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/urban-land",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 707.1639000000002,
+   "cls": 0.008702034270976126,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/urban-land",
+   "form": "mobile",
+   "score": 92,
+   "lcp": 2325.2727409301756,
+   "cls": 0.038580789753160497,
+   "tbt": 215.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/usa-today-brad-pitt-foundation-homes-arrive-on-reservation",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 1158.9549,
+   "cls": 0.2332923850211292,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/usa-today-brad-pitt-foundation-homes-arrive-on-reservation",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2216.970090930176,
+   "cls": 0.14950364823209708,
+   "tbt": 233.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/vashon-island-cabin-install",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 771.7614000000001,
+   "cls": 0.0028096117060075814,
+   "tbt": 23.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/vashon-island-cabin-install",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 2810.3393999999994,
+   "cls": 0.002628726575590956,
+   "tbt": 460
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/venice-beach-prefab-home-set-method-homes",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 738.3114999999999,
+   "cls": 0.005134569538361559,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/venice-beach-prefab-home-set-method-homes",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 2889.419700000001,
+   "cls": 0.003329093222784121,
+   "tbt": 276
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/wall-street-journal-prefab-but-make-it-luxury",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1145.1135,
+   "cls": 0.0030959093816658174,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/wall-street-journal-prefab-but-make-it-luxury",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2821.4699,
+   "cls": 0.0029074627828179532,
+   "tbt": 251
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/washington-coastal-cabin-large-prefab-set",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 835.9642,
+   "cls": 0.018408527896488464,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/washington-coastal-cabin-large-prefab-set",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2593.6795999999995,
+   "cls": 0.003478308687004682,
+   "tbt": 237.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/we-are-permitted",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 783.5888,
+   "cls": 0.016878459136812907,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/we-are-permitted",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2585.224525,
+   "cls": 0.00814184564516316,
+   "tbt": 227
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/were-back-to-blogging-with-some-exciting-new-things-on-the-horizon",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 706.97235,
+   "cls": 0.07773854380342168,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/were-back-to-blogging-with-some-exciting-new-things-on-the-horizon",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2500.7975,
+   "cls": 0.04404815150779217,
+   "tbt": 219.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-coast-shop-update",
+   "form": "desktop",
+   "score": 79,
+   "lcp": 876.8343749999999,
+   "cls": 0.3856245120345475,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-coast-shop-update",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 3593.3623000000002,
+   "cls": 0.19423232535972937,
+   "tbt": 240.17425000000003
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-herald",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 764.7343999999999,
+   "cls": 0.0073847860208208545,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-herald",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2193.897390930176,
+   "cls": 0.24102064857497732,
+   "tbt": 218
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-townhomes-modular-install",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 860.7874999999999,
+   "cls": 0.0027422460978626154,
+   "tbt": 15.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-townhomes-modular-install",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2691.1200500000004,
+   "cls": 0.002684714625854694,
+   "tbt": 295
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-townhomes-set-day-1",
+   "form": "desktop",
+   "score": 72,
+   "lcp": 1555.8952000000004,
+   "cls": 0.3934583813473656,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/west-seattle-townhomes-set-day-1",
+   "form": "mobile",
+   "score": 52,
+   "lcp": 5838.960800000002,
+   "cls": 0.32687219402630857,
+   "tbt": 274.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/white-rock-bc-shop-progress",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 718.424875,
+   "cls": 0.006164631339904129,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/white-rock-bc-shop-progress",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2675.5324,
+   "cls": 0.010853416714127267,
+   "tbt": 254.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/whiterock-bc-modern-prefab",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 685.8929,
+   "cls": 0.006931399466525675,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/whiterock-bc-modern-prefab",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2818.2546,
+   "cls": 0.013973582754817616,
+   "tbt": 234.5
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/window-of-nice-weather-today",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 700.4635999999998,
+   "cls": 0.009012856811038557,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/blog/window-of-nice-weather-today",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2574.0742499999997,
+   "cls": 0.0048724197388866995,
+   "tbt": 217
+  },
+  {
+   "url": "https://www.methodhomes.net/calistoga",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1515.2400750000002,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/calistoga",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 6096.959325,
+   "cls": 0.001527033398620713,
+   "tbt": 277.5
+  },
+  {
+   "url": "https://www.methodhomes.net/chimney-rock-estate",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 872.1904999999999,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/chimney-rock-estate",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3801.628125000001,
+   "cls": 0.013888785553218196,
+   "tbt": 305.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial",
+   "form": "desktop",
+   "score": 61,
+   "lcp": 3209.812299999999,
+   "cls": 0.3873096773382423,
+   "tbt": 28
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 2732.10865,
+   "cls": 0.21553935551060233,
+   "tbt": 247.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 1513.6438000000003,
+   "cls": 0.0018868054548268163,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 3217.7617,
+   "cls": 0.0030466059680387637,
+   "tbt": 281
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/chartwell-school-addition-with-grouparchitect",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1457.7331909301756,
+   "cls": 0.2326956962974802,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/chartwell-school-addition-with-grouparchitect",
+   "form": "mobile",
+   "score": 66,
+   "lcp": 6089.402700000001,
+   "cls": 0.013902345271124715,
+   "tbt": 319
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/fish-bay-cottages-lopez-island",
+   "form": "desktop",
+   "score": 81,
+   "lcp": 1572.6544,
+   "cls": 0.25715183352979165,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/fish-bay-cottages-lopez-island",
+   "form": "mobile",
+   "score": 69,
+   "lcp": 7371.398674999999,
+   "cls": 0.0024051862489937095,
+   "tbt": 169.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/make-it-right-fort-peck-sustainable-village",
+   "form": "desktop",
+   "score": 82,
+   "lcp": 1573.6821,
+   "cls": 0.22554462130172576,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/make-it-right-fort-peck-sustainable-village",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3907.5117,
+   "cls": 0.00006529856308661405,
+   "tbt": 247
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/northstar-yoga-studio",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 2758.2417499999992,
+   "cls": 0.003981135559095238,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/northstar-yoga-studio",
+   "form": "mobile",
+   "score": 59,
+   "lcp": 18889.897999999994,
+   "cls": 0.0067816070120632465,
+   "tbt": 360.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/rico-workforce-development-designed-by-lda-architects",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 1499.6364250000001,
+   "cls": 0.13271310833256486,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/rico-workforce-development-designed-by-lda-architects",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2811.2989,
+   "cls": 0.013902345271124715,
+   "tbt": 242.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/seed-classroom-designed-by-stacy-smedley",
+   "form": "desktop",
+   "score": 81,
+   "lcp": 2727.591625,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/seed-classroom-designed-by-stacy-smedley",
+   "form": "mobile",
+   "score": 58,
+   "lcp": 15154.730024999997,
+   "cls": 0.0014564425063141005,
+   "tbt": 496.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/skylodge",
+   "form": "desktop",
+   "score": 67,
+   "lcp": 3312.639075,
+   "cls": 0.25260220463871513,
+   "tbt": 16.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/skylodge",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 3211.0782999999997,
+   "cls": 0.001449003233890424,
+   "tbt": 544
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/tahoe-park-concession-commercial",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1567.8019249999998,
+   "cls": 0.0009878588106905573,
+   "tbt": 27.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/tahoe-park-concession-commercial",
+   "form": "mobile",
+   "score": 69,
+   "lcp": 6967.8802,
+   "cls": 0.0008571295596737653,
+   "tbt": 188
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/taproot-theatre-commercial",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1171.4625,
+   "cls": 0.0009475955751581142,
+   "tbt": 9.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/taproot-theatre-commercial",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 3767.7565999999997,
+   "cls": 0.0009531090744116018,
+   "tbt": 392.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/the-valley-school-with-workshop-ad",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1492.2208500000002,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/the-valley-school-with-workshop-ad",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3898.407675,
+   "cls": 0.0007371551662514698,
+   "tbt": 315.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/village-north-affordable-workforce-housing-with-housing-lopez",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1549.1327500000002,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/village-north-affordable-workforce-housing-with-housing-lopez",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 4191.91215,
+   "cls": 0.00006529856308661405,
+   "tbt": 241.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/village-walk-northstar-tahoe-commercial",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1094.9418,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/village-walk-northstar-tahoe-commercial",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 3560.6108000000004,
+   "cls": 0.0010730834678338971,
+   "tbt": 270
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/west-seattle-townhomes-commercial",
+   "form": "desktop",
+   "score": 76,
+   "lcp": 3104.7474,
+   "cls": 0.001647007158903391,
+   "tbt": 4
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-portfolio/west-seattle-townhomes-commercial",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 11842.526575000002,
+   "cls": 0.0002087088147222255,
+   "tbt": 498
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/affordable-workforce-housing",
+   "form": "desktop",
+   "score": 76,
+   "lcp": 1942.2209000000003,
+   "cls": 0.302427319147831,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/affordable-workforce-housing",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3001.0398000000005,
+   "cls": 0.202412430088219,
+   "tbt": 214.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/classrooms-and-school-additions",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 931.5319,
+   "cls": 0.305507223016477,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/classrooms-and-school-additions",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3317.2486999999996,
+   "cls": 0.1650390648656466,
+   "tbt": 286
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/multi-family-housing-units",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 943.1023,
+   "cls": 0.009576351777860426,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/multi-family-housing-units",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2312.678890930176,
+   "cls": 0.09952999888038234,
+   "tbt": 330.5
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/remote-ski-lodge-and-hospitality-projects",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1651.7299000000003,
+   "cls": 0.3110973218926539,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-project-types/remote-ski-lodge-and-hospitality-projects",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 2365.9762999999994,
+   "cls": 0.17357329836820357,
+   "tbt": 343
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-survey",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1213.671,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-survey",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 4486.8552,
+   "cls": 0.033846902274779,
+   "tbt": 282
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-survey-copy",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1244.942225,
+   "cls": 0.0003520761349591996,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/commercial-survey-copy",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3646.7089500000006,
+   "cls": 0.03434578773129812,
+   "tbt": 236
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1284.0004499999998,
+   "cls": 0.00189225903932241,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3417.6151,
+   "cls": 0.023996215260747866,
+   "tbt": 195.99999999999966
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/bainbridge-island-custom",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1442.9163,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/bainbridge-island-custom",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3514.9495,
+   "cls": 0.007673649818998488,
+   "tbt": 367
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/beehive-guesthouse-designed-by-method-arc",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 996.6971500000002,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/beehive-guesthouse-designed-by-method-arc",
+   "form": "mobile",
+   "score": 93,
+   "lcp": 2236.3733,
+   "cls": 0.0016829284407785254,
+   "tbt": 189.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/belmont-custom",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1205.7626499999997,
+   "cls": 0.0014866249022931234,
+   "tbt": 4.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/belmont-custom",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 3544.0771,
+   "cls": 0.016839693476461873,
+   "tbt": 220.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/brittania-beach-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1027.23515,
+   "cls": 0.001578819398743443,
+   "tbt": 30
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/brittania-beach-custom",
+   "form": "mobile",
+   "score": 62,
+   "lcp": 5168.066750000001,
+   "cls": 0.017117483649045407,
+   "tbt": 412.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/burlingame-custom-designed-by-clever-homes",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 863.78085,
+   "cls": 0.0046701455015440594,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/burlingame-custom-designed-by-clever-homes",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3085.9793499999996,
+   "cls": 0.001243022331563441,
+   "tbt": 404
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/calistoga-custom",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1090.9588250000002,
+   "cls": 0.0014866249022931234,
+   "tbt": 0.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/calistoga-custom",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 3440.5324999999993,
+   "cls": 0.016669195592261186,
+   "tbt": 305.0000000000009
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/canopy-house",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1692.544675,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/canopy-house",
+   "form": "mobile",
+   "score": 75,
+   "lcp": 3856.9864000000002,
+   "cls": 0.0015309608757769501,
+   "tbt": 374.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/carmel-valley-residence-by-studio-schicketanz",
+   "form": "desktop",
+   "score": 89,
+   "lcp": 2024.4134,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/carmel-valley-residence-by-studio-schicketanz",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3955.98995,
+   "cls": 0.04965965185323098,
+   "tbt": 253
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/chimney-rock-designed-by-nick-noyes-architects",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1232.612,
+   "cls": 0.001578819398743443,
+   "tbt": 19
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/chimney-rock-designed-by-nick-noyes-architects",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 5763.001849999999,
+   "cls": 0.00006529856308661405,
+   "tbt": 234.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/creekbend-residence",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 2810.201625,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/creekbend-residence",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 6741.0878,
+   "cls": 0.00486949831940529,
+   "tbt": 404.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/fish-creek-passage-by-method-arc",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 961.3896500000002,
+   "cls": 0.0014866249022931234,
+   "tbt": 9
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/fish-creek-passage-by-method-arc",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3656.2453500000006,
+   "cls": 0.001187034281299703,
+   "tbt": 340
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/friday-harbor-custom-by-fish-mackay-architects",
+   "form": "desktop",
+   "score": 86,
+   "lcp": 2385.7823000000003,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/friday-harbor-custom-by-fish-mackay-architects",
+   "form": "mobile",
+   "score": 69,
+   "lcp": 5917.236500000001,
+   "cls": 0.008585455209007935,
+   "tbt": 237.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/greenville-fire-rebuilds-custom",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1320.7521500000003,
+   "cls": 0.0009422233757528167,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/greenville-fire-rebuilds-custom",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 5987.439300000001,
+   "cls": 0.008516719879443078,
+   "tbt": 342
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/guemes-tidelands-custom",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1615.067475,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/guemes-tidelands-custom",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3076.7273999999998,
+   "cls": 0.001217052739940652,
+   "tbt": 356.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/homb-portland",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1061.1190750000003,
+   "cls": 0.001578819398743443,
+   "tbt": 14.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/homb-portland",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3377.5384000000004,
+   "cls": 0.00906668583151292,
+   "tbt": 498
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/house-of-the-immediate-future-seattle-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1074.7333250000001,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/house-of-the-immediate-future-seattle-custom",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 3377.45555,
+   "cls": 0.001437005794548194,
+   "tbt": 218
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/idaho-mountain-home",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1395.1798,
+   "cls": 0.001578819398743443,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/idaho-mountain-home",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2920.45295,
+   "cls": 0.016525785340625574,
+   "tbt": 221.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1005.0101500000001,
+   "cls": 0.001578819398743443,
+   "tbt": 12
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3517.6479,
+   "cls": 0.008585455209007935,
+   "tbt": 223
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom-d1348",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1010.5903999999998,
+   "cls": 0.0014866249022931234,
+   "tbt": 9
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jackson-hole-custom-d1348",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 2948.1409409301755,
+   "cls": 0.001072524447362754,
+   "tbt": 240.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jefferson-knoll-custom",
+   "form": "desktop",
+   "score": 86,
+   "lcp": 2431.7201499999996,
+   "cls": 0.0014866249022931234,
+   "tbt": 35
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jefferson-knoll-custom",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 12746.084500000003,
+   "cls": 0.016669195592261186,
+   "tbt": 241.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jh-mountainview",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1371.8249,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/jh-mountainview",
+   "form": "mobile",
+   "score": 66,
+   "lcp": 5217.4782,
+   "cls": 0.008585455209007935,
+   "tbt": 432.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/ketchikan-custom",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1377.94045,
+   "cls": 0.0009878588106905573,
+   "tbt": 20
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/ketchikan-custom",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 5545.364425,
+   "cls": 0.001217052739940652,
+   "tbt": 325.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/lid-park-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1084.8763,
+   "cls": 0.0014866249022931234,
+   "tbt": 11
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/lid-park-custom",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3538.5143,
+   "cls": 0.017117483649045407,
+   "tbt": 428.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-416-custom-home-designed-by-sagemodern-architects",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1678.204975,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-416-custom-home-designed-by-sagemodern-architects",
+   "form": "mobile",
+   "score": 63,
+   "lcp": 10199.029325000003,
+   "cls": 0.005432130922823683,
+   "tbt": 280
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-476-custom",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1566.3862749999998,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-476-custom",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 4744.1414,
+   "cls": 0.016525785340625574,
+   "tbt": 242.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-663-by-sagemodern",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 988.30565,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-663-by-sagemodern",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 3884.1303999999996,
+   "cls": 0.017117483649045407,
+   "tbt": 349
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-camp-custom",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 931.3472,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/martis-camp-custom",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 3842.87135,
+   "cls": 0.0007885816900986308,
+   "tbt": 366
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/menlo-park-custom-by-clever-homes",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1540.1507500000002,
+   "cls": 0.001578819398743443,
+   "tbt": 16
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/menlo-park-custom-by-clever-homes",
+   "form": "mobile",
+   "score": 65,
+   "lcp": 5631.7363000000005,
+   "cls": 0.005495448053975919,
+   "tbt": 254.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/mercer-island-3-custom",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 913.6468,
+   "cls": 0.0014866249022931234,
+   "tbt": 9
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/mercer-island-3-custom",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3410.3116,
+   "cls": 0.016839693476461873,
+   "tbt": 314.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/moose-crossing-custom",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1129.8047000000001,
+   "cls": 0.0014866249022931234,
+   "tbt": 9
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/moose-crossing-custom",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 2997.676190930176,
+   "cls": 0.0010730834678338971,
+   "tbt": 331.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/mountain-village-peak-custom",
+   "form": "desktop",
+   "score": 79,
+   "lcp": 3619.2284999999983,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/mountain-village-peak-custom",
+   "form": "mobile",
+   "score": 54,
+   "lcp": 8165.3579500000005,
+   "cls": 0.005495448053975919,
+   "tbt": 409
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/oakland-custom",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1264.6822000000002,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/oakland-custom",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 5606.13615,
+   "cls": 0.00006529856308661405,
+   "tbt": 202.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/olympic-valley-custom-home",
+   "form": "desktop",
+   "score": 86,
+   "lcp": 2343.1777500000003,
+   "cls": 0.001578819398743443,
+   "tbt": 23
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/olympic-valley-custom-home",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 14690.102350000005,
+   "cls": 0.0399980580488864,
+   "tbt": 218
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/orcas-retreat-washington",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1223.3882999999996,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/orcas-retreat-washington",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3833.1240499999994,
+   "cls": 0.01652922210710382,
+   "tbt": 224.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/pacific-palisades-custom",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1158.1118,
+   "cls": 0.25975314486314766,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/pacific-palisades-custom",
+   "form": "mobile",
+   "score": 90,
+   "lcp": 2796.602640930176,
+   "cls": 0.036878083275616855,
+   "tbt": 214
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/palisades-tahoe-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1024.4391,
+   "cls": 0.001578819398743443,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/palisades-tahoe-custom",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 5255.963499999999,
+   "cls": 0.05485352090515105,
+   "tbt": 333.5000000000009
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/peninsula-custom-by-studio-s2",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 1230.1398909301759,
+   "cls": 0.2588377603707325,
+   "tbt": 9.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/peninsula-custom-by-studio-s2",
+   "form": "mobile",
+   "score": 67,
+   "lcp": 5114.5472500000005,
+   "cls": 0.010948133729507797,
+   "tbt": 442.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/portola-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1118.286975,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/portola-custom",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 4720.5749,
+   "cls": 0.016525785340625574,
+   "tbt": 422
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/portola-valley-custom",
+   "form": "desktop",
+   "score": 88,
+   "lcp": 2088.767925,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/portola-valley-custom",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3385.0982499999996,
+   "cls": 0.005426712724411063,
+   "tbt": 264
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/san-juan-custom",
+   "form": "desktop",
+   "score": 82,
+   "lcp": 3032.972849999999,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/san-juan-custom",
+   "form": "mobile",
+   "score": 60,
+   "lcp": 15367.136299999995,
+   "cls": 0.016525785340625574,
+   "tbt": 376
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/san-juan-island-custom",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1480.9662999999996,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/san-juan-island-custom",
+   "form": "mobile",
+   "score": 69,
+   "lcp": 5529.5261,
+   "cls": 0.00851149586001623,
+   "tbt": 255.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/santa-rosa-custom-by-tobylongdesign",
+   "form": "desktop",
+   "score": 82,
+   "lcp": 1462.3126,
+   "cls": 0.25793181565342516,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/santa-rosa-custom-by-tobylongdesign",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 2964.1962000000003,
+   "cls": 0.016770958146897014,
+   "tbt": 358.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 883.2546500000001,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 3246.97985,
+   "cls": 0.0010670598878774074,
+   "tbt": 373
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/sun-valley-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 994.7534999999999,
+   "cls": 0.0014866249022931234,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/sun-valley-custom",
+   "form": "mobile",
+   "score": 64,
+   "lcp": 6063.0149,
+   "cls": 0.005432130922823683,
+   "tbt": 349
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/sv-residence-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1036.05105,
+   "cls": 0.0014866249022931234,
+   "tbt": 13
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/sv-residence-custom",
+   "form": "mobile",
+   "score": 45,
+   "lcp": 6429.77155,
+   "cls": 0.016839693476461873,
+   "tbt": 2233.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/tahoe-custom",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1215.868675,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/tahoe-custom",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 4500.847075,
+   "cls": 0.00006529856308661405,
+   "tbt": 270
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/truckee-custom",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1165.3801,
+   "cls": 0.0009878588106905573,
+   "tbt": 9.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/truckee-custom",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 6597.825925,
+   "cls": 0.00006529856308661405,
+   "tbt": 378.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/truckee-custom-by-clever-homes",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1011.1564500000002,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/truckee-custom-by-clever-homes",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 4039.6162750000003,
+   "cls": 0.00006529856308661405,
+   "tbt": 222
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/venice-beach-custom",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1033.72945,
+   "cls": 0.0012002381749683562,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/venice-beach-custom",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 5516.7454,
+   "cls": 0.00006529856308661405,
+   "tbt": 226
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/vineyard-court",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 2085.7243,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/vineyard-court",
+   "form": "mobile",
+   "score": 64,
+   "lcp": 6376.6476999999995,
+   "cls": 0.0012164937194695086,
+   "tbt": 258
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/west-end-wetlands-custom",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 1385.9012000000002,
+   "cls": 0.00497003622205449,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolio/west-end-wetlands-custom",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3838.1680000000006,
+   "cls": 0.016839693476461873,
+   "tbt": 351.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1129.929275,
+   "cls": 0.0011335472608070764,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 5087.602025,
+   "cls": 0.001387776718358334,
+   "tbt": 313.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/city-and-urban",
+   "form": "desktop",
+   "score": 79,
+   "lcp": 1249.3478,
+   "cls": 0.3655003020158146,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/city-and-urban",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 2680.9083,
+   "cls": 0.21787375646433715,
+   "tbt": 234
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/island-and-waterfront-homes",
+   "form": "desktop",
+   "score": 75,
+   "lcp": 1832.31735,
+   "cls": 0.3478153659845933,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/island-and-waterfront-homes",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 2180.671190930176,
+   "cls": 0.18025971937896207,
+   "tbt": 269.5
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/mountain-modern-homes",
+   "form": "desktop",
+   "score": 66,
+   "lcp": 3257.9739999999993,
+   "cls": 0.30924997369860713,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/mountain-modern-homes",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 2620.178775,
+   "cls": 0.24381589158167777,
+   "tbt": 158
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/valley-and-vineyard-homes",
+   "form": "desktop",
+   "score": 80,
+   "lcp": 1516.3845000000001,
+   "cls": 0.29106624753146026,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-regions/valley-and-vineyard-homes",
+   "form": "mobile",
+   "score": 67,
+   "lcp": 2897.5163250000005,
+   "cls": 0.4368227753669264,
+   "tbt": 218
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-residential",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 963.45435,
+   "cls": 0.0075545024552443555,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/custom-residential",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3463.2569249999997,
+   "cls": 0.01799000530883108,
+   "tbt": 326
+  },
+  {
+   "url": "https://www.methodhomes.net/faq",
+   "form": "desktop",
+   "score": 77,
+   "lcp": 1099.1803,
+   "cls": 0.3684368568470025,
+   "tbt": 31.00435000000016
+  },
+  {
+   "url": "https://www.methodhomes.net/faq",
+   "form": "mobile",
+   "score": 54,
+   "lcp": 5701.715999999999,
+   "cls": 0.1630507384574421,
+   "tbt": 312.5
+  },
+  {
+   "url": "https://www.methodhomes.net/featured-projects",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 841.3293000000001,
+   "cls": 0.0021571606064526684,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/featured-projects",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 6973.578295465089,
+   "cls": 0.018182963900952063,
+   "tbt": 195.5
+  },
+  {
+   "url": "https://www.methodhomes.net/fish-creek",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1464.07575,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/fish-creek",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3774.9308999999994,
+   "cls": 0.001527033398620713,
+   "tbt": 323
+  },
+  {
+   "url": "https://www.methodhomes.net/get-started",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1048.7082,
+   "cls": 0.0032286755954113056,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/get-started",
+   "form": "mobile",
+   "score": 51,
+   "lcp": 5788.783100000001,
+   "cls": 0.25220452164030593,
+   "tbt": 250.0000000000009
+  },
+  {
+   "url": "https://www.methodhomes.net/martis-camp-416",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1768.3835,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/martis-camp-416",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 7730.549599999999,
+   "cls": 0.001527033398620713,
+   "tbt": 228.47050000000036
+  },
+  {
+   "url": "https://www.methodhomes.net/martis-camp-663",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1565.4993499999998,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/martis-camp-663",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 5783.772599999999,
+   "cls": 0.001527033398620713,
+   "tbt": 246.5
+  },
+  {
+   "url": "https://www.methodhomes.net/method-process",
+   "form": "desktop",
+   "score": 65,
+   "lcp": 2479.1109749999996,
+   "cls": 0.5360361806810935,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/method-process",
+   "form": "mobile",
+   "score": 55,
+   "lcp": 11733.577400000004,
+   "cls": 0.2539179327103691,
+   "tbt": 222
+  },
+  {
+   "url": "https://www.methodhomes.net/orcas-cabin-retreat",
+   "form": "desktop",
+   "score": 88,
+   "lcp": 2331.4255000000003,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/orcas-cabin-retreat",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3885.9654250000003,
+   "cls": 0.001527033398620713,
+   "tbt": 259
+  },
+  {
+   "url": "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 905.8983249999997,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/partnerships-with-architects-and-developers",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 3745.4211250000003,
+   "cls": 0.00006873532956485689,
+   "tbt": 232
+  },
+  {
+   "url": "https://www.methodhomes.net/peninsula",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1868.9638,
+   "cls": 0.0009878588106905573,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/peninsula",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 5449.13135,
+   "cls": 0.001527033398620713,
+   "tbt": 287.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1169.315125,
+   "cls": 0.0016776984221850348,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3118.4467000000004,
+   "cls": 0.00241738464230939,
+   "tbt": 297.16439999999966
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/bainbridge-island-option",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 990.59665,
+   "cls": 0.001763933209533983,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/bainbridge-island-option",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2673.8681909301754,
+   "cls": 0.0019909057188037876,
+   "tbt": 260.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1020.7083499999999,
+   "cls": 0.0011275141147077984,
+   "tbt": 1
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 3713.1371999999997,
+   "cls": 0.001431025216166408,
+   "tbt": 391
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin-ii",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 1481.6062499999998,
+   "cls": 0.0012197086111581177,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/big-creek-ranch-cabin-ii",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3351.1799,
+   "cls": 0.002614772564599725,
+   "tbt": 300
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/bryant-option",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1044.1868,
+   "cls": 0.004207140406609835,
+   "tbt": 3
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/bryant-option",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3762.4927999999995,
+   "cls": 0.00835813007193719,
+   "tbt": 179
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/camano-shift",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 1324.1918999999998,
+   "cls": 0.0012197086111581177,
+   "tbt": 3.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/camano-shift",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3494.88285,
+   "cls": 0.01013598717647174,
+   "tbt": 194.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/coastal-cabin",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1247.4794499999998,
+   "cls": 0.0012197086111581177,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/coastal-cabin",
+   "form": "mobile",
+   "score": 86,
+   "lcp": 2837.4929,
+   "cls": 0.001328232639436512,
+   "tbt": 254.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/custom-elemental-5",
+   "form": "desktop",
+   "score": 84,
+   "lcp": 867.0133000000001,
+   "cls": 0.256317058992047,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/custom-elemental-5",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 5226.011345465087,
+   "cls": 0.0022006674002066394,
+   "tbt": 218
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/deming-m2",
+   "form": "desktop",
+   "score": 89,
+   "lcp": 1681.6454999999996,
+   "cls": 0.001763933209533983,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/deming-m2",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 4419.0343,
+   "cls": 0.01652143434275182,
+   "tbt": 287
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/glacier-cabin",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1205.7103000000002,
+   "cls": 0.0018561277059843014,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/glacier-cabin",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3118.0346999999992,
+   "cls": 0.002674009921351984,
+   "tbt": 265
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/hood-canal-m-series",
+   "form": "desktop",
+   "score": 88,
+   "lcp": 1733.2599999999998,
+   "cls": 0.0012197086111581177,
+   "tbt": 5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/hood-canal-m-series",
+   "form": "mobile",
+   "score": 81,
+   "lcp": 3156.9014500000003,
+   "cls": 0.016147884142634676,
+   "tbt": 337
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lake-whatcom-cabin",
+   "form": "desktop",
+   "score": 85,
+   "lcp": 1701.90675,
+   "cls": 0.1477197613631718,
+   "tbt": 16
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lake-whatcom-cabin",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3980.4671,
+   "cls": 0.001431025216166408,
+   "tbt": 296.49999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lid-park-custom",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1019.157,
+   "cls": 0.0018502827530313376,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lid-park-custom",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3722.1341999999995,
+   "cls": 0.007405903201706612,
+   "tbt": 244.62937499999862
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lopez-island-cabin-2",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 889.7778999999998,
+   "cls": 0.0017580882565810191,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/lopez-island-cabin-2",
+   "form": "mobile",
+   "score": 75,
+   "lcp": 3894.0979749999997,
+   "cls": 0.016147884142634676,
+   "tbt": 245.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/marrowstone-island-elemental",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 1280.9408999999998,
+   "cls": 0.22853367794500237,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/marrowstone-island-elemental",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 3989.1607000000004,
+   "cls": 0.001431025216166408,
+   "tbt": 229.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/modern-monogram-elemental",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 910.029225,
+   "cls": 0.18533118173016463,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/modern-monogram-elemental",
+   "form": "mobile",
+   "score": 83,
+   "lcp": 3355.255575,
+   "cls": 0.0022006674002066394,
+   "tbt": 221
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/obstruction-island-cabin",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 1480.1855500000001,
+   "cls": 0.0012197086111581177,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/obstruction-island-cabin",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3981.985350000001,
+   "cls": 0.006040861214324048,
+   "tbt": 320
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/orcas-island-cabin",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1343.346825,
+   "cls": 0.001763933209533983,
+   "tbt": 8.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/orcas-island-cabin",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3085.5275,
+   "cls": 0.002810730740522808,
+   "tbt": 294.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/paradigm-i",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 983.6937,
+   "cls": 0.001763933209533983,
+   "tbt": 7
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/paradigm-i",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 3824.6873999999993,
+   "cls": 0.001431025216166408,
+   "tbt": 266.99999999999864
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/peninsula-shift",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1379.64875,
+   "cls": 0.0012197086111581177,
+   "tbt": 6.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/peninsula-shift",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 3304.5742,
+   "cls": 0.0022468510914380184,
+   "tbt": 398
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/phinney-option",
+   "form": "desktop",
+   "score": 72,
+   "lcp": 2119.621825,
+   "cls": 0.2951439398662113,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/phinney-option",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 4057.7593750000005,
+   "cls": 0.001431025216166408,
+   "tbt": 207
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/san-juan-cabin",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 1476.7699499999999,
+   "cls": 0.001763933209533983,
+   "tbt": 0.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/san-juan-cabin",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3670.5742,
+   "cls": 0.002614772564599725,
+   "tbt": 274
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/santa-barbara-cabin",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 892.8958,
+   "cls": 0.0011216691617548348,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/santa-barbara-cabin",
+   "form": "mobile",
+   "score": 79,
+   "lcp": 3809.362400000001,
+   "cls": 0.001431025216166408,
+   "tbt": 219.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/santa-rosa-annata",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 1093.85055,
+   "cls": 0.25848474541594707,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/santa-rosa-annata",
+   "form": "mobile",
+   "score": 82,
+   "lcp": 3417.2961000000005,
+   "cls": 0.016313698214690718,
+   "tbt": 241.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/seattle-element-3",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1185.1435,
+   "cls": 0.001213863658205154,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/seattle-element-3",
+   "form": "mobile",
+   "score": 84,
+   "lcp": 3124.266775,
+   "cls": 0.0021348749909105426,
+   "tbt": 258
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/seattle-option",
+   "form": "desktop",
+   "score": 83,
+   "lcp": 1274.1015249999998,
+   "cls": 0.24466921291197682,
+   "tbt": 6
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/seattle-option",
+   "form": "mobile",
+   "score": 89,
+   "lcp": 2995.3426,
+   "cls": 0.002810730740522808,
+   "tbt": 88.52225453491201
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/sonoma-elemental",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 997.9410499999997,
+   "cls": 0.001763933209533983,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/sonoma-elemental",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3211.3583249999997,
+   "cls": 0.002230854505648379,
+   "tbt": 358.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/spencer-lake-cabin",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1119.2693000000002,
+   "cls": 0.0011275141147077984,
+   "tbt": 8
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/spencer-lake-cabin",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 5963.350549999999,
+   "cls": 0.001431025216166408,
+   "tbt": 252.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/tahoe-cabin",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1190.095425,
+   "cls": 0.001213863658205154,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/tahoe-cabin",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 4329.0749,
+   "cls": 0.002897962122406935,
+   "tbt": 259
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/vashon-island-cabin",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1155.0691500000003,
+   "cls": 0.0018502827530313376,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/vashon-island-cabin",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3443.812325,
+   "cls": 0.002184670814417,
+   "tbt": 285.99999999999955
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/white-rock-ii-custom",
+   "form": "desktop",
+   "score": 96,
+   "lcp": 983.1624,
+   "cls": 0.0012197086111581177,
+   "tbt": 2.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-portfolio/white-rock-ii-custom",
+   "form": "mobile",
+   "score": 73,
+   "lcp": 3985.03445,
+   "cls": 0.001431025216166408,
+   "tbt": 353.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-residential",
+   "form": "desktop",
+   "score": 90,
+   "lcp": 1766.1478,
+   "cls": 0.019017869539420456,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-residential",
+   "form": "mobile",
+   "score": 80,
+   "lcp": 3392.1583,
+   "cls": 0.0019728719334125774,
+   "tbt": 283
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/annata",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1509.7694000000004,
+   "cls": 0.008067777104014434,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/annata",
+   "form": "mobile",
+   "score": 67,
+   "lcp": 3964.4429,
+   "cls": 0.23583569165540613,
+   "tbt": 250
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/cabin",
+   "form": "desktop",
+   "score": 91,
+   "lcp": 1527.1549000000005,
+   "cls": 0.05594086273567913,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/cabin",
+   "form": "mobile",
+   "score": 55,
+   "lcp": 5652.833349999999,
+   "cls": 0.26941084155943307,
+   "tbt": 238.70314999999846
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/elemental",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 819.0111,
+   "cls": 0.0068251133459460624,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/elemental",
+   "form": "mobile",
+   "score": 61,
+   "lcp": 4615.909700000001,
+   "cls": 0.21876947820156653,
+   "tbt": 276.5
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/m",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 2229.9927,
+   "cls": 0.0068251133459460624,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/m",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 3726.7541,
+   "cls": 0.16227365901667698,
+   "tbt": 244
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/method-one",
+   "form": "desktop",
+   "score": 92,
+   "lcp": 1452.5905000000002,
+   "cls": 0.009958351277971624,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/method-one",
+   "form": "mobile",
+   "score": 67,
+   "lcp": 3710.6631749999997,
+   "cls": 0.22576041637536087,
+   "tbt": 261
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/option",
+   "form": "desktop",
+   "score": 87,
+   "lcp": 1964.5808500000003,
+   "cls": 0.023017775936307206,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/option",
+   "form": "mobile",
+   "score": 59,
+   "lcp": 5322.492200000001,
+   "cls": 0.21955689313800153,
+   "tbt": 248
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/paradigm",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 898.12815,
+   "cls": 0.004783351882344057,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/predesigned-series/paradigm",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 3477.3229,
+   "cls": 0.17972792047237177,
+   "tbt": 213
+  },
+  {
+   "url": "https://www.methodhomes.net/press",
+   "form": "desktop",
+   "score": 80,
+   "lcp": 2588.4949,
+   "cls": 0.0015563078127000583,
+   "tbt": 3.5
+  },
+  {
+   "url": "https://www.methodhomes.net/press",
+   "form": "mobile",
+   "score": 53,
+   "lcp": 9168.365600000001,
+   "cls": 0.014000216183249897,
+   "tbt": 457.2196500000009
+  },
+  {
+   "url": "https://www.methodhomes.net/pricing",
+   "form": "desktop",
+   "score": 98,
+   "lcp": 1072.8762499999998,
+   "cls": 0.0008956643142402381,
+   "tbt": 3.5
+  },
+  {
+   "url": "https://www.methodhomes.net/pricing",
+   "form": "mobile",
+   "score": 77,
+   "lcp": 4592.5193,
+   "cls": 0.0005871336464717558,
+   "tbt": 239
+  },
+  {
+   "url": "https://www.methodhomes.net/privacy-policy",
+   "form": "desktop",
+   "score": 100,
+   "lcp": 711.3329499999999,
+   "cls": 0.02134559927937027,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/privacy-policy",
+   "form": "mobile",
+   "score": 88,
+   "lcp": 2711.1852,
+   "cls": 0.005034127160558576,
+   "tbt": 221.5
+  },
+  {
+   "url": "https://www.methodhomes.net/process-services",
+   "form": "desktop",
+   "score": 78,
+   "lcp": 1471.3641000000002,
+   "cls": 0.35450885683057126,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/process-services",
+   "form": "mobile",
+   "score": 78,
+   "lcp": 2519.1623,
+   "cls": 0.22900453938239737,
+   "tbt": 243
+  },
+  {
+   "url": "https://www.methodhomes.net/project/calistoga",
+   "form": "desktop",
+   "score": 93,
+   "lcp": 1718.7166000000007,
+   "cls": 0.0003520761349591996,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/project/calistoga",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 5887.4411,
+   "cls": 0.00006873532956485689,
+   "tbt": 306
+  },
+  {
+   "url": "https://www.methodhomes.net/project/peninsula",
+   "form": "desktop",
+   "score": 89,
+   "lcp": 2187.0632499999997,
+   "cls": 0.00039130472778916377,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/project/peninsula",
+   "form": "mobile",
+   "score": 70,
+   "lcp": 7207.940050000002,
+   "cls": 0.00006873532956485689,
+   "tbt": 179.5
+  },
+  {
+   "url": "https://www.methodhomes.net/res-survey",
+   "form": "desktop",
+   "score": 95,
+   "lcp": 1302.55265,
+   "cls": 0.00039130472778916377,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/res-survey",
+   "form": "mobile",
+   "score": 56,
+   "lcp": 4718.1104,
+   "cls": 0.2966944104077028,
+   "tbt": 235
+  },
+  {
+   "url": "https://www.methodhomes.net/residential-survey",
+   "form": "desktop",
+   "score": 94,
+   "lcp": 1435.200075,
+   "cls": 0.0007976149598443017,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/residential-survey",
+   "form": "mobile",
+   "score": 76,
+   "lcp": 4562.8476,
+   "cls": 0.00006873532956485689,
+   "tbt": 302.5
+  },
+  {
+   "url": "https://www.methodhomes.net/residential-survey-copy",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1201.28865,
+   "cls": 0.0002200873605429264,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/residential-survey-copy",
+   "form": "mobile",
+   "score": 87,
+   "lcp": 3547.8470500000003,
+   "cls": 0.00006873532956485689,
+   "tbt": 144
+  },
+  {
+   "url": "https://www.methodhomes.net/santa-rosa",
+   "form": "desktop",
+   "score": 97,
+   "lcp": 1293.4405249999998,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/santa-rosa",
+   "form": "mobile",
+   "score": 72,
+   "lcp": 6069.316499999999,
+   "cls": 0.001527033398620713,
+   "tbt": 152.5
+  },
+  {
+   "url": "https://www.methodhomes.net/search",
+   "form": "desktop",
+   "score": 100,
+   "lcp": 687.3520000000001,
+   "cls": 0.0003699185710533229,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/search",
+   "form": "mobile",
+   "score": 85,
+   "lcp": 2699.2958000000003,
+   "cls": 0.001022168931485548,
+   "tbt": 322
+  },
+  {
+   "url": "https://www.methodhomes.net/sustainability",
+   "form": "desktop",
+   "score": 67,
+   "lcp": 2419.8502250000006,
+   "cls": 0.3414154837769217,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/sustainability",
+   "form": "mobile",
+   "score": 69,
+   "lcp": 2615.4961999999996,
+   "cls": 0.3629646682076615,
+   "tbt": 181.5
+  },
+  {
+   "url": "https://www.methodhomes.net/sv-residence",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 821.7941000000001,
+   "cls": 0.0008956643142402381,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/sv-residence",
+   "form": "mobile",
+   "score": 74,
+   "lcp": 4546.296875,
+   "cls": 0.0010352817241716453,
+   "tbt": 298.50000000000045
+  },
+  {
+   "url": "https://www.methodhomes.net/sv-residence-arc",
+   "form": "desktop",
+   "score": 99,
+   "lcp": 1038.1825749999998,
+   "cls": 0.00039130472778916377,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/sv-residence-arc",
+   "form": "mobile",
+   "score": 68,
+   "lcp": 7320.062100000001,
+   "cls": 0.0010352817241716453,
+   "tbt": 231
+  },
+  {
+   "url": "https://www.methodhomes.net/what-is-prefab",
+   "form": "desktop",
+   "score": 79,
+   "lcp": 1577.6092954650876,
+   "cls": 0.30819253115317063,
+   "tbt": 0
+  },
+  {
+   "url": "https://www.methodhomes.net/what-is-prefab",
+   "form": "mobile",
+   "score": 71,
+   "lcp": 2954.689975,
+   "cls": 0.13428226504366012,
+   "tbt": 553
+  }
+ ]
+}
