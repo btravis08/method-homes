@@ -24,9 +24,18 @@ const urls = Object.values(data.pages)
 const mine = urls.filter((_, i) => i % shards === shard);
 console.log(`shard ${shard}/${shards}: ${mine.length} urls`);
 
-const chrome = await chromeLauncher.launch({
+let chrome = await chromeLauncher.launch({
   chromeFlags: ["--headless=new"],
 });
+
+// A wedged page load can hang the lighthouse promise past maxWaitForLoad;
+// race a hard timeout and relaunch Chrome after any failure so one bad URL
+// can't stall the shard.
+const withTimeout = (p, ms) =>
+  Promise.race([
+    p,
+    new Promise((_, rej) => setTimeout(() => rej(new Error("hard timeout")), ms)),
+  ]);
 
 const results = [];
 async function run(url, form) {
@@ -34,10 +43,10 @@ async function run(url, form) {
     port: chrome.port,
     output: "json",
     onlyCategories: ["performance"],
-    maxWaitForLoad: 60_000,
+    maxWaitForLoad: 45_000,
   };
   const config = form === "desktop" ? desktopConfig : undefined;
-  const r = await lighthouse(url, opts, config);
+  const r = await withTimeout(lighthouse(url, opts, config), 100_000);
   const lhr = r.lhr;
   const a = lhr.audits;
   return {
@@ -62,6 +71,8 @@ for (const url of mine) {
       } catch (e) {
         console.log(`ERR ${form} ${url}: ${String(e).slice(0, 120)}`);
         entry = { url, form, score: null, lcp: null, cls: null, tbt: null };
+        try { chrome.kill(); } catch {}
+        chrome = await chromeLauncher.launch({ chromeFlags: ["--headless=new"] });
       }
     }
     results.push(entry);
