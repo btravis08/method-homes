@@ -12,6 +12,17 @@ import lighthouse from "lighthouse";
 import * as chromeLauncher from "chrome-launcher";
 import desktopConfig from "lighthouse/core/config/desktop-config.js";
 
+// Lighthouse occasionally throws protocol errors ("Session with given id
+// not found") from detached async callbacks — unreachable from the per-run
+// try/catch, and fatal to the process by default. Log and keep going; the
+// per-run hard timeout + Chrome relaunch recovers the affected run.
+process.on("unhandledRejection", (e) =>
+  console.log("UNHANDLED:", String(e).slice(0, 140)),
+);
+process.on("uncaughtException", (e) =>
+  console.log("UNCAUGHT:", String(e).slice(0, 140)),
+);
+
 const shard = Number(process.env.SHARD ?? 0);
 const shards = Number(process.env.SHARDS ?? 1);
 
