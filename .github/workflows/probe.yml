@@ -7,66 +7,9 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Head recheck (attribute-order-agnostic) and homepage weight breakdown
+      - name: Region pages status check
         run: |
-          cat > inspect2.py <<'EOF'
-          import re, urllib.request
-          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
-          def fetch(p):
-              req = urllib.request.Request("https://www.methodhomes.net" + p, headers=UA)
-              return urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
-          def tag_with(html, tagname, **attrs):
-              out = []
-              for m in re.finditer(r"<" + tagname + r"\b[^>]*>", html, re.I):
-                  t = m.group(0)
-                  ok = True
-                  for k, v in attrs.items():
-                      am = re.search(k + r'=["\']([^"\']*)["\']', t, re.I)
-                      if not am or am.group(1).lower() != v.lower():
-                          ok = False; break
-                  if ok: out.append(t)
-              return out
-          def attr(t, name):
-              m = re.search(name + r'=["\']([^"\']*)["\']', t, re.I)
-              return m.group(1) if m else None
-          pages = ["/", "/custom-residential", "/about", "/pricing", "/peninsula", "/custom-portfolio/calistoga-custom", "/blog/backyard-cottages", "/predesigned-series/annata", "/faq"]
-          for p in pages:
-              try: html = fetch(p)
-              except Exception as e:
-                  print(f"\n##### {p}: FETCH ERROR {e}"); continue
-              print(f"\n##### {p} ({len(html)} bytes)")
-              md = tag_with(html, "meta", name="description")
-              print("meta-desc:", (attr(md[0], "content") or "")[:160] if md else "NONE")
-              can = tag_with(html, "link", rel="canonical")
-              print("canonical:", attr(can[0], "href") if can else "NONE")
-              rob = tag_with(html, "meta", name="robots")
-              print("meta-robots:", attr(rob[0], "content") if rob else "NONE")
-              for prop in ["og:title", "og:image", "og:description", "twitter:card"]:
-                  tags = [t for t in re.findall(r"<meta\b[^>]*>", html, re.I) if (attr(t, "property") or attr(t, "name") or "").lower() == prop]
-                  print(f"{prop}:", (attr(tags[0], "content") or "")[:120] if tags else "NONE")
-              srcset = len(re.findall(r'<img[^>]+srcset=', html, re.I))
-              imgs = len(re.findall(r"<img\b", html, re.I))
-              print(f"imgs: {imgs} | with srcset: {srcset}")
-          # homepage weight breakdown
-          html = fetch("/")
-          print("\n===== HOMEPAGE 2.2MB BREAKDOWN =====")
-          print("total bytes:", len(html))
-          for pat, label in [(r"<svg\b.*?</svg>", "inline svg"), (r"<style\b.*?</style>", "inline style"), (r"<script\b.*?</script>", "inline+ext script tags")]:
-              blocks = re.findall(pat, html, re.I | re.S)
-              print(f"{label}: {len(blocks)} blocks, {sum(len(b) for b in blocks)} bytes")
-          # biggest single elements
-          divs = re.findall(r'data:image/[^"\')]{200,}', html)
-          print("data-uri images >200ch:", len(divs), "bytes:", sum(len(d) for d in divs))
-          videos = re.findall(r"<video\b[^>]*>", html, re.I)
-          print("video tags:", len(videos))
-          for v in videos[:4]: print("  ", v[:200])
-          bgs = len(re.findall(r"background-image", html, re.I))
-          print("background-image occurrences:", bgs)
-          EOF
-          python3 inspect2.py
-      - name: Blog scan for canonicals and thin pages
-        run: |
-          for u in "https://www.methodhomes.net/press" "https://www.methodhomes.net/search" "https://www.methodhomes.net/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects" "https://www.methodhomes.net/commercial-project-types/multi-family-housing-units" "https://www.methodhomes.net/custom-regions/california"; do
+          for u in "https://www.methodhomes.net/custom-regions/mountain-modern-homes" "https://www.methodhomes.net/custom-regions/valley-and-vineyard-homes" "https://www.methodhomes.net/custom-regions/island-and-waterfront-homes" "https://www.methodhomes.net/custom-regions/city-and-urban" "https://www.methodhomes.net/custom-regions"; do
             echo "=== $u"
-            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0" -w "status %{http_code}\n" "$u" || true
+            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
           done
