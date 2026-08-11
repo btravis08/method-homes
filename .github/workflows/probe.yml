@@ -7,24 +7,20 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Annata Heading placeholder context
+      - name: heading-57 CSS rule
         run: |
           cat > check.py <<'EOF'
           import re, urllib.request
           UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
-          req = urllib.request.Request("https://www.methodhomes.net/predesigned-series/annata", headers=UA)
-          html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
-          print("bytes:", len(html))
-          for m in re.finditer(r"<h1[^>]*>.*?</h1>", html, re.S):
-              start = max(0, m.start() - 400)
-              ctx = html[start:m.end()]
-              print("\n===== H1 with 400ch of preceding context =====")
-              print(ctx[-700:])
-          # any w-condition-invisible near Heading?
-          i = html.find(">Heading<")
-          if i == -1:
-              print("\nNO literal >Heading< found in HTML")
-          else:
-              print("\ncontext around Heading:", html[max(0,i-600):i+200])
+          def get(url):
+              req = urllib.request.Request(url, headers=UA)
+              return urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+          html = get("https://www.methodhomes.net/predesigned-series/annata")
+          css_urls = re.findall(r'<link[^>]+href="([^"]+\.css[^"]*)"', html)
+          print("css files:", css_urls)
+          for u in css_urls:
+              css = get(u)
+              for m in re.finditer(r"[^{}]*\.heading-57[^{}]*\{[^}]*\}", css):
+                  print("\nRULE:", m.group(0)[:400])
           EOF
           python3 check.py
