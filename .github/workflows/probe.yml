@@ -7,20 +7,9 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: heading-57 CSS rule
+      - name: Survey pages status
         run: |
-          cat > check.py <<'EOF'
-          import re, urllib.request
-          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
-          def get(url):
-              req = urllib.request.Request(url, headers=UA)
-              return urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
-          html = get("https://www.methodhomes.net/predesigned-series/annata")
-          css_urls = re.findall(r'<link[^>]+href="([^"]+\.css[^"]*)"', html)
-          print("css files:", css_urls)
-          for u in css_urls:
-              css = get(u)
-              for m in re.finditer(r"[^{}]*\.heading-57[^{}]*\{[^}]*\}", css):
-                  print("\nRULE:", m.group(0)[:400])
-          EOF
-          python3 check.py
+          for u in "https://www.methodhomes.net/residential-survey" "https://www.methodhomes.net/residential-survey-copy" "https://www.methodhomes.net/commercial-survey" "https://www.methodhomes.net/commercial-survey-copy" "https://www.methodhomes.net/res-survey"; do
+            echo "=== $u"
+            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
+          done
