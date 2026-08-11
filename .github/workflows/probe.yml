@@ -7,9 +7,24 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Region pages status check
+      - name: Annata Heading placeholder context
         run: |
-          for u in "https://www.methodhomes.net/custom-regions/mountain-modern-homes" "https://www.methodhomes.net/custom-regions/valley-and-vineyard-homes" "https://www.methodhomes.net/custom-regions/island-and-waterfront-homes" "https://www.methodhomes.net/custom-regions/city-and-urban" "https://www.methodhomes.net/custom-regions"; do
-            echo "=== $u"
-            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
-          done
+          cat > check.py <<'EOF'
+          import re, urllib.request
+          UA = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"}
+          req = urllib.request.Request("https://www.methodhomes.net/predesigned-series/annata", headers=UA)
+          html = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", "replace")
+          print("bytes:", len(html))
+          for m in re.finditer(r"<h1[^>]*>.*?</h1>", html, re.S):
+              start = max(0, m.start() - 400)
+              ctx = html[start:m.end()]
+              print("\n===== H1 with 400ch of preceding context =====")
+              print(ctx[-700:])
+          # any w-condition-invisible near Heading?
+          i = html.find(">Heading<")
+          if i == -1:
+              print("\nNO literal >Heading< found in HTML")
+          else:
+              print("\ncontext around Heading:", html[max(0,i-600):i+200])
+          EOF
+          python3 check.py
