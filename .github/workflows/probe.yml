@@ -3,13 +3,23 @@ name: probe
 on:
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Survey pages status
+      - uses: actions/checkout@v4
+      - name: Fetch Method logo assets and commit
         run: |
-          for u in "https://www.methodhomes.net/residential-survey" "https://www.methodhomes.net/residential-survey-copy" "https://www.methodhomes.net/commercial-survey" "https://www.methodhomes.net/commercial-survey-copy" "https://www.methodhomes.net/res-survey"; do
-            echo "=== $u"
-            curl -sS -o /dev/null --max-time 30 -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36" -w "status %{http_code} -> %{redirect_url}\n" "$u" || true
-          done
+          mkdir -p public/method/brand
+          curl -sS --max-time 30 -A "Mozilla/5.0" -o public/method/brand/logo-nav.webp "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/660fea59ad2f5afd387c69cd_high%20res%20new%20logo.webp"
+          curl -sS --max-time 30 -A "Mozilla/5.0" -o public/method/brand/logo-alt.webp "https://cdn.prod.website-files.com/6540250bb99e8be37b523929/6540f2bc55a4593c692dfdb9_Method%20Logo.webp"
+          file public/method/brand/*.webp; ls -la public/method/brand/
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/method/brand
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Add Method logo assets (fetched from live site CDN)"
+          git pull --rebase origin main && git push
