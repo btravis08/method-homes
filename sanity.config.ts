@@ -10,6 +10,7 @@ import { icons } from "@sanity/icons";
 import type { StructureResolver } from "sanity/structure";
 
 import { apiVersion, dataset, projectId } from "@/sanity/env";
+import { StudioIcon } from "@/sanity/components/StudioIcon";
 import { schemaTypes } from "@/sanity/schemaTypes";
 import { calendarTool } from "@/sanity/tools/Calendar";
 import { designTokensTool } from "@/sanity/tools/DesignTokens";
@@ -216,6 +217,7 @@ S.listItem()
 export default defineConfig({
   basePath: "/studio",
   title: designops.site.name,
+  icon: StudioIcon,
   projectId,
   dataset,
   theme,
