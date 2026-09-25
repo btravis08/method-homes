@@ -13,6 +13,11 @@ real content migration below).
 
 ## Working agreements
 
+- Written deliverables (proposals, audits, plans, question lists,
+  cleanup docs) are created as GOOGLE DOCS via the Google Drive
+  connector — always, by default (user preference, 2026-09-25).
+  If the connector is off in the session, ask the user to enable it
+  rather than falling back to .docx without saying so.
 - Repo btravis08/method-homes, branch `main` only; pushes deploy via
   Vercel to https://method-homes.vercel.app (staging). Never open a
   PR unless asked.
