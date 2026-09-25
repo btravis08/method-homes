@@ -154,12 +154,13 @@ S.listItem()
           S.list()
             .title("Inbox")
             .items([
-              /* flagged spam never reaches Unread; it waits in Spam */
+              /* flagged spam never reaches Unread; it waits in Spam. `!(x == …)`
+                 keeps older docs with no status/read field in the lists */
               ...(
                 [
-                  ["Unread", 'read != true && status != "spam"'],
-                  ["Get Started leads", 'form == "intake" && status != "spam"'],
-                  ["Newsletter", 'form == "newsletter" && status != "spam"'],
+                  ["Unread", '!(read == true) && !(status == "spam")'],
+                  ["Get Started leads", 'form == "intake" && !(status == "spam")'],
+                  ["Newsletter", 'form == "newsletter" && !(status == "spam")'],
                   ["Spam", 'status == "spam"'],
                 ] as const
               ).map(([title, where]) =>
