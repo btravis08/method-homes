@@ -3558,6 +3558,76 @@
             "totalMs": 0
           }
         }
+      },
+      {
+        "t": "2026-09-25T14:05:58.529Z",
+        "mobile": {
+          "benchmarkIndex": 2430,
+          "perf": 83,
+          "a11y": 95,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 3503.264,
+          "cls": 0,
+          "tbt": 228.5,
+          "lcpElement": {
+            "selector": "div.flex > div.hero-cta > div.flex > span.sdr-text-reveal",
+            "snippet": "<span class=\"sdr-text-reveal font-display text-headline-lg\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 748
+            },
+            {
+              "url": "41ie449iow24y.js",
+              "totalMs": 406
+            },
+            {
+              "url": "",
+              "totalMs": 358
+            }
+          ],
+          "longTasks": {
+            "count": 4,
+            "totalMs": 445
+          },
+          "retried": true
+        },
+        "desktop": {
+          "benchmarkIndex": 2437,
+          "perf": 100,
+          "a11y": 91,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 554.1455,
+          "cls": 0.00007076977349911941,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div.pointer-events-none > div.absolute > div.grid > span.sdr-text-reveal",
+            "snippet": "<span class=\"sdr-text-reveal col-start-2 justify-self-center font-display text-headline…\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 200
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 92
+            },
+            {
+              "url": "",
+              "totalMs": 91
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
       }
     ],
     "/journal": [
@@ -7224,6 +7294,75 @@
             {
               "url": "1nzfiapbtfjhl.js",
               "totalMs": 108
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
+      },
+      {
+        "t": "2026-09-25T14:06:37.712Z",
+        "mobile": {
+          "benchmarkIndex": 2470,
+          "perf": 99,
+          "a11y": 96,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 2047.2200000000003,
+          "cls": 0,
+          "tbt": 88.5,
+          "lcpElement": {
+            "selector": "div > div.bg-surface > header.flex > p.label",
+            "snippet": "<p class=\"label max-w-[22.875rem] text-center\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 721
+            },
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 678
+            },
+            {
+              "url": "journal",
+              "totalMs": 500
+            }
+          ],
+          "longTasks": {
+            "count": 3,
+            "totalMs": 327
+          }
+        },
+        "desktop": {
+          "benchmarkIndex": 2408,
+          "perf": 100,
+          "a11y": 91,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 501.645,
+          "cls": 0,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div > div.bg-surface > header.flex > p.label",
+            "snippet": "<p class=\"label max-w-[22.875rem] text-center\">"
+          },
+          "opportunities": [],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 166
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 165
+            },
+            {
+              "url": "journal",
+              "totalMs": 125
             }
           ],
           "longTasks": {
@@ -11364,6 +11503,89 @@
             {
               "url": "2nsq1ek51g625.js",
               "totalMs": 81
+            }
+          ],
+          "longTasks": {
+            "count": 0,
+            "totalMs": 0
+          }
+        }
+      },
+      {
+        "t": "2026-09-25T14:07:17.140Z",
+        "mobile": {
+          "benchmarkIndex": 2462,
+          "perf": 92,
+          "a11y": 94,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 3361.341,
+          "cls": 0,
+          "tbt": 82,
+          "lcpElement": {
+            "selector": "div.grid > a.group > div.relative > img.object-cover",
+            "snippet": "<img alt=\"West Seattle Townhomes\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover transition-transform duration-500 group-hover:scale-[1.03"
+          },
+          "opportunities": [
+            {
+              "id": "unused-javascript",
+              "savingsMs": 150
+            },
+            {
+              "id": "uses-responsive-images",
+              "savingsMs": 150
+            }
+          ],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 540
+            },
+            {
+              "url": "Unattributable",
+              "totalMs": 267
+            },
+            {
+              "url": "1nzfiapbtfjhl.js",
+              "totalMs": 208
+            }
+          ],
+          "longTasks": {
+            "count": 1,
+            "totalMs": 132
+          }
+        },
+        "desktop": {
+          "benchmarkIndex": 2473,
+          "perf": 99,
+          "a11y": 89,
+          "bp": 96,
+          "seo": 100,
+          "lcp": 863.306,
+          "cls": 0,
+          "tbt": 0,
+          "lcpElement": {
+            "selector": "div.grid > a.group > div.relative > img.object-cover",
+            "snippet": "<img alt=\"Village Walk Northstar Tahoe\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-cover transition-transform duration-500 group-hover:scale"
+          },
+          "opportunities": [
+            {
+              "id": "uses-responsive-images",
+              "savingsMs": 160
+            }
+          ],
+          "bootup": [
+            {
+              "url": "2ejk_26znfoeu.js",
+              "totalMs": 115
+            },
+            {
+              "url": "Unattributable",
+              "totalMs": 82
+            },
+            {
+              "url": "projects",
+              "totalMs": 69
             }
           ],
           "longTasks": {
