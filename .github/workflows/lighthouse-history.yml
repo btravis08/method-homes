@@ -7,9 +7,6 @@ name: lighthouse-history
 # with fresh numbers each night.
 on:
   workflow_dispatch:
-  schedule:
-    # nightly, 08:30 UTC — before the section audit (09:00)
-    - cron: "30 8 * * *"
 
 permissions:
   contents: write

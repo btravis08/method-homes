@@ -5,8 +5,6 @@ name: check-links
 # resolve. Fails red when anything is broken, and commits the result
 # to src/design/links.status.json for the Studio's Overview pane.
 on:
-  schedule:
-    - cron: "15 8 * * *"
   workflow_dispatch:
 
 permissions:

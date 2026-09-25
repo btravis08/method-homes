@@ -89,10 +89,12 @@ staging/design use.
 
 - designops.config.json is the single config seam (site name/URL,
   perf pages, figma key, features).
-- Nightly workflows (lighthouse-history, audit, check-links,
+- Monitoring workflows (lighthouse-history, audit, check-links,
   dataset-backup, design-drift) run against method-homes.vercel.app
-  and commit status JSONs the Studio Overview reads. They started
-  EMPTY at scaffold time — dashboards fill as runs land.
+  and commit status JSONs the Studio Overview reads. Their nightly
+  schedules were PAUSED 2026-09-25 (user request) — they're
+  workflow_dispatch-only now, so dashboard data is stale until run
+  by hand. Re-add the `schedule:` cron blocks to resume.
 - The Studio: Overview leads the nav; tool panes are plain @sanity/ui
   (lazy-loaded chunks); workspace title reads designops.site.name;
   the Sections tool passes the Studio's scheme + exact background

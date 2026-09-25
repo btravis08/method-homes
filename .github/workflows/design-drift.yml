@@ -10,10 +10,6 @@ name: design-drift
 # with file read access). Without it the job exits quietly.
 on:
   workflow_dispatch:
-  schedule:
-    # nightly, 09:30 UTC — between the audit (09:00) and any
-    # improvement pass
-    - cron: "30 9 * * *"
 
 permissions:
   contents: write

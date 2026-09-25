@@ -7,9 +7,6 @@ name: section-audit
 # demand instead of when someone remembers to run the audit locally.
 on:
   workflow_dispatch:
-  schedule:
-    # nightly, 09:00 UTC (~2am PT)
-    - cron: "0 9 * * *"
 
 permissions:
   contents: write
