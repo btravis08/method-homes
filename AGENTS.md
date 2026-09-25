@@ -108,6 +108,49 @@ staging/design use.
 - probe.yml exists for live-response inspection (edit steps per
   question, dispatch, read the log).
 
+## Forms (multi-step engine + hardened /api/forms)
+
+- A form is DATA: a FormDef in `src/lib/forms/definitions/*` (steps,
+  fields, options, `showIf` branching, `hidden` fields for page
+  context). Register it in `src/lib/forms/registry.ts` so /api/forms
+  accepts it. Answer keys are what the inbox + any CRM mapping read —
+  rename labels freely, keys only deliberately.
+- ONE validation source: `src/lib/forms/validation.ts` builds zod
+  rules from the FormDef. The client validates per step; the server
+  re-validates the whole submission with the same code and DROPS
+  answers to questions that aren't visible (branch changed).
+- Engine: `src/components/forms/MultiStepForm.tsx` (react-hook-form;
+  progress, Back/Next, focus moves to each step heading, errors are
+  aria-linked + summarized in a live region, review step with Edit
+  links, sessionStorage drafts, `initialValues` prefill that skips
+  fully-answered steps, `mh:form` CustomEvents for step/submit
+  analytics). Page code renders `LazyIntakeForm` / `LazyMultiStepForm`
+  from `LazyForms.tsx` ONLY (ssr:false chunk) and mounts it when the
+  form opens — never import MultiStepForm statically.
+- Spam/abuse layers (route.ts): same-origin + 32KB cap → honeypot
+  (`website`, silently dropped) → 5/min/IP rate limit → optional
+  Turnstile → validation (422 + fieldErrors) → signed time-trap token
+  (GET /api/forms, 3s minimum fill, 24h max) + content heuristics.
+  Token/heuristic hits are FLAGGED `status: "spam"` (Inbox → Spam),
+  never emailed, never rejected — false positives stay recoverable.
+- Double clicks/retries: sync ref lock on Next/Send; the client sends
+  one `submissionId` per set of answers (reused across automatic
+  retries) and the doc `_id` is `formSubmission-<id>` — a repeat write
+  409s and is answered as success without a second doc or email.
+  (ids are dash-only: never a dot.)
+- First-touch attribution (UTM + external referrer + landing page) is
+  captured once per session by AttributionCapture in (site)/layout and
+  stored on the submission.
+- Env (all optional except the write token): SANITY_API_WRITE_TOKEN
+  (storage; also derives the token key), FORMS_SECRET (explicit
+  time-trap key), RESEND_API_KEY + FORMS_NOTIFY_TO + FORMS_NOTIFY_FROM
+  (lead emails, Reply-To = the lead), FORMS_WEBHOOK_URL (+
+  FORMS_WEBHOOK_SECRET → X-Forms-Signature: sha256=…) for a CRM/Zapier,
+  TURNSTILE_SECRET_KEY + NEXT_PUBLIC_TURNSTILE_SITE_KEY. Notifications
+  run in `after()` and never block or fail the response.
+- Preview: /library/intake-form (Sections tool → Forms). The Get
+  Started modal chrome itself waits on the Figma design.
+
 ## Frontend architecture
 
 - `src/app/globals.css` is the design-token source of truth: semantic

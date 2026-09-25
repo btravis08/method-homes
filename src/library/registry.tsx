@@ -17,6 +17,7 @@ import { FullBleedCarousel } from "@/components/legacy/FullBleedCarousel";
 import { LegacyHero } from "@/components/legacy/LegacyHero";
 import { ProductSwirl } from "@/components/legacy/ProductSwirl";
 import { SplitTextBlock } from "@/components/legacy/SplitTextBlock";
+import { LazyIntakeForm } from "@/components/forms/LazyForms";
 
 /*
   The section library — every composable section the site can build a
@@ -34,7 +35,7 @@ export type Mode = "light" | "light-mid" | "dark-mid" | "dark";
 export interface SectionEntry {
   slug: string;
   title: string;
-  group: "Page sections" | "Legacy page";
+  group: "Page sections" | "Legacy page" | "Forms";
   /* the Sanity section type, when it's CMS-composable */
   schemaType?: string;
   description: string;
@@ -326,8 +327,25 @@ export const SECTIONS: SectionEntry[] = [
     },
     render: () => <ProductSwirl />,
   },
+
+  /* ---- forms (multi-step engine, lib/forms) ---- */
+  {
+    slug: "intake-form",
+    title: "Get Started intake",
+    group: "Forms",
+    description:
+      "Multi-step engine running the intake definition: branches residential / commercial, validates per step (same rules the server re-applies), review with edit links, honeypot + time-trap + idempotent send. Unstyled beyond tokens until the modal design lands.",
+    modes: ["light", "dark"],
+    tall: true,
+    figmaNodeId: "37348:2",
+    render: () => (
+      <div className="mx-auto w-full max-w-[36rem] px-xl py-4xl">
+        <LazyIntakeForm persist={false} />
+      </div>
+    ),
+  },
 ];
 
 export const bySlug = (slug: string) => SECTIONS.find((s) => s.slug === slug);
 
-export const GROUPS = ["Page sections", "Legacy page"] as const;
+export const GROUPS = ["Page sections", "Legacy page", "Forms"] as const;

@@ -154,17 +154,28 @@ S.listItem()
           S.list()
             .title("Inbox")
             .items([
-              S.listItem()
-                .title("Unread")
-                .schemaType("formSubmission")
-                .child(
-                  S.documentList()
-                    .title("Unread")
-                    .apiVersion(apiVersion)
-                    .schemaType("formSubmission")
-                    .filter('_type == "formSubmission" && read != true')
-                    .defaultOrdering([{ field: "submittedAt", direction: "desc" }]),
-                ),
+              /* flagged spam never reaches Unread; it waits in Spam */
+              ...(
+                [
+                  ["Unread", 'read != true && status != "spam"'],
+                  ["Get Started leads", 'form == "intake" && status != "spam"'],
+                  ["Newsletter", 'form == "newsletter" && status != "spam"'],
+                  ["Spam", 'status == "spam"'],
+                ] as const
+              ).map(([title, where]) =>
+                S.listItem()
+                  .title(title)
+                  .schemaType("formSubmission")
+                  .child(
+                    S.documentList()
+                      .title(title)
+                      .apiVersion(apiVersion)
+                      .schemaType("formSubmission")
+                      .filter(`_type == "formSubmission" && ${where}`)
+                      .defaultOrdering([{ field: "submittedAt", direction: "desc" }]),
+                  ),
+              ),
+              S.divider(),
               S.listItem()
                 .title("All submissions")
                 .schemaType("formSubmission")

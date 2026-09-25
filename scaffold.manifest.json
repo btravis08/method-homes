@@ -68,6 +68,7 @@
     "src/components/MenuX.tsx",
     "src/components/NavTextLink.tsx",
     "src/components/NewsletterForm.tsx",
+    "src/components/forms/**",
     "src/components/PageGate.tsx",
     "src/components/SmartLink.tsx",
     "src/components/icons.tsx",

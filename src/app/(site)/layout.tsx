@@ -2,6 +2,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { draftMode } from "next/headers";
 
 import { AnnouncementBar } from "@/components/AnnouncementBar";
+import { AttributionCapture } from "@/components/forms/AttributionCapture";
 import { CartProvider } from "@/components/cart/CartContext";
 import { LazyCartFlyout } from "@/components/cart/LazyCartFlyout";
 import { LazySearchFlyout } from "@/components/search/LazySearchFlyout";
@@ -157,6 +158,8 @@ export default async function SiteLayout({
       <LazySearchFlyout />
       {/* real-user Core Web Vitals (enable Speed Insights in Vercel) */}
       <SpeedInsights />
+      {/* first-touch UTM/referrer for form leads; idle, renders nothing */}
+      <AttributionCapture />
       {/* click-to-edit overlays + live refresh, ONLY inside the
           Studio's Presentation preview (draft mode); ordinary
           visitors never load this */}

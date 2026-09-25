@@ -1,7 +1,9 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+import { newSubmissionId } from "@/lib/forms/ids";
 
 /*
   Footer newsletter signup, wired to /api/forms. Markup and tokens
@@ -12,6 +14,10 @@ import { useState } from "react";
 export function NewsletterForm() {
   const pathname = usePathname();
   const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+  /* sync lock (state updates too late to stop a double click) + one id
+     per email so a retry after a dropped response isn't stored twice */
+  const lock = useRef(false);
+  const attempt = useRef<{ email: string; id: string } | null>(null);
 
   if (status === "success") {
     return (
@@ -28,8 +34,11 @@ export function NewsletterForm() {
       className="flex w-full flex-col items-stretch gap-3 p-4 sm:flex-row sm:gap-0 md:p-6"
       onSubmit={async (e) => {
         e.preventDefault();
-        if (status === "sending") return;
+        if (lock.current) return;
+        lock.current = true;
         const data = new FormData(e.currentTarget);
+        const email = String(data.get("email") ?? "").trim().toLowerCase();
+        if (attempt.current?.email !== email) attempt.current = { email, id: newSubmissionId() };
         setStatus("sending");
         try {
           const res = await fetch("/api/forms", {
@@ -37,14 +46,17 @@ export function NewsletterForm() {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               form: "newsletter",
-              email: data.get("email"),
+              email,
               website: data.get("website"),
               page: pathname,
+              submissionId: attempt.current.id,
             }),
           });
           setStatus(res.ok ? "success" : "error");
         } catch {
           setStatus("error");
+        } finally {
+          lock.current = false;
         }
       }}
     >
