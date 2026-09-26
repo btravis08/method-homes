@@ -25,7 +25,9 @@ jobs:
       # clone, and upload URLs expire 10 minutes after they're minted
       - uses: actions/checkout@v4
         with:
-          sparse-checkout: design
+          sparse-checkout: |
+            design
+            public/method/brand
           sparse-checkout-cone-mode: true
       - name: Upload
         env:
