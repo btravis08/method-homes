@@ -17,6 +17,19 @@ const isCommercial = (a: Answers) => a.project_type === "commercial";
 
 const opts = (...pairs: [string, string][]) => pairs.map(([value, label]) => ({ value, label }));
 
+/* Timeline years roll with the calendar: this year, next year, then an
+   open-ended bucket — in 2027 the choices read 2027 / 2028 / 2029 or
+   later without a code change. Evaluated at module load on both the
+   client and the server, so validation sees the same set. The values
+   are the year itself (a stable, sortable answer) and "later". */
+const thisYear = new Date().getFullYear();
+const yearOpts = (later: (firstLaterYear: number) => string) =>
+  opts(
+    [String(thisYear), String(thisYear)],
+    [String(thisYear + 1), String(thisYear + 1)],
+    ["later", later(thisYear + 2)],
+  );
+
 export const intakeForm: FormDef = {
   id: "intake",
   title: "Get started",
@@ -169,7 +182,7 @@ export const intakeForm: FormDef = {
           type: "radio",
           required: true,
           showIf: isHome,
-          options: opts(["2026", "2026"], ["2027", "2027"], ["2028-plus", "2028 or later"]),
+          options: yearOpts((y) => `${y} or later`),
         },
         {
           name: "com_timeline",
@@ -177,7 +190,7 @@ export const intakeForm: FormDef = {
           type: "radio",
           required: true,
           showIf: isCommercial,
-          options: opts(["2026", "2026"], ["2027", "2027"], ["later", "Later than 2027"]),
+          options: yearOpts((y) => `Later than ${y - 1}`),
         },
       ],
     },
