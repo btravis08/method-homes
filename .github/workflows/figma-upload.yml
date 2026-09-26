@@ -1,0 +1,38 @@
+name: figma-upload
+
+# Posts image files from this repo into a Figma file. The sandbox that
+# drives Claude can't reach Figma's upload host; runners can. Flow:
+# commit the images, mint single-use URLs with the Figma MCP
+# upload_assets tool (they expire in 10 minutes), then dispatch this
+# with a JSON list of {"file": "<repo path>", "url": "<submitUrl>"}.
+# The multipart filename becomes the layer name in Figma.
+
+on:
+  workflow_dispatch:
+    inputs:
+      uploads:
+        description: 'JSON array of {"file","url"}'
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload
+        env:
+          UPLOADS: ${{ inputs.uploads }}
+        run: |
+          set -euo pipefail
+          echo "$UPLOADS" > uploads.json
+          n=$(jq length uploads.json); ok=0; fail=0
+          for i in $(seq 0 $((n-1))); do
+            f=$(jq -r ".[$i].file" uploads.json); u=$(jq -r ".[$i].url" uploads.json)
+            code=$(curl -s -o /tmp/resp -w "%{http_code}" --retry 3 --max-time 60 -F "file=@${f};type=image/png" "$u" || echo 000)
+            if [ "$code" = "200" ]; then ok=$((ok+1)); else fail=$((fail+1)); echo "FAIL $code $f $(head -c 200 /tmp/resp)"; fi
+          done
+          echo "uploaded $ok / $n (failed $fail)"
+          [ "$fail" = "0" ]
