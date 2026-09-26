@@ -11,9 +11,10 @@ import {
   loadDraft,
   newSubmissionId,
   postSubmission,
+  requestResumeLink,
   saveDraft,
 } from "@/lib/forms/client";
-import type { Answers, FormDef, StepDef } from "@/lib/forms/types";
+import type { Answers, FormDef, ResumePayload, StepDef } from "@/lib/forms/types";
 import {
   describeAnswer,
   validateAnswers,
@@ -22,6 +23,7 @@ import {
   visibleSteps,
 } from "@/lib/forms/validation";
 
+import { BOOKING_ENABLED, BookingEmbed } from "./BookingEmbed";
 import { Field } from "./Field";
 import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
 
@@ -73,19 +75,31 @@ function emit(detail: Record<string, unknown>) {
   }
 }
 
+export interface SuccessContext {
+  answers: Answers;
+  submissionId: string;
+  /* the definition's qualify() verdict (false when it has none) */
+  qualified: boolean;
+  /* a terminal step ended the form early (its outcome id) */
+  outcome?: string;
+}
+
 export interface MultiStepFormProps {
   def: FormDef;
   initialValues?: Answers;
+  /* answers restored from a finish-later link (wins over the session draft) */
+  resume?: ResumePayload;
   /* keep answers in sessionStorage between opens (default true) */
   persist?: boolean;
-  onComplete?: (submissionId: string) => void;
-  success?: ReactNode;
+  onComplete?: (submissionId: string, ctx: SuccessContext) => void;
+  success?: ReactNode | ((ctx: SuccessContext) => ReactNode);
   className?: string;
 }
 
 export function MultiStepForm({
   def,
   initialValues,
+  resume,
   persist = true,
   onComplete,
   success,
@@ -93,9 +107,12 @@ export function MultiStepForm({
 }: MultiStepFormProps) {
   const pathname = usePathname();
   const uid = useId();
-  const draft = useMemo(() => (persist ? loadDraft(def.id) : undefined), [def.id, persist]);
+  const draft = useMemo(
+    () => resume ?? (persist ? loadDraft(def.id) : undefined),
+    [def.id, persist, resume],
+  );
 
-  const { register, control, getValues, setError, clearErrors, setFocus, formState } = useForm<Answers>({
+  const { register, control, getValues, setValue, setError, clearErrors, setFocus, formState } = useForm<Answers>({
     defaultValues: { ...draft?.answers, ...initialValues },
     shouldUnregister: false,
   });
@@ -125,11 +142,17 @@ export function MultiStepForm({
   });
   const index = Math.max(0, steps.findIndex((s) => s.id === stepId));
   const step: StepDef = steps[index];
+  /* a terminal step is always the last visible one (visibleSteps stops there) */
   const isLast = index === steps.length - 1;
 
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>();
   const [returnToReview, setReturnToReview] = useState(false);
+  const [done, setDone] = useState<SuccessContext>();
+  /* finish-later: closed → asking for the email → sent (or a link to copy) */
+  const [later, setLater] = useState<
+    { state: "closed" } | { state: "asking"; email: string; error?: string; busy?: boolean } | { state: "sent"; email: string; link?: string }
+  >({ state: "closed" });
   const lock = useRef(false);
   const submissionId = useRef<string>(undefined);
   const lastFingerprint = useRef<string>(undefined);
@@ -257,10 +280,17 @@ export function MultiStepForm({
     });
 
     if (res.ok) {
+      const ctx: SuccessContext = {
+        answers: result.data,
+        submissionId: submissionId.current,
+        qualified: Boolean(def.qualify?.(result.data)),
+        outcome: step.terminal ? (step.outcome ?? step.id) : undefined,
+      };
+      setDone(ctx);
       setStatus("success");
       if (persist) clearDraft(def.id);
-      emit({ form: def.id, step: step.id, index, event: "submitted" });
-      onComplete?.(submissionId.current);
+      emit({ form: def.id, step: step.id, index, event: "submitted", outcome: ctx.outcome, qualified: ctx.qualified });
+      onComplete?.(submissionId.current, ctx);
       return; // lock stays held: the form is done
     }
     turnstileReset();
@@ -293,15 +323,66 @@ export function MultiStepForm({
     void send();
   };
 
-  if (status === "success") {
+  /* "save and finish later": email the visitor a link that restores the
+     answers at this step. Uses the email they already typed when there
+     is one; otherwise asks for it inline. */
+  const requestLater = useCallback(async (email: string) => {
+    const clean = email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) {
+      setLater({ state: "asking", email, error: "Please enter a valid email address." });
+      return;
+    }
+    setLater({ state: "asking", email: clean, busy: true });
+    if (!token.current.value || Date.now() - token.current.at > TOKEN_TTL_MS)
+      token.current = { value: await fetchFormToken(), at: Date.now() };
+    const res = await requestResumeLink({
+      form: def.id,
+      email: clean,
+      answers: getValues(),
+      stepId: step.id,
+      page: pathname,
+      token: token.current.value,
+      website: honeypot.current?.value ?? "",
+    });
+    if (!res.ok) {
+      setLater({ state: "asking", email: clean, error: res.fieldErrors?.email ?? res.message });
+      return;
+    }
+    emit({ form: def.id, step: step.id, index, event: "saved-for-later" });
+    setLater({ state: "sent", email: clean, link: res.emailed ? undefined : res.link });
+  }, [def.id, getValues, step.id, pathname, index]);
+
+  if (status === "success" && done) {
+    const custom = typeof success === "function" ? success(done) : success;
+    const name = [done.answers.first_name, done.answers.last_name].filter((x) => typeof x === "string").join(" ") || undefined;
+    const email = typeof done.answers.email === "string" ? done.answers.email : undefined;
     return (
       <div className={className} role="status">
-        {success ?? (
-          <div className="flex flex-col gap-lg">
-            <h2 className="text-title-md text-ink">Thank you — we’ve got it.</h2>
-            <p className="text-body-md text-ink-2">
-              Someone from our team will be in touch within two business days.
-            </p>
+        {custom ?? (
+          <div className="flex flex-col gap-2xl">
+            {done.outcome ? (
+              <div className="flex flex-col gap-lg">
+                <h2 className="text-title-md text-ink">Thanks — you’re on the list.</h2>
+                <p className="text-body-md text-ink-2">We’ll email you if that changes.</p>
+              </div>
+            ) : done.qualified && BOOKING_ENABLED ? (
+              <>
+                <div className="flex flex-col gap-lg">
+                  <h2 className="text-title-md text-ink">Thank you — let’s talk.</h2>
+                  <p className="text-body-md text-ink-2">
+                    Your project is a good fit. Pick a time below and we’ll come prepared with your answers.
+                  </p>
+                </div>
+                <BookingEmbed name={name} email={email} />
+              </>
+            ) : (
+              <div className="flex flex-col gap-lg">
+                <h2 className="text-title-md text-ink">Thank you — we’ve got it.</h2>
+                <p className="text-body-md text-ink-2">
+                  Someone from our team will be in touch within two business days.
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -390,6 +471,7 @@ export function MultiStepForm({
               key={field.name}
               field={field}
               register={register}
+              setValue={setValue}
               error={fieldErrors[field.name]?.message as string | undefined}
               idPrefix={uid}
               hideLabel={shown.length === 1 && field.type !== "consent"}
@@ -431,12 +513,86 @@ export function MultiStepForm({
             {isLast
               ? status === "sending"
                 ? "Sending…"
-                : (def.submitLabel ?? "Submit")
+                : (step.submitLabel ?? def.submitLabel ?? "Submit")
               : returnToReview
                 ? "Back to review"
                 : "Next"}
           </button>
         </div>
+
+        {def.resumable && !isLast && !step.terminal ? (
+          <div className="flex flex-col gap-md">
+            {later.state === "closed" ? (
+              <button
+                type="button"
+                className="label self-start text-ink-2 underline underline-offset-4 hover:text-ink"
+                onClick={() =>
+                  setLater({ state: "asking", email: typeof values.email === "string" ? values.email : "" })
+                }
+              >
+                Save and finish later
+              </button>
+            ) : later.state === "asking" ? (
+              <div className="flex flex-col gap-md rounded-xs border border-line p-xl">
+                <label htmlFor={`${uid}-later`} className="text-body-sm text-ink">
+                  We’ll email you a link that picks up right here.
+                </label>
+                <div className="flex flex-col gap-md sm:flex-row">
+                  <input
+                    id={`${uid}-later`}
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                    value={later.email}
+                    disabled={later.busy}
+                    aria-invalid={later.error ? true : undefined}
+                    className="h-12 w-full rounded-xs border border-line bg-surface px-xl text-body-md text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
+                    onChange={(e) => setLater({ state: "asking", email: e.target.value })}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        e.preventDefault();
+                        void requestLater(later.email);
+                      }
+                    }}
+                  />
+                  <button
+                    type="button"
+                    className={`${BTN_PRIMARY} shrink-0`}
+                    disabled={later.busy}
+                    aria-busy={later.busy || undefined}
+                    onClick={() => void requestLater(later.email)}
+                  >
+                    {later.busy ? "Sending…" : "Send link"}
+                  </button>
+                  <button type="button" className={`${BTN_SECONDARY} shrink-0`} onClick={() => setLater({ state: "closed" })}>
+                    Cancel
+                  </button>
+                </div>
+                {later.error ? (
+                  <p role="alert" className="text-body-sm font-medium text-ink">
+                    {later.error}
+                  </p>
+                ) : null}
+              </div>
+            ) : (
+              <p role="status" className="text-body-sm text-ink-2">
+                {later.link ? (
+                  <>
+                    Saved. Copy this link to continue later:{" "}
+                    <a href={later.link} className="break-all text-ink underline underline-offset-4">
+                      {later.link}
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    Saved — we sent a link to <span className="text-ink">{later.email}</span>. It works for 7 days.
+                  </>
+                )}
+              </p>
+            )}
+          </div>
+        ) : null}
       </div>
     </form>
   );

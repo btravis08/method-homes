@@ -1,13 +1,14 @@
-import { after, NextResponse } from "next/server";
+import { after } from "next/server";
 import { createClient } from "next-sanity";
 
 import { FORMS } from "@/lib/forms/registry";
+import { clientIp, EMAIL_RE, json, rateLimiter, readJsonBody, sameOrigin, str } from "@/lib/forms/server/http";
 import { notify } from "@/lib/forms/server/notify";
 import { spamSignals } from "@/lib/forms/server/spam";
 import { checkToken, issueToken } from "@/lib/forms/server/token";
 import { verifyTurnstile } from "@/lib/forms/server/turnstile";
 import type { Answers, FormDef } from "@/lib/forms/types";
-import { describeAnswer, validateAnswers } from "@/lib/forms/validation";
+import { describeAnswer, validateAnswers, visibleSteps } from "@/lib/forms/validation";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 
 /*
@@ -20,8 +21,9 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
   Two paths share the guards below:
   - REGISTERED forms (lib/forms/registry — the multi-step engine):
     answers are re-validated against the same definition the browser
-    used, then stored with labels, a summary line and first-touch
-    attribution.
+    used, then stored with labels, a summary line, first-touch
+    attribution, the lead score/tier the definition computes, and the
+    outcome when a terminal step (soft exit) ended the form early.
   - SIMPLE forms (newsletter, one-off contact rows): email / name /
     message / up to 20 extra key-value fields, as before.
 
@@ -37,56 +39,18 @@ import { apiVersion, dataset, projectId } from "@/sanity/env";
   without storing or notifying twice.
 
   GET issues the time-trap token; the engine fetches it when a form
-  opens.
+  opens. Finish-later links live in ./resume/route.ts.
 */
 const writeToken = process.env.SANITY_API_WRITE_TOKEN;
 const writeClient = writeToken
   ? createClient({ projectId, dataset, apiVersion, token: writeToken, useCdn: false })
   : null;
 
-const MAX_BODY_BYTES = 32_000;
+/* 5/min per IP */
+const rateLimited = rateLimiter(5);
 
-/* per-instance sliding-window rate limit — serverless instances don't
-   share it, which is fine as a nuisance brake (5/min per IP) */
-const WINDOW_MS = 60_000;
-const MAX_PER_WINDOW = 5;
-const hits = new Map<string, number[]>();
-function rateLimited(ip: string) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < WINDOW_MS);
-  recent.push(now);
-  hits.set(ip, recent);
-  if (hits.size > 1000) {
-    for (const [k, v] of hits) if (now - (v[v.length - 1] ?? 0) > WINDOW_MS) hits.delete(k);
-  }
-  return recent.length > MAX_PER_WINDOW;
-}
-
-const str = (v: unknown, max: number) =>
-  typeof v === "string" ? v.trim().slice(0, max) : undefined;
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /* document ids must never contain a dot (published-perspective rule) */
 const SUBMISSION_ID_RE = /^[a-zA-Z0-9-]{16,64}$/;
-
-const json = (body: unknown, status = 200, headers?: Record<string, string>) =>
-  NextResponse.json(body, { status, headers: { "Cache-Control": "no-store", ...headers } });
-
-function clientIp(request: Request) {
-  return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
-}
-
-/* browsers always send Origin on a cross-site POST; a mismatch means
-   another site is posting into our inbox */
-function sameOrigin(request: Request) {
-  const origin = request.headers.get("origin");
-  if (!origin) return true;
-  const host = request.headers.get("x-forwarded-host") ?? request.headers.get("host");
-  try {
-    return new URL(origin).host === host;
-  } catch {
-    return false;
-  }
-}
 
 const isConflict = (err: unknown) =>
   typeof err === "object" && err !== null && (err as { statusCode?: number }).statusCode === 409;
@@ -99,17 +63,8 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "forbidden" }, 403);
 
-  const declared = Number(request.headers.get("content-length") ?? 0);
-  if (declared > MAX_BODY_BYTES) return json({ error: "too large" }, 413);
-  let body: Record<string, unknown>;
-  try {
-    const raw = await request.text();
-    if (raw.length > MAX_BODY_BYTES) return json({ error: "too large" }, 413);
-    body = JSON.parse(raw);
-    if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error();
-  } catch {
-    return json({ error: "invalid body" }, 400);
-  }
+  const body = await readJsonBody(request);
+  if (!body) return json({ error: "invalid body" }, 400);
 
   /* honeypot: bots fill the hidden "website" field — pretend success */
   if (str(body.website, 10)) return json({ ok: true });
@@ -157,10 +112,18 @@ async function registered(
   spamReasons.push(...spamSignals(answers));
   const status = spamReasons.length ? "spam" : "new";
 
-  /* answers in definition order, with human labels for the inbox */
-  const described = def.steps
+  /* did a soft exit end the form? (the last visible step is terminal) */
+  const shown = visibleSteps(def, answers);
+  const last = shown[shown.length - 1];
+  const outcome = last?.terminal ? (last.outcome ?? last.id) : undefined;
+
+  /* answers in definition order, with human labels for the inbox; a key
+     declared on two steps (email on the soft exit and on About you) is
+     described once */
+  const seen = new Set<string>();
+  const described = shown
     .flatMap((s) => s.fields)
-    .filter((f) => answers[f.name] !== undefined)
+    .filter((f) => answers[f.name] !== undefined && !seen.has(f.name) && seen.add(f.name))
     .map((f) => ({ key: f.name, ...describeAnswer(def, f.name, answers[f.name]!) }));
   const summary = (def.summaryFields ?? [])
     .filter((k) => answers[k] !== undefined)
@@ -169,6 +132,9 @@ async function registered(
 
   const email = typeof answers.email === "string" ? answers.email : undefined;
   const name = [answers.first_name, answers.last_name].filter((x) => typeof x === "string").join(" ") || undefined;
+
+  /* lead score — skipped for soft exits, which are a list not a pipeline */
+  const lead = def.score && !outcome ? def.score(answers) : undefined;
 
   const a = (body.attribution ?? {}) as Record<string, unknown>;
   const attribution = Object.fromEntries(
@@ -190,6 +156,8 @@ async function registered(
       ...(summary ? { summary } : {}),
       ...(name ? { name } : {}),
       ...(email ? { email } : {}),
+      ...(outcome ? { outcome } : {}),
+      ...(lead ? { score: lead.score, tier: lead.tier, scoreReasons: lead.reasons } : {}),
       fields: described.map((d) => ({ _type: "submissionField", _key: d.key, ...d })),
       ...(Object.keys(attribution).length ? { attribution } : {}),
       page,
@@ -199,7 +167,7 @@ async function registered(
   } catch (err) {
     /* same submissionId already stored: a double click or a retry
        after a dropped response — the first write won */
-    if (isConflict(err)) return json({ ok: true, id, duplicate: true });
+    if (isConflict(err)) return json({ ok: true, id, duplicate: true, tier: lead?.tier });
     return json({ error: "could not save" }, 500);
   }
 
@@ -216,12 +184,15 @@ async function registered(
         submittedAt,
         answers: described,
         attribution,
+        tier: lead?.tier,
+        score: lead?.score,
+        outcome,
       }),
     );
   }
   /* spam gets the same answer as a real lead — never tell a bot
      which layer caught it */
-  return json({ ok: true, id });
+  return json({ ok: true, id, tier: lead?.tier });
 }
 
 async function simple(form: string, body: Record<string, unknown>, submissionId: string | undefined) {

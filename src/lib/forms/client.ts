@@ -1,4 +1,4 @@
-import type { Answers, SubmissionErrorBody, SubmissionPayload } from "./types";
+import type { Answers, ResumePayload, ResumeRequest, SubmissionErrorBody, SubmissionPayload } from "./types";
 
 /*
   Browser-side plumbing for the form engine: submission ids, the
@@ -55,6 +55,69 @@ export async function postSubmission(payload: SubmissionPayload, retries = 2): P
         return { ok: false, kind: "network", message: "We couldn’t reach the server. Check your connection and try again." };
     }
     await sleep(attempt === 0 ? 800 : 2000);
+  }
+}
+
+/* ── finish later ──────────────────────────────────────────────── */
+
+export type ResumeLinkResult =
+  | { ok: true; emailed: true }
+  | { ok: true; emailed: false; link: string }
+  | { ok: false; message: string; fieldErrors?: Record<string, string> };
+
+/* ask the server to email a link that restores these answers */
+export async function requestResumeLink(req: ResumeRequest): Promise<ResumeLinkResult> {
+  try {
+    const res = await fetch("/api/forms/resume", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req),
+      signal: AbortSignal.timeout(15_000),
+    });
+    const data = (await res.json().catch(() => ({}))) as {
+      emailed?: boolean;
+      link?: string;
+      fieldErrors?: Record<string, string>;
+    };
+    if (res.ok) return data.emailed || !data.link ? { ok: true, emailed: true } : { ok: true, emailed: false, link: data.link };
+    if (res.status === 422) return { ok: false, message: "Please check your email address.", fieldErrors: data.fieldErrors };
+    if (res.status === 429) return { ok: false, message: "Too many requests. Please wait a minute and try again." };
+    if (res.status === 503) return { ok: false, message: "Saving for later isn’t available right now." };
+    return { ok: false, message: "We couldn’t save this. Please try again." };
+  } catch {
+    return { ok: false, message: "We couldn’t reach the server. Check your connection and try again." };
+  }
+}
+
+export const RESUME_PARAM = "resume";
+
+export const hasResumeParam = () => {
+  try {
+    return new URL(window.location.href).searchParams.has(RESUME_PARAM);
+  } catch {
+    return false;
+  }
+};
+
+/* a ?resume= token in the current URL → the saved answers. The token is
+   removed from the address bar so a reload doesn't re-apply it over
+   newer answers. */
+export async function openResumeFromUrl(formId: string): Promise<ResumePayload | undefined> {
+  try {
+    const url = new URL(window.location.href);
+    const token = url.searchParams.get(RESUME_PARAM);
+    if (!token) return undefined;
+    url.searchParams.delete(RESUME_PARAM);
+    window.history.replaceState(window.history.state, "", url.toString());
+    const res = await fetch(`/api/forms/resume?token=${encodeURIComponent(token)}`, {
+      cache: "no-store",
+      signal: AbortSignal.timeout(8000),
+    });
+    if (!res.ok) return undefined;
+    const data = (await res.json()) as ResumePayload;
+    return data.form === formId ? data : undefined;
+  } catch {
+    return undefined;
   }
 }
 

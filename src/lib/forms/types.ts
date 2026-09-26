@@ -20,6 +20,7 @@ export type FieldType =
   | "radio" // visible options, one value
   | "checkbox" // visible options, many values
   | "consent" // single yes/no checkbox that must be ticked when required
+  | "address" // free text with place autocomplete when a geocoder token is configured
   | "hidden"; // never rendered; carries page context (e.g. the plan a CTA sat on)
 
 export interface FieldOption {
@@ -47,7 +48,13 @@ export interface FieldDef {
   autoComplete?: string;
   /* hide the field unless this returns true (branching inside a step) */
   showIf?: (answers: Answers) => boolean;
+  /* address fields: the answer keys the geocoder fills alongside the
+     formatted address (each must also be declared as a hidden field so
+     the server keeps and validates it) */
+  addressParts?: Partial<Record<AddressPart, string>>;
 }
+
+export type AddressPart = "street" | "city" | "state" | "postal" | "country" | "lat" | "lng";
 
 export interface StepDef {
   id: string;
@@ -56,6 +63,13 @@ export interface StepDef {
   fields: FieldDef[];
   /* skip the whole step unless this returns true (branching) */
   showIf?: (answers: Answers) => boolean;
+  /* a terminal step ends the form early: it is submitted from here and
+     every later step is dropped (a soft exit such as "we don't build
+     there yet"). Its `outcome` is stored on the submission. */
+  terminal?: boolean;
+  outcome?: string;
+  /* button label on a terminal step (defaults to the form's submitLabel) */
+  submitLabel?: string;
 }
 
 export interface FormDef {
@@ -70,6 +84,22 @@ export interface FormDef {
   summaryFields?: string[];
   /* show a read-back of every answer (with Edit links) on the last step */
   review?: boolean;
+  /* lets the visitor email themselves a link that restores the answers */
+  resumable?: boolean;
+  /* leads that pass go straight to a booking embed on the thank-you
+     screen (NEXT_PUBLIC_BOOKING_URL); the rest get the standard copy */
+  qualify?: (answers: Answers) => boolean;
+  /* lead scoring, stored on the submission for the inbox */
+  score?: (answers: Answers) => LeadScore;
+}
+
+/* result of the lead scoring in lib/forms/score.ts */
+export type LeadTier = "hot" | "warm" | "cool";
+export interface LeadScore {
+  score: number; // 0–100
+  tier: LeadTier;
+  /* what earned the points, for the inbox ("Budget $1M–$2M · Building 2026 · Owns land") */
+  reasons: string[];
 }
 
 /* what the client posts for a registered multi-step form */
@@ -96,6 +126,25 @@ export interface Attribution {
   utmContent?: string;
   referrer?: string;
   landingPage?: string;
+}
+
+/* what the client posts to /api/forms/resume to get a finish-later link */
+export interface ResumeRequest {
+  form: string;
+  email: string;
+  answers: Answers;
+  stepId?: string;
+  /* path the form lives on — the link reopens it there */
+  page?: string;
+  token?: string;
+  website?: string;
+}
+
+/* what a resume token unseals to */
+export interface ResumePayload {
+  form: string;
+  answers: Answers;
+  stepId?: string;
 }
 
 /* server → client error shape (422) */

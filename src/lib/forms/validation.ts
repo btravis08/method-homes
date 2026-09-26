@@ -37,8 +37,18 @@ export const isFieldVisible = (field: FieldDef, answers: Answers) =>
 export const isStepVisible = (step: StepDef, answers: Answers) =>
   !step.showIf || step.showIf(answers);
 
-export const visibleSteps = (def: FormDef, answers: Answers) =>
-  def.steps.filter((s) => isStepVisible(s, answers));
+/* the steps the visitor will see, in order. A visible terminal step
+   (a soft exit) ends the list: nothing after it is shown, validated or
+   kept — so both sides agree the form is over there. */
+export const visibleSteps = (def: FormDef, answers: Answers) => {
+  const out: StepDef[] = [];
+  for (const s of def.steps) {
+    if (!isStepVisible(s, answers)) continue;
+    out.push(s);
+    if (s.terminal) break;
+  }
+  return out;
+};
 
 export const visibleFields = (step: StepDef, answers: Answers) =>
   step.fields.filter((f) => isFieldVisible(f, answers));
@@ -59,6 +69,7 @@ export function fieldSchema(field: FieldDef): z.ZodType {
   switch (field.type) {
     case "hidden":
     case "text":
+    case "address":
     case "email":
     case "tel":
     case "textarea": {

@@ -26,6 +26,10 @@ export interface NotifyPayload {
   submittedAt: string;
   answers: { key: string; label: string; value: string }[];
   attribution?: Record<string, string | undefined>;
+  /* lead scoring, when the form defines it */
+  tier?: string;
+  score?: number;
+  outcome?: string;
 }
 
 const esc = (s: string) =>
@@ -54,7 +58,12 @@ async function sendEmail(p: NotifyPayload) {
     .filter(([, v]) => v)
     .map(([k, v]) => `${k}: ${v}`)
     .join(" · ");
-  const subject = `New ${p.formTitle} submission${p.summary ? ` — ${p.summary}` : ""}`;
+  const lead = p.outcome
+    ? ` — ${p.outcome.replace(/-/g, " ")}`
+    : p.tier
+      ? ` — ${p.tier === "hot" ? "🔥 " : ""}${p.tier} lead (${p.score ?? 0})`
+      : "";
+  const subject = `New ${p.formTitle} submission${lead}${p.summary ? ` — ${p.summary}` : ""}`;
   const html = `<p>${esc(subject)}</p><table>${rows}</table>
 <p style="color:#666">Page: ${esc(p.page ?? "—")}${attribution ? `<br>Source: ${esc(attribution)}` : ""}<br>ID: ${esc(p.id)}</p>`;
   const text = `${subject}\n\n${p.answers.map((a) => `${a.label}: ${a.value}`).join("\n")}\n\nPage: ${p.page ?? "—"}${attribution ? `\nSource: ${attribution}` : ""}\nID: ${p.id}`;
@@ -83,6 +92,31 @@ async function sendWebhook(p: NotifyPayload) {
   if (secret) headers["X-Forms-Signature"] = `sha256=${createHmac("sha256", secret).update(body).digest("hex")}`;
   const res = await withTimeout(url, { method: "POST", headers, body });
   if (!res.ok) console.error("[forms] webhook failed", res.status);
+}
+
+/* the finish-later link, sent to the visitor themselves. Returns false
+   when no email channel is configured so the caller can fall back to
+   showing the link. */
+export async function sendResumeEmail(p: { to: string; link: string; formTitle: string; firstName?: string }) {
+  const key = process.env.RESEND_API_KEY;
+  const from = process.env.FORMS_NOTIFY_FROM;
+  if (!key || !from) return false;
+  const hi = p.firstName ? `Hi ${esc(p.firstName)},` : "Hi,";
+  const subject = `Pick up where you left off — ${p.formTitle}`;
+  const html = `<p>${hi}</p><p>Your answers are saved. Open this link to continue where you stopped:</p><p><a href="${esc(p.link)}">${esc(p.link)}</a></p><p style="color:#666">The link works for 7 days and only on this device or another you open it on. If you didn’t ask for it, you can ignore this email.</p>`;
+  const text = `${p.firstName ? `Hi ${p.firstName},` : "Hi,"}\n\nYour answers are saved. Open this link to continue where you stopped:\n${p.link}\n\nThe link works for 7 days. If you didn’t ask for it, you can ignore this email.`;
+  try {
+    const res = await withTimeout("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to: [p.to], subject, html, text }),
+    });
+    if (!res.ok) console.error("[forms] resume email failed", res.status);
+    return res.ok;
+  } catch (err) {
+    console.error("[forms] resume email error", err);
+    return false;
+  }
 }
 
 export async function notify(p: NotifyPayload) {

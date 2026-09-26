@@ -158,12 +158,14 @@ S.listItem()
                  keeps older docs with no status/read field in the lists */
               ...(
                 [
-                  ["Unread", '!(read == true) && !(status == "spam")'],
-                  ["Get Started leads", 'form == "intake" && !(status == "spam")'],
-                  ["Newsletter", 'form == "newsletter" && !(status == "spam")'],
-                  ["Spam", 'status == "spam"'],
+                  ["Unread", '!(read == true) && !(status == "spam")', "submittedAt"],
+                  ["Hot leads", 'tier == "hot" && !(status == "spam")', "score"],
+                  ["Get Started leads", 'form == "intake" && !(status == "spam") && !defined(outcome)', "submittedAt"],
+                  ["Out of area", 'form == "intake" && outcome == "out-of-area"', "submittedAt"],
+                  ["Newsletter", 'form == "newsletter" && !(status == "spam")', "submittedAt"],
+                  ["Spam", 'status == "spam"', "submittedAt"],
                 ] as const
-              ).map(([title, where]) =>
+              ).map(([title, where, orderBy]) =>
                 S.listItem()
                   .title(title)
                   .schemaType("formSubmission")
@@ -173,7 +175,14 @@ S.listItem()
                       .apiVersion(apiVersion)
                       .schemaType("formSubmission")
                       .filter(`_type == "formSubmission" && ${where}`)
-                      .defaultOrdering([{ field: "submittedAt", direction: "desc" }]),
+                      .defaultOrdering(
+                        orderBy === "score"
+                          ? [
+                              { field: "score", direction: "desc" },
+                              { field: "submittedAt", direction: "desc" },
+                            ]
+                          : [{ field: "submittedAt", direction: "desc" }],
+                      ),
                   ),
               ),
               S.divider(),

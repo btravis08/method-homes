@@ -1,3 +1,4 @@
+import { qualifiesForBooking, scoreIntake } from "../score";
 import type { Answers, FormDef } from "../types";
 
 /*
@@ -36,6 +37,9 @@ export const intakeForm: FormDef = {
   submitLabel: "Send",
   summaryFields: ["project_type", "build_type", "series", "commercial_type", "build_state"],
   review: true,
+  resumable: true,
+  score: scoreIntake,
+  qualify: qualifiesForBooking,
   steps: [
     {
       id: "branch",
@@ -167,6 +171,81 @@ export const intakeForm: FormDef = {
           type: "radio",
           required: true,
           options: opts(["yes", "Yes"], ["no", "No"]),
+        },
+      ],
+    },
+    /* soft exit: outside the delivery region the form ends here with an
+       email capture — no point walking someone through eight more
+       questions we can't act on. Terminal: later steps are dropped. */
+    {
+      id: "out-of-area",
+      title: "We don’t build there yet",
+      description:
+        "Method delivers across the western US and British Columbia. Leave your email and we’ll let you know if that changes, and share builders we trust in your area.",
+      showIf: (a) => a.build_state === "other",
+      terminal: true,
+      outcome: "out-of-area",
+      submitLabel: "Keep me posted",
+      fields: [
+        { name: "email", label: "Email", type: "email", required: true, autoComplete: "email" },
+        { name: "first_name", label: "First name", type: "text", autoComplete: "given-name", maxLength: 80, hint: "Optional" },
+      ],
+    },
+    /* land follow-ups: owners tell us where the lot is (place lookup
+       when a geocoder token is configured), the rest tell us where they
+       are looking and whether they want help */
+    {
+      id: "land-owned",
+      title: "Tell us about your land",
+      showIf: (a) => a.own_land === "yes",
+      fields: [
+        {
+          name: "site_address",
+          label: "Lot address",
+          type: "address",
+          placeholder: "Street address, or the nearest town",
+          hint: "Optional if you don’t have it handy.",
+          maxLength: 200,
+          addressParts: { city: "site_city", state: "site_state", postal: "site_postal", lat: "site_lat", lng: "site_lng" },
+        },
+        { name: "site_city", label: "Lot city", type: "hidden" },
+        { name: "site_state", label: "Lot state", type: "hidden" },
+        { name: "site_postal", label: "Lot postal code", type: "hidden" },
+        { name: "site_lat", label: "Lot latitude", type: "hidden", maxLength: 24 },
+        { name: "site_lng", label: "Lot longitude", type: "hidden", maxLength: 24 },
+        {
+          name: "lot_status",
+          label: "What is on the lot today?",
+          type: "radio",
+          required: true,
+          options: opts(
+            ["cleared", "Cleared and ready to build"],
+            ["raw", "Undeveloped land"],
+            ["existing", "An existing structure"],
+            ["not-sure", "Not sure yet"],
+          ),
+        },
+      ],
+    },
+    {
+      id: "land-search",
+      title: "Finding land",
+      showIf: (a) => a.own_land === "no",
+      fields: [
+        {
+          name: "land_region",
+          label: "Where are you looking?",
+          type: "text",
+          placeholder: "City, county or region",
+          maxLength: 120,
+          hint: "Optional",
+        },
+        {
+          name: "land_help",
+          label: "Would you like help finding land?",
+          type: "radio",
+          required: true,
+          options: opts(["yes", "Yes, please"], ["no", "No, I have it covered"]),
         },
       ],
     },

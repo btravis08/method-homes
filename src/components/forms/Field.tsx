@@ -1,8 +1,10 @@
 "use client";
 
-import type { UseFormRegister } from "react-hook-form";
+import type { UseFormRegister, UseFormSetValue } from "react-hook-form";
 
 import type { Answers, FieldDef } from "@/lib/forms/types";
+
+import { AddressField } from "./AddressField";
 
 /*
   One renderer per field type, token-styled (no raw colors — error
@@ -20,12 +22,14 @@ const CONTROL = "size-4 shrink-0 accent-ink";
 export function Field({
   field,
   register,
+  setValue,
   error,
   idPrefix,
   hideLabel,
 }: {
   field: FieldDef;
   register: UseFormRegister<Answers>;
+  setValue: UseFormSetValue<Answers>;
   error?: string;
   idPrefix: string;
   /* a step with a single question uses the step title as its label */
@@ -97,7 +101,17 @@ export function Field({
         {field.required && !hideLabel ? <span aria-hidden="true"> *</span> : null}
       </label>
       {hint}
-      {field.type === "select" ? (
+      {field.type === "address" ? (
+        <AddressField
+          field={field}
+          register={register}
+          setValue={setValue}
+          id={id}
+          className={INPUT}
+          invalid={Boolean(error)}
+          describedBy={describedBy}
+        />
+      ) : field.type === "select" ? (
         <select id={id} className={`${INPUT} appearance-none`} defaultValue="" {...aria} {...register(field.name)}>
           <option value="" disabled>
             Select one…

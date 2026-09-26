@@ -53,6 +53,43 @@ export const formSubmission = defineType({
       readOnly: true,
       description: "One-line read of the key answers.",
     }),
+    defineField({
+      name: "tier",
+      title: "Lead tier",
+      type: "string",
+      readOnly: true,
+      options: {
+        list: [
+          { title: "Hot", value: "hot" },
+          { title: "Warm", value: "warm" },
+          { title: "Cool", value: "cool" },
+        ],
+      },
+      description: "Scored on submit from budget, timeline, land and location (src/lib/forms/score.ts).",
+    }),
+    defineField({
+      name: "score",
+      title: "Lead score",
+      type: "number",
+      readOnly: true,
+      description: "0–100. Hot ≥ 65, warm ≥ 40.",
+    }),
+    defineField({
+      name: "scoreReasons",
+      title: "What earned the score",
+      type: "array",
+      of: [{ type: "string" }],
+      readOnly: true,
+      hidden: ({ document }) => !(document?.scoreReasons as unknown[] | undefined)?.length,
+    }),
+    defineField({
+      name: "outcome",
+      title: "Outcome",
+      type: "string",
+      readOnly: true,
+      description: "Set when the form ended early, e.g. out-of-area (an email capture, not a project lead).",
+      hidden: ({ document }) => !document?.outcome,
+    }),
     defineField({ name: "name", title: "Name", type: "string", readOnly: true }),
     defineField({ name: "email", title: "Email", type: "string", readOnly: true }),
     defineField({ name: "message", title: "Message", type: "text", rows: 6, readOnly: true }),
@@ -131,10 +168,18 @@ export const formSubmission = defineType({
       submittedAt: "submittedAt",
       read: "read",
       status: "status",
+      tier: "tier",
+      score: "score",
+      outcome: "outcome",
     },
-    prepare: ({ email, name, form, summary, submittedAt, read, status }) => ({
-      title: `${status === "spam" ? "⚠ " : read ? "" : "● "}${name || email || "Submission"}`,
-      subtitle: [form ?? "form", summary, submittedAt ? new Date(submittedAt).toLocaleString() : ""]
+    prepare: ({ email, name, form, summary, submittedAt, read, status, tier, score, outcome }) => ({
+      title: `${status === "spam" ? "⚠ " : read ? "" : "● "}${tier === "hot" ? "🔥 " : ""}${name || email || "Submission"}`,
+      subtitle: [
+        form ?? "form",
+        outcome ? outcome.replace(/-/g, " ") : tier ? `${tier} ${score ?? ""}`.trim() : "",
+        summary,
+        submittedAt ? new Date(submittedAt).toLocaleString() : "",
+      ]
         .filter(Boolean)
         .join(" — "),
     }),

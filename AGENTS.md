@@ -146,8 +146,43 @@ staging/design use.
   time-trap key), RESEND_API_KEY + FORMS_NOTIFY_TO + FORMS_NOTIFY_FROM
   (lead emails, Reply-To = the lead), FORMS_WEBHOOK_URL (+
   FORMS_WEBHOOK_SECRET → X-Forms-Signature: sha256=…) for a CRM/Zapier,
-  TURNSTILE_SECRET_KEY + NEXT_PUBLIC_TURNSTILE_SITE_KEY. Notifications
-  run in `after()` and never block or fail the response.
+  TURNSTILE_SECRET_KEY + NEXT_PUBLIC_TURNSTILE_SITE_KEY,
+  NEXT_PUBLIC_MAPBOX_TOKEN (address autocomplete),
+  NEXT_PUBLIC_BOOKING_URL (Calendly/Cal.com event link for qualified
+  leads). Notifications run in `after()` and never block or fail the
+  response.
+- Progressive behaviors (all declared on the FormDef; the engine is
+  generic):
+  - Soft exits: a step with `terminal: true` ends the form there —
+    `visibleSteps()` stops at it on BOTH sides, so later answers are
+    dropped, and its `outcome` is stored (`"out-of-area"` → Inbox →
+    Out of area; not scored). The intake exits when `build_state ==
+    "other"` with an email capture.
+  - Finish later (`resumable: true`): "Save and finish later" POSTs the
+    partial answers to /api/forms/resume, which seals them into an
+    AES-256-GCM token (server/resume.ts — nothing stored, 7-day
+    expiry, key derived from FORMS_SECRET / the write token) and
+    emails the visitor `<page>?resume=<token>` via Resend
+    (FORMS_NOTIFY_FROM as sender). No Resend → the link is returned
+    and shown to copy. IntakeForm unseals `?resume=` on mount (GET) and
+    mounts the engine already restored (resume beats the session
+    draft).
+  - `address` fields (AddressField.tsx): place autocomplete via Mapbox
+    Geocoding v6 when NEXT_PUBLIC_MAPBOX_TOKEN is set; a pick fills the
+    `addressParts` sibling keys (declare them as `hidden` fields so the
+    server keeps them). No token → plain text input. Used for the lot
+    address on the land follow-up (`own_land` yes → lot address +
+    what's on it; no → region + "help finding land").
+  - Lead score (`score: scoreIntake`, src/lib/forms/score.ts — pure,
+    client-safe): budget / timeline / land / location / phone points →
+    0–100, tier hot ≥65, warm ≥40, plus a reasons list. Stored on the
+    submission (`score`, `tier`, `scoreReasons`) → Inbox → Hot leads
+    (sorted by score), 🔥 in previews, tier in the email subject.
+  - Booking (`qualify: qualifiesForBooking`): a qualified lead (in
+    area, warm/hot, building within two years) gets a Calendly/Cal.com
+    inline embed (BookingEmbed.tsx, name + email prefilled) on the
+    thank-you screen instead of the "two business days" copy. No
+    NEXT_PUBLIC_BOOKING_URL → standard copy for everyone.
 - Preview: /library/intake-form (Sections tool → Forms). The Get
   Started modal chrome itself waits on the Figma design.
 
