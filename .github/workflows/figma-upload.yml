@@ -38,7 +38,8 @@ jobs:
           n=$(jq length uploads.json); ok=0; fail=0
           for i in $(seq 0 $((n-1))); do
             f=$(jq -r ".[$i].file" uploads.json); u=$(jq -r ".[$i].url" uploads.json)
-            code=$(curl -s -o /tmp/resp -w "%{http_code}" --retry 3 --max-time 60 -F "file=@${f};type=image/png" "$u" || echo 000)
+            case "${f##*.}" in png) mime=image/png;; jpg|jpeg) mime=image/jpeg;; webp) mime=image/webp;; gif) mime=image/gif;; svg) mime=image/svg+xml;; *) mime=application/octet-stream;; esac
+            code=$(curl -s -o /tmp/resp -w "%{http_code}" --retry 3 --max-time 60 -F "file=@${f};type=${mime}" "$u" || echo 000)
             if [ "$code" = "200" ]; then ok=$((ok+1)); else fail=$((fail+1)); echo "FAIL $code $f $(head -c 200 /tmp/resp)"; fi
           done
           echo "uploaded $ok / $n (failed $fail)"
