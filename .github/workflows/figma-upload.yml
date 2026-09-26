@@ -21,7 +21,12 @@ jobs:
   upload:
     runs-on: ubuntu-latest
     steps:
+      # images only — the full repo (site imagery) takes minutes to
+      # clone, and upload URLs expire 10 minutes after they're minted
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: design
+          sparse-checkout-cone-mode: true
       - name: Upload
         env:
           UPLOADS: ${{ inputs.uploads }}
