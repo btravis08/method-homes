@@ -151,6 +151,15 @@ staging/design use.
   NEXT_PUBLIC_BOOKING_URL (Calendly/Cal.com event link for qualified
   leads). Notifications run in `after()` and never block or fail the
   response.
+- Option layouts (`layout` on a radio/checkbox field, Field.tsx):
+  `list` (default; two columns when every label ≤16 chars), `cards`
+  (image-background cards with the label over a bottom scrim — the
+  branch step) and `media` (thumbnail rows with eyebrow/title/meta —
+  the series pick). Option stills live in public/method/intake/
+  (640px WebP, ≤80KB, lazy). Single required radio steps advance on
+  tap (`autoAdvance: false` opts out); the series step is a
+  multi-select placed after budget; there is no review step — the
+  newsletter consent is a bare checkbox row on About you.
 - Progressive behaviors (all declared on the FormDef; the engine is
   generic):
   - Soft exits: a step with `terminal: true` ends the form there —

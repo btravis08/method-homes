@@ -36,7 +36,8 @@ export const intakeForm: FormDef = {
   title: "Get started",
   submitLabel: "Send",
   summaryFields: ["project_type", "build_type", "series", "commercial_type", "build_state"],
-  review: true,
+  /* no read-back step: the Figma flow sends from About you → Almost done */
+  review: false,
   resumable: true,
   score: scoreIntake,
   qualify: qualifiesForBooking,
@@ -50,7 +51,11 @@ export const intakeForm: FormDef = {
           label: "What are you planning?",
           type: "radio",
           required: true,
-          options: opts(["residential", "A home: custom or predesigned"], ["commercial", "A commercial project"]),
+          layout: "cards",
+          options: [
+            { value: "residential", label: "A home: custom or predesigned", image: "/method/intake/branch-residential.webp" },
+            { value: "commercial", label: "A commercial project", image: "/method/intake/branch-commercial.webp" },
+          ],
         },
         /* page context, set by the CTA that opened the form */
         { name: "source_series", label: "Series (from page)", type: "hidden" },
@@ -73,30 +78,6 @@ export const intakeForm: FormDef = {
         },
       ],
     },
-    {
-      id: "series",
-      title: "Which series are you interested in?",
-      showIf: (a) => isHome(a) && a.build_type === "predesigned",
-      fields: [
-        {
-          name: "series",
-          label: "Series",
-          type: "radio",
-          required: true,
-          options: opts(
-            ["method-one", "Method One"],
-            ["annata", "Annata"],
-            ["cabin", "Cabin"],
-            ["elemental", "Elemental"],
-            ["m", "M Series"],
-            ["option", "Option"],
-            ["paradigm", "Paradigm"],
-            ["not-sure", "Not sure yet"],
-          ),
-        },
-      ],
-    },
-
     /* ── commercial ──────────────────────────────── */
     {
       id: "commercial-type",
@@ -361,6 +342,36 @@ export const intakeForm: FormDef = {
       ],
     },
 
+    /* series come AFTER size and budget so the pick is informed, and
+       several can be chosen. When the series documents carry size and
+       price ranges this list narrows to the ones that fit; until then
+       every series shows. */
+    {
+      id: "series",
+      title: "Which series interest you?",
+      description: "Pick any you’d like to hear more about.",
+      showIf: (a) => isHome(a) && a.build_type === "predesigned",
+      fields: [
+        {
+          name: "series",
+          label: "Series",
+          type: "checkbox",
+          required: true,
+          layout: "media",
+          options: [
+            { value: "method-one", label: "Method One", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-method-one.webp" },
+            { value: "annata", label: "Annata", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-annata.webp" },
+            { value: "cabin", label: "Cabin", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-cabin.webp" },
+            { value: "elemental", label: "Elemental", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-elemental.webp" },
+            { value: "m", label: "M Series", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-m.webp" },
+            { value: "option", label: "Option", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-option.webp" },
+            { value: "paradigm", label: "Paradigm", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-paradigm.webp" },
+            { value: "not-sure", label: "Show me all series" },
+          ],
+        },
+      ],
+    },
+
     /* ── shared finish ───────────────────────────── */
     {
       id: "about-you",
@@ -379,6 +390,7 @@ export const intakeForm: FormDef = {
           hint: "Optional",
           maxLength: 120,
         },
+        { name: "newsletter", label: "Add me to the Method Homes newsletter", type: "consent" },
       ],
     },
     {
@@ -402,11 +414,6 @@ export const intakeForm: FormDef = {
         },
         { name: "notes", label: "Anything else you’d like us to know?", type: "textarea", maxLength: 2000 },
       ],
-    },
-    {
-      id: "review",
-      title: "Review and send",
-      fields: [{ name: "newsletter", label: "Add me to the Method Homes newsletter", type: "consent" }],
     },
   ],
 };

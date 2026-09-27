@@ -26,7 +26,19 @@ export type FieldType =
 export interface FieldOption {
   value: string;
   label: string;
+  /* still for image layouts (a public/ path); rendered lazily */
+  image?: string;
+  /* small print under the label in the "media" layout */
+  meta?: string;
+  /* tiny uppercase label above the title in the "media" layout */
+  eyebrow?: string;
 }
+
+/* how a radio/checkbox group draws its options:
+   list  — stacked bordered rows (default); short labels wrap to two columns
+   cards — image-background cards, label and control over a bottom scrim
+   media — thumbnail rows: image left, eyebrow/title/meta, control right */
+export type OptionLayout = "list" | "cards" | "media";
 
 export interface FieldDef {
   /* answer key — stable, snake_case; it is what lands in the inbox */
@@ -46,6 +58,8 @@ export interface FieldDef {
   minSelected?: number;
   maxSelected?: number;
   autoComplete?: string;
+  /* radio/checkbox presentation (see OptionLayout) */
+  layout?: OptionLayout;
   /* hide the field unless this returns true (branching inside a step) */
   showIf?: (answers: Answers) => boolean;
   /* address fields: the answer keys the geocoder fills alongside the
@@ -63,6 +77,9 @@ export interface StepDef {
   fields: FieldDef[];
   /* skip the whole step unless this returns true (branching) */
   showIf?: (answers: Answers) => boolean;
+  /* a step whose only visible question is one required radio advances
+     on tap (default). Set false to keep the Next button as the only way on. */
+  autoAdvance?: boolean;
   /* a terminal step ends the form early: it is submitted from here and
      every later step is dropped (a soft exit such as "we don't build
      there yet"). Its `outcome` is stored on the submission. */

@@ -202,6 +202,35 @@ export function MultiStepForm({
     setStepId(id);
   }, []);
 
+  /* tap-to-advance: a step whose only visible question is one required
+     radio moves on as soon as it is answered (a beat later, so the
+     selection is seen). Never on the last step, never on a terminal
+     step, and not while returning to the review. */
+  const autoAdvance = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const advanceKey = (() => {
+    if (step.autoAdvance === false || isLast || step.terminal || returnToReview) return undefined;
+    const shownNow = visibleFields(step, values).filter((f) => f.type !== "hidden");
+    if (shownNow.length !== 1 || shownNow[0].type !== "radio" || !shownNow[0].required) return undefined;
+    const v = values[shownNow[0].name];
+    return typeof v === "string" && v ? `${step.id}:${v}` : undefined;
+  })();
+  const lastAdvance = useRef<string>(undefined);
+  useEffect(() => {
+    if (!advanceKey || advanceKey === lastAdvance.current) return;
+    lastAdvance.current = advanceKey;
+    clearTimeout(autoAdvance.current);
+    autoAdvance.current = setTimeout(() => {
+      if (lock.current) return;
+      const vals = getValues();
+      const order = visibleSteps(def, vals);
+      const here = order.findIndex((s) => s.id === step.id);
+      if (here < 0 || here >= order.length - 1) return;
+      if (Object.keys(validateStep(step, vals).errors).length) return;
+      go(order[here + 1].id);
+    }, 260);
+    return () => clearTimeout(autoAdvance.current);
+  }, [advanceKey, def, step, getValues, go]);
+
   const showErrors = useCallback(
     (errors: Record<string, string>) => {
       const names = Object.keys(errors);
@@ -416,18 +445,18 @@ export function MultiStepForm({
     <form noValidate onSubmit={onSubmit} className={className} aria-labelledby={`${uid}-title`}>
       <div className="flex flex-col gap-2xl">
         <div className="flex flex-col gap-md">
-          <p className="label text-ink-3">
+          <p className="sr-only">
             Step {index + 1} of {steps.length}
           </p>
           <div
-            className="h-px w-full bg-line"
+            className="h-[3px] w-full bg-line"
             role="progressbar"
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={progress}
             aria-label="Progress"
           >
-            <div className="h-px bg-ink transition-[width] duration-300" style={{ width: `${progress}%` }} />
+            <div className="h-[3px] bg-ink transition-[width] duration-300" style={{ width: `${progress}%` }} />
           </div>
         </div>
 
@@ -498,15 +527,21 @@ export function MultiStepForm({
 
         <div className="flex items-center justify-between gap-lg">
           {index > 0 ? (
-            <button type="button" onClick={back} className={BTN_SECONDARY} disabled={status === "sending"}>
-              Back
+            <button
+              type="button"
+              onClick={back}
+              className={`${BTN_SECONDARY} size-14 shrink-0 px-0`}
+              disabled={status === "sending"}
+              aria-label="Back"
+            >
+              <span aria-hidden="true">←</span>
             </button>
           ) : (
             <span />
           )}
           <button
             type="submit"
-            className={BTN_PRIMARY}
+            className={`${BTN_PRIMARY} h-14 flex-1 sm:flex-none`}
             disabled={status === "sending"}
             aria-busy={status === "sending" || undefined}
           >
