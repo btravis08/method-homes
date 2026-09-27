@@ -45,7 +45,10 @@ export default function GetStartedTray({ open, onClose, persist = true }: { open
         aria-modal="true"
         aria-label="Get started"
         tabIndex={-1}
-        className="absolute inset-x-0 bottom-0 top-16 flex flex-col overflow-hidden rounded-t-2xl bg-surface outline-none md:top-0 md:rounded-none"
+        /* bottom-0 of a fixed parent tracks the visual viewport on iOS
+           (toolbars collapsing and all); the safe-area inset keeps the
+           footer above the home indicator */
+        className="absolute inset-x-0 bottom-0 top-16 flex flex-col overflow-hidden rounded-t-2xl bg-surface pb-[env(safe-area-inset-bottom)] outline-none md:top-0 md:rounded-none"
       >
         {/* handle (phones) */}
         <div className="flex h-3 shrink-0 items-center justify-center md:hidden" aria-hidden="true">

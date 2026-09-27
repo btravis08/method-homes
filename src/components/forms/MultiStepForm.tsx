@@ -76,6 +76,8 @@ const BTN =
   "label inline-flex h-14 items-center justify-center px-2xl font-medium transition-opacity disabled:opacity-60";
 const BTN_PRIMARY = `${BTN} bg-btn text-btn-fg hover:opacity-80`;
 const BTN_SECONDARY = `${BTN} bg-wash text-ink hover:opacity-80`;
+/* the library button's Disabled state: wash fill, tertiary ink */
+const BTN_DISABLED = `${BTN} cursor-not-allowed bg-wash text-ink-3 disabled:opacity-100`;
 const ICON_BTN =
   "inline-flex size-10 items-center justify-center text-ink transition-opacity hover:opacity-70 disabled:opacity-40";
 
@@ -527,6 +529,9 @@ export function MultiStepForm({
       ? "Continue"
       : "Next";
   const laterAllowed = def.resumable && !isLast && !step.terminal && !interstitial;
+  /* Next stays grayed until the step's required answers are in;
+     interstitials are always ready */
+  const ready = interstitial || !Object.keys(validateStep(step, values).errors).length;
 
   return (
     <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
@@ -600,8 +605,8 @@ export function MultiStepForm({
           <>
             <button
               type="submit"
-              className={`${BTN_PRIMARY} w-full md:w-auto md:self-end`}
-              disabled={status === "sending"}
+              className={`${ready ? BTN_PRIMARY : BTN_DISABLED} w-full md:w-auto md:self-end`}
+              disabled={status === "sending" || !ready}
               aria-busy={status === "sending" || undefined}
             >
               {primaryLabel}
