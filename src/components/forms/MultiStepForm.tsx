@@ -170,6 +170,16 @@ export function MultiStepForm({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>();
   const [done, setDone] = useState<SuccessContext>();
+  /* true when the current step was entered with its single-choice
+     answer already in place (Back, a restored draft, a resume link):
+     that is the only time a tap step shows Next. A fresh tap keeps the
+     footer hidden while the auto-advance is on its way. */
+  const [revisitAnswered, setRevisitAnswered] = useState<boolean>(() => {
+    const vals = { ...draft?.answers, ...initialValues };
+    const first = visibleSteps(def, vals);
+    const s0 = first.find((x) => x.id === draft?.stepId) ?? first.find((x) => !prefilled.has(x.id)) ?? first[0];
+    return Boolean(s0 && s0.fields.some((f) => f.type === "radio" && f.required && typeof vals[f.name] === "string" && vals[f.name]));
+  });
   /* the "thinking" preloader shown for a beat before a computed step */
   const [thinking, setThinking] = useState<string>();
   const thinkTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -229,6 +239,8 @@ export function MultiStepForm({
       moved.current = true;
       setMessage(undefined);
       const target = def.steps.find((s) => s.id === id);
+      const vals = getValues();
+      setRevisitAnswered(Boolean(target && target.fields.some((f) => f.type === "radio" && f.required && typeof vals[f.name] === "string" && vals[f.name])));
       clearTimeout(thinkTimer.current);
       if (target?.loading) {
         setThinking(target.loading);
@@ -246,7 +258,7 @@ export function MultiStepForm({
       }
       setStepId(id);
     },
-    [def.steps, historyNav],
+    [def.steps, historyNav, getValues],
   );
 
   /* history: stamp the opening step onto the entry the tray pushed, and
@@ -596,9 +608,7 @@ export function MultiStepForm({
   /* no footer on a tap step until it has been answered AND that answer
      has already been used to advance (a revisit). A fresh tap is on
      its way to the next step, so Next must not flash in the meantime. */
-  const tapAnswered = tapStep && typeof values[shown[0]?.name] === "string" && Boolean(values[shown[0]?.name]);
-  const advancePending = Boolean(advanceKey) && lastAdvance.current !== null && lastAdvance.current !== advanceKey;
-  const tapPending = tapStep && (!tapAnswered || advancePending);
+  const tapPending = tapStep && !revisitAnswered;
 
   return (
     <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
