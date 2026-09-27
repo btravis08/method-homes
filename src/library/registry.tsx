@@ -17,7 +17,7 @@ import { FullBleedCarousel } from "@/components/legacy/FullBleedCarousel";
 import { LegacyHero } from "@/components/legacy/LegacyHero";
 import { ProductSwirl } from "@/components/legacy/ProductSwirl";
 import { SplitTextBlock } from "@/components/legacy/SplitTextBlock";
-import { LazyGetStartedTray } from "@/components/forms/LazyForms";
+import { IntakePreview } from "@/components/forms/IntakePreview";
 
 /*
   The section library — every composable section the site can build a
@@ -334,15 +334,11 @@ export const SECTIONS: SectionEntry[] = [
     title: "Get Started intake",
     group: "Forms",
     description:
-      "The Get Started sheet (Figma: Intake/Tray): bottom tray on phones with a sliver of page behind, full screen from md; header with Back · section · Close, 3px progress, centered question, footer pinned to the bottom with a fade. Image cards, series rows grouped by fit, interstitials, tap-to-advance, soft exit, finish-later links, lead scoring and the booking thank-you all run from the intake definition.",
+      "The Get Started sheet (Figma: Intake/Tray): bottom tray on phones with a sliver of page behind, full screen from md; header with Back · section · Close, 3px progress, top-aligned question, footer pinned to the bottom with a fade; the review step with Edit links and the Send preloader. Image cards, series rows grouped by fit, interstitials, tap-to-advance, soft exit, finish-later links, lead scoring and the booking thank-you all run from the intake definition.",
     modes: ["light"],
     tall: true,
     figmaNodeId: "37373:1104",
-    render: () => (
-      <div className="relative h-svh w-full bg-surface-2">
-        <LazyGetStartedTray open persist={false} />
-      </div>
-    ),
+    render: () => <IntakePreview />,
   },
 ];
 

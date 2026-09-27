@@ -239,7 +239,13 @@ staging/design use.
   responses…") for ≥1.6s before the thank-you or the error, so the
   calculating beat is the same whatever the network does.
 - Preview: /library/intake-form (Sections tool → Forms) renders the
-  open sheet at the viewer's breakpoint.
+  open sheet at the viewer's breakpoint through IntakePreview.tsx — a
+  client wrapper that owns the open state so the preview gets the
+  header X, Done and the device-Back mirroring (all three switch on
+  `onClose`, which the server-side registry cannot pass itself).
+- Device Back is verified in real WebKit from the `webkit-back.yml`
+  workflow (scripts/webkit-back.mjs against production): every Back
+  pops one step, only backing past the first step closes the sheet.
 
 ## Frontend architecture
 

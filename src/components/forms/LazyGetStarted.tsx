@@ -44,13 +44,17 @@ export function LazyGetStarted() {
       }
     };
     window.addEventListener(GET_STARTED_EVENT, onEvent);
-    document.addEventListener("click", onClick);
+    /* capture phase: a next/link to /get-started must not ALSO start a
+       route change — its handler bails on a default-prevented event —
+       or the router's own history entry lands between the sheet's and
+       the device Back button pops out of the form */
+    document.addEventListener("click", onClick, true);
     /* deep links open after hydration settles (a tick later, not inside
        the effect body) */
     const t = window.location.hash === "#get-started" || hasResumeParam() ? setTimeout(show, 0) : undefined;
     return () => {
       window.removeEventListener(GET_STARTED_EVENT, onEvent);
-      document.removeEventListener("click", onClick);
+      document.removeEventListener("click", onClick, true);
       clearTimeout(t);
     };
   }, [show]);
