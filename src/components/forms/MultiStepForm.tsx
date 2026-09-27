@@ -11,7 +11,6 @@ import {
   loadDraft,
   newSubmissionId,
   postSubmission,
-  requestResumeLink,
   saveDraft,
 } from "@/lib/forms/client";
 import type { Answers, FormDef, Recommendation, ResumePayload, StepDef } from "@/lib/forms/types";
@@ -32,7 +31,7 @@ import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
   header (Back · section label · Close), a 3px progress bar, a scrolling
   content area with the question centered, and a footer pinned to the
   bottom of the sheet (Next fills the width on phones, hugs on desktop)
-  with a "Save and finish later" link. It renders any FormDef
+  (none on tap-to-advance steps). It renders any FormDef
   (lib/forms): one step at a time, branching on answers, validating each
   step with the same rules the server re-applies, and submitting
   through the hardened /api/forms path. The parent (GetStartedTray)
@@ -75,7 +74,6 @@ type Status = "idle" | "sending" | "success" | "error";
 const BTN =
   "label inline-flex h-14 items-center justify-center px-2xl font-medium transition-opacity disabled:opacity-60";
 const BTN_PRIMARY = `${BTN} bg-btn text-btn-fg hover:opacity-80`;
-const BTN_SECONDARY = `${BTN} bg-wash text-ink hover:opacity-80`;
 /* the library button's Disabled state: wash fill, tertiary ink */
 const BTN_DISABLED = `${BTN} cursor-not-allowed bg-wash text-ink-3 disabled:opacity-100`;
 const ICON_BTN =
@@ -175,10 +173,6 @@ export function MultiStepForm({
   /* the "thinking" preloader shown for a beat before a computed step */
   const [thinking, setThinking] = useState<string>();
   const thinkTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
-  /* finish-later: closed → asking for the email → sent (or a link to copy) */
-  const [later, setLater] = useState<
-    { state: "closed" } | { state: "asking"; email: string; error?: string; busy?: boolean } | { state: "sent"; email: string; link?: string }
-  >({ state: "closed" });
   const lock = useRef(false);
   const submissionId = useRef<string>(undefined);
   const lastFingerprint = useRef<string>(undefined);
@@ -234,7 +228,6 @@ export function MultiStepForm({
     (id: string, opts?: { silent?: boolean }) => {
       moved.current = true;
       setMessage(undefined);
-      setLater({ state: "closed" });
       const target = def.steps.find((s) => s.id === id);
       clearTimeout(thinkTimer.current);
       if (target?.loading) {
@@ -435,35 +428,6 @@ export function MultiStepForm({
     void send();
   };
 
-  /* "save and finish later": email the visitor a link that restores the
-     answers at this step. Uses the email they already typed when there
-     is one; otherwise asks for it inline. */
-  const requestLater = useCallback(async (email: string) => {
-    const clean = email.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(clean)) {
-      setLater({ state: "asking", email, error: "Please enter a valid email address." });
-      return;
-    }
-    setLater({ state: "asking", email: clean, busy: true });
-    if (!token.current.value || Date.now() - token.current.at > TOKEN_TTL_MS)
-      token.current = { value: await fetchFormToken(), at: Date.now() };
-    const res = await requestResumeLink({
-      form: def.id,
-      email: clean,
-      answers: getValues(),
-      stepId: step.id,
-      page: pathname,
-      token: token.current.value,
-      website: honeypot.current?.value ?? "",
-    });
-    if (!res.ok) {
-      setLater({ state: "asking", email: clean, error: res.fieldErrors?.email ?? res.message });
-      return;
-    }
-    emit({ form: def.id, step: step.id, index, event: "saved-for-later" });
-    setLater({ state: "sent", email: clean, link: res.emailed ? undefined : res.link });
-  }, [def.id, getValues, step.id, pathname, index]);
-
   /* ── shared chrome ─────────────────────────────────────────────── */
   const finished = status === "success" && done;
   const section = finished ? "Thank you" : (step.section ?? def.title);
@@ -618,7 +582,6 @@ export function MultiStepForm({
     : interstitial
       ? "Continue"
       : "Next";
-  const laterAllowed = def.resumable && !isLast && !step.terminal && !interstitial;
   /* Next stays grayed until the step's required answers are in;
      interstitials are always ready */
   const ready = interstitial || !Object.keys(validateStep(step, values).errors).length;
@@ -700,13 +663,9 @@ export function MultiStepForm({
             )}
           </div>,
         ),
-        footer(
-          <>
-            {tapPending ? (
-              <p className="flex h-14 items-center justify-center text-body-sm text-ink-3 md:justify-end">
-                Tap an answer to continue
-              </p>
-            ) : (
+        tapPending
+          ? null
+          : footer(
               <button
                 type="submit"
                 className={`${ready ? BTN_PRIMARY : BTN_DISABLED} w-full md:w-auto md:self-end`}
@@ -714,74 +673,8 @@ export function MultiStepForm({
                 aria-busy={status === "sending" || undefined}
               >
                 {primaryLabel}
-              </button>
-            )}
-            {laterAllowed ? (
-              later.state === "closed" ? (
-                <button
-                  type="button"
-                  className="label self-center text-ink-3 underline underline-offset-4 hover:text-ink md:self-end"
-                  onClick={() => setLater({ state: "asking", email: typeof values.email === "string" ? values.email : "" })}
-                >
-                  Save and finish later
-                </button>
-              ) : later.state === "asking" ? (
-                <div className="flex flex-col gap-md border border-line p-xl">
-                  <label htmlFor={`${uid}-later`} className="text-body-sm text-ink">
-                    We’ll email you a link that picks up right here.
-                  </label>
-                  <div className="flex flex-col gap-md md:flex-row">
-                    <input
-                      id={`${uid}-later`}
-                      type="email"
-                      inputMode="email"
-                      autoComplete="email"
-                      placeholder="you@example.com"
-                      value={later.email}
-                      disabled={later.busy}
-                      aria-invalid={later.error ? true : undefined}
-                      className="h-14 w-full border border-line bg-surface px-xl text-[length:max(1rem,var(--text-body-md))] text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
-                      onChange={(e) => setLater({ state: "asking", email: e.target.value })}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter") {
-                          e.preventDefault();
-                          void requestLater(later.email);
-                        }
-                      }}
-                    />
-                    <button type="button" className={`${BTN_PRIMARY} shrink-0`} disabled={later.busy} aria-busy={later.busy || undefined} onClick={() => void requestLater(later.email)}>
-                      {later.busy ? "Sending…" : "Send link"}
-                    </button>
-                    <button type="button" className={`${BTN_SECONDARY} shrink-0`} onClick={() => setLater({ state: "closed" })}>
-                      Cancel
-                    </button>
-                  </div>
-                  {later.error ? (
-                    <p role="alert" className="text-body-sm font-medium text-ink">
-                      {later.error}
-                    </p>
-                  ) : null}
-                </div>
-              ) : (
-                <p role="status" className="text-center text-body-sm text-ink-3 md:text-right">
-                  {later.link ? (
-                    <>
-                      Saved. Copy this link to continue later:{" "}
-                      <a href={later.link} className="break-all text-ink underline underline-offset-4">
-                        {later.link}
-                      </a>
-                    </>
-                  ) : (
-                    <>
-                      Saved — we sent a link to <span className="text-ink">{later.email}</span>. It works for 7 days.
-                    </>
-                  )}
-                </p>
-              )
-            ) : null}
-          </>,
-          { fade: !tapPending },
-        ),
+              </button>,
+            ),
       )}
     </form>
   );
