@@ -20,6 +20,7 @@ jobs:
           echo "== home"; curl -sS -o /dev/null -w "status=%{http_code} age=%header{age} vercel=%header{x-vercel-id} cache=%header{x-vercel-cache}\n" "$B/"
           echo "== /api/forms/resume (new build answers 400/503, old build 404)"; curl -sS -w "\nstatus=%{http_code}\n" "$B/api/forms/resume?token=x"
           echo "== /api/forms GET (token issuance)"; curl -sS -o /dev/null -w "status=%{http_code}\n" "$B/api/forms"
+          echo "== image-card still (new build 200, old build 404)"; curl -sS -o /dev/null -w "status=%{http_code} type=%header{content-type} bytes=%{size_download}\n" "$B/method/intake/branch-residential.webp"
           echo "== library preview"; curl -sS -o /dev/null -w "status=%{http_code}\n" "$B/library/intake-form?frame=1&mode=light"
           echo "== finish-later copy present in a client chunk?"
           curl -sS "$B/library/intake-form?frame=1&mode=light" | grep -o '/_next/static/chunks/[^"]*\.js' | sort -u | head -40 > chunks.txt
