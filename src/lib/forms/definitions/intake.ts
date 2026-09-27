@@ -349,8 +349,8 @@ export const intakeForm: FormDef = {
        every series shows. */
     {
       id: "series",
-      title: "Series that fit your size and budget",
-      description: "Based on what you told us. Pick any you’d like to hear more about.",
+      title: "Which series interest you?",
+      description: "The ones that fit your size and budget come first. Pick any you’d like to hear more about.",
       showIf: (a) => isHome(a) && a.build_type === "predesigned",
       fields: [
         {

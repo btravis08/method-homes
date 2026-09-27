@@ -104,13 +104,24 @@ const toOption = (s: SeriesInfo): FieldOption => ({
   meta: seriesMeta(s),
 });
 
+/* kept for the inbox label of older submissions that chose it */
 export const ALL_SERIES_OPTION: FieldOption = { value: "not-sure", label: "Show me all series" };
 
-/* the series step's options for these answers */
+export const FIT_GROUP = "Fit your size and budget";
+export const REST_GROUP = "The rest of the series";
+
+/* the series step's options for these answers: the fitting series
+   first under their own heading, everything else below it. When the
+   answers don't narrow anything (no size yet, or every series fits)
+   the list is flat. */
 export function seriesOptions(a: Answers): FieldOption[] {
   const fit = SERIES.filter((s) => seriesFits(s, a));
-  const list = fit.length ? fit : SERIES;
-  return [...list.map(toOption), ALL_SERIES_OPTION];
+  const rest = SERIES.filter((s) => !seriesFits(s, a));
+  if (!fit.length || !rest.length) return SERIES.map(toOption);
+  return [
+    ...fit.map((s) => ({ ...toOption(s), group: FIT_GROUP })),
+    ...rest.map((s) => ({ ...toOption(s), group: REST_GROUP })),
+  ];
 }
 
 /* did the size/budget actually narrow the list? (for the step copy) */

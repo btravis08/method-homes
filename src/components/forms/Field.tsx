@@ -105,7 +105,12 @@ export function Field({
           </div>
         ) : layout === "media" ? (
           <div className="flex flex-col gap-md">
-            {options.map((o) => (
+            {options.map((o, i) => [
+              o.group && options[i - 1]?.group !== o.group ? (
+                <p key={`g-${o.group}`} className={`label text-ink-3 ${i ? "mt-xl" : ""}`}>
+                  {o.group}
+                </p>
+              ) : null,
               <label key={o.value} className={`${OPTION} p-lg`}>
                 {o.image ? (
                   <img
@@ -122,8 +127,8 @@ export function Field({
                   {o.meta ? <span className="text-body-sm text-ink-3">{o.meta}</span> : null}
                 </span>
                 {control(o)}
-              </label>
-            ))}
+              </label>,
+            ])}
           </div>
         ) : (
           <div className={`grid gap-md ${twoColumns(options) ? "grid-cols-2" : "grid-cols-1"}`}>

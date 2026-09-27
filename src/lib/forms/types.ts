@@ -32,6 +32,9 @@ export interface FieldOption {
   meta?: string;
   /* tiny uppercase label above the title in the "media" layout */
   eyebrow?: string;
+  /* consecutive options with the same group render under one heading
+     ("Fit your size and budget" / "The rest of the series") */
+  group?: string;
 }
 
 /* how a radio/checkbox group draws its options:
