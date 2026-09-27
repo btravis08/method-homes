@@ -14,7 +14,17 @@ import { IntakeForm } from "./IntakeForm";
   scroll lock. Mounted only through LazyGetStarted so none of it ships
   until someone opens it.
 */
-export default function GetStartedTray({ open, onClose, persist = true }: { open: boolean; onClose: () => void; persist?: boolean }) {
+export default function GetStartedTray({
+  open,
+  onClose,
+  persist = true,
+}: {
+  open: boolean;
+  /* omitted in the section library, which renders the sheet from a
+     server component and can't pass a function; there it just stays open */
+  onClose?: () => void;
+  persist?: boolean;
+}) {
   const panel = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,7 +32,7 @@ export default function GetStartedTray({ open, onClose, persist = true }: { open
     const prev = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onClose?.();
     };
     window.addEventListener("keydown", onKey);
     const t = setTimeout(() => panel.current?.focus({ preventScroll: true }), 50);
@@ -38,7 +48,11 @@ export default function GetStartedTray({ open, onClose, persist = true }: { open
   return (
     <div className="fixed inset-0 z-[70]" data-mode="light">
       {/* scrim over the page; tapping it closes */}
-      <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-black/50" />
+      {onClose ? (
+        <button type="button" aria-label="Close" onClick={onClose} className="absolute inset-0 bg-black/50" />
+      ) : (
+        <div aria-hidden="true" className="absolute inset-0 bg-black/50" />
+      )}
       <div
         ref={panel}
         role="dialog"

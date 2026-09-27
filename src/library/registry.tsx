@@ -340,7 +340,7 @@ export const SECTIONS: SectionEntry[] = [
     figmaNodeId: "37373:1104",
     render: () => (
       <div className="relative h-svh w-full bg-surface-2">
-        <LazyGetStartedTray open onClose={() => {}} persist={false} />
+        <LazyGetStartedTray open persist={false} />
       </div>
     ),
   },
