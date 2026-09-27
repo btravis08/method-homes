@@ -1,0 +1,39 @@
+name: webkit-back
+
+# Runs scripts/webkit-back.mjs — the Get Started sheet's device-Back
+# walk — in real WebKit against production. The sandbox has neither
+# WebKit nor a route to vercel.app; a runner has both.
+
+on:
+  workflow_dispatch:
+    inputs:
+      base:
+        description: Site to test
+        default: https://method-homes.vercel.app
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  webkit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright WebKit
+        run: |
+          mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null
+          npm i playwright@1.63.0 >/dev/null
+          npx playwright install --with-deps webkit chromium
+      - name: Back walk (WebKit)
+        env:
+          BASE: ${{ github.event.inputs.base }}
+        run: cp "$GITHUB_WORKSPACE/scripts/webkit-back.mjs" /tmp/pw/ && cd /tmp/pw && ENGINE=webkit node webkit-back.mjs
+      - name: Back walk (Chromium, for contrast)
+        if: always()
+        env:
+          BASE: ${{ github.event.inputs.base }}
+        run: cp "$GITHUB_WORKSPACE/scripts/webkit-back.mjs" /tmp/pw/ && cd /tmp/pw && ENGINE=chromium node webkit-back.mjs
