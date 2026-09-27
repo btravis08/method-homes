@@ -1,0 +1,56 @@
+name: crawl-series
+
+# Reads the live series + floor-plan pages on methodhomes.net (public
+# marketing content) and prints per-plan square footage and pricing as
+# JSON to the job log. The sandbox cannot reach methodhomes.net; a
+# runner can. Result is copied into src/lib/forms/series-data.json.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Crawl series and plan pages
+        run: |
+          cat > crawl.py <<'PY'
+          import re, json, urllib.request, html
+          BASE = "https://www.methodhomes.net"
+          SERIES = ["method-one","annata","cabin","elemental","m","option","paradigm"]
+          def get(url):
+              req = urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0"})
+              return urllib.request.urlopen(req, timeout=25).read().decode("utf-8","replace")
+          def text_of(h):
+              h = re.sub(r"<(script|style).*?</\1>", " ", h, flags=re.S|re.I)
+              return html.unescape(re.sub(r"<[^>]+>", " ", h))
+          out = {}
+          for s in SERIES:
+              url = f"{BASE}/predesigned-series/{s}"
+              try: h = get(url)
+              except Exception as e: out[s] = {"error": str(e)}; continue
+              links = sorted(set(re.findall(r'href="((?:https?://www\.methodhomes\.net)?(/predesigned-series/'+re.escape(s)+r'/[^"#?]+|/floor-plans?/[^"#?]+|/plans?/[^"#?]+))"', h)))
+              links = [l[0] if isinstance(l, tuple) else l for l in links]
+              links = [l if l.startswith("http") else BASE + l for l in links][:20]
+              t = text_of(h)
+              series_sqft = re.findall(r"([\d,]{3,6})\s*(?:sq\.?\s*ft|square feet|SF\b)", t, re.I)
+              series_price = re.findall(r"(?:starting|from|price)[^$]{0,40}\$\s?([\d,]{3,9})", t, re.I)
+              plans = []
+              for l in links:
+                  try: ph = get(l)
+                  except Exception as e: plans.append({"url": l, "error": str(e)}); continue
+                  pt = text_of(ph)
+                  title = re.search(r"<title>(.*?)</title>", ph, re.S|re.I)
+                  sq = [int(x.replace(",","")) for x in re.findall(r"([\d,]{3,6})\s*(?:sq\.?\s*ft|square feet|SF\b)", pt, re.I)]
+                  sq = [x for x in sq if 200 <= x <= 8000]
+                  beds = re.findall(r"(\d)\s*(?:bed|br\b|bedroom)", pt, re.I)
+                  price = re.findall(r"\$\s?([\d,]{5,9})", pt)
+                  ctx = re.findall(r"(?:starting at|from|base price|price)[^$]{0,60}\$\s?([\d,]{5,9})", pt, re.I)
+                  plans.append({"url": l, "title": html.unescape(title.group(1).strip()) if title else None, "sqft": sorted(set(sq)), "beds": sorted(set(beds)), "prices": sorted(set(price))[:8], "priceCtx": sorted(set(ctx))[:5]})
+              out[s] = {"url": url, "seriesSqft": sorted(set(series_sqft)), "seriesPrice": sorted(set(series_price)), "links": len(links), "plans": plans}
+          print("SERIES_JSON_START"); print(json.dumps(out)); print("SERIES_JSON_END")
+          PY
+          python3 crawl.py
