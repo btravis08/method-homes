@@ -1,5 +1,8 @@
 name: probe
 
+# Inspects the live site from a runner (the sandbox cannot reach
+# vercel.app). Edit the steps per question and dispatch.
+
 on:
   workflow_dispatch:
 
@@ -10,38 +13,16 @@ jobs:
   probe:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump intake survey form fields
+      - name: Which build is production serving?
         run: |
-          cat > dump.py <<'PY'
-          import sys, re
-          from html.parser import HTMLParser
-          KEEP = {"form","label","input","select","option","textarea","h1","h2","h3","h4","h5","h6","legend","fieldset","iframe","script","button","div","span","p"}
-          class P(HTMLParser):
-              def __init__(s): super().__init__(); s.inform=0; s.stack=[]; s.out=[]; s.cur=None
-              def handle_starttag(s, t, a):
-                  a=dict(a)
-                  if t=="iframe" or (t=="script" and a.get("src") and re.search(r"typeform|hubspot|jotform|hsforms|tally|form", a.get("src",""), re.I)):
-                      s.out.append(f"[{t}] src={a.get('src')}")
-                  if t=="form": s.inform+=1; s.out.append(f"== FORM id={a.get('id')} name={a.get('name')} data-name={a.get('data-name')} action={a.get('action')}")
-                  if not s.inform: return
-                  if t in ("input","select","textarea","option","label","button"):
-                      keep={k:v for k,v in a.items() if k in ("name","type","value","placeholder","data-name","for","id","required","selected")}
-                      s.out.append(f"<{t}> {keep}")
-                  s.cur=t
-              def handle_endtag(s, t):
-                  if t=="form": s.inform-=1; s.out.append("== /FORM")
-              def handle_data(s, d):
-                  d=" ".join(d.split())
-                  if s.inform and d: s.out.append(f"   text: {d}")
-          for url in sys.argv[1:]:
-              import urllib.request
-              req=urllib.request.Request(url, headers={"User-Agent":"Mozilla/5.0"})
-              html=urllib.request.urlopen(req, timeout=30).read().decode("utf-8","replace")
-              html=re.sub(r"<style.*?</style>","",html,flags=re.S)
-              p=P(); p.feed(html)
-              print("#"*20, url, "bytes", len(html))
-              print("\n".join(p.out))
-              for m in re.findall(r'<(?:iframe|script)[^>]+src="([^"]+)"', html):
-                  if re.search(r"typeform|hubspot|jotform|hsforms|tally|paperform|formstack|cognito", m, re.I): print("EMBED:", m)
-          PY
-          python3 dump.py https://www.methodhomes.net/residential-survey https://www.methodhomes.net/commercial-survey
+          set +e
+          B=https://method-homes.vercel.app
+          echo "== home"; curl -sS -o /dev/null -w "status=%{http_code} age=%header{age} vercel=%header{x-vercel-id} cache=%header{x-vercel-cache}\n" "$B/"
+          echo "== /api/forms/resume (new build answers 400/503, old build 404)"; curl -sS -w "\nstatus=%{http_code}\n" "$B/api/forms/resume?token=x"
+          echo "== /api/forms GET (token issuance)"; curl -sS -o /dev/null -w "status=%{http_code}\n" "$B/api/forms"
+          echo "== library preview"; curl -sS -o /dev/null -w "status=%{http_code}\n" "$B/library/intake-form?frame=1&mode=light"
+          echo "== finish-later copy present in a client chunk?"
+          curl -sS "$B/library/intake-form?frame=1&mode=light" | grep -o '/_next/static/chunks/[^"]*\.js' | sort -u | head -40 > chunks.txt
+          wc -l chunks.txt
+          hit=0; while read -r c; do if curl -sS "$B$c" | grep -q "Save and finish later"; then echo "FOUND in $c"; hit=1; fi; done < chunks.txt
+          echo "chunk hit=$hit (the form chunk loads lazily, so 0 here is not conclusive)"
