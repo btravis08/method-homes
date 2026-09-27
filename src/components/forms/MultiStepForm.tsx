@@ -593,7 +593,12 @@ export function MultiStepForm({
     const shownNow = shown;
     return shownNow.length === 1 && shownNow[0].type === "radio" && Boolean(shownNow[0].required);
   })();
-  const tapPending = tapStep && !(typeof values[shown[0]?.name] === "string" && values[shown[0]?.name]);
+  /* no footer on a tap step until it has been answered AND that answer
+     has already been used to advance (a revisit). A fresh tap is on
+     its way to the next step, so Next must not flash in the meantime. */
+  const tapAnswered = tapStep && typeof values[shown[0]?.name] === "string" && Boolean(values[shown[0]?.name]);
+  const advancePending = Boolean(advanceKey) && lastAdvance.current !== null && lastAdvance.current !== advanceKey;
+  const tapPending = tapStep && (!tapAnswered || advancePending);
 
   return (
     <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
