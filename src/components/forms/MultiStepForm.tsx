@@ -532,6 +532,15 @@ export function MultiStepForm({
   /* Next stays grayed until the step's required answers are in;
      interstitials are always ready */
   const ready = interstitial || !Object.keys(validateStep(step, values).errors).length;
+  /* a single-choice step needs no Next at all: the tap advances. The
+     button comes back only when the visitor returns to a step already
+     answered (Back), so they can move on without changing it. */
+  const tapStep = (() => {
+    if (step.autoAdvance === false || isLast || step.terminal || interstitial) return false;
+    const shownNow = shown;
+    return shownNow.length === 1 && shownNow[0].type === "radio" && Boolean(shownNow[0].required);
+  })();
+  const tapPending = tapStep && !(typeof values[shown[0]?.name] === "string" && values[shown[0]?.name]);
 
   return (
     <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
@@ -603,14 +612,20 @@ export function MultiStepForm({
         ),
         footer(
           <>
-            <button
-              type="submit"
-              className={`${ready ? BTN_PRIMARY : BTN_DISABLED} w-full md:w-auto md:self-end`}
-              disabled={status === "sending" || !ready}
-              aria-busy={status === "sending" || undefined}
-            >
-              {primaryLabel}
-            </button>
+            {tapPending ? (
+              <p className="flex h-14 items-center justify-center text-body-sm text-ink-3 md:justify-end">
+                Tap an answer to continue
+              </p>
+            ) : (
+              <button
+                type="submit"
+                className={`${ready ? BTN_PRIMARY : BTN_DISABLED} w-full md:w-auto md:self-end`}
+                disabled={status === "sending" || !ready}
+                aria-busy={status === "sending" || undefined}
+              >
+                {primaryLabel}
+              </button>
+            )}
             {laterAllowed ? (
               later.state === "closed" ? (
                 <button
