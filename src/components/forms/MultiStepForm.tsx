@@ -24,6 +24,7 @@ import {
 
 import { BOOKING_ENABLED, BookingEmbed } from "./BookingEmbed";
 import { Field } from "./Field";
+import { ArrowLeft, XClose } from "./icons";
 import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
 
 /*
@@ -292,6 +293,8 @@ export function MultiStepForm({
   const autoAdvance = useRef<ReturnType<typeof setTimeout>>(undefined);
   const advanceKey = (() => {
     if (step.autoAdvance === false || isLast || step.terminal || interstitial) return undefined;
+    /* came back to edit: show the question and let Next do the moving */
+    if (revisitAnswered) return undefined;
     const shownNow = visibleFields(step, values).filter((f) => f.type !== "hidden");
     if (shownNow.length !== 1 || shownNow[0].type !== "radio" || !shownNow[0].required) return undefined;
     const v = values[shownNow[0].name];
@@ -450,7 +453,7 @@ export function MultiStepForm({
       <div className="flex items-center gap-lg">
         {!finished && index > 0 ? (
           <button type="button" onClick={back} className={ICON_BTN} disabled={status === "sending"} aria-label="Back">
-            <span aria-hidden="true" className="text-body-md">←</span>
+            <ArrowLeft className="size-6" />
           </button>
         ) : (
           <span className="size-10" />
@@ -461,7 +464,7 @@ export function MultiStepForm({
       <div className="flex justify-end">
         {onClose ? (
           <button type="button" onClick={onClose} className={ICON_BTN} aria-label="Close">
-            <span aria-hidden="true" className="text-body-md">✕</span>
+            <XClose className="size-5" />
           </button>
         ) : (
           <span className="size-10" />

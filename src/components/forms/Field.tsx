@@ -29,9 +29,13 @@ const OPTION =
   "relative flex min-h-16 cursor-pointer items-center gap-lg border border-line bg-surface px-xl py-lg text-body-md text-ink transition-colors hover:border-ink-3 has-[:checked]:border-ink has-[:checked]:ring-1 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:border-ink";
 const CONTROL = "size-5 shrink-0 accent-ink";
 
-/* two columns when the labels are short enough not to wrap awkwardly */
-const twoColumns = (options: FieldOption[] = []) =>
+/* two columns when the labels are short enough not to wrap awkwardly.
+   On phones a list of six or fewer stacks regardless — the two-column
+   grid is for long lists that would otherwise run under the footer. */
+const shortLabels = (options: FieldOption[] = []) =>
   options.length > 1 && options.every((o) => o.label.length <= 16);
+const listColumns = (options: FieldOption[] = []) =>
+  shortLabels(options) ? (options.length > 6 ? "grid-cols-2" : "grid-cols-1 sm:grid-cols-2") : "grid-cols-1";
 
 export function Field({
   field,
@@ -136,7 +140,7 @@ export function Field({
             ])}
           </div>
         ) : (
-          <div className={`grid gap-md ${twoColumns(options) ? "grid-cols-2" : "grid-cols-1"}`}>
+          <div className={`grid gap-md ${listColumns(options)}`}>
             {options.map((o) => (
               <label key={o.value} className={OPTION}>
                 <span className="flex-1">{o.label}</span>
