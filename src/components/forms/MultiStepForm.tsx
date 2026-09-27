@@ -110,6 +110,9 @@ export interface MultiStepFormProps {
   onComplete?: (submissionId: string, ctx: SuccessContext) => void;
   /* shows the header Close and the Done button on the thank-you */
   onClose?: () => void;
+  /* mirror steps into browser history so the device Back button steps
+     back inside the sheet instead of leaving it (the tray turns this on) */
+  historyNav?: boolean;
   success?: ReactNode | ((ctx: SuccessContext) => ReactNode);
   className?: string;
 }
@@ -121,6 +124,7 @@ export function MultiStepForm({
   persist = true,
   onComplete,
   onClose,
+  historyNav = false,
   success,
   className,
 }: MultiStepFormProps) {
@@ -168,6 +172,9 @@ export function MultiStepForm({
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>();
   const [done, setDone] = useState<SuccessContext>();
+  /* the "thinking" preloader shown for a beat before a computed step */
+  const [thinking, setThinking] = useState<string>();
+  const thinkTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
   /* finish-later: closed → asking for the email → sent (or a link to copy) */
   const [later, setLater] = useState<
     { state: "closed" } | { state: "asking"; email: string; error?: string; busy?: boolean } | { state: "sent"; email: string; link?: string }
@@ -218,12 +225,61 @@ export function MultiStepForm({
     if (moved.current) heading.current?.focus({ preventScroll: true });
   }, [stepId, index, def.id]);
 
-  const go = useCallback((id: string) => {
-    moved.current = true;
-    setMessage(undefined);
-    setLater({ state: "closed" });
-    setStepId(id);
-  }, []);
+  /* move to a step. Forward moves push a history entry (when historyNav
+     is on) so the browser's Back walks back through the steps; `silent`
+     is used when we are already reacting to a popstate. Steps that
+     compute their content from earlier answers show their preloader
+     first. */
+  const go = useCallback(
+    (id: string, opts?: { silent?: boolean }) => {
+      moved.current = true;
+      setMessage(undefined);
+      setLater({ state: "closed" });
+      const target = def.steps.find((s) => s.id === id);
+      clearTimeout(thinkTimer.current);
+      if (target?.loading) {
+        setThinking(target.loading);
+        thinkTimer.current = setTimeout(() => setThinking(undefined), 1100);
+      } else {
+        setThinking(undefined);
+      }
+      if (historyNav && !opts?.silent && typeof window !== "undefined") {
+        try {
+          const depth = (window.history.state?.mhSheetDepth ?? 0) + 1;
+          window.history.pushState({ ...(window.history.state ?? {}), mhSheet: true, mhStep: id, mhSheetDepth: depth }, "", window.location.href);
+        } catch {
+          /* history unavailable — the in-sheet Back still works */
+        }
+      }
+      setStepId(id);
+    },
+    [def.steps, historyNav],
+  );
+
+  /* history: stamp the opening step onto the entry the tray pushed, and
+     answer the device Back button by stepping back (or, past the first
+     step, letting the tray close) */
+  useEffect(() => {
+    if (!historyNav || typeof window === "undefined") return;
+    try {
+      const s = window.history.state ?? {};
+      if (s.mhSheet && !s.mhStep) window.history.replaceState({ ...s, mhStep: stepId }, "", window.location.href);
+    } catch {
+      /* ignore */
+    }
+    const onPop = (e: PopStateEvent) => {
+      const s = e.state as { mhSheet?: boolean; mhStep?: string } | null;
+      if (!s?.mhSheet) return; // left the sheet — the tray closes itself
+      if (status === "success") return;
+      /* the tray's base entry carries no step: it means the first one */
+      const target = s.mhStep && def.steps.some((x) => x.id === s.mhStep) ? s.mhStep : visibleSteps(def, getValues())[0]?.id;
+      if (target && target !== stepId) go(target, { silent: true });
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
+  }, [historyNav, stepId, status, def, getValues, go]);
+
+  useEffect(() => () => clearTimeout(thinkTimer.current), []);
 
   /* tap-to-advance: a step whose only visible question is one required
      radio moves on as soon as it is answered (a beat later, so the
@@ -236,8 +292,15 @@ export function MultiStepForm({
     const v = values[shownNow[0].name];
     return typeof v === "string" && v ? `${step.id}:${v}` : undefined;
   })();
-  const lastAdvance = useRef<string>(undefined);
+  /* null until the first render has been seen: a restored draft or a
+     resume link that lands on an answered single-choice step must not
+     auto-advance on mount — only a NEW tap does */
+  const lastAdvance = useRef<string | undefined | null>(null);
   useEffect(() => {
+    if (lastAdvance.current === null) {
+      lastAdvance.current = advanceKey;
+      return;
+    }
     if (!advanceKey || advanceKey === lastAdvance.current) return;
     lastAdvance.current = advanceKey;
     clearTimeout(autoAdvance.current);
@@ -283,8 +346,15 @@ export function MultiStepForm({
     clearErrors();
     const order = visibleSteps(def, getValues());
     const here = order.findIndex((s) => s.id === step.id);
-    if (here > 0) go(order[here - 1].id);
-  }, [def, getValues, step, go, clearErrors]);
+    if (here <= 0) return;
+    /* with history mirroring, the in-sheet Back IS a browser back so the
+       two stay in step; the popstate handler moves the form */
+    if (historyNav && typeof window !== "undefined" && window.history.state?.mhSheet && window.history.state.mhSheetDepth > 0) {
+      window.history.back();
+      return;
+    }
+    go(order[here - 1].id);
+  }, [def, getValues, step, go, clearErrors, historyNav]);
 
   const send = useCallback(async () => {
     const vals = getValues();
@@ -439,8 +509,8 @@ export function MultiStepForm({
      it doesn't (m-auto inside a min-h-full column) */
   const content = (children: ReactNode) => (
     <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto">
-      <div className="flex min-h-full flex-col px-xl py-6xl">
-        <div className="m-auto w-full max-w-[34rem]">{children}</div>
+      <div className="flex min-h-full flex-col px-xl py-6xl md:py-8xl">
+        <div className="mx-auto w-full max-w-[34rem]">{children}</div>
       </div>
     </div>
   );
@@ -511,6 +581,23 @@ export function MultiStepForm({
             </button>,
           )
         : null,
+    );
+  }
+
+  /* ── thinking: a beat before a computed step ───────────────────── */
+  if (thinking) {
+    return shell(
+      content(
+        <div role="status" aria-live="polite" className="flex flex-col items-center gap-xl py-8xl text-center">
+          <span aria-hidden="true" className="flex items-center gap-md">
+            {[0, 1, 2].map((i) => (
+              <span key={i} className="mh-dot size-2 rounded-full bg-ink" style={{ animationDelay: `${i * 0.16}s` }} />
+            ))}
+          </span>
+          <p className="text-body-md text-ink-3">{thinking}</p>
+        </div>,
+      ),
+      footer(<div className="h-14" aria-hidden="true" />),
     );
   }
 
@@ -650,7 +737,7 @@ export function MultiStepForm({
                       value={later.email}
                       disabled={later.busy}
                       aria-invalid={later.error ? true : undefined}
-                      className="h-14 w-full border border-line bg-surface px-xl text-body-md text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
+                      className="h-14 w-full border border-line bg-surface px-xl text-[length:max(1rem,var(--text-body-md))] text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
                       onChange={(e) => setLater({ state: "asking", email: e.target.value })}
                       onKeyDown={(e) => {
                         if (e.key === "Enter") {

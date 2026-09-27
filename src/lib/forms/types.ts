@@ -89,6 +89,9 @@ export interface StepDef {
   attribution?: { name: string; role?: string };
   /* the label in the sheet header ("Get started", "About you") */
   section?: string;
+  /* shown for a beat before the step appears, for steps whose content
+     is computed from earlier answers ("Finding the series that fit…") */
+  loading?: string;
   /* skip the whole step unless this returns true (branching) */
   showIf?: (answers: Answers) => boolean;
   /* a step whose only visible question is one required radio advances

@@ -20,8 +20,11 @@ import { AddressField } from "./AddressField";
 
 /* square corners throughout: the Method library's buttons carry
    radius-none, and the Figma intake matches the inputs to them */
+/* inputs never drop below 16px: iOS Safari zooms the page into any
+   focused field smaller than that (the fluid body size is 15px on
+   phones) */
 const INPUT =
-  "h-16 w-full border border-line bg-surface px-xl text-body-md text-ink outline-none transition-colors placeholder:text-ink-3 focus-visible:border-ink aria-[invalid=true]:border-ink";
+  "h-16 w-full border border-line bg-surface px-xl text-[length:max(1rem,var(--text-body-md))] leading-normal text-ink outline-none transition-colors placeholder:text-ink-3 focus-visible:border-ink aria-[invalid=true]:border-ink";
 const OPTION =
   "relative flex min-h-16 cursor-pointer items-center gap-lg border border-line bg-surface px-xl py-lg text-body-md text-ink transition-colors hover:border-ink-3 has-[:checked]:border-ink has-[:checked]:ring-1 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:border-ink";
 const CONTROL = "size-5 shrink-0 accent-ink";

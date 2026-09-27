@@ -214,6 +214,18 @@ staging/design use.
   /get-started link or `[data-get-started]`, `#get-started`, or a
   `?resume=` link. /get-started is a real page that opens the sheet
   on load (the IA turns it into the contact page later).
+- Sheet rules: content top-aligns under the progress bar (only the
+  footer is pinned); inputs never render below 16px
+  (`max(1rem, var(--text-body-md))`) so iOS doesn't zoom on focus; a
+  single required radio step has no Next (the tap advances, Next
+  returns only on a revisited answered step); Next is grayed until the
+  step validates; steps with `loading` show the three-dot "thinking"
+  preloader for ~1.1s first. History: the tray pushes one entry on
+  open (`mhSheet`, depth 0) and the engine one per forward step, so
+  the device Back button steps back inside the sheet and leaves it
+  only from the first step; the in-sheet Back IS history.back(), and
+  closing (X, scrim, Esc, Done) unwinds the entries with history.go().
+  A restored draft never auto-advances on mount (only a new tap does).
 - Interstitials: steps with `kind: "interstitial"` (quote +
   attribution, Continue, no fields); `section` labels the header.
   The thank-you shows `def.recommendations(answers)` cards (feature +
