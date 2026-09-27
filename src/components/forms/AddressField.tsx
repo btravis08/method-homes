@@ -209,7 +209,7 @@ export function AddressField({
         <ul
           id={listId}
           role="listbox"
-          className="absolute inset-x-0 top-full z-10 mt-xs flex flex-col overflow-hidden rounded-xs border border-line bg-surface shadow-sm"
+          className="absolute inset-x-0 top-full z-10 mt-xs flex flex-col overflow-hidden border border-line bg-surface shadow-sm"
         >
           {items.map((s, i) => (
             <li

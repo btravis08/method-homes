@@ -14,9 +14,8 @@ import {
   requestResumeLink,
   saveDraft,
 } from "@/lib/forms/client";
-import type { Answers, FormDef, ResumePayload, StepDef } from "@/lib/forms/types";
+import type { Answers, FormDef, Recommendation, ResumePayload, StepDef } from "@/lib/forms/types";
 import {
-  describeAnswer,
   optionsOf,
   validateAnswers,
   validateStep,
@@ -29,10 +28,15 @@ import { Field } from "./Field";
 import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
 
 /*
-  The multi-step form engine. Renders any FormDef (lib/forms): one
-  step at a time, branching on answers, validating each step with the
-  same rules the server re-applies, and submitting through the hardened
-  /api/forms path.
+  The multi-step form engine, laid out as the Figma intake sheet: a
+  header (Back · section label · Close), a 3px progress bar, a scrolling
+  content area with the question centered, and a footer pinned to the
+  bottom of the sheet (Next fills the width on phones, hugs on desktop)
+  with a "Save and finish later" link. It renders any FormDef
+  (lib/forms): one step at a time, branching on answers, validating each
+  step with the same rules the server re-applies, and submitting
+  through the hardened /api/forms path. The parent (GetStartedTray)
+  supplies the fixed positioning, scrim and scroll lock.
 
   Guards built in:
   - double clicks / double Enter: a ref lock (synchronous, unlike state)
@@ -43,28 +47,37 @@ import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
   - spam: honeypot field, time-trap token fetched on open, optional
     Turnstile on the last step;
   - lost work: answers + position persist to sessionStorage, so closing
-    the modal or reloading resumes where the visitor left off.
+    the sheet or reloading resumes where the visitor left off; a
+    finish-later link (resume prop) restores them on another device.
+
+  Steps of kind "interstitial" show a quote and a Continue button.
+  Single required radio steps advance on tap. A terminal step submits
+  early (soft exit). The thank-you shows the definition's
+  recommendations, or the booking embed for qualified leads.
 
   Page context: pass initialValues (e.g. { project_type: "residential",
   build_type: "predesigned", series: "annata" } from a series page) and
   steps fully answered by it are skipped going forward — still
-  reachable with Back or from the review's Edit links.
+  reachable with Back.
 
   Analytics: every step view and the final outcome dispatch an
   "mh:form" CustomEvent on window ({ form, step, index, event }) for
   whatever tracking the site adopts; nothing is sent anywhere by this
   component.
 
-  Load it lazily (LazyMultiStepForm) — it pulls react-hook-form + zod,
-  which no visitor should download until a form actually opens.
+  Load it lazily (LazyGetStarted / LazyIntakeForm) — it pulls
+  react-hook-form + zod, which no visitor should download until a form
+  actually opens.
 */
 
 type Status = "idle" | "sending" | "success" | "error";
 
 const BTN =
-  "label inline-flex h-12 items-center justify-center rounded-xs px-[1.125rem] font-medium transition-opacity disabled:opacity-60";
+  "label inline-flex h-14 items-center justify-center px-2xl font-medium transition-opacity disabled:opacity-60";
 const BTN_PRIMARY = `${BTN} bg-btn text-btn-fg hover:opacity-80`;
-const BTN_SECONDARY = `${BTN} border border-line text-ink hover:border-ink-3`;
+const BTN_SECONDARY = `${BTN} bg-wash text-ink hover:opacity-80`;
+const ICON_BTN =
+  "inline-flex size-10 items-center justify-center text-ink transition-opacity hover:opacity-70 disabled:opacity-40";
 
 const TOKEN_TTL_MS = 12 * 60 * 60 * 1000;
 
@@ -93,6 +106,8 @@ export interface MultiStepFormProps {
   /* keep answers in sessionStorage between opens (default true) */
   persist?: boolean;
   onComplete?: (submissionId: string, ctx: SuccessContext) => void;
+  /* shows the header Close and the Done button on the thank-you */
+  onClose?: () => void;
   success?: ReactNode | ((ctx: SuccessContext) => ReactNode);
   className?: string;
 }
@@ -103,6 +118,7 @@ export function MultiStepForm({
   resume,
   persist = true,
   onComplete,
+  onClose,
   success,
   className,
 }: MultiStepFormProps) {
@@ -145,10 +161,10 @@ export function MultiStepForm({
   const step: StepDef = steps[index];
   /* a terminal step is always the last visible one (visibleSteps stops there) */
   const isLast = index === steps.length - 1;
+  const interstitial = step.kind === "interstitial";
 
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>();
-  const [returnToReview, setReturnToReview] = useState(false);
   const [done, setDone] = useState<SuccessContext>();
   /* finish-later: closed → asking for the email → sent (or a link to copy) */
   const [later, setLater] = useState<
@@ -159,6 +175,7 @@ export function MultiStepForm({
   const lastFingerprint = useRef<string>(undefined);
   const honeypot = useRef<HTMLInputElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
+  const scroller = useRef<HTMLDivElement>(null);
   const moved = useRef(false);
   const token = useRef<{ value?: string; at: number }>({ at: 0 });
   const { container: turnstileRef, getToken: turnstileToken, reset: turnstileReset } = useTurnstile();
@@ -190,26 +207,28 @@ export function MultiStepForm({
     for (const n of names) if (!errors[n]) clearErrors(n);
   }, [values, fieldErrors, step, getValues, clearErrors]);
 
-  /* move focus to the new step's heading so screen readers announce it
-     (not on first render — opening the form shouldn't steal focus) */
+  /* new step: scroll the content to the top and move focus to the
+     heading so screen readers announce it (not on first render —
+     opening the form shouldn't steal focus) */
   useEffect(() => {
     emit({ form: def.id, step: stepId, index, event: "step" });
+    scroller.current?.scrollTo({ top: 0 });
     if (moved.current) heading.current?.focus({ preventScroll: true });
   }, [stepId, index, def.id]);
 
   const go = useCallback((id: string) => {
     moved.current = true;
     setMessage(undefined);
+    setLater({ state: "closed" });
     setStepId(id);
   }, []);
 
   /* tap-to-advance: a step whose only visible question is one required
      radio moves on as soon as it is answered (a beat later, so the
-     selection is seen). Never on the last step, never on a terminal
-     step, and not while returning to the review. */
+     selection is seen). Never on the last step or a terminal step. */
   const autoAdvance = useRef<ReturnType<typeof setTimeout>>(undefined);
   const advanceKey = (() => {
-    if (step.autoAdvance === false || isLast || step.terminal || returnToReview) return undefined;
+    if (step.autoAdvance === false || isLast || step.terminal || interstitial) return undefined;
     const shownNow = visibleFields(step, values).filter((f) => f.type !== "hidden");
     if (shownNow.length !== 1 || shownNow[0].type !== "radio" || !shownNow[0].required) return undefined;
     const v = values[shownNow[0].name];
@@ -246,17 +265,8 @@ export function MultiStepForm({
     const { errors } = validateStep(step, vals);
     if (Object.keys(errors).length) return showErrors(errors);
     clearErrors();
-
     const order = visibleSteps(def, vals);
     const here = order.findIndex((s) => s.id === step.id);
-    if (returnToReview) {
-      const firstInvalid = order.find((s) => Object.keys(validateStep(s, vals).errors).length);
-      if (!firstInvalid || firstInvalid.id === order[order.length - 1].id) {
-        setReturnToReview(false);
-        return go(order[order.length - 1].id);
-      }
-      return go(firstInvalid.id);
-    }
     let i = here + 1;
     while (
       i < order.length - 1 &&
@@ -265,7 +275,7 @@ export function MultiStepForm({
     )
       i++;
     go(order[Math.min(i, order.length - 1)].id);
-  }, [getValues, step, def, returnToReview, prefilled, go, clearErrors, showErrors]);
+  }, [getValues, step, def, prefilled, go, clearErrors, showErrors]);
 
   const back = useCallback(() => {
     clearErrors();
@@ -382,255 +392,317 @@ export function MultiStepForm({
     setLater({ state: "sent", email: clean, link: res.emailed ? undefined : res.link });
   }, [def.id, getValues, step.id, pathname, index]);
 
-  if (status === "success" && done) {
+  /* ── shared chrome ─────────────────────────────────────────────── */
+  const finished = status === "success" && done;
+  const section = finished ? "Thank you" : (step.section ?? def.title);
+  const progress = Math.round(((index + 1) / steps.length) * 100);
+
+  const header = (
+    <header className="grid h-16 shrink-0 grid-cols-[1fr_auto_1fr] items-center px-md md:h-[5.5rem] md:px-xl">
+      <div className="flex items-center gap-lg">
+        {!finished && index > 0 ? (
+          <button type="button" onClick={back} className={ICON_BTN} disabled={status === "sending"} aria-label="Back">
+            <span aria-hidden="true" className="text-body-md">←</span>
+          </button>
+        ) : (
+          <span className="size-10" />
+        )}
+        <img src="/method/brand/logo-nav.webp" alt="Method Homes" className="hidden h-8 w-auto md:block" />
+      </div>
+      <p className="text-body-md font-medium text-ink">{section}</p>
+      <div className="flex justify-end">
+        {onClose ? (
+          <button type="button" onClick={onClose} className={ICON_BTN} aria-label="Close">
+            <span aria-hidden="true" className="text-body-md">✕</span>
+          </button>
+        ) : (
+          <span className="size-10" />
+        )}
+      </div>
+    </header>
+  );
+
+  const progressBar = finished ? (
+    <div className="h-[3px] w-full shrink-0 bg-line" aria-hidden="true" />
+  ) : (
+    <div className="h-[3px] w-full shrink-0 bg-line" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress} aria-label="Progress">
+      <div className="h-[3px] bg-ink transition-[width] duration-300" style={{ width: `${progress}%` }} />
+      <p className="sr-only">
+        Step {index + 1} of {steps.length}
+      </p>
+    </div>
+  );
+
+  /* content area: scrolls; the step centers when it fits, tops out when
+     it doesn't (m-auto inside a min-h-full column) */
+  const content = (children: ReactNode) => (
+    <div ref={scroller} className="min-h-0 flex-1 overflow-y-auto">
+      <div className="flex min-h-full flex-col px-xl py-6xl">
+        <div className="m-auto w-full max-w-[34rem]">{children}</div>
+      </div>
+    </div>
+  );
+
+  /* footer pinned to the bottom of the sheet; a fade above it on phones
+     so a long list dissolves before the buttons */
+  const footer = (children: ReactNode) => (
+    <div className="relative shrink-0 bg-surface px-xl pb-4xl pt-lg md:pb-6xl">
+      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-linear-to-t from-surface to-transparent md:hidden" />
+      <div className="mx-auto flex w-full max-w-[34rem] flex-col gap-md">{children}</div>
+    </div>
+  );
+
+  const shell = (inner: ReactNode, foot: ReactNode) => (
+    <div className={`flex h-full min-h-0 flex-col bg-surface ${className ?? ""}`}>
+      {header}
+      {progressBar}
+      {inner}
+      {foot}
+    </div>
+  );
+
+  /* ── thank-you ─────────────────────────────────────────────────── */
+  if (finished) {
     const custom = typeof success === "function" ? success(done) : success;
+    const first = typeof done.answers.first_name === "string" ? done.answers.first_name : undefined;
     const name = [done.answers.first_name, done.answers.last_name].filter((x) => typeof x === "string").join(" ") || undefined;
     const email = typeof done.answers.email === "string" ? done.answers.email : undefined;
-    return (
-      <div className={className} role="status">
-        {custom ?? (
-          <div className="flex flex-col gap-2xl">
-            {done.outcome ? (
-              <div className="flex flex-col gap-lg">
-                <h2 className="text-title-md text-ink">Thanks — you’re on the list.</h2>
-                <p className="text-body-md text-ink-2">We’ll email you if that changes.</p>
-              </div>
-            ) : done.qualified && BOOKING_ENABLED ? (
-              <>
-                <div className="flex flex-col gap-lg">
-                  <h2 className="text-title-md text-ink">Thank you — let’s talk.</h2>
-                  <p className="text-body-md text-ink-2">
-                    Your project is a good fit. Pick a time below and we’ll come prepared with your answers.
-                  </p>
-                </div>
-                <BookingEmbed name={name} email={email} />
-              </>
-            ) : (
-              <div className="flex flex-col gap-lg">
-                <h2 className="text-title-md text-ink">Thank you — we’ve got it.</h2>
-                <p className="text-body-md text-ink-2">
-                  Someone from our team will be in touch within two business days.
-                </p>
-              </div>
-            )}
+    const recs = def.recommendations?.(done.answers) ?? [];
+    const body = custom ?? (
+      <div className="flex flex-col gap-2xl" role="status">
+        {done.outcome ? (
+          <div className="flex flex-col gap-md text-center">
+            <h2 className="text-title-md text-ink">Thanks — you’re on the list.</h2>
+            <p className="text-body-md text-ink-3">We’ll email you if that changes.</p>
           </div>
+        ) : done.qualified && BOOKING_ENABLED ? (
+          <>
+            <div className="flex flex-col gap-md text-center">
+              <h2 className="text-title-md text-ink">Thank you — let’s talk.</h2>
+              <p className="text-body-md text-ink-3">
+                Your project is a good fit. Pick a time below and we’ll come prepared with your answers.
+              </p>
+            </div>
+            <BookingEmbed name={name} email={email} />
+          </>
+        ) : (
+          <>
+            <div className="flex flex-col gap-md text-center">
+              <h2 className="text-title-md text-ink">{first ? `Thanks, ${first}.` : "Thank you — we’ve got it."}</h2>
+              <p className="text-body-md text-ink-3">
+                We’ll be in touch within two business days.{recs.length ? " While you wait, here’s what fits what you told us." : ""}
+              </p>
+            </div>
+            {recs.map((r) => (
+              <RecommendationCard key={r.href + r.title} rec={r} />
+            ))}
+          </>
         )}
       </div>
     );
+    return shell(
+      content(body),
+      onClose
+        ? footer(
+            <button type="button" onClick={onClose} className={`${BTN_PRIMARY} w-full md:w-auto md:self-end`}>
+              Done
+            </button>,
+          )
+        : null,
+    );
   }
 
+  /* ── a step ─────────────────────────────────────────────────────── */
   const shown = visibleFields(step, values).filter((f) => f.type !== "hidden");
   const errorCount = Object.keys(fieldErrors).length;
   /* server/network problems win; otherwise summarize field errors */
   const live =
     message ??
     (errorCount === 1 ? "One answer needs a look." : errorCount > 1 ? `${errorCount} answers need a look.` : undefined);
-  const progress = Math.round(((index + 1) / steps.length) * 100);
-  const answered = def.review && isLast
-    ? steps
-        .slice(0, -1)
-        .map((s) => ({
-          step: s,
-          rows: visibleFields(s, values)
-            .filter((f) => f.type !== "hidden")
-            .filter((f) => {
-              const v = values[f.name];
-              return Array.isArray(v) ? v.length : v;
-            })
-            .map((f) => describeAnswer(def, f.name, values[f.name]!, values)),
-        }))
-        .filter((g) => g.rows.length)
-    : [];
+  const primaryLabel = isLast
+    ? status === "sending"
+      ? "Sending…"
+      : (step.submitLabel ?? def.submitLabel ?? "Submit")
+    : interstitial
+      ? "Continue"
+      : "Next";
+  const laterAllowed = def.resumable && !isLast && !step.terminal && !interstitial;
 
   return (
-    <form noValidate onSubmit={onSubmit} className={className} aria-labelledby={`${uid}-title`}>
-      <div className="flex flex-col gap-2xl">
-        <div className="flex flex-col gap-md">
-          <p className="sr-only">
-            Step {index + 1} of {steps.length}
-          </p>
-          <div
-            className="h-[3px] w-full bg-line"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-valuenow={progress}
-            aria-label="Progress"
-          >
-            <div className="h-[3px] bg-ink transition-[width] duration-300" style={{ width: `${progress}%` }} />
-          </div>
-        </div>
-
-        <div className="flex flex-col gap-md">
-          <h2 id={`${uid}-title`} ref={heading} tabIndex={-1} className="text-title-md text-ink outline-none">
-            {step.title}
-          </h2>
-          {step.description ? <p className="text-body-md text-ink-2">{step.description}</p> : null}
-        </div>
-
-        {answered.length ? (
-          <dl className="flex flex-col gap-lg border-y border-line py-xl">
-            {answered.map((g) => (
-              <div key={g.step.id} className="flex items-start justify-between gap-xl">
-                <div className="flex flex-col gap-xs">
-                  {g.rows.map((r) => (
-                    <div key={r.label} className="flex flex-col">
-                      <dt className="text-body-sm text-ink-3">{r.label}</dt>
-                      <dd className="text-body-md text-ink">{r.value}</dd>
+    <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
+      {shell(
+        content(
+          <div className="flex flex-col gap-2xl">
+            {interstitial ? (
+              <div className="flex flex-col gap-2xl">
+                <p aria-hidden="true" className="text-headline-lg leading-none text-ink">
+                  “
+                </p>
+                <h2 id={`${uid}-title`} ref={heading} tabIndex={-1} className="text-title-md text-ink outline-none">
+                  {step.quote ?? step.title}
+                </h2>
+                {step.attribution ? (
+                  <div className="flex items-center gap-lg">
+                    <span aria-hidden="true" className="size-12 shrink-0 rounded-full bg-surface-2" />
+                    <div className="flex flex-col">
+                      <p className="text-body-md font-medium text-ink">{step.attribution.name}</p>
+                      {step.attribution.role ? <p className="text-body-sm text-ink-3">{step.attribution.role}</p> : null}
                     </div>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="label shrink-0 text-ink underline underline-offset-4"
-                  onClick={() => {
-                    setReturnToReview(true);
-                    go(g.step.id);
-                  }}
-                >
-                  Edit<span className="sr-only"> {g.step.title}</span>
-                </button>
-              </div>
-            ))}
-          </dl>
-        ) : null}
-
-        <div className="flex flex-col gap-xl">
-          {shown.map((field) => (
-            <Field
-              key={field.name}
-              field={field}
-              register={register}
-              setValue={setValue}
-              options={optionsOf(field, values)}
-              error={fieldErrors[field.name]?.message as string | undefined}
-              idPrefix={uid}
-              hideLabel={shown.length === 1 && field.type !== "consent"}
-            />
-          ))}
-        </div>
-
-        {/* honeypot — hidden from people and assistive tech, filled by bots */}
-        <input
-          ref={honeypot}
-          type="text"
-          name="website"
-          tabIndex={-1}
-          autoComplete="off"
-          aria-hidden="true"
-          className="absolute -left-[9999px] h-0 w-0 opacity-0"
-        />
-
-        {isLast && TURNSTILE_ENABLED ? <div ref={turnstileRef} /> : null}
-
-        <p aria-live="polite" className="min-h-[1lh] text-body-sm text-ink">
-          {live}
-        </p>
-
-        <div className="flex items-center justify-between gap-lg">
-          {index > 0 ? (
-            <button
-              type="button"
-              onClick={back}
-              className={`${BTN_SECONDARY} size-14 shrink-0 px-0`}
-              disabled={status === "sending"}
-              aria-label="Back"
-            >
-              <span aria-hidden="true">←</span>
-            </button>
-          ) : (
-            <span />
-          )}
-          <button
-            type="submit"
-            className={`${BTN_PRIMARY} h-14 flex-1 sm:flex-none`}
-            disabled={status === "sending"}
-            aria-busy={status === "sending" || undefined}
-          >
-            {isLast
-              ? status === "sending"
-                ? "Sending…"
-                : (step.submitLabel ?? def.submitLabel ?? "Submit")
-              : returnToReview
-                ? "Back to review"
-                : "Next"}
-          </button>
-        </div>
-
-        {def.resumable && !isLast && !step.terminal ? (
-          <div className="flex flex-col gap-md">
-            {later.state === "closed" ? (
-              <button
-                type="button"
-                className="label self-start text-ink-2 underline underline-offset-4 hover:text-ink"
-                onClick={() =>
-                  setLater({ state: "asking", email: typeof values.email === "string" ? values.email : "" })
-                }
-              >
-                Save and finish later
-              </button>
-            ) : later.state === "asking" ? (
-              <div className="flex flex-col gap-md rounded-xs border border-line p-xl">
-                <label htmlFor={`${uid}-later`} className="text-body-sm text-ink">
-                  We’ll email you a link that picks up right here.
-                </label>
-                <div className="flex flex-col gap-md sm:flex-row">
-                  <input
-                    id={`${uid}-later`}
-                    type="email"
-                    inputMode="email"
-                    autoComplete="email"
-                    placeholder="you@example.com"
-                    value={later.email}
-                    disabled={later.busy}
-                    aria-invalid={later.error ? true : undefined}
-                    className="h-12 w-full rounded-xs border border-line bg-surface px-xl text-body-md text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
-                    onChange={(e) => setLater({ state: "asking", email: e.target.value })}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        void requestLater(later.email);
-                      }
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className={`${BTN_PRIMARY} shrink-0`}
-                    disabled={later.busy}
-                    aria-busy={later.busy || undefined}
-                    onClick={() => void requestLater(later.email)}
-                  >
-                    {later.busy ? "Sending…" : "Send link"}
-                  </button>
-                  <button type="button" className={`${BTN_SECONDARY} shrink-0`} onClick={() => setLater({ state: "closed" })}>
-                    Cancel
-                  </button>
-                </div>
-                {later.error ? (
-                  <p role="alert" className="text-body-sm font-medium text-ink">
-                    {later.error}
-                  </p>
+                  </div>
                 ) : null}
               </div>
             ) : (
-              <p role="status" className="text-body-sm text-ink-2">
-                {later.link ? (
-                  <>
-                    Saved. Copy this link to continue later:{" "}
-                    <a href={later.link} className="break-all text-ink underline underline-offset-4">
-                      {later.link}
-                    </a>
-                  </>
-                ) : (
-                  <>
-                    Saved — we sent a link to <span className="text-ink">{later.email}</span>. It works for 7 days.
-                  </>
-                )}
-              </p>
+              <>
+                <div className="flex flex-col gap-md text-center">
+                  <h2 id={`${uid}-title`} ref={heading} tabIndex={-1} className="text-title-md text-ink outline-none">
+                    {step.title}
+                  </h2>
+                  {step.description ? <p className="text-body-md text-ink-3">{step.description}</p> : null}
+                </div>
+                <div className="flex flex-col gap-lg">
+                  {shown.map((field) => (
+                    <Field
+                      key={field.name}
+                      field={field}
+                      register={register}
+                      setValue={setValue}
+                      options={optionsOf(field, values)}
+                      error={fieldErrors[field.name]?.message as string | undefined}
+                      idPrefix={uid}
+                      hideLabel={shown.length === 1 && field.type !== "consent"}
+                    />
+                  ))}
+                </div>
+              </>
             )}
-          </div>
-        ) : null}
-      </div>
+
+            {/* honeypot — hidden from people and assistive tech, filled by bots */}
+            <input
+              ref={honeypot}
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="absolute -left-[9999px] h-0 w-0 opacity-0"
+            />
+            {isLast && TURNSTILE_ENABLED ? <div ref={turnstileRef} /> : null}
+            {live ? (
+              <p aria-live="polite" className="text-center text-body-sm text-ink">
+                {live}
+              </p>
+            ) : (
+              <p aria-live="polite" className="sr-only" />
+            )}
+          </div>,
+        ),
+        footer(
+          <>
+            <button
+              type="submit"
+              className={`${BTN_PRIMARY} w-full md:w-auto md:self-end`}
+              disabled={status === "sending"}
+              aria-busy={status === "sending" || undefined}
+            >
+              {primaryLabel}
+            </button>
+            {laterAllowed ? (
+              later.state === "closed" ? (
+                <button
+                  type="button"
+                  className="label self-center text-ink-3 underline underline-offset-4 hover:text-ink md:self-end"
+                  onClick={() => setLater({ state: "asking", email: typeof values.email === "string" ? values.email : "" })}
+                >
+                  Save and finish later
+                </button>
+              ) : later.state === "asking" ? (
+                <div className="flex flex-col gap-md border border-line p-xl">
+                  <label htmlFor={`${uid}-later`} className="text-body-sm text-ink">
+                    We’ll email you a link that picks up right here.
+                  </label>
+                  <div className="flex flex-col gap-md md:flex-row">
+                    <input
+                      id={`${uid}-later`}
+                      type="email"
+                      inputMode="email"
+                      autoComplete="email"
+                      placeholder="you@example.com"
+                      value={later.email}
+                      disabled={later.busy}
+                      aria-invalid={later.error ? true : undefined}
+                      className="h-14 w-full border border-line bg-surface px-xl text-body-md text-ink outline-none placeholder:text-ink-3 focus-visible:border-ink"
+                      onChange={(e) => setLater({ state: "asking", email: e.target.value })}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          void requestLater(later.email);
+                        }
+                      }}
+                    />
+                    <button type="button" className={`${BTN_PRIMARY} shrink-0`} disabled={later.busy} aria-busy={later.busy || undefined} onClick={() => void requestLater(later.email)}>
+                      {later.busy ? "Sending…" : "Send link"}
+                    </button>
+                    <button type="button" className={`${BTN_SECONDARY} shrink-0`} onClick={() => setLater({ state: "closed" })}>
+                      Cancel
+                    </button>
+                  </div>
+                  {later.error ? (
+                    <p role="alert" className="text-body-sm font-medium text-ink">
+                      {later.error}
+                    </p>
+                  ) : null}
+                </div>
+              ) : (
+                <p role="status" className="text-center text-body-sm text-ink-3 md:text-right">
+                  {later.link ? (
+                    <>
+                      Saved. Copy this link to continue later:{" "}
+                      <a href={later.link} className="break-all text-ink underline underline-offset-4">
+                        {later.link}
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      Saved — we sent a link to <span className="text-ink">{later.email}</span>. It works for 7 days.
+                    </>
+                  )}
+                </p>
+              )
+            ) : null}
+          </>,
+        ),
+      )}
     </form>
+  );
+}
+
+/* thank-you "what to read next" cards: a big image card or a row */
+function RecommendationCard({ rec }: { rec: Recommendation }) {
+  const arrow = <span aria-hidden="true" className="shrink-0 text-body-md text-ink">→</span>;
+  if (rec.size === "feature") {
+    return (
+      <a href={rec.href} className="group flex flex-col overflow-hidden border border-line bg-surface transition-colors hover:border-ink-3">
+        {rec.image ? <img src={rec.image} alt="" loading="lazy" decoding="async" className="aspect-[16/10] w-full bg-surface-2 object-cover" /> : null}
+        <span className="flex items-center gap-lg px-xl py-lg">
+          <span className="flex min-w-0 flex-1 flex-col gap-xs">
+            <span className="label text-ink-3">{rec.eyebrow}</span>
+            <span className="text-title-sm text-ink">{rec.title}</span>
+            {rec.meta ? <span className="text-body-sm text-ink-3">{rec.meta}</span> : null}
+          </span>
+          {arrow}
+        </span>
+      </a>
+    );
+  }
+  return (
+    <a href={rec.href} className="group flex items-center gap-lg border border-line bg-surface p-lg transition-colors hover:border-ink-3">
+      {rec.image ? <img src={rec.image} alt="" loading="lazy" decoding="async" className="h-[4.5rem] w-24 shrink-0 bg-surface-2 object-cover" /> : null}
+      <span className="flex min-w-0 flex-1 flex-col gap-xs">
+        <span className="label text-ink-3">{rec.eyebrow}</span>
+        <span className="text-body-md font-medium text-ink">{rec.title}</span>
+        {rec.meta ? <span className="text-body-sm text-ink-3">{rec.meta}</span> : null}
+      </span>
+      {arrow}
+    </a>
   );
 }

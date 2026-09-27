@@ -82,6 +82,13 @@ export interface StepDef {
   title: string;
   description?: string;
   fields: FieldDef[];
+  /* "interstitial": a pause between questions — a quote or a line of
+     reassurance with a Continue button and no fields */
+  kind?: "question" | "interstitial";
+  quote?: string;
+  attribution?: { name: string; role?: string };
+  /* the label in the sheet header ("Get started", "About you") */
+  section?: string;
   /* skip the whole step unless this returns true (branching) */
   showIf?: (answers: Answers) => boolean;
   /* a step whose only visible question is one required radio advances
@@ -115,6 +122,18 @@ export interface FormDef {
   qualify?: (answers: Answers) => boolean;
   /* lead scoring, stored on the submission for the inbox */
   score?: (answers: Answers) => LeadScore;
+  /* thank-you screen: what to read next, built from the answers */
+  recommendations?: (answers: Answers) => Recommendation[];
+}
+
+export interface Recommendation {
+  eyebrow: string;
+  title: string;
+  meta?: string;
+  href: string;
+  image?: string;
+  /* "feature": big image card; "row": thumbnail row */
+  size?: "feature" | "row";
 }
 
 /* result of the lead scoring in lib/forms/score.ts */

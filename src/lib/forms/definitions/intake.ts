@@ -42,6 +42,34 @@ export const intakeForm: FormDef = {
   resumable: true,
   score: scoreIntake,
   qualify: qualifiesForBooking,
+  /* thank-you reading list, by branch (Figma R14/R15/C06) */
+  recommendations: (a) => [
+    {
+      size: "feature",
+      eyebrow: "Start here",
+      title: "What is prefab?",
+      meta: "How modular building works, in five minutes",
+      href: "/what-is-prefab",
+      image: "/method/intake/branch-residential.webp",
+    },
+    isCommercial(a)
+      ? {
+          size: "row",
+          eyebrow: "Page",
+          title: "Commercial process",
+          meta: "From feasibility to occupancy",
+          href: "/commercial",
+          image: "/method/intake/branch-commercial.webp",
+        }
+      : {
+          size: "row",
+          eyebrow: "Page",
+          title: "Pricing & cost guide",
+          meta: a.build_type === "custom" ? "What a custom home costs" : "What a predesigned home costs",
+          href: "/pricing",
+          image: "/method/intake/series-annata.webp",
+        },
+  ],
   steps: [
     {
       id: "branch",
@@ -62,6 +90,19 @@ export const intakeForm: FormDef = {
         { name: "source_series", label: "Series (from page)", type: "hidden" },
         { name: "source_plan", label: "Floor plan (from page)", type: "hidden" },
       ],
+    },
+    /* interstitials: a pause between questions — educational first,
+       then reassurance where the form asks for something sensitive.
+       Copy is the working draft from the Figma flow; the attribution is
+       the team, not a named person, until Method supplies real quotes. */
+    {
+      id: "why-prefab",
+      kind: "interstitial",
+      title: "How prefab works",
+      quote:
+        "Your home is built indoors, in a controlled factory, while your site is prepared. Then it is delivered and set in days, not months. Same architects, same materials, far fewer surprises.",
+      attribution: { name: "Method Homes", role: "Design + build team" },
+      fields: [],
     },
 
     /* ── residential ─────────────────────────────── */
@@ -343,6 +384,26 @@ export const intakeForm: FormDef = {
       ],
     },
 
+    {
+      id: "budget-reassurance",
+      kind: "interstitial",
+      title: "About budget",
+      showIf: isHome,
+      quote:
+        "There is no wrong answer on budget. It helps us point you to the right series and level of finish. Nothing is locked in until you say so.",
+      attribution: { name: "Method Homes", role: "Client relations" },
+      fields: [],
+    },
+    {
+      id: "commercial-reassurance",
+      kind: "interstitial",
+      title: "How commercial projects start",
+      showIf: isCommercial,
+      quote:
+        "Every commercial project starts with a feasibility conversation. We review your site, program and timeline with you before any numbers are final.",
+      attribution: { name: "Method Homes", role: "Commercial team" },
+      fields: [],
+    },
     /* series come AFTER size and budget so the pick is informed, and
        several can be chosen. When the series documents carry size and
        price ranges this list narrows to the ones that fit; until then
@@ -369,8 +430,17 @@ export const intakeForm: FormDef = {
 
     /* ── shared finish ───────────────────────────── */
     {
+      id: "before-details",
+      kind: "interstitial",
+      title: "Almost there",
+      quote:
+        "Almost there. We use your details to get back to you within two business days, and for nothing else. No newsletter unless you ask, no sales pressure.",
+      fields: [],
+    },
+    {
       id: "about-you",
       title: "About you",
+      section: "About you",
       fields: [
         { name: "first_name", label: "First name", type: "text", required: true, autoComplete: "given-name", maxLength: 80 },
         { name: "last_name", label: "Last name", type: "text", required: true, autoComplete: "family-name", maxLength: 80 },
@@ -391,6 +461,7 @@ export const intakeForm: FormDef = {
     {
       id: "more",
       title: "Almost done",
+      section: "About you",
       fields: [
         {
           name: "heard_about",

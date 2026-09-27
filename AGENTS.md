@@ -201,8 +201,25 @@ staging/design use.
     inline embed (BookingEmbed.tsx, name + email prefilled) on the
     thank-you screen instead of the "two business days" copy. No
     NEXT_PUBLIC_BOOKING_URL → standard copy for everyone.
-- Preview: /library/intake-form (Sections tool → Forms). The Get
-  Started modal chrome itself waits on the Figma design.
+- The sheet (Figma Intake/Tray): GetStartedTray.tsx owns the scrim,
+  fixed positioning (phones: bottom tray from top-16 with handle and
+  rounded top; md+: full screen), dialog semantics, Escape and the
+  body scroll lock. MultiStepForm lays itself out as header (Back ·
+  section label · Close, logo on md+) → 3px progress → scrolling
+  content (question centered when it fits, `m-auto` in a `min-h-full`
+  column) → footer pinned to the sheet's bottom edge (Next fills on
+  phones, hugs right on md+, a fade above it on phones). Mount only
+  through LazyGetStarted in (site)/layout — it opens on the
+  "mh:get-started" event (`openGetStarted()`), any click on a
+  /get-started link or `[data-get-started]`, `#get-started`, or a
+  `?resume=` link. /get-started is a real page that opens the sheet
+  on load (the IA turns it into the contact page later).
+- Interstitials: steps with `kind: "interstitial"` (quote +
+  attribution, Continue, no fields); `section` labels the header.
+  The thank-you shows `def.recommendations(answers)` cards (feature +
+  row) or the booking embed for qualified leads.
+- Preview: /library/intake-form (Sections tool → Forms) renders the
+  open sheet at the viewer's breakpoint.
 
 ## Frontend architecture
 

@@ -17,6 +17,9 @@ export const LazyIntakeForm = dynamic(
   { ssr: false },
 );
 
+/* the whole sheet (scrim + tray + engine), for the section library */
+export const LazyGetStartedTray = dynamic(() => import("./GetStartedTray"), { ssr: false });
+
 export const LazyMultiStepForm = dynamic(
   () => import("./MultiStepForm").then((m) => m.MultiStepForm),
   { ssr: false },
