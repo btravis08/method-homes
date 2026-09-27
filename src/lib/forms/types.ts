@@ -116,7 +116,7 @@ export interface FormDef {
   /* label on the final button */
   submitLabel?: string;
   /* preloader line shown while the submission is in flight and the
-     recommendations are prepared ("Finding what fits your project…") */
+     recommendations are prepared ("Sending your responses…") */
   submittingLabel?: string;
   /* answers whose labels make the one-line inbox summary
      ("Residential · Predesigned · Annata · Washington") */

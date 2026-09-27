@@ -37,7 +37,7 @@ export const intakeForm: FormDef = {
   title: "Get started",
   submitLabel: "Send",
   summaryFields: ["project_type", "build_type", "series", "commercial_type", "build_state"],
-  submittingLabel: "Finding what fits your project…",
+  submittingLabel: "Sending your responses…",
   resumable: true,
   score: scoreIntake,
   qualify: qualifiesForBooking,
