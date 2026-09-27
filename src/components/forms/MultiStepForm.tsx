@@ -515,11 +515,14 @@ export function MultiStepForm({
     </div>
   );
 
-  /* footer pinned to the bottom of the sheet; a fade above it on phones
-     so a long list dissolves before the buttons */
-  const footer = (children: ReactNode) => (
+  /* footer pinned to the bottom of the sheet. The fade above it on
+     phones belongs to the button: a long list dissolves before Next.
+     Footers with no button (tap-to-advance hint, preloader) get none. */
+  const footer = (children: ReactNode, opts?: { fade?: boolean }) => (
     <div className="relative shrink-0 bg-surface px-xl pb-4xl pt-lg md:pb-6xl">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-linear-to-t from-surface to-transparent md:hidden" />
+      {opts?.fade !== false ? (
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-16 h-16 bg-linear-to-t from-surface to-transparent md:hidden" />
+      ) : null}
       <div className="mx-auto flex w-full max-w-[34rem] flex-col gap-md">{children}</div>
     </div>
   );
@@ -597,7 +600,7 @@ export function MultiStepForm({
           <p className="text-body-md text-ink-3">{thinking}</p>
         </div>,
       ),
-      footer(<div className="h-14" aria-hidden="true" />),
+      footer(<div className="h-14" aria-hidden="true" />, { fade: false }),
     );
   }
 
@@ -777,6 +780,7 @@ export function MultiStepForm({
               )
             ) : null}
           </>,
+          { fade: !tapPending },
         ),
       )}
     </form>
