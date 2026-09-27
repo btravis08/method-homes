@@ -37,8 +37,7 @@ export const intakeForm: FormDef = {
   title: "Get started",
   submitLabel: "Send",
   summaryFields: ["project_type", "build_type", "series", "commercial_type", "build_state"],
-  /* no read-back step: the Figma flow sends from About you → Almost done */
-  review: false,
+  submittingLabel: "Finding what fits your project…",
   resumable: true,
   score: scoreIntake,
   qualify: qualifiesForBooking,
@@ -481,6 +480,14 @@ export const intakeForm: FormDef = {
         },
         { name: "notes", label: "Anything else you’d like us to know?", type: "textarea", maxLength: 2000 },
       ],
+    },
+    {
+      id: "review",
+      kind: "review",
+      title: "Review and send",
+      description: "Check your answers. You can change anything before sending.",
+      section: "Review",
+      fields: [],
     },
   ],
 };

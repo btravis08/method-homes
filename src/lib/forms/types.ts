@@ -83,8 +83,10 @@ export interface StepDef {
   description?: string;
   fields: FieldDef[];
   /* "interstitial": a pause between questions — a quote or a line of
-     reassurance with a Continue button and no fields */
-  kind?: "question" | "interstitial";
+     reassurance with a Continue button and no fields;
+     "review": a read-back of every answer with Edit links, the step
+     the form is sent from */
+  kind?: "question" | "interstitial" | "review";
   quote?: string;
   attribution?: { name: string; role?: string };
   /* the label in the sheet header ("Get started", "About you") */
@@ -113,6 +115,9 @@ export interface FormDef {
   steps: StepDef[];
   /* label on the final button */
   submitLabel?: string;
+  /* preloader line shown while the submission is in flight and the
+     recommendations are prepared ("Finding what fits your project…") */
+  submittingLabel?: string;
   /* answers whose labels make the one-line inbox summary
      ("Residential · Predesigned · Annata · Washington") */
   summaryFields?: string[];

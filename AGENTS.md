@@ -230,6 +230,14 @@ staging/design use.
   attribution, Continue, no fields); `section` labels the header.
   The thank-you shows `def.recommendations(answers)` cards (feature +
   row) or the booking embed for qualified leads.
+- Review + send: the last step is `kind: "review"` — a read-back of
+  every answered step (describeAnswer) with an Edit link per step.
+  Edit sets `returnToReview` and jumps to that step, whose button
+  reads "Back to review" (no auto-advance while returning); Send is
+  grayed until the whole form validates. Send ALWAYS shows the
+  thinking preloader with `def.submittingLabel` ("Finding what fits
+  your project…") for ≥1.6s before the thank-you or the error, so the
+  calculating beat is the same whatever the network does.
 - Preview: /library/intake-form (Sections tool → Forms) renders the
   open sheet at the viewer's breakpoint.
 

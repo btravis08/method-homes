@@ -15,6 +15,7 @@ import {
 } from "@/lib/forms/client";
 import type { Answers, FormDef, Recommendation, ResumePayload, StepDef } from "@/lib/forms/types";
 import {
+  describeAnswer,
   optionsOf,
   validateAnswers,
   validateStep,
@@ -167,6 +168,9 @@ export function MultiStepForm({
   /* a terminal step is always the last visible one (visibleSteps stops there) */
   const isLast = index === steps.length - 1;
   const interstitial = step.kind === "interstitial";
+  const review = step.kind === "review";
+  /* editing from the review: Next returns there instead of moving on */
+  const [returnToReview, setReturnToReview] = useState(false);
 
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string>();
@@ -294,7 +298,7 @@ export function MultiStepForm({
   const advanceKey = (() => {
     if (step.autoAdvance === false || isLast || step.terminal || interstitial) return undefined;
     /* came back to edit: show the question and let Next do the moving */
-    if (revisitAnswered) return undefined;
+    if (revisitAnswered || returnToReview) return undefined;
     const shownNow = visibleFields(step, values).filter((f) => f.type !== "hidden");
     if (shownNow.length !== 1 || shownNow[0].type !== "radio" || !shownNow[0].required) return undefined;
     const v = values[shownNow[0].name];
@@ -339,6 +343,11 @@ export function MultiStepForm({
     if (Object.keys(errors).length) return showErrors(errors);
     clearErrors();
     const order = visibleSteps(def, vals);
+    if (returnToReview) {
+      const target = order.find((s) => s.kind === "review");
+      setReturnToReview(false);
+      if (target) return go(target.id);
+    }
     const here = order.findIndex((s) => s.id === step.id);
     let i = here + 1;
     while (
@@ -348,7 +357,7 @@ export function MultiStepForm({
     )
       i++;
     go(order[Math.min(i, order.length - 1)].id);
-  }, [getValues, step, def, prefilled, go, clearErrors, showErrors]);
+  }, [getValues, step, def, prefilled, go, clearErrors, showErrors, returnToReview]);
 
   const back = useCallback(() => {
     clearErrors();
@@ -378,6 +387,12 @@ export function MultiStepForm({
     lock.current = true;
     setStatus("sending");
     setMessage(undefined);
+    /* the calculating preloader: shown for the whole request and at
+       least this long, so the thank-you never snaps in */
+    const startedAt = Date.now();
+    const MIN_MS = 1600;
+    clearTimeout(thinkTimer.current);
+    setThinking(def.submittingLabel ?? "Sending…");
 
     /* same answers → same id (a retry); changed answers → a new lead */
     const fingerprint = JSON.stringify(result.data);
@@ -399,6 +414,8 @@ export function MultiStepForm({
       attribution: readAttribution(),
     });
 
+    await new Promise((r) => setTimeout(r, Math.max(0, MIN_MS - (Date.now() - startedAt))));
+    setThinking(undefined);
     if (res.ok) {
       const ctx: SuccessContext = {
         answers: result.data,
@@ -596,10 +613,12 @@ export function MultiStepForm({
       : (step.submitLabel ?? def.submitLabel ?? "Submit")
     : interstitial
       ? "Continue"
-      : "Next";
+      : returnToReview
+        ? "Back to review"
+        : "Next";
   /* Next stays grayed until the step's required answers are in;
      interstitials are always ready */
-  const ready = interstitial || !Object.keys(validateStep(step, values).errors).length;
+  const ready = interstitial || (review ? validateAnswers(def, values).success : !Object.keys(validateStep(step, values).errors).length);
   /* a single-choice step needs no Next at all: the tap advances. The
      button comes back only when the visitor returns to a step already
      answered (Back), so they can move on without changing it. */
@@ -611,7 +630,7 @@ export function MultiStepForm({
   /* no footer on a tap step until it has been answered AND that answer
      has already been used to advance (a revisit). A fresh tap is on
      its way to the next step, so Next must not flash in the meantime. */
-  const tapPending = tapStep && !revisitAnswered;
+  const tapPending = tapStep && !revisitAnswered && !returnToReview;
 
   return (
     <form noValidate onSubmit={onSubmit} aria-labelledby={`${uid}-title`} className="contents">
@@ -644,6 +663,45 @@ export function MultiStepForm({
                   </h2>
                   {step.description ? <p className="text-body-md text-ink-3">{step.description}</p> : null}
                 </div>
+                {review ? (
+                  <div className="flex flex-col gap-lg">
+                    {visibleSteps(def, values)
+                      .filter((s) => s.kind !== "review" && s.kind !== "interstitial")
+                      .map((s) => ({
+                        step: s,
+                        rows: visibleFields(s, values)
+                          .filter((f) => f.type !== "hidden")
+                          .filter((f) => {
+                            const v = values[f.name];
+                            return Array.isArray(v) ? v.length : v;
+                          })
+                          .map((f) => describeAnswer(def, f.name, values[f.name]!, values)),
+                      }))
+                      .filter((g) => g.rows.length)
+                      .map((g) => (
+                        <div key={g.step.id} className="flex items-start justify-between gap-xl border border-line p-xl">
+                          <dl className="flex min-w-0 flex-1 flex-col gap-md">
+                            {g.rows.map((r) => (
+                              <div key={r.label} className="flex flex-col gap-xs">
+                                <dt className="text-body-sm text-ink-3">{r.label}</dt>
+                                <dd className="text-body-md text-ink">{r.value}</dd>
+                              </div>
+                            ))}
+                          </dl>
+                          <button
+                            type="button"
+                            className="label shrink-0 text-ink underline underline-offset-4"
+                            onClick={() => {
+                              setReturnToReview(true);
+                              go(g.step.id);
+                            }}
+                          >
+                            Edit<span className="sr-only"> {g.step.title}</span>
+                          </button>
+                        </div>
+                      ))}
+                  </div>
+                ) : null}
                 <div className="flex flex-col gap-lg">
                   {shown.map((field) => (
                     <Field
