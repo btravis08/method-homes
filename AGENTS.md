@@ -157,9 +157,18 @@ staging/design use.
   branch step) and `media` (thumbnail rows with eyebrow/title/meta —
   the series pick). Option stills live in public/method/intake/
   (640px WebP, ≤80KB, lazy). Single required radio steps advance on
-  tap (`autoAdvance: false` opts out); the series step is a
-  multi-select placed after budget; there is no review step — the
+  tap (`autoAdvance: false` opts out); there is no review step — the
   newsletter consent is a bare checkbox row on About you.
+- Dynamic options: a field's `optionsFor(answers)` replaces its static
+  `options`; `optionsOf()` resolves it on both sides so validation
+  checks against what was shown (static `options` stay as the label
+  fallback for the inbox). The series step uses it
+  (src/lib/forms/series.ts): after size + budget it offers the series
+  whose plan sizes overlap the chosen size ±25% and whose starting
+  price fits the budget; unknown data never excludes, and no match →
+  all series. Data is src/lib/forms/series-data.json, filled from the
+  live series pages by the crawl-series workflow (sizes only — the
+  site publishes no prices yet).
 - Progressive behaviors (all declared on the FormDef; the engine is
   generic):
   - Soft exits: a step with `terminal: true` ends the form there —

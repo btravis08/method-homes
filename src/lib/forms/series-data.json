@@ -1,0 +1,10 @@
+{
+  "_source": "Plan sizes read from the live series pages on methodhomes.net by the crawl-series workflow (2026-09-27). Starting prices are not published there, so priceFrom stays null and never excludes a series. Method One's page lists no sizes.",
+  "method-one": { "sqftMin": null, "sqftMax": null, "priceFrom": null, "plans": null },
+  "annata": { "sqftMin": 1590, "sqftMax": 2250, "priceFrom": null, "plans": 2 },
+  "cabin": { "sqftMin": 1298, "sqftMax": 2800, "priceFrom": null, "plans": 5 },
+  "elemental": { "sqftMin": 624, "sqftMax": 3500, "priceFrom": null, "plans": 8 },
+  "m": { "sqftMin": 655, "sqftMax": 1740, "priceFrom": null, "plans": 5 },
+  "option": { "sqftMin": 922, "sqftMax": 2320, "priceFrom": null, "plans": 9 },
+  "paradigm": { "sqftMin": 656, "sqftMax": 1868, "priceFrom": null, "plans": 3 }
+}

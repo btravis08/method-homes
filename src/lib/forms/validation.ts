@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import type { Answers, FieldDef, FormDef, StepDef } from "./types";
+import type { Answers, FieldDef, FieldOption, FormDef, StepDef } from "./types";
 
 /*
   Validation built from a FormDef. The client validates one step at a
@@ -53,6 +53,10 @@ export const visibleSteps = (def: FormDef, answers: Answers) => {
 export const visibleFields = (step: StepDef, answers: Answers) =>
   step.fields.filter((f) => isFieldVisible(f, answers));
 
+/* the options a choice field offers for these answers */
+export const optionsOf = (field: FieldDef, answers: Answers): FieldOption[] =>
+  field.optionsFor ? field.optionsFor(answers) : (field.options ?? []);
+
 const TEL_RE = /^\+?[\d\s().-]{7,25}$/;
 
 const requiredMessage = (field: FieldDef) =>
@@ -62,9 +66,10 @@ const requiredMessage = (field: FieldDef) =>
       ? "Please confirm to continue."
       : `Please enter your ${field.label.toLowerCase()}.`;
 
-/* the zod schema for ONE field's value */
-export function fieldSchema(field: FieldDef): z.ZodType {
+/* the zod schema for ONE field's value (answers resolve dynamic options) */
+export function fieldSchema(field: FieldDef, answers: Answers = {}): z.ZodType {
   const req = requiredMessage(field);
+  const opts = optionsOf(field, answers);
 
   switch (field.type) {
     case "hidden":
@@ -99,7 +104,7 @@ export function fieldSchema(field: FieldDef): z.ZodType {
 
     case "select":
     case "radio": {
-      const values = new Set((field.options ?? []).map((o) => o.value));
+      const values = new Set(opts.map((o) => o.value));
       return z.preprocess(
         (v) => (typeof v === "string" ? v : ""),
         z.string().superRefine((s, ctx) => {
@@ -113,7 +118,7 @@ export function fieldSchema(field: FieldDef): z.ZodType {
     }
 
     case "checkbox": {
-      const values = new Set((field.options ?? []).map((o) => o.value));
+      const values = new Set(opts.map((o) => o.value));
       const min = field.minSelected ?? (field.required ? 1 : 0);
       const max = Math.min(field.maxSelected ?? MAX_CHECKBOX, MAX_CHECKBOX);
       return z.preprocess(
@@ -146,7 +151,7 @@ function collectErrors(fields: FieldDef[], answers: Answers) {
   const data: Answers = {};
   const errors: FieldErrors = {};
   for (const field of fields) {
-    const res = fieldSchema(field).safeParse(answers[field.name]);
+    const res = fieldSchema(field, answers).safeParse(answers[field.name]);
     if (res.success) {
       const v = res.data as string | string[];
       if (Array.isArray(v) ? v.length : v) data[field.name] = v;
@@ -179,9 +184,12 @@ export function validateAnswers(def: FormDef, raw: Answers) {
 
 /* label lookup for the inbox: "home_use" → "Which best describes …",
    "adu" → "In-law cottage / ADU" */
-export function describeAnswer(def: FormDef, name: string, value: string | string[]) {
+export function describeAnswer(def: FormDef, name: string, value: string | string[], answers: Answers = {}) {
   const field = def.steps.flatMap((s) => s.fields).find((f) => f.name === name);
-  const labelOf = (v: string) => field?.options?.find((o) => o.value === v)?.label ?? v;
+  /* dynamic options may have hidden the chosen one by now — fall back
+     to the full static list so the inbox still gets a label */
+  const all = field ? [...optionsOf(field, answers), ...(field.options ?? [])] : [];
+  const labelOf = (v: string) => all.find((o) => o.value === v)?.label ?? v;
   return {
     label: field?.label ?? name,
     value: Array.isArray(value) ? value.map(labelOf).join(", ") : labelOf(value),

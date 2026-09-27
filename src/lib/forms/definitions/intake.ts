@@ -1,4 +1,5 @@
 import { qualifiesForBooking, scoreIntake } from "../score";
+import { ALL_SERIES_OPTION, SERIES, seriesOptions } from "../series";
 import type { Answers, FormDef } from "../types";
 
 /*
@@ -348,8 +349,8 @@ export const intakeForm: FormDef = {
        every series shows. */
     {
       id: "series",
-      title: "Which series interest you?",
-      description: "Pick any you’d like to hear more about.",
+      title: "Series that fit your size and budget",
+      description: "Based on what you told us. Pick any you’d like to hear more about.",
       showIf: (a) => isHome(a) && a.build_type === "predesigned",
       fields: [
         {
@@ -358,16 +359,10 @@ export const intakeForm: FormDef = {
           type: "checkbox",
           required: true,
           layout: "media",
-          options: [
-            { value: "method-one", label: "Method One", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-method-one.webp" },
-            { value: "annata", label: "Annata", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-annata.webp" },
-            { value: "cabin", label: "Cabin", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-cabin.webp" },
-            { value: "elemental", label: "Elemental", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-elemental.webp" },
-            { value: "m", label: "M Series", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-m.webp" },
-            { value: "option", label: "Option", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-option.webp" },
-            { value: "paradigm", label: "Paradigm", eyebrow: "Series", meta: "Predesigned series", image: "/method/intake/series-paradigm.webp" },
-            { value: "not-sure", label: "Show me all series" },
-          ],
+          /* the fitting series for these answers (src/lib/forms/series.ts);
+             the static list is the fallback for labels in the inbox */
+          optionsFor: seriesOptions,
+          options: [...SERIES.map((s) => ({ value: s.value, label: s.label })), ALL_SERIES_OPTION],
         },
       ],
     },

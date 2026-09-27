@@ -32,6 +32,7 @@ export function Field({
   field,
   register,
   setValue,
+  options = field.options ?? [],
   error,
   idPrefix,
   hideLabel,
@@ -39,6 +40,8 @@ export function Field({
   field: FieldDef;
   register: UseFormRegister<Answers>;
   setValue: UseFormSetValue<Answers>;
+  /* resolved choices (optionsOf) — dynamic fields differ from field.options */
+  options?: FieldOption[];
   error?: string;
   idPrefix: string;
   /* a step with a single question uses the step title as its label */
@@ -78,7 +81,7 @@ export function Field({
         {hint}
         {layout === "cards" ? (
           <div className="grid grid-cols-1 gap-md sm:grid-cols-2">
-            {field.options?.map((o) => (
+            {options.map((o) => (
               <label
                 key={o.value}
                 className="group relative flex aspect-[9/5] cursor-pointer items-end overflow-hidden rounded-xs border border-line bg-surface-2 text-body-md font-medium text-white has-[:checked]:border-ink has-[:checked]:ring-2 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-inset has-[:focus-visible]:ring-ink sm:aspect-square"
@@ -102,7 +105,7 @@ export function Field({
           </div>
         ) : layout === "media" ? (
           <div className="flex flex-col gap-md">
-            {field.options?.map((o) => (
+            {options.map((o) => (
               <label key={o.value} className={`${OPTION} p-lg`}>
                 {o.image ? (
                   <img
@@ -123,8 +126,8 @@ export function Field({
             ))}
           </div>
         ) : (
-          <div className={`grid gap-md ${twoColumns(field.options) ? "grid-cols-2" : "grid-cols-1"}`}>
-            {field.options?.map((o) => (
+          <div className={`grid gap-md ${twoColumns(options) ? "grid-cols-2" : "grid-cols-1"}`}>
+            {options.map((o) => (
               <label key={o.value} className={OPTION}>
                 <span className="flex-1">{o.label}</span>
                 {control(o)}
@@ -172,7 +175,7 @@ export function Field({
           <option value="" disabled>
             Select one…
           </option>
-          {field.options?.map((o) => (
+          {options.map((o) => (
             <option key={o.value} value={o.value}>
               {o.label}
             </option>

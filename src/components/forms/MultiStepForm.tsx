@@ -17,6 +17,7 @@ import {
 import type { Answers, FormDef, ResumePayload, StepDef } from "@/lib/forms/types";
 import {
   describeAnswer,
+  optionsOf,
   validateAnswers,
   validateStep,
   visibleFields,
@@ -436,7 +437,7 @@ export function MultiStepForm({
               const v = values[f.name];
               return Array.isArray(v) ? v.length : v;
             })
-            .map((f) => describeAnswer(def, f.name, values[f.name]!)),
+            .map((f) => describeAnswer(def, f.name, values[f.name]!, values)),
         }))
         .filter((g) => g.rows.length)
     : [];
@@ -501,6 +502,7 @@ export function MultiStepForm({
               field={field}
               register={register}
               setValue={setValue}
+              options={optionsOf(field, values)}
               error={fieldErrors[field.name]?.message as string | undefined}
               idPrefix={uid}
               hideLabel={shown.length === 1 && field.type !== "consent"}

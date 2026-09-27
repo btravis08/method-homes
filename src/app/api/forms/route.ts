@@ -124,10 +124,10 @@ async function registered(
   const described = shown
     .flatMap((s) => s.fields)
     .filter((f) => answers[f.name] !== undefined && !seen.has(f.name) && seen.add(f.name))
-    .map((f) => ({ key: f.name, ...describeAnswer(def, f.name, answers[f.name]!) }));
+    .map((f) => ({ key: f.name, ...describeAnswer(def, f.name, answers[f.name]!, answers) }));
   const summary = (def.summaryFields ?? [])
     .filter((k) => answers[k] !== undefined)
-    .map((k) => describeAnswer(def, k, answers[k]!).value)
+    .map((k) => describeAnswer(def, k, answers[k]!, answers).value)
     .join(" · ");
 
   const email = typeof answers.email === "string" ? answers.email : undefined;

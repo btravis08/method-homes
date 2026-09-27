@@ -50,6 +50,10 @@ export interface FieldDef {
   hint?: string;
   placeholder?: string;
   options?: FieldOption[];
+  /* options that depend on earlier answers (e.g. the series that fit
+     the chosen size and budget). Resolved with optionsOf() on both
+     sides, so validation always checks against what was shown. */
+  optionsFor?: (answers: Answers) => FieldOption[];
   /* text rules */
   minLength?: number;
   maxLength?: number;
