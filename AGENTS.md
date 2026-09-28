@@ -231,7 +231,7 @@ staging/design use.
   (AnimatePresence in GetStartedTray — the parent keeps rendering it
   with open=false so the exit can play). Inside, `content(key, …)`
   keys each screen (step id / "thinking" / "done") in one
-  AnimatePresence mode="wait": out 0.18s (opacity 0, y −8), in 0.32s
+  AnimatePresence mode="wait": out 0.3s (opacity 0, y −8), in 0.55s
   (from y +12); the footer fades in/out with presence; Next fades
   wash→ink over 0.3s via transition-[background-color,color] on BTN.
   Every branch renders through the same shell() inside ONE <form> so

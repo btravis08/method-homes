@@ -91,8 +91,8 @@ type Status = "idle" | "sending" | "success" | "error";
 
 /* step crossfade: the outgoing screen lifts and fades, then the next
    settles in (seconds) */
-const STEP_OUT = 0.18;
-const STEP_IN = 0.32;
+const STEP_OUT = 0.3;
+const STEP_IN = 0.55;
 
 const BTN =
   "label inline-flex h-14 items-center justify-center rounded-md px-2xl font-medium transition-[background-color,color,opacity] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] disabled:opacity-60";
