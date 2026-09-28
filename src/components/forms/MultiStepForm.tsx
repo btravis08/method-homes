@@ -74,12 +74,12 @@ import { TURNSTILE_ENABLED, useTurnstile } from "./useTurnstile";
 type Status = "idle" | "sending" | "success" | "error";
 
 const BTN =
-  "label inline-flex h-14 items-center justify-center px-2xl font-medium transition-opacity disabled:opacity-60";
+  "label inline-flex h-14 items-center justify-center rounded-md px-2xl font-medium transition-opacity disabled:opacity-60";
 const BTN_PRIMARY = `${BTN} bg-btn text-btn-fg hover:opacity-80`;
 /* the library button's Disabled state: wash fill, tertiary ink */
 const BTN_DISABLED = `${BTN} cursor-not-allowed bg-wash text-ink-3 disabled:opacity-100`;
 const ICON_BTN =
-  "inline-flex size-10 items-center justify-center text-ink transition-opacity hover:opacity-70 disabled:opacity-40";
+  "inline-flex size-10 items-center justify-center rounded-md text-ink transition-opacity hover:opacity-70 disabled:opacity-40";
 
 const TOKEN_TTL_MS = 12 * 60 * 60 * 1000;
 
@@ -679,7 +679,7 @@ export function MultiStepForm({
                       }))
                       .filter((g) => g.rows.length)
                       .map((g) => (
-                        <div key={g.step.id} className="flex items-start justify-between gap-xl border border-line p-xl">
+                        <div key={g.step.id} className="flex items-start justify-between gap-xl rounded-md border border-line p-xl">
                           <dl className="flex min-w-0 flex-1 flex-col gap-md">
                             {g.rows.map((r) => (
                               <div key={r.label} className="flex flex-col gap-xs">
@@ -761,7 +761,7 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
   const arrow = <span aria-hidden="true" className="shrink-0 text-body-md text-ink">→</span>;
   if (rec.size === "feature") {
     return (
-      <a href={rec.href} className="group flex flex-col overflow-hidden border border-line bg-surface transition-colors hover:border-ink-3">
+      <a href={rec.href} className="group flex flex-col overflow-hidden rounded-md border border-line bg-surface transition-colors hover:border-ink-3">
         {rec.image ? <img src={rec.image} alt="" loading="lazy" decoding="async" className="aspect-[16/10] w-full bg-surface-2 object-cover" /> : null}
         <span className="flex items-center gap-lg px-xl py-lg">
           <span className="flex min-w-0 flex-1 flex-col gap-xs">
@@ -775,7 +775,7 @@ function RecommendationCard({ rec }: { rec: Recommendation }) {
     );
   }
   return (
-    <a href={rec.href} className="group flex items-center gap-lg border border-line bg-surface p-lg transition-colors hover:border-ink-3">
+    <a href={rec.href} className="group flex items-center gap-lg rounded-md border border-line bg-surface p-lg transition-colors hover:border-ink-3">
       {rec.image ? <img src={rec.image} alt="" loading="lazy" decoding="async" className="h-[4.5rem] w-24 shrink-0 bg-surface-2 object-cover" /> : null}
       <span className="flex min-w-0 flex-1 flex-col gap-xs">
         <span className="label text-ink-3">{rec.eyebrow}</span>

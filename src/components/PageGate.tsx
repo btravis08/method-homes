@@ -38,7 +38,7 @@ export function PageGate({
           aria-label="Passphrase"
           aria-invalid={wrong || undefined}
           placeholder="Passphrase"
-          className="label h-12 w-full rounded-xs border border-line bg-transparent px-[1.125rem] text-ink outline-none placeholder:text-ink-3 focus:border-ink-2"
+          className="label h-12 w-full rounded-md border border-line bg-transparent px-[1.125rem] text-ink outline-none placeholder:text-ink-3 focus:border-ink-2"
         />
         {wrong && (
           <p className="label text-ink-2" role="alert">
@@ -47,7 +47,7 @@ export function PageGate({
         )}
         <button
           type="submit"
-          className="label h-12 w-full rounded-xs bg-btn px-[1.125rem] text-btn-fg"
+          className="label h-12 w-full rounded-md bg-btn px-[1.125rem] text-btn-fg"
         >
           VIEW PAGE
         </button>

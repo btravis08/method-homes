@@ -219,7 +219,7 @@ function ColumnsPanel({ item }: { item: MenuItem }) {
               <div className="media-overlay" />
               <div className="absolute inset-x-0 bottom-0 flex items-end justify-between p-6">
                 <p className="font-display text-title-md text-white">{item.imageTitle}</p>
-                <span className="flex size-10 items-center justify-center rounded-xs bg-white text-[#161716]">
+                <span className="flex size-10 items-center justify-center rounded-md bg-white text-[#161716]">
                   <ArrowSwap dx={1} dy={-1}>
                     <ArrowUpRight />
                   </ArrowSwap>
@@ -677,7 +677,7 @@ export function Navigation({ data }: { data?: NavData | null }) {
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
-            className="flex size-[2.875rem] items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+            className="flex size-[2.875rem] items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
           >
             <MenuX open={mobileOpen} className="text-ink" />
           </button>
@@ -849,7 +849,7 @@ export function Navigation({ data }: { data?: NavData | null }) {
         <m.div
           ref={mobileBarRef}
           style={{ clipPath: barClipPath }}
-          className={`label flex h-12 items-center justify-between rounded-xs px-6 text-ink transition-colors duration-300 ${
+          className={`label flex h-12 items-center justify-between rounded-md px-6 text-ink transition-colors duration-300 ${
             mobileOpen ? "bg-surface-2" : "bg-wash backdrop-blur-md"
           }`}
         >

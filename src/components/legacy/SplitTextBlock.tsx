@@ -112,7 +112,7 @@ export function SplitTextBlock({
       {cta && (
         <a
           href="#"
-          className="label flex h-12 min-w-[9.375rem] items-center justify-center gap-1.5 rounded-xs bg-btn px-[1.125rem] font-medium text-btn-fg transition-opacity hover:opacity-80"
+          className="label flex h-12 min-w-[9.375rem] items-center justify-center gap-1.5 rounded-md bg-btn px-[1.125rem] font-medium text-btn-fg transition-opacity hover:opacity-80"
         >
           {cta}
           <ArrowUpRight />

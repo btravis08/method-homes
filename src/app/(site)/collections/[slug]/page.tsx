@@ -117,7 +117,7 @@ function Chip({ label, href }: { label: string; href: string }) {
   return (
     <SmartLink
       href={href}
-      className="label flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-xs bg-wash px-3.5 font-medium text-ink transition-colors hover:opacity-80"
+      className="label flex h-10 shrink-0 items-center justify-center whitespace-nowrap rounded-md bg-wash px-3.5 font-medium text-ink transition-colors hover:opacity-80"
     >
       {label.toUpperCase()}
     </SmartLink>

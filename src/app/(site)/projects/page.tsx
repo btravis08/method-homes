@@ -61,7 +61,7 @@ export default async function ProjectsPage({
                   ? `/projects?category=${filter.value}`
                   : "/projects"
               }
-              className={`label flex h-10 items-center justify-center rounded-xs px-3.5 font-medium transition-opacity hover:opacity-80 ${
+              className={`label flex h-10 items-center justify-center rounded-md px-3.5 font-medium transition-opacity hover:opacity-80 ${
                 isActive ? "bg-btn text-btn-fg" : "bg-wash text-ink"
               }`}
             >

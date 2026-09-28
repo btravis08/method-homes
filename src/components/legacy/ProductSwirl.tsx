@@ -115,7 +115,7 @@ export function ProductSwirl({
       <div className="absolute inset-0 flex items-center justify-center">
         <a
           href="#"
-          className="label flex h-12 min-w-[9.375rem] items-center justify-center gap-1.5 rounded-xs bg-white px-[1.125rem] font-medium text-black transition-opacity hover:opacity-90"
+          className="label flex h-12 min-w-[9.375rem] items-center justify-center gap-1.5 rounded-md bg-white px-[1.125rem] font-medium text-black transition-opacity hover:opacity-90"
         >
           {cta.toUpperCase()}
           <ArrowUpRight />

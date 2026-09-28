@@ -407,7 +407,7 @@ export function ImageViewer({
             type="button"
             aria-label="Previous image"
             onClick={() => page(-1)}
-            className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+            className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
           >
             <ArrowLeft />
           </button>
@@ -415,7 +415,7 @@ export function ImageViewer({
         <m.div
           ref={flyPill.ref}
           style={flyPill.style}
-          className="pointer-events-auto flex h-[2.875rem] items-center gap-1 rounded-xs bg-wash backdrop-blur-md px-2"
+          className="pointer-events-auto flex h-[2.875rem] items-center gap-1 rounded-md bg-wash backdrop-blur-md px-2"
         >
           <m.div style={{ opacity: pillContent }} className="flex items-center gap-1">
             <button
@@ -446,7 +446,7 @@ export function ImageViewer({
             type="button"
             aria-label="Next image"
             onClick={() => page(1)}
-            className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+            className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
           >
             <ArrowRight />
           </button>

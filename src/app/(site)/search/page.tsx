@@ -43,7 +43,7 @@ export default async function SearchPage({
               <Link
                 key={collection._id}
                 href={`/collections/${collection.slug}`}
-                className="label flex h-10 items-center rounded-xs bg-wash px-4 font-medium text-ink transition-opacity hover:opacity-80"
+                className="label flex h-10 items-center rounded-md bg-wash px-4 font-medium text-ink transition-opacity hover:opacity-80"
               >
                 {collection.title.toUpperCase()}
               </Link>
@@ -65,7 +65,7 @@ export default async function SearchPage({
           </p>
           <Link
             href="/collections/shop-all"
-            className="label flex h-12 items-center rounded-xs bg-btn px-[1.125rem] font-medium text-btn-fg transition-opacity hover:opacity-80"
+            className="label flex h-12 items-center rounded-md bg-btn px-[1.125rem] font-medium text-btn-fg transition-opacity hover:opacity-80"
           >
             SHOP ALL
           </Link>

@@ -206,8 +206,11 @@
   --text-display-xl--line-height: 1.2;
   --text-display-xl--letter-spacing: -0.02em;
 
-  /* Subtle 1px rounding on tiles, buttons, cards, and media wells */
+  /* Subtle 1px rounding on tiles, cards, and media wells */
   --radius-xs: 1px;
+  /* radius-md from the Figma library: buttons, chips, inputs, option
+     rows and icon buttons (rem so the >1920px root zoom carries it) */
+  --radius-md: 0.5rem;
 }
 
 /*

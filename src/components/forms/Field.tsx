@@ -18,15 +18,15 @@ import { AddressField } from "./AddressField";
   ink outline — never a hue.
 */
 
-/* square corners throughout: the Method library's buttons carry
-   radius-none, and the Figma intake matches the inputs to them */
+/* 8px corners (radius-md) throughout: the Method library's buttons
+   carry radius-md, and the Figma intake matches the inputs to them */
 /* inputs never drop below 16px: iOS Safari zooms the page into any
    focused field smaller than that (the fluid body size is 15px on
    phones) */
 const INPUT =
-  "h-16 w-full border border-line bg-surface px-xl text-[length:max(1rem,var(--text-body-md))] leading-normal text-ink outline-none transition-colors placeholder:text-ink-3 focus-visible:border-ink aria-[invalid=true]:border-ink";
+  "h-16 w-full rounded-md border border-line bg-surface px-xl text-[length:max(1rem,var(--text-body-md))] leading-normal text-ink outline-none transition-colors placeholder:text-ink-3 focus-visible:border-ink aria-[invalid=true]:border-ink";
 const OPTION =
-  "relative flex min-h-16 cursor-pointer items-center gap-lg border border-line bg-surface px-xl py-lg text-body-md text-ink transition-colors hover:border-ink-3 has-[:checked]:border-ink has-[:checked]:ring-1 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:border-ink";
+  "relative flex min-h-16 cursor-pointer items-center gap-lg rounded-md border border-line bg-surface px-xl py-lg text-body-md text-ink transition-colors hover:border-ink-3 has-[:checked]:border-ink has-[:checked]:ring-1 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:border-ink";
 const CONTROL = "size-5 shrink-0 accent-ink";
 
 /* two columns when the labels are short enough not to wrap awkwardly.
@@ -93,7 +93,7 @@ export function Field({
             {options.map((o) => (
               <label
                 key={o.value}
-                className="group relative flex aspect-[9/5] cursor-pointer items-end overflow-hidden border border-line bg-surface-2 text-body-md font-medium text-white has-[:checked]:border-ink has-[:checked]:ring-2 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-inset has-[:focus-visible]:ring-ink sm:aspect-square"
+                className="group relative flex aspect-[9/5] cursor-pointer items-end overflow-hidden rounded-md border border-line bg-surface-2 text-body-md font-medium text-white has-[:checked]:border-ink has-[:checked]:ring-2 has-[:checked]:ring-inset has-[:checked]:ring-ink has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-inset has-[:focus-visible]:ring-ink sm:aspect-square"
               >
                 {o.image ? (
                   <img

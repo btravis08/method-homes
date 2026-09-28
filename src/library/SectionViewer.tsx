@@ -128,7 +128,7 @@ export function SectionViewer({
                   key={m}
                   type="button"
                   onClick={() => setMode(m)}
-                  className={`label rounded-xs px-3 py-2 font-medium transition-colors ${
+                  className={`label rounded-md px-3 py-2 font-medium transition-colors ${
                     mode === m ? "bg-btn text-btn-fg" : "bg-wash text-ink-3 hover:text-ink"
                   }`}
                 >
@@ -143,7 +143,7 @@ export function SectionViewer({
                 key={v.id}
                 type="button"
                 onClick={() => setVp(v.id)}
-                className={`label flex items-center gap-1.5 rounded-xs px-3 py-2 font-medium transition-colors ${
+                className={`label flex items-center gap-1.5 rounded-md px-3 py-2 font-medium transition-colors ${
                   vp === v.id ? "bg-btn text-btn-fg" : "bg-wash text-ink-3 hover:text-ink"
                 }`}
               >
@@ -193,7 +193,7 @@ export function SectionViewer({
                   key={id}
                   type="button"
                   onClick={() => setCompare(id)}
-                  className={`label rounded-xs px-3 py-2 font-medium transition-colors ${
+                  className={`label rounded-md px-3 py-2 font-medium transition-colors ${
                     compare === id
                       ? "bg-btn text-btn-fg"
                       : "bg-wash text-ink-3 hover:text-ink"
@@ -233,7 +233,7 @@ export function SectionViewer({
                       key={label}
                       type="button"
                       onClick={() => nudge(dx, dy)}
-                      className="label rounded-xs bg-wash px-2 py-1 font-medium text-ink-3 hover:text-ink"
+                      className="label rounded-md bg-wash px-2 py-1 font-medium text-ink-3 hover:text-ink"
                     >
                       {label}
                     </button>
@@ -241,7 +241,7 @@ export function SectionViewer({
                   <button
                     type="button"
                     onClick={() => setOffset({ x: 0, y: 0 })}
-                    className="label ml-1 rounded-xs bg-wash px-2 py-1 font-medium text-ink-3 hover:text-ink"
+                    className="label ml-1 rounded-md bg-wash px-2 py-1 font-medium text-ink-3 hover:text-ink"
                   >
                     {offset.x || offset.y ? `${offset.x},${offset.y} ✕` : "0,0"}
                   </button>

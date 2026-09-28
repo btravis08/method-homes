@@ -133,7 +133,7 @@ export default function SearchFlyout({
                 type="button"
                 aria-label="Close"
                 onClick={onClose}
-                className="flex size-10 shrink-0 items-center justify-center rounded-xs bg-wash text-ink transition-opacity hover:opacity-80"
+                className="flex size-10 shrink-0 items-center justify-center rounded-md bg-wash text-ink transition-opacity hover:opacity-80"
               >
                 <svg width="12" height="12" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="1.5" aria-hidden>
                   <path d="M1 1l10 10M11 1L1 11" />
@@ -224,7 +224,7 @@ export default function SearchFlyout({
                 <Link
                   href={`/search?q=${encodeURIComponent(term.trim())}`}
                   onClick={onClose}
-                  className="label flex h-12 items-center justify-center rounded-xs bg-btn font-medium text-btn-fg transition-opacity hover:opacity-80"
+                  className="label flex h-12 items-center justify-center rounded-md bg-btn font-medium text-btn-fg transition-opacity hover:opacity-80"
                 >
                   VIEW ALL RESULTS
                 </Link>

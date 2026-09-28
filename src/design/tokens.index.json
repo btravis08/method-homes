@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-31T07:12:38.145Z",
+  "generatedAt": "2026-09-28T00:17:26.272Z",
   "sources": {
     "figma": {
       "dir": "design/figma-tokens",
@@ -7,34 +7,34 @@
         {
           "name": "Brand Mode Dark",
           "file": "Brand_Mode_Dark.tokens.json",
-          "updatedAt": "2026-07-17T04:55:11+00:00"
+          "updatedAt": "2026-08-04T22:25:33+00:00"
         },
         {
           "name": "Brand Mode Light",
           "file": "Brand_Mode_Light.tokens.json",
-          "updatedAt": "2026-07-17T04:55:11+00:00"
+          "updatedAt": "2026-08-04T22:25:33+00:00"
         },
         {
           "name": "Dark mode",
           "file": "Dark_mode.tokens.json",
-          "updatedAt": "2026-07-17T04:55:11+00:00"
+          "updatedAt": "2026-08-04T22:25:33+00:00"
         },
         {
           "name": "Light mode",
           "file": "Light_mode.tokens.json",
-          "updatedAt": "2026-07-17T04:55:11+00:00"
+          "updatedAt": "2026-08-04T22:25:33+00:00"
         },
         {
           "name": "Medium Dark Mode",
           "file": "Medium_Dark_Mode.tokens.json",
-          "updatedAt": "2026-07-17T04:55:11+00:00"
+          "updatedAt": "2026-08-04T22:25:33+00:00"
         }
       ],
-      "updatedAt": "2026-07-17T04:55:11+00:00"
+      "updatedAt": "2026-08-04T22:25:33+00:00"
     },
     "css": {
       "file": "src/app/globals.css",
-      "updatedAt": "2026-07-26T01:47:38+00:00"
+      "updatedAt": "2026-09-27T05:14:09+00:00"
     }
   },
   "css": {
@@ -466,6 +466,14 @@
         "type": "radius",
         "value": "1px",
         "utility": "rounded-xs",
+        "detail": {}
+      },
+      {
+        "path": "--radius-md",
+        "name": "md",
+        "type": "radius",
+        "value": "0.5rem",
+        "utility": "rounded-md",
         "detail": {}
       }
     ],

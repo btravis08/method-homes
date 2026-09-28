@@ -136,7 +136,7 @@ function fullRowCount(target: number, storyTotal: number): number {
 }
 
 const chip = (selected: boolean) =>
-  `label flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-xs px-3 font-medium transition-colors ${
+  `label flex h-9 items-center justify-center gap-1 whitespace-nowrap rounded-md px-3 font-medium transition-colors ${
     selected ? "bg-btn text-btn-fg" : "bg-surface-2 text-ink hover:bg-[#cacbc8]"
   }`;
 
@@ -155,7 +155,7 @@ function CtaPill({
   down?: boolean;
   onClick?: () => void;
 }) {
-  const className = `label flex h-10 w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-xs px-3.5 font-medium ${
+  const className = `label flex h-10 w-fit shrink-0 items-center gap-3 whitespace-nowrap rounded-md px-3.5 font-medium ${
     variant === "secondary" ? "bg-wash text-ink" : "bg-btn text-btn-fg"
   }`;
   const arrow =
@@ -496,7 +496,7 @@ function FilterPanel({
                         onClick={() =>
                           setDraft({ ...draft, colors: toggle(draft.colors, color.label) })
                         }
-                        className={`label flex items-center gap-1.5 rounded-xs border bg-surface px-4 py-3 font-medium text-ink transition-colors ${
+                        className={`label flex items-center gap-1.5 rounded-md border bg-surface px-4 py-3 font-medium text-ink transition-colors ${
                           draft.colors.includes(color.label) ? "border-ink" : "border-line"
                         }`}
                       >
@@ -521,7 +521,7 @@ function FilterPanel({
                   onApply(draft, draftSort);
                   onClose();
                 }}
-                className="flex h-[2.875rem] w-full items-center justify-center rounded-xs bg-btn font-mono text-[0.875rem] uppercase leading-none text-btn-fg md:h-12"
+                className="flex h-[2.875rem] w-full items-center justify-center rounded-md bg-btn font-mono text-[0.875rem] uppercase leading-none text-btn-fg md:h-12"
               >
                 View Results [{resultCount}]
               </button>

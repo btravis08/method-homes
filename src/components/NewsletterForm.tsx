@@ -22,7 +22,7 @@ export function NewsletterForm() {
   if (status === "success") {
     return (
       <div className="flex w-full flex-col items-stretch gap-3 p-4 sm:flex-row sm:gap-0 md:p-6">
-        <p className="label flex h-[2.875rem] items-center rounded-xs bg-wash pl-4 pr-3 font-medium text-ink md:h-10">
+        <p className="label flex h-[2.875rem] items-center rounded-md bg-wash pl-4 pr-3 font-medium text-ink md:h-10">
           THANK YOU — YOU&rsquo;RE ON THE LIST
         </p>
       </div>
@@ -63,7 +63,7 @@ export function NewsletterForm() {
       {/* flex-1 only in the sm+ row layout — in the stacked mobile
           column it would become the vertical basis and squash the
           46px heights */}
-      <label className="flex h-[2.875rem] items-center rounded-xs bg-wash pl-4 pr-3 backdrop-blur-[12px] sm:flex-1 md:h-10">
+      <label className="flex h-[2.875rem] items-center rounded-md bg-wash pl-4 pr-3 backdrop-blur-[12px] sm:flex-1 md:h-10">
         <span className="sr-only">Email address</span>
         <input
           type="email"
@@ -85,7 +85,7 @@ export function NewsletterForm() {
       <button
         type="submit"
         disabled={status === "sending"}
-        className="label flex h-[2.875rem] items-center justify-center rounded-xs bg-btn px-3.5 font-medium text-btn-fg transition-opacity hover:opacity-80 disabled:opacity-60 sm:min-w-[9.375rem] sm:flex-1 md:h-10"
+        className="label flex h-[2.875rem] items-center justify-center rounded-md bg-btn px-3.5 font-medium text-btn-fg transition-opacity hover:opacity-80 disabled:opacity-60 sm:min-w-[9.375rem] sm:flex-1 md:h-10"
       >
         {status === "sending" ? "SUBMITTING…" : "Submit"}
       </button>

@@ -37,7 +37,7 @@ export function BookingEmbed({ name, email, className }: { name?: string; email?
         src={href}
         title="Book a call"
         loading="lazy"
-        className="h-[44rem] w-full rounded-xs border border-line bg-surface"
+        className="h-[44rem] w-full rounded-md border border-line bg-surface"
         allow="payment"
       />
       <p className="mt-md text-body-sm text-ink-3">

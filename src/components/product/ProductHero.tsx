@@ -390,7 +390,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
       }`}
     >
       <div
-        className={`label flex h-[2.875rem] min-w-0 flex-1 items-center justify-between gap-6 rounded-xs px-3 font-medium text-ink md:h-10 ${chip}`}
+        className={`label flex h-[2.875rem] min-w-0 flex-1 items-center justify-between gap-6 rounded-md px-3 font-medium text-ink md:h-10 ${chip}`}
       >
         <span className="truncate">{(product.title ?? "").toUpperCase()}</span>
         <span className="flex items-baseline gap-1.5">
@@ -403,7 +403,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
       {/* color dropdown: the chip fills what the swatch tiles leave */}
       <div className="hidden min-w-0 flex-1 items-center gap-1.5 md:flex">
         <div
-          className={`label flex h-[2.875rem] min-w-0 flex-1 items-center rounded-xs px-3 font-medium text-ink md:h-10 ${chip}`}
+          className={`label flex h-[2.875rem] min-w-0 flex-1 items-center rounded-md px-3 font-medium text-ink md:h-10 ${chip}`}
         >
           <span className="truncate">
             COLOR: {(active?.name ?? "").toUpperCase()}
@@ -424,7 +424,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
             sizes,
           })
         }
-        className="label flex h-[2.875rem] min-w-[9.375rem] flex-1 items-center justify-center rounded-xs bg-btn px-3.5 font-medium text-btn-fg md:h-10 xl:w-[21.875rem] xl:flex-none"
+        className="label flex h-[2.875rem] min-w-[9.375rem] flex-1 items-center justify-center rounded-md bg-btn px-3.5 font-medium text-btn-fg md:h-10 xl:w-[21.875rem] xl:flex-none"
       >
         SELECT SIZE
       </button>
@@ -530,7 +530,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
               type="button"
               aria-label="Previous image"
               onClick={() => step(-1)}
-              className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+              className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
             >
               <ArrowLeft />
             </button>
@@ -538,7 +538,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
               type="button"
               aria-label="Next image"
               onClick={() => step(1)}
-              className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+              className="pointer-events-auto flex size-[2.875rem] items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
             >
               <ArrowRight />
             </button>
@@ -636,7 +636,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
                 className="flex min-w-0 flex-1 items-center gap-3"
               >
                 <div
-                  className={`label flex h-[2.875rem] min-w-0 flex-1 items-center justify-between gap-4 rounded-xs px-3 font-medium text-ink ${chip}`}
+                  className={`label flex h-[2.875rem] min-w-0 flex-1 items-center justify-between gap-4 rounded-md px-3 font-medium text-ink ${chip}`}
                 >
                   <span className="truncate">
                     {(product.title ?? "").toUpperCase()}
@@ -654,7 +654,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
                       sizes,
                     })
                   }
-                  className="label flex h-[2.875rem] min-w-[9.375rem] flex-1 items-center justify-center rounded-xs bg-btn px-3.5 font-medium text-btn-fg"
+                  className="label flex h-[2.875rem] min-w-[9.375rem] flex-1 items-center justify-center rounded-md bg-btn px-3.5 font-medium text-btn-fg"
                 >
                   SELECT SIZE
                 </button>
@@ -665,7 +665,7 @@ export function ProductHero({ product }: { product: ProductHeroData }) {
             type="button"
             aria-label="Open menu"
             onClick={() => window.dispatchEvent(new CustomEvent("sdr:open-menu"))}
-            className="flex size-[2.875rem] shrink-0 items-center justify-center rounded-xs bg-wash text-ink backdrop-blur-md"
+            className="flex size-[2.875rem] shrink-0 items-center justify-center rounded-md bg-wash text-ink backdrop-blur-md"
           >
             <MenuX open={menuOpen} className="text-ink" />
           </button>

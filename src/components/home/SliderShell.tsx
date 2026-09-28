@@ -413,7 +413,7 @@ export function SliderShell({
                 key={g}
                 type="button"
                 onClick={() => applyFilter(g)}
-                className={`label flex h-10 min-w-[7.5rem] items-center justify-center rounded-xs px-3.5 font-medium transition-colors hover:opacity-80 ${
+                className={`label flex h-10 min-w-[7.5rem] items-center justify-center rounded-md px-3.5 font-medium transition-colors hover:opacity-80 ${
                   gender === g ? "bg-btn text-btn-fg" : "bg-wash text-ink"
                 }`}
               >
@@ -428,7 +428,7 @@ export function SliderShell({
             aria-label="Previous"
             disabled={!canPrev}
             onClick={() => slide(-1)}
-            className="flex size-10 items-center justify-center rounded-xs bg-wash text-ink transition-all disabled:bg-transparent disabled:opacity-30"
+            className="flex size-10 items-center justify-center rounded-md bg-wash text-ink transition-all disabled:bg-transparent disabled:opacity-30"
           >
             <ArrowSwap dx={-1}>
               <ArrowLeft />
@@ -439,7 +439,7 @@ export function SliderShell({
             aria-label="Next"
             disabled={!canNext}
             onClick={() => slide(1)}
-            className="flex size-10 items-center justify-center rounded-xs bg-wash text-ink transition-all disabled:bg-transparent disabled:opacity-30"
+            className="flex size-10 items-center justify-center rounded-md bg-wash text-ink transition-all disabled:bg-transparent disabled:opacity-30"
           >
             <ArrowSwap dx={1}>
               <ArrowRight />

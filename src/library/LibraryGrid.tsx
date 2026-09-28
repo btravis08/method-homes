@@ -103,7 +103,7 @@ function Badge({
   return (
     <span
       title={title}
-      className={`label rounded-xs px-2 py-1 font-medium ${
+      className={`label rounded-md px-2 py-1 font-medium ${
         strong ? "bg-btn text-btn-fg" : "bg-wash text-ink-3"
       }`}
     >
@@ -138,7 +138,7 @@ export function LibraryGrid({
         <button
           type="button"
           onClick={() => setOnlyAttention((v) => !v)}
-          className={`label rounded-xs px-3 py-2 font-medium transition-colors ${
+          className={`label rounded-md px-3 py-2 font-medium transition-colors ${
             onlyAttention ? "bg-btn text-btn-fg" : "bg-wash text-ink-3 hover:text-ink"
           }`}
         >

@@ -303,10 +303,13 @@ Build from the tokens; never invent a value, never eyeball a comp.
   line-height and tracking; don't override them. Fonts are
   `font-display` (Feature Deck), `font-sans` (Maison Neue),
   `font-mono` — never a raw family.
-- **Radius**: `rounded-xs` (the system's only radius).
+- **Radius**: `rounded-md` (8px, the library's `radius-md`) on every
+  button, chip, toggle, input, option row and icon button — the
+  standard since 2026-09-28; `rounded-xs` (1px) stays for tiles, cards
+  and media wells only.
 - **Components**: reuse the built ones (buttons, cards, sliders,
   `ArrowHover`, `SliderShell`) before writing a new variant. A button
-  is `bg-btn text-btn-fg` at `h-12 rounded-xs px-[1.125rem]` with the
+  is `bg-btn text-btn-fg` at `h-12 rounded-md px-[1.125rem]` with the
   `label` utility — match the existing implementations rather than
   restyling.
 - Layout values stay in **rem** so the >1920px root-font zoom carries

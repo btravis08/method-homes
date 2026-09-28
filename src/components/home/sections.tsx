@@ -49,7 +49,7 @@ export function PrimaryButton({ label }: { label: string }) {
   return (
     <a
       href="#"
-      className="label flex h-[2.875rem] min-w-[9.375rem] items-center justify-center rounded-xs bg-btn px-3.5 font-medium text-btn-fg transition-opacity hover:opacity-80 md:h-10"
+      className="label flex h-[2.875rem] min-w-[9.375rem] items-center justify-center rounded-md bg-btn px-3.5 font-medium text-btn-fg transition-opacity hover:opacity-80 md:h-10"
     >
       {label}
     </a>
@@ -518,7 +518,7 @@ export function FiftyFifty({
                 {showButton && (
                   <a
                     href="#"
-                    className="label flex h-[2.875rem] min-w-[7.5rem] items-center justify-center gap-1.5 rounded-xs bg-surface-2 px-4 font-medium text-ink transition-colors hover:bg-[#cacbc8]"
+                    className="label flex h-[2.875rem] min-w-[7.5rem] items-center justify-center gap-1.5 rounded-md bg-surface-2 px-4 font-medium text-ink transition-colors hover:bg-[#cacbc8]"
                   >
                     {panel.ctaLabel!.toUpperCase()}
                     <ArrowUpRight size={10} />
@@ -559,12 +559,12 @@ export function FiftyFifty({
                   {panel.title}
                 </p>
                 {/* md+: swap on panel hover; mobile: plays once in view */}
-                <span className="hidden size-10 items-center justify-center rounded-xs bg-white text-[#161716] md:flex">
+                <span className="hidden size-10 items-center justify-center rounded-md bg-white text-[#161716] md:flex">
                   <ArrowSwap dx={1} dy={-1}>
                     <ArrowUpRight />
                   </ArrowSwap>
                 </span>
-                <ArrowInViewPlay className="flex size-10 items-center justify-center rounded-xs bg-white text-[#161716] md:hidden">
+                <ArrowInViewPlay className="flex size-10 items-center justify-center rounded-md bg-white text-[#161716] md:hidden">
                   <ArrowSwap dx={1} dy={-1}>
                     <ArrowUpRight />
                   </ArrowSwap>
@@ -588,7 +588,7 @@ export function FiftyFifty({
                   {panel.title}
                 </p>
                 {/* mobile: the square NE arrow, playing once in view */}
-                <ArrowInViewPlay className="flex size-10 shrink-0 items-center justify-center rounded-xs bg-white text-[#161716] md:hidden">
+                <ArrowInViewPlay className="flex size-10 shrink-0 items-center justify-center rounded-md bg-white text-[#161716] md:hidden">
                   <ArrowSwap dx={1} dy={-1}>
                     <ArrowUpRight />
                   </ArrowSwap>

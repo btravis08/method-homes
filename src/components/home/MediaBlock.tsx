@@ -97,7 +97,7 @@ export function ShopTheLook({ products }: { products: LookProductData[] }) {
         aria-label="Shop the look"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex size-10 items-center justify-center rounded-xs bg-white text-[#161716]"
+        className="flex size-10 items-center justify-center rounded-md bg-white text-[#161716]"
       >
         <Bag />
       </button>
@@ -124,7 +124,7 @@ export function VideoPlayerBlock({ src }: { src: string }) {
           type="button"
           aria-label="Play video"
           onClick={() => setOpen(true)}
-          className="flex size-10 items-center justify-center rounded-xs bg-white text-[#161716] transition-transform duration-300 hover:scale-110"
+          className="flex size-10 items-center justify-center rounded-md bg-white text-[#161716] transition-transform duration-300 hover:scale-110"
         >
           <Play />
         </button>
@@ -143,7 +143,7 @@ export function VideoPlayerBlock({ src }: { src: string }) {
               type="button"
               aria-label="Close video"
               onClick={() => setOpen(false)}
-              className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-xs bg-white text-[#161716] md:right-6 md:top-6"
+              className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-md bg-white text-[#161716] md:right-6 md:top-6"
             >
               <Close />
             </button>

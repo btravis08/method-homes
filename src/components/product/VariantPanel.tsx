@@ -42,7 +42,7 @@ export function VariantPanel({
       {/* color chip + swatch tiles */}
       <div className="flex items-start gap-1.5">
         <div
-          className={`label flex h-[2.875rem] min-w-0 flex-1 items-center rounded-xs px-3 font-medium text-ink md:h-10 ${chip}`}
+          className={`label flex h-[2.875rem] min-w-0 flex-1 items-center rounded-md px-3 font-medium text-ink md:h-10 ${chip}`}
         >
           <span className="truncate">
             COLOR: {(active?.name ?? "").toUpperCase()}
@@ -58,7 +58,7 @@ export function VariantPanel({
         <button
           type="button"
           onClick={open}
-          className={`relative flex h-[2.875rem] w-full items-center rounded-xs md:h-10 ${chip}`}
+          className={`relative flex h-[2.875rem] w-full items-center rounded-md md:h-10 ${chip}`}
         >
           <span className="label flex flex-1 items-center gap-2 px-3 font-medium text-ink">
             SIZE:
@@ -73,7 +73,7 @@ export function VariantPanel({
       <button
         type="button"
         onClick={open}
-        className="label flex h-[2.875rem] w-full items-center justify-center rounded-xs bg-btn font-medium text-btn-fg md:h-10"
+        className="label flex h-[2.875rem] w-full items-center justify-center rounded-md bg-btn font-medium text-btn-fg md:h-10"
       >
         Select size
       </button>

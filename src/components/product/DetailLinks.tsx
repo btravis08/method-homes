@@ -85,7 +85,7 @@ export function DetailLinks({ links }: { links: DetailLinkData[] }) {
                   type="button"
                   aria-label="Close drawer"
                   onClick={() => setOpen(null)}
-                  className="flex size-10 items-center justify-center rounded-xs bg-wash"
+                  className="flex size-10 items-center justify-center rounded-md bg-wash"
                 >
                   <Close />
                 </button>
@@ -132,7 +132,7 @@ export function CardAddButton({
         addItem({ title: title ?? "", price: parsePrice(price), image, color });
         openCart();
       }}
-      className="absolute bottom-4 right-4 flex size-9 items-center justify-center rounded-xs bg-white text-[#161716] transition-transform duration-300 hover:scale-105"
+      className="absolute bottom-4 right-4 flex size-9 items-center justify-center rounded-md bg-white text-[#161716] transition-transform duration-300 hover:scale-105"
     >
       <Plus size={10} />
     </button>

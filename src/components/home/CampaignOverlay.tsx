@@ -94,7 +94,7 @@ export function CampaignOverlay({
               {right !== undefined && (
                 <m.span
                   {...fade}
-                  className={`${fadeClass}label flex h-[2.875rem] w-full items-center justify-center rounded-xs bg-btn font-medium text-btn-fg`}
+                  className={`${fadeClass}label flex h-[2.875rem] w-full items-center justify-center rounded-md bg-btn font-medium text-btn-fg`}
                 >
                   {right}
                 </m.span>
@@ -122,7 +122,7 @@ export function CampaignOverlay({
               )}
             </div>
             <m.span {...fade} className={`${fadeClass}shrink-0`}>
-              <ArrowInViewPlay className="flex size-10 items-center justify-center rounded-xs bg-white text-[#161716]">
+              <ArrowInViewPlay className="flex size-10 items-center justify-center rounded-md bg-white text-[#161716]">
                 <ArrowSwap dx={1} dy={-1}>
                   <ArrowUpRight />
                 </ArrowSwap>

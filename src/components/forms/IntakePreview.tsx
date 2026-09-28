@@ -20,7 +20,7 @@ export function IntakePreview() {
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="label inline-flex h-14 items-center justify-center bg-btn px-2xl font-medium text-btn-fg transition-opacity hover:opacity-80"
+          className="label inline-flex h-14 items-center justify-center rounded-md bg-btn px-2xl font-medium text-btn-fg transition-opacity hover:opacity-80"
         >
           Start
         </button>
