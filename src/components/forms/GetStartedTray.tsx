@@ -1,6 +1,9 @@
 "use client";
 
+import { AnimatePresence, m } from "motion/react";
 import { useCallback, useEffect, useRef } from "react";
+
+import { DUR, EASE_OUT } from "@/lib/motion";
 
 import { IntakeForm } from "./IntakeForm";
 
@@ -15,12 +18,22 @@ import { IntakeForm } from "./IntakeForm";
   back inside the sheet rather than leave the page. Mounted only
   through LazyGetStarted so none of it ships until someone opens it.
 
+  Motion: the scrim fades and the panel fades UP from 40px on the house
+  ease (EASE_OUT); closing runs it in reverse, fading DOWN. The panel
+  stays mounted through the exit (AnimatePresence), so the parent keeps
+  rendering this component with open=false rather than unmounting it.
+
   History: opening pushes one entry ({ mhSheet, mhSheetDepth: 0 }); the
   engine pushes one per forward step. Back pops a step; backing past the
   first step pops the sheet entry and this closes. Closing from the X,
   the scrim, Escape or Done unwinds those entries with history.go(), so
   a later Back leaves the page as the visitor expects.
 */
+
+/* seconds */
+const OPEN = 0.55;
+const CLOSE = 0.32;
+
 export default function GetStartedTray({
   open,
   onClose,
@@ -93,33 +106,52 @@ export default function GetStartedTray({
     };
   }, [open, onClose, historyNav, requestClose]);
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-[70] intake-sheet" data-mode="light">
-      {/* scrim over the page; tapping it closes */}
-      {onClose ? (
-        <button type="button" aria-label="Close" onClick={requestClose} className="absolute inset-0 bg-black/50" />
-      ) : (
-        <div aria-hidden="true" className="absolute inset-0 bg-black/50" />
-      )}
-      <div
-        ref={panel}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Get started"
-        tabIndex={-1}
-        /* bottom-0 of a fixed parent tracks the visual viewport on iOS
-           (toolbars collapsing and all); the safe-area inset keeps the
-           footer above the home indicator */
-        className="absolute inset-x-0 bottom-0 top-16 flex flex-col overflow-hidden rounded-t-2xl bg-surface pb-[env(safe-area-inset-bottom)] outline-none md:top-0 md:rounded-none"
-      >
-        {/* handle (phones) */}
-        <div className="flex h-3 shrink-0 items-center justify-center md:hidden" aria-hidden="true">
-          <span className="h-1 w-12 rounded-full bg-line" />
+    <AnimatePresence>
+      {open ? (
+        <div key="sheet" className="fixed inset-0 z-[70] intake-sheet" data-mode="light">
+          {/* scrim over the page; tapping it closes */}
+          {onClose ? (
+            <m.button
+              type="button"
+              aria-label="Close"
+              onClick={requestClose}
+              className="absolute inset-0 bg-black/50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: DUR.base, ease: EASE_OUT } }}
+              exit={{ opacity: 0, transition: { duration: CLOSE, ease: EASE_OUT } }}
+            />
+          ) : (
+            <m.div
+              aria-hidden="true"
+              className="absolute inset-0 bg-black/50"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { duration: DUR.base, ease: EASE_OUT } }}
+              exit={{ opacity: 0, transition: { duration: CLOSE, ease: EASE_OUT } }}
+            />
+          )}
+          <m.div
+            ref={panel}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Get started"
+            tabIndex={-1}
+            /* bottom-0 of a fixed parent tracks the visual viewport on iOS
+               (toolbars collapsing and all); the safe-area inset keeps the
+               footer above the home indicator */
+            className="absolute inset-x-0 bottom-0 top-16 flex flex-col overflow-hidden rounded-t-2xl bg-surface pb-[env(safe-area-inset-bottom)] outline-none md:top-0 md:rounded-none"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0, transition: { duration: OPEN, ease: EASE_OUT } }}
+            exit={{ opacity: 0, y: 40, transition: { duration: CLOSE, ease: EASE_OUT } }}
+          >
+            {/* handle (phones) */}
+            <div className="flex h-3 shrink-0 items-center justify-center md:hidden" aria-hidden="true">
+              <span className="h-1 w-12 rounded-full bg-line" />
+            </div>
+            <IntakeForm onClose={onClose ? requestClose : undefined} historyNav={historyNav} persist={persist} className="min-h-0 flex-1" />
+          </m.div>
         </div>
-        <IntakeForm onClose={onClose ? requestClose : undefined} historyNav={historyNav} persist={persist} className="min-h-0 flex-1" />
-      </div>
-    </div>
+      ) : null}
+    </AnimatePresence>
   );
 }
