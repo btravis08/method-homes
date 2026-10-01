@@ -18,6 +18,9 @@ on:
       wait:
         description: Extra milliseconds to wait for client rendering
         default: "8000"
+      clicks:
+        description: Optional "|"-separated visible texts of tabs/buttons to click in turn, capturing the page text after each
+        default: ""
 
 permissions:
   contents: write
@@ -40,6 +43,7 @@ jobs:
           URL: ${{ github.event.inputs.url }}
           SLUG: ${{ github.event.inputs.slug }}
           WAIT: ${{ github.event.inputs.wait }}
+          CLICKS: ${{ github.event.inputs.clicks }}
         run: |
           mkdir -p design/reference
           cat > /tmp/pw/render.mjs <<'JS'
@@ -57,7 +61,20 @@ jobs:
           await page.waitForTimeout(500);
           const title = await page.title();
           const text = await page.evaluate(() => document.body.innerText);
-          const md = `# ${title}\n\nSource: ${url}\nRendered: ${new Date().toISOString()}\n\n---\n\n${text}\n`;
+          let md = `# ${title}\n\nSource: ${url}\nRendered: ${new Date().toISOString()}\n\n---\n\n${text}\n`;
+          // optional tab walk: click each named control and capture the text it reveals
+          for (const label of (process.env.CLICKS || "").split("|").map((s) => s.trim()).filter(Boolean)) {
+            try {
+              const ctl = page.getByRole("tab", { name: label }).or(page.getByRole("button", { name: label })).or(page.getByText(label, { exact: true })).first();
+              await ctl.click({ timeout: 8000 });
+              await page.waitForTimeout(1500);
+              const t = await page.evaluate(() => document.body.innerText);
+              md += `\n\n---\n\n## After clicking "${label}"\n\n${t}\n`;
+              await page.screenshot({ path: `${process.env.GITHUB_WORKSPACE}/design/reference/${slug}--${label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}.png`, fullPage: true });
+            } catch (e) {
+              md += `\n\n---\n\n## Click "${label}" failed: ${String(e.message).slice(0, 160)}\n`;
+            }
+          }
           writeFileSync(`${process.env.GITHUB_WORKSPACE}/design/reference/${slug}.md`, md);
           await page.screenshot({ path: `${process.env.GITHUB_WORKSPACE}/design/reference/${slug}.png`, fullPage: true });
           console.log(`title: ${title}\nchars: ${text.length}`);
