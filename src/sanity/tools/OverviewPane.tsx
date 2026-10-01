@@ -121,7 +121,7 @@ function collect() {
       levelName: string;
       pillars: Record<string, { score: number }>;
       recommendations: { title: string; impact: number }[];
-      prompts: { ran: boolean; visibility?: number; citationRate?: number };
+      prompts: { ran: boolean; mentionRate?: number; citationRate?: number; shareOfVoice?: number };
     }),
     prevMedian: aeoPrev,
   };
@@ -335,7 +335,7 @@ export default function OverviewPane() {
               </Flex>
               <Text size={1} muted>
                 {aeo.prompts.ran
-                  ? `visibility score ${aeo.prompts.visibility}% · citation rate ${aeo.prompts.citationRate}%`
+                  ? `mention rate ${aeo.prompts.mentionRate}% · citation rate ${aeo.prompts.citationRate}% · share of voice ${aeo.prompts.shareOfVoice}%`
                   : "prompt insights not recorded (ANTHROPIC_API_KEY in Actions, or the manual record)"}
                 {aeo.recommendations[0]
                   ? ` · next: ${aeo.recommendations[0].title} (+${aeo.recommendations[0].impact} pts)`

@@ -305,7 +305,10 @@ function analyze(url, res, lastmod) {
 const CONTENT_TYPES = new Set(["home", "post", "page", "project"]);
 const ratio = (ok, total) => (total ? ok / total : 1);
 const pct = (n) => `${Math.round(n * 100)}%`;
-const MIN_WORDS = { post: 400, page: 200, home: 200, project: 200, index: 80, category: 80, product: 80, collection: 80 };
+const DEPTH = AEO.depthThreshold ?? 300;
+const MIN_WORDS = { post: Math.max(400, DEPTH), page: DEPTH, home: DEPTH, project: DEPTH, index: 80, category: 80, product: 80, collection: 80 };
+/* the pages Webflow's metadata gate counts as "important" */
+const KEY_TYPES = new Set(["home", "page", "product", "project", "index", "category", "collection"]);
 
 /* { id, pillar, weight, effort, title, fix, scope, applies?, run } —
    run returns { ratio 0..1, detail } */
@@ -318,6 +321,7 @@ const CHECKS = [
   { id: "https", pillar: "technical", weight: 1, effort: "low", scope: "site", title: "Served over HTTPS", fix: "Force HTTPS at the edge.", run: (s) => ({ ratio: s.https ? 1 : 0, detail: s.https ? "yes" : "no" }) },
   { id: "broken-links", pillar: "technical", weight: 3, effort: "medium", scope: "site", title: "Internal links resolve", fix: "Fix or redirect the broken internal links (CMS redirects document).", run: (s) => ({ ratio: 1 - ratio(s.links.broken.length, s.links.checked || 1), detail: `${s.links.broken.length} broken of ${s.links.checked} checked` }) },
 
+  { id: "metadata-coverage", pillar: "technical", weight: 3, effort: "low", scope: "page", title: "Key pages carry a title, a meta description and an H1", fix: "Fill the SEO title and description and give the page one H1 — Webflow's gate is 80% of homepage, product, service, about, contact and FAQ pages.", applies: (pg) => KEY_TYPES.has(pg.type), run: (pg) => { const missing = [!pg.titleLen && "title", !pg.descriptionLen && "description", pg.h1.length !== 1 && "H1"].filter(Boolean); return { ratio: missing.length ? 0 : 1, detail: missing.length ? `missing ${missing.join(", ")}` : "complete" }; } },
   { id: "title", pillar: "technical", weight: 2, effort: "low", scope: "page", title: "Title tag, 15–65 characters", fix: "Give the page a specific title in the SEO fields (15–65 characters, brand suffix included).", run: (pg) => ({ ratio: pg.titleLen >= 15 && pg.titleLen <= 65 ? 1 : pg.titleLen ? 0.5 : 0, detail: pg.titleLen ? `${pg.titleLen} chars` : "missing" }) },
   { id: "description", pillar: "technical", weight: 3, effort: "low", scope: "page", title: "Meta description, 70–160 characters", fix: "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).", run: (pg) => ({ ratio: pg.descriptionLen >= 70 && pg.descriptionLen <= 160 ? 1 : pg.descriptionLen ? 0.5 : 0, detail: pg.descriptionLen ? `${pg.descriptionLen} chars` : "missing" }) },
   { id: "canonical", pillar: "technical", weight: 2, effort: "low", scope: "page", title: "Canonical URL declared", fix: "Emit <link rel=canonical> on every page (seoMeta does this when the route uses it).", run: (pg) => ({ ratio: pg.canonical ? 1 : 0, detail: pg.canonical || "missing" }) },
@@ -354,7 +358,7 @@ const CHECKS = [
 
   /* ── Measurement: do we know how AI sees us? ── */
   { id: "monitoring", pillar: "measurement", weight: 3, effort: "low", scope: "site", title: "This grader runs on a schedule", fix: "Keep the aeo workflow on its nightly schedule so the trend is real.", run: (s) => ({ ratio: s.historyRuns >= 2 ? 1 : 0.5, detail: `${s.historyRuns} run(s) recorded` }) },
-  { id: "prompt-insights", pillar: "measurement", weight: 5, effort: "low", scope: "site", title: "Tracked prompts probed for mentions and citations", fix: "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.", run: (s) => { if (!s.prompts.ran) return { ratio: 0, detail: s.prompts.reason }; const stale = s.prompts.manual && Date.now() - Date.parse(s.prompts.recordedAt) > 30 * 86400e3; return { ratio: stale ? 0.5 : 1, detail: `visibility ${s.prompts.visibility}%, cited ${s.prompts.citationRate}% of ${s.prompts.answered}${s.prompts.manual ? (stale ? " (manual, >30 days old)" : " (manual)") : ""}` }; } },
+  { id: "prompt-insights", pillar: "measurement", weight: 5, effort: "low", scope: "site", title: "Tracked prompts probed for mentions and citations", fix: "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.", run: (s) => { if (!s.prompts.ran) return { ratio: 0, detail: s.prompts.reason }; const stale = s.prompts.manual && Date.now() - Date.parse(s.prompts.recordedAt) > 30 * 86400e3; return { ratio: stale ? 0.5 : 1, detail: `mention rate ${s.prompts.mentionRate}%, citation rate ${s.prompts.citationRate}%, share of voice ${s.prompts.shareOfVoice}% over ${s.prompts.answered} prompts${s.prompts.unrecorded ? ` (${s.prompts.unrecorded} not yet recorded)` : ""}${s.prompts.manual ? (stale ? " (manual, >30 days old)" : " (manual)") : ""}` }; } },
   { id: "analytics", pillar: "measurement", weight: 4, effort: "low", scope: "site", title: "Web analytics on the site", fix: "Enable Vercel Web Analytics (or GA4) so AI-referred sessions can be segmented by referrer.", run: (s) => ({ ratio: s.analytics.web ? 1 : s.analytics.rum ? 0.4 : 0, detail: s.analytics.web ? "web analytics" : s.analytics.rum ? "Speed Insights only" : "none" }) },
   { id: "ai-referrers", pillar: "measurement", weight: 3, effort: "medium", scope: "site", title: "AI-referred visitors tracked", fix: "Record chatgpt.com, perplexity.ai, claude.ai, gemini.google.com, copilot.microsoft.com referrers on sessions, not only on form leads.", run: (s) => ({ ratio: s.referrerTracking === "visits" ? 1 : s.referrerTracking ? 0.5 : 0, detail: s.referrerTracking ? `on ${s.referrerTracking}` : "none" }) },
 ];
@@ -447,8 +451,8 @@ async function main() {
   const links = { checked: candidates.length + graded.filter((p) => p.status === 200).length, broken: [...broken, ...graded.filter((p) => p.status >= 400).map((p) => ({ path: p.path, status: p.status }))] };
 
   const history = existsSync(HISTORY) ? JSON.parse(readFileSync(HISTORY, "utf8")) : { runs: [] };
-  const prompts = process.env.AEO_SKIP_PROMPTS ? { ran: false, reason: "skipped (AEO_SKIP_PROMPTS)", results: [] } : await runPromptInsights({ prompts: AEO.prompts ?? [], brand: AEO.brand, brandDomains: AEO.brandDomains ?? [BASE_HOST] });
-  if (prompts.ran) console.log(`prompt insights: visibility ${prompts.visibility}% · citation rate ${prompts.citationRate}% (${prompts.answered} prompts)`);
+  const prompts = process.env.AEO_SKIP_PROMPTS ? { ran: false, reason: "skipped (AEO_SKIP_PROMPTS)", results: [] } : await runPromptInsights({ prompts: AEO.prompts ?? [], brand: AEO.brand, brandDomains: AEO.brandDomains ?? [BASE_HOST], competitors: AEO.competitors ?? [], keyMessages: AEO.keyMessages ?? [] });
+  if (prompts.ran) console.log(`prompt insights: mention ${prompts.mentionRate}% · cited ${prompts.citationRate}% · share of voice ${prompts.shareOfVoice}% · sentiment ${prompts.sentiment ?? "–"} · accuracy ${prompts.accuracy ?? "–"} · pull-through ${prompts.messagePullThrough}% (${prompts.answered} prompts)`);
   else console.log(`prompt insights: not run — ${prompts.reason}`);
 
   const home = graded.find((p) => p.path === "/");
@@ -482,15 +486,41 @@ async function main() {
     return { id: c.id, pillar: c.pillar, weight: c.weight, effort: c.effort, title: c.title, fix: c.fix, scope: "page", ratio: avg, detail: per.length ? `${per.filter((x) => x.ratio >= 0.999).length}/${per.length} pages pass` : "no applicable pages", pages: per.filter((x) => x.ratio < 0.999).sort((a, b) => a.ratio - b.ratio) };
   });
 
+  /* a pillar's level is its score band, but Webflow-style GATES hold
+     it back: level N is reachable only when every gate for N (and the
+     levels below) passes, whatever the average says */
   const pillars = {};
   for (const [name, pw] of Object.entries(AEO.pillarWeights)) {
     const own = checks.filter((c) => c.pillar === name);
     const wsum = own.reduce((s, c) => s + c.weight, 0);
     const score = wsum ? Math.round((own.reduce((s, c) => s + c.weight * c.ratio, 0) / wsum) * 100) : 0;
-    pillars[name] = { score, level: level(score), weight: pw, checks: own.length, passing: own.filter((c) => c.ratio >= 0.999).length };
+    const byScore = level(score);
+    const gateDefs = AEO.gates?.[name] ?? {};
+    const gates = [];
+    let reachable = 5;
+    for (let L = 2; L <= 5; L++) {
+      const defs = gateDefs[String(L)] ?? [];
+      let open = true;
+      for (const g of defs) {
+        const c = checks.find((x) => x.id === g.check);
+        const actual = c ? c.ratio : 0;
+        const met = actual >= (g.min ?? 1) - 1e-9;
+        gates.push({ level: L, check: g.check, label: g.label ?? c?.title ?? g.check, min: g.min ?? 1, actual: Math.round(actual * 100) / 100, met });
+        if (!met) open = false;
+      }
+      if (!open) {
+        reachable = L - 1;
+        break;
+      }
+    }
+    const lvl = Math.max(1, Math.min(byScore, reachable));
+    pillars[name] = { score, level: lvl, levelByScore: byScore, gatedTo: lvl < byScore ? lvl : null, weight: pw, checks: own.length, passing: own.filter((c) => c.ratio >= 0.999).length, gates };
   }
   const totalW = Object.values(AEO.pillarWeights).reduce((a, b) => a + b, 0);
   const score = Math.round(Object.entries(pillars).reduce((s, [, p]) => s + p.score * p.weight, 0) / totalW);
+  /* the site level cannot exceed its strongest pillar's gated level */
+  const siteLevel = Math.max(1, Math.min(level(score), Math.max(...Object.values(pillars).map((p) => p.level))));
+  const gateBlocks = Object.entries(pillars).flatMap(([name, p]) => p.gates.filter((g) => !g.met && g.level === p.level + 1).map((g) => ({ pillar: name, ...g })));
 
   /* page score: weighted ratio of the page checks that apply to it */
   const pageScores = graded.map((p) => {
@@ -523,8 +553,10 @@ async function main() {
     origin: ORIGIN,
     model: "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
     score,
-    level: level(score),
-    levelName: LEVEL_NAMES[level(score)],
+    level: siteLevel,
+    levelByScore: level(score),
+    levelName: LEVEL_NAMES[siteLevel],
+    gateBlocks,
     pillars,
     pagesCrawled: graded.length,
     pagesFailed: pages.length - graded.length,
@@ -533,7 +565,7 @@ async function main() {
     sitemap: { ok: sitemapRes.ok, urls: urls.length, lastmod: lastmods.size > 0 },
     llms: site.llms,
     links,
-    prompts: { ...prompts, results: (prompts.results ?? []).map((r) => ({ prompt: r.prompt, mentioned: r.mentioned, cited: r.cited, surfaced: r.surfaced, citedUrls: r.citedUrls, sources: r.sources, excerpt: r.excerpt, error: r.error, refused: r.refused })) },
+    prompts: { ...prompts, results: (prompts.results ?? []).map((r) => ({ prompt: r.prompt, stage: r.stage, recorded: r.recorded !== false, mentioned: r.mentioned, cited: r.cited, surfaced: r.surfaced, competitors: r.competitors ?? [], messages: r.messages ?? [], sentiment: r.sentiment, accuracy: r.accuracy, judgeNote: r.judgeNote, citedUrls: r.citedUrls, sources: r.sources, excerpt: r.excerpt, error: r.error, refused: r.refused })) },
     checks: checks.map((c) => ({ ...c, pages: c.pages.slice(0, 20) })),
     recommendations,
     pages: pageScores.sort((a, b) => a.score - b.score),
@@ -541,12 +573,13 @@ async function main() {
 
   mkdirSync(path.dirname(OUT), { recursive: true });
   writeFileSync(OUT, JSON.stringify(report, null, 2) + "\n");
-  history.runs.push({ t: report.generatedAt, score, level: report.level, pillars: Object.fromEntries(Object.entries(pillars).map(([k, v]) => [k, v.score])), pages: graded.length, visibility: prompts.ran ? prompts.visibility : null, citationRate: prompts.ran ? prompts.citationRate : null });
+  history.runs.push({ t: report.generatedAt, score, level: report.level, pillars: Object.fromEntries(Object.entries(pillars).map(([k, v]) => [k, v.score])), pages: graded.length, visibility: prompts.ran ? prompts.mentionRate : null, citationRate: prompts.ran ? prompts.citationRate : null, shareOfVoice: prompts.ran ? prompts.shareOfVoice : null });
   history.runs = history.runs.slice(-(AEO.historyCap ?? 120));
   writeFileSync(HISTORY, JSON.stringify(history, null, 2) + "\n");
 
-  console.log(`\nAEO score ${score}/100 · level ${report.level} (${report.levelName})`);
-  for (const [k, v] of Object.entries(pillars)) console.log(`  ${k.padEnd(12)} ${String(v.score).padStart(3)}  (${v.passing}/${v.checks} checks pass, weight ${v.weight})`);
+  console.log(`\nAEO score ${score}/100 · Level ${report.level} of 5 (${report.levelName})${report.levelByScore !== report.level ? ` — gated from ${report.levelByScore}` : ""}`);
+  for (const [k, v] of Object.entries(pillars)) console.log(`  ${k.padEnd(12)} ${String(v.score).padStart(3)}  L${v.level}${v.gatedTo ? ` (gated; score says L${v.levelByScore})` : ""}  (${v.passing}/${v.checks} checks pass, weight ${v.weight})`);
+  for (const g of gateBlocks) console.log(`  gate: ${g.pillar} → L${g.level} blocked by "${g.label}" (${Math.round(g.actual * 100)}% < ${Math.round(g.min * 100)}%)`);
   console.log(`\ntop recommendations:`);
   for (const r of recommendations.slice(0, 8)) console.log(`  +${r.impact.toFixed(1).padStart(4)} pts  [${r.effort}] ${r.title} — ${r.detail}`);
   console.log(`\n→ ${path.relative(ROOT, OUT)}`);

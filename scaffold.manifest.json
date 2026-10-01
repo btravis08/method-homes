@@ -58,6 +58,7 @@
     "scripts/lib/**",
     ".github/workflows/lighthouse-history.yml",
     ".github/workflows/aeo.yml",
+    ".github/workflows/fetch-page.yml",
     ".github/workflows/audit.yml",
     ".github/workflows/design-drift.yml",
     ".github/workflows/check-links.yml",

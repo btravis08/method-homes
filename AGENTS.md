@@ -288,15 +288,35 @@ staging/design use.
   prompt insights, analytics, AI-referrer tracking). Weights, bots,
   brand, prompts and organization facts live in designops.config.json
   → `aeo` — edit the config, not the rubric, for a new project.
-- `scripts/lib/aeo-prompts.mjs` = prompt insights (Webflow's
-  visibility score / citation rate): runs aeo.prompts through Claude
-  with live web search and records brand mentions and citations of
-  aeo.brandDomains. Needs ANTHROPIC_API_KEY (Actions secret). Without
+- `scripts/lib/aeo-prompts.mjs` = prompt insights, Webflow's six
+  snapshot metrics: mention rate (= visibility score), citation rate,
+  share of voice (our mentions ÷ all tracked-brand mentions,
+  aeo.competitors), sentiment and accuracy (a second structured Claude
+  call judging the answer against aeo.keyMessages as brand facts) and
+  message pull-through (regex hits of aeo.keyMessages patterns in
+  answers that mention us). Prompts are `{text, stage}` across
+  awareness / consideration / decision / retention; the pane reports
+  by stage. Runs aeo.prompts through Claude with live web search and
+  records citations of aeo.brandDomains. Needs ANTHROPIC_API_KEY (Actions secret). Without
   it the collector falls back to src/design/aeo.prompts.manual.json —
   a hand-recorded run (ask any answer engine the tracked prompts, note
   mentioned / cited / surfaced per prompt; Claude can do this in a
   session with its own web search). Manual runs older than 30 days
   score half; with neither, Measurement flags it.
+- Levels are GATED like Webflow's: aeo.gates lists, per pillar and
+  level, the checks that must reach a minimum ratio (metadata-coverage
+  ≥80% for Technical L2, depth for Content L2, bylines for Authority
+  L3, …). A pillar's level is min(score band, highest consecutively
+  unlocked level); the site level cannot exceed its strongest pillar.
+  `levelByScore` and `gateBlocks` in the report say what held it back.
+  aeo.depthThreshold (300 words) is Webflow's content gate.
+- design/reference/webflow-aeo-assessment-methodhomes*.md/.png = the
+  rendered Webflow assessment of the OLD methodhomes.net (2026-10-01:
+  2 of 5; mention 27%, citation 3%, share of voice 29%, sentiment 64%,
+  accuracy 67%, pull-through 28%; competitors Stillwater, Dvele,
+  Ideabox) — the baseline our numbers are compared to. Fetched with the
+  fetch-page workflow (renders any public URL from a runner into
+  design/reference; optional tab clicks).
 - Output: src/design/aeo.status.json (+ aeo.history.json, cap
   aeo.historyCap) → Studio **AEO** tool (score, pillars, prompt
   insights, crawler matrix, recommendations, per-page table) and the

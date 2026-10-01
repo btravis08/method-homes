@@ -70,12 +70,46 @@
       "Diffbot"
     ],
     "prompts": [
-      "Who are the best prefab and modular home builders in the Pacific Northwest?",
-      "What does a Method Homes prefab house cost?",
-      "Which companies build architect-designed modular homes in Washington state?",
-      "Is prefab construction higher quality than site-built for a custom home?",
-      "Best sustainable prefab home builders in the United States",
-      "How long does it take to build a prefab home from a predesigned series?"
+      {
+        "stage": "awareness",
+        "text": "What is the difference between modular, prefab and manufactured homes?"
+      },
+      {
+        "stage": "awareness",
+        "text": "Is prefab construction higher quality than site-built for a custom home?"
+      },
+      {
+        "stage": "awareness",
+        "text": "How long does it take to build a prefab home from a predesigned series?"
+      },
+      {
+        "stage": "consideration",
+        "text": "Who are the best prefab and modular home builders in the Pacific Northwest?"
+      },
+      {
+        "stage": "consideration",
+        "text": "Which companies build architect-designed modular homes in Washington state?"
+      },
+      {
+        "stage": "consideration",
+        "text": "Best sustainable prefab home builders in the United States"
+      },
+      {
+        "stage": "consideration",
+        "text": "Method Homes vs Stillwater Dwellings vs Dvele \u2014 how do they compare?"
+      },
+      {
+        "stage": "decision",
+        "text": "What does a Method Homes prefab house cost?"
+      },
+      {
+        "stage": "decision",
+        "text": "Does Method Homes deliver to Oregon, Idaho or California, and what does site work add?"
+      },
+      {
+        "stage": "retention",
+        "text": "How do I maintain a modular home over its first ten years?"
+      }
     ],
     "organization": {
       "legalName": "Method Homes",
@@ -89,6 +123,142 @@
         "Montana",
         "British Columbia"
       ]
-    }
+    },
+    "competitors": [
+      {
+        "name": "Stillwater Dwellings",
+        "domain": "stillwaterdwellings.com"
+      },
+      {
+        "name": "Dvele",
+        "domain": "dvele.com"
+      },
+      {
+        "name": "Ideabox",
+        "domain": "ideabox.us"
+      },
+      {
+        "name": "FabCab",
+        "domain": "fabcab.com"
+      },
+      {
+        "name": "Plant Prefab",
+        "domain": "plantprefab.com"
+      },
+      {
+        "name": "Lindal Cedar Homes",
+        "domain": "lindal.com",
+        "aliases": [
+          "Lindal"
+        ]
+      },
+      {
+        "name": "Greenfab",
+        "domain": "greenfab.com"
+      },
+      {
+        "name": "MODS PDX",
+        "domain": "modspdx.com"
+      }
+    ],
+    "keyMessages": [
+      {
+        "id": "projects-400",
+        "label": "400+ completed projects",
+        "pattern": "400\\+?\\s*(completed\\s+)?(projects|homes)"
+      },
+      {
+        "id": "founded-2007",
+        "label": "Founded in Seattle in 2007",
+        "pattern": "(founded|established|since|launched)\\s*(in\\s*)?2007"
+      },
+      {
+        "id": "architect-designed",
+        "label": "Architect-designed, with architects and engineers in one process",
+        "pattern": "architect[- ]?(designed|led|driven)|architects? and engineers"
+      },
+      {
+        "id": "factory-built",
+        "label": "Built indoors in a factory, then delivered and set on site",
+        "pattern": "built indoors|factory[- ]?built|in a (controlled )?factory|off[- ]?site (construction|built)"
+      },
+      {
+        "id": "sustainable",
+        "label": "Sustainable: Passive House, LEED, net-zero, Energy Star ready",
+        "pattern": "passive house|\\bleed\\b|net[- ]?zero|energy star|sustainab"
+      },
+      {
+        "id": "predesigned-and-custom",
+        "label": "Predesigned series plus fully custom homes",
+        "pattern": "pre-?designed|predesigned|(series|models?).{0,40}custom|custom.{0,40}(series|pre-?designed)"
+      }
+    ],
+    "gates": {
+      "technical": {
+        "2": [
+          {
+            "check": "metadata-coverage",
+            "min": 0.8,
+            "label": "title + description + H1 on 80% of key pages"
+          }
+        ],
+        "4": [
+          {
+            "check": "schema-type",
+            "min": 0.9,
+            "label": "page-typed schema on 90% of pages"
+          }
+        ]
+      },
+      "content": {
+        "2": [
+          {
+            "check": "depth",
+            "min": 0.6,
+            "label": "key pages past the 300-word threshold"
+          }
+        ],
+        "4": [
+          {
+            "check": "freshness",
+            "min": 0.7,
+            "label": "70% of key pages refreshed in the window"
+          }
+        ]
+      },
+      "authority": {
+        "3": [
+          {
+            "check": "bylines",
+            "min": 0.8,
+            "label": "bylines with Person schema on 80% of articles"
+          }
+        ],
+        "4": [
+          {
+            "check": "same-as",
+            "min": 1,
+            "label": "Organization sameAs profiles"
+          }
+        ]
+      },
+      "measurement": {
+        "3": [
+          {
+            "check": "prompt-insights",
+            "min": 1,
+            "label": "prompt insights recorded"
+          }
+        ],
+        "4": [
+          {
+            "check": "analytics",
+            "min": 1,
+            "label": "web analytics live"
+          }
+        ]
+      }
+    },
+    "depthThreshold": 300
   }
 }

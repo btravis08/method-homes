@@ -25,11 +25,33 @@ import designops from "../../../designops.config.json";
   src/design/aeo.status.json (+ aeo.history.json).
 */
 
-type Pillar = { score: number; level: number; weight: number; checks: number; passing: number };
+type Gate = { level: number; check: string; label: string; min: number; actual: number; met: boolean };
+type Pillar = { score: number; level: number; levelByScore?: number; gatedTo?: number | null; weight: number; checks: number; passing: number; gates?: Gate[] };
 type Rec = { id: string; pillar: string; title: string; fix: string; effort: string; impact: number; priority: number; detail: string; pages: string[]; pagesAffected: number };
 type PageRow = { path: string; type: string; score: number; words: number; schema: string[]; fails: string[]; title: string };
 type Check = { id: string; pillar: string; title: string; ratio: number; detail: string; scope: string; weight: number };
-type PromptResult = { prompt: string; mentioned: boolean; cited: boolean; surfaced: boolean; citedUrls?: string[]; sources?: string[]; excerpt?: string; error?: string; refused?: boolean };
+type PromptResult = { prompt: string; stage?: string; recorded?: boolean; mentioned: boolean; cited: boolean; surfaced: boolean; competitors?: string[]; messages?: string[]; sentiment?: number; accuracy?: number; judgeNote?: string; citedUrls?: string[]; sources?: string[]; excerpt?: string; error?: string; refused?: boolean };
+type Prompts = {
+  ran: boolean;
+  manual?: boolean;
+  reason?: string;
+  model?: string;
+  prompts?: number;
+  answered?: number;
+  unrecorded?: number;
+  mentionRate?: number;
+  visibility?: number;
+  citationRate?: number;
+  surfacedRate?: number;
+  shareOfVoice?: number;
+  sentiment?: number | null;
+  accuracy?: number | null;
+  messagePullThrough?: number;
+  competitors?: { name: string; count: number; domain?: string }[];
+  messages?: { id: string; label: string; count: number; rate: number }[];
+  byStage?: { stage: string; prompts: number; mentioned: number; cited: number; mentionRate: number }[];
+  results: PromptResult[];
+};
 type Report = {
   generatedAt: string;
   origin: string;
@@ -42,7 +64,9 @@ type Report = {
   llms: { ok: boolean; status: number };
   sitemap: { ok: boolean; urls: number; lastmod: boolean };
   links: { checked: number; broken: { path: string; status: number }[] };
-  prompts: { ran: boolean; manual?: boolean; reason?: string; model?: string; answered?: number; visibility?: number; citationRate?: number; surfacedRate?: number; results: PromptResult[] };
+  levelByScore?: number;
+  gateBlocks?: ({ pillar: string } & Gate)[];
+  prompts: Prompts;
   checks: Check[];
   recommendations: Rec[];
   pages: PageRow[];
@@ -215,7 +239,13 @@ function Hero() {
                   {delta} since the last assessment
                 </span>
               ) : null}
-              {nextFloor != null ? <span>{nextFloor - DATA.score} points to Level {DATA.level + 1}</span> : <span>top level reached</span>}
+              {DATA.levelByScore && DATA.levelByScore > DATA.level ? (
+                <span>score would be Level {DATA.levelByScore} — held at {DATA.level} by {DATA.gateBlocks?.length ?? 0} unmet gate{(DATA.gateBlocks?.length ?? 0) === 1 ? "" : "s"}</span>
+              ) : nextFloor != null ? (
+                <span>{nextFloor - DATA.score} points to Level {DATA.level + 1}</span>
+              ) : (
+                <span>top level reached</span>
+              )}
             </p>
           </div>
         </div>
@@ -259,6 +289,20 @@ function Pillars() {
                 <Dot tone={tone} />
                 {p.passing} of {p.checks} checks pass
               </p>
+              {(p.gates ?? []).filter((g) => g.level === p.level + 1).length ? (
+                <ul className="flex flex-col gap-xs border-t border-line pt-md">
+                  {(p.gates ?? [])
+                    .filter((g) => g.level === p.level + 1)
+                    .map((g) => (
+                      <li key={g.check} className="flex items-start gap-sm text-body-sm text-ink-3">
+                        <Glyph ok={g.met} />
+                        <span>
+                          <span className="text-ink">Gate to Level {g.level}:</span> {g.label} · {Math.round(g.actual * 100)}% of {Math.round(g.min * 100)}%
+                        </span>
+                      </li>
+                    ))}
+                </ul>
+              ) : null}
             </article>
           );
         })}
@@ -269,7 +313,9 @@ function Pillars() {
 
 function Analytics() {
   const p = DATA.prompts;
-  const rows: PromptResult[] = p.ran ? p.results : (designops.aeo.prompts as string[]).map((prompt) => ({ prompt, mentioned: false, cited: false, surfaced: false }));
+  const rows: PromptResult[] = p.ran
+    ? p.results
+    : (designops.aeo.prompts as { text: string; stage: string }[]).map((x) => ({ prompt: x.text, stage: x.stage, mentioned: false, cited: false, surfaced: false }));
   return (
     <Panel>
       <div className="flex flex-col gap-xl">
@@ -279,16 +325,65 @@ function Analytics() {
             <h2 className="text-body-md text-ink">What AI answers say when buyers ask</h2>
           </div>
           <p className="text-body-sm text-ink-3">
-            {p.ran ? (p.manual ? `${p.answered} prompts · recorded by hand · ${p.model}` : `${p.answered} prompts · live web search · ${p.model}`) : `not recorded — ${p.reason}`}
+            {p.ran ? `${p.answered} of ${p.prompts ?? p.answered} prompts ${p.manual ? "recorded by hand" : "answered with live web search"} · ${p.model}` : `not recorded — ${p.reason}`}
           </p>
         </div>
 
         {p.ran ? (
-          <div className="grid gap-md sm:grid-cols-3">
-            <Stat label="Visibility score" value={p.visibility ?? 0} unit="%" sub="answers that mention the brand" tone={statusOf(p.visibility ?? 0)} />
-            <Stat label="Citation rate" value={p.citationRate ?? 0} unit="%" sub="answers that cite one of our domains" tone={statusOf(p.citationRate ?? 0)} />
-            <Stat label="Surfaced in sources" value={p.surfacedRate ?? 0} unit="%" sub="research that found our domain, cited or not" />
-          </div>
+          <>
+            <div className="grid gap-md sm:grid-cols-3 xl:grid-cols-6">
+              <Stat label="Mention rate" value={p.mentionRate ?? 0} unit="%" sub="answers naming the brand" tone={statusOf(p.mentionRate ?? 0)} />
+              <Stat label="Citation rate" value={p.citationRate ?? 0} unit="%" sub="answers citing our domain" tone={statusOf(p.citationRate ?? 0)} />
+              <Stat label="Share of voice" value={p.shareOfVoice ?? 0} unit="%" sub="of tracked-brand mentions" tone={statusOf(p.shareOfVoice ?? 0)} />
+              <Stat label="Sentiment" value={p.sentiment ?? "—"} unit={p.sentiment != null ? "%" : undefined} sub="how favourably we are portrayed" tone={p.sentiment != null ? statusOf(p.sentiment) : undefined} />
+              <Stat label="Accuracy" value={p.accuracy ?? "—"} unit={p.accuracy != null ? "%" : undefined} sub="facts about us stated correctly" tone={p.accuracy != null ? statusOf(p.accuracy) : undefined} />
+              <Stat label="Message pull-through" value={p.messagePullThrough ?? 0} unit="%" sub="key messages that come through" tone={statusOf(p.messagePullThrough ?? 0)} />
+            </div>
+            <div className="grid gap-md lg:grid-cols-3">
+              <div className="flex flex-col gap-md rounded-md border border-line bg-surface p-xl">
+                <p className="text-body-sm text-ink-3">By funnel stage</p>
+                <ul className="flex flex-col gap-sm">
+                  {["awareness", "consideration", "decision", "retention"].map((stage) => {
+                    const row = (p.byStage ?? []).find((x) => x.stage === stage);
+                    return (
+                      <li key={stage} className="flex items-center justify-between gap-md text-body-sm">
+                        <span className="capitalize text-ink">{stage}</span>
+                        <span className="text-ink-3 tabular-nums">{row ? `${row.mentioned}/${row.prompts} mentioned · ${row.cited} cited` : "not recorded"}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-md rounded-md border border-line bg-surface p-xl">
+                <p className="text-body-sm text-ink-3">Competitors mentioned alongside us</p>
+                <ul className="flex flex-col gap-sm">
+                  {(p.competitors ?? []).slice(0, 6).map((c) => (
+                    <li key={c.name} className="flex items-center justify-between gap-md text-body-sm">
+                      <span className="text-ink">
+                        {c.name} {c.domain ? <span className="text-ink-3">({c.domain})</span> : null}
+                      </span>
+                      <span className="text-ink-3 tabular-nums">{c.count}×</span>
+                    </li>
+                  ))}
+                  {!(p.competitors ?? []).length && <li className="text-body-sm text-ink-3">none of the tracked competitors appeared</li>}
+                </ul>
+              </div>
+              <div className="flex flex-col gap-md rounded-md border border-line bg-surface p-xl">
+                <p className="text-body-sm text-ink-3">Key messages that come through</p>
+                <ul className="flex flex-col gap-sm">
+                  {(p.messages ?? []).map((m) => (
+                    <li key={m.id} className="flex flex-col gap-xs text-body-sm">
+                      <span className="flex items-center justify-between gap-md">
+                        <span className="text-ink">{m.label}</span>
+                        <span className="text-ink-3 tabular-nums">{m.rate}%</span>
+                      </span>
+                      <Meter value={m.rate} height="h-1" />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </>
         ) : (
           <p className="rounded-md border border-line bg-surface p-xl text-body-sm text-ink-2">
             Add an <code className="font-mono">ANTHROPIC_API_KEY</code> secret to the repository&apos;s Actions for a nightly probe, or ask an answer engine the tracked prompts and record the answers in <code className="font-mono">src/design/aeo.prompts.manual.json</code>.
@@ -299,10 +394,23 @@ function Analytics() {
           {rows.map((r) => (
             <li key={r.prompt} className="grid gap-md py-lg md:grid-cols-[1fr_auto] md:items-start">
               <div className="flex flex-col gap-xs">
-                <p className="text-body-md text-ink">{r.prompt}</p>
+                <p className="flex flex-wrap items-center gap-md text-body-md text-ink">
+                  {r.prompt}
+                  {r.stage ? <Tag>{r.stage}</Tag> : null}
+                </p>
                 {r.excerpt ? <p className="text-body-sm text-ink-3">{r.excerpt}</p> : null}
+                {p.ran && r.recorded !== false && (r.competitors?.length || r.messages?.length || r.sentiment != null) ? (
+                  <p className="text-body-sm text-ink-3">
+                    {r.competitors?.length ? `with ${r.competitors.join(", ")}` : "no tracked competitors named"}
+                    {r.messages?.length ? ` · conveys ${r.messages.length} key message${r.messages.length === 1 ? "" : "s"}` : ""}
+                    {r.sentiment != null ? ` · sentiment ${r.sentiment}` : ""}
+                    {r.accuracy != null ? ` · accuracy ${r.accuracy}` : ""}
+                  </p>
+                ) : null}
               </div>
-              {p.ran ? (
+              {p.ran && r.recorded === false ? (
+                <Tag>not yet recorded</Tag>
+              ) : p.ran ? (
                 <div className="flex flex-wrap items-center gap-md md:justify-end">
                   <span className="inline-flex items-center gap-sm text-body-sm text-ink">
                     <Glyph ok={r.mentioned} /> {r.mentioned ? "mentioned" : "not mentioned"}
