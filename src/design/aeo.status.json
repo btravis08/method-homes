@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T15:13:54.337Z",
+  "generatedAt": "2026-10-01T16:41:02.404Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 63,
@@ -1176,63 +1176,38 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.8833333333333333,
-      "detail": "49/60 pages pass",
+      "ratio": 0.925,
+      "detail": "54/60 pages pass",
       "pages": [
         {
           "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2404 ms"
+          "detail": "2781 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2300 ms"
+          "detail": "2433 ms"
         },
         {
           "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
-          "detail": "2615 ms"
+          "detail": "2806 ms"
         },
         {
           "path": "/",
           "ratio": 0.5,
-          "detail": "985 ms"
+          "detail": "1078 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "954 ms"
+          "detail": "1070 ms"
         },
         {
           "path": "/journal",
           "ratio": 0.5,
-          "detail": "926 ms"
-        },
-        {
-          "path": "/custom-regions-island-and-waterfront-homes",
-          "ratio": 0.5,
-          "detail": "847 ms"
-        },
-        {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
-          "ratio": 0.5,
-          "detail": "837 ms"
-        },
-        {
-          "path": "/custom-regions-mountain-modern-homes",
-          "ratio": 0.5,
-          "detail": "915 ms"
-        },
-        {
-          "path": "/journal/annata-display-2017-dwell-on-design",
-          "ratio": 0.5,
-          "detail": "876 ms"
-        },
-        {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
-          "ratio": 0.5,
-          "detail": "1055 ms"
+          "detail": "1005 ms"
         }
       ]
     },
@@ -2471,7 +2446,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "4 run(s) recorded",
+      "detail": "5 run(s) recorded",
       "pages": []
     },
     {
@@ -2991,22 +2966,17 @@
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "effort": "high",
       "impact": 0.1,
-      "priority": 0.03,
-      "detail": "49/60 pages pass",
+      "priority": 0.02,
+      "detail": "54/60 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 2404 ms",
-        "/about — 2300 ms",
-        "/journal/2014-palm-springs-modernism-week-in-review — 2615 ms",
-        "/ — 985 ms",
-        "/legacy — 954 ms",
-        "/journal — 926 ms",
-        "/custom-regions-island-and-waterfront-homes — 847 ms",
-        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 837 ms",
-        "/custom-regions-mountain-modern-homes — 915 ms",
-        "/journal/annata-display-2017-dwell-on-design — 876 ms",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 1055 ms"
+        "/journal/2013-green-washington-awards — 2781 ms",
+        "/about — 2433 ms",
+        "/journal/2014-palm-springs-modernism-week-in-review — 2806 ms",
+        "/ — 1078 ms",
+        "/legacy — 1070 ms",
+        "/journal — 1005 ms"
       ],
-      "pagesAffected": 11
+      "pagesAffected": 6
     },
     {
       "id": "indexable",
@@ -3067,7 +3037,6 @@
         "description",
         "open-graph",
         "landmarks",
-        "ttfb",
         "answer-first",
         "question-headings",
         "faq",
@@ -3622,7 +3591,7 @@
     {
       "path": "/custom-regions-mountain-modern-homes",
       "type": "page",
-      "score": 51,
+      "score": 52,
       "words": 78,
       "schema": [
         "Organization",
@@ -3634,7 +3603,6 @@
         "title",
         "open-graph",
         "landmarks",
-        "ttfb",
         "answer-first",
         "question-headings",
         "faq",
@@ -3800,61 +3768,6 @@
       "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
-      "type": "post",
-      "score": 61,
-      "words": 137,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "Anchor Homes: Prefab Modular Homes From Around the World: Our Top 3 Picks for 2025 — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
-      "type": "post",
-      "score": 61,
-      "words": 277,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "Architectural Digest: See How 16 Families are Rebuilding After the LA Fires — Honors Journal | Method Homes"
-    },
-    {
       "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 61,
@@ -3932,6 +3845,59 @@
         "references"
       ],
       "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+      "type": "post",
+      "score": 62,
+      "words": 137,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Anchor Homes: Prefab Modular Homes From Around the World: Our Top 3 Picks for 2025 — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+      "type": "post",
+      "score": 62,
+      "words": 277,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Architectural Digest: See How 16 Families are Rebuilding After the LA Fires — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/architectural-record-modular-classroom-makeover",
@@ -4428,7 +4394,6 @@
       "fails": [
         "title",
         "landmarks",
-        "ttfb",
         "question-headings",
         "faq",
         "depth",
