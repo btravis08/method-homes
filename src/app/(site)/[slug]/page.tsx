@@ -18,6 +18,37 @@ import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
 import { seoMeta } from "@/sanity/lib/seo";
 import type { Page } from "@/sanity/types";
 
+/* Plain text from a section tree: strings and Portable Text blocks in
+   copy-bearing fields, longest-first — the meta description fallback
+   when the SEO field is empty, so no CMS page ships without one */
+function describeSections(sections: unknown, max = 155): string | undefined {
+  const texts: string[] = [];
+  const KEYS = new Set(["body", "description", "copy", "text", "headline", "subtitle", "quote", "title"]);
+  const grab = (v: unknown): string => {
+    if (typeof v === "string") return v;
+    if (Array.isArray(v))
+      return v
+        .map((b) => (b && typeof b === "object" && (b as { _type?: string })._type === "block" ? ((b as { children?: { text?: string }[] }).children ?? []).map((c) => c.text ?? "").join("") : ""))
+        .join(" ");
+    return "";
+  };
+  const walk = (node: unknown, depth: number) => {
+    if (!node || typeof node !== "object" || depth > 3) return;
+    for (const [k, v] of Object.entries(node as Record<string, unknown>)) {
+      if (KEYS.has(k)) {
+        const t = grab(v).replace(/\s+/g, " ").trim();
+        if (t.length >= 40) texts.push(t);
+      } else if (v && typeof v === "object") walk(v, depth + 1);
+    }
+  };
+  walk(sections, 0);
+  if (!texts.length) return undefined;
+  const best = texts.sort((a, b) => b.length - a.length)[0];
+  if (best.length <= max) return best;
+  const cut = best.slice(0, max - 1);
+  return `${cut.slice(0, Math.max(cut.lastIndexOf(" "), 80)).trim()}…`;
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -26,7 +57,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const page = await sanityFetch<Page | null>(pageBySlugQuery, { slug }, null);
   if (!page) return { title: "Page not found" };
-  const meta = seoMeta({ seo: page.seo, title: page.title, path: `/${slug}` });
+  const meta = seoMeta({ seo: page.seo, title: page.title, description: describeSections(page.sections), path: `/${slug}` });
   /* protected pages never index, whatever the SEO fields say */
   if (page.protected) meta.robots = { index: false, follow: false };
   return meta;
@@ -79,7 +110,10 @@ export default async function CmsPage({
   if (page.sections?.length) {
     return (
       <div data-mode="light" className="flex flex-col items-start bg-surface">
-        <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path: `/${slug}` })} />
+        <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description || describeSections(page.sections), path: `/${slug}` })} />
+        {/* the document heading: section headlines are display copy,
+            not the page's name — answer engines want exactly one H1 */}
+        <h1 className="sr-only">{page.title}</h1>
         {page.showFooterTagline && <FooterTagline />}
         <SectionRenderer sections={page.sections} />
       </div>

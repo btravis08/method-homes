@@ -24,7 +24,7 @@ export interface PostDoc {
   seoTitle?: string;
   seo?: import("@/sanity/types").SeoDoc | null;
   tags?: string[];
-  author?: { name?: string; role?: string; avatar?: SanityImageSource };
+  author?: { name?: string; role?: string; avatar?: SanityImageSource; bio?: string; credentials?: string; sameAs?: string[] };
   categories?: { title?: string; slug?: string }[];
 }
 
@@ -157,7 +157,7 @@ export function PostArticle({
 
       {/* byline */}
       {post.author?.name && (
-        <footer className="mx-auto mt-16 flex max-w-2xl items-center gap-4 border-t border-line px-6 pt-8">
+        <footer className="mx-auto mt-16 flex max-w-2xl items-start gap-4 border-t border-line px-6 pt-8">
           {img(post.author.avatar, 200) && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -167,9 +167,12 @@ export function PostArticle({
               className="size-12 rounded-xs object-cover"
             />
           )}
-          <div className="flex flex-col">
+          <div className="flex flex-col gap-1">
             <p className="label font-medium text-ink">{post.author.name.toUpperCase()}</p>
-            {post.author.role && <p className="label text-ink-3">{post.author.role}</p>}
+            {(post.author.role || post.author.credentials) && (
+              <p className="label text-ink-3">{[post.author.role, post.author.credentials].filter(Boolean).join(" · ")}</p>
+            )}
+            {post.author.bio && <p className="mt-1 max-w-prose text-body-sm text-ink-2">{post.author.bio}</p>}
           </div>
         </footer>
       )}

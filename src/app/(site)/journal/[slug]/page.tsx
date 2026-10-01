@@ -54,7 +54,17 @@ function articleJsonLd(post: PostDoc, slug: string) {
     datePublished: post.publishedAt,
     dateModified: post._updatedAt ?? post.publishedAt,
     ...(post.author?.name
-      ? { author: { "@type": "Person", name: post.author.name, ...(post.author.role ? { jobTitle: post.author.role } : {}) } }
+      ? {
+          author: {
+            "@type": "Person",
+            name: post.author.name,
+            ...(post.author.role ? { jobTitle: post.author.role } : {}),
+            ...(post.author.bio || post.author.credentials ? { description: [post.author.credentials, post.author.bio].filter(Boolean).join(". ") } : {}),
+            ...(post.author.sameAs?.length ? { sameAs: post.author.sameAs } : {}),
+            ...(post.author.avatar ? { image: (() => { try { return urlFor(post.author.avatar).width(400).height(400).fit("crop").url(); } catch { return undefined; } })() } : {}),
+            worksFor: { "@type": "Organization", name: designops.aeo.brand, url: designops.site.baseUrl },
+          },
+        }
       : {}),
     publisher: { "@type": "Organization", name: designops.aeo.brand, url: designops.site.baseUrl },
     ...(post.tags?.length ? { keywords: post.tags.join(", ") } : {}),

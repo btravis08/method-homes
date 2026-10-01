@@ -307,7 +307,7 @@ export const postBySlugQuery = groq`
     seoTitle,
     seo,
     tags,
-    "author": author->{name, role, avatar},
+    "author": author->{name, role, avatar, bio, credentials, sameAs},
     "categories": categories[]->{title, "slug": slug.current}
   }
 `;

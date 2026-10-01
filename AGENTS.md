@@ -333,6 +333,13 @@ staging/design use.
 - Studio tool **Analytics** (`/studio/analytics`, views AEO · Traffic ·
   Performance via #hash) replaces the separate Performance and AEO
   tools; Overview links into it.
+- Content gates in code: every section-built page (and the home page)
+  renders an sr-only `<h1>` with the page title so there is exactly
+  one H1; CMS pages without an SEO description fall back to the
+  longest copy field in their sections (describeSections); authors
+  carry bio, credentials and sameAs profiles which the post's
+  BlogPosting emits as a full Person (the Authority L3 gate). The
+  remaining gate work is content entry in the Studio.
 - Output: src/design/aeo.status.json (+ aeo.history.json, cap
   aeo.historyCap) → Studio **AEO** tool (score, pillars, prompt
   insights, crawler matrix, recommendations, per-page table) and the

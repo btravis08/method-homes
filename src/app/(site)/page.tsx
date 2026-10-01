@@ -75,6 +75,8 @@ export default async function Home() {
 
   return (
     <div data-mode="light" className="flex flex-col items-start bg-surface">
+      {/* document heading for the entity page; the hero's headline is campaign copy */}
+      <h1 className="sr-only">{designops.aeo.brand} — architect-designed prefab homes</h1>
       {page?.showFooterTagline && <FooterTagline />}
       {page?.sections?.length ? (
         <SectionRenderer sections={page.sections} />

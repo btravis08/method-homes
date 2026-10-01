@@ -25,7 +25,15 @@ export const author = defineType({
     defineField({ name: "name", title: "Name", type: "string", validation: (r) => r.required() }),
     defineField({ name: "role", title: "Role", type: "string" }),
     defineField({ name: "avatar", title: "Avatar", type: "image", options: { hotspot: true } }),
-    defineField({ name: "bio", title: "Bio", type: "text", rows: 3 }),
+    defineField({ name: "bio", title: "Bio", type: "text", rows: 3, description: "Two or three sentences on expertise — shown under the byline and emitted as the author's Person schema." }),
+    defineField({ name: "credentials", title: "Credentials", type: "string", description: "e.g. AIA, LEED AP, 15 years in modular construction" }),
+    defineField({
+      name: "sameAs",
+      title: "Profiles",
+      type: "array",
+      of: [{ type: "url" }],
+      description: "LinkedIn, Instagram, personal site — lets answer engines resolve the author to one person.",
+    }),
   ],
   preview: { select: { title: "name", subtitle: "role", media: "avatar" } },
 });
