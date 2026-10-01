@@ -1,23 +1,28 @@
 "use client";
 
-import { Badge, Box, Card, Code, Container, Flex, Grid, Heading, Stack, Text } from "@sanity/ui";
-
 import history from "@/design/aeo.history.json";
 import report from "@/design/aeo.status.json";
 
 import designops from "../../../designops.config.json";
 
 /*
-  "AEO" — answer-engine readiness, graded the way Webflow AEO grades a
-  site: four pillars (Content · Technical · Authority · Measurement),
-  a 0–100 score with a 1–5 maturity level, prompt insights (how often
-  AI answers mention and cite us), the AI-crawler access matrix, a
-  ranked list of recommendations (impact in score points, discounted
-  by effort) and the per-page table behind them.
+  "AEO" — the AEO maturity dashboard, in Webflow AEO's vocabulary:
+  AEO maturity (0–100 score, Level 1–5 on the four-pillar Maturity
+  Model — what the site itself does), AEO analytics · Prompt insights
+  (visibility score / citation rate — the outcome, which lags), LLM bot
+  access, AEO recommendations (prioritized fixes) and the page-level
+  audit.
+
+  Built with the site's own Tailwind tokens (surface / ink / wash /
+  line, the spacing ladder, the fluid type scale) inside a
+  data-mode="light" wrapper, so it reads as a Method surface rather
+  than a generic admin table. Charts follow the dataviz rules: one
+  hero figure in the UI sans, stat tiles, meters whose track is the
+  same ramp (ink on wash), hairline rules, status colors only where a
+  color means pass / watch / fail — always paired with a label.
 
   Data: scripts/aeo-audit.mjs via the nightly aeo workflow →
-  src/design/aeo.status.json (+ aeo.history.json). Plain @sanity/ui,
-  themed by the Studio.
+  src/design/aeo.status.json (+ aeo.history.json).
 */
 
 type Pillar = { score: number; level: number; weight: number; checks: number; passing: number };
@@ -54,8 +59,17 @@ const PILLAR_BLURB: Record<string, string> = {
   measurement: "Do we know how AI answers describe and cite us?",
 };
 const LEVELS = ["", "Invisible", "Emerging", "Developing", "Established", "Leading"];
+const LEVEL_FLOOR = [0, 0, 20, 40, 60, 80];
 
-const tone = (score: number) => (score >= 80 ? "positive" : score >= 50 ? "caution" : "critical");
+/* status palette (fixed, never themed): a color only ever means pass /
+   watch / fail and always travels with a label or glyph */
+const STATUS = {
+  good: "#0ca30c",
+  warning: "#c98500",
+  critical: "#d03b3b",
+} as const;
+const statusOf = (score: number) => (score >= 80 ? "good" : score >= 50 ? "warning" : "critical");
+const STATUS_LABEL = { good: "on track", warning: "watch", critical: "needs work" } as const;
 
 function ago(iso: string) {
   const hours = (Date.now() - new Date(iso).getTime()) / 36e5;
@@ -64,300 +78,431 @@ function ago(iso: string) {
   return `${Math.round(hours / 24)}d ago`;
 }
 
-/* 0–100 bar in the Studio's own colors */
-function Bar({ value }: { value: number }) {
+/* ── primitives ──────────────────────────────────────────────────── */
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return <p className="label text-ink-3">{children}</p>;
+}
+
+function Panel({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  return <section className={`rounded-md border border-line bg-surface-2/40 p-2xl ${className}`}>{children}</section>;
+}
+
+function Dot({ tone }: { tone: keyof typeof STATUS }) {
+  return <span aria-hidden="true" className="inline-block size-2 shrink-0 rounded-full" style={{ background: STATUS[tone] }} />;
+}
+
+function StatusPill({ tone, children }: { tone: keyof typeof STATUS; children: React.ReactNode }) {
   return (
-    <Card tone="transparent" border radius={2} style={{ height: 8, overflow: "hidden" }}>
-      <Card tone={tone(value)} style={{ height: "100%", width: `${Math.max(2, Math.min(100, value))}%`, transition: "width .3s" }} />
-    </Card>
+    <span className="inline-flex items-center gap-sm rounded-md border border-line bg-surface px-md py-xs text-body-sm text-ink">
+      <Dot tone={tone} />
+      {children}
+    </span>
   );
 }
 
-function Trend() {
-  const scores = RUNS.map((r) => r.score);
-  if (scores.length < 2)
-    return (
-      <Text size={1} muted>
-        one run — the trend appears after tomorrow&apos;s grade
-      </Text>
-    );
-  const W = 220;
-  const H = 44;
-  const min = Math.min(...scores, 0);
-  const max = 100;
-  const pts = scores.map((s, i) => `${((i / (scores.length - 1)) * (W - 4) + 2).toFixed(1)},${(H - 4 - ((s - min) / (max - min)) * (H - 8)).toFixed(1)}`).join(" ");
-  const latest = scores[scores.length - 1];
-  const prev = scores[scores.length - 2];
+function Tag({ children }: { children: React.ReactNode }) {
+  return <span className="label inline-flex items-center rounded-md bg-wash px-md py-xs text-ink-2">{children}</span>;
+}
+
+/* meter: fill = ink, track = the same ramp lighter (wash) */
+function Meter({ value, height = "h-1.5" }: { value: number; height?: string }) {
   return (
-    <Flex align="center" gap={3}>
-      <Text muted={latest === prev} accent={latest < prev}>
-        <svg width={W} height={H} aria-hidden style={{ display: "block" }}>
-          <polyline points={pts} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
-        </svg>
-      </Text>
-      <Text size={1} muted>
-        {latest - prev >= 0 ? "+" : ""}
-        {latest - prev} since last run · {scores.length} runs
-      </Text>
-    </Flex>
+    <div className={`${height} w-full overflow-hidden rounded-md bg-wash`} role="meter" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(value)}>
+      <div className="h-full rounded-md bg-ink transition-[width] duration-500 ease-[cubic-bezier(0.22,1,0.36,1)]" style={{ width: `${Math.max(1, Math.min(100, value))}%` }} />
+    </div>
+  );
+}
+
+/* the 1–5 level stepper: filled steps reached, the rest on the track */
+function LevelSteps({ level }: { level: number }) {
+  return (
+    <ol className="flex items-center gap-xs" aria-label={`Level ${level} of 5`}>
+      {[1, 2, 3, 4, 5].map((n) => (
+        <li key={n} className={`h-1.5 w-8 rounded-md ${n <= level ? "bg-ink" : "bg-wash"}`} title={`Level ${n} · ${LEVELS[n]} (${LEVEL_FLOOR[n]}+)`} />
+      ))}
+    </ol>
+  );
+}
+
+/* 2px line, ≥8px end marker with a surface ring, hairline baseline */
+function Sparkline({ values, width = 240, height = 56 }: { values: number[]; width?: number; height?: number }) {
+  if (values.length < 2) {
+    return <div className="flex h-14 items-center text-body-sm text-ink-3">one assessment so far — the trend draws after tomorrow&apos;s run</div>;
+  }
+  const min = Math.max(0, Math.min(...values) - 10);
+  const max = Math.min(100, Math.max(...values) + 10);
+  const x = (i: number) => (i / (values.length - 1)) * (width - 8) + 4;
+  const y = (v: number) => height - 6 - ((v - min) / (max - min || 1)) * (height - 12);
+  const pts = values.map((v, i) => `${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
+  const last = values[values.length - 1];
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} className="block max-w-full" aria-hidden="true">
+      <line x1={4} x2={width - 4} y1={height - 6} y2={height - 6} className="stroke-line" strokeWidth={1} />
+      <polyline points={pts} fill="none" className="stroke-ink" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
+      <circle cx={x(values.length - 1)} cy={y(last)} r={6} className="fill-surface" />
+      <circle cx={x(values.length - 1)} cy={y(last)} r={4} className="fill-ink" />
+    </svg>
+  );
+}
+
+function Stat({ label, value, unit, sub, tone }: { label: string; value: string | number; unit?: string; sub?: string; tone?: keyof typeof STATUS }) {
+  return (
+    <div className="flex flex-col gap-sm rounded-md border border-line bg-surface p-xl">
+      <p className="text-body-sm text-ink-3">{label}</p>
+      <p className="flex items-baseline gap-xs font-sans text-title-md font-medium text-ink">
+        {value}
+        {unit ? <span className="text-body-md text-ink-3">{unit}</span> : null}
+      </p>
+      {sub ? (
+        <p className="flex items-center gap-sm text-body-sm text-ink-3">
+          {tone ? <Dot tone={tone} /> : null}
+          {sub}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function Glyph({ ok }: { ok: boolean }) {
+  return ok ? (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0">
+      <path d="M3 7.5l2.5 2.5L11 4" fill="none" stroke={STATUS.good} strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  ) : (
+    <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" className="shrink-0 text-ink-3">
+      <path d="M3.5 7h7" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+/* ── sections ────────────────────────────────────────────────────── */
+
+function Hero() {
+  const runs = RUNS.map((r) => r.score);
+  const prev = runs.length > 1 ? runs[runs.length - 2] : null;
+  const delta = prev == null ? null : DATA.score - prev;
+  const nextFloor = DATA.level < 5 ? LEVEL_FLOOR[DATA.level + 1] : null;
+  const tone = statusOf(DATA.score);
+  return (
+    <header className="grid gap-2xl border-b border-line pb-2xl lg:grid-cols-[1fr_auto] lg:items-end">
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-col gap-sm">
+          <Eyebrow>AEO maturity</Eyebrow>
+          <h1 className="text-title-md text-ink">Answer engine optimization</h1>
+          <p className="max-w-[44rem] text-body-md text-ink-3">
+            How ready {designops.aeo.brand}&apos;s site is to be read, understood and cited by ChatGPT, Claude, Perplexity and Gemini — scored on the four-pillar AEO Maturity Model. {DATA.origin.replace(/^https?:\/\//, "")} · {DATA.pagesCrawled} pages · assessed {ago(DATA.generatedAt)}.
+          </p>
+        </div>
+        <div className="flex flex-wrap items-end gap-2xl">
+          <div className="flex items-baseline gap-md">
+            {/* the one hero figure on the view: UI sans, proportional figures */}
+            <span className="font-sans text-[4rem] font-medium leading-none tracking-[-0.02em] text-ink">{DATA.score}</span>
+            <span className="text-body-md text-ink-3">/ 100</span>
+          </div>
+          <div className="flex flex-col gap-md pb-xs">
+            <div className="flex items-center gap-lg">
+              <LevelSteps level={DATA.level} />
+              <span className="text-body-md text-ink">
+                Level {DATA.level} of 5 · {LEVELS[DATA.level]}
+              </span>
+            </div>
+            <p className="flex flex-wrap items-center gap-lg text-body-sm text-ink-3">
+              <StatusPill tone={tone}>{STATUS_LABEL[tone]}</StatusPill>
+              {delta != null ? (
+                <span>
+                  {delta >= 0 ? "+" : ""}
+                  {delta} since the last assessment
+                </span>
+              ) : null}
+              {nextFloor != null ? <span>{nextFloor - DATA.score} points to Level {DATA.level + 1}</span> : <span>top level reached</span>}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col gap-sm">
+        <Eyebrow>Trend · {runs.length} run{runs.length === 1 ? "" : "s"}</Eyebrow>
+        <Sparkline values={runs} />
+        <p className="text-body-sm text-ink-3">
+          first {runs[0]} → now {DATA.score}
+        </p>
+      </div>
+    </header>
   );
 }
 
 function Pillars() {
   return (
-    <Grid columns={[1, 2, 4]} gap={3}>
-      {Object.entries(DATA.pillars).map(([name, p]) => (
-        <Card key={name} padding={4} radius={3} border>
-          <Stack space={3}>
-            <Flex justify="space-between" align="baseline">
-              <Text size={1} weight="medium" style={{ textTransform: "capitalize" }}>
-                {name}
-              </Text>
-              <Text size={1} muted>
-                weight {p.weight}%
-              </Text>
-            </Flex>
-            <Flex align="baseline" gap={2}>
-              <Heading size={4}>{p.score}</Heading>
-              <Badge tone={tone(p.score)}>Level {p.level}</Badge>
-            </Flex>
-            <Bar value={p.score} />
-            <Text size={1} muted>
-              {p.passing}/{p.checks} checks pass · {PILLAR_BLURB[name]}
-            </Text>
-          </Stack>
-        </Card>
-      ))}
-    </Grid>
+    <section className="flex flex-col gap-xl">
+      <div className="flex items-baseline justify-between gap-lg">
+        <Eyebrow>Maturity by pillar</Eyebrow>
+        <p className="text-body-sm text-ink-3">each pillar is the weighted pass ratio of its checks · weights sum to 100</p>
+      </div>
+      <div className="grid gap-md sm:grid-cols-2 xl:grid-cols-4">
+        {Object.entries(DATA.pillars).map(([name, p]) => {
+          const tone = statusOf(p.score);
+          return (
+            <article key={name} className="flex flex-col gap-lg rounded-md border border-line bg-surface p-xl">
+              <div className="flex items-start justify-between gap-md">
+                <div className="flex flex-col gap-xs">
+                  <h2 className="text-body-md font-medium capitalize text-ink">{name}</h2>
+                  <p className="text-body-sm text-ink-3">{PILLAR_BLURB[name]}</p>
+                </div>
+                <Tag>{p.weight}%</Tag>
+              </div>
+              <div className="flex items-baseline gap-md">
+                <span className="font-sans text-title-md font-medium leading-none text-ink">{p.score}</span>
+                <span className="text-body-sm text-ink-3">Level {p.level} · {LEVELS[p.level]}</span>
+              </div>
+              <Meter value={p.score} />
+              <p className="flex items-center gap-sm text-body-sm text-ink-3">
+                <Dot tone={tone} />
+                {p.passing} of {p.checks} checks pass
+              </p>
+            </article>
+          );
+        })}
+      </div>
+    </section>
   );
 }
 
-function PromptInsights() {
+function Analytics() {
   const p = DATA.prompts;
-  const rows: PromptResult[] = p.ran
-    ? p.results
-    : (designops.aeo.prompts as string[]).map((prompt) => ({ prompt, mentioned: false, cited: false, surfaced: false }));
+  const rows: PromptResult[] = p.ran ? p.results : (designops.aeo.prompts as string[]).map((prompt) => ({ prompt, mentioned: false, cited: false, surfaced: false }));
   return (
-    <Card padding={4} radius={3} border>
-      <Stack space={4}>
-        <Flex justify="space-between" align="baseline" gap={3} wrap="wrap">
-          <Heading size={1}>AEO analytics · Prompt insights</Heading>
-          <Text size={1} muted>
-            {p.ran ? (p.manual ? `${p.answered} prompts, recorded by hand — ${p.model}` : `${p.answered} prompts answered with live web search (${p.model})`) : `not run — ${p.reason}`}
-          </Text>
-        </Flex>
+    <Panel>
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-wrap items-baseline justify-between gap-lg">
+          <div className="flex flex-col gap-xs">
+            <Eyebrow>AEO analytics · Prompt insights</Eyebrow>
+            <h2 className="text-body-md text-ink">What AI answers say when buyers ask</h2>
+          </div>
+          <p className="text-body-sm text-ink-3">
+            {p.ran ? (p.manual ? `${p.answered} prompts · recorded by hand · ${p.model}` : `${p.answered} prompts · live web search · ${p.model}`) : `not recorded — ${p.reason}`}
+          </p>
+        </div>
+
         {p.ran ? (
-          <Grid columns={[1, 3]} gap={3}>
-            {[
-              ["Visibility score", p.visibility, "share of AI answers to the tracked prompts that mention the brand"],
-              ["Citation rate", p.citationRate, "share of answers that cite one of our domains as a source"],
-              ["Surfaced in sources", p.surfacedRate, "answers whose research found our domain, cited or not"],
-            ].map(([label, value, blurb]) => (
-              <Card key={String(label)} padding={3} radius={2} tone="transparent" border>
-                <Stack space={2}>
-                  <Text size={1} muted>
-                    {label}
-                  </Text>
-                  <Heading size={3}>{value}%</Heading>
-                  <Text size={0} muted>
-                    {blurb}
-                  </Text>
-                </Stack>
-              </Card>
-            ))}
-          </Grid>
+          <div className="grid gap-md sm:grid-cols-3">
+            <Stat label="Visibility score" value={p.visibility ?? 0} unit="%" sub="answers that mention the brand" tone={statusOf(p.visibility ?? 0)} />
+            <Stat label="Citation rate" value={p.citationRate ?? 0} unit="%" sub="answers that cite one of our domains" tone={statusOf(p.citationRate ?? 0)} />
+            <Stat label="Surfaced in sources" value={p.surfacedRate ?? 0} unit="%" sub="research that found our domain, cited or not" />
+          </div>
         ) : (
-          <Text size={1}>
-            Add <Code size={1}>ANTHROPIC_API_KEY</Code> to the repository&apos;s Actions secrets for a nightly probe, or ask an answer engine the tracked prompts yourself and record the answers in{" "}
-            <Code size={1}>src/design/aeo.prompts.manual.json</Code>. The prompts live in <Code size={1}>designops.config.json → aeo.prompts</Code>.
-          </Text>
+          <p className="rounded-md border border-line bg-surface p-xl text-body-sm text-ink-2">
+            Add an <code className="font-mono">ANTHROPIC_API_KEY</code> secret to the repository&apos;s Actions for a nightly probe, or ask an answer engine the tracked prompts and record the answers in <code className="font-mono">src/design/aeo.prompts.manual.json</code>.
+          </p>
         )}
-        <Stack space={2}>
+
+        <ul className="flex flex-col divide-y divide-line">
           {rows.map((r) => (
-            <Flex key={r.prompt} gap={3} align="flex-start">
-              <Box flex={1}>
-                <Text size={1}>{r.prompt}</Text>
-                {r.excerpt ? (
-                  <Text size={0} muted style={{ marginTop: 4 }}>
-                    {r.excerpt.slice(0, 180)}…
-                  </Text>
-                ) : null}
-              </Box>
+            <li key={r.prompt} className="grid gap-md py-lg md:grid-cols-[1fr_auto] md:items-start">
+              <div className="flex flex-col gap-xs">
+                <p className="text-body-md text-ink">{r.prompt}</p>
+                {r.excerpt ? <p className="text-body-sm text-ink-3">{r.excerpt}</p> : null}
+              </div>
               {p.ran ? (
-                <Flex gap={1}>
-                  <Badge tone={r.mentioned ? "positive" : "default"}>{r.mentioned ? "mentioned" : "no mention"}</Badge>
-                  <Badge tone={r.cited ? "positive" : r.surfaced ? "caution" : "default"}>{r.cited ? "cited" : r.surfaced ? "found" : "not cited"}</Badge>
-                </Flex>
+                <div className="flex flex-wrap items-center gap-md md:justify-end">
+                  <span className="inline-flex items-center gap-sm text-body-sm text-ink">
+                    <Glyph ok={r.mentioned} /> {r.mentioned ? "mentioned" : "not mentioned"}
+                  </span>
+                  <span className="inline-flex items-center gap-sm text-body-sm text-ink">
+                    <Glyph ok={r.cited} /> {r.cited ? "cited" : r.surfaced ? "found, not cited" : "not cited"}
+                  </span>
+                </div>
               ) : (
-                <Badge>tracked</Badge>
+                <Tag>tracked</Tag>
               )}
-            </Flex>
+            </li>
           ))}
-        </Stack>
-      </Stack>
-    </Card>
+        </ul>
+      </div>
+    </Panel>
   );
 }
 
 function Bots() {
   const allowed = DATA.bots.filter((b) => b.allowed).length;
   return (
-    <Card padding={4} radius={3} border>
-      <Stack space={3}>
-        <Flex justify="space-between" align="baseline">
-          <Heading size={1}>LLM bot access</Heading>
-          <Badge tone={allowed === DATA.bots.length ? "positive" : "caution"}>
+    <Panel>
+      <div className="flex flex-col gap-xl">
+        <div className="flex items-baseline justify-between gap-lg">
+          <div className="flex flex-col gap-xs">
+            <Eyebrow>LLM bot access</Eyebrow>
+            <h2 className="text-body-md text-ink">Which answer-engine crawlers may read the site</h2>
+          </div>
+          <StatusPill tone={allowed === DATA.bots.length ? "good" : "warning"}>
             {allowed}/{DATA.bots.length} allowed
-          </Badge>
-        </Flex>
-        <Flex gap={2} wrap="wrap">
+          </StatusPill>
+        </div>
+        <ul className="flex flex-wrap gap-sm">
           {DATA.bots.map((b) => (
-            <Badge key={b.bot} tone={b.allowed ? (b.explicit ? "positive" : "primary") : "critical"} title={b.rule}>
+            <li key={b.bot} className="inline-flex items-center gap-sm rounded-md border border-line bg-surface px-md py-sm text-body-sm text-ink" title={b.rule}>
+              <Dot tone={b.allowed ? (b.explicit ? "good" : "warning") : "critical"} />
               {b.bot}
-            </Badge>
+            </li>
           ))}
-        </Flex>
-        <Text size={0} muted>
-          green = named and allowed · blue = allowed by the * rule · red = blocked. Also: llms.txt {DATA.llms.ok ? "present" : `missing (${DATA.llms.status})`} · sitemap {DATA.sitemap.urls} URLs{DATA.sitemap.lastmod ? " with lastmod" : ", no lastmod"} · {DATA.links.broken.length} broken of {DATA.links.checked} internal links
-        </Text>
-      </Stack>
-    </Card>
+        </ul>
+        <dl className="grid gap-md text-body-sm sm:grid-cols-3">
+          <div className="flex flex-col gap-xs rounded-md bg-surface p-lg">
+            <dt className="text-ink-3">llms.txt</dt>
+            <dd className="flex items-center gap-sm text-ink">
+              <Dot tone={DATA.llms.ok ? "good" : "critical"} />
+              {DATA.llms.ok ? "published" : `missing (${DATA.llms.status})`}
+            </dd>
+          </div>
+          <div className="flex flex-col gap-xs rounded-md bg-surface p-lg">
+            <dt className="text-ink-3">Sitemap</dt>
+            <dd className="flex items-center gap-sm text-ink">
+              <Dot tone={DATA.sitemap.ok ? (DATA.sitemap.lastmod ? "good" : "warning") : "critical"} />
+              {DATA.sitemap.urls} URLs{DATA.sitemap.lastmod ? ", with lastmod" : ", no lastmod"}
+            </dd>
+          </div>
+          <div className="flex flex-col gap-xs rounded-md bg-surface p-lg">
+            <dt className="text-ink-3">Internal links</dt>
+            <dd className="flex items-center gap-sm text-ink">
+              <Dot tone={DATA.links.broken.length ? "critical" : "good"} />
+              {DATA.links.broken.length} broken of {DATA.links.checked}
+            </dd>
+          </div>
+        </dl>
+        <p className="text-body-sm text-ink-3">green = named and allowed · amber = allowed only by the wildcard rule · red = blocked</p>
+      </div>
+    </Panel>
   );
 }
 
 function Recommendations() {
+  const max = Math.max(...DATA.recommendations.map((r) => r.impact), 1);
   return (
-    <Card padding={4} radius={3} border>
-      <Stack space={4}>
-        <Flex justify="space-between" align="baseline">
-          <Heading size={1}>AEO recommendations</Heading>
-          <Text size={1} muted>
-            prioritized by maturity points recovered ÷ effort
-          </Text>
-        </Flex>
-        <Stack space={3}>
+    <Panel>
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-wrap items-baseline justify-between gap-lg">
+          <div className="flex flex-col gap-xs">
+            <Eyebrow>AEO recommendations</Eyebrow>
+            <h2 className="text-body-md text-ink">What to fix next, in order</h2>
+          </div>
+          <p className="text-body-sm text-ink-3">prioritized by maturity points recovered ÷ effort</p>
+        </div>
+        <ol className="flex flex-col divide-y divide-line">
           {DATA.recommendations.slice(0, 14).map((r, i) => (
-            <Card key={r.id} padding={3} radius={2} tone="transparent" border>
-              <Stack space={2}>
-                <Flex gap={3} align="baseline" wrap="wrap">
-                  <Text size={1} muted>
-                    {i + 1}
-                  </Text>
-                  <Box flex={1}>
-                    <Text size={1} weight="medium">
-                      {r.title}
-                    </Text>
-                  </Box>
-                  <Badge tone="primary">+{r.impact} pts</Badge>
-                  <Badge>{r.effort} effort</Badge>
-                  <Badge style={{ textTransform: "capitalize" }}>{r.pillar}</Badge>
-                </Flex>
-                <Text size={1}>{r.fix}</Text>
-                <Text size={0} muted>
+            <li key={r.id} className="grid gap-lg py-xl md:grid-cols-[2.5rem_1fr_14rem] md:items-start">
+              <span className="font-sans text-title-sm leading-none text-ink-3 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+              <div className="flex flex-col gap-sm">
+                <p className="text-body-md font-medium text-ink">{r.title}</p>
+                <p className="max-w-[60rem] text-body-md text-ink-2">{r.fix}</p>
+                <p className="text-body-sm text-ink-3">
                   {r.detail}
-                  {r.pagesAffected ? ` · ${r.pagesAffected} page(s): ${r.pages.slice(0, 3).join(" · ")}${r.pagesAffected > 3 ? " …" : ""}` : ""}
-                </Text>
-              </Stack>
-            </Card>
+                  {r.pagesAffected ? ` · ${r.pagesAffected} page${r.pagesAffected === 1 ? "" : "s"}: ${r.pages.slice(0, 3).map((x) => x.split(" — ")[0]).join(", ")}${r.pagesAffected > 3 ? "…" : ""}` : ""}
+                </p>
+                <div className="flex flex-wrap gap-sm">
+                  <Tag>{r.pillar}</Tag>
+                  <Tag>{r.effort} effort</Tag>
+                </div>
+              </div>
+              <div className="flex flex-col gap-sm">
+                <p className="flex items-baseline justify-between text-body-sm text-ink-3">
+                  <span>recovers</span>
+                  <span className="font-medium text-ink tabular-nums">+{r.impact.toFixed(1)} pts</span>
+                </p>
+                <Meter value={(r.impact / max) * 100} height="h-1" />
+              </div>
+            </li>
           ))}
-          {!DATA.recommendations.length && <Text size={1}>Every check passes.</Text>}
-        </Stack>
-      </Stack>
-    </Card>
+          {!DATA.recommendations.length && <li className="py-xl text-body-md text-ink">Every check passes.</li>}
+        </ol>
+      </div>
+    </Panel>
   );
 }
 
 function Pages() {
   return (
-    <Card padding={4} radius={3} border>
-      <Stack space={3}>
-        <Flex justify="space-between" align="baseline">
-          <Heading size={1}>Page-level audit</Heading>
-          <Text size={1} muted>
-            {DATA.pagesCrawled} pages crawled from the sitemap · weakest first
-          </Text>
-        </Flex>
-        <Stack space={2}>
-          {DATA.pages.map((pg) => (
-            <Flex key={pg.path} gap={3} align="center">
-              <Box style={{ width: 40 }}>
-                <Badge tone={tone(pg.score)}>{pg.score}</Badge>
-              </Box>
-              <Box flex={1} style={{ minWidth: 0 }}>
-                <Text size={1} textOverflow="ellipsis">
-                  <a href={`${designops.site.baseUrl}${pg.path}`} target="_blank" rel="noreferrer" style={{ color: "inherit" }}>
-                    {pg.path}
-                  </a>{" "}
-                  <Text as="span" size={0} muted>
-                    {pg.type} · {pg.words} words · {pg.schema.length ? pg.schema.join(", ") : "no schema"}
-                  </Text>
-                </Text>
-              </Box>
-              <Text size={0} muted style={{ maxWidth: 320 }} textOverflow="ellipsis">
-                {pg.fails.join(", ")}
-              </Text>
-            </Flex>
-          ))}
-        </Stack>
-      </Stack>
-    </Card>
+    <Panel>
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-wrap items-baseline justify-between gap-lg">
+          <div className="flex flex-col gap-xs">
+            <Eyebrow>Page-level audit</Eyebrow>
+            <h2 className="text-body-md text-ink">Every crawled page, weakest first</h2>
+          </div>
+          <p className="text-body-sm text-ink-3">{DATA.pagesCrawled} pages from the sitemap</p>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-body-sm">
+            <thead>
+              <tr className="border-b border-line text-left text-ink-3">
+                <th className="py-md pr-lg font-normal">Score</th>
+                <th className="py-md pr-lg font-normal">Page</th>
+                <th className="py-md pr-lg font-normal">Type</th>
+                <th className="py-md pr-lg text-right font-normal">Words</th>
+                <th className="py-md pr-lg font-normal">Schema</th>
+                <th className="py-md font-normal">Failing checks</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-line">
+              {DATA.pages.map((pg) => (
+                <tr key={pg.path} className="align-top">
+                  <td className="py-md pr-lg">
+                    <span className="inline-flex items-center gap-sm text-ink tabular-nums">
+                      <Dot tone={statusOf(pg.score)} />
+                      {pg.score}
+                    </span>
+                  </td>
+                  <td className="max-w-[22rem] py-md pr-lg">
+                    <a href={`${designops.site.baseUrl}${pg.path}`} target="_blank" rel="noreferrer" className="block truncate text-ink underline decoration-line underline-offset-4 hover:decoration-ink">
+                      {pg.path}
+                    </a>
+                  </td>
+                  <td className="py-md pr-lg text-ink-3">{pg.type}</td>
+                  <td className="py-md pr-lg text-right text-ink-3 tabular-nums">{pg.words}</td>
+                  <td className="max-w-[14rem] truncate py-md pr-lg text-ink-3">{pg.schema.length ? pg.schema.join(", ") : "none"}</td>
+                  <td className="max-w-[24rem] py-md text-ink-3">{pg.fails.join(", ")}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </Panel>
+  );
+}
+
+function Method() {
+  return (
+    <aside className="grid gap-xl border-t border-line pt-2xl text-body-sm text-ink-3 md:grid-cols-2">
+      <p>
+        <span className="text-ink">Readiness vs visibility.</span> The maturity score is what the site itself does and changes the moment a fix ships. Prompt insights are the outcome it drives — whether AI answers mention and cite {designops.aeo.brand} — and they lag until the engines re-read the site.
+      </p>
+      <p>
+        <span className="text-ink">How it is scored.</span> {DATA.checks.length} checks, each with a pillar, a weight and an effort. Page checks run on every crawled page they apply to and contribute their average pass ratio; site checks run once. A pillar is the weighted pass ratio of its checks; the score weights the pillars{" "}
+        {Object.entries(DATA.pillars)
+          .map(([k, v]) => `${k} ${v.weight}`)
+          .join(" · ")}
+        . Levels: &lt;20 Invisible · &lt;40 Emerging · &lt;60 Developing · &lt;80 Established · 80+ Leading. Weights, bots, prompts and the brand live in designops.config.json → aeo.
+      </p>
+    </aside>
   );
 }
 
 export default function AeoPane() {
   return (
-    <Card height="fill" overflow="auto">
-      <Container width={5} paddingX={4} paddingY={5}>
-        <Stack space={5}>
-          <Flex align="flex-end" justify="space-between" gap={4} wrap="wrap">
-            <Stack space={3}>
-              <Heading as="h1" size={3}>
-                AEO maturity
-              </Heading>
-              <Text size={1} muted>
-                {DATA.origin.replace(/^https?:\/\//, "")} · assessed {ago(DATA.generatedAt)} · {DATA.pagesCrawled} pages · the AEO Maturity Model: Content · Technical · Authority · Measurement
-              </Text>
-            </Stack>
-            <Flex align="baseline" gap={3}>
-              <Heading size={5}>{DATA.score}</Heading>
-              <Stack space={2}>
-                <Badge tone={tone(DATA.score)} fontSize={1} padding={3}>
-                  Level {DATA.level} of 5 · {LEVELS[DATA.level]}
-                </Badge>
-                <Text size={0} muted>
-                  maturity score, out of 100
-                </Text>
-              </Stack>
-            </Flex>
-          </Flex>
-          <Trend />
-          <Stack space={3}>
-            <Heading size={1}>Maturity by pillar</Heading>
-            <Pillars />
-          </Stack>
-          <PromptInsights />
-          <Grid columns={[1, 1, 2]} gap={3}>
-            <Bots />
-            <Card padding={4} radius={3} border>
-              <Stack space={3}>
-                <Heading size={1}>How maturity is scored</Heading>
-                <Text size={1}>
-                  Readiness (the maturity score) is what the site itself does; AI visibility (prompt insights above) is the outcome it drives, and lags it. Each check has a pillar, a weight and an effort. Page checks run on every crawled page they apply to and contribute their average pass ratio; site checks run once. A pillar is the weighted pass ratio of its checks; the maturity score is the pillars weighted{" "}
-                  {Object.entries(DATA.pillars)
-                    .map(([k, v]) => `${k} ${v.weight}`)
-                    .join(" · ")}
-                  . Levels, 1–5: &lt;20 Invisible · &lt;40 Emerging · &lt;60 Developing · &lt;80 Established · 80+ Leading (Webflow&apos;s index put the average company at Level 2).
-                </Text>
-                <Text size={0} muted>
-                  {DATA.checks.length} checks · edit weights, bots, prompts and the brand in designops.config.json → aeo.
-                </Text>
-              </Stack>
-            </Card>
-          </Grid>
-          <Recommendations />
-          <Pages />
-        </Stack>
-      </Container>
-    </Card>
+    <div data-mode="light" className="h-full min-h-0 overflow-y-auto bg-surface font-sans text-ink">
+      <div className="mx-auto flex w-full max-w-[88rem] flex-col gap-4xl px-2xl py-4xl">
+        <Hero />
+        <div className="grid gap-md sm:grid-cols-2 xl:grid-cols-4">
+          <Stat label="Pages assessed" value={DATA.pagesCrawled} sub="crawled from the sitemap" />
+          <Stat label="LLM bots allowed" value={`${DATA.bots.filter((b) => b.allowed).length}/${DATA.bots.length}`} sub="named in robots.txt" tone={DATA.bots.every((b) => b.allowed) ? "good" : "warning"} />
+          <Stat label="Checks passing" value={`${DATA.checks.filter((c) => c.ratio >= 0.999).length}/${DATA.checks.length}`} sub="site-wide and page-level" />
+          <Stat label="Top fix recovers" value={DATA.recommendations[0] ? `+${DATA.recommendations[0].impact.toFixed(1)}` : "—"} unit={DATA.recommendations[0] ? "pts" : undefined} sub={DATA.recommendations[0]?.title ?? "every check passes"} />
+        </div>
+        <Pillars />
+        <Analytics />
+        <Bots />
+        <Recommendations />
+        <Pages />
+        <Method />
+      </div>
+    </div>
   );
 }
