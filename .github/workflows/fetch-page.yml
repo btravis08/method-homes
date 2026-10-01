@@ -1,0 +1,74 @@
+name: fetch-page
+
+# Renders a public web page with a real browser from a runner (the
+# sandbox's egress blocks many hosts) and commits its visible text and a
+# full-page screenshot under design/reference/<slug>.{md,png}. For
+# reading third-party reports and reference material — never for
+# anything confidential (the repo is public).
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Page to render
+        required: true
+      slug:
+        description: File name (no extension) under design/reference/
+        required: true
+      wait:
+        description: Extra milliseconds to wait for client rendering
+        default: "8000"
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright
+        run: |
+          mkdir -p /tmp/pw && cd /tmp/pw && npm init -y >/dev/null
+          npm i playwright@1.63.0 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+      - name: Render
+        env:
+          URL: ${{ github.event.inputs.url }}
+          SLUG: ${{ github.event.inputs.slug }}
+          WAIT: ${{ github.event.inputs.wait }}
+        run: |
+          mkdir -p design/reference
+          cat > /tmp/pw/render.mjs <<'JS'
+          import { chromium } from "playwright";
+          import { writeFileSync } from "node:fs";
+          const url = process.env.URL, slug = process.env.SLUG, wait = Number(process.env.WAIT || 8000);
+          const browser = await chromium.launch();
+          const page = await (await browser.newContext({ viewport: { width: 1440, height: 1000 }, userAgent: "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130 Safari/537.36" })).newPage();
+          await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60000 });
+          await page.waitForTimeout(wait);
+          // scroll through to trigger lazy content
+          const h = await page.evaluate(() => document.body.scrollHeight);
+          for (let y = 0; y < h; y += 800) { await page.evaluate((y) => window.scrollTo(0, y), y); await page.waitForTimeout(150); }
+          await page.evaluate(() => window.scrollTo(0, 0));
+          await page.waitForTimeout(500);
+          const title = await page.title();
+          const text = await page.evaluate(() => document.body.innerText);
+          const md = `# ${title}\n\nSource: ${url}\nRendered: ${new Date().toISOString()}\n\n---\n\n${text}\n`;
+          writeFileSync(`${process.env.GITHUB_WORKSPACE}/design/reference/${slug}.md`, md);
+          await page.screenshot({ path: `${process.env.GITHUB_WORKSPACE}/design/reference/${slug}.png`, fullPage: true });
+          console.log(`title: ${title}\nchars: ${text.length}`);
+          await browser.close();
+          JS
+          cd /tmp/pw && node render.mjs
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add design/reference
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Reference: render ${{ github.event.inputs.slug }}"
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep $((i * 3)); done
