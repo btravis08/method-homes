@@ -114,12 +114,12 @@ function Pillars() {
                 {name}
               </Text>
               <Text size={1} muted>
-                weight {p.weight}
+                weight {p.weight}%
               </Text>
             </Flex>
             <Flex align="baseline" gap={2}>
               <Heading size={4}>{p.score}</Heading>
-              <Badge tone={tone(p.score)}>level {p.level}</Badge>
+              <Badge tone={tone(p.score)}>Level {p.level}</Badge>
             </Flex>
             <Bar value={p.score} />
             <Text size={1} muted>
@@ -141,7 +141,7 @@ function PromptInsights() {
     <Card padding={4} radius={3} border>
       <Stack space={4}>
         <Flex justify="space-between" align="baseline" gap={3} wrap="wrap">
-          <Heading size={1}>Prompt insights</Heading>
+          <Heading size={1}>AEO analytics · Prompt insights</Heading>
           <Text size={1} muted>
             {p.ran ? (p.manual ? `${p.answered} prompts, recorded by hand — ${p.model}` : `${p.answered} prompts answered with live web search (${p.model})`) : `not run — ${p.reason}`}
           </Text>
@@ -149,9 +149,9 @@ function PromptInsights() {
         {p.ran ? (
           <Grid columns={[1, 3]} gap={3}>
             {[
-              ["Visibility", p.visibility, "answers that mention the brand"],
-              ["Citation rate", p.citationRate, "answers that cite one of our domains"],
-              ["Surfaced", p.surfacedRate, "searches that found us, cited or not"],
+              ["Visibility score", p.visibility, "share of AI answers to the tracked prompts that mention the brand"],
+              ["Citation rate", p.citationRate, "share of answers that cite one of our domains as a source"],
+              ["Surfaced in sources", p.surfacedRate, "answers whose research found our domain, cited or not"],
             ].map(([label, value, blurb]) => (
               <Card key={String(label)} padding={3} radius={2} tone="transparent" border>
                 <Stack space={2}>
@@ -205,7 +205,7 @@ function Bots() {
     <Card padding={4} radius={3} border>
       <Stack space={3}>
         <Flex justify="space-between" align="baseline">
-          <Heading size={1}>AI crawler access</Heading>
+          <Heading size={1}>LLM bot access</Heading>
           <Badge tone={allowed === DATA.bots.length ? "positive" : "caution"}>
             {allowed}/{DATA.bots.length} allowed
           </Badge>
@@ -230,9 +230,9 @@ function Recommendations() {
     <Card padding={4} radius={3} border>
       <Stack space={4}>
         <Flex justify="space-between" align="baseline">
-          <Heading size={1}>Recommendations</Heading>
+          <Heading size={1}>AEO recommendations</Heading>
           <Text size={1} muted>
-            ranked by score points recovered ÷ effort
+            prioritized by maturity points recovered ÷ effort
           </Text>
         </Flex>
         <Stack space={3}>
@@ -272,9 +272,9 @@ function Pages() {
     <Card padding={4} radius={3} border>
       <Stack space={3}>
         <Flex justify="space-between" align="baseline">
-          <Heading size={1}>Pages</Heading>
+          <Heading size={1}>Page-level audit</Heading>
           <Text size={1} muted>
-            {DATA.pagesCrawled} crawled from the sitemap · weakest first
+            {DATA.pagesCrawled} pages crawled from the sitemap · weakest first
           </Text>
         </Flex>
         <Stack space={2}>
@@ -312,38 +312,41 @@ export default function AeoPane() {
           <Flex align="flex-end" justify="space-between" gap={4} wrap="wrap">
             <Stack space={3}>
               <Heading as="h1" size={3}>
-                Answer engine readiness
+                AEO maturity
               </Heading>
               <Text size={1} muted>
-                {DATA.origin.replace(/^https?:\/\//, "")} · graded {ago(DATA.generatedAt)} · {DATA.pagesCrawled} pages · model after Webflow AEO&apos;s four pillars
+                {DATA.origin.replace(/^https?:\/\//, "")} · assessed {ago(DATA.generatedAt)} · {DATA.pagesCrawled} pages · the AEO Maturity Model: Content · Technical · Authority · Measurement
               </Text>
             </Stack>
             <Flex align="baseline" gap={3}>
               <Heading size={5}>{DATA.score}</Heading>
               <Stack space={2}>
                 <Badge tone={tone(DATA.score)} fontSize={1} padding={3}>
-                  level {DATA.level} · {LEVELS[DATA.level]}
+                  Level {DATA.level} of 5 · {LEVELS[DATA.level]}
                 </Badge>
                 <Text size={0} muted>
-                  out of 100
+                  maturity score, out of 100
                 </Text>
               </Stack>
             </Flex>
           </Flex>
           <Trend />
-          <Pillars />
+          <Stack space={3}>
+            <Heading size={1}>Maturity by pillar</Heading>
+            <Pillars />
+          </Stack>
           <PromptInsights />
           <Grid columns={[1, 1, 2]} gap={3}>
             <Bots />
             <Card padding={4} radius={3} border>
               <Stack space={3}>
-                <Heading size={1}>How the score works</Heading>
+                <Heading size={1}>How maturity is scored</Heading>
                 <Text size={1}>
-                  Each check has a pillar, a weight and an effort. Page checks run on every crawled page they apply to and contribute their average pass ratio; site checks run once. A pillar is the weighted pass ratio of its checks; the site score is the pillars weighted{" "}
+                  Readiness (the maturity score) is what the site itself does; AI visibility (prompt insights above) is the outcome it drives, and lags it. Each check has a pillar, a weight and an effort. Page checks run on every crawled page they apply to and contribute their average pass ratio; site checks run once. A pillar is the weighted pass ratio of its checks; the maturity score is the pillars weighted{" "}
                   {Object.entries(DATA.pillars)
                     .map(([k, v]) => `${k} ${v.weight}`)
                     .join(" · ")}
-                  . Levels: &lt;20 Invisible · &lt;40 Emerging · &lt;60 Developing · &lt;80 Established · 80+ Leading.
+                  . Levels, 1–5: &lt;20 Invisible · &lt;40 Emerging · &lt;60 Developing · &lt;80 Established · 80+ Leading (Webflow&apos;s index put the average company at Level 2).
                 </Text>
                 <Text size={0} muted>
                   {DATA.checks.length} checks · edit weights, bots, prompts and the brand in designops.config.json → aeo.

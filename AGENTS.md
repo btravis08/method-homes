@@ -260,7 +260,15 @@ staging/design use.
   workflow (scripts/webkit-back.mjs against production): every Back
   pops one step, only backing past the first step closes the sheet.
 
-## AEO grader (answer-engine readiness)
+## AEO grader (AEO maturity + AEO analytics)
+
+- Vocabulary follows Webflow AEO so the Studio reads like theirs:
+  "AEO maturity" = the site's own readiness (0–100 score, Level 1–5
+  on the four-pillar Maturity Model) — what we change; "AEO analytics
+  · Prompt insights" = the outcome (visibility score = share of AI
+  answers mentioning the brand, citation rate = share citing our
+  domain) — what we measure, and it lags readiness; "LLM bot access" =
+  crawler permissions; "AEO recommendations" = the prioritized fixes.
 
 - Modelled on Webflow AEO: four pillars — Technical (can an engine
   reach/parse/trust the page), Content (a direct, liftable answer with

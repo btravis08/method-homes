@@ -314,7 +314,7 @@ export default function OverviewPane() {
             <Stack space={3}>
               <Flex justify="space-between" gap={2}>
                 <Text size={1} weight="medium">
-                  Answer engine readiness (AEO)
+                  AEO maturity
                 </Text>
                 <Text size={1} muted>
                   <a href="/studio/aeo" style={{ color: "inherit" }}>
@@ -325,7 +325,7 @@ export default function OverviewPane() {
               <Flex align="baseline" gap={3} wrap="wrap">
                 <Heading size={4}>{aeo.score}</Heading>
                 <Badge tone={aeo.score >= 80 ? "positive" : aeo.score >= 50 ? "caution" : "critical"}>
-                  level {aeo.level} · {aeo.levelName}
+                  Level {aeo.level} of 5 · {aeo.levelName}
                 </Badge>
                 {Object.entries(aeo.pillars).map(([name, p]) => (
                   <Text key={name} size={1} muted>
@@ -335,8 +335,8 @@ export default function OverviewPane() {
               </Flex>
               <Text size={1} muted>
                 {aeo.prompts.ran
-                  ? `AI answers mention us ${aeo.prompts.visibility}% · cite us ${aeo.prompts.citationRate}%`
-                  : "prompt insights not running (needs ANTHROPIC_API_KEY in Actions)"}
+                  ? `visibility score ${aeo.prompts.visibility}% · citation rate ${aeo.prompts.citationRate}%`
+                  : "prompt insights not recorded (ANTHROPIC_API_KEY in Actions, or the manual record)"}
                 {aeo.recommendations[0]
                   ? ` · next: ${aeo.recommendations[0].title} (+${aeo.recommendations[0].impact} pts)`
                   : ""}
