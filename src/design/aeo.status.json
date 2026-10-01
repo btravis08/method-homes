@@ -1,0 +1,2847 @@
+{
+  "generatedAt": "2026-10-01T00:12:01.135Z",
+  "origin": "http://localhost:3000",
+  "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
+  "score": 53,
+  "level": 3,
+  "levelName": "Developing",
+  "pillars": {
+    "technical": {
+      "score": 80,
+      "level": 5,
+      "weight": 35,
+      "checks": 20,
+      "passing": 13
+    },
+    "content": {
+      "score": 45,
+      "level": 3,
+      "weight": 35,
+      "checks": 9,
+      "passing": 0
+    },
+    "authority": {
+      "score": 31,
+      "level": 2,
+      "weight": 15,
+      "checks": 6,
+      "passing": 1
+    },
+    "measurement": {
+      "score": 30,
+      "level": 2,
+      "weight": 15,
+      "checks": 4,
+      "passing": 1
+    }
+  },
+  "pagesCrawled": 21,
+  "pagesFailed": 0,
+  "bots": [
+    {
+      "bot": "GPTBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "ChatGPT-User",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "OAI-SearchBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "ClaudeBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "Claude-SearchBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "PerplexityBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "Google-Extended",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "Applebot-Extended",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "CCBot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "Bytespider",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "meta-externalagent",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "cohere-ai",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    },
+    {
+      "bot": "Diffbot",
+      "allowed": true,
+      "explicit": true,
+      "rule": "named, allowed"
+    }
+  ],
+  "robots": {
+    "ok": true,
+    "status": 200
+  },
+  "sitemap": {
+    "ok": true,
+    "urls": 21,
+    "lastmod": false
+  },
+  "llms": {
+    "ok": true,
+    "status": 200,
+    "bytes": 2445,
+    "sections": 4
+  },
+  "links": {
+    "checked": 21,
+    "broken": []
+  },
+  "prompts": {
+    "ran": false,
+    "reason": "skipped (AEO_SKIP_PROMPTS)",
+    "results": []
+  },
+  "checks": [
+    {
+      "id": "robots",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "robots.txt present and parseable",
+      "fix": "Serve /robots.txt (Next: app/robots.ts) with a sitemap line.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "14 group(s)",
+      "pages": []
+    },
+    {
+      "id": "ai-bots",
+      "pillar": "technical",
+      "weight": 6,
+      "effort": "low",
+      "title": "AI crawlers allowed to read the site",
+      "fix": "Allow GPTBot, ClaudeBot, PerplexityBot, OAI-SearchBot, Google-Extended and the other answer-engine crawlers in robots.txt — name them explicitly so intent is unambiguous.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "13/13 allowed · 13 named",
+      "pages": []
+    },
+    {
+      "id": "sitemap",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "low",
+      "title": "XML sitemap lists the site's pages",
+      "fix": "Serve /sitemap.xml from the CMS so every published page is discoverable.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "21 URL(s), no lastmod",
+      "pages": []
+    },
+    {
+      "id": "llms-txt",
+      "pillar": "technical",
+      "weight": 5,
+      "effort": "medium",
+      "title": "/llms.txt describes the site for language models",
+      "fix": "Publish /llms.txt (llmstxt.org): a one-paragraph summary, then the key pages with one-line descriptions, kept in sync with the CMS.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "2445 bytes, 4 section(s)",
+      "pages": []
+    },
+    {
+      "id": "https",
+      "pillar": "technical",
+      "weight": 1,
+      "effort": "low",
+      "title": "Served over HTTPS",
+      "fix": "Force HTTPS at the edge.",
+      "scope": "site",
+      "ratio": 0,
+      "detail": "no",
+      "pages": []
+    },
+    {
+      "id": "broken-links",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "medium",
+      "title": "Internal links resolve",
+      "fix": "Fix or redirect the broken internal links (CMS redirects document).",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "0 broken of 21 checked",
+      "pages": []
+    },
+    {
+      "id": "title",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Title tag, 15–65 characters",
+      "fix": "Give the page a specific title in the SEO fields (15–65 characters, brand suffix included).",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "description",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "low",
+      "title": "Meta description, 70–160 characters",
+      "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
+      "scope": "page",
+      "ratio": 0.5476190476190477,
+      "detail": "2/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0.5,
+          "detail": "180 chars"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0.5,
+          "detail": "200 chars"
+        }
+      ]
+    },
+    {
+      "id": "canonical",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Canonical URL declared",
+      "fix": "Emit <link rel=canonical> on every page (seoMeta does this when the route uses it).",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "missing"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "missing"
+        }
+      ]
+    },
+    {
+      "id": "open-graph",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Open Graph title, description and image",
+      "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "id": "indexable",
+      "pillar": "technical",
+      "weight": 1,
+      "effort": "low",
+      "title": "Page responds 200 and is indexable",
+      "fix": "Return 200 and drop noindex on pages that should be cited.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "lang-viewport",
+      "pillar": "technical",
+      "weight": 1,
+      "effort": "low",
+      "title": "html lang and viewport declared",
+      "fix": "Set <html lang> and a viewport meta tag.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "h1",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Exactly one H1",
+      "fix": "One H1 per page naming the subject; demote the others.",
+      "scope": "page",
+      "ratio": 0.8571428571428571,
+      "detail": "18/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "0 H1"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "0 H1"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0,
+          "detail": "0 H1"
+        }
+      ]
+    },
+    {
+      "id": "heading-order",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Headings step down one level at a time",
+      "fix": "Don't jump from H2 to H4 — answer engines use the outline to segment the page.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "landmarks",
+      "pillar": "technical",
+      "weight": 1,
+      "effort": "low",
+      "title": "Semantic landmarks (main, nav, header, footer)",
+      "fix": "Wrap page content in <main> and chrome in <nav>/<header>/<footer> so parsers can drop the chrome.",
+      "scope": "page",
+      "ratio": 0.9642857142857143,
+      "detail": "18/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        }
+      ]
+    },
+    {
+      "id": "jsonld",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "medium",
+      "title": "Valid JSON-LD structured data",
+      "fix": "Add a JSON-LD block per page (Organization/WebSite on the home page, Article on posts, Product on products, BreadcrumbList everywhere) and keep it parseable.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "schema-type",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "medium",
+      "title": "Schema type matches the page",
+      "fix": "home → Organization + WebSite · post → Article/BlogPosting with author and dates · product → Product · project → CreativeWork/Article · others → WebPage.",
+      "scope": "page",
+      "ratio": 0.047619047619047616,
+      "detail": "1/21 pages pass",
+      "pages": [
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0,
+          "detail": "want CollectionPage, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+        }
+      ]
+    },
+    {
+      "id": "alt-text",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "low",
+      "title": "Images carry alt text",
+      "fix": "Describe content images in alt; mark decorative ones alt=\"\".",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "html-weight",
+      "pillar": "technical",
+      "weight": 2,
+      "effort": "medium",
+      "title": "HTML document under 300 KB",
+      "fix": "Trim inlined data (serialized props, oversized JSON-LD, base64) so crawlers with byte budgets read the whole page.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "ttfb",
+      "pillar": "technical",
+      "weight": 1,
+      "effort": "high",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "scope": "page",
+      "ratio": 1,
+      "detail": "21/21 pages pass",
+      "pages": []
+    },
+    {
+      "id": "answer-first",
+      "pillar": "content",
+      "weight": 6,
+      "effort": "medium",
+      "title": "Direct answer in the first 200 words",
+      "fix": "Open with a 2–4 sentence paragraph that states what the page is about and answers its core question before any scene-setting.",
+      "scope": "page",
+      "ratio": 0.95,
+      "detail": "19/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "no paragraph ≥ 25 words"
+        }
+      ]
+    },
+    {
+      "id": "question-headings",
+      "pillar": "content",
+      "weight": 4,
+      "effort": "medium",
+      "title": "Headings phrased as the questions people ask",
+      "fix": "Turn section headings into the question they answer ('How much does a Method home cost?') and answer it in the first sentence beneath.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/19 pages pass",
+      "pages": [
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "0 question heading(s)"
+        }
+      ]
+    },
+    {
+      "id": "faq",
+      "pillar": "content",
+      "weight": 4,
+      "effort": "medium",
+      "title": "FAQ block with FAQPage schema",
+      "fix": "Add a short FAQ (3–6 real questions) to key pages and emit FAQPage JSON-LD for it.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "id": "depth",
+      "pillar": "content",
+      "weight": 4,
+      "effort": "high",
+      "title": "Enough substance to be worth citing",
+      "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
+      "scope": "page",
+      "ratio": 0.9928571428571429,
+      "detail": "20/21 pages pass",
+      "pages": [
+        {
+          "path": "/journal",
+          "ratio": 0.85,
+          "detail": "68 words (target 80)"
+        }
+      ]
+    },
+    {
+      "id": "readability",
+      "pillar": "content",
+      "weight": 3,
+      "effort": "medium",
+      "title": "Sentences average 25 words or fewer",
+      "fix": "Shorten long sentences; answer engines lift short declarative ones.",
+      "scope": "page",
+      "ratio": 0.95,
+      "detail": "19/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "61.6 words/sentence"
+        }
+      ]
+    },
+    {
+      "id": "structures",
+      "pillar": "content",
+      "weight": 2,
+      "effort": "low",
+      "title": "Lists or tables to extract from",
+      "fix": "Put specs, steps and comparisons in lists or tables — they are quoted verbatim.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "0 list(s)/table(s)"
+        }
+      ]
+    },
+    {
+      "id": "entity-clarity",
+      "pillar": "content",
+      "weight": 3,
+      "effort": "low",
+      "title": "Brand named in title, H1 or opening",
+      "fix": "Name \"Method Homes\" in the title, H1 or first paragraph so the answer attributes the fact to you.",
+      "scope": "page",
+      "ratio": 0.5999999999999999,
+      "detail": "0/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        }
+      ]
+    },
+    {
+      "id": "internal-links",
+      "pillar": "content",
+      "weight": 4,
+      "effort": "medium",
+      "title": "Descriptive internal links to related pages",
+      "fix": "Link each page to 3+ related pages with anchor text that says what's there (not 'learn more').",
+      "scope": "page",
+      "ratio": 0.3333333333333332,
+      "detail": "1/21 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0.3333333333333333,
+          "detail": "1 internal, 0 generic anchor(s)"
+        }
+      ]
+    },
+    {
+      "id": "freshness",
+      "pillar": "content",
+      "weight": 5,
+      "effort": "medium",
+      "title": "Updated within 180 days (dateModified / lastmod)",
+      "fix": "Expose dateModified in Article schema and <lastmod> in the sitemap, and revisit key pages at least twice a year.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/20 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "no date signal"
+        }
+      ]
+    },
+    {
+      "id": "organization",
+      "pillar": "authority",
+      "weight": 4,
+      "effort": "low",
+      "title": "Organization schema on the home page",
+      "fix": "Emit Organization (or LocalBusiness) JSON-LD on the home page with name, url, logo, description.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "logo yes",
+      "pages": []
+    },
+    {
+      "id": "same-as",
+      "pillar": "authority",
+      "weight": 3,
+      "effort": "low",
+      "title": "Organization sameAs links the brand's other profiles",
+      "fix": "List the official Instagram, LinkedIn, Houzz, Wikipedia etc. URLs in Organization.sameAs so engines merge mentions into one entity.",
+      "scope": "site",
+      "ratio": 0,
+      "detail": "0 profile(s)",
+      "pages": []
+    },
+    {
+      "id": "nap",
+      "pillar": "authority",
+      "weight": 2,
+      "effort": "low",
+      "title": "Address and phone in the Organization schema",
+      "fix": "Add postalAddress and telephone to the Organization JSON-LD (matches the site footer).",
+      "scope": "site",
+      "ratio": 0,
+      "detail": "no address, no phone",
+      "pages": []
+    },
+    {
+      "id": "about-contact",
+      "pillar": "authority",
+      "weight": 2,
+      "effort": "low",
+      "title": "About and contact pages linked from the site",
+      "fix": "Publish and link /about and a contact path — models verify who you are there.",
+      "scope": "site",
+      "ratio": 0.5,
+      "detail": "about, no contact",
+      "pages": []
+    },
+    {
+      "id": "bylines",
+      "pillar": "authority",
+      "weight": 3,
+      "effort": "medium",
+      "title": "Articles carry a named author",
+      "fix": "Attach an author (name, role) to every post and emit it as Article.author in JSON-LD.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/18 pages pass",
+      "pages": [
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "none"
+        }
+      ]
+    },
+    {
+      "id": "references",
+      "pillar": "authority",
+      "weight": 2,
+      "effort": "medium",
+      "title": "Articles cite outside sources",
+      "fix": "Link to the studies, codes and partners you reference — cited content gets cited.",
+      "scope": "page",
+      "ratio": 0,
+      "detail": "0/18 pages pass",
+      "pages": [
+        {
+          "path": "/journal/next-in-line",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/inside-the-team-room",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/the-first-signing",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/sunday-at-augusta",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/the-back-nine-wind",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/a-caddies-eye",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/anatomy-of-a-polo",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/cashmere-on-course",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/building-the-presidio",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/a-year-of-red",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/what-theyre-saying",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/majors-season",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/why-sunday-red",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/the-meaning-of-the-tiger",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/letters-from-the-founder",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/golf-after-dark",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/training-days",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/the-travel-kit",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        }
+      ]
+    },
+    {
+      "id": "monitoring",
+      "pillar": "measurement",
+      "weight": 3,
+      "effort": "low",
+      "title": "This grader runs on a schedule",
+      "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
+      "scope": "site",
+      "ratio": 1,
+      "detail": "2 run(s) recorded",
+      "pages": []
+    },
+    {
+      "id": "prompt-insights",
+      "pillar": "measurement",
+      "weight": 5,
+      "effort": "low",
+      "title": "Tracked prompts probed for mentions and citations",
+      "fix": "Set ANTHROPIC_API_KEY as an Actions secret and keep aeo.prompts current — this is the visibility score and citation rate.",
+      "scope": "site",
+      "ratio": 0,
+      "detail": "skipped (AEO_SKIP_PROMPTS)",
+      "pages": []
+    },
+    {
+      "id": "analytics",
+      "pillar": "measurement",
+      "weight": 4,
+      "effort": "low",
+      "title": "Web analytics on the site",
+      "fix": "Enable Vercel Web Analytics (or GA4) so AI-referred sessions can be segmented by referrer.",
+      "scope": "site",
+      "ratio": 0,
+      "detail": "none",
+      "pages": []
+    },
+    {
+      "id": "ai-referrers",
+      "pillar": "measurement",
+      "weight": 3,
+      "effort": "medium",
+      "title": "AI-referred visitors tracked",
+      "fix": "Record chatgpt.com, perplexity.ai, claude.ai, gemini.google.com, copilot.microsoft.com referrers on sessions, not only on form leads.",
+      "scope": "site",
+      "ratio": 0.5,
+      "detail": "on leads",
+      "pages": []
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "prompt-insights",
+      "pillar": "measurement",
+      "title": "Tracked prompts probed for mentions and citations",
+      "fix": "Set ANTHROPIC_API_KEY as an Actions secret and keep aeo.prompts current — this is the visibility score and citation rate.",
+      "effort": "low",
+      "impact": 5,
+      "priority": 5,
+      "detail": "skipped (AEO_SKIP_PROMPTS)",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "analytics",
+      "pillar": "measurement",
+      "title": "Web analytics on the site",
+      "fix": "Enable Vercel Web Analytics (or GA4) so AI-referred sessions can be segmented by referrer.",
+      "effort": "low",
+      "impact": 4,
+      "priority": 4,
+      "detail": "none",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "freshness",
+      "pillar": "content",
+      "title": "Updated within 180 days (dateModified / lastmod)",
+      "fix": "Expose dateModified in Article schema and <lastmod> in the sitemap, and revisit key pages at least twice a year.",
+      "effort": "medium",
+      "impact": 5,
+      "priority": 3.13,
+      "detail": "0/20 pages pass",
+      "pages": [
+        "/ — no date signal",
+        "/legacy — no date signal",
+        "/journal/next-in-line — no date signal",
+        "/journal/inside-the-team-room — no date signal",
+        "/journal/the-first-signing — no date signal",
+        "/journal/sunday-at-augusta — no date signal",
+        "/journal/the-back-nine-wind — no date signal",
+        "/journal/a-caddies-eye — no date signal",
+        "/journal/anatomy-of-a-polo — no date signal",
+        "/journal/cashmere-on-course — no date signal",
+        "/journal/building-the-presidio — no date signal",
+        "/journal/a-year-of-red — no date signal"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "same-as",
+      "pillar": "authority",
+      "title": "Organization sameAs links the brand's other profiles",
+      "fix": "List the official Instagram, LinkedIn, Houzz, Wikipedia etc. URLs in Organization.sameAs so engines merge mentions into one entity.",
+      "effort": "low",
+      "impact": 2.8,
+      "priority": 2.81,
+      "detail": "0 profile(s)",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "question-headings",
+      "pillar": "content",
+      "title": "Headings phrased as the questions people ask",
+      "fix": "Turn section headings into the question they answer ('How much does a Method home cost?') and answer it in the first sentence beneath.",
+      "effort": "medium",
+      "impact": 4,
+      "priority": 2.5,
+      "detail": "0/19 pages pass",
+      "pages": [
+        "/legacy — 0 question heading(s)",
+        "/journal/next-in-line — 0 question heading(s)",
+        "/journal/inside-the-team-room — 0 question heading(s)",
+        "/journal/the-first-signing — 0 question heading(s)",
+        "/journal/sunday-at-augusta — 0 question heading(s)",
+        "/journal/the-back-nine-wind — 0 question heading(s)",
+        "/journal/a-caddies-eye — 0 question heading(s)",
+        "/journal/anatomy-of-a-polo — 0 question heading(s)",
+        "/journal/cashmere-on-course — 0 question heading(s)",
+        "/journal/building-the-presidio — 0 question heading(s)",
+        "/journal/a-year-of-red — 0 question heading(s)",
+        "/journal/what-theyre-saying — 0 question heading(s)"
+      ],
+      "pagesAffected": 19
+    },
+    {
+      "id": "faq",
+      "pillar": "content",
+      "title": "FAQ block with FAQPage schema",
+      "fix": "Add a short FAQ (3–6 real questions) to key pages and emit FAQPage JSON-LD for it.",
+      "effort": "medium",
+      "impact": 4,
+      "priority": 2.5,
+      "detail": "0/20 pages pass",
+      "pages": [
+        "/ — none",
+        "/legacy — none",
+        "/journal/next-in-line — none",
+        "/journal/inside-the-team-room — none",
+        "/journal/the-first-signing — none",
+        "/journal/sunday-at-augusta — none",
+        "/journal/the-back-nine-wind — none",
+        "/journal/a-caddies-eye — none",
+        "/journal/anatomy-of-a-polo — none",
+        "/journal/cashmere-on-course — none",
+        "/journal/building-the-presidio — none",
+        "/journal/a-year-of-red — none"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "structures",
+      "pillar": "content",
+      "title": "Lists or tables to extract from",
+      "fix": "Put specs, steps and comparisons in lists or tables — they are quoted verbatim.",
+      "effort": "low",
+      "impact": 2,
+      "priority": 2,
+      "detail": "0/20 pages pass",
+      "pages": [
+        "/ — 0 list(s)/table(s)",
+        "/legacy — 0 list(s)/table(s)",
+        "/journal/next-in-line — 0 list(s)/table(s)",
+        "/journal/inside-the-team-room — 0 list(s)/table(s)",
+        "/journal/the-first-signing — 0 list(s)/table(s)",
+        "/journal/sunday-at-augusta — 0 list(s)/table(s)",
+        "/journal/the-back-nine-wind — 0 list(s)/table(s)",
+        "/journal/a-caddies-eye — 0 list(s)/table(s)",
+        "/journal/anatomy-of-a-polo — 0 list(s)/table(s)",
+        "/journal/cashmere-on-course — 0 list(s)/table(s)",
+        "/journal/building-the-presidio — 0 list(s)/table(s)",
+        "/journal/a-year-of-red — 0 list(s)/table(s)"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "nap",
+      "pillar": "authority",
+      "title": "Address and phone in the Organization schema",
+      "fix": "Add postalAddress and telephone to the Organization JSON-LD (matches the site footer).",
+      "effort": "low",
+      "impact": 1.9,
+      "priority": 1.88,
+      "detail": "no address, no phone",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "bylines",
+      "pillar": "authority",
+      "title": "Articles carry a named author",
+      "fix": "Attach an author (name, role) to every post and emit it as Article.author in JSON-LD.",
+      "effort": "medium",
+      "impact": 2.8,
+      "priority": 1.76,
+      "detail": "0/18 pages pass",
+      "pages": [
+        "/journal/next-in-line — none",
+        "/journal/inside-the-team-room — none",
+        "/journal/the-first-signing — none",
+        "/journal/sunday-at-augusta — none",
+        "/journal/the-back-nine-wind — none",
+        "/journal/a-caddies-eye — none",
+        "/journal/anatomy-of-a-polo — none",
+        "/journal/cashmere-on-course — none",
+        "/journal/building-the-presidio — none",
+        "/journal/a-year-of-red — none",
+        "/journal/what-theyre-saying — none",
+        "/journal/majors-season — none"
+      ],
+      "pagesAffected": 18
+    },
+    {
+      "id": "internal-links",
+      "pillar": "content",
+      "title": "Descriptive internal links to related pages",
+      "fix": "Link each page to 3+ related pages with anchor text that says what's there (not 'learn more').",
+      "effort": "medium",
+      "impact": 2.7,
+      "priority": 1.67,
+      "detail": "1/21 pages pass",
+      "pages": [
+        "/ — 0 internal, 0 generic anchor(s)",
+        "/legacy — 0 internal, 0 generic anchor(s)",
+        "/journal/next-in-line — 1 internal, 0 generic anchor(s)",
+        "/journal/inside-the-team-room — 1 internal, 0 generic anchor(s)",
+        "/journal/the-first-signing — 1 internal, 0 generic anchor(s)",
+        "/journal/sunday-at-augusta — 1 internal, 0 generic anchor(s)",
+        "/journal/the-back-nine-wind — 1 internal, 0 generic anchor(s)",
+        "/journal/a-caddies-eye — 1 internal, 0 generic anchor(s)",
+        "/journal/anatomy-of-a-polo — 1 internal, 0 generic anchor(s)",
+        "/journal/cashmere-on-course — 1 internal, 0 generic anchor(s)",
+        "/journal/building-the-presidio — 1 internal, 0 generic anchor(s)",
+        "/journal/a-year-of-red — 1 internal, 0 generic anchor(s)"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "canonical",
+      "pillar": "technical",
+      "title": "Canonical URL declared",
+      "fix": "Emit <link rel=canonical> on every page (seoMeta does this when the route uses it).",
+      "effort": "low",
+      "impact": 1.5,
+      "priority": 1.49,
+      "detail": "0/21 pages pass",
+      "pages": [
+        "/ — missing",
+        "/legacy — missing",
+        "/journal — missing",
+        "/journal/next-in-line — missing",
+        "/journal/inside-the-team-room — missing",
+        "/journal/the-first-signing — missing",
+        "/journal/sunday-at-augusta — missing",
+        "/journal/the-back-nine-wind — missing",
+        "/journal/a-caddies-eye — missing",
+        "/journal/anatomy-of-a-polo — missing",
+        "/journal/cashmere-on-course — missing",
+        "/journal/building-the-presidio — missing"
+      ],
+      "pagesAffected": 21
+    },
+    {
+      "id": "open-graph",
+      "pillar": "technical",
+      "title": "Open Graph title, description and image",
+      "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
+      "effort": "low",
+      "impact": 1.5,
+      "priority": 1.49,
+      "detail": "0/21 pages pass",
+      "pages": [
+        "/ — none",
+        "/legacy — none",
+        "/journal — none",
+        "/journal/next-in-line — none",
+        "/journal/inside-the-team-room — none",
+        "/journal/the-first-signing — none",
+        "/journal/sunday-at-augusta — none",
+        "/journal/the-back-nine-wind — none",
+        "/journal/a-caddies-eye — none",
+        "/journal/anatomy-of-a-polo — none",
+        "/journal/cashmere-on-course — none",
+        "/journal/building-the-presidio — none"
+      ],
+      "pagesAffected": 21
+    },
+    {
+      "id": "schema-type",
+      "pillar": "technical",
+      "title": "Schema type matches the page",
+      "fix": "home → Organization + WebSite · post → Article/BlogPosting with author and dates · product → Product · project → CreativeWork/Article · others → WebPage.",
+      "effort": "medium",
+      "impact": 2.1,
+      "priority": 1.33,
+      "detail": "1/21 pages pass",
+      "pages": [
+        "/legacy — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal — want CollectionPage, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/next-in-line — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/inside-the-team-room — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/the-first-signing — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/sunday-at-augusta — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/the-back-nine-wind — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/a-caddies-eye — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/anatomy-of-a-polo — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/cashmere-on-course — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/building-the-presidio — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
+        "/journal/a-year-of-red — want Article, have Organization, HomeAndConstructionBusiness, WebSite"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "entity-clarity",
+      "pillar": "content",
+      "title": "Brand named in title, H1 or opening",
+      "fix": "Name \"Method Homes\" in the title, H1 or first paragraph so the answer attributes the fact to you.",
+      "effort": "low",
+      "impact": 1.2,
+      "priority": 1.2,
+      "detail": "0/20 pages pass",
+      "pages": [
+        "/ — 1/3 spots",
+        "/legacy — 1/3 spots",
+        "/journal/next-in-line — 1/3 spots",
+        "/journal/inside-the-team-room — 1/3 spots",
+        "/journal/the-first-signing — 1/3 spots",
+        "/journal/sunday-at-augusta — 1/3 spots",
+        "/journal/the-back-nine-wind — 1/3 spots",
+        "/journal/a-caddies-eye — 1/3 spots",
+        "/journal/anatomy-of-a-polo — 1/3 spots",
+        "/journal/cashmere-on-course — 1/3 spots",
+        "/journal/building-the-presidio — 1/3 spots",
+        "/journal/a-year-of-red — 1/3 spots"
+      ],
+      "pagesAffected": 20
+    },
+    {
+      "id": "references",
+      "pillar": "authority",
+      "title": "Articles cite outside sources",
+      "fix": "Link to the studies, codes and partners you reference — cited content gets cited.",
+      "effort": "medium",
+      "impact": 1.9,
+      "priority": 1.17,
+      "detail": "0/18 pages pass",
+      "pages": [
+        "/journal/next-in-line — 0 external link(s)",
+        "/journal/inside-the-team-room — 0 external link(s)",
+        "/journal/the-first-signing — 0 external link(s)",
+        "/journal/sunday-at-augusta — 0 external link(s)",
+        "/journal/the-back-nine-wind — 0 external link(s)",
+        "/journal/a-caddies-eye — 0 external link(s)",
+        "/journal/anatomy-of-a-polo — 0 external link(s)",
+        "/journal/cashmere-on-course — 0 external link(s)",
+        "/journal/building-the-presidio — 0 external link(s)",
+        "/journal/a-year-of-red — 0 external link(s)",
+        "/journal/what-theyre-saying — 0 external link(s)",
+        "/journal/majors-season — 0 external link(s)"
+      ],
+      "pagesAffected": 18
+    },
+    {
+      "id": "description",
+      "pillar": "technical",
+      "title": "Meta description, 70–160 characters",
+      "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
+      "effort": "low",
+      "impact": 1,
+      "priority": 1.01,
+      "detail": "2/21 pages pass",
+      "pages": [
+        "/ — 180 chars",
+        "/journal/next-in-line — 200 chars",
+        "/journal/inside-the-team-room — 200 chars",
+        "/journal/the-first-signing — 200 chars",
+        "/journal/sunday-at-augusta — 200 chars",
+        "/journal/the-back-nine-wind — 200 chars",
+        "/journal/a-caddies-eye — 200 chars",
+        "/journal/anatomy-of-a-polo — 200 chars",
+        "/journal/cashmere-on-course — 200 chars",
+        "/journal/building-the-presidio — 200 chars",
+        "/journal/a-year-of-red — 200 chars",
+        "/journal/what-theyre-saying — 200 chars"
+      ],
+      "pagesAffected": 19
+    },
+    {
+      "id": "about-contact",
+      "pillar": "authority",
+      "title": "About and contact pages linked from the site",
+      "fix": "Publish and link /about and a contact path — models verify who you are there.",
+      "effort": "low",
+      "impact": 0.9,
+      "priority": 0.94,
+      "detail": "about, no contact",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "ai-referrers",
+      "pillar": "measurement",
+      "title": "AI-referred visitors tracked",
+      "fix": "Record chatgpt.com, perplexity.ai, claude.ai, gemini.google.com, copilot.microsoft.com referrers on sessions, not only on form leads.",
+      "effort": "medium",
+      "impact": 1.5,
+      "priority": 0.94,
+      "detail": "on leads",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "https",
+      "pillar": "technical",
+      "title": "Served over HTTPS",
+      "fix": "Force HTTPS at the edge.",
+      "effort": "low",
+      "impact": 0.7,
+      "priority": 0.74,
+      "detail": "no",
+      "pages": [],
+      "pagesAffected": 0
+    },
+    {
+      "id": "h1",
+      "pillar": "technical",
+      "title": "Exactly one H1",
+      "fix": "One H1 per page naming the subject; demote the others.",
+      "effort": "low",
+      "impact": 0.2,
+      "priority": 0.21,
+      "detail": "18/21 pages pass",
+      "pages": [
+        "/ — 0 H1",
+        "/legacy — 0 H1",
+        "/journal — 0 H1"
+      ],
+      "pagesAffected": 3
+    },
+    {
+      "id": "answer-first",
+      "pillar": "content",
+      "title": "Direct answer in the first 200 words",
+      "fix": "Open with a 2–4 sentence paragraph that states what the page is about and answers its core question before any scene-setting.",
+      "effort": "medium",
+      "impact": 0.3,
+      "priority": 0.19,
+      "detail": "19/20 pages pass",
+      "pages": [
+        "/ — no paragraph ≥ 25 words"
+      ],
+      "pagesAffected": 1
+    },
+    {
+      "id": "readability",
+      "pillar": "content",
+      "title": "Sentences average 25 words or fewer",
+      "fix": "Shorten long sentences; answer engines lift short declarative ones.",
+      "effort": "medium",
+      "impact": 0.2,
+      "priority": 0.09,
+      "detail": "19/20 pages pass",
+      "pages": [
+        "/ — 61.6 words/sentence"
+      ],
+      "pagesAffected": 1
+    },
+    {
+      "id": "landmarks",
+      "pillar": "technical",
+      "title": "Semantic landmarks (main, nav, header, footer)",
+      "fix": "Wrap page content in <main> and chrome in <nav>/<header>/<footer> so parsers can drop the chrome.",
+      "effort": "low",
+      "impact": 0,
+      "priority": 0.03,
+      "detail": "18/21 pages pass",
+      "pages": [
+        "/ — main, header, footer",
+        "/legacy — main, header, footer",
+        "/journal — main, header, footer"
+      ],
+      "pagesAffected": 3
+    },
+    {
+      "id": "depth",
+      "pillar": "content",
+      "title": "Enough substance to be worth citing",
+      "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
+      "effort": "high",
+      "impact": 0,
+      "priority": 0.01,
+      "detail": "20/21 pages pass",
+      "pages": [
+        "/journal — 68 words (target 80)"
+      ],
+      "pagesAffected": 1
+    }
+  ],
+  "pages": [
+    {
+      "path": "/",
+      "type": "home",
+      "score": 43,
+      "words": 678,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes — Architect-designed prefab homes"
+    },
+    {
+      "path": "/legacy",
+      "type": "page",
+      "score": 52,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "canonical",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
+    },
+    {
+      "path": "/journal/next-in-line",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Next in Line — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/inside-the-team-room",
+      "type": "post",
+      "score": 52,
+      "words": 672,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Inside the Team Room — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/the-first-signing",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "The First Signing — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/sunday-at-augusta",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Sunday at Augusta — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/the-back-nine-wind",
+      "type": "post",
+      "score": 52,
+      "words": 672,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "The Back Nine Wind — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/a-caddies-eye",
+      "type": "post",
+      "score": 52,
+      "words": 672,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Through a Caddie's Eye — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/anatomy-of-a-polo",
+      "type": "post",
+      "score": 52,
+      "words": 673,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "The Anatomy of a Polo — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/cashmere-on-course",
+      "type": "post",
+      "score": 52,
+      "words": 673,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Why Cashmere Belongs on Course — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/building-the-presidio",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Building the Presidio — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/a-year-of-red",
+      "type": "post",
+      "score": 52,
+      "words": 672,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "A Year of Red — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/what-theyre-saying",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "What They're Saying — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/majors-season",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Majors Season, Reviewed — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/why-sunday-red",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Why Sunday Red — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/the-meaning-of-the-tiger",
+      "type": "post",
+      "score": 52,
+      "words": 673,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "The Meaning of the Tiger — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/letters-from-the-founder",
+      "type": "post",
+      "score": 52,
+      "words": 672,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Letters from the Founder — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/golf-after-dark",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Golf After Dark — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/training-days",
+      "type": "post",
+      "score": 52,
+      "words": 670,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "Training Days — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/the-travel-kit",
+      "type": "post",
+      "score": 52,
+      "words": 671,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "description",
+        "canonical",
+        "open-graph",
+        "schema-type",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness",
+        "bylines",
+        "references"
+      ],
+      "title": "The Travel Kit — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal",
+      "type": "index",
+      "score": 72,
+      "words": 68,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite"
+      ],
+      "fails": [
+        "canonical",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "schema-type",
+        "depth"
+      ],
+      "title": "Honors Journal | Method Homes"
+    }
+  ]
+}

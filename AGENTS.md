@@ -260,6 +260,49 @@ staging/design use.
   workflow (scripts/webkit-back.mjs against production): every Back
   pops one step, only backing past the first step closes the sheet.
 
+## AEO grader (answer-engine readiness)
+
+- Modelled on Webflow AEO: four pillars — Technical (can an engine
+  reach/parse/trust the page), Content (a direct, liftable answer with
+  depth and freshness), Authority (who is speaking, verifiably),
+  Measurement (do we know how AI describes and cites us) — rolled
+  into a 0–100 score and a 1–5 maturity level (Invisible → Leading),
+  plus recommendations ranked by score points recovered ÷ effort.
+- `scripts/aeo-audit.mjs` (`npm run aeo`, AEO_ORIGIN to grade a local
+  build) crawls the sitemap (cap aeo.pageCap, a mix of page types),
+  runs ~40 checks (robots.txt access for the 13 tracked AI bots,
+  llms.txt, sitemap, broken links; per page: metadata lengths,
+  canonical, OG, one H1, heading order, landmarks, JSON-LD validity +
+  expected type, alt text, HTML weight, TTFB; answer in the first 200
+  words, question headings, FAQ schema, depth, sentence length,
+  lists, brand naming, descriptive internal links, freshness;
+  Organization/sameAs/NAP, bylines, outside references; monitoring,
+  prompt insights, analytics, AI-referrer tracking). Weights, bots,
+  brand, prompts and organization facts live in designops.config.json
+  → `aeo` — edit the config, not the rubric, for a new project.
+- `scripts/lib/aeo-prompts.mjs` = prompt insights (Webflow's
+  visibility score / citation rate): runs aeo.prompts through Claude
+  with live web search and records brand mentions and citations of
+  aeo.brandDomains. Needs ANTHROPIC_API_KEY (Actions secret); without
+  it the grade still computes and Measurement flags it.
+- Output: src/design/aeo.status.json (+ aeo.history.json, cap
+  aeo.historyCap) → Studio **AEO** tool (score, pillars, prompt
+  insights, crawler matrix, recommendations, per-page table) and the
+  Overview card; Overview alerts when the score drops ≥ alerts.aeoDrop
+  vs the median of the previous five runs. `aeo.yml` grades
+  production nightly (09:40 UTC) and mirrors the data commit to main.
+- Shipped with it: named AI-bot allow groups in robots.ts, /llms.txt
+  (CMS-built, ISR 1h), Organization + WebSite JSON-LD in the site
+  layout (contact from Site Settings, the rest from aeo.organization —
+  fill `sameAs` with the real profiles), BlogPosting JSON-LD on CMS
+  posts (author, datePublished, dateModified from _updatedAt), and the
+  root metadata finally says Method Homes (it shipped as Sun Day Red).
+  Still open for a higher grade: FAQ blocks + FAQPage schema on key
+  pages, question-form headings, author bylines on every post, web
+  analytics (Vercel Web Analytics) and session-level AI-referrer
+  tracking (set the `ai-referrer-tracking` meta to "visits" when it
+  lands).
+
 ## Frontend architecture
 
 - `src/app/globals.css` is the design-token source of truth: semantic

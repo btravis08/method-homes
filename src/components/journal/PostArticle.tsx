@@ -20,6 +20,7 @@ export interface PostDoc {
   excerpt?: string;
   body?: PortableTextBlock[];
   publishedAt?: string;
+  _updatedAt?: string;
   seoTitle?: string;
   seo?: import("@/sanity/types").SeoDoc | null;
   tags?: string[];

@@ -2,6 +2,8 @@ import { icons } from "@sanity/icons";
 import { Badge, Box, Card, Container, Flex, Grid, Heading, Stack, Text } from "@sanity/ui";
 import type { Tool } from "sanity";
 
+import aeoHistory from "@/design/aeo.history.json";
+import aeoStatus from "@/design/aeo.status.json";
 import backupStatus from "@/design/backup.status.json";
 import driftStatus from "@/design/design-drift.json";
 import libraryStatus from "@/design/library.status.json";
@@ -107,7 +109,26 @@ function collect() {
   };
   const drift = driftStatus as { generatedAt: string | null };
 
+  /* AEO grade: current score/level, the top fix, and the drop vs the
+     median of the previous five runs */
+  const aeoRuns = (aeoHistory as { runs: { score: number }[] }).runs;
+  const aeoPrev = median(aeoRuns.slice(-6, -1).map((r) => r.score));
+  const aeo = {
+    ...(aeoStatus as {
+      generatedAt: string;
+      score: number;
+      level: number;
+      levelName: string;
+      pillars: Record<string, { score: number }>;
+      recommendations: { title: string; impact: number }[];
+      prompts: { ran: boolean; visibility?: number; citationRate?: number };
+    }),
+    prevMedian: aeoPrev,
+  };
+
   const alerts: string[] = [];
+  if (aeo.prevMedian != null && aeo.prevMedian - aeo.score >= designops.alerts.aeoDrop)
+    alerts.push(`AEO grade dropped (${aeo.prevMedian}→${aeo.score})`);
   if (links.broken?.length) alerts.push(`${links.broken.length} broken link(s)`);
   if (hoursSince(backup.generatedAt) > designops.alerts.backupStaleHours)
     alerts.push("dataset backup is stale");
@@ -120,14 +141,14 @@ function collect() {
       alerts.push(`${row.path} perf dropped (${row.prevMedian}→${row.score})`);
   }
 
-  return { perf, sections, links, backup, drift, alerts };
+  return { perf, sections, links, backup, drift, aeo, alerts };
 }
 
 const scoreTone = (score: number | undefined) =>
   score == null ? undefined : score >= 90 ? "positive" : score >= 75 ? "caution" : "critical";
 
 export default function OverviewPane() {
-  const { perf, sections, links, backup, drift, alerts } = collect();
+  const { perf, sections, links, backup, drift, aeo, alerts } = collect();
   const base = designops.site.baseUrl;
   const lastRun = perf[0]?.t;
   const backupFresh = hoursSince(backup.generatedAt) <= designops.alerts.backupStaleHours;
@@ -289,6 +310,42 @@ export default function OverviewPane() {
           </Grid>
 
           {/* live A/B results (D1) — reads the dataset, not bundled JSON */}
+          <Card padding={4} radius={3} border>
+            <Stack space={3}>
+              <Flex justify="space-between" gap={2}>
+                <Text size={1} weight="medium">
+                  Answer engine readiness (AEO)
+                </Text>
+                <Text size={1} muted>
+                  <a href="/studio/aeo" style={{ color: "inherit" }}>
+                    details →
+                  </a>
+                </Text>
+              </Flex>
+              <Flex align="baseline" gap={3} wrap="wrap">
+                <Heading size={4}>{aeo.score}</Heading>
+                <Badge tone={aeo.score >= 80 ? "positive" : aeo.score >= 50 ? "caution" : "critical"}>
+                  level {aeo.level} · {aeo.levelName}
+                </Badge>
+                {Object.entries(aeo.pillars).map(([name, p]) => (
+                  <Text key={name} size={1} muted>
+                    {name} {p.score}
+                  </Text>
+                ))}
+              </Flex>
+              <Text size={1} muted>
+                {aeo.prompts.ran
+                  ? `AI answers mention us ${aeo.prompts.visibility}% · cite us ${aeo.prompts.citationRate}%`
+                  : "prompt insights not running (needs ANTHROPIC_API_KEY in Actions)"}
+                {aeo.recommendations[0]
+                  ? ` · next: ${aeo.recommendations[0].title} (+${aeo.recommendations[0].impact} pts)`
+                  : ""}
+                {" · graded "}
+                {ago(aeo.generatedAt)}
+              </Text>
+            </Stack>
+          </Card>
+
           <ExperimentsCard />
 
           <Box>

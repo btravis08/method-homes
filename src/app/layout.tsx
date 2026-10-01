@@ -1,4 +1,6 @@
 import type { Metadata, Viewport } from "next";
+
+import designops from "../../designops.config.json";
 import localFont from "next/font/local";
 import "./globals.css";
 
@@ -41,11 +43,17 @@ const maisonMono = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(designops.site.baseUrl),
   title: {
-    default: "Sun Day Red",
-    template: "%s | Sun Day Red",
+    default: `${designops.aeo.brand} — Architect-designed prefab homes`,
+    template: `%s | ${designops.aeo.brand}`,
   },
-  description: "SDR design library implementation.",
+  description:
+    "Method Homes designs and builds architect-led prefab homes: predesigned series and custom modular residences, built indoors and delivered across the Pacific Northwest and the West.",
+  /* read by the AEO grader: AI referrers (chatgpt.com, perplexity.ai,
+     claude.ai, gemini…) are recorded on form leads via
+     AttributionCapture; "visits" once session analytics does too */
+  other: { "ai-referrer-tracking": "leads" },
 };
 
 /* viewport-fit=cover exposes env(safe-area-inset-*) on iOS, so

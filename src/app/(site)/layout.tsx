@@ -22,6 +22,8 @@ import { navigationQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import type { NavigationDoc, NavLinkDoc, SiteSettingsDoc } from "@/sanity/types";
 import type { SanityImageSource } from "@sanity/image-url";
 
+import designops from "../../../designops.config.json";
+
 function img(source: SanityImageSource | undefined | null, width = 1400) {
   if (!source) return undefined;
   try {
@@ -89,6 +91,45 @@ function toNavData(doc: NavigationDoc | null): NavData | undefined {
 }
 
 /* SDR site chrome — wraps every site route, but not /studio */
+/* Organization + WebSite JSON-LD on every page: the entity record an
+   answer engine resolves "Method Homes" to (name, logo, contact,
+   service area, other profiles). Contact details come from Site
+   Settings; the rest from designops aeo.organization. */
+function organizationJsonLd(settings: SiteSettingsDoc | null) {
+  const base = designops.site.baseUrl;
+  const org = designops.aeo.organization;
+  const name = settings?.companyName || designops.aeo.brand;
+  const address = typeof settings?.address === "string" ? settings.address : undefined;
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": ["Organization", "HomeAndConstructionBusiness"],
+        "@id": `${base}/#organization`,
+        name,
+        legalName: org.legalName,
+        url: base,
+        logo: `${base}${org.logo}`,
+        description:
+          "Architect-led prefab home builder: predesigned series and custom modular residences, built indoors and delivered to the site.",
+        ...(settings?.phone ? { telephone: settings.phone } : {}),
+        ...(settings?.email ? { email: settings.email } : {}),
+        ...(address ? { address: { "@type": "PostalAddress", streetAddress: address } } : {}),
+        areaServed: org.areaServed.map((area) => ({ "@type": "AdministrativeArea", name: area })),
+        ...(org.sameAs.length ? { sameAs: org.sameAs } : {}),
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${base}/#website`,
+        url: base,
+        name,
+        publisher: { "@id": `${base}/#organization` },
+        inLanguage: "en-US",
+      },
+    ],
+  };
+}
+
 export default async function SiteLayout({
   children,
 }: Readonly<{
@@ -143,6 +184,10 @@ export default async function SiteLayout({
             <AnnouncementBar announcement={announcement} />
           </>
         )}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(settings)) }}
+        />
         <Navigation data={toNavData(navDoc)} />
         <main className="flex-1">
           {/* draft mode (Presentation preview) skips the transition

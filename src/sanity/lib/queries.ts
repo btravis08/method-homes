@@ -303,7 +303,7 @@ export const collectionSearchQuery = groq`
 // ---------- Blog (Honors Journal posts) ----------
 export const postBySlugQuery = groq`
   *[_type == "post" && slug.current == $slug][0]{
-    title, "slug": slug.current, heroImage, excerpt, body, publishedAt,
+    title, "slug": slug.current, heroImage, excerpt, body, publishedAt, _updatedAt,
     seoTitle,
     seo,
     tags,

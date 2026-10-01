@@ -1,0 +1,51 @@
+name: aeo
+
+# Answer-engine readiness of production, graded nightly the way
+# Webflow AEO grades a site: four pillars (Content · Technical ·
+# Authority · Measurement), a 0–100 score, a 1–5 maturity level and
+# ranked recommendations. scripts/aeo-audit.mjs crawls the sitemap,
+# runs the rubric, and — when ANTHROPIC_API_KEY is set as an Actions
+# secret — probes the tracked prompts for brand mentions and citations
+# (visibility score / citation rate). Results land in
+# src/design/aeo.status.json (+ history) for the Studio's AEO tool and
+# the Overview card; the data commit is mirrored to main so the live
+# Studio rebuilds with it.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "40 9 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: aeo
+  cancel-in-progress: false
+
+jobs:
+  aeo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Grade production
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: node scripts/aeo-audit.mjs
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/aeo.status.json src/design/aeo.history.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh AEO grade (scheduled)"
+          for i in 1 2 3; do
+            git pull --rebase && git push && break
+            sleep $((i * 3))
+          done
+          git push origin HEAD:main || echo "main diverged — the grade lands with the next sync"

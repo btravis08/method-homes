@@ -12,6 +12,7 @@ import type { StructureResolver } from "sanity/structure";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { StudioIcon } from "@/sanity/components/StudioIcon";
 import { schemaTypes } from "@/sanity/schemaTypes";
+import { aeoTool } from "@/sanity/tools/Aeo";
 import { calendarTool } from "@/sanity/tools/Calendar";
 import { designTokensTool } from "@/sanity/tools/DesignTokens";
 import { performanceTool } from "@/sanity/tools/Performance";
@@ -363,6 +364,7 @@ export default defineConfig({
     sectionLibraryTool,
     designTokensTool,
     performanceTool,
+    aeoTool,
     ...(designops.features.blog ? [calendarTool] : []),
   ],
   document: {

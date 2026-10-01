@@ -12,7 +12,8 @@
     "lint": "eslint",
     "tokens": "node scripts/build-token-index.mjs",
     "audit": "node scripts/audit-sections.mjs",
-    "drift": "node scripts/check-design-drift.mjs"
+    "drift": "node scripts/check-design-drift.mjs",
+    "aeo": "node scripts/aeo-audit.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -35,6 +36,7 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.131.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -42,6 +44,7 @@
     "babel-plugin-react-compiler": "^1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.2.10",
+    "node-html-parser": "^9.0.4",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "typescript": "^5"

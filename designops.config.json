@@ -31,11 +31,64 @@
   },
   "alerts": {
     "perfDrop": 10,
-    "backupStaleHours": 36
+    "backupStaleHours": 36,
+    "aeoDrop": 8
   },
   "features": {
     "commerce": false,
     "blog": true,
     "projects": true
+  },
+  "aeo": {
+    "brand": "Method Homes",
+    "brandDomains": [
+      "method-homes.vercel.app",
+      "methodhomes.net"
+    ],
+    "pageCap": 60,
+    "freshnessDays": 180,
+    "historyCap": 120,
+    "pillarWeights": {
+      "technical": 35,
+      "content": 35,
+      "authority": 15,
+      "measurement": 15
+    },
+    "bots": [
+      "GPTBot",
+      "ChatGPT-User",
+      "OAI-SearchBot",
+      "ClaudeBot",
+      "Claude-SearchBot",
+      "PerplexityBot",
+      "Google-Extended",
+      "Applebot-Extended",
+      "CCBot",
+      "Bytespider",
+      "meta-externalagent",
+      "cohere-ai",
+      "Diffbot"
+    ],
+    "prompts": [
+      "Who are the best prefab and modular home builders in the Pacific Northwest?",
+      "What does a Method Homes prefab house cost?",
+      "Which companies build architect-designed modular homes in Washington state?",
+      "Is prefab construction higher quality than site-built for a custom home?",
+      "Best sustainable prefab home builders in the United States",
+      "How long does it take to build a prefab home from a predesigned series?"
+    ],
+    "organization": {
+      "legalName": "Method Homes",
+      "logo": "/method/brand/logo-nav.webp",
+      "sameAs": [],
+      "areaServed": [
+        "Washington",
+        "Oregon",
+        "California",
+        "Idaho",
+        "Montana",
+        "British Columbia"
+      ]
+    }
   }
 }
