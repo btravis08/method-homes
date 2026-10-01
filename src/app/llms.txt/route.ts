@@ -1,6 +1,5 @@
 import { groq } from "next-sanity";
 
-import { JOURNAL_CATEGORIES } from "@/components/journal/articles";
 import { sanityFetch } from "@/sanity/lib/fetch";
 
 import designops from "../../../designops.config.json";
@@ -63,14 +62,10 @@ export async function GET() {
     out.push("", "## Projects");
     for (const p of data.projects) out.push(line(p.title, `/projects/${p.slug}`, [p.location, p.completedYear].filter(Boolean).join(", ")));
   }
-  out.push("", "## Journal");
   if (data.posts.length) {
+    out.push("", "## Journal");
     for (const p of data.posts) out.push(line(p.title, `/journal/${p.slug}`, p.excerpt));
-  } else {
-    for (const c of JOURNAL_CATEGORIES) for (const a of c.articles) out.push(line(a.title, `/journal/${a.slug}`));
   }
-
-  out.push("", "## Optional", line("Legacy site", "/legacy", "the previous methodhomes.net, kept for reference"));
 
   return new Response(out.join("\n") + "\n", {
     headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "public, max-age=3600, s-maxage=3600" },

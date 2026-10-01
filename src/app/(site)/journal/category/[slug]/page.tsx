@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
+import { seoMeta } from "@/sanity/lib/seo";
 import { urlFor, sanitySrcSet } from "@/sanity/lib/image";
 import {
   postCategoryBySlugQuery,
@@ -63,12 +65,11 @@ export async function generateMetadata({
     null,
   );
   if (!category?.title) return { title: "Honors Journal" };
-  return {
-    title: `${category.title} — Honors Journal`,
-    description:
-      category.description ??
-      `${category.title} stories from the Honors Journal.`,
-  };
+  return seoMeta({
+    title: `${category.title} — Journal`,
+    description: category.description ?? `${category.title} articles from the Method Homes journal.`,
+    path: `/journal/category/${slug}`,
+  });
 }
 
 export default async function JournalCategoryPage({
@@ -102,6 +103,14 @@ export default async function JournalCategoryPage({
 
   return (
     <main data-mode="dark" className="w-full bg-surface pb-32 text-ink">
+      <JsonLd
+        data={webPage({
+          type: "CollectionPage",
+          name: category?.title ?? "Journal",
+          description: category?.description,
+          path: `/journal/category/${slug}`,
+        })}
+      />
       {/* masthead */}
       <header className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 pb-16 pt-[8.75rem] text-center">
         <p className="label text-ink-3">

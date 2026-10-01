@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 
 import { LegacyBody } from "@/components/legacy/LegacyBody";
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { legacyPageQuery } from "@/sanity/lib/queries";
 import type { LegacyPageDoc } from "@/sanity/types";
+
+import designops from "../../../../designops.config.json";
 
 /*
   The Legacy page (Figma node 33599:69683) — a scroll-driven brand
@@ -22,6 +25,7 @@ export const metadata: Metadata = {
   title: "A New Legacy — Sun Day Red",
   description:
     "Every seam, every stitch, every fold of Sun Day Red is sewn with the meticulousness, care, and unwavering focus that has defined Tiger Woods' legendary career.",
+  alternates: { canonical: `${designops.site.baseUrl}/legacy` },
 };
 
 export default async function LegacyPage() {
@@ -34,5 +38,10 @@ export default async function LegacyPage() {
     return <PreviewGate kind="legacy" initial={doc} />;
   }
 
-  return <LegacyBody doc={doc} />;
+  return (
+    <>
+      <JsonLd data={webPage({ name: metadata.title as string, description: metadata.description as string, path: "/legacy" })} />
+      <LegacyBody doc={doc} />
+    </>
+  );
 }

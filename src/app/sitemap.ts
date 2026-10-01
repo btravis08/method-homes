@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { groq } from "next-sanity";
 
-import { JOURNAL_CATEGORIES } from "@/components/journal/articles";
 import { sanityFetch } from "@/sanity/lib/fetch";
 
 /*
@@ -57,9 +56,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     entry("/", 1, "daily"),
     entry("/legacy", 0.8, "monthly"),
     entry("/journal", 0.7, "weekly"),
-    ...JOURNAL_CATEGORIES.flatMap((category) =>
-      category.articles.map((article) => entry(`/journal/${article.slug}`, 0.5, "monthly")),
-    ),
+    /* the built-in design articles (JOURNAL_CATEGORIES) are the CMS-less
+       fallback, not Method content — they stay out of the sitemap */
     ...pages.map((slug) => entry(`/${slug}`, 0.6, "weekly")),
     ...collections.map((slug) => entry(`/collections/${slug}`, 0.8, "daily")),
     ...products.map((slug) => entry(`/products/${slug}`, 0.7, "weekly")),

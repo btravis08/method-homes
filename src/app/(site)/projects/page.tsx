@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProjectCard } from "@/components/ProjectCard";
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
   allProjectsQuery,
   projectsByCategoryQuery,
 } from "@/sanity/lib/queries";
 import type { Project } from "@/sanity/types";
+import { seoMeta } from "@/sanity/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description: "Our residential and commercial prefab builds.",
-};
+const DESCRIPTION = "Completed Method Homes projects — residential and commercial prefab builds with location, size and series.";
+export const metadata: Metadata = seoMeta({ title: "Projects", description: DESCRIPTION, path: "/projects" });
 
 const filters = [
   { value: undefined, label: "All" },
@@ -41,6 +41,7 @@ export default async function ProjectsPage({
 
   return (
     <div>
+      <JsonLd data={webPage({ type: "CollectionPage", name: "Projects", description: DESCRIPTION, path: "/projects" })} />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
         <p className="label font-medium text-ink-2">
           Residential + Commercial

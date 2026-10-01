@@ -280,7 +280,7 @@ function analyze(url, res, lastmod) {
     headings: headings.length,
     headingSkips: skips,
     questionHeadings: questionHeadings.length,
-    landmarks: { main: Boolean(root.querySelector("main")), nav: Boolean(root.querySelector("nav")), header: Boolean(root.querySelector("header")), footer: Boolean(root.querySelector("footer")) },
+    landmarks: { main: Boolean(root.querySelector('main, [role="main"]')), nav: Boolean(root.querySelector('nav, [role="navigation"]')), header: Boolean(root.querySelector('header, [role="banner"]')), footer: Boolean(root.querySelector('footer, [role="contentinfo"]')) },
     wordCount,
     avgSentence: Math.round(avgSentence * 10) / 10,
     lists,

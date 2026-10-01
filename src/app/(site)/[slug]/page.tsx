@@ -11,6 +11,7 @@ import { FooterTagline } from "@/components/FooterTagline";
 import { PageGate } from "@/components/PageGate";
 import { buildSliderCardMap, SectionRenderer } from "@/components/SectionRenderer";
 import { gateCookieName, gateCookieValue } from "@/lib/gate";
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
@@ -78,6 +79,7 @@ export default async function CmsPage({
   if (page.sections?.length) {
     return (
       <div data-mode="light" className="flex flex-col items-start bg-surface">
+        <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path: `/${slug}` })} />
         {page.showFooterTagline && <FooterTagline />}
         <SectionRenderer sections={page.sections} />
       </div>
@@ -87,6 +89,7 @@ export default async function CmsPage({
   // Legacy page (heroImage + body)
   return (
     <article>
+      <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path: `/${slug}` })} />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
         <h1 className="max-w-[56rem] font-display text-display-xl text-ink">
           {page.title}

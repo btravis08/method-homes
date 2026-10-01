@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { draftMode } from "next/headers";
 
 import { FooterTagline } from "@/components/FooterTagline";
@@ -16,6 +17,15 @@ import { sanityFetch } from "@/sanity/lib/fetch";
 import { sanitySrcSet, urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery } from "@/sanity/lib/queries";
 import type { Page } from "@/sanity/types";
+
+import designops from "../../../designops.config.json";
+
+/* the home page is the entity page: canonical + OG here, title and
+   description from the root layout */
+export const metadata: Metadata = {
+  alternates: { canonical: `${designops.site.baseUrl}/` },
+  openGraph: { url: `${designops.site.baseUrl}/`, type: "website" },
+};
 
 /*
   The homepage is built from the Sanity "home" page's sections. Until

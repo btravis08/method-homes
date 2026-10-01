@@ -4,7 +4,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PortableText } from "next-sanity";
 
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
+import { seoMeta } from "@/sanity/lib/seo";
 import { urlFor } from "@/sanity/lib/image";
 import { projectBySlugQuery } from "@/sanity/lib/queries";
 import type { Project } from "@/sanity/types";
@@ -21,7 +23,7 @@ export async function generateMetadata({
     null,
   );
   if (!project) return { title: "Project not found" };
-  return { title: project.title, description: project.summary };
+  return seoMeta({ title: project.title, description: project.summary, path: `/projects/${slug}`, image: project.mainImage });
 }
 
 export default async function ProjectPage({
@@ -54,6 +56,24 @@ export default async function ProjectPage({
 
   return (
     <article>
+      <JsonLd
+        data={webPage({
+          name: project.title,
+          description: project.summary,
+          path: `/projects/${slug}`,
+          extra: {
+            mainEntity: {
+              "@type": "House",
+              name: project.title,
+              ...(project.location ? { address: { "@type": "PostalAddress", addressLocality: project.location } } : {}),
+              ...(project.squareFeet ? { floorSize: { "@type": "QuantitativeValue", value: project.squareFeet, unitCode: "FTK" } } : {}),
+              ...(project.bedrooms ? { numberOfBedrooms: project.bedrooms } : {}),
+              ...(project.bathrooms ? { numberOfBathroomsTotal: project.bathrooms } : {}),
+              ...(project.completedYear ? { yearBuilt: project.completedYear } : {}),
+            },
+          },
+        })}
+      />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
         <Link
           href="/projects"

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     template: `%s | ${designops.aeo.brand}`,
   },
   description:
-    "Method Homes designs and builds architect-led prefab homes: predesigned series and custom modular residences, built indoors and delivered across the Pacific Northwest and the West.",
+    "Method Homes designs and builds architect-led prefab homes: predesigned series and custom modular residences, built indoors and delivered to your site.",
   /* read by the AEO grader: AI referrers (chatgpt.com, perplexity.ai,
      claude.ai, gemini…) are recorded on form leads via
      AttributionCapture; "visits" once session analytics does too */

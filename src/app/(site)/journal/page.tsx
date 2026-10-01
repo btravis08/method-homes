@@ -1,17 +1,25 @@
 import type { Metadata, Viewport } from "next";
 
 import { JournalLanding } from "@/components/journal/JournalLanding";
+import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { journalPostsQuery } from "@/sanity/lib/queries";
 import type { SanityImageSource } from "@sanity/image-url";
 
+import designops from "../../../../designops.config.json";
+
 export const metadata: Metadata = {
-  title: "Honors Journal",
-  description:
-    "People, ideas, & culture — stories from the course and beyond the red.",
+  title: "Journal",
+  description: "Articles on prefab construction, design and process from Method Homes.",
   alternates: {
+    canonical: `${designops.site.baseUrl}/journal`,
     types: { "application/rss+xml": "/journal/rss.xml" },
+  },
+  openGraph: {
+    title: "Journal",
+    description: "Articles on prefab construction, design and process from Method Homes.",
+    url: `${designops.site.baseUrl}/journal`,
   },
 };
 
@@ -47,5 +55,10 @@ export default async function JournalPage() {
     });
   }
 
-  return <JournalLanding extraStreams={extraStreams} />;
+  return (
+    <>
+      <JsonLd data={webPage({ type: "Blog", name: "Journal", description: "Articles on prefab construction, design and process from Method Homes.", path: "/journal" })} />
+      <JournalLanding extraStreams={extraStreams} />
+    </>
+  );
 }
