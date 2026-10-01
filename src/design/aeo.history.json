@@ -1,1 +1,18 @@
-{"runs":[]}
+{
+  "runs": [
+    {
+      "t": "2026-10-01T00:19:11.413Z",
+      "score": 50,
+      "level": 3,
+      "pillars": {
+        "technical": 86,
+        "content": 34,
+        "authority": 31,
+        "measurement": 20
+      },
+      "pages": 60,
+      "visibility": null,
+      "citationRate": null
+    }
+  ]
+}
