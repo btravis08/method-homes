@@ -1,20 +1,20 @@
 {
-  "generatedAt": "2026-10-01T00:19:11.413Z",
+  "generatedAt": "2026-10-01T00:31:18.675Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
-  "score": 50,
+  "score": 59,
   "level": 3,
   "levelName": "Developing",
   "pillars": {
     "technical": {
-      "score": 86,
+      "score": 93,
       "level": 5,
       "weight": 35,
       "checks": 20,
-      "passing": 11
+      "passing": 13
     },
     "content": {
-      "score": 34,
+      "score": 35,
       "level": 2,
       "weight": 35,
       "checks": 9,
@@ -28,11 +28,11 @@
       "passing": 1
     },
     "measurement": {
-      "score": 20,
-      "level": 2,
+      "score": 63,
+      "level": 4,
       "weight": 15,
       "checks": 4,
-      "passing": 0
+      "passing": 2
     }
   },
   "pagesCrawled": 60,
@@ -129,18 +129,79 @@
   "llms": {
     "ok": true,
     "status": 200,
-    "bytes": 25103,
-    "sections": 6
+    "bytes": 24984,
+    "sections": 5
   },
   "links": {
-    "checked": 60,
+    "checked": 78,
     "broken": []
   },
   "prompts": {
-    "ran": false,
-    "reason": "ANTHROPIC_API_KEY not set",
-    "model": "claude-opus-5-5",
-    "results": []
+    "ran": true,
+    "manual": true,
+    "model": "Claude web search (manual, session probe) · recorded 0d ago",
+    "recordedAt": "2026-10-01T00:30:00Z",
+    "prompts": 6,
+    "answered": 6,
+    "visibility": 67,
+    "citationRate": 17,
+    "surfacedRate": 33,
+    "results": [
+      {
+        "prompt": "Who are the best prefab and modular home builders in the Pacific Northwest?",
+        "mentioned": true,
+        "cited": false,
+        "surfaced": false,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Listed as 'MethodHomes — established 2007, multiple awards, sustainable systems and materials' alongside Wolf Industries, TLC Modular, MODS PDX, Stratford and Future Homes. Sources were attainablehome.com, newhomesource.com and prefabreview.com, not methodhomes.net."
+      },
+      {
+        "prompt": "What does a Method Homes prefab house cost?",
+        "mentioned": true,
+        "cited": true,
+        "surfaced": true,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Base modules $300–450+/sq ft, predesigned $300–375/sq ft before site work; all-in $325–425+/sq ft, many locations $700–950/sq ft; M Series from $170k, M2 from $280k. methodhomes.net/faq appeared among the sources; the figures came from prefabreview.com, dwellito.com and modernprefabs.com."
+      },
+      {
+        "prompt": "Which companies build architect-designed modular homes in Washington state?",
+        "mentioned": true,
+        "cited": false,
+        "surfaced": false,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "'Method Homes is a Seattle-based design and construction firm specializing in architect-designed prefab and modular homes with more than 400 completed projects since 2007; over 30 pre-designed homes; custom projects can achieve net-zero.' Listed with FabCab, HyBrid Architecture, Greenfab and Lindal. Sources: dwell.com, attainablehome.com, prefabreview.com."
+      },
+      {
+        "prompt": "Is prefab construction higher quality than site-built for a custom home?",
+        "mentioned": false,
+        "cited": false,
+        "surfaced": false,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Generic answer (factory QC, staged inspections, 25–30% more lumber) sourced from dreamfindershomes, biobuilds, precisioncraft, nar.realtor, ideabox. No builder named."
+      },
+      {
+        "prompt": "Best sustainable prefab home builders in the United States",
+        "mentioned": true,
+        "cited": false,
+        "surfaced": false,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "'Method Homes (Seattle) — award-winning manufacturer guided by sustainable principles; Passive House, LEED, net-zero and Energy Star homes, prewired for solar.' Listed with Plant Prefab, Bensonwood, Ideabox, GO Logic, FabCab. Sources: dwell.com, cnn.com, greencoast.org, ecohome.net."
+      },
+      {
+        "prompt": "How long does it take to build a prefab home from a predesigned series?",
+        "mentioned": false,
+        "cited": false,
+        "surfaced": true,
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Generic 16–31 week timeline with a phase breakdown. methodhomes.net/predesigned-residential was among the pages consulted but the answer named Pacific Homes, Steelmark and Avrame instead."
+      }
+    ]
   },
   "checks": [
     {
@@ -188,7 +249,7 @@
       "fix": "Publish /llms.txt (llmstxt.org): a one-paragraph summary, then the key pages with one-line descriptions, kept in sync with the CMS.",
       "scope": "site",
       "ratio": 1,
-      "detail": "25103 bytes, 6 section(s)",
+      "detail": "24984 bytes, 5 section(s)",
       "pages": []
     },
     {
@@ -212,7 +273,7 @@
       "fix": "Fix or redirect the broken internal links (CMS redirects document).",
       "scope": "site",
       "ratio": 1,
-      "detail": "0 broken of 60 checked",
+      "detail": "0 broken of 78 checked",
       "pages": []
     },
     {
@@ -223,53 +284,18 @@
       "title": "Title tag, 15–65 characters",
       "fix": "Give the page a specific title in the SEO fields (15–65 characters, brand suffix included).",
       "scope": "page",
-      "ratio": 0.8416666666666667,
-      "detail": "41/60 pages pass",
+      "ratio": 0.7416666666666667,
+      "detail": "29/60 pages pass",
       "pages": [
-        {
-          "path": "/commercial-project-types-affordable-workforce-housing",
-          "ratio": 0.5,
-          "detail": "110 chars"
-        },
-        {
-          "path": "/commercial-project-types-classrooms-and-school-additions",
-          "ratio": 0.5,
-          "detail": "95 chars"
-        },
-        {
-          "path": "/commercial-project-types-multi-family-housing-units",
-          "ratio": 0.5,
-          "detail": "81 chars"
-        },
-        {
-          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-          "ratio": 0.5,
-          "detail": "105 chars"
-        },
-        {
-          "path": "/custom-regions-city-and-urban",
-          "ratio": 0.5,
-          "detail": "133 chars"
-        },
-        {
-          "path": "/custom-regions-island-and-waterfront-homes",
-          "ratio": 0.5,
-          "detail": "182 chars"
-        },
-        {
-          "path": "/custom-regions-mountain-modern-homes",
-          "ratio": 0.5,
-          "detail": "168 chars"
-        },
-        {
-          "path": "/custom-regions-valley-and-vineyard-homes",
-          "ratio": 0.5,
-          "detail": "154 chars"
-        },
         {
           "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
           "detail": "74 chars"
+        },
+        {
+          "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0.5,
+          "detail": "110 chars"
         },
         {
           "path": "/journal/793",
@@ -277,9 +303,19 @@
           "detail": "91 chars"
         },
         {
+          "path": "/commercial-project-types-classrooms-and-school-additions",
+          "ratio": 0.5,
+          "detail": "95 chars"
+        },
+        {
           "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0.5,
           "detail": "108 chars"
+        },
+        {
+          "path": "/commercial-project-types-multi-family-housing-units",
+          "ratio": 0.5,
+          "detail": "81 chars"
         },
         {
           "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
@@ -287,9 +323,19 @@
           "detail": "74 chars"
         },
         {
+          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+          "ratio": 0.5,
+          "detail": "105 chars"
+        },
+        {
           "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0.5,
           "detail": "100 chars"
+        },
+        {
+          "path": "/custom-regions-city-and-urban",
+          "ratio": 0.5,
+          "detail": "133 chars"
         },
         {
           "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
@@ -297,14 +343,29 @@
           "detail": "72 chars"
         },
         {
+          "path": "/custom-regions-island-and-waterfront-homes",
+          "ratio": 0.5,
+          "detail": "182 chars"
+        },
+        {
           "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.5,
           "detail": "114 chars"
         },
         {
+          "path": "/custom-regions-mountain-modern-homes",
+          "ratio": 0.5,
+          "detail": "168 chars"
+        },
+        {
           "path": "/journal/annata-display-2017-dwell-on-design",
           "ratio": 0.5,
           "detail": "116 chars"
+        },
+        {
+          "path": "/custom-regions-valley-and-vineyard-homes",
+          "ratio": 0.5,
+          "detail": "154 chars"
         },
         {
           "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
@@ -320,6 +381,11 @@
           "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0.5,
           "detail": "89 chars"
+        },
+        {
+          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "ratio": 0.5,
+          "detail": "94 chars"
         }
       ]
     },
@@ -331,18 +397,13 @@
       "title": "Meta description, 70–160 characters",
       "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
       "scope": "page",
-      "ratio": 0.5583333333333333,
-      "detail": "7/60 pages pass",
+      "ratio": 0.65,
+      "detail": "18/60 pages pass",
       "pages": [
         {
-          "path": "/",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0.5,
-          "detail": "180 chars"
-        },
-        {
-          "path": "/journal/next-in-line",
-          "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "229 chars"
         },
         {
           "path": "/about",
@@ -350,9 +411,9 @@
           "detail": "185 chars"
         },
         {
-          "path": "/journal/inside-the-team-room",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "240 chars"
         },
         {
           "path": "/commercial",
@@ -360,54 +421,34 @@
           "detail": "174 chars"
         },
         {
-          "path": "/journal/the-first-signing",
+          "path": "/journal/783",
           "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "240 chars"
         },
         {
-          "path": "/commercial-project-types-affordable-workforce-housing",
+          "path": "/journal/793",
           "ratio": 0.5,
-          "detail": "180 chars"
+          "detail": "42 chars"
         },
         {
-          "path": "/journal/sunday-at-augusta",
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "170 chars"
         },
         {
-          "path": "/commercial-project-types-classrooms-and-school-additions",
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0.5,
-          "detail": "180 chars"
+          "detail": "240 chars"
         },
         {
-          "path": "/journal/the-back-nine-wind",
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "198 chars"
         },
         {
-          "path": "/commercial-project-types-multi-family-housing-units",
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.5,
-          "detail": "180 chars"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0.5,
-          "detail": "200 chars"
-        },
-        {
-          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-          "ratio": 0.5,
-          "detail": "180 chars"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0.5,
-          "detail": "200 chars"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "240 chars"
         },
         {
           "path": "/custom-regions-island-and-waterfront-homes",
@@ -415,24 +456,49 @@
           "detail": "167 chars"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "240 chars"
         },
         {
-          "path": "/journal/a-year-of-red",
+          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.5,
-          "detail": "200 chars"
-        },
-        {
-          "path": "/journal/what-theyre-saying",
-          "ratio": 0.5,
-          "detail": "200 chars"
+          "detail": "211 chars"
         },
         {
           "path": "/custom-residential",
           "ratio": 0.5,
           "detail": "192 chars"
+        },
+        {
+          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "ratio": 0.5,
+          "detail": "240 chars"
+        },
+        {
+          "path": "/faq",
+          "ratio": 0.5,
+          "detail": "192 chars"
+        },
+        {
+          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "ratio": 0.5,
+          "detail": "240 chars"
+        },
+        {
+          "path": "/journal/backyard-cottages",
+          "ratio": 0.5,
+          "detail": "240 chars"
+        },
+        {
+          "path": "/journal/bainbridge-island-option",
+          "ratio": 0.5,
+          "detail": "165 chars"
+        },
+        {
+          "path": "/predesigned-residential",
+          "ratio": 0.5,
+          "detail": "226 chars"
         }
       ]
     },
@@ -444,110 +510,9 @@
       "title": "Canonical URL declared",
       "fix": "Emit <link rel=canonical> on every page (seoMeta does this when the route uses it).",
       "scope": "page",
-      "ratio": 0.6333333333333333,
-      "detail": "38/60 pages pass",
-      "pages": [
-        {
-          "path": "/",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/legacy",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/inside-the-team-room",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/sunday-at-augusta",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/building-the-presidio",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/a-year-of-red",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/what-theyre-saying",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/majors-season",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/why-sunday-red",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/get-started",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/the-meaning-of-the-tiger",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/letters-from-the-founder",
-          "ratio": 0,
-          "detail": "missing"
-        },
-        {
-          "path": "/journal/golf-after-dark",
-          "ratio": 0,
-          "detail": "missing"
-        }
-      ]
+      "ratio": 1,
+      "detail": "60/60 pages pass",
+      "pages": []
     },
     {
       "id": "open-graph",
@@ -557,108 +522,108 @@
       "title": "Open Graph title, description and image",
       "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
       "scope": "page",
-      "ratio": 0.5055555555555555,
-      "detail": "15/60 pages pass",
+      "ratio": 0.8388888888888888,
+      "detail": "33/60 pages pass",
       "pages": [
-        {
-          "path": "/",
-          "ratio": 0,
-          "detail": "none"
-        },
         {
           "path": "/legacy",
           "ratio": 0,
           "detail": "none"
         },
         {
+          "path": "/",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
+        },
+        {
           "path": "/journal",
-          "ratio": 0,
-          "detail": "none"
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/about",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/inside-the-team-room",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/commercial",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/sunday-at-augusta",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/commercial-project-types-classrooms-and-school-additions",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/commercial-project-types-multi-family-housing-units",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/custom-regions-city-and-urban",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/custom-regions-island-and-waterfront-homes",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/building-the-presidio",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/custom-regions-mountain-modern-homes",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/a-year-of-red",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/custom-regions-valley-and-vineyard-homes",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/what-theyre-saying",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/custom-residential",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/majors-season",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/why-sunday-red",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/faq",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
           "path": "/get-started",
-          "ratio": 0,
-          "detail": "none"
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/the-meaning-of-the-tiger",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/partnerships-with-architects-and-developers",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/letters-from-the-founder",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/predesigned-residential",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         },
         {
-          "path": "/journal/golf-after-dark",
-          "ratio": 0,
-          "detail": "none"
+          "path": "/predesigned-series-annata",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
+        },
+        {
+          "path": "/predesigned-series-cabin",
+          "ratio": 0.6666666666666666,
+          "detail": "title, description"
         }
       ]
     },
@@ -825,8 +790,8 @@
       "title": "Semantic landmarks (main, nav, header, footer)",
       "fix": "Wrap page content in <main> and chrome in <nav>/<header>/<footer> so parsers can drop the chrome.",
       "scope": "page",
-      "ratio": 0.825,
-      "detail": "18/60 pages pass",
+      "ratio": 0.75,
+      "detail": "0/60 pages pass",
       "pages": [
         {
           "path": "/",
@@ -844,7 +809,17 @@
           "detail": "main, header, footer"
         },
         {
+          "path": "/journal/2013-green-washington-awards",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
           "path": "/about",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -854,7 +829,17 @@
           "detail": "main, header, footer"
         },
         {
+          "path": "/journal/783",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
           "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/journal/793",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -864,7 +849,17 @@
           "detail": "main, header, footer"
         },
         {
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
           "path": "/commercial-project-types-multi-family-housing-units",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -874,7 +869,17 @@
           "detail": "main, header, footer"
         },
         {
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
           "path": "/custom-regions-city-and-urban",
+          "ratio": 0.75,
+          "detail": "main, header, footer"
+        },
+        {
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -884,47 +889,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/custom-regions-mountain-modern-homes",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/custom-regions-valley-and-vineyard-homes",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/custom-residential",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/faq",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/get-started",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/partnerships-with-architects-and-developers",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/predesigned-residential",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/predesigned-series-annata",
-          "ratio": 0.75,
-          "detail": "main, header, footer"
-        },
-        {
-          "path": "/predesigned-series-cabin",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.75,
           "detail": "main, header, footer"
         }
@@ -950,110 +915,9 @@
       "title": "Schema type matches the page",
       "fix": "home → Organization + WebSite · post → Article/BlogPosting with author and dates · product → Product · project → CreativeWork/Article · others → WebPage.",
       "scope": "page",
-      "ratio": 0.26666666666666666,
-      "detail": "16/60 pages pass",
-      "pages": [
-        {
-          "path": "/legacy",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal",
-          "ratio": 0,
-          "detail": "want CollectionPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/about",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/inside-the-team-room",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/commercial",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/commercial-project-types-affordable-workforce-housing",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/sunday-at-augusta",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/commercial-project-types-classrooms-and-school-additions",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/commercial-project-types-multi-family-housing-units",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/custom-regions-city-and-urban",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/custom-regions-island-and-waterfront-homes",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/journal/building-the-presidio",
-          "ratio": 0,
-          "detail": "want Article, have Organization, HomeAndConstructionBusiness, WebSite"
-        },
-        {
-          "path": "/custom-regions-mountain-modern-homes",
-          "ratio": 0,
-          "detail": "want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
-        }
-      ]
+      "ratio": 1,
+      "detail": "60/60 pages pass",
+      "pages": []
     },
     {
       "id": "alt-text",
@@ -1087,28 +951,38 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9583333333333334,
-      "detail": "56/60 pages pass",
+      "ratio": 0.9416666666666667,
+      "detail": "54/60 pages pass",
       "pages": [
         {
-          "path": "/commercial",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "1843 ms"
+          "detail": "2019 ms"
         },
         {
           "path": "/about",
           "ratio": 0.5,
-          "detail": "1014 ms"
+          "detail": "896 ms"
         },
         {
-          "path": "/commercial-project-types-classrooms-and-school-additions",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0.5,
+          "detail": "1780 ms"
+        },
+        {
+          "path": "/commercial",
+          "ratio": 0.5,
+          "detail": "1372 ms"
+        },
+        {
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0.5,
+          "detail": "1538 ms"
+        },
+        {
+          "path": "/journal/coastal-large-time-lapse-video",
           "ratio": 0.5,
           "detail": "1725 ms"
-        },
-        {
-          "path": "/journal/backyard-cottages",
-          "ratio": 0.5,
-          "detail": "1537 ms"
         }
       ]
     },
@@ -1120,8 +994,8 @@
       "title": "Direct answer in the first 200 words",
       "fix": "Open with a 2–4 sentence paragraph that states what the page is about and answers its core question before any scene-setting.",
       "scope": "page",
-      "ratio": 0.5423728813559322,
-      "detail": "32/59 pages pass",
+      "ratio": 0.5254237288135594,
+      "detail": "31/59 pages pass",
       "pages": [
         {
           "path": "/",
@@ -1140,6 +1014,11 @@
         },
         {
           "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0,
+          "detail": "no paragraph ≥ 25 words"
+        },
+        {
+          "path": "/journal/793",
           "ratio": 0,
           "detail": "no paragraph ≥ 25 words"
         },
@@ -1199,6 +1078,11 @@
           "detail": "no paragraph ≥ 25 words"
         },
         {
+          "path": "/journal/bainbridge-island-option",
+          "ratio": 0,
+          "detail": "no paragraph ≥ 25 words"
+        },
+        {
           "path": "/predesigned-residential",
           "ratio": 0,
           "detail": "no paragraph ≥ 25 words"
@@ -1210,16 +1094,6 @@
         },
         {
           "path": "/predesigned-series-cabin",
-          "ratio": 0,
-          "detail": "no paragraph ≥ 25 words"
-        },
-        {
-          "path": "/predesigned-series-elemental",
-          "ratio": 0,
-          "detail": "no paragraph ≥ 25 words"
-        },
-        {
-          "path": "/predesigned-series-m",
           "ratio": 0,
           "detail": "no paragraph ≥ 25 words"
         }
@@ -1242,7 +1116,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/next-in-line",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1252,7 +1126,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/inside-the-team-room",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1262,7 +1136,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/the-first-signing",
+          "path": "/journal/783",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1272,7 +1146,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/sunday-at-augusta",
+          "path": "/journal/793",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1282,7 +1156,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/the-back-nine-wind",
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1292,7 +1166,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/a-caddies-eye",
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1302,7 +1176,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/anatomy-of-a-polo",
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1312,7 +1186,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/cashmere-on-course",
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1322,7 +1196,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1332,7 +1206,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/a-year-of-red",
+          "path": "/journal/annata-display-2017-dwell-on-design",
           "ratio": 0,
           "detail": "0 question heading(s)"
         }
@@ -1360,7 +1234,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/next-in-line",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
           "detail": "none"
         },
@@ -1370,7 +1244,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/inside-the-team-room",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "none"
         },
@@ -1380,7 +1254,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/the-first-signing",
+          "path": "/journal/783",
           "ratio": 0,
           "detail": "none"
         },
@@ -1390,7 +1264,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/sunday-at-augusta",
+          "path": "/journal/793",
           "ratio": 0,
           "detail": "none"
         },
@@ -1400,7 +1274,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/the-back-nine-wind",
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "none"
         },
@@ -1410,7 +1284,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/a-caddies-eye",
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "none"
         },
@@ -1420,7 +1294,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/anatomy-of-a-polo",
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "none"
         },
@@ -1430,7 +1304,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/cashmere-on-course",
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "none"
         },
@@ -1440,7 +1314,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "none"
         },
@@ -1459,8 +1333,8 @@
       "title": "Enough substance to be worth citing",
       "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
       "scope": "page",
-      "ratio": 0.4973750000000002,
-      "detail": "21/60 pages pass",
+      "ratio": 0.3290416666666667,
+      "detail": "3/60 pages pass",
       "pages": [
         {
           "path": "/predesigned-series-annata",
@@ -1572,8 +1446,8 @@
       "title": "Sentences average 25 words or fewer",
       "fix": "Shorten long sentences; answer engines lift short declarative ones.",
       "scope": "page",
-      "ratio": 0.8970588235294118,
-      "detail": "30/34 pages pass",
+      "ratio": 0.8529411764705882,
+      "detail": "27/34 pages pass",
       "pages": [
         {
           "path": "/",
@@ -1594,6 +1468,21 @@
           "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.5,
           "detail": "27.7 words/sentence"
+        },
+        {
+          "path": "/journal/bellingham-herald",
+          "ratio": 0.5,
+          "detail": "25.7 words/sentence"
+        },
+        {
+          "path": "/journal/blog-kickoff",
+          "ratio": 0.5,
+          "detail": "31.9 words/sentence"
+        },
+        {
+          "path": "/journal/come-celebrate-design-in-san-francisco-june-10-11",
+          "ratio": 0.5,
+          "detail": "27 words/sentence"
         }
       ]
     },
@@ -1619,7 +1508,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/next-in-line",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1629,7 +1518,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/inside-the-team-room",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1639,7 +1528,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/the-first-signing",
+          "path": "/journal/783",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1649,7 +1538,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/sunday-at-augusta",
+          "path": "/journal/793",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1659,7 +1548,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/the-back-nine-wind",
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1669,7 +1558,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/a-caddies-eye",
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1679,7 +1568,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/anatomy-of-a-polo",
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1689,7 +1578,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/cashmere-on-course",
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1699,7 +1588,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1718,8 +1607,8 @@
       "title": "Brand named in title, H1 or opening",
       "fix": "Name \"Method Homes\" in the title, H1 or first paragraph so the answer attributes the fact to you.",
       "scope": "page",
-      "ratio": 0.6949152542372887,
-      "detail": "14/59 pages pass",
+      "ratio": 0.7288135593220346,
+      "detail": "19/59 pages pass",
       "pages": [
         {
           "path": "/",
@@ -1732,7 +1621,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/next-in-line",
+          "path": "/journal/2013-green-washington-awards",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1742,7 +1631,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/inside-the-team-room",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1752,32 +1641,17 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/the-first-signing",
+          "path": "/journal/783",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/sunday-at-augusta",
+          "path": "/journal/793",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0.6,
-          "detail": "1/3 spots"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0.6,
-          "detail": "1/3 spots"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0.6,
-          "detail": "1/3 spots"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1787,17 +1661,12 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/a-year-of-red",
-          "ratio": 0.6,
-          "detail": "1/3 spots"
-        },
-        {
-          "path": "/journal/what-theyre-saying",
+          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1807,7 +1676,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/majors-season",
+          "path": "/journal/architectural-record-modular-classroom-makeover",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1817,7 +1686,27 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/why-sunday-red",
+          "path": "/get-started",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/partnerships-with-architects-and-developers",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/bainbridge-island-option",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/predesigned-residential",
+          "ratio": 0.6,
+          "detail": "1/3 spots"
+        },
+        {
+          "path": "/journal/balance-s-m-l-series-prefab-studio",
           "ratio": 0.6,
           "detail": "1/3 spots"
         }
@@ -1831,7 +1720,7 @@
       "title": "Descriptive internal links to related pages",
       "fix": "Link each page to 3+ related pages with anchor text that says what's there (not 'learn more').",
       "scope": "page",
-      "ratio": 0.11666666666666663,
+      "ratio": 0.016666666666666666,
       "detail": "1/60 pages pass",
       "pages": [
         {
@@ -1845,7 +1734,17 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
+          "path": "/journal/2013-green-washington-awards",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
           "path": "/about",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1855,7 +1754,17 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
+          "path": "/journal/783",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
           "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/793",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1865,7 +1774,17 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
           "path": "/commercial-project-types-multi-family-housing-units",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1875,7 +1794,17 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
           "path": "/custom-regions-city-and-urban",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1885,52 +1814,12 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "ratio": 0,
+          "detail": "0 internal, 0 generic anchor(s)"
+        },
+        {
           "path": "/custom-regions-mountain-modern-homes",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/custom-regions-valley-and-vineyard-homes",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/custom-residential",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/faq",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/get-started",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/partnerships-with-architects-and-developers",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/predesigned-residential",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/predesigned-series-annata",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/predesigned-series-cabin",
-          "ratio": 0,
-          "detail": "0 internal, 0 generic anchor(s)"
-        },
-        {
-          "path": "/predesigned-series-elemental",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         }
@@ -1944,8 +1833,8 @@
       "title": "Updated within 180 days (dateModified / lastmod)",
       "fix": "Expose dateModified in Article schema and <lastmod> in the sitemap, and revisit key pages at least twice a year.",
       "scope": "page",
-      "ratio": 0.2542372881355932,
-      "detail": "15/59 pages pass",
+      "ratio": 0.559322033898305,
+      "detail": "33/59 pages pass",
       "pages": [
         {
           "path": "/",
@@ -1958,17 +1847,7 @@
           "detail": "no date signal"
         },
         {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
           "path": "/about",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
-          "path": "/journal/inside-the-team-room",
           "ratio": 0,
           "detail": "no date signal"
         },
@@ -1978,17 +1857,7 @@
           "detail": "no date signal"
         },
         {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
           "path": "/commercial-project-types-affordable-workforce-housing",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
-          "path": "/journal/sunday-at-augusta",
           "ratio": 0,
           "detail": "no date signal"
         },
@@ -1998,17 +1867,7 @@
           "detail": "no date signal"
         },
         {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
           "path": "/commercial-project-types-multi-family-housing-units",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
           "ratio": 0,
           "detail": "no date signal"
         },
@@ -2018,17 +1877,7 @@
           "detail": "no date signal"
         },
         {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
           "path": "/custom-regions-city-and-urban",
-          "ratio": 0,
-          "detail": "no date signal"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
           "ratio": 0,
           "detail": "no date signal"
         },
@@ -2038,12 +1887,52 @@
           "detail": "no date signal"
         },
         {
-          "path": "/journal/building-the-presidio",
+          "path": "/custom-regions-mountain-modern-homes",
           "ratio": 0,
           "detail": "no date signal"
         },
         {
-          "path": "/custom-regions-mountain-modern-homes",
+          "path": "/custom-regions-valley-and-vineyard-homes",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/custom-residential",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/faq",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/get-started",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/partnerships-with-architects-and-developers",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/predesigned-residential",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/predesigned-series-annata",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/predesigned-series-cabin",
+          "ratio": 0,
+          "detail": "no date signal"
+        },
+        {
+          "path": "/predesigned-series-elemental",
           "ratio": 0,
           "detail": "no date signal"
         }
@@ -2109,102 +1998,102 @@
       "detail": "0/33 pages pass",
       "pages": [
         {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/inside-the-team-room",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/sunday-at-augusta",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/building-the-presidio",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/a-year-of-red",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/what-theyre-saying",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/majors-season",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/why-sunday-red",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/the-meaning-of-the-tiger",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/letters-from-the-founder",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/golf-after-dark",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/training-days",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
-          "path": "/journal/the-travel-kit",
-          "ratio": 0,
-          "detail": "none"
-        },
-        {
           "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
           "detail": "none"
         },
         {
           "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/783",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/793",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/annata-display-2017-dwell-on-design",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/backyard-cottages",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/bainbridge-island-option",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/bccustom-off-grid-cabin",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/bellingham-herald",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/berkshires-custom-install-video",
+          "ratio": 0,
+          "detail": "none"
+        },
+        {
+          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0,
           "detail": "none"
         }
@@ -2222,102 +2111,102 @@
       "detail": "0/33 pages pass",
       "pages": [
         {
-          "path": "/journal/next-in-line",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/inside-the-team-room",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/the-first-signing",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/sunday-at-augusta",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/the-back-nine-wind",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/a-caddies-eye",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/anatomy-of-a-polo",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/cashmere-on-course",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/building-the-presidio",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/a-year-of-red",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/what-theyre-saying",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/majors-season",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/why-sunday-red",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/the-meaning-of-the-tiger",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/letters-from-the-founder",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/golf-after-dark",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/training-days",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
-          "path": "/journal/the-travel-kit",
-          "ratio": 0,
-          "detail": "0 external link(s)"
-        },
-        {
           "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
           "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/783",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/793",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/annata-display-2017-dwell-on-design",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/backyard-cottages",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/bainbridge-island-option",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/bccustom-off-grid-cabin",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/bellingham-herald",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/berkshires-custom-install-video",
+          "ratio": 0,
+          "detail": "0 external link(s)"
+        },
+        {
+          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0,
           "detail": "0 external link(s)"
         }
@@ -2331,8 +2220,8 @@
       "title": "This grader runs on a schedule",
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
-      "ratio": 0.5,
-      "detail": "1 run(s) recorded",
+      "ratio": 1,
+      "detail": "2 run(s) recorded",
       "pages": []
     },
     {
@@ -2341,10 +2230,10 @@
       "weight": 5,
       "effort": "low",
       "title": "Tracked prompts probed for mentions and citations",
-      "fix": "Set ANTHROPIC_API_KEY as an Actions secret and keep aeo.prompts current — this is the visibility score and citation rate.",
+      "fix": "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.",
       "scope": "site",
-      "ratio": 0,
-      "detail": "ANTHROPIC_API_KEY not set",
+      "ratio": 1,
+      "detail": "visibility 67%, cited 17% of 6 (manual)",
       "pages": []
     },
     {
@@ -2373,18 +2262,6 @@
     }
   ],
   "recommendations": [
-    {
-      "id": "prompt-insights",
-      "pillar": "measurement",
-      "title": "Tracked prompts probed for mentions and citations",
-      "fix": "Set ANTHROPIC_API_KEY as an Actions secret and keep aeo.prompts current — this is the visibility score and citation rate.",
-      "effort": "low",
-      "impact": 5,
-      "priority": 5,
-      "detail": "ANTHROPIC_API_KEY not set",
-      "pages": [],
-      "pagesAffected": 0
-    },
     {
       "id": "analytics",
       "pillar": "measurement",
@@ -2420,17 +2297,17 @@
       "detail": "0/58 pages pass",
       "pages": [
         "/legacy — 0 question heading(s)",
-        "/journal/next-in-line — 0 question heading(s)",
+        "/journal/2013-green-washington-awards — 0 question heading(s)",
         "/about — 0 question heading(s)",
-        "/journal/inside-the-team-room — 0 question heading(s)",
+        "/journal/2014-palm-springs-modernism-week-in-review — 0 question heading(s)",
         "/commercial — 0 question heading(s)",
-        "/journal/the-first-signing — 0 question heading(s)",
+        "/journal/783 — 0 question heading(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 question heading(s)",
-        "/journal/sunday-at-augusta — 0 question heading(s)",
+        "/journal/793 — 0 question heading(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 question heading(s)",
-        "/journal/the-back-nine-wind — 0 question heading(s)",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 question heading(s)",
         "/commercial-project-types-multi-family-housing-units — 0 question heading(s)",
-        "/journal/a-caddies-eye — 0 question heading(s)"
+        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 question heading(s)"
       ],
       "pagesAffected": 58
     },
@@ -2446,43 +2323,18 @@
       "pages": [
         "/ — none",
         "/legacy — none",
-        "/journal/next-in-line — none",
+        "/journal/2013-green-washington-awards — none",
         "/about — none",
-        "/journal/inside-the-team-room — none",
+        "/journal/2014-palm-springs-modernism-week-in-review — none",
         "/commercial — none",
-        "/journal/the-first-signing — none",
+        "/journal/783 — none",
         "/commercial-project-types-affordable-workforce-housing — none",
-        "/journal/sunday-at-augusta — none",
+        "/journal/793 — none",
         "/commercial-project-types-classrooms-and-school-additions — none",
-        "/journal/the-back-nine-wind — none",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
         "/commercial-project-types-multi-family-housing-units — none"
       ],
       "pagesAffected": 59
-    },
-    {
-      "id": "freshness",
-      "pillar": "content",
-      "title": "Updated within 180 days (dateModified / lastmod)",
-      "fix": "Expose dateModified in Article schema and <lastmod> in the sitemap, and revisit key pages at least twice a year.",
-      "effort": "medium",
-      "impact": 3.7,
-      "priority": 2.33,
-      "detail": "15/59 pages pass",
-      "pages": [
-        "/ — no date signal",
-        "/legacy — no date signal",
-        "/journal/next-in-line — no date signal",
-        "/about — no date signal",
-        "/journal/inside-the-team-room — no date signal",
-        "/commercial — no date signal",
-        "/journal/the-first-signing — no date signal",
-        "/commercial-project-types-affordable-workforce-housing — no date signal",
-        "/journal/sunday-at-augusta — no date signal",
-        "/commercial-project-types-classrooms-and-school-additions — no date signal",
-        "/journal/the-back-nine-wind — no date signal",
-        "/commercial-project-types-multi-family-housing-units — no date signal"
-      ],
-      "pagesAffected": 44
     },
     {
       "id": "internal-links",
@@ -2490,22 +2342,22 @@
       "title": "Descriptive internal links to related pages",
       "fix": "Link each page to 3+ related pages with anchor text that says what's there (not 'learn more').",
       "effort": "medium",
-      "impact": 3.5,
-      "priority": 2.21,
+      "impact": 3.9,
+      "priority": 2.46,
       "detail": "1/60 pages pass",
       "pages": [
         "/ — 0 internal, 0 generic anchor(s)",
         "/legacy — 0 internal, 0 generic anchor(s)",
+        "/journal/2013-green-washington-awards — 0 internal, 0 generic anchor(s)",
         "/about — 0 internal, 0 generic anchor(s)",
+        "/journal/2014-palm-springs-modernism-week-in-review — 0 internal, 0 generic anchor(s)",
         "/commercial — 0 internal, 0 generic anchor(s)",
+        "/journal/783 — 0 internal, 0 generic anchor(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 internal, 0 generic anchor(s)",
+        "/journal/793 — 0 internal, 0 generic anchor(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 internal, 0 generic anchor(s)",
-        "/commercial-project-types-multi-family-housing-units — 0 internal, 0 generic anchor(s)",
-        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — 0 internal, 0 generic anchor(s)",
-        "/custom-regions-city-and-urban — 0 internal, 0 generic anchor(s)",
-        "/custom-regions-island-and-waterfront-homes — 0 internal, 0 generic anchor(s)",
-        "/custom-regions-mountain-modern-homes — 0 internal, 0 generic anchor(s)",
-        "/custom-regions-valley-and-vineyard-homes — 0 internal, 0 generic anchor(s)"
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 internal, 0 generic anchor(s)",
+        "/commercial-project-types-multi-family-housing-units — 0 internal, 0 generic anchor(s)"
       ],
       "pagesAffected": 59
     },
@@ -2521,15 +2373,15 @@
       "pages": [
         "/ — 0 list(s)/table(s)",
         "/legacy — 0 list(s)/table(s)",
-        "/journal/next-in-line — 0 list(s)/table(s)",
+        "/journal/2013-green-washington-awards — 0 list(s)/table(s)",
         "/about — 0 list(s)/table(s)",
-        "/journal/inside-the-team-room — 0 list(s)/table(s)",
+        "/journal/2014-palm-springs-modernism-week-in-review — 0 list(s)/table(s)",
         "/commercial — 0 list(s)/table(s)",
-        "/journal/the-first-signing — 0 list(s)/table(s)",
+        "/journal/783 — 0 list(s)/table(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 list(s)/table(s)",
-        "/journal/sunday-at-augusta — 0 list(s)/table(s)",
+        "/journal/793 — 0 list(s)/table(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 list(s)/table(s)",
-        "/journal/the-back-nine-wind — 0 list(s)/table(s)",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 list(s)/table(s)",
         "/commercial-project-types-multi-family-housing-units — 0 list(s)/table(s)"
       ],
       "pagesAffected": 59
@@ -2547,6 +2399,31 @@
       "pagesAffected": 0
     },
     {
+      "id": "answer-first",
+      "pillar": "content",
+      "title": "Direct answer in the first 200 words",
+      "fix": "Open with a 2–4 sentence paragraph that states what the page is about and answers its core question before any scene-setting.",
+      "effort": "medium",
+      "impact": 2.8,
+      "priority": 1.78,
+      "detail": "31/59 pages pass",
+      "pages": [
+        "/ — no paragraph ≥ 25 words",
+        "/about — no paragraph ≥ 25 words",
+        "/commercial — no paragraph ≥ 25 words",
+        "/commercial-project-types-affordable-workforce-housing — no paragraph ≥ 25 words",
+        "/journal/793 — no paragraph ≥ 25 words",
+        "/commercial-project-types-classrooms-and-school-additions — no paragraph ≥ 25 words",
+        "/commercial-project-types-multi-family-housing-units — no paragraph ≥ 25 words",
+        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — no paragraph ≥ 25 words",
+        "/custom-regions-city-and-urban — no paragraph ≥ 25 words",
+        "/custom-regions-island-and-waterfront-homes — no paragraph ≥ 25 words",
+        "/custom-regions-mountain-modern-homes — no paragraph ≥ 25 words",
+        "/custom-regions-valley-and-vineyard-homes — no paragraph ≥ 25 words"
+      ],
+      "pagesAffected": 28
+    },
+    {
       "id": "bylines",
       "pillar": "authority",
       "title": "Articles carry a named author",
@@ -2556,57 +2433,45 @@
       "priority": 1.76,
       "detail": "0/33 pages pass",
       "pages": [
-        "/journal/next-in-line — none",
-        "/journal/inside-the-team-room — none",
-        "/journal/the-first-signing — none",
-        "/journal/sunday-at-augusta — none",
-        "/journal/the-back-nine-wind — none",
-        "/journal/a-caddies-eye — none",
-        "/journal/anatomy-of-a-polo — none",
-        "/journal/cashmere-on-course — none",
-        "/journal/building-the-presidio — none",
-        "/journal/a-year-of-red — none",
-        "/journal/what-theyre-saying — none",
-        "/journal/majors-season — none"
+        "/journal/2013-green-washington-awards — none",
+        "/journal/2014-palm-springs-modernism-week-in-review — none",
+        "/journal/783 — none",
+        "/journal/793 — none",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
+        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — none",
+        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — none",
+        "/journal/alaska-custom-cabin-girdwood-prefab-set — none",
+        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — none",
+        "/journal/annata-display-2017-dwell-on-design — none",
+        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — none",
+        "/journal/architectural-record-modular-classroom-makeover — none"
       ],
       "pagesAffected": 33
     },
     {
-      "id": "answer-first",
+      "id": "freshness",
       "pillar": "content",
-      "title": "Direct answer in the first 200 words",
-      "fix": "Open with a 2–4 sentence paragraph that states what the page is about and answers its core question before any scene-setting.",
+      "title": "Updated within 180 days (dateModified / lastmod)",
+      "fix": "Expose dateModified in Article schema and <lastmod> in the sitemap, and revisit key pages at least twice a year.",
       "effort": "medium",
-      "impact": 2.7,
-      "priority": 1.72,
-      "detail": "32/59 pages pass",
+      "impact": 2.2,
+      "priority": 1.38,
+      "detail": "33/59 pages pass",
       "pages": [
-        "/ — no paragraph ≥ 25 words",
-        "/about — no paragraph ≥ 25 words",
-        "/commercial — no paragraph ≥ 25 words",
-        "/commercial-project-types-affordable-workforce-housing — no paragraph ≥ 25 words",
-        "/commercial-project-types-classrooms-and-school-additions — no paragraph ≥ 25 words",
-        "/commercial-project-types-multi-family-housing-units — no paragraph ≥ 25 words",
-        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — no paragraph ≥ 25 words",
-        "/custom-regions-city-and-urban — no paragraph ≥ 25 words",
-        "/custom-regions-island-and-waterfront-homes — no paragraph ≥ 25 words",
-        "/custom-regions-mountain-modern-homes — no paragraph ≥ 25 words",
-        "/custom-regions-valley-and-vineyard-homes — no paragraph ≥ 25 words",
-        "/custom-residential — no paragraph ≥ 25 words"
+        "/ — no date signal",
+        "/legacy — no date signal",
+        "/about — no date signal",
+        "/commercial — no date signal",
+        "/commercial-project-types-affordable-workforce-housing — no date signal",
+        "/commercial-project-types-classrooms-and-school-additions — no date signal",
+        "/commercial-project-types-multi-family-housing-units — no date signal",
+        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — no date signal",
+        "/custom-regions-city-and-urban — no date signal",
+        "/custom-regions-island-and-waterfront-homes — no date signal",
+        "/custom-regions-mountain-modern-homes — no date signal",
+        "/custom-regions-valley-and-vineyard-homes — no date signal"
       ],
-      "pagesAffected": 27
-    },
-    {
-      "id": "monitoring",
-      "pillar": "measurement",
-      "title": "This grader runs on a schedule",
-      "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
-      "effort": "low",
-      "impact": 1.5,
-      "priority": 1.5,
-      "detail": "1 run(s) recorded",
-      "pages": [],
-      "pagesAffected": 0
+      "pagesAffected": 26
     },
     {
       "id": "references",
@@ -2618,70 +2483,45 @@
       "priority": 1.17,
       "detail": "0/33 pages pass",
       "pages": [
-        "/journal/next-in-line — 0 external link(s)",
-        "/journal/inside-the-team-room — 0 external link(s)",
-        "/journal/the-first-signing — 0 external link(s)",
-        "/journal/sunday-at-augusta — 0 external link(s)",
-        "/journal/the-back-nine-wind — 0 external link(s)",
-        "/journal/a-caddies-eye — 0 external link(s)",
-        "/journal/anatomy-of-a-polo — 0 external link(s)",
-        "/journal/cashmere-on-course — 0 external link(s)",
-        "/journal/building-the-presidio — 0 external link(s)",
-        "/journal/a-year-of-red — 0 external link(s)",
-        "/journal/what-theyre-saying — 0 external link(s)",
-        "/journal/majors-season — 0 external link(s)"
+        "/journal/2013-green-washington-awards — 0 external link(s)",
+        "/journal/2014-palm-springs-modernism-week-in-review — 0 external link(s)",
+        "/journal/783 — 0 external link(s)",
+        "/journal/793 — 0 external link(s)",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 external link(s)",
+        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 external link(s)",
+        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 0 external link(s)",
+        "/journal/alaska-custom-cabin-girdwood-prefab-set — 0 external link(s)",
+        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 0 external link(s)",
+        "/journal/annata-display-2017-dwell-on-design — 0 external link(s)",
+        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 0 external link(s)",
+        "/journal/architectural-record-modular-classroom-makeover — 0 external link(s)"
       ],
       "pagesAffected": 33
     },
     {
-      "id": "schema-type",
-      "pillar": "technical",
-      "title": "Schema type matches the page",
-      "fix": "home → Organization + WebSite · post → Article/BlogPosting with author and dates · product → Product · project → CreativeWork/Article · others → WebPage.",
-      "effort": "medium",
-      "impact": 1.6,
-      "priority": 1.02,
-      "detail": "16/60 pages pass",
+      "id": "depth",
+      "pillar": "content",
+      "title": "Enough substance to be worth citing",
+      "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
+      "effort": "high",
+      "impact": 2.7,
+      "priority": 1.07,
+      "detail": "3/60 pages pass",
       "pages": [
-        "/legacy — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal — want CollectionPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal/next-in-line — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/about — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal/inside-the-team-room — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/commercial — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal/the-first-signing — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/commercial-project-types-affordable-workforce-housing — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal/sunday-at-augusta — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/commercial-project-types-classrooms-and-school-additions — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/journal/the-back-nine-wind — want Article, have Organization, HomeAndConstructionBusiness, WebSite",
-        "/commercial-project-types-multi-family-housing-units — want WebPage, have Organization, HomeAndConstructionBusiness, WebSite"
+        "/predesigned-series-annata — 2 words (target 200)",
+        "/predesigned-series-cabin — 2 words (target 200)",
+        "/predesigned-series-elemental — 2 words (target 200)",
+        "/predesigned-series-m — 2 words (target 200)",
+        "/predesigned-series-option — 2 words (target 200)",
+        "/predesigned-series-paradigm — 2 words (target 200)",
+        "/pricing — 2 words (target 200)",
+        "/commercial — 4 words (target 200)",
+        "/predesigned-residential — 4 words (target 200)",
+        "/predesigned-series-method-one — 4 words (target 200)",
+        "/custom-residential — 6 words (target 200)",
+        "/faq — 6 words (target 200)"
       ],
-      "pagesAffected": 44
-    },
-    {
-      "id": "description",
-      "pillar": "technical",
-      "title": "Meta description, 70–160 characters",
-      "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
-      "effort": "low",
-      "impact": 1,
-      "priority": 0.99,
-      "detail": "7/60 pages pass",
-      "pages": [
-        "/ — 180 chars",
-        "/journal/next-in-line — 200 chars",
-        "/about — 185 chars",
-        "/journal/inside-the-team-room — 200 chars",
-        "/commercial — 174 chars",
-        "/journal/the-first-signing — 200 chars",
-        "/commercial-project-types-affordable-workforce-housing — 180 chars",
-        "/journal/sunday-at-augusta — 200 chars",
-        "/commercial-project-types-classrooms-and-school-additions — 180 chars",
-        "/journal/the-back-nine-wind — 200 chars",
-        "/commercial-project-types-multi-family-housing-units — 180 chars",
-        "/journal/a-caddies-eye — 200 chars"
-      ],
-      "pagesAffected": 53
+      "pagesAffected": 57
     },
     {
       "id": "about-contact",
@@ -2713,74 +2553,49 @@
       "title": "Brand named in title, H1 or opening",
       "fix": "Name \"Method Homes\" in the title, H1 or first paragraph so the answer attributes the fact to you.",
       "effort": "low",
-      "impact": 0.9,
-      "priority": 0.92,
-      "detail": "14/59 pages pass",
+      "impact": 0.8,
+      "priority": 0.81,
+      "detail": "19/59 pages pass",
       "pages": [
         "/ — 1/3 spots",
         "/legacy — 1/3 spots",
-        "/journal/next-in-line — 1/3 spots",
+        "/journal/2013-green-washington-awards — 1/3 spots",
         "/about — 1/3 spots",
-        "/journal/inside-the-team-room — 1/3 spots",
+        "/journal/2014-palm-springs-modernism-week-in-review — 1/3 spots",
         "/commercial — 1/3 spots",
-        "/journal/the-first-signing — 1/3 spots",
-        "/journal/sunday-at-augusta — 1/3 spots",
-        "/journal/the-back-nine-wind — 1/3 spots",
-        "/journal/a-caddies-eye — 1/3 spots",
-        "/journal/anatomy-of-a-polo — 1/3 spots",
-        "/journal/cashmere-on-course — 1/3 spots"
+        "/journal/783 — 1/3 spots",
+        "/journal/793 — 1/3 spots",
+        "/journal/alaska-custom-cabin-girdwood-prefab-set — 1/3 spots",
+        "/custom-regions-island-and-waterfront-homes — 1/3 spots",
+        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 1/3 spots",
+        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 1/3 spots"
       ],
-      "pagesAffected": 45
+      "pagesAffected": 40
     },
     {
-      "id": "depth",
-      "pillar": "content",
-      "title": "Enough substance to be worth citing",
-      "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
-      "effort": "high",
-      "impact": 2,
-      "priority": 0.8,
-      "detail": "21/60 pages pass",
-      "pages": [
-        "/predesigned-series-annata — 2 words (target 200)",
-        "/predesigned-series-cabin — 2 words (target 200)",
-        "/predesigned-series-elemental — 2 words (target 200)",
-        "/predesigned-series-m — 2 words (target 200)",
-        "/predesigned-series-option — 2 words (target 200)",
-        "/predesigned-series-paradigm — 2 words (target 200)",
-        "/pricing — 2 words (target 200)",
-        "/commercial — 4 words (target 200)",
-        "/predesigned-residential — 4 words (target 200)",
-        "/predesigned-series-method-one — 4 words (target 200)",
-        "/custom-residential — 6 words (target 200)",
-        "/faq — 6 words (target 200)"
-      ],
-      "pagesAffected": 39
-    },
-    {
-      "id": "open-graph",
+      "id": "description",
       "pillar": "technical",
-      "title": "Open Graph title, description and image",
-      "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
+      "title": "Meta description, 70–160 characters",
+      "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
       "effort": "low",
-      "impact": 0.7,
-      "priority": 0.74,
-      "detail": "15/60 pages pass",
+      "impact": 0.8,
+      "priority": 0.78,
+      "detail": "18/60 pages pass",
       "pages": [
-        "/ — none",
-        "/legacy — none",
-        "/journal — none",
-        "/journal/next-in-line — none",
-        "/journal/inside-the-team-room — none",
-        "/journal/the-first-signing — none",
-        "/journal/sunday-at-augusta — none",
-        "/journal/the-back-nine-wind — none",
-        "/journal/a-caddies-eye — none",
-        "/journal/anatomy-of-a-polo — none",
-        "/journal/cashmere-on-course — none",
-        "/journal/building-the-presidio — none"
+        "/journal/2013-green-washington-awards — 229 chars",
+        "/about — 185 chars",
+        "/journal/2014-palm-springs-modernism-week-in-review — 240 chars",
+        "/commercial — 174 chars",
+        "/journal/783 — 240 chars",
+        "/journal/793 — 42 chars",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 170 chars",
+        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 240 chars",
+        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 198 chars",
+        "/journal/alaska-custom-cabin-girdwood-prefab-set — 240 chars",
+        "/custom-regions-island-and-waterfront-homes — 167 chars",
+        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 240 chars"
       ],
-      "pagesAffected": 45
+      "pagesAffected": 42
     },
     {
       "id": "h1",
@@ -2808,54 +2623,29 @@
       "pagesAffected": 26
     },
     {
-      "id": "canonical",
-      "pillar": "technical",
-      "title": "Canonical URL declared",
-      "fix": "Emit <link rel=canonical> on every page (seoMeta does this when the route uses it).",
-      "effort": "low",
-      "impact": 0.5,
-      "priority": 0.55,
-      "detail": "38/60 pages pass",
-      "pages": [
-        "/ — missing",
-        "/legacy — missing",
-        "/journal — missing",
-        "/journal/next-in-line — missing",
-        "/journal/inside-the-team-room — missing",
-        "/journal/the-first-signing — missing",
-        "/journal/sunday-at-augusta — missing",
-        "/journal/the-back-nine-wind — missing",
-        "/journal/a-caddies-eye — missing",
-        "/journal/anatomy-of-a-polo — missing",
-        "/journal/cashmere-on-course — missing",
-        "/journal/building-the-presidio — missing"
-      ],
-      "pagesAffected": 22
-    },
-    {
       "id": "title",
       "pillar": "technical",
       "title": "Title tag, 15–65 characters",
       "fix": "Give the page a specific title in the SEO fields (15–65 characters, brand suffix included).",
       "effort": "low",
-      "impact": 0.2,
-      "priority": 0.24,
-      "detail": "41/60 pages pass",
+      "impact": 0.4,
+      "priority": 0.38,
+      "detail": "29/60 pages pass",
       "pages": [
-        "/commercial-project-types-affordable-workforce-housing — 110 chars",
-        "/commercial-project-types-classrooms-and-school-additions — 95 chars",
-        "/commercial-project-types-multi-family-housing-units — 81 chars",
-        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — 105 chars",
-        "/custom-regions-city-and-urban — 133 chars",
-        "/custom-regions-island-and-waterfront-homes — 182 chars",
-        "/custom-regions-mountain-modern-homes — 168 chars",
-        "/custom-regions-valley-and-vineyard-homes — 154 chars",
         "/journal/2014-palm-springs-modernism-week-in-review — 74 chars",
+        "/commercial-project-types-affordable-workforce-housing — 110 chars",
         "/journal/793 — 91 chars",
+        "/commercial-project-types-classrooms-and-school-additions — 95 chars",
         "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 108 chars",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 74 chars"
+        "/commercial-project-types-multi-family-housing-units — 81 chars",
+        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 74 chars",
+        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — 105 chars",
+        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 100 chars",
+        "/custom-regions-city-and-urban — 133 chars",
+        "/journal/alaska-custom-cabin-girdwood-prefab-set — 72 chars",
+        "/custom-regions-island-and-waterfront-homes — 182 chars"
       ],
-      "pagesAffected": 19
+      "pagesAffected": 31
     },
     {
       "id": "readability",
@@ -2863,16 +2653,44 @@
       "title": "Sentences average 25 words or fewer",
       "fix": "Shorten long sentences; answer engines lift short declarative ones.",
       "effort": "medium",
-      "impact": 0.3,
-      "priority": 0.19,
-      "detail": "30/34 pages pass",
+      "impact": 0.4,
+      "priority": 0.28,
+      "detail": "27/34 pages pass",
       "pages": [
         "/ — 61.6 words/sentence",
         "/journal/2014-palm-springs-modernism-week-in-review — 39.4 words/sentence",
         "/journal/backyard-cottage-design-challenge-and-the-winners-are — 39.7 words/sentence",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 27.7 words/sentence"
+        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 27.7 words/sentence",
+        "/journal/bellingham-herald — 25.7 words/sentence",
+        "/journal/blog-kickoff — 31.9 words/sentence",
+        "/journal/come-celebrate-design-in-san-francisco-june-10-11 — 27 words/sentence"
       ],
-      "pagesAffected": 4
+      "pagesAffected": 7
+    },
+    {
+      "id": "open-graph",
+      "pillar": "technical",
+      "title": "Open Graph title, description and image",
+      "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
+      "effort": "low",
+      "impact": 0.2,
+      "priority": 0.24,
+      "detail": "33/60 pages pass",
+      "pages": [
+        "/legacy — none",
+        "/ — title, description",
+        "/journal — title, description",
+        "/about — title, description",
+        "/commercial — title, description",
+        "/commercial-project-types-affordable-workforce-housing — title, description",
+        "/commercial-project-types-classrooms-and-school-additions — title, description",
+        "/commercial-project-types-multi-family-housing-units — title, description",
+        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — title, description",
+        "/custom-regions-city-and-urban — title, description",
+        "/custom-regions-island-and-waterfront-homes — title, description",
+        "/custom-regions-mountain-modern-homes — title, description"
+      ],
+      "pagesAffected": 27
     },
     {
       "id": "landmarks",
@@ -2880,24 +2698,43 @@
       "title": "Semantic landmarks (main, nav, header, footer)",
       "fix": "Wrap page content in <main> and chrome in <nav>/<header>/<footer> so parsers can drop the chrome.",
       "effort": "low",
-      "impact": 0.1,
-      "priority": 0.13,
-      "detail": "18/60 pages pass",
+      "impact": 0.2,
+      "priority": 0.19,
+      "detail": "0/60 pages pass",
       "pages": [
         "/ — main, header, footer",
         "/legacy — main, header, footer",
         "/journal — main, header, footer",
+        "/journal/2013-green-washington-awards — main, header, footer",
         "/about — main, header, footer",
+        "/journal/2014-palm-springs-modernism-week-in-review — main, header, footer",
         "/commercial — main, header, footer",
+        "/journal/783 — main, header, footer",
         "/commercial-project-types-affordable-workforce-housing — main, header, footer",
+        "/journal/793 — main, header, footer",
         "/commercial-project-types-classrooms-and-school-additions — main, header, footer",
-        "/commercial-project-types-multi-family-housing-units — main, header, footer",
-        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — main, header, footer",
-        "/custom-regions-city-and-urban — main, header, footer",
-        "/custom-regions-island-and-waterfront-homes — main, header, footer",
-        "/custom-regions-mountain-modern-homes — main, header, footer"
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — main, header, footer"
       ],
-      "pagesAffected": 42
+      "pagesAffected": 60
+    },
+    {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0,
+      "priority": 0.02,
+      "detail": "54/60 pages pass",
+      "pages": [
+        "/journal/2013-green-washington-awards — 2019 ms",
+        "/about — 896 ms",
+        "/journal/2014-palm-springs-modernism-week-in-review — 1780 ms",
+        "/commercial — 1372 ms",
+        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 1538 ms",
+        "/journal/coastal-large-time-lapse-video — 1725 ms"
+      ],
+      "pagesAffected": 6
     },
     {
       "id": "indexable",
@@ -2912,98 +2749,25 @@
         "/get-started — 200, noindex"
       ],
       "pagesAffected": 1
-    },
-    {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0,
-      "priority": 0.01,
-      "detail": "56/60 pages pass",
-      "pages": [
-        "/commercial — 1843 ms",
-        "/about — 1014 ms",
-        "/commercial-project-types-classrooms-and-school-additions — 1725 ms",
-        "/journal/backyard-cottages — 1537 ms"
-      ],
-      "pagesAffected": 4
     }
   ],
   "pages": [
     {
-      "path": "/get-started",
-      "type": "page",
-      "score": 30,
-      "words": 13,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "indexable",
-        "landmarks",
-        "schema-type",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Get started | Method Homes"
-    },
-    {
-      "path": "/commercial",
-      "type": "page",
-      "score": 35,
-      "words": 4,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "schema-type",
-        "ttfb",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Commercial Projects | Method Homes"
-    },
-    {
       "path": "/about",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 12,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "ttfb",
         "answer-first",
         "question-headings",
@@ -3017,14 +2781,43 @@
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
+      "path": "/commercial",
+      "type": "page",
+      "score": 41,
+      "words": 4,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Commercial Projects | Method Homes"
+    },
+    {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 48,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "title",
@@ -3032,7 +2825,6 @@
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3045,75 +2837,21 @@
       "title": "Method is experienced in building in remote island and waterfront environments, including the San Juan Islands, Bainbridge Island, and the islands of British Columbia. | Method Homes"
     },
     {
-      "path": "/custom-residential",
-      "type": "page",
-      "score": 36,
-      "words": 6,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "schema-type",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Custom Modular Homes | Method Homes"
-    },
-    {
-      "path": "/faq",
-      "type": "page",
-      "score": 36,
-      "words": 6,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "schema-type",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Frequently Asked Questions | Method Homes"
-    },
-    {
       "path": "/predesigned-residential",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 4,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3128,19 +2866,19 @@
     {
       "path": "/predesigned-series-annata",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3155,19 +2893,19 @@
     {
       "path": "/predesigned-series-cabin",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3182,19 +2920,19 @@
     {
       "path": "/predesigned-series-elemental",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3209,19 +2947,19 @@
     {
       "path": "/predesigned-series-m",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3236,19 +2974,19 @@
     {
       "path": "/predesigned-series-method-one",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 4,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3263,19 +3001,19 @@
     {
       "path": "/predesigned-series-option",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3290,19 +3028,19 @@
     {
       "path": "/predesigned-series-paradigm",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3317,19 +3055,19 @@
     {
       "path": "/pricing",
       "type": "page",
-      "score": 36,
+      "score": 41,
       "words": 2,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3342,129 +3080,100 @@
       "title": "Pricing | Method Homes"
     },
     {
-      "path": "/commercial-project-types-affordable-workforce-housing",
+      "path": "/custom-residential",
       "type": "page",
-      "score": 37,
-      "words": 24,
+      "score": 42,
+      "words": 6,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
-        "title",
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
         "depth",
         "structures",
+        "entity-clarity",
         "internal-links",
         "freshness"
       ],
-      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
+      "title": "Custom Modular Homes | Method Homes"
     },
     {
-      "path": "/commercial-project-types-classrooms-and-school-additions",
+      "path": "/faq",
       "type": "page",
-      "score": 37,
-      "words": 24,
+      "score": 42,
+      "words": 6,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
-        "title",
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
-        "ttfb",
         "answer-first",
         "question-headings",
         "faq",
         "depth",
         "structures",
+        "entity-clarity",
         "internal-links",
         "freshness"
       ],
-      "title": "Method Homes has completed a variety of school expansion and classroom projects. | Method Homes"
+      "title": "Frequently Asked Questions | Method Homes"
     },
     {
-      "path": "/commercial-project-types-multi-family-housing-units",
+      "path": "/get-started",
       "type": "page",
-      "score": 37,
-      "words": 20,
+      "score": 44,
+      "words": 13,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "ContactPage"
       ],
       "fails": [
-        "title",
-        "description",
         "open-graph",
-        "h1",
+        "indexable",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
         "depth",
         "structures",
+        "entity-clarity",
         "internal-links",
         "freshness"
       ],
-      "title": "Method Homes has built a variety of multi-family housing projects. | Method Homes"
-    },
-    {
-      "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-      "type": "page",
-      "score": 38,
-      "words": 30,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "schema-type",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes"
+      "title": "Get started | Method Homes"
     },
     {
       "path": "/partnerships-with-architects-and-developers",
       "type": "page",
-      "score": 39,
+      "score": 44,
       "words": 10,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3479,19 +3188,19 @@
     {
       "path": "/sustainability",
       "type": "page",
-      "score": 39,
+      "score": 44,
       "words": 8,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3503,21 +3212,125 @@
       "title": "Sustainability at Method Homes | Method Homes"
     },
     {
-      "path": "/custom-regions-city-and-urban",
+      "path": "/commercial-project-types-affordable-workforce-housing",
       "type": "page",
-      "score": 41,
-      "words": 42,
+      "score": 45,
+      "words": 24,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "title",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-classrooms-and-school-additions",
+      "type": "page",
+      "score": 45,
+      "words": 24,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has completed a variety of school expansion and classroom projects. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-multi-family-housing-units",
+      "type": "page",
+      "score": 45,
+      "words": 20,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has built a variety of multi-family housing projects. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+      "type": "page",
+      "score": 45,
+      "words": 30,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes"
+    },
+    {
+      "path": "/custom-regions-city-and-urban",
+      "type": "page",
+      "score": 46,
+      "words": 42,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
         "answer-first",
         "question-headings",
         "faq",
@@ -3531,19 +3344,19 @@
     {
       "path": "/custom-regions-mountain-modern-homes",
       "type": "page",
-      "score": 41,
+      "score": 46,
       "words": 52,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "title",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3557,19 +3370,19 @@
     {
       "path": "/custom-regions-valley-and-vineyard-homes",
       "type": "page",
-      "score": 41,
+      "score": 46,
       "words": 44,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "WebPage"
       ],
       "fails": [
         "title",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "answer-first",
         "question-headings",
         "faq",
@@ -3579,32 +3392,6 @@
         "freshness"
       ],
       "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes"
-    },
-    {
-      "path": "/",
-      "type": "home",
-      "score": 43,
-      "words": 678,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes — Architect-designed prefab homes"
     },
     {
       "path": "/journal/793",
@@ -3634,497 +3421,55 @@
       "title": "Link to preliminary Lake Whatcom Cabin set video on YouTube — Honors Journal | Method Homes"
     },
     {
-      "path": "/legacy",
-      "type": "page",
+      "path": "/",
+      "type": "home",
       "score": 52,
-      "words": 201,
+      "words": 678,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
         "WebSite"
       ],
       "fails": [
-        "canonical",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
-        "question-headings",
+        "answer-first",
         "faq",
+        "readability",
         "structures",
         "entity-clarity",
         "internal-links",
         "freshness"
       ],
-      "title": "A New Legacy — Sun Day Red | Method Homes"
+      "title": "Method Homes — Architect-designed prefab homes"
     },
     {
-      "path": "/journal/next-in-line",
+      "path": "/journal/coastal-large-time-lapse-video",
       "type": "post",
-      "score": 52,
-      "words": 671,
+      "score": 53,
+      "words": 87,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "BlogPosting"
       ],
       "fails": [
+        "title",
         "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
+        "landmarks",
+        "ttfb",
+        "answer-first",
         "question-headings",
         "faq",
+        "depth",
         "structures",
-        "entity-clarity",
         "internal-links",
-        "freshness",
         "bylines",
         "references"
       ],
-      "title": "Next in Line — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/inside-the-team-room",
-      "type": "post",
-      "score": 52,
-      "words": 672,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Inside the Team Room — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/the-first-signing",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "The First Signing — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/sunday-at-augusta",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Sunday at Augusta — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/the-back-nine-wind",
-      "type": "post",
-      "score": 52,
-      "words": 672,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "The Back Nine Wind — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/a-caddies-eye",
-      "type": "post",
-      "score": 52,
-      "words": 672,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Through a Caddie's Eye — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/anatomy-of-a-polo",
-      "type": "post",
-      "score": 52,
-      "words": 673,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "The Anatomy of a Polo — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/cashmere-on-course",
-      "type": "post",
-      "score": 52,
-      "words": 673,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Why Cashmere Belongs on Course — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/building-the-presidio",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Building the Presidio — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/a-year-of-red",
-      "type": "post",
-      "score": 52,
-      "words": 672,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "A Year of Red — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/what-theyre-saying",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "What They're Saying — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/majors-season",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Majors Season, Reviewed — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/why-sunday-red",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Why Sunday Red — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/the-meaning-of-the-tiger",
-      "type": "post",
-      "score": 52,
-      "words": 673,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "The Meaning of the Tiger — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/letters-from-the-founder",
-      "type": "post",
-      "score": 52,
-      "words": 672,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Letters from the Founder — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/golf-after-dark",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Golf After Dark — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/training-days",
-      "type": "post",
-      "score": 52,
-      "words": 670,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "Training Days — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/the-travel-kit",
-      "type": "post",
-      "score": 52,
-      "words": 671,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "description",
-        "canonical",
-        "open-graph",
-        "schema-type",
-        "question-headings",
-        "faq",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness",
-        "bylines",
-        "references"
-      ],
-      "title": "The Travel Kit — Honors Journal | Method Homes"
+      "title": "Method Homes Coastal Large TimeLapse — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/bainbridge-island-option",
@@ -4153,6 +3498,30 @@
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
     },
     {
+      "path": "/legacy",
+      "type": "page",
+      "score": 61,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "open-graph",
+        "h1",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
+    },
+    {
       "path": "/journal/2014-palm-springs-modernism-week-in-review",
       "type": "post",
       "score": 61,
@@ -4167,6 +3536,7 @@
         "title",
         "description",
         "landmarks",
+        "ttfb",
         "question-headings",
         "faq",
         "readability",
@@ -4203,6 +3573,85 @@
         "references"
       ],
       "title": "Backyard Cottage Design Challenge- and the winners are... — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/come-celebrate-design-in-san-francisco-june-10-11",
+      "type": "post",
+      "score": 61,
+      "words": 243,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Come Celebrate Design in San Francisco June 10-11 — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/2013-green-washington-awards",
+      "type": "post",
+      "score": 62,
+      "words": 177,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "type": "post",
+      "score": 62,
+      "words": 102,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
@@ -4284,10 +3733,10 @@
       "title": "Architectural Record: Modular Classroom Makeover — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
       "type": "post",
-      "score": 63,
-      "words": 102,
+      "score": 62,
+      "words": 180,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
@@ -4302,11 +3751,64 @@
         "faq",
         "depth",
         "structures",
+        "entity-clarity",
         "internal-links",
         "bylines",
         "references"
       ],
-      "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes"
+      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/cabinets-being-installed-in-method-factory",
+      "type": "post",
+      "score": 62,
+      "words": 137,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/come-see-method-dwell-design-may-29-31",
+      "type": "post",
+      "score": 62,
+      "words": 156,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Come see Method at Dwell on Design May 29-31 — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
@@ -4360,10 +3862,36 @@
       "title": "Alaska Custom Cabin: Girdwood Prefab Set — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/2013-green-washington-awards",
+      "path": "/journal/balance-s-m-l-series-prefab-studio",
       "type": "post",
-      "score": 64,
-      "words": 177,
+      "score": 63,
+      "words": 219,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Introducing the Balance S-M-L Series of Prefab Homes + Studios — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/berkshires-custom-install-video",
+      "type": "post",
+      "score": 63,
+      "words": 88,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
@@ -4382,7 +3910,7 @@
         "bylines",
         "references"
       ],
-      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
+      "title": "Berkshires Custom Install Video — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/783",
@@ -4435,6 +3963,206 @@
       "title": "Method Homes completes Spencer Lake cabin… — Honors Journal | Method Homes"
     },
     {
+      "path": "/journal/bccustom-off-grid-cabin",
+      "type": "post",
+      "score": 64,
+      "words": 171,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "B.C. Custom Off-Grid Cabin — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/bellingham-herald",
+      "type": "post",
+      "score": 64,
+      "words": 231,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Bellingham Herald — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/best-of-install-photos",
+      "type": "post",
+      "score": 64,
+      "words": 114,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Best of: Method Modular Prefab Installs — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/blown-in-cellulose",
+      "type": "post",
+      "score": 64,
+      "words": 188,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Blown in Cellulose — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/blue-ridge-cabin-foundation",
+      "type": "post",
+      "score": 64,
+      "words": 153,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/carmel-valley-residence-in-dwell-magazine",
+      "type": "post",
+      "score": 64,
+      "words": 133,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Carmel Valley Residence in Dwell Magazine — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/carmel-valley-residence-on-america-bydesign",
+      "type": "post",
+      "score": 64,
+      "words": 118,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Carmel Valley Residence on America ByDesign — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/chimney-rock-residence-featured-in-2025-residential-design-awards",
+      "type": "post",
+      "score": 64,
+      "words": 124,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Chimney Rock Residence featured in 2025 Residential Design Awards — Honors Journal | Method Homes"
+    },
+    {
       "path": "/journal/annata-display-2017-dwell-on-design",
       "type": "post",
       "score": 66,
@@ -4459,9 +4187,83 @@
       "title": "Annata Model on Display at 2017 Dwell on Design Conference in Los Angeles June 23-25 — Honors Journal | Method Homes"
     },
     {
+      "path": "/journal/blog-kickoff",
+      "type": "post",
+      "score": 66,
+      "words": 319,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Blog Kickoff — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/come-see-modern-monogram-house-built-method-tour-now",
+      "type": "post",
+      "score": 66,
+      "words": 297,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Come see the Modern Monogram House built by Method on tour now — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+      "type": "post",
+      "score": 67,
+      "words": 202,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Come see Method at Dwell on Design in LA! Complimentary One day passes available! — Honors Journal | Method Homes"
+    },
+    {
       "path": "/journal/backyard-cottages",
       "type": "post",
-      "score": 68,
+      "score": 69,
       "words": 371,
       "schema": [
         "Organization",
@@ -4472,7 +4274,6 @@
       "fails": [
         "description",
         "landmarks",
-        "ttfb",
         "question-headings",
         "faq",
         "depth",
@@ -4486,22 +4287,21 @@
     {
       "path": "/journal",
       "type": "index",
-      "score": 72,
+      "score": 90,
       "words": 68,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite"
+        "WebSite",
+        "Blog"
       ],
       "fails": [
-        "canonical",
         "open-graph",
         "h1",
         "landmarks",
-        "schema-type",
         "depth"
       ],
-      "title": "Honors Journal | Method Homes"
+      "title": "Journal | Method Homes"
     }
   ]
 }
