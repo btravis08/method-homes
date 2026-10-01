@@ -317,6 +317,22 @@ staging/design use.
   Ideabox) — the baseline our numbers are compared to. Fetched with the
   fetch-page workflow (renders any public URL from a runner into
   design/reference; optional tab clicks).
+- Measurement layer (Webflow's three parts): prompt insights (above);
+  LLM bot insights + AI-referred visitors counted at the EDGE by
+  src/proxy.ts — bot user agents (aeo.bots) and first visits whose
+  referrer is an AI assistant (aeo.aiReferrers; sets an `mh_ai`
+  session cookie) POST fire-and-forget to /api/aeo/hit, which
+  increments one aeoBotHit / aeoAiSession document per day × name ×
+  path (createIfNotExists + inc). Needs SANITY_API_WRITE_TOKEN and
+  AEO_HIT_KEY (falls back to FORMS_SECRET) in Vercel; without them
+  nothing is recorded and nothing else changes. The collector reads
+  the counters from the public dataset (trafficWindowDays) into
+  report.traffic; general web analytics = Vercel Web Analytics
+  (`<Analytics />` in the site layout — enable it in the Vercel
+  project) + Speed Insights.
+- Studio tool **Analytics** (`/studio/analytics`, views AEO · Traffic ·
+  Performance via #hash) replaces the separate Performance and AEO
+  tools; Overview links into it.
 - Output: src/design/aeo.status.json (+ aeo.history.json, cap
   aeo.historyCap) → Studio **AEO** tool (score, pillars, prompt
   insights, crawler matrix, recommendations, per-page table) and the

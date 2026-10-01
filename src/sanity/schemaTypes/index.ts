@@ -3,6 +3,7 @@ import designops from "../../../designops.config.json";
 import { blockContent } from "./blockContent";
 import { collection } from "./collection";
 import { discount } from "./discount";
+import { aeoAiSession, aeoBotHit } from "./aeoTraffic";
 import { formSubmission } from "./formSubmission";
 import { legacyPage } from "./legacyPage";
 import { navigation } from "./navigation";
@@ -30,6 +31,8 @@ import { storeSettings } from "./storeSettings";
 const base = [
   redirect,
   formSubmission,
+  aeoBotHit,
+  aeoAiSession,
   seo,
   page,
   legacyPage,

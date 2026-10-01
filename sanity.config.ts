@@ -12,10 +12,9 @@ import type { StructureResolver } from "sanity/structure";
 import { apiVersion, dataset, projectId } from "@/sanity/env";
 import { StudioIcon } from "@/sanity/components/StudioIcon";
 import { schemaTypes } from "@/sanity/schemaTypes";
-import { aeoTool } from "@/sanity/tools/Aeo";
+import { analyticsTool } from "@/sanity/tools/Analytics";
 import { calendarTool } from "@/sanity/tools/Calendar";
 import { designTokensTool } from "@/sanity/tools/DesignTokens";
-import { performanceTool } from "@/sanity/tools/Performance";
 import { sectionLibraryTool } from "@/sanity/tools/SectionLibrary";
 import { overviewTool } from "@/sanity/tools/Overview";
 import { themerTool } from "@sanity/themer/tool";
@@ -363,8 +362,7 @@ export default defineConfig({
     ...prev,
     sectionLibraryTool,
     designTokensTool,
-    performanceTool,
-    aeoTool,
+    analyticsTool,
     ...(designops.features.blog ? [calendarTool] : []),
   ],
   document: {

@@ -1,3 +1,4 @@
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { draftMode } from "next/headers";
 
@@ -207,6 +208,9 @@ export default async function SiteLayout({
       <LazyGetStarted />
       {/* real-user Core Web Vitals (enable Speed Insights in Vercel) */}
       <SpeedInsights />
+      {/* page views + referrers (enable Web Analytics in Vercel); AI-referred
+          sessions are also counted server-side by src/proxy.ts */}
+      <Analytics />
       {/* first-touch UTM/referrer for form leads; idle, renders nothing */}
       <AttributionCapture />
       {/* click-to-edit overlays + live refresh, ONLY inside the

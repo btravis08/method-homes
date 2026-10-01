@@ -259,6 +259,60 @@
         ]
       }
     },
-    "depthThreshold": 300
+    "depthThreshold": 300,
+    "aiReferrers": [
+      {
+        "source": "ChatGPT",
+        "hosts": [
+          "chatgpt.com",
+          "chat.openai.com"
+        ]
+      },
+      {
+        "source": "Perplexity",
+        "hosts": [
+          "perplexity.ai"
+        ]
+      },
+      {
+        "source": "Claude",
+        "hosts": [
+          "claude.ai"
+        ]
+      },
+      {
+        "source": "Gemini",
+        "hosts": [
+          "gemini.google.com",
+          "bard.google.com"
+        ]
+      },
+      {
+        "source": "Copilot",
+        "hosts": [
+          "copilot.microsoft.com"
+        ]
+      },
+      {
+        "source": "Grok",
+        "hosts": [
+          "grok.com",
+          "x.ai"
+        ]
+      },
+      {
+        "source": "Meta AI",
+        "hosts": [
+          "meta.ai"
+        ]
+      },
+      {
+        "source": "You.com",
+        "hosts": [
+          "you.com"
+        ]
+      }
+    ],
+    "trafficWindowDays": 30
   }
 }

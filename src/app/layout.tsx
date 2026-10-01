@@ -50,10 +50,10 @@ export const metadata: Metadata = {
   },
   description:
     "Method Homes designs and builds architect-led prefab homes: predesigned series and custom modular residences, built indoors and delivered to your site.",
-  /* read by the AEO grader: AI referrers (chatgpt.com, perplexity.ai,
-     claude.ai, gemini…) are recorded on form leads via
-     AttributionCapture; "visits" once session analytics does too */
-  other: { "ai-referrer-tracking": "leads" },
+  /* read by the AEO grader: AI-referred sessions are counted at the
+     edge (src/proxy.ts → /api/aeo/hit) and on form leads
+     (AttributionCapture); web analytics = Vercel Web Analytics */
+  other: { "ai-referrer-tracking": "visits", analytics: "vercel-web-analytics" },
 };
 
 /* viewport-fit=cover exposes env(safe-area-inset-*) on iOS, so

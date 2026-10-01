@@ -317,7 +317,7 @@ export default function OverviewPane() {
                   AEO maturity
                 </Text>
                 <Text size={1} muted>
-                  <a href="/studio/aeo" style={{ color: "inherit" }}>
+                  <a href="/studio/analytics#aeo" style={{ color: "inherit" }}>
                     details →
                   </a>
                 </Text>

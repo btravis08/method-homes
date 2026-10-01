@@ -295,7 +295,7 @@ function analyze(url, res, lastmod) {
     faqSchema,
     newest: newest ? new Date(newest).toISOString() : null,
     author: authorName || null,
-    analytics: { web: /\/_vercel\/insights|googletagmanager|gtag\(|plausible\.io|cdn\.segment|analytics\.js/.test(html), rum: /\/_vercel\/speed-insights/.test(html) },
+    analytics: { web: /name="analytics" content="[^"]+"|\/_vercel\/insights|googletagmanager|gtag\(|plausible\.io|cdn\.segment|analytics\.js/.test(html), rum: /\/_vercel\/speed-insights|speed-insights/.test(html) },
     referrerTracking: meta('meta[name="ai-referrer-tracking"]') || null,
   };
 }
@@ -360,12 +360,62 @@ const CHECKS = [
   { id: "monitoring", pillar: "measurement", weight: 3, effort: "low", scope: "site", title: "This grader runs on a schedule", fix: "Keep the aeo workflow on its nightly schedule so the trend is real.", run: (s) => ({ ratio: s.historyRuns >= 2 ? 1 : 0.5, detail: `${s.historyRuns} run(s) recorded` }) },
   { id: "prompt-insights", pillar: "measurement", weight: 5, effort: "low", scope: "site", title: "Tracked prompts probed for mentions and citations", fix: "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.", run: (s) => { if (!s.prompts.ran) return { ratio: 0, detail: s.prompts.reason }; const stale = s.prompts.manual && Date.now() - Date.parse(s.prompts.recordedAt) > 30 * 86400e3; return { ratio: stale ? 0.5 : 1, detail: `mention rate ${s.prompts.mentionRate}%, citation rate ${s.prompts.citationRate}%, share of voice ${s.prompts.shareOfVoice}% over ${s.prompts.answered} prompts${s.prompts.unrecorded ? ` (${s.prompts.unrecorded} not yet recorded)` : ""}${s.prompts.manual ? (stale ? " (manual, >30 days old)" : " (manual)") : ""}` }; } },
   { id: "analytics", pillar: "measurement", weight: 4, effort: "low", scope: "site", title: "Web analytics on the site", fix: "Enable Vercel Web Analytics (or GA4) so AI-referred sessions can be segmented by referrer.", run: (s) => ({ ratio: s.analytics.web ? 1 : s.analytics.rum ? 0.4 : 0, detail: s.analytics.web ? "web analytics" : s.analytics.rum ? "Speed Insights only" : "none" }) },
-  { id: "ai-referrers", pillar: "measurement", weight: 3, effort: "medium", scope: "site", title: "AI-referred visitors tracked", fix: "Record chatgpt.com, perplexity.ai, claude.ai, gemini.google.com, copilot.microsoft.com referrers on sessions, not only on form leads.", run: (s) => ({ ratio: s.referrerTracking === "visits" ? 1 : s.referrerTracking ? 0.5 : 0, detail: s.referrerTracking ? `on ${s.referrerTracking}` : "none" }) },
+  { id: "ai-referrers", pillar: "measurement", weight: 3, effort: "medium", scope: "site", title: "AI-referred visitors tracked", fix: "Count sessions arriving from chatgpt.com, perplexity.ai, claude.ai, gemini… at the edge (src/proxy.ts) with AEO_HIT_KEY + SANITY_API_WRITE_TOKEN set in Vercel.", run: (s) => ({ ratio: s.traffic.available && s.traffic.aiSessions > 0 ? 1 : s.referrerTracking === "visits" ? 0.7 : s.referrerTracking ? 0.4 : 0, detail: s.traffic.available && s.traffic.aiSessions > 0 ? `${s.traffic.aiSessions} session(s) in ${s.traffic.days}d` : s.referrerTracking === "visits" ? "tracking deployed, no sessions recorded yet" : s.referrerTracking ? `on ${s.referrerTracking} only` : "none" }) },
+  { id: "bot-insights", pillar: "measurement", weight: 3, effort: "medium", scope: "site", title: "LLM bot visits recorded", fix: "Keep the edge counter (src/proxy.ts → /api/aeo/hit) deployed with AEO_HIT_KEY + SANITY_API_WRITE_TOKEN so each crawler's visits by page land in the Traffic view.", run: (s) => ({ ratio: s.traffic.available && s.traffic.botHits > 0 ? 1 : s.referrerTracking === "visits" ? 0.6 : 0, detail: s.traffic.available && s.traffic.botHits > 0 ? `${s.traffic.botHits} hit(s) from ${s.traffic.bots.length} crawler(s) in ${s.traffic.days}d` : s.referrerTracking === "visits" ? "counter deployed, no crawler visits recorded yet" : "not deployed" }) },
 ];
 
 const EFFORT_FACTOR = { low: 1, medium: 1.6, high: 2.5 };
 const level = (score) => (score < 20 ? 1 : score < 40 ? 2 : score < 60 ? 3 : score < 80 ? 4 : 5);
 const LEVEL_NAMES = { 1: "Invisible", 2: "Emerging", 3: "Developing", 4: "Established", 5: "Leading" };
+
+/* ── traffic counters (aeoBotHit / aeoAiSession, written at the edge) ─ */
+
+async function fetchTraffic() {
+  const days = AEO.trafficWindowDays ?? 30;
+  const since = new Date(Date.now() - days * 86400e3).toISOString().slice(0, 10);
+  const project = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || DESIGNOPS.sanity?.projectId || "i2wd5pr1";
+  const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || DESIGNOPS.sanity?.dataset || "production";
+  const query = `{"bots": *[_type == "aeoBotHit" && day >= $since]{bot, path, hits, day}, "ai": *[_type == "aeoAiSession" && day >= $since]{source, path, hits, day}}`;
+  const url = `https://${project}.apicdn.sanity.io/v2026-07-01/data/query/${dataset}?query=${encodeURIComponent(query)}&$since=${encodeURIComponent(JSON.stringify(since))}`;
+  const empty = { available: false, days, since, botHits: 0, aiSessions: 0, bots: [], sources: [], botDays: [], aiDays: [] };
+  try {
+    const res = await get(url, { timeoutMs: 20000 });
+    if (!res.ok) return { ...empty, reason: `HTTP ${res.status}` };
+    const { result } = JSON.parse(res.text);
+    const roll = (rows, key) => {
+      const by = new Map();
+      for (const r of rows) {
+        const e = by.get(r[key]) ?? { name: r[key], hits: 0, pages: new Map() };
+        e.hits += r.hits ?? 0;
+        e.pages.set(r.path, (e.pages.get(r.path) ?? 0) + (r.hits ?? 0));
+        by.set(r[key], e);
+      }
+      return [...by.values()]
+        .sort((a, b) => b.hits - a.hits)
+        .map((e) => ({ name: e.name, hits: e.hits, pages: [...e.pages.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8).map(([path, hits]) => ({ path, hits })) }));
+    };
+    const byDay = (rows) => {
+      const m = new Map();
+      for (const r of rows) m.set(r.day, (m.get(r.day) ?? 0) + (r.hits ?? 0));
+      return [...m.entries()].sort().map(([day, hits]) => ({ day, hits }));
+    };
+    const bots = roll(result.bots ?? [], "bot");
+    const sources = roll(result.ai ?? [], "source");
+    return {
+      available: true,
+      days,
+      since,
+      botHits: bots.reduce((s, b) => s + b.hits, 0),
+      aiSessions: sources.reduce((s, b) => s + b.hits, 0),
+      bots,
+      sources,
+      botDays: byDay(result.bots ?? []),
+      aiDays: byDay(result.ai ?? []),
+    };
+  } catch (err) {
+    return { ...empty, reason: String(err?.message ?? err).slice(0, 120) };
+  }
+}
 
 /* ── main ────────────────────────────────────────────────────────── */
 
@@ -451,6 +501,8 @@ async function main() {
   const links = { checked: candidates.length + graded.filter((p) => p.status === 200).length, broken: [...broken, ...graded.filter((p) => p.status >= 400).map((p) => ({ path: p.path, status: p.status }))] };
 
   const history = existsSync(HISTORY) ? JSON.parse(readFileSync(HISTORY, "utf8")) : { runs: [] };
+  const traffic = await fetchTraffic();
+  console.log(traffic.available ? `traffic: ${traffic.botHits} bot hit(s) across ${traffic.bots.length} crawler(s), ${traffic.aiSessions} AI-referred session(s) in ${traffic.days}d` : `traffic: unavailable — ${traffic.reason}`);
   const prompts = process.env.AEO_SKIP_PROMPTS ? { ran: false, reason: "skipped (AEO_SKIP_PROMPTS)", results: [] } : await runPromptInsights({ prompts: AEO.prompts ?? [], brand: AEO.brand, brandDomains: AEO.brandDomains ?? [BASE_HOST], competitors: AEO.competitors ?? [], keyMessages: AEO.keyMessages ?? [] });
   if (prompts.ran) console.log(`prompt insights: mention ${prompts.mentionRate}% · cited ${prompts.citationRate}% · share of voice ${prompts.shareOfVoice}% · sentiment ${prompts.sentiment ?? "–"} · accuracy ${prompts.accuracy ?? "–"} · pull-through ${prompts.messagePullThrough}% (${prompts.answered} prompts)`);
   else console.log(`prompt insights: not run — ${prompts.reason}`);
@@ -469,6 +521,7 @@ async function main() {
     prompts,
     analytics: { web: graded.some((p) => p.analytics?.web), rum: graded.some((p) => p.analytics?.rum) },
     referrerTracking: home?.referrerTracking ?? null,
+    traffic,
   };
 
   /* ── score ── */
@@ -565,6 +618,7 @@ async function main() {
     sitemap: { ok: sitemapRes.ok, urls: urls.length, lastmod: lastmods.size > 0 },
     llms: site.llms,
     links,
+    traffic,
     prompts: { ...prompts, results: (prompts.results ?? []).map((r) => ({ prompt: r.prompt, stage: r.stage, recorded: r.recorded !== false, mentioned: r.mentioned, cited: r.cited, surfaced: r.surfaced, competitors: r.competitors ?? [], messages: r.messages ?? [], sentiment: r.sentiment, accuracy: r.accuracy, judgeNote: r.judgeNote, citedUrls: r.citedUrls, sources: r.sources, excerpt: r.excerpt, error: r.error, refused: r.refused })) },
     checks: checks.map((c) => ({ ...c, pages: c.pages.slice(0, 20) })),
     recommendations,
