@@ -42,6 +42,21 @@
       "visibility": 67,
       "citationRate": 17,
       "shareOfVoice": 33
+    },
+    {
+      "t": "2026-10-01T15:13:54.337Z",
+      "score": 63,
+      "level": 4,
+      "pillars": {
+        "technical": 95,
+        "content": 34,
+        "authority": 31,
+        "measurement": 88
+      },
+      "pages": 60,
+      "visibility": 67,
+      "citationRate": 17,
+      "shareOfVoice": 33
     }
   ]
 }
