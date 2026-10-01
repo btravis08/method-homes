@@ -49,6 +49,7 @@
     "src/sanity/tools/AeoPane.tsx",
     "src/design/aeo.status.json",
     "src/design/aeo.history.json",
+    "src/design/aeo.prompts.manual.json",
     "src/app/robots.ts",
     "src/app/llms.txt/**",
     "scripts/audit-sections.mjs",

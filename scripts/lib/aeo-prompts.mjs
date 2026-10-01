@@ -12,9 +12,40 @@
  *
  * One request per prompt, a few thousand tokens each: cents per run.
  */
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 
 const MODEL = "claude-opus-5-5";
+const MANUAL = path.join(process.cwd(), "src/design/aeo.prompts.manual.json");
+
+/* no key: fall back to the hand-recorded run (src/design/
+   aeo.prompts.manual.json) — what an answer engine said when someone
+   asked it the tracked prompts, scored the same way */
+function manualRun(reason) {
+  if (!existsSync(MANUAL)) return { ran: false, reason, model: MODEL, results: [] };
+  try {
+    const m = JSON.parse(readFileSync(MANUAL, "utf8"));
+    const results = (m.results ?? []).map((r) => ({ ...r, at: m.recordedAt, mentioned: Boolean(r.mentioned), cited: Boolean(r.cited), surfaced: Boolean(r.surfaced), citedUrls: r.citedUrls ?? [], sources: r.sources ?? [] }));
+    if (!results.length) return { ran: false, reason, model: MODEL, results: [] };
+    const n = results.length;
+    const ageDays = Math.round((Date.now() - Date.parse(m.recordedAt)) / 86400e3);
+    return {
+      ran: true,
+      manual: true,
+      model: `${m.engine ?? "manual"} · recorded ${ageDays}d ago`,
+      recordedAt: m.recordedAt,
+      prompts: n,
+      answered: n,
+      visibility: Math.round((results.filter((r) => r.mentioned).length / n) * 100),
+      citationRate: Math.round((results.filter((r) => r.cited).length / n) * 100),
+      surfacedRate: Math.round((results.filter((r) => r.surfaced).length / n) * 100),
+      results,
+    };
+  } catch (err) {
+    return { ran: false, reason: `${reason}; manual file unreadable: ${err.message}`, model: MODEL, results: [] };
+  }
+}
 
 /* host matches a brand domain (or a subdomain of one) */
 function isBrandUrl(url, domains) {
@@ -27,9 +58,7 @@ function isBrandUrl(url, domains) {
 }
 
 export async function runPromptInsights({ prompts, brand, brandDomains }) {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    return { ran: false, reason: "ANTHROPIC_API_KEY not set", model: MODEL, results: [] };
-  }
+  if (!process.env.ANTHROPIC_API_KEY) return manualRun("ANTHROPIC_API_KEY not set");
   if (!prompts?.length) {
     return { ran: false, reason: "no prompts configured (designops.config.json → aeo.prompts)", model: MODEL, results: [] };
   }

@@ -1,0 +1,49 @@
+{
+  "note": "Manual prompt insights — what an answer engine said when asked the tracked prompts, recorded by hand (or by Claude in a session) when ANTHROPIC_API_KEY is not available to the aeo workflow. The collector uses this file whenever the automated probe cannot run. mentioned = the brand is named in the answer; cited = one of our domains is given as a source; surfaced = our domain appears among the sources consulted even if not cited.",
+  "recordedAt": "2026-10-01T00:30:00Z",
+  "engine": "Claude web search (manual, session probe)",
+  "results": [
+    {
+      "prompt": "Who are the best prefab and modular home builders in the Pacific Northwest?",
+      "mentioned": true,
+      "cited": false,
+      "surfaced": false,
+      "excerpt": "Listed as 'MethodHomes — established 2007, multiple awards, sustainable systems and materials' alongside Wolf Industries, TLC Modular, MODS PDX, Stratford and Future Homes. Sources were attainablehome.com, newhomesource.com and prefabreview.com, not methodhomes.net."
+    },
+    {
+      "prompt": "What does a Method Homes prefab house cost?",
+      "mentioned": true,
+      "cited": true,
+      "surfaced": true,
+      "excerpt": "Base modules $300–450+/sq ft, predesigned $300–375/sq ft before site work; all-in $325–425+/sq ft, many locations $700–950/sq ft; M Series from $170k, M2 from $280k. methodhomes.net/faq appeared among the sources; the figures came from prefabreview.com, dwellito.com and modernprefabs.com."
+    },
+    {
+      "prompt": "Which companies build architect-designed modular homes in Washington state?",
+      "mentioned": true,
+      "cited": false,
+      "surfaced": false,
+      "excerpt": "'Method Homes is a Seattle-based design and construction firm specializing in architect-designed prefab and modular homes with more than 400 completed projects since 2007; over 30 pre-designed homes; custom projects can achieve net-zero.' Listed with FabCab, HyBrid Architecture, Greenfab and Lindal. Sources: dwell.com, attainablehome.com, prefabreview.com."
+    },
+    {
+      "prompt": "Is prefab construction higher quality than site-built for a custom home?",
+      "mentioned": false,
+      "cited": false,
+      "surfaced": false,
+      "excerpt": "Generic answer (factory QC, staged inspections, 25–30% more lumber) sourced from dreamfindershomes, biobuilds, precisioncraft, nar.realtor, ideabox. No builder named."
+    },
+    {
+      "prompt": "Best sustainable prefab home builders in the United States",
+      "mentioned": true,
+      "cited": false,
+      "surfaced": false,
+      "excerpt": "'Method Homes (Seattle) — award-winning manufacturer guided by sustainable principles; Passive House, LEED, net-zero and Energy Star homes, prewired for solar.' Listed with Plant Prefab, Bensonwood, Ideabox, GO Logic, FabCab. Sources: dwell.com, cnn.com, greencoast.org, ecohome.net."
+    },
+    {
+      "prompt": "How long does it take to build a prefab home from a predesigned series?",
+      "mentioned": false,
+      "cited": false,
+      "surfaced": true,
+      "excerpt": "Generic 16–31 week timeline with a phase breakdown. methodhomes.net/predesigned-residential was among the pages consulted but the answer named Pacific Homes, Steelmark and Avrame instead."
+    }
+  ]
+}

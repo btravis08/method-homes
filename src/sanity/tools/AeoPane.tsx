@@ -37,7 +37,7 @@ type Report = {
   llms: { ok: boolean; status: number };
   sitemap: { ok: boolean; urls: number; lastmod: boolean };
   links: { checked: number; broken: { path: string; status: number }[] };
-  prompts: { ran: boolean; reason?: string; model?: string; answered?: number; visibility?: number; citationRate?: number; surfacedRate?: number; results: PromptResult[] };
+  prompts: { ran: boolean; manual?: boolean; reason?: string; model?: string; answered?: number; visibility?: number; citationRate?: number; surfacedRate?: number; results: PromptResult[] };
   checks: Check[];
   recommendations: Rec[];
   pages: PageRow[];
@@ -143,7 +143,7 @@ function PromptInsights() {
         <Flex justify="space-between" align="baseline" gap={3} wrap="wrap">
           <Heading size={1}>Prompt insights</Heading>
           <Text size={1} muted>
-            {p.ran ? `${p.answered} prompts answered with live web search (${p.model})` : `not run — ${p.reason}`}
+            {p.ran ? (p.manual ? `${p.answered} prompts, recorded by hand — ${p.model}` : `${p.answered} prompts answered with live web search (${p.model})`) : `not run — ${p.reason}`}
           </Text>
         </Flex>
         {p.ran ? (
@@ -168,8 +168,8 @@ function PromptInsights() {
           </Grid>
         ) : (
           <Text size={1}>
-            Add <Code size={1}>ANTHROPIC_API_KEY</Code> to the repository&apos;s Actions secrets to turn this on. The prompts live in{" "}
-            <Code size={1}>designops.config.json → aeo.prompts</Code>.
+            Add <Code size={1}>ANTHROPIC_API_KEY</Code> to the repository&apos;s Actions secrets for a nightly probe, or ask an answer engine the tracked prompts yourself and record the answers in{" "}
+            <Code size={1}>src/design/aeo.prompts.manual.json</Code>. The prompts live in <Code size={1}>designops.config.json → aeo.prompts</Code>.
           </Text>
         )}
         <Stack space={2}>

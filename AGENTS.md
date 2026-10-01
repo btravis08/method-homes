@@ -283,8 +283,12 @@ staging/design use.
 - `scripts/lib/aeo-prompts.mjs` = prompt insights (Webflow's
   visibility score / citation rate): runs aeo.prompts through Claude
   with live web search and records brand mentions and citations of
-  aeo.brandDomains. Needs ANTHROPIC_API_KEY (Actions secret); without
-  it the grade still computes and Measurement flags it.
+  aeo.brandDomains. Needs ANTHROPIC_API_KEY (Actions secret). Without
+  it the collector falls back to src/design/aeo.prompts.manual.json —
+  a hand-recorded run (ask any answer engine the tracked prompts, note
+  mentioned / cited / surfaced per prompt; Claude can do this in a
+  session with its own web search). Manual runs older than 30 days
+  score half; with neither, Measurement flags it.
 - Output: src/design/aeo.status.json (+ aeo.history.json, cap
   aeo.historyCap) → Studio **AEO** tool (score, pillars, prompt
   insights, crawler matrix, recommendations, per-page table) and the
