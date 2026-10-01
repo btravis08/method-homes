@@ -1,38 +1,133 @@
 {
-  "generatedAt": "2026-10-01T00:31:18.675Z",
+  "generatedAt": "2026-10-01T03:15:20.997Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
-  "score": 59,
+  "score": 57,
   "level": 3,
+  "levelByScore": 3,
   "levelName": "Developing",
+  "gateBlocks": [
+    {
+      "pillar": "technical",
+      "level": 2,
+      "check": "metadata-coverage",
+      "label": "title + description + H1 on 80% of key pages",
+      "min": 0.8,
+      "actual": 0.04,
+      "met": false
+    },
+    {
+      "pillar": "content",
+      "level": 2,
+      "check": "depth",
+      "label": "key pages past the 300-word threshold",
+      "min": 0.6,
+      "actual": 0.31,
+      "met": false
+    },
+    {
+      "pillar": "authority",
+      "level": 3,
+      "check": "bylines",
+      "label": "bylines with Person schema on 80% of articles",
+      "min": 0.8,
+      "actual": 0,
+      "met": false
+    },
+    {
+      "pillar": "measurement",
+      "level": 4,
+      "check": "analytics",
+      "label": "web analytics live",
+      "min": 1,
+      "actual": 0,
+      "met": false
+    }
+  ],
   "pillars": {
     "technical": {
-      "score": 93,
-      "level": 5,
+      "score": 88,
+      "level": 1,
+      "levelByScore": 5,
+      "gatedTo": 1,
       "weight": 35,
-      "checks": 20,
-      "passing": 13
+      "checks": 21,
+      "passing": 13,
+      "gates": [
+        {
+          "level": 2,
+          "check": "metadata-coverage",
+          "label": "title + description + H1 on 80% of key pages",
+          "min": 0.8,
+          "actual": 0.04,
+          "met": false
+        }
+      ]
     },
     "content": {
-      "score": 35,
-      "level": 2,
+      "score": 34,
+      "level": 1,
+      "levelByScore": 2,
+      "gatedTo": 1,
       "weight": 35,
       "checks": 9,
-      "passing": 0
+      "passing": 0,
+      "gates": [
+        {
+          "level": 2,
+          "check": "depth",
+          "label": "key pages past the 300-word threshold",
+          "min": 0.6,
+          "actual": 0.31,
+          "met": false
+        }
+      ]
     },
     "authority": {
       "score": 31,
       "level": 2,
+      "levelByScore": 2,
+      "gatedTo": null,
       "weight": 15,
       "checks": 6,
-      "passing": 1
+      "passing": 1,
+      "gates": [
+        {
+          "level": 3,
+          "check": "bylines",
+          "label": "bylines with Person schema on 80% of articles",
+          "min": 0.8,
+          "actual": 0,
+          "met": false
+        }
+      ]
     },
     "measurement": {
       "score": 63,
-      "level": 4,
+      "level": 3,
+      "levelByScore": 4,
+      "gatedTo": 3,
       "weight": 15,
       "checks": 4,
-      "passing": 2
+      "passing": 2,
+      "gates": [
+        {
+          "level": 3,
+          "check": "prompt-insights",
+          "label": "prompt insights recorded",
+          "min": 1,
+          "actual": 1,
+          "met": true
+        },
+        {
+          "level": 4,
+          "check": "analytics",
+          "label": "web analytics live",
+          "min": 1,
+          "actual": 0,
+          "met": false
+        }
+      ]
     }
   },
   "pagesCrawled": 60,
@@ -141,65 +236,261 @@
     "manual": true,
     "model": "Claude web search (manual, session probe) · recorded 0d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
-    "prompts": 6,
+    "prompts": 10,
     "answered": 6,
+    "unrecorded": 4,
+    "mentionRate": 67,
     "visibility": 67,
     "citationRate": 17,
     "surfacedRate": 33,
+    "shareOfVoice": 33,
+    "sentiment": 80,
+    "accuracy": 83,
+    "messagePullThrough": 38,
+    "competitors": [
+      {
+        "name": "Ideabox",
+        "count": 2,
+        "domain": "ideabox.us"
+      },
+      {
+        "name": "FabCab",
+        "count": 2,
+        "domain": "fabcab.com"
+      },
+      {
+        "name": "MODS PDX",
+        "count": 1,
+        "domain": "modspdx.com"
+      },
+      {
+        "name": "Greenfab",
+        "count": 1,
+        "domain": "greenfab.com"
+      },
+      {
+        "name": "Lindal Cedar Homes",
+        "count": 1,
+        "domain": "lindal.com"
+      },
+      {
+        "name": "Plant Prefab",
+        "count": 1,
+        "domain": "plantprefab.com"
+      }
+    ],
+    "messages": [
+      {
+        "id": "projects-400",
+        "label": "400+ completed projects",
+        "count": 1,
+        "rate": 25
+      },
+      {
+        "id": "founded-2007",
+        "label": "Founded in Seattle in 2007",
+        "count": 2,
+        "rate": 50
+      },
+      {
+        "id": "architect-designed",
+        "label": "Architect-designed, with architects and engineers in one process",
+        "count": 1,
+        "rate": 25
+      },
+      {
+        "id": "factory-built",
+        "label": "Built indoors in a factory, then delivered and set on site",
+        "count": 0,
+        "rate": 0
+      },
+      {
+        "id": "sustainable",
+        "label": "Sustainable: Passive House, LEED, net-zero, Energy Star ready",
+        "count": 3,
+        "rate": 75
+      },
+      {
+        "id": "predesigned-and-custom",
+        "label": "Predesigned series plus fully custom homes",
+        "count": 2,
+        "rate": 50
+      }
+    ],
+    "byStage": [
+      {
+        "stage": "awareness",
+        "prompts": 2,
+        "mentioned": 0,
+        "cited": 0,
+        "mentionRate": 0
+      },
+      {
+        "stage": "consideration",
+        "prompts": 3,
+        "mentioned": 3,
+        "cited": 0,
+        "mentionRate": 100
+      },
+      {
+        "stage": "decision",
+        "prompts": 1,
+        "mentioned": 1,
+        "cited": 1,
+        "mentionRate": 100
+      }
+    ],
     "results": [
       {
+        "prompt": "What is the difference between modular, prefab and manufactured homes?",
+        "stage": "awareness",
+        "recorded": false,
+        "mentioned": false,
+        "cited": false,
+        "surfaced": false,
+        "competitors": [],
+        "messages": []
+      },
+      {
+        "prompt": "Is prefab construction higher quality than site-built for a custom home?",
+        "stage": "awareness",
+        "recorded": true,
+        "mentioned": false,
+        "cited": false,
+        "surfaced": false,
+        "competitors": [
+          "Ideabox"
+        ],
+        "messages": [],
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Generic answer (factory QC, staged inspections, 25–30% more lumber) sourced from dreamfindershomes, biobuilds, precisioncraft, nar.realtor and ideabox. No builder named."
+      },
+      {
+        "prompt": "How long does it take to build a prefab home from a predesigned series?",
+        "stage": "awareness",
+        "recorded": true,
+        "mentioned": false,
+        "cited": false,
+        "surfaced": true,
+        "competitors": [],
+        "messages": [],
+        "citedUrls": [],
+        "sources": [],
+        "excerpt": "Generic 16–31 week timeline with a phase breakdown. methodhomes.net/predesigned-residential was among the pages consulted but the answer named Pacific Homes, Steelmark and Avrame instead."
+      },
+      {
         "prompt": "Who are the best prefab and modular home builders in the Pacific Northwest?",
+        "stage": "consideration",
+        "recorded": true,
         "mentioned": true,
         "cited": false,
         "surfaced": false,
+        "competitors": [
+          "MODS PDX"
+        ],
+        "messages": [
+          "founded-2007",
+          "sustainable"
+        ],
+        "sentiment": 82,
+        "accuracy": 85,
         "citedUrls": [],
         "sources": [],
         "excerpt": "Listed as 'MethodHomes — established 2007, multiple awards, sustainable systems and materials' alongside Wolf Industries, TLC Modular, MODS PDX, Stratford and Future Homes. Sources were attainablehome.com, newhomesource.com and prefabreview.com, not methodhomes.net."
       },
       {
-        "prompt": "What does a Method Homes prefab house cost?",
-        "mentioned": true,
-        "cited": true,
-        "surfaced": true,
-        "citedUrls": [],
-        "sources": [],
-        "excerpt": "Base modules $300–450+/sq ft, predesigned $300–375/sq ft before site work; all-in $325–425+/sq ft, many locations $700–950/sq ft; M Series from $170k, M2 from $280k. methodhomes.net/faq appeared among the sources; the figures came from prefabreview.com, dwellito.com and modernprefabs.com."
-      },
-      {
         "prompt": "Which companies build architect-designed modular homes in Washington state?",
+        "stage": "consideration",
+        "recorded": true,
         "mentioned": true,
         "cited": false,
         "surfaced": false,
+        "competitors": [
+          "FabCab",
+          "Greenfab",
+          "Lindal Cedar Homes"
+        ],
+        "messages": [
+          "projects-400",
+          "founded-2007",
+          "architect-designed",
+          "sustainable",
+          "predesigned-and-custom"
+        ],
+        "sentiment": 88,
+        "accuracy": 92,
         "citedUrls": [],
         "sources": [],
         "excerpt": "'Method Homes is a Seattle-based design and construction firm specializing in architect-designed prefab and modular homes with more than 400 completed projects since 2007; over 30 pre-designed homes; custom projects can achieve net-zero.' Listed with FabCab, HyBrid Architecture, Greenfab and Lindal. Sources: dwell.com, attainablehome.com, prefabreview.com."
       },
       {
-        "prompt": "Is prefab construction higher quality than site-built for a custom home?",
-        "mentioned": false,
-        "cited": false,
-        "surfaced": false,
-        "citedUrls": [],
-        "sources": [],
-        "excerpt": "Generic answer (factory QC, staged inspections, 25–30% more lumber) sourced from dreamfindershomes, biobuilds, precisioncraft, nar.realtor, ideabox. No builder named."
-      },
-      {
         "prompt": "Best sustainable prefab home builders in the United States",
+        "stage": "consideration",
+        "recorded": true,
         "mentioned": true,
         "cited": false,
         "surfaced": false,
+        "competitors": [
+          "Plant Prefab",
+          "Ideabox",
+          "FabCab"
+        ],
+        "messages": [
+          "sustainable"
+        ],
+        "sentiment": 86,
+        "accuracy": 85,
         "citedUrls": [],
         "sources": [],
         "excerpt": "'Method Homes (Seattle) — award-winning manufacturer guided by sustainable principles; Passive House, LEED, net-zero and Energy Star homes, prewired for solar.' Listed with Plant Prefab, Bensonwood, Ideabox, GO Logic, FabCab. Sources: dwell.com, cnn.com, greencoast.org, ecohome.net."
       },
       {
-        "prompt": "How long does it take to build a prefab home from a predesigned series?",
+        "prompt": "Method Homes vs Stillwater Dwellings vs Dvele — how do they compare?",
+        "stage": "consideration",
+        "recorded": false,
         "mentioned": false,
         "cited": false,
+        "surfaced": false,
+        "competitors": [],
+        "messages": []
+      },
+      {
+        "prompt": "What does a Method Homes prefab house cost?",
+        "stage": "decision",
+        "recorded": true,
+        "mentioned": true,
+        "cited": true,
         "surfaced": true,
+        "competitors": [],
+        "messages": [
+          "predesigned-and-custom"
+        ],
+        "sentiment": 65,
+        "accuracy": 70,
         "citedUrls": [],
         "sources": [],
-        "excerpt": "Generic 16–31 week timeline with a phase breakdown. methodhomes.net/predesigned-residential was among the pages consulted but the answer named Pacific Homes, Steelmark and Avrame instead."
+        "excerpt": "Base modules $300–450+/sq ft, predesigned $300–375/sq ft before site work; all-in $325–425+/sq ft, many locations $700–950/sq ft; M Series from $170k, M2 from $280k. methodhomes.net/faq appeared among the sources; the figures came from prefabreview.com, dwellito.com and modernprefabs.com."
+      },
+      {
+        "prompt": "Does Method Homes deliver to Oregon, Idaho or California, and what does site work add?",
+        "stage": "decision",
+        "recorded": false,
+        "mentioned": false,
+        "cited": false,
+        "surfaced": false,
+        "competitors": [],
+        "messages": []
+      },
+      {
+        "prompt": "How do I maintain a modular home over its first ten years?",
+        "stage": "retention",
+        "recorded": false,
+        "mentioned": false,
+        "cited": false,
+        "surfaced": false,
+        "competitors": [],
+        "messages": []
       }
     ]
   },
@@ -275,6 +566,119 @@
       "ratio": 1,
       "detail": "0 broken of 78 checked",
       "pages": []
+    },
+    {
+      "id": "metadata-coverage",
+      "pillar": "technical",
+      "weight": 3,
+      "effort": "low",
+      "title": "Key pages carry a title, a meta description and an H1",
+      "fix": "Fill the SEO title and description and give the page one H1 — Webflow's gate is 80% of homepage, product, service, about, contact and FAQ pages.",
+      "scope": "page",
+      "ratio": 0.037037037037037035,
+      "detail": "1/27 pages pass",
+      "pages": [
+        {
+          "path": "/",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/journal",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/about",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/commercial",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/commercial-project-types-affordable-workforce-housing",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/commercial-project-types-classrooms-and-school-additions",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/commercial-project-types-multi-family-housing-units",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/custom-regions-city-and-urban",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/custom-regions-island-and-waterfront-homes",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/custom-regions-mountain-modern-homes",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/custom-regions-valley-and-vineyard-homes",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/custom-residential",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/faq",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/partnerships-with-architects-and-developers",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/predesigned-residential",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/predesigned-series-annata",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/predesigned-series-cabin",
+          "ratio": 0,
+          "detail": "missing H1"
+        },
+        {
+          "path": "/predesigned-series-elemental",
+          "ratio": 0,
+          "detail": "missing H1"
+        }
+      ]
     },
     {
       "id": "title",
@@ -951,38 +1355,23 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9416666666666667,
-      "detail": "54/60 pages pass",
+      "ratio": 0.9666666666666667,
+      "detail": "57/60 pages pass",
       "pages": [
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
-          "detail": "2019 ms"
+          "detail": "2036 ms"
+        },
+        {
+          "path": "/journal/2013-green-washington-awards",
+          "ratio": 0.5,
+          "detail": "1781 ms"
         },
         {
           "path": "/about",
           "ratio": 0.5,
-          "detail": "896 ms"
-        },
-        {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
-          "ratio": 0.5,
-          "detail": "1780 ms"
-        },
-        {
-          "path": "/commercial",
-          "ratio": 0.5,
-          "detail": "1372 ms"
-        },
-        {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
-          "ratio": 0.5,
-          "detail": "1538 ms"
-        },
-        {
-          "path": "/journal/coastal-large-time-lapse-video",
-          "ratio": 0.5,
-          "detail": "1725 ms"
+          "detail": "1658 ms"
         }
       ]
     },
@@ -1333,108 +1722,108 @@
       "title": "Enough substance to be worth citing",
       "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
       "scope": "page",
-      "ratio": 0.3290416666666667,
-      "detail": "3/60 pages pass",
+      "ratio": 0.31340277777777775,
+      "detail": "2/60 pages pass",
       "pages": [
         {
           "path": "/predesigned-series-annata",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/predesigned-series-cabin",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/predesigned-series-elemental",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/predesigned-series-m",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/predesigned-series-option",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/predesigned-series-paradigm",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/pricing",
-          "ratio": 0.01,
-          "detail": "2 words (target 200)"
+          "ratio": 0.006666666666666667,
+          "detail": "2 words (target 300)"
         },
         {
           "path": "/commercial",
-          "ratio": 0.02,
-          "detail": "4 words (target 200)"
+          "ratio": 0.013333333333333334,
+          "detail": "4 words (target 300)"
         },
         {
           "path": "/predesigned-residential",
-          "ratio": 0.02,
-          "detail": "4 words (target 200)"
+          "ratio": 0.013333333333333334,
+          "detail": "4 words (target 300)"
         },
         {
           "path": "/predesigned-series-method-one",
-          "ratio": 0.02,
-          "detail": "4 words (target 200)"
+          "ratio": 0.013333333333333334,
+          "detail": "4 words (target 300)"
         },
         {
           "path": "/custom-residential",
-          "ratio": 0.03,
-          "detail": "6 words (target 200)"
+          "ratio": 0.02,
+          "detail": "6 words (target 300)"
         },
         {
           "path": "/faq",
-          "ratio": 0.03,
-          "detail": "6 words (target 200)"
+          "ratio": 0.02,
+          "detail": "6 words (target 300)"
         },
         {
           "path": "/sustainability",
-          "ratio": 0.04,
-          "detail": "8 words (target 200)"
+          "ratio": 0.02666666666666667,
+          "detail": "8 words (target 300)"
         },
         {
           "path": "/partnerships-with-architects-and-developers",
-          "ratio": 0.05,
-          "detail": "10 words (target 200)"
+          "ratio": 0.03333333333333333,
+          "detail": "10 words (target 300)"
         },
         {
           "path": "/about",
-          "ratio": 0.06,
-          "detail": "12 words (target 200)"
+          "ratio": 0.04,
+          "detail": "12 words (target 300)"
         },
         {
           "path": "/get-started",
-          "ratio": 0.065,
-          "detail": "13 words (target 200)"
+          "ratio": 0.043333333333333335,
+          "detail": "13 words (target 300)"
         },
         {
           "path": "/commercial-project-types-multi-family-housing-units",
-          "ratio": 0.1,
-          "detail": "20 words (target 200)"
+          "ratio": 0.06666666666666667,
+          "detail": "20 words (target 300)"
         },
         {
           "path": "/commercial-project-types-affordable-workforce-housing",
-          "ratio": 0.12,
-          "detail": "24 words (target 200)"
+          "ratio": 0.08,
+          "detail": "24 words (target 300)"
         },
         {
           "path": "/commercial-project-types-classrooms-and-school-additions",
-          "ratio": 0.12,
-          "detail": "24 words (target 200)"
+          "ratio": 0.08,
+          "detail": "24 words (target 300)"
         },
         {
           "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-          "ratio": 0.15,
-          "detail": "30 words (target 200)"
+          "ratio": 0.1,
+          "detail": "30 words (target 300)"
         }
       ]
     },
@@ -2221,7 +2610,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "2 run(s) recorded",
+      "detail": "3 run(s) recorded",
       "pages": []
     },
     {
@@ -2233,7 +2622,7 @@
       "fix": "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.",
       "scope": "site",
       "ratio": 1,
-      "detail": "visibility 67%, cited 17% of 6 (manual)",
+      "detail": "mention rate 67%, citation rate 17%, share of voice 33% over 6 prompts (4 not yet recorded) (manual)",
       "pages": []
     },
     {
@@ -2360,6 +2749,31 @@
         "/commercial-project-types-multi-family-housing-units — 0 internal, 0 generic anchor(s)"
       ],
       "pagesAffected": 59
+    },
+    {
+      "id": "metadata-coverage",
+      "pillar": "technical",
+      "title": "Key pages carry a title, a meta description and an H1",
+      "fix": "Fill the SEO title and description and give the page one H1 — Webflow's gate is 80% of homepage, product, service, about, contact and FAQ pages.",
+      "effort": "low",
+      "impact": 2,
+      "priority": 2.02,
+      "detail": "1/27 pages pass",
+      "pages": [
+        "/ — missing H1",
+        "/legacy — missing H1",
+        "/journal — missing H1",
+        "/about — missing H1",
+        "/commercial — missing H1",
+        "/commercial-project-types-affordable-workforce-housing — missing H1",
+        "/commercial-project-types-classrooms-and-school-additions — missing H1",
+        "/commercial-project-types-multi-family-housing-units — missing H1",
+        "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — missing H1",
+        "/custom-regions-city-and-urban — missing H1",
+        "/custom-regions-island-and-waterfront-homes — missing H1",
+        "/custom-regions-mountain-modern-homes — missing H1"
+      ],
+      "pagesAffected": 26
     },
     {
       "id": "structures",
@@ -2505,23 +2919,23 @@
       "fix": "Expand thin pages: real specifics (sizes, timelines, prices, process) rather than taglines.",
       "effort": "high",
       "impact": 2.7,
-      "priority": 1.07,
-      "detail": "3/60 pages pass",
+      "priority": 1.1,
+      "detail": "2/60 pages pass",
       "pages": [
-        "/predesigned-series-annata — 2 words (target 200)",
-        "/predesigned-series-cabin — 2 words (target 200)",
-        "/predesigned-series-elemental — 2 words (target 200)",
-        "/predesigned-series-m — 2 words (target 200)",
-        "/predesigned-series-option — 2 words (target 200)",
-        "/predesigned-series-paradigm — 2 words (target 200)",
-        "/pricing — 2 words (target 200)",
-        "/commercial — 4 words (target 200)",
-        "/predesigned-residential — 4 words (target 200)",
-        "/predesigned-series-method-one — 4 words (target 200)",
-        "/custom-residential — 6 words (target 200)",
-        "/faq — 6 words (target 200)"
+        "/predesigned-series-annata — 2 words (target 300)",
+        "/predesigned-series-cabin — 2 words (target 300)",
+        "/predesigned-series-elemental — 2 words (target 300)",
+        "/predesigned-series-m — 2 words (target 300)",
+        "/predesigned-series-option — 2 words (target 300)",
+        "/predesigned-series-paradigm — 2 words (target 300)",
+        "/pricing — 2 words (target 300)",
+        "/commercial — 4 words (target 300)",
+        "/predesigned-residential — 4 words (target 300)",
+        "/predesigned-series-method-one — 4 words (target 300)",
+        "/custom-residential — 6 words (target 300)",
+        "/faq — 6 words (target 300)"
       ],
-      "pagesAffected": 57
+      "pagesAffected": 58
     },
     {
       "id": "about-contact",
@@ -2578,8 +2992,8 @@
       "title": "Meta description, 70–160 characters",
       "fix": "Write a meta description that answers 'what is this page' in one or two sentences (70–160 characters).",
       "effort": "low",
-      "impact": 0.8,
-      "priority": 0.78,
+      "impact": 0.7,
+      "priority": 0.73,
       "detail": "18/60 pages pass",
       "pages": [
         "/journal/2013-green-washington-awards — 229 chars",
@@ -2604,7 +3018,7 @@
       "fix": "One H1 per page naming the subject; demote the others.",
       "effort": "low",
       "impact": 0.6,
-      "priority": 0.65,
+      "priority": 0.61,
       "detail": "34/60 pages pass",
       "pages": [
         "/ — 0 H1",
@@ -2629,7 +3043,7 @@
       "fix": "Give the page a specific title in the SEO fields (15–65 characters, brand suffix included).",
       "effort": "low",
       "impact": 0.4,
-      "priority": 0.38,
+      "priority": 0.36,
       "detail": "29/60 pages pass",
       "pages": [
         "/journal/2014-palm-springs-modernism-week-in-review — 74 chars",
@@ -2674,7 +3088,7 @@
       "fix": "Set og:title, og:description and a 1200×630 og:image so previews and answer cards render.",
       "effort": "low",
       "impact": 0.2,
-      "priority": 0.24,
+      "priority": 0.23,
       "detail": "33/60 pages pass",
       "pages": [
         "/legacy — none",
@@ -2699,7 +3113,7 @@
       "fix": "Wrap page content in <main> and chrome in <nav>/<header>/<footer> so parsers can drop the chrome.",
       "effort": "low",
       "impact": 0.2,
-      "priority": 0.19,
+      "priority": 0.18,
       "detail": "0/60 pages pass",
       "pages": [
         "/ — main, header, footer",
@@ -2718,25 +3132,6 @@
       "pagesAffected": 60
     },
     {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0,
-      "priority": 0.02,
-      "detail": "54/60 pages pass",
-      "pages": [
-        "/journal/2013-green-washington-awards — 2019 ms",
-        "/about — 896 ms",
-        "/journal/2014-palm-springs-modernism-week-in-review — 1780 ms",
-        "/commercial — 1372 ms",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 1538 ms",
-        "/journal/coastal-large-time-lapse-video — 1725 ms"
-      ],
-      "pagesAffected": 6
-    },
-    {
       "id": "indexable",
       "pillar": "technical",
       "title": "Page responds 200 and is indexable",
@@ -2749,13 +3144,29 @@
         "/get-started — 200, noindex"
       ],
       "pagesAffected": 1
+    },
+    {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0,
+      "priority": 0.01,
+      "detail": "57/60 pages pass",
+      "pages": [
+        "/journal/2014-palm-springs-modernism-week-in-review — 2036 ms",
+        "/journal/2013-green-washington-awards — 1781 ms",
+        "/about — 1658 ms"
+      ],
+      "pagesAffected": 3
     }
   ],
   "pages": [
     {
       "path": "/about",
       "type": "page",
-      "score": 41,
+      "score": 39,
       "words": 12,
       "schema": [
         "Organization",
@@ -2764,6 +3175,7 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "description",
         "open-graph",
         "h1",
@@ -2783,7 +3195,7 @@
     {
       "path": "/commercial",
       "type": "page",
-      "score": 41,
+      "score": 39,
       "words": 4,
       "schema": [
         "Organization",
@@ -2792,11 +3204,11 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "description",
         "open-graph",
         "h1",
         "landmarks",
-        "ttfb",
         "answer-first",
         "question-headings",
         "faq",
@@ -2811,7 +3223,7 @@
     {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
-      "score": 41,
+      "score": 39,
       "words": 48,
       "schema": [
         "Organization",
@@ -2820,6 +3232,7 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "title",
         "description",
         "open-graph",
@@ -2837,252 +3250,9 @@
       "title": "Method is experienced in building in remote island and waterfront environments, including the San Juan Islands, Bainbridge Island, and the islands of British Columbia. | Method Homes"
     },
     {
-      "path": "/predesigned-residential",
-      "type": "page",
-      "score": 41,
-      "words": 4,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Predesigned Residential | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-annata",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Annata | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-cabin",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Cabin | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-elemental",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Elemental | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-m",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "M | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-method-one",
-      "type": "page",
-      "score": 41,
-      "words": 4,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method One | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-option",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Option | Method Homes"
-    },
-    {
-      "path": "/predesigned-series-paradigm",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Paradigm | Method Homes"
-    },
-    {
-      "path": "/pricing",
-      "type": "page",
-      "score": 41,
-      "words": 2,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Pricing | Method Homes"
-    },
-    {
       "path": "/custom-residential",
       "type": "page",
-      "score": 42,
+      "score": 39,
       "words": 6,
       "schema": [
         "Organization",
@@ -3091,6 +3261,7 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "description",
         "open-graph",
         "h1",
@@ -3109,7 +3280,7 @@
     {
       "path": "/faq",
       "type": "page",
-      "score": 42,
+      "score": 39,
       "words": 6,
       "schema": [
         "Organization",
@@ -3118,6 +3289,7 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "description",
         "open-graph",
         "h1",
@@ -3134,9 +3306,504 @@
       "title": "Frequently Asked Questions | Method Homes"
     },
     {
+      "path": "/predesigned-residential",
+      "type": "page",
+      "score": 39,
+      "words": 4,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Predesigned Residential | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-annata",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Annata | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-cabin",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Cabin | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-elemental",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Elemental | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-m",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "M | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-method-one",
+      "type": "page",
+      "score": 39,
+      "words": 4,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method One | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-option",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Option | Method Homes"
+    },
+    {
+      "path": "/predesigned-series-paradigm",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Paradigm | Method Homes"
+    },
+    {
+      "path": "/pricing",
+      "type": "page",
+      "score": 39,
+      "words": 2,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Pricing | Method Homes"
+    },
+    {
+      "path": "/sustainability",
+      "type": "page",
+      "score": 41,
+      "words": 8,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "description",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Sustainability at Method Homes | Method Homes"
+    },
+    {
+      "path": "/partnerships-with-architects-and-developers",
+      "type": "page",
+      "score": 42,
+      "words": 10,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Partnerships with Architects and Developers | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-affordable-workforce-housing",
+      "type": "page",
+      "score": 43,
+      "words": 24,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-classrooms-and-school-additions",
+      "type": "page",
+      "score": 43,
+      "words": 24,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has completed a variety of school expansion and classroom projects. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-multi-family-housing-units",
+      "type": "page",
+      "score": 43,
+      "words": 20,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has built a variety of multi-family housing projects. | Method Homes"
+    },
+    {
+      "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+      "type": "page",
+      "score": 43,
+      "words": 30,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes"
+    },
+    {
+      "path": "/custom-regions-city-and-urban",
+      "type": "page",
+      "score": 43,
+      "words": 42,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has built in a variety of city and urban environments such as Seattle, WA, Jackson, WY, and Portland, OR. | Method Homes"
+    },
+    {
+      "path": "/custom-regions-mountain-modern-homes",
+      "type": "page",
+      "score": 43,
+      "words": 52,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has experience in building modern modular homes in a vast range of mountainous locations such as Lake Tahoe, the Tetons, and Sun Valley, ID. | Method Homes"
+    },
+    {
+      "path": "/custom-regions-valley-and-vineyard-homes",
+      "type": "page",
+      "score": 43,
+      "words": 44,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "title",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes"
+    },
+    {
       "path": "/get-started",
       "type": "page",
-      "score": 44,
+      "score": 47,
       "words": 13,
       "schema": [
         "Organization",
@@ -3160,238 +3827,29 @@
       "title": "Get started | Method Homes"
     },
     {
-      "path": "/partnerships-with-architects-and-developers",
-      "type": "page",
-      "score": 44,
-      "words": 10,
+      "path": "/",
+      "type": "home",
+      "score": 49,
+      "words": 678,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
+        "WebSite"
       ],
       "fails": [
+        "metadata-coverage",
         "open-graph",
         "h1",
         "landmarks",
         "answer-first",
-        "question-headings",
         "faq",
-        "depth",
+        "readability",
         "structures",
         "entity-clarity",
         "internal-links",
         "freshness"
       ],
-      "title": "Partnerships with Architects and Developers | Method Homes"
-    },
-    {
-      "path": "/sustainability",
-      "type": "page",
-      "score": 44,
-      "words": 8,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Sustainability at Method Homes | Method Homes"
-    },
-    {
-      "path": "/commercial-project-types-affordable-workforce-housing",
-      "type": "page",
-      "score": 45,
-      "words": 24,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
-    },
-    {
-      "path": "/commercial-project-types-classrooms-and-school-additions",
-      "type": "page",
-      "score": 45,
-      "words": 24,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has completed a variety of school expansion and classroom projects. | Method Homes"
-    },
-    {
-      "path": "/commercial-project-types-multi-family-housing-units",
-      "type": "page",
-      "score": 45,
-      "words": 20,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has built a variety of multi-family housing projects. | Method Homes"
-    },
-    {
-      "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
-      "type": "page",
-      "score": 45,
-      "words": 30,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes"
-    },
-    {
-      "path": "/custom-regions-city-and-urban",
-      "type": "page",
-      "score": 46,
-      "words": 42,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has built in a variety of city and urban environments such as Seattle, WA, Jackson, WY, and Portland, OR. | Method Homes"
-    },
-    {
-      "path": "/custom-regions-mountain-modern-homes",
-      "type": "page",
-      "score": 46,
-      "words": 52,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has experience in building modern modular homes in a vast range of mountainous locations such as Lake Tahoe, the Tetons, and Sun Valley, ID. | Method Homes"
-    },
-    {
-      "path": "/custom-regions-valley-and-vineyard-homes",
-      "type": "page",
-      "score": 46,
-      "words": 44,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes"
+      "title": "Method Homes — Architect-designed prefab homes"
     },
     {
       "path": "/journal/793",
@@ -3421,57 +3879,6 @@
       "title": "Link to preliminary Lake Whatcom Cabin set video on YouTube — Honors Journal | Method Homes"
     },
     {
-      "path": "/",
-      "type": "home",
-      "score": 52,
-      "words": 678,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite"
-      ],
-      "fails": [
-        "open-graph",
-        "h1",
-        "landmarks",
-        "answer-first",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "Method Homes — Architect-designed prefab homes"
-    },
-    {
-      "path": "/journal/coastal-large-time-lapse-video",
-      "type": "post",
-      "score": 53,
-      "words": 87,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "Method Homes Coastal Large TimeLapse — Honors Journal | Method Homes"
-    },
-    {
       "path": "/journal/bainbridge-island-option",
       "type": "post",
       "score": 54,
@@ -3498,9 +3905,35 @@
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
     },
     {
+      "path": "/journal/coastal-large-time-lapse-video",
+      "type": "post",
+      "score": 54,
+      "words": 87,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Method Homes Coastal Large TimeLapse — Honors Journal | Method Homes"
+    },
+    {
       "path": "/legacy",
       "type": "page",
-      "score": 61,
+      "score": 56,
       "words": 201,
       "schema": [
         "Organization",
@@ -3509,11 +3942,13 @@
         "WebPage"
       ],
       "fails": [
+        "metadata-coverage",
         "open-graph",
         "h1",
         "landmarks",
         "question-headings",
         "faq",
+        "depth",
         "structures",
         "entity-clarity",
         "internal-links",
@@ -3524,7 +3959,7 @@
     {
       "path": "/journal/2014-palm-springs-modernism-week-in-review",
       "type": "post",
-      "score": 61,
+      "score": 60,
       "words": 552,
       "schema": [
         "Organization",
@@ -3600,58 +4035,6 @@
         "references"
       ],
       "title": "Come Celebrate Design in San Francisco June 10-11 — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/2013-green-washington-awards",
-      "type": "post",
-      "score": 62,
-      "words": 177,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting"
-      ],
-      "fails": [
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
-      "type": "post",
-      "score": 62,
-      "words": 102,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
@@ -3809,6 +4192,57 @@
         "references"
       ],
       "title": "Come see Method at Dwell on Design May 29-31 — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/2013-green-washington-awards",
+      "type": "post",
+      "score": 63,
+      "words": 177,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "type": "post",
+      "score": 63,
+      "words": 102,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes"
     },
     {
       "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
@@ -4287,7 +4721,7 @@
     {
       "path": "/journal",
       "type": "index",
-      "score": 90,
+      "score": 83,
       "words": 68,
       "schema": [
         "Organization",
@@ -4296,6 +4730,7 @@
         "Blog"
       ],
       "fails": [
+        "metadata-coverage",
         "open-graph",
         "h1",
         "landmarks",
