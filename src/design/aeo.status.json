@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-01T16:41:02.404Z",
+  "generatedAt": "2026-10-02T15:57:59.429Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 63,
@@ -224,7 +224,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-01",
+    "since": "2026-09-02",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -235,7 +235,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 1d ago",
+    "model": "Claude web search (manual, session probe) · recorded 2d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1176,38 +1176,38 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.925,
+      "ratio": 0.9333333333333333,
       "detail": "54/60 pages pass",
       "pages": [
         {
           "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2781 ms"
-        },
-        {
-          "path": "/about",
-          "ratio": 0,
-          "detail": "2433 ms"
+          "detail": "2265 ms"
         },
         {
           "path": "/journal/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
-          "detail": "2806 ms"
+          "detail": "2226 ms"
         },
         {
           "path": "/",
           "ratio": 0.5,
-          "detail": "1078 ms"
+          "detail": "990 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "1070 ms"
+          "detail": "972 ms"
         },
         {
           "path": "/journal",
           "ratio": 0.5,
-          "detail": "1005 ms"
+          "detail": "915 ms"
+        },
+        {
+          "path": "/about",
+          "ratio": 0.5,
+          "detail": "1450 ms"
         }
       ]
     },
@@ -2446,7 +2446,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "5 run(s) recorded",
+      "detail": "6 run(s) recorded",
       "pages": []
     },
     {
@@ -2965,16 +2965,16 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "effort": "high",
-      "impact": 0.1,
+      "impact": 0,
       "priority": 0.02,
       "detail": "54/60 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 2781 ms",
-        "/about — 2433 ms",
-        "/journal/2014-palm-springs-modernism-week-in-review — 2806 ms",
-        "/ — 1078 ms",
-        "/legacy — 1070 ms",
-        "/journal — 1005 ms"
+        "/journal/2013-green-washington-awards — 2265 ms",
+        "/journal/2014-palm-springs-modernism-week-in-review — 2226 ms",
+        "/ — 990 ms",
+        "/legacy — 972 ms",
+        "/journal — 915 ms",
+        "/about — 1450 ms"
       ],
       "pagesAffected": 6
     },
@@ -2997,7 +2997,7 @@
     {
       "path": "/about",
       "type": "page",
-      "score": 46,
+      "score": 47,
       "words": 18,
       "schema": [
         "Organization",
