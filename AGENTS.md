@@ -89,6 +89,27 @@ staging/design use.
   library against Method frames.
 - Until the rebrand, fonts are SDR's TRIAL cuts (Feature Deck /
   Maison Neue) — licensing must be resolved before production.
+- IA Design page `36373:44911` (built 2026-10-03) holds the full
+  desktop UX: section `Method/Sections — component library`
+  (37505:3440) = 31 editable 1440-wide section components (Nav, Hero
+  Home/Page, Text intro, 50/50 [Image=Left|Right], Card + Card grid
+  [Columns=2|3|4], Carousel, Stats bar, Testimonial, Logo row, Spec
+  table, Compare table, Process timeline, FAQ, Author & share,
+  Article body, Inline CTA, Filter bar, Gallery, Form block, Map
+  block, Team grid, Pricing cards, Feature list [Columns=3|4], Link
+  list, Glossary, Press list, Plan drawings, CTA band, Footer), all
+  bound to the file's Colors/Spacing/Radius variables + Geist text
+  styles and using Buttons/Button + Intake/Field. Section
+  `Pages (full UX) — desktop 1440` (37509:3821) = 39 page frames
+  (24 IA routes + series/commercial-type/market template instances),
+  composed from those instances with CMS-bound values written as
+  `{placeholders}`. Section `AEO review — designs vs rubric`
+  (37514:13776) scores every page (body words, question H2s, FAQ,
+  byline, NAP, unfilled facts). Scripting gotchas: override instance
+  text by layer name (`Section header|H2`, `Card 1|Title`,
+  `Questions|:0|Answer`); hidden children drop out of `children`, so
+  hide index-addressed rows last-first; mobile (428) frames are NOT
+  designed yet.
 
 ## Ops apparatus
 
