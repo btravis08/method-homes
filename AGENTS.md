@@ -110,6 +110,24 @@ staging/design use.
   `Questions|:0|Answer`); hidden children drop out of `children`, so
   hide index-addressed rows last-first; mobile (428) frames are NOT
   designed yet.
+- Section `Method/Experiential — bespoke sections` (37516:13784) =
+  nine page-specific experiential components, each a variant set
+  whose variants are the interaction STATES, with an "Interaction
+  spec" card beside it (trigger, motion tokens, states, no-JS /
+  reduced-motion fallback, perf budget, AEO rule): Build journey
+  (3D) [Stage=Design|Fabrication|Delivery|Install] → /process;
+  Budget builder [Path=Series|Custom] → /pricing; Floor plan
+  explorer [View=Plan|Modules|3D] → series + plan pages (replaces
+  Plan drawings there); Delivery route map [State=Empty|Result] →
+  /where-we-build; Series explorer [State=Default|Filtered] →
+  /predesigned; Module stacker [Config=24 units|48 units] →
+  /commercial; Set day sequence [Time=06:10|14:40] → /; Performance
+  comparison [Metric=Waste|Schedule|Airtightness|Energy] →
+  /sustainability; Prefab types explainer
+  [Type=Modular|Panelized|Manufactured] → /prefab-101. Rule for all
+  of them: every fact lives in DOM text (canvases are aria-hidden),
+  the shared component next to them is the no-JS twin, and the
+  interactive chunk loads via an ssr:false client gate after idle.
 
 ## Ops apparatus
 
