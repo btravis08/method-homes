@@ -131,6 +131,25 @@ staging/design use.
   twin, and any interactive chunk loads via an ssr:false client gate
   after idle. `Method/Experiential — v1 (superseded …, too techy)`
   (37516:13784) is kept for reference only — don't place it.
+- Rivian-derived patterns (reference captures in
+  design/reference/rivian-{home,r1s,r2}.{md,png}, rendered by the
+  fetch-page workflow because the sandbox can't reach rivian.com):
+  in the editorial library — Lineup [Series=…] (pill toggle across
+  the seven series → one photo, sentence, meta line with footnote
+  markers, four big numbers, swatches; replaces Find your fit on
+  /predesigned), Finish levels (trim-style cards: name, tagline,
+  From…, three numbers, Includes/Optional; replaces Pricing cards on
+  /pricing), Size it up [Plan=…] (lettered dimensions A–H beside a
+  line diagram, plan toggle; on floor-plan pages). In the shared
+  library — Hero / Series (breadcrumb, 176px wordmark H1, one photo,
+  sentence, meta line, two pills; needs a 'Display XL' text style so
+  the size stops being an override), Sub-nav (sticky under Nav on
+  series, plan and commercial-type pages: context · anchors · Get a
+  range), Location + newsletter (factory card with NAP + tour hours
+  beside a dark newsletter card; on About and Contact). Build
+  journey chapters are now photo + one sentence (numbers/titles
+  hidden). Every number carries a footnote marker that resolves to a
+  dated sources line — Rivian's way of keeping claims honest.
 
 ## Ops apparatus
 
