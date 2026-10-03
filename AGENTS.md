@@ -160,6 +160,22 @@ staging/design use.
   marker; floating photos are 4–6 lazy <img> with real alt text and
   depth-based parallax (0.1–0.3), static under reduced motion; the
   Image kind is never the LCP. At most two per page.
+- Authors (decided 2026-10-03): 3–5 REAL people + one organization
+  byline for news, each with a landing page at /blog/authors/[slug]
+  — the Person entity every byline links to. Figma: `Author hero`
+  (shared lib, 37530:15456) + `Page / Author` template (row 3 of
+  Pages, 37530:15457) + an Authors row (Team grid) on the Blog page.
+  Schema: `author` now has slug, kind (person|organization),
+  firstName, role, credentials, avatar (portrait), bio, sameAs,
+  email, teamMember ref, bioLong (two first-person paragraphs),
+  startedAt, homesSet, reviewsTopics, projects (refs), featured;
+  `post` gained `reviewedBy` (for backfilled posts whose writer is
+  unknown — a reviewer is still a Person signal). Never invent a
+  persona. Still to build in code: the /blog/authors/[slug] route
+  (ProfilePage + Person JSON-LD, articles, projects, 'Ask {first
+  name}' → intake with the author id), the Blog authors row, byline →
+  author-page links, and the backfill of 182 posts once the people
+  are chosen.
 
 ## Ops apparatus
 
