@@ -1,13 +1,4499 @@
 {
-  "generatedAt": "2026-10-03T00:00:00.000Z",
+  "generatedAt": "2026-10-03T19:08:42.179Z",
   "origin": "https://method-homes.vercel.app",
-  "durationMs": 0,
-  "sitemapUrls": 0,
-  "checked": 0,
-  "score": 0,
-  "byGate": {},
-  "llmsFull": { "ok": false, "bytes": 0 },
+  "durationMs": 37029,
+  "sitemapUrls": 209,
+  "checked": 80,
+  "score": 46,
+  "byGate": {
+    "G3": {
+      "applicable": 80,
+      "passing": 78
+    },
+    "G4": {
+      "applicable": 80,
+      "passing": 1
+    },
+    "G5": {
+      "applicable": 80,
+      "passing": 78
+    },
+    "G6": {
+      "applicable": 80,
+      "passing": 79
+    },
+    "G7": {
+      "applicable": 78,
+      "passing": 0
+    },
+    "G8": {
+      "applicable": 80,
+      "passing": 24
+    },
+    "G9": {
+      "applicable": 78,
+      "passing": 23
+    },
+    "G10": {
+      "applicable": 80,
+      "passing": 49
+    },
+    "G11": {
+      "applicable": 80,
+      "passing": 1
+    }
+  },
+  "llmsFull": {
+    "ok": true,
+    "bytes": 716
+  },
   "errors": [],
-  "pages": [],
-  "note": "Not run yet — dispatch the qa workflow (GitHub Actions) or run `node scripts/qa-pages.mjs` against a build."
+  "pages": [
+    {
+      "path": "/legacy",
+      "kind": "page",
+      "title": "A New Legacy — Sun Day Red | Method Homes",
+      "words": 187,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "gates": {
+        "G3": {
+          "pass": false,
+          "note": "0 H1s"
+        },
+        "G4": {
+          "pass": false,
+          "note": "no og:image"
+        },
+        "G5": {
+          "pass": false,
+          "note": "18/21 images without alt"
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "187 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing BreadcrumbList"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 22,
+      "fails": [
+        "G3: 0 H1s",
+        "G4: no og:image",
+        "G5: 18/21 images without alt",
+        "G7: 187 words; 0 question headings",
+        "G8: missing BreadcrumbList",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal",
+      "kind": "list",
+      "title": "Journal | Method Homes",
+      "words": 45,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "Blog"
+      ],
+      "gates": {
+        "G3": {
+          "pass": false,
+          "note": "0 H1s"
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 70 chars; no og:image"
+        },
+        "G5": {
+          "pass": false,
+          "note": "108/109 images without alt"
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": null,
+          "note": "navigational page"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing BreadcrumbList"
+        },
+        "G9": {
+          "pass": null,
+          "note": "not a dated page"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 29,
+      "fails": [
+        "G3: 0 H1s",
+        "G4: description 70 chars; no og:image",
+        "G5: 108/109 images without alt",
+        "G8: missing BreadcrumbList",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/get-started",
+      "kind": "page",
+      "title": "Get started | Method Homes",
+      "words": 11,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "ContactPage"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": false,
+          "note": "noindex (in sitemap)"
+        },
+        "G7": {
+          "pass": false,
+          "note": "11 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing BreadcrumbList"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: no og:image",
+        "G6: noindex (in sitemap)",
+        "G7: 11 words; 0 question headings",
+        "G8: missing BreadcrumbList",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/2013-green-washington-awards",
+      "kind": "post",
+      "title": "2013 Green Washington Awards — Honors Journal | Method Homes",
+      "words": 217,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 229 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "217 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 229 chars",
+        "G7: 217 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/793",
+      "kind": "post",
+      "title": "Link to preliminary Lake Whatcom Cabin set video on YouTube — Honors Journal | Method Homes",
+      "words": 80,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 91 chars; description 42 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "80 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 91 chars; description 42 chars",
+        "G7: 80 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "kind": "post",
+      "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes",
+      "words": 132,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 108 chars; description 170 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "132 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 108 chars; description 170 chars",
+        "G7: 132 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+      "kind": "post",
+      "title": "Method Homes completes Spencer Lake cabin… — Honors Journal | Method Homes",
+      "words": 199,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 74 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "199 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 74 chars; description 240 chars",
+        "G7: 199 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/architectural-record-modular-classroom-makeover",
+      "kind": "post",
+      "title": "Architectural Record: Modular Classroom Makeover — Honors Journal | Method Homes",
+      "words": 188,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 80 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "188 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 80 chars; description 240 chars",
+        "G7: 188 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/bainbridge-island-option",
+      "kind": "post",
+      "title": "Bainbridge Island Option — Honors Journal | Method Homes",
+      "words": 126,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 165 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "126 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 165 chars",
+        "G7: 126 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/balance-s-m-l-series-prefab-studio",
+      "kind": "post",
+      "title": "Introducing the Balance S-M-L Series of Prefab Homes + Studios — Honors Journal | Method Homes",
+      "words": 266,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 94 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "266 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 94 chars; description 240 chars",
+        "G7: 266 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/bellingham-herald",
+      "kind": "post",
+      "title": "Bellingham Herald — Honors Journal | Method Homes",
+      "words": 268,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "268 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 268 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/berkshires-custom-install-video",
+      "kind": "post",
+      "title": "Berkshires Custom Install Video — Honors Journal | Method Homes",
+      "words": 123,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 63 chars; description 172 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "123 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 63 chars; description 172 chars",
+        "G7: 123 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/best-of-install-photos",
+      "kind": "post",
+      "title": "Best of: Method Modular Prefab Installs — Honors Journal | Method Homes",
+      "words": 143,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 71 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "143 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 71 chars",
+        "G7: 143 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/blog-kickoff",
+      "kind": "post",
+      "title": "Blog Kickoff — Honors Journal | Method Homes",
+      "words": 364,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/blown-in-cellulose",
+      "kind": "post",
+      "title": "Blown in Cellulose — Honors Journal | Method Homes",
+      "words": 230,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 239 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "230 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 239 chars",
+        "G7: 230 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/blue-ridge-cabin-foundation",
+      "kind": "post",
+      "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes",
+      "words": 197,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "197 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 197 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/cabinets-being-installed-in-method-factory",
+      "kind": "post",
+      "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes",
+      "words": 182,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 74 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "182 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 74 chars; description 240 chars",
+        "G7: 182 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/carmel-valley-residence-on-america-bydesign",
+      "kind": "post",
+      "title": "Carmel Valley Residence on America ByDesign — Honors Journal | Method Homes",
+      "words": 133,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 75 chars; description 75 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "133 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 75 chars; description 75 chars",
+        "G7: 133 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/coastal-large-time-lapse-video",
+      "kind": "post",
+      "title": "Method Homes Coastal Large TimeLapse — Honors Journal | Method Homes",
+      "words": 102,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 68 chars; description 63 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "102 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 68 chars; description 63 chars",
+        "G7: 102 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/come-celebrate-design-in-san-francisco-june-10-11",
+      "kind": "post",
+      "title": "Come Celebrate Design in San Francisco June 10-11 — Honors Journal | Method Homes",
+      "words": 283,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 81 chars; description 233 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "283 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 81 chars; description 233 chars",
+        "G7: 283 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/curbed-seattle",
+      "kind": "post",
+      "title": "Curbed Seattle — Honors Journal | Method Homes",
+      "words": 195,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "195 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 195 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/curbed-taproots-modular-addition-unveiled-this-friday",
+      "kind": "post",
+      "title": "Curbed: Taproot&#x27;s Modular Addition Unveiled this Friday — Honors Journal | Method Homes",
+      "words": 177,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 92 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "177 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 92 chars; description 240 chars",
+        "G7: 177 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/custom-annata-iii-available-for-rent-in-the-heart-of-wine-country",
+      "kind": "post",
+      "title": "Custom Annata III available for rent in the heart of Wine Country — Honors Journal | Method Homes",
+      "words": 143,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 97 chars; description 174 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "143 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 97 chars; description 174 chars",
+        "G7: 143 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/deep-water-survey",
+      "kind": "post",
+      "title": "Deep water survey — Honors Journal | Method Homes",
+      "words": 407,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/design-milk",
+      "kind": "post",
+      "title": "Design Milk — Honors Journal | Method Homes",
+      "words": 241,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "241 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 241 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/design-milk-what-to-do-and-see-during-modernism-week",
+      "kind": "post",
+      "title": "Design Milk: What to do and see during Modernism Week — Honors Journal | Method Homes",
+      "words": 199,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 85 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "199 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 85 chars; description 240 chars",
+        "G7: 199 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/dwell-method-homes-makes-bespoke-prefabs-that-dont-have-a-factory-feel",
+      "kind": "post",
+      "title": "Dwell: Method Homes Makes Bespoke Prefabs That Don’t Have a Factory Feel — Honors Journal | Method Homes",
+      "words": 136,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 104 chars; description 206 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "136 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 104 chars; description 206 chars",
+        "G7: 136 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/dwell-monogram-invite-monogram-modern-home",
+      "kind": "post",
+      "title": "Dwell + Monogram Invite You to the Monogram Modern Home June 24–26 in LA — Honors Journal | Method Homes",
+      "words": 232,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 104 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "232 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 104 chars; description 240 chars",
+        "G7: 232 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/dwell-on-design",
+      "kind": "post",
+      "title": "Dwell on Design — Honors Journal | Method Homes",
+      "words": 120,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 109 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "120 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: description 109 chars",
+        "G7: 120 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/east-coast-availibilty",
+      "kind": "post",
+      "title": "East Coast Availibilty – Method Homes Expands to Nationwide Service — Honors Journal | Method Homes",
+      "words": 194,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 99 chars; description 239 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "194 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 99 chars; description 239 chars",
+        "G7: 194 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/first-layer-of-insulation-on-lake-whatcom-cabin",
+      "kind": "post",
+      "title": "First layer of insulation on Lake Whatcom Cabin — Honors Journal | Method Homes",
+      "words": 303,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 79 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 79 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/girdwood-custom-cabin-install",
+      "kind": "post",
+      "title": "Girdwood Custom Cabin Install — Honors Journal | Method Homes",
+      "words": 123,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 61 chars; description 172 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "123 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 33,
+      "fails": [
+        "G4: title 61 chars; description 172 chars",
+        "G7: 123 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/2014-palm-springs-modernism-week-in-review",
+      "kind": "post",
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes",
+      "words": 593,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 74 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 74 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/783",
+      "kind": "post",
+      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes",
+      "words": 201,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 65 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "201 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 65 chars; description 240 chars",
+        "G7: 201 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+      "kind": "post",
+      "title": "Absolutely Prefab-ulous: Why Luxury Buyers Are Moving Toward Modular — Honors Journal | Method Homes",
+      "words": 144,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 100 chars; description 198 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "144 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 100 chars; description 198 chars",
+        "G7: 144 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+      "kind": "post",
+      "title": "Alaska Custom Cabin: Girdwood Prefab Set — Honors Journal | Method Homes",
+      "words": 266,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 72 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "266 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 72 chars; description 240 chars",
+        "G7: 266 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+      "kind": "post",
+      "title": "Anchor Homes: Prefab Modular Homes From Around the World: Our Top 3 Picks for 2025 — Honors Journal | Method Homes",
+      "words": 180,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 114 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "180 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 114 chars; description 240 chars",
+        "G7: 180 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/annata-display-2017-dwell-on-design",
+      "kind": "post",
+      "title": "Annata Model on Display at 2017 Dwell on Design Conference in Los Angeles June 23-25 — Honors Journal | Method Homes",
+      "words": 193,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 116 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "193 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 116 chars",
+        "G7: 193 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+      "kind": "post",
+      "title": "Architectural Digest: See How 16 Families are Rebuilding After the LA Fires — Honors Journal | Method Homes",
+      "words": 313,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 107 chars; description 211 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 107 chars; description 211 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+      "kind": "post",
+      "title": "Backyard Cottage Design Challenge- and the winners are... — Honors Journal | Method Homes",
+      "words": 322,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 89 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 89 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/backyard-cottages",
+      "kind": "post",
+      "title": "Backyard Cottages Design Showcase — Honors Journal | Method Homes",
+      "words": 413,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 65 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 65 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/bccustom-off-grid-cabin",
+      "kind": "post",
+      "title": "B.C. Custom Off-Grid Cabin — Honors Journal | Method Homes",
+      "words": 219,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "219 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 219 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "kind": "post",
+      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes",
+      "words": 223,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 98 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "223 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 98 chars; description 240 chars",
+        "G7: 223 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/carmel-valley-residence-in-dwell-magazine",
+      "kind": "post",
+      "title": "Carmel Valley Residence in Dwell Magazine — Honors Journal | Method Homes",
+      "words": 149,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 73 chars; description 78 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "149 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 73 chars; description 78 chars",
+        "G7: 149 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/chimney-rock-residence-featured-in-2025-residential-design-awards",
+      "kind": "post",
+      "title": "Chimney Rock Residence featured in 2025 Residential Design Awards — Honors Journal | Method Homes",
+      "words": 141,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 97 chars; description 94 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "141 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 97 chars; description 94 chars",
+        "G7: 141 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+      "kind": "post",
+      "title": "Come see Method at Dwell on Design in LA! Complimentary One day passes available! — Honors Journal | Method Homes",
+      "words": 229,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 113 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "229 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 113 chars",
+        "G7: 229 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/come-see-method-dwell-design-may-29-31",
+      "kind": "post",
+      "title": "Come see Method at Dwell on Design May 29-31 — Honors Journal | Method Homes",
+      "words": 205,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 76 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "205 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 76 chars; description 240 chars",
+        "G7: 205 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/come-see-modern-monogram-house-built-method-tour-now",
+      "kind": "post",
+      "title": "Come see the Modern Monogram House built by Method on tour now — Honors Journal | Method Homes",
+      "words": 337,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 94 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 94 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/curbed-watch-west-seattle-townhomes-fall-into-place",
+      "kind": "post",
+      "title": "Curbed: Watch West Seattle Townhomes Fall into Place — Honors Journal | Method Homes",
+      "words": 217,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 84 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "217 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 84 chars; description 240 chars",
+        "G7: 217 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/design-challenge-for-sustainable-backyard-cottages",
+      "kind": "post",
+      "title": "Design Challenge for Sustainable Backyard Cottages — Honors Journal | Method Homes",
+      "words": 457,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 82 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 82 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/dwell-in-la-2018",
+      "kind": "post",
+      "title": "Come see Method at Dwell on Design in LA! Complimentary one-day passes available! — Honors Journal | Method Homes",
+      "words": 226,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 113 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "226 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 113 chars",
+        "G7: 226 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/dwell-on-design-2013-in-review",
+      "kind": "post",
+      "title": "Dwell on Design 2013 in Review — Honors Journal | Method Homes",
+      "words": 278,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 62 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "278 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 62 chars; description 240 chars",
+        "G7: 278 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/girdwood-construction-update",
+      "kind": "post",
+      "title": "Girdwood: Construction Update — Honors Journal | Method Homes",
+      "words": 220,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 61 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "220 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 61 chars; description 240 chars",
+        "G7: 220 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/gizmag",
+      "kind": "post",
+      "title": "Gizmag — Honors Journal | Method Homes",
+      "words": 232,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "232 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: description 240 chars",
+        "G7: 232 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/h-o-m-e",
+      "kind": "post",
+      "title": "H.O.M.E. — Honors Journal | Method Homes",
+      "words": 112,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": true
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "112 words; 0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": false,
+          "note": "no byline"
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G7: 112 words; 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G10: no byline",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/journal/habitat-for-humanity-celebrates-completion-of-hybrid-modular-net-zero-home-prototype",
+      "kind": "post",
+      "title": "Habitat for Humanity Celebrates Completion of Hybrid Modular Net-Zero Home Prototype — Honors Journal | Method Homes",
+      "words": 906,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 116 chars; description 240 chars"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "0 question headings"
+        },
+        "G8": {
+          "pass": false,
+          "note": "missing WebPage node"
+        },
+        "G9": {
+          "pass": false,
+          "note": "no visible Updated line"
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 44,
+      "fails": [
+        "G4: title 116 chars; description 240 chars",
+        "G7: 0 question headings",
+        "G8: missing WebPage node",
+        "G9: no visible Updated line",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/about",
+      "kind": "page",
+      "title": "Building Custom Modular Homes Since 2008 | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 185 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 185 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/commercial",
+      "kind": "page",
+      "title": "Commercial Projects | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 174 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 174 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/commercial-project-types-affordable-workforce-housing",
+      "kind": "page",
+      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 110 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 110 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/commercial-project-types-classrooms-and-school-additions",
+      "kind": "page",
+      "title": "Method Homes has completed a variety of school expansion and classroom projects. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 95 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 95 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/commercial-project-types-multi-family-housing-units",
+      "kind": "page",
+      "title": "Method Homes has built a variety of multi-family housing projects. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 81 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 81 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/commercial-project-types-remote-ski-lodge-and-hospitality-projects",
+      "kind": "page",
+      "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 105 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 105 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/custom-regions-city-and-urban",
+      "kind": "page",
+      "title": "Method Homes has built in a variety of city and urban environments such as Seattle, WA, Jackson, WY, and Portland, OR. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 133 chars; description 118 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 133 chars; description 118 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/custom-regions-island-and-waterfront-homes",
+      "kind": "page",
+      "title": "Method is experienced in building in remote island and waterfront environments, including the San Juan Islands, Bainbridge Island, and the islands of British Columbia. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 182 chars; description 167 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 182 chars; description 167 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/custom-regions-mountain-modern-homes",
+      "kind": "page",
+      "title": "Method Homes has experience in building modern modular homes in a vast range of mountainous locations such as Lake Tahoe, the Tetons, and Sun Valley, ID. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 168 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 168 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/custom-regions-valley-and-vineyard-homes",
+      "kind": "page",
+      "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "title 154 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: title 154 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/custom-residential",
+      "kind": "page",
+      "title": "Custom Modular Homes | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 192 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 192 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/faq",
+      "kind": "page",
+      "title": "Frequently Asked Questions | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 192 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 192 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/partnerships-with-architects-and-developers",
+      "kind": "page",
+      "title": "Partnerships with Architects and Developers | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-residential",
+      "kind": "page",
+      "title": "Predesigned Residential | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 226 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 226 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-annata",
+      "kind": "page",
+      "title": "Annata | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 341 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 341 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-cabin",
+      "kind": "page",
+      "title": "Cabin | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 448 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 448 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-elemental",
+      "kind": "page",
+      "title": "Elemental | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 270 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 270 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-m",
+      "kind": "page",
+      "title": "M | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 204 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 204 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-method-one",
+      "kind": "page",
+      "title": "Method One | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 354 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 354 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-option",
+      "kind": "page",
+      "title": "Option | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 264 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 264 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/predesigned-series-paradigm",
+      "kind": "page",
+      "title": "Paradigm | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 355 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 355 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/pricing",
+      "kind": "page",
+      "title": "Pricing | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 216 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 216 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/sustainability",
+      "kind": "page",
+      "title": "Sustainability at Method Homes | Method Homes",
+      "words": 3,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "description 220 chars; no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": false,
+          "note": "3 words; 0 question headings"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": true
+        },
+        "G10": {
+          "pass": true
+        },
+        "G11": {
+          "pass": false,
+          "note": "not in /llms-full.txt"
+        }
+      },
+      "score": 67,
+      "fails": [
+        "G4: description 220 chars; no og:image",
+        "G7: 3 words; 0 question headings",
+        "G11: not in /llms-full.txt"
+      ]
+    },
+    {
+      "path": "/",
+      "kind": "home",
+      "title": "Method Homes — Architect-designed prefab homes",
+      "words": 640,
+      "questionHeadings": 0,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "gates": {
+        "G3": {
+          "pass": true
+        },
+        "G4": {
+          "pass": false,
+          "note": "no og:image"
+        },
+        "G5": {
+          "pass": true
+        },
+        "G6": {
+          "pass": true
+        },
+        "G7": {
+          "pass": null,
+          "note": "navigational page"
+        },
+        "G8": {
+          "pass": true
+        },
+        "G9": {
+          "pass": null,
+          "note": "not a dated page"
+        },
+        "G10": {
+          "pass": false,
+          "note": "lorem ipsum"
+        },
+        "G11": {
+          "pass": true
+        }
+      },
+      "score": 71,
+      "fails": [
+        "G4: no og:image",
+        "G10: lorem ipsum"
+      ]
+    }
+  ]
 }
