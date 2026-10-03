@@ -150,6 +150,16 @@ staging/design use.
   journey chapters are now photo + one sentence (numbers/titles
   hidden). Every number carries a footnote marker that resolves to a
   dated sources line — Rivian's way of keeping claims honest.
+- `Interstitial` [Kind=Statement|Image|Floating images|Word over
+  image|Number] (editorial library, 37528:15397) = moments of pause
+  between chapters: one message, one medium, no buttons or eyebrow.
+  Placed once per key page (Home, Custom Homes, Predesigned, series,
+  Pricing, Process, Where we build, Commercial, Sustainability,
+  About, Prefab 101). Rules: the text is a styled <p>, not a heading,
+  unless it opens a chapter; numeric statements carry a footnote
+  marker; floating photos are 4–6 lazy <img> with real alt text and
+  depth-based parallax (0.1–0.3), static under reduced motion; the
+  Image kind is never the LCP. At most two per page.
 
 ## Ops apparatus
 
