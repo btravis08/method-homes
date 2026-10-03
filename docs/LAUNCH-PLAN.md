@@ -49,6 +49,18 @@ with a dated entry in PROJECT-LOG.
 - Blocking inputs: see PROJECT-LOG §1 (author roster, NAP, sameAs,
   founding year, series facts, case-study facts, GSC secrets, press
   list, plan PDFs, Vercel env).
+- **QA baseline (first production run, 2026-10-03 19:08 UTC, 80 of
+  209 sitemap URLs):** gate score **46 / 100**. Per gate: G3 78/80 ·
+  G4 1/80 · G5 78/80 · G6 79/80 · G7 0/78 · G8 24/80 · G9 23/78 ·
+  G10 49/80 · G11 1/80. What that means: headings, alt text and
+  indexability are already near-clean; metadata fails almost
+  everywhere on title length (the " | Method Homes" suffix pushes
+  most past 60), excerpt-length descriptions and no og:image (A3);
+  no page yet clears content depth (words + question headings =
+  the content work in §5); posts lacked a visible Updated line and
+  30 of 53 have no author; `/llms-full.txt` was 716 bytes because
+  its GROQ had a syntax error (fixed the same day). Re-run after
+  each content or template change; the number to beat is 46.
 
 ---
 
@@ -388,6 +400,11 @@ and only need content; the rest are build or content work.
       press, authors; images sitemap optional.
 - [ ] `WebSite.potentialAction` SearchAction if /search stays public.
 - [ ] hreflang none (US-only); `inLanguage` en-US already set.
+- [ ] Title/description fallback patterns per template (SEO-PLAN
+      Phase 2) tuned to the gates: titles ≤60 incl. any suffix (drop
+      " | Method Homes" when the title alone exceeds ~45), descriptions
+      120–160 generated from the lede, not the excerpt. QA baseline:
+      G4 passes on 1 of 80 pages today.
 
 ### E2 Structured data (per template)
 - ✔ Organization + HomeAndConstructionBusiness (structured NAP,
@@ -590,6 +607,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — First production QA baseline recorded (46/100, §0).
+  Fixes from it: llms-full GROQ alias, visible Updated line + machine-
+  readable byline on posts, checker accepts BlogPosting as the page
+  node. Open from it: title-length pattern (G4) and the default
+  og:image (A3).
 - 2026-10-03 — Sanity model: series, plan, market, commercialType,
   press, glossary document types + shared AEO field helpers; desk
   restructured; project gains state/architect/certifications. QA

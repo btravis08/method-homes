@@ -46,7 +46,7 @@ needs an account or secret.
 |---|---|---|---|---|
 | 1 | Structured data for the designed sections | **Code shipped** | `sectionFaq` type + `Faq` component (details/summary, H3 questions) → FAQPage JSON-LD pooled per page; BreadcrumbList on CMS pages, projects, journal posts/categories; ItemList on /projects; `JsonLd.tsx` helpers (`breadcrumbList`, `faqPage`, `itemList`, `updatedLabel`) | HowTo on the Process page (needs the step copy); Product/House per series (needs series facts, input 5); ProfilePage on author pages (needs the route) |
 | 2 | Search Console questions → FAQ source | **Code shipped, Ops pending** | `scripts/aeo-queries.mjs` (service-account JWT, 90-day query+page report, question regex) → `src/design/aeo.queries.json`; aeo.yml step; AEO pane panel "Questions people already ask" with per-page FAQ brief | Input 7 (secrets). Panel shows setup steps until then |
-| 3 | Visible dated freshness + dateModified | **Code shipped** | CMS pages and project pages render "Updated {Month YYYY}" (`<time>`) and emit WebPage.dateModified from `_updatedAt`; posts already carried dateModified | Journal post pages: a visible "Updated" line when `_updatedAt` month ≠ publish month (PostArticle) |
+| 3 | Visible dated freshness + dateModified | **Code shipped** | CMS pages, project pages and posts render "Updated {Month YYYY}" (`<time>`; posts only when the publish month differs) and emit dateModified from `_updatedAt` | — |
 | 4 | Named reviews with Review/AggregateRating | **Code shipped, Content pending** | `project.testimonial` {quote, clientName, clientDetail, date, rating} → quoted on the page + Review on the House (itemReviewed = Organization); site layout computes Organization.aggregateRating from all published ratings once ≥3 exist | Input 6 (real testimonials). Rule: never type a rating by hand; it is always computed |
 | 5 | Entity consistency (Organization.sameAs, NAP, founding) | **Code shipped, Content pending** | Site Settings gained city/region/postalCode/sameAs; Organization emits structured PostalAddress, foundingDate (2007), foundingLocation (Seattle), sameAs (settings win over config) | Inputs 2, 3, 4. Then GBP ↔ site ↔ profiles must read identically |
 | 6 | Comparison pages | **Design done, Content pending** | Figma: Prefab 101 "Three kinds of prefab" (37523:15844), Compare table (37507:3753), tracked competitor prompt in aeo.prompts | Write /prefab-101 comparison copy (modular vs panelized vs manufactured; prefab vs site-built cost/timeline; Method vs named competitors only with sourced facts). Each gets a FAQ section |
@@ -60,6 +60,22 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 ---
 
 ## 3. Decisions (newest first)
+
+### 2026-10-03 — First production QA baseline: 46/100
+- `qa.yml` run 1 over 80 of 209 sitemap URLs. Strong: headings
+  (78/80), alt text (78/80), indexability (79/80). Weak: metadata
+  1/80 (title suffix pushes titles past 60; excerpt-length
+  descriptions; no og:image), content depth 0/78 (words + question
+  headings — the §5 content work), schema 24/80 (posts counted as
+  missing a WebPage node — checker corrected: BlogPosting is the page
+  node), freshness 23/78 (posts had no visible Updated line — added),
+  bylines missing on 30/53 posts (author roster, input 1), and
+  `/llms-full.txt` at 716 bytes: a bare `variants[0].sections[]{}`
+  attribute is invalid GROQ and the whole query fell back to empty
+  (aliased; lesson added below).
+- Decision: title pattern needs a shorter suffix or none on long
+  titles — decide with the SEO fallback patterns (SEO-PLAN Phase 2);
+  logged in LAUNCH-PLAN E1.
 
 ### 2026-10-03 — Content model for the catalog and landers
 - Six document types added so content entry can start before the
@@ -186,3 +202,8 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   from the sandbox.
 - Never print confidential client documents into Actions logs — the
   repo is public.
+- GROQ: every computed attribute in a projection must be aliased
+  (`"name": expr`); a bare `variants[0].sections[]{…}` is a syntax
+  error and `sanityFetch` falls back silently, so the page looks
+  empty rather than broken. Localhost cannot catch this (Sanity is
+  egress-blocked) — the QA workflow against production can.

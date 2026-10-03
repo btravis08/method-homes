@@ -149,7 +149,9 @@ function checkPage(url, html, llmsFull) {
   /* G8 structured data */
   const nodes = jsonLd(root);
   const types = typesOf(nodes);
-  const hasWebPage = types.some((t) => /Page$|^Blog$|^WebPage$/.test(t));
+  /* an Article/BlogPosting with mainEntityOfPage is the page node on a
+     post — a second WebPage node would only duplicate it */
+  const hasWebPage = types.some((t) => /Page$|^Blog$|^WebPage$|Article$|^BlogPosting$/.test(t));
   const hasCrumbs = types.includes("BreadcrumbList");
   const showsFaq = root.querySelectorAll("details summary").some((s) => QUESTION_RE.test(clean(s.text)));
   const needs = [];
@@ -169,7 +171,10 @@ function checkPage(url, html, llmsFull) {
   /* G10 placeholders + byline */
   const placeholders = (clean(main.text).match(/\{[a-zA-Z_][\w .-]*\}/g) ?? []).slice(0, 5);
   const lorem = /lorem ipsum/i.test(main.text);
-  const byline = kind === "post" ? /\b(by|reviewed by)\s+[A-Z][a-z]+/i.test(clean(main.text)) || Boolean(root.querySelector('[rel="author"]')) : true;
+  const byline =
+    kind === "post"
+      ? Boolean(root.querySelector('[itemprop="author"], [rel="author"]')) || /\b(by|reviewed by)\s+[A-Z][a-z]+/i.test(clean(main.text))
+      : true;
   const g10 = [];
   if (placeholders.length) g10.push(`placeholders ${placeholders.join(" ")}`);
   if (lorem) g10.push("lorem ipsum");

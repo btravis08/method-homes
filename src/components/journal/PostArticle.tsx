@@ -65,6 +65,13 @@ export function PostArticle({
   const hero = img(post.heroImage, 2000);
   const date = formatDate(post.publishedAt);
   const category = post.categories?.[0];
+  /* visible freshness (gate G9): "Updated Month YYYY" when the last
+     publish falls in a later month than the original date — the
+     visible twin of BlogPosting.dateModified */
+  const updated =
+    post._updatedAt && post.publishedAt && post._updatedAt.slice(0, 7) > post.publishedAt.slice(0, 7)
+      ? new Date(post._updatedAt).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" })
+      : null;
 
   return (
     <article data-mode="dark" className="w-full bg-surface pb-32 text-ink">
@@ -79,10 +86,24 @@ export function PostArticle({
               >
                 {category.title.toUpperCase()}
               </Link>
-              {date && ` · ${date.toUpperCase()}`}
+              {date && (
+                <>
+                  {" · "}
+                  <time dateTime={post.publishedAt}>{date.toUpperCase()}</time>
+                </>
+              )}
             </>
           ) : (
-            [category?.title, date].filter(Boolean).join(" · ").toUpperCase()
+            <>
+              {category?.title ? `${category.title.toUpperCase()} · ` : null}
+              {date && <time dateTime={post.publishedAt}>{date.toUpperCase()}</time>}
+            </>
+          )}
+          {updated && (
+            <>
+              {" · "}
+              <time dateTime={post._updatedAt}>UPDATED {updated.toUpperCase()}</time>
+            </>
           )}
         </p>
         <h1 className="font-display text-headline-lg">{post.title}</h1>
@@ -157,7 +178,12 @@ export function PostArticle({
 
       {/* byline */}
       {post.author?.name && (
-        <footer className="mx-auto mt-16 flex max-w-2xl items-start gap-4 border-t border-line px-6 pt-8">
+        <footer
+          className="mx-auto mt-16 flex max-w-2xl items-start gap-4 border-t border-line px-6 pt-8"
+          itemProp="author"
+          itemScope
+          itemType="https://schema.org/Person"
+        >
           {img(post.author.avatar, 200) && (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -168,7 +194,10 @@ export function PostArticle({
             />
           )}
           <div className="flex flex-col gap-1">
-            <p className="label font-medium text-ink">{post.author.name.toUpperCase()}</p>
+            <p className="label font-medium text-ink">
+              <span className="sr-only">By </span>
+              <span itemProp="name">{post.author.name.toUpperCase()}</span>
+            </p>
             {(post.author.role || post.author.credentials) && (
               <p className="label text-ink-3">{[post.author.role, post.author.credentials].filter(Boolean).join(" · ")}</p>
             )}

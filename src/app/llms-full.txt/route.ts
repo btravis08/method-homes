@@ -27,7 +27,7 @@ const query = groq`{
         _type, eyebrow, headline, title, intro, description, items, body,
         cards[]{ title, body }, panels[]{ title, eyebrow, body },
         rows[]{ label, value }, stats[]{ value, label },
-        variants[0].sections[]{ _type, eyebrow, headline, title, intro, description, items, body, rows[]{ label, value } }
+        "variantSections": variants[0].sections[]{ _type, eyebrow, headline, title, intro, description, items, body, rows[]{ label, value } }
       },
       body
     },
@@ -58,7 +58,10 @@ type Section = {
   panels?: { title?: string; eyebrow?: string; body?: string }[];
   rows?: { label?: string; value?: string }[];
   stats?: { value?: number; label?: string }[];
-  variants?: { sections?: Section[] }[] | Section[];
+  /* an experiment's control-variant sections (aliased in GROQ — a bare
+     `variants[0].sections[]{}` attribute is a syntax error that made
+     the whole query fall back to empty on the first production run) */
+  variantSections?: Section[];
 };
 interface Data {
   settings: { companyName?: string; tagline?: string; phone?: string; email?: string; address?: string; city?: string; region?: string } | null;
@@ -119,7 +122,7 @@ function sectionText(s: Section): string[] {
   const body = portable(s.body);
   if (body) out.push(body);
   /* experiments: the control variant's sections are the page's canon */
-  if (Array.isArray(s.variants)) for (const v of s.variants as Section[]) out.push(...sectionText(v));
+  for (const v of s.variantSections ?? []) out.push(...sectionText(v));
   return out;
 }
 
