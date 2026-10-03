@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { ENTRIES, flipToArticle } from "@/components/journal/field-flip";
+import { ENTRIES, flipToArticle } from "@/components/blog/field-flip";
 
 /*
   Alt journal landing: an infinite drag-anywhere masonry field.

@@ -585,7 +585,7 @@
           "detail": "missing H1"
         },
         {
-          "path": "/journal",
+          "path": "/blog",
           "ratio": 0,
           "detail": "missing H1"
         }
@@ -603,7 +603,7 @@
       "detail": "29/60 pages pass",
       "pages": [
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
           "detail": "74 chars"
         },
@@ -613,7 +613,7 @@
           "detail": "110 chars"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0.5,
           "detail": "91 chars"
         },
@@ -623,7 +623,7 @@
           "detail": "95 chars"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0.5,
           "detail": "108 chars"
         },
@@ -633,7 +633,7 @@
           "detail": "81 chars"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0.5,
           "detail": "74 chars"
         },
@@ -643,7 +643,7 @@
           "detail": "105 chars"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0.5,
           "detail": "100 chars"
         },
@@ -653,7 +653,7 @@
           "detail": "133 chars"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.5,
           "detail": "72 chars"
         },
@@ -663,7 +663,7 @@
           "detail": "182 chars"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.5,
           "detail": "114 chars"
         },
@@ -673,7 +673,7 @@
           "detail": "168 chars"
         },
         {
-          "path": "/journal/annata-display-2017-dwell-on-design",
+          "path": "/blog/annata-display-2017-dwell-on-design",
           "ratio": 0.5,
           "detail": "116 chars"
         },
@@ -683,22 +683,22 @@
           "detail": "154 chars"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.5,
           "detail": "107 chars"
         },
         {
-          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "path": "/blog/architectural-record-modular-classroom-makeover",
           "ratio": 0.5,
           "detail": "80 chars"
         },
         {
-          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0.5,
           "detail": "89 chars"
         },
         {
-          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "path": "/blog/balance-s-m-l-series-prefab-studio",
           "ratio": 0.5,
           "detail": "94 chars"
         }
@@ -716,7 +716,7 @@
       "detail": "18/60 pages pass",
       "pages": [
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0.5,
           "detail": "229 chars"
         },
@@ -726,7 +726,7 @@
           "detail": "185 chars"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
           "detail": "240 chars"
         },
@@ -736,32 +736,32 @@
           "detail": "174 chars"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0.5,
           "detail": "240 chars"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0.5,
           "detail": "42 chars"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0.5,
           "detail": "170 chars"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0.5,
           "detail": "240 chars"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0.5,
           "detail": "198 chars"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.5,
           "detail": "240 chars"
         },
@@ -771,12 +771,12 @@
           "detail": "167 chars"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.5,
           "detail": "240 chars"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.5,
           "detail": "211 chars"
         },
@@ -786,7 +786,7 @@
           "detail": "192 chars"
         },
         {
-          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "path": "/blog/architectural-record-modular-classroom-makeover",
           "ratio": 0.5,
           "detail": "240 chars"
         },
@@ -796,17 +796,17 @@
           "detail": "192 chars"
         },
         {
-          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0.5,
           "detail": "240 chars"
         },
         {
-          "path": "/journal/backyard-cottages",
+          "path": "/blog/backyard-cottages",
           "ratio": 0.5,
           "detail": "240 chars"
         },
         {
-          "path": "/journal/bainbridge-island-option",
+          "path": "/blog/bainbridge-island-option",
           "ratio": 0.5,
           "detail": "165 chars"
         },
@@ -851,7 +851,7 @@
           "detail": "title, description"
         },
         {
-          "path": "/journal",
+          "path": "/blog",
           "ratio": 0.6666666666666666,
           "detail": "title, description"
         },
@@ -989,7 +989,7 @@
           "detail": "0 H1"
         },
         {
-          "path": "/journal",
+          "path": "/blog",
           "ratio": 0,
           "detail": "0 H1"
         }
@@ -1029,12 +1029,12 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal",
+          "path": "/blog",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1044,7 +1044,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1054,7 +1054,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1064,7 +1064,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1074,7 +1074,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1084,7 +1084,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1094,7 +1094,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1104,7 +1104,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.75,
           "detail": "main, header, footer"
         },
@@ -1114,7 +1114,7 @@
           "detail": "main, header, footer"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.75,
           "detail": "main, header, footer"
         }
@@ -1180,7 +1180,7 @@
       "detail": "51/60 pages pass",
       "pages": [
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "2132 ms"
         },
@@ -1195,7 +1195,7 @@
           "detail": "1115 ms"
         },
         {
-          "path": "/journal",
+          "path": "/blog",
           "ratio": 0.5,
           "detail": "963 ms"
         },
@@ -1205,22 +1205,22 @@
           "detail": "1192 ms"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
           "detail": "865 ms"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0.5,
           "detail": "1173 ms"
         },
         {
-          "path": "/journal/bellingham-herald",
+          "path": "/blog/bellingham-herald",
           "ratio": 0.5,
           "detail": "805 ms"
         },
         {
-          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+          "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0.5,
           "detail": "808 ms"
         }
@@ -1258,7 +1258,7 @@
           "detail": "no paragraph ≥ 25 words"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "no paragraph ≥ 25 words"
         },
@@ -1318,7 +1318,7 @@
           "detail": "no paragraph ≥ 25 words"
         },
         {
-          "path": "/journal/bainbridge-island-option",
+          "path": "/blog/bainbridge-island-option",
           "ratio": 0,
           "detail": "no paragraph ≥ 25 words"
         },
@@ -1356,7 +1356,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1366,7 +1366,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1376,7 +1376,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1386,7 +1386,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1396,7 +1396,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1406,7 +1406,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1416,7 +1416,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1426,7 +1426,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1436,7 +1436,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 question heading(s)"
         },
@@ -1446,7 +1446,7 @@
           "detail": "0 question heading(s)"
         },
         {
-          "path": "/journal/annata-display-2017-dwell-on-design",
+          "path": "/blog/annata-display-2017-dwell-on-design",
           "ratio": 0,
           "detail": "0 question heading(s)"
         }
@@ -1474,7 +1474,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "none"
         },
@@ -1484,7 +1484,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "none"
         },
@@ -1494,7 +1494,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "none"
         },
@@ -1504,7 +1504,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "none"
         },
@@ -1514,7 +1514,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "none"
         },
@@ -1524,7 +1524,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "none"
         },
@@ -1534,7 +1534,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "none"
         },
@@ -1544,7 +1544,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "none"
         },
@@ -1554,7 +1554,7 @@
           "detail": "none"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "none"
         },
@@ -1695,32 +1695,32 @@
           "detail": "62.2 words/sentence"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "39.4 words/sentence"
         },
         {
-          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0,
           "detail": "39.7 words/sentence"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.5,
           "detail": "27.7 words/sentence"
         },
         {
-          "path": "/journal/bellingham-herald",
+          "path": "/blog/bellingham-herald",
           "ratio": 0.5,
           "detail": "25.7 words/sentence"
         },
         {
-          "path": "/journal/blog-kickoff",
+          "path": "/blog/blog-kickoff",
           "ratio": 0.5,
           "detail": "31.9 words/sentence"
         },
         {
-          "path": "/journal/come-celebrate-design-in-san-francisco-june-10-11",
+          "path": "/blog/come-celebrate-design-in-san-francisco-june-10-11",
           "ratio": 0.5,
           "detail": "27 words/sentence"
         }
@@ -1748,7 +1748,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1758,7 +1758,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1768,7 +1768,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1778,7 +1778,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1788,7 +1788,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1798,7 +1798,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1808,7 +1808,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1818,7 +1818,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1828,7 +1828,7 @@
           "detail": "0 list(s)/table(s)"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 list(s)/table(s)"
         },
@@ -1856,7 +1856,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1866,7 +1866,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1876,17 +1876,17 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1896,12 +1896,12 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1911,7 +1911,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "path": "/blog/architectural-record-modular-classroom-makeover",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1931,7 +1931,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/bainbridge-island-option",
+          "path": "/blog/bainbridge-island-option",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1941,7 +1941,7 @@
           "detail": "1/3 spots"
         },
         {
-          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "path": "/blog/balance-s-m-l-series-prefab-studio",
           "ratio": 0.6,
           "detail": "1/3 spots"
         },
@@ -1974,7 +1974,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1984,7 +1984,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -1994,7 +1994,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2004,7 +2004,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2014,7 +2014,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2024,7 +2024,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2034,7 +2034,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2044,7 +2044,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2054,7 +2054,7 @@
           "detail": "0 internal, 0 generic anchor(s)"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 internal, 0 generic anchor(s)"
         },
@@ -2238,102 +2238,102 @@
       "detail": "0/33 pages pass",
       "pages": [
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/annata-display-2017-dwell-on-design",
+          "path": "/blog/annata-display-2017-dwell-on-design",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "path": "/blog/architectural-record-modular-classroom-makeover",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/backyard-cottages",
+          "path": "/blog/backyard-cottages",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/bainbridge-island-option",
+          "path": "/blog/bainbridge-island-option",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "path": "/blog/balance-s-m-l-series-prefab-studio",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/bccustom-off-grid-cabin",
+          "path": "/blog/bccustom-off-grid-cabin",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/bellingham-herald",
+          "path": "/blog/bellingham-herald",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/berkshires-custom-install-video",
+          "path": "/blog/berkshires-custom-install-video",
           "ratio": 0,
           "detail": "none"
         },
         {
-          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+          "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0,
           "detail": "none"
         }
@@ -2351,102 +2351,102 @@
       "detail": "0/33 pages pass",
       "pages": [
         {
-          "path": "/journal/2013-green-washington-awards",
+          "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/783",
+          "path": "/blog/783",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/793",
+          "path": "/blog/793",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+          "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+          "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+          "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/annata-display-2017-dwell-on-design",
+          "path": "/blog/annata-display-2017-dwell-on-design",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+          "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/architectural-record-modular-classroom-makeover",
+          "path": "/blog/architectural-record-modular-classroom-makeover",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+          "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/backyard-cottages",
+          "path": "/blog/backyard-cottages",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/bainbridge-island-option",
+          "path": "/blog/bainbridge-island-option",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/balance-s-m-l-series-prefab-studio",
+          "path": "/blog/balance-s-m-l-series-prefab-studio",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/bccustom-off-grid-cabin",
+          "path": "/blog/bccustom-off-grid-cabin",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/bellingham-herald",
+          "path": "/blog/bellingham-herald",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/berkshires-custom-install-video",
+          "path": "/blog/berkshires-custom-install-video",
           "ratio": 0,
           "detail": "0 external link(s)"
         },
         {
-          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+          "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0,
           "detail": "0 external link(s)"
         }
@@ -2537,17 +2537,17 @@
       "detail": "0/58 pages pass",
       "pages": [
         "/legacy — 0 question heading(s)",
-        "/journal/2013-green-washington-awards — 0 question heading(s)",
+        "/blog/2013-green-washington-awards — 0 question heading(s)",
         "/about — 0 question heading(s)",
-        "/journal/2014-palm-springs-modernism-week-in-review — 0 question heading(s)",
+        "/blog/2014-palm-springs-modernism-week-in-review — 0 question heading(s)",
         "/commercial — 0 question heading(s)",
-        "/journal/783 — 0 question heading(s)",
+        "/blog/783 — 0 question heading(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 question heading(s)",
-        "/journal/793 — 0 question heading(s)",
+        "/blog/793 — 0 question heading(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 question heading(s)",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 question heading(s)",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 question heading(s)",
         "/commercial-project-types-multi-family-housing-units — 0 question heading(s)",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 question heading(s)"
+        "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 question heading(s)"
       ],
       "pagesAffected": 58
     },
@@ -2563,15 +2563,15 @@
       "pages": [
         "/ — none",
         "/legacy — none",
-        "/journal/2013-green-washington-awards — none",
+        "/blog/2013-green-washington-awards — none",
         "/about — none",
-        "/journal/2014-palm-springs-modernism-week-in-review — none",
+        "/blog/2014-palm-springs-modernism-week-in-review — none",
         "/commercial — none",
-        "/journal/783 — none",
+        "/blog/783 — none",
         "/commercial-project-types-affordable-workforce-housing — none",
-        "/journal/793 — none",
+        "/blog/793 — none",
         "/commercial-project-types-classrooms-and-school-additions — none",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
         "/commercial-project-types-multi-family-housing-units — none"
       ],
       "pagesAffected": 59
@@ -2588,15 +2588,15 @@
       "pages": [
         "/ — 0 internal, 0 generic anchor(s)",
         "/legacy — 0 internal, 0 generic anchor(s)",
-        "/journal/2013-green-washington-awards — 0 internal, 0 generic anchor(s)",
+        "/blog/2013-green-washington-awards — 0 internal, 0 generic anchor(s)",
         "/about — 0 internal, 0 generic anchor(s)",
-        "/journal/2014-palm-springs-modernism-week-in-review — 0 internal, 0 generic anchor(s)",
+        "/blog/2014-palm-springs-modernism-week-in-review — 0 internal, 0 generic anchor(s)",
         "/commercial — 0 internal, 0 generic anchor(s)",
-        "/journal/783 — 0 internal, 0 generic anchor(s)",
+        "/blog/783 — 0 internal, 0 generic anchor(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 internal, 0 generic anchor(s)",
-        "/journal/793 — 0 internal, 0 generic anchor(s)",
+        "/blog/793 — 0 internal, 0 generic anchor(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 internal, 0 generic anchor(s)",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 internal, 0 generic anchor(s)",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 internal, 0 generic anchor(s)",
         "/commercial-project-types-multi-family-housing-units — 0 internal, 0 generic anchor(s)"
       ],
       "pagesAffected": 59
@@ -2613,15 +2613,15 @@
       "pages": [
         "/ — 0 list(s)/table(s)",
         "/legacy — 0 list(s)/table(s)",
-        "/journal/2013-green-washington-awards — 0 list(s)/table(s)",
+        "/blog/2013-green-washington-awards — 0 list(s)/table(s)",
         "/about — 0 list(s)/table(s)",
-        "/journal/2014-palm-springs-modernism-week-in-review — 0 list(s)/table(s)",
+        "/blog/2014-palm-springs-modernism-week-in-review — 0 list(s)/table(s)",
         "/commercial — 0 list(s)/table(s)",
-        "/journal/783 — 0 list(s)/table(s)",
+        "/blog/783 — 0 list(s)/table(s)",
         "/commercial-project-types-affordable-workforce-housing — 0 list(s)/table(s)",
-        "/journal/793 — 0 list(s)/table(s)",
+        "/blog/793 — 0 list(s)/table(s)",
         "/commercial-project-types-classrooms-and-school-additions — 0 list(s)/table(s)",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 list(s)/table(s)",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 list(s)/table(s)",
         "/commercial-project-types-multi-family-housing-units — 0 list(s)/table(s)"
       ],
       "pagesAffected": 59
@@ -2652,7 +2652,7 @@
         "/about — no paragraph ≥ 25 words",
         "/commercial — no paragraph ≥ 25 words",
         "/commercial-project-types-affordable-workforce-housing — no paragraph ≥ 25 words",
-        "/journal/793 — no paragraph ≥ 25 words",
+        "/blog/793 — no paragraph ≥ 25 words",
         "/commercial-project-types-classrooms-and-school-additions — no paragraph ≥ 25 words",
         "/commercial-project-types-multi-family-housing-units — no paragraph ≥ 25 words",
         "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — no paragraph ≥ 25 words",
@@ -2673,18 +2673,18 @@
       "priority": 1.76,
       "detail": "0/33 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — none",
-        "/journal/2014-palm-springs-modernism-week-in-review — none",
-        "/journal/783 — none",
-        "/journal/793 — none",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — none",
-        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — none",
-        "/journal/alaska-custom-cabin-girdwood-prefab-set — none",
-        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — none",
-        "/journal/annata-display-2017-dwell-on-design — none",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — none",
-        "/journal/architectural-record-modular-classroom-makeover — none"
+        "/blog/2013-green-washington-awards — none",
+        "/blog/2014-palm-springs-modernism-week-in-review — none",
+        "/blog/783 — none",
+        "/blog/793 — none",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — none",
+        "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — none",
+        "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — none",
+        "/blog/alaska-custom-cabin-girdwood-prefab-set — none",
+        "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — none",
+        "/blog/annata-display-2017-dwell-on-design — none",
+        "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — none",
+        "/blog/architectural-record-modular-classroom-makeover — none"
       ],
       "pagesAffected": 33
     },
@@ -2723,18 +2723,18 @@
       "priority": 1.17,
       "detail": "0/33 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 0 external link(s)",
-        "/journal/2014-palm-springs-modernism-week-in-review — 0 external link(s)",
-        "/journal/783 — 0 external link(s)",
-        "/journal/793 — 0 external link(s)",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 external link(s)",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 external link(s)",
-        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 0 external link(s)",
-        "/journal/alaska-custom-cabin-girdwood-prefab-set — 0 external link(s)",
-        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 0 external link(s)",
-        "/journal/annata-display-2017-dwell-on-design — 0 external link(s)",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 0 external link(s)",
-        "/journal/architectural-record-modular-classroom-makeover — 0 external link(s)"
+        "/blog/2013-green-washington-awards — 0 external link(s)",
+        "/blog/2014-palm-springs-modernism-week-in-review — 0 external link(s)",
+        "/blog/783 — 0 external link(s)",
+        "/blog/793 — 0 external link(s)",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 0 external link(s)",
+        "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 external link(s)",
+        "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 0 external link(s)",
+        "/blog/alaska-custom-cabin-girdwood-prefab-set — 0 external link(s)",
+        "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 0 external link(s)",
+        "/blog/annata-display-2017-dwell-on-design — 0 external link(s)",
+        "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 0 external link(s)",
+        "/blog/architectural-record-modular-classroom-makeover — 0 external link(s)"
       ],
       "pagesAffected": 33
     },
@@ -2786,16 +2786,16 @@
       "detail": "20/59 pages pass",
       "pages": [
         "/legacy — 1/3 spots",
-        "/journal/2013-green-washington-awards — 1/3 spots",
+        "/blog/2013-green-washington-awards — 1/3 spots",
         "/about — 1/3 spots",
-        "/journal/2014-palm-springs-modernism-week-in-review — 1/3 spots",
+        "/blog/2014-palm-springs-modernism-week-in-review — 1/3 spots",
         "/commercial — 1/3 spots",
-        "/journal/783 — 1/3 spots",
-        "/journal/793 — 1/3 spots",
-        "/journal/alaska-custom-cabin-girdwood-prefab-set — 1/3 spots",
+        "/blog/783 — 1/3 spots",
+        "/blog/793 — 1/3 spots",
+        "/blog/alaska-custom-cabin-girdwood-prefab-set — 1/3 spots",
         "/custom-regions-island-and-waterfront-homes — 1/3 spots",
-        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 1/3 spots",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 1/3 spots",
+        "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 1/3 spots",
+        "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 1/3 spots",
         "/custom-residential — 1/3 spots"
       ],
       "pagesAffected": 39
@@ -2810,18 +2810,18 @@
       "priority": 0.73,
       "detail": "18/60 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 229 chars",
+        "/blog/2013-green-washington-awards — 229 chars",
         "/about — 185 chars",
-        "/journal/2014-palm-springs-modernism-week-in-review — 240 chars",
+        "/blog/2014-palm-springs-modernism-week-in-review — 240 chars",
         "/commercial — 174 chars",
-        "/journal/783 — 240 chars",
-        "/journal/793 — 42 chars",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 170 chars",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 240 chars",
-        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 198 chars",
-        "/journal/alaska-custom-cabin-girdwood-prefab-set — 240 chars",
+        "/blog/783 — 240 chars",
+        "/blog/793 — 42 chars",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 170 chars",
+        "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — 240 chars",
+        "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 198 chars",
+        "/blog/alaska-custom-cabin-girdwood-prefab-set — 240 chars",
         "/custom-regions-island-and-waterfront-homes — 167 chars",
-        "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 240 chars"
+        "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025 — 240 chars"
       ],
       "pagesAffected": 42
     },
@@ -2859,17 +2859,17 @@
       "priority": 0.36,
       "detail": "29/60 pages pass",
       "pages": [
-        "/journal/2014-palm-springs-modernism-week-in-review — 74 chars",
+        "/blog/2014-palm-springs-modernism-week-in-review — 74 chars",
         "/commercial-project-types-affordable-workforce-housing — 110 chars",
-        "/journal/793 — 91 chars",
+        "/blog/793 — 91 chars",
         "/commercial-project-types-classrooms-and-school-additions — 95 chars",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 108 chars",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 108 chars",
         "/commercial-project-types-multi-family-housing-units — 81 chars",
-        "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin — 74 chars",
+        "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — 74 chars",
         "/commercial-project-types-remote-ski-lodge-and-hospitality-projects — 105 chars",
-        "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 100 chars",
+        "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular — 100 chars",
         "/custom-regions-city-and-urban — 133 chars",
-        "/journal/alaska-custom-cabin-girdwood-prefab-set — 72 chars",
+        "/blog/alaska-custom-cabin-girdwood-prefab-set — 72 chars",
         "/custom-regions-island-and-waterfront-homes — 182 chars"
       ],
       "pagesAffected": 31
@@ -2885,12 +2885,12 @@
       "detail": "27/34 pages pass",
       "pages": [
         "/ — 62.2 words/sentence",
-        "/journal/2014-palm-springs-modernism-week-in-review — 39.4 words/sentence",
-        "/journal/backyard-cottage-design-challenge-and-the-winners-are — 39.7 words/sentence",
-        "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 27.7 words/sentence",
-        "/journal/bellingham-herald — 25.7 words/sentence",
-        "/journal/blog-kickoff — 31.9 words/sentence",
-        "/journal/come-celebrate-design-in-san-francisco-june-10-11 — 27 words/sentence"
+        "/blog/2014-palm-springs-modernism-week-in-review — 39.4 words/sentence",
+        "/blog/backyard-cottage-design-challenge-and-the-winners-are — 39.7 words/sentence",
+        "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires — 27.7 words/sentence",
+        "/blog/bellingham-herald — 25.7 words/sentence",
+        "/blog/blog-kickoff — 31.9 words/sentence",
+        "/blog/come-celebrate-design-in-san-francisco-june-10-11 — 27 words/sentence"
       ],
       "pagesAffected": 7
     },
@@ -2906,7 +2906,7 @@
       "pages": [
         "/legacy — none",
         "/ — title, description",
-        "/journal — title, description",
+        "/blog — title, description",
         "/about — title, description",
         "/commercial — title, description",
         "/commercial-project-types-affordable-workforce-housing — title, description",
@@ -2931,16 +2931,16 @@
       "pages": [
         "/ — main, header, footer",
         "/legacy — main, header, footer",
-        "/journal — main, header, footer",
-        "/journal/2013-green-washington-awards — main, header, footer",
+        "/blog — main, header, footer",
+        "/blog/2013-green-washington-awards — main, header, footer",
         "/about — main, header, footer",
-        "/journal/2014-palm-springs-modernism-week-in-review — main, header, footer",
+        "/blog/2014-palm-springs-modernism-week-in-review — main, header, footer",
         "/commercial — main, header, footer",
-        "/journal/783 — main, header, footer",
+        "/blog/783 — main, header, footer",
         "/commercial-project-types-affordable-workforce-housing — main, header, footer",
-        "/journal/793 — main, header, footer",
+        "/blog/793 — main, header, footer",
         "/commercial-project-types-classrooms-and-school-additions — main, header, footer",
-        "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — main, header, footer"
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — main, header, footer"
       ],
       "pagesAffected": 60
     },
@@ -2955,7 +2955,7 @@
       "detail": "25/27 pages pass",
       "pages": [
         "/legacy — missing H1",
-        "/journal — missing H1"
+        "/blog — missing H1"
       ],
       "pagesAffected": 2
     },
@@ -2970,7 +2970,7 @@
       "detail": "58/60 pages pass",
       "pages": [
         "/legacy — 0 H1",
-        "/journal — 0 H1"
+        "/blog — 0 H1"
       ],
       "pagesAffected": 2
     },
@@ -2984,15 +2984,15 @@
       "priority": 0.02,
       "detail": "51/60 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 2132 ms",
+        "/blog/2013-green-washington-awards — 2132 ms",
         "/ — 1027 ms",
         "/legacy — 1115 ms",
-        "/journal — 963 ms",
+        "/blog — 963 ms",
         "/about — 1192 ms",
-        "/journal/2014-palm-springs-modernism-week-in-review — 865 ms",
-        "/journal/793 — 1173 ms",
-        "/journal/bellingham-herald — 805 ms",
-        "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour — 808 ms"
+        "/blog/2014-palm-springs-modernism-week-in-review — 865 ms",
+        "/blog/793 — 1173 ms",
+        "/blog/bellingham-herald — 805 ms",
+        "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour — 808 ms"
       ],
       "pagesAffected": 9
     },
@@ -3405,7 +3405,7 @@
       "title": "Method One | Method Homes"
     },
     {
-      "path": "/journal/793",
+      "path": "/blog/793",
       "type": "post",
       "score": 49,
       "words": 76,
@@ -3658,7 +3658,7 @@
       "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes"
     },
     {
-      "path": "/journal/bainbridge-island-option",
+      "path": "/blog/bainbridge-island-option",
       "type": "post",
       "score": 54,
       "words": 99,
@@ -3684,7 +3684,7 @@
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/coastal-large-time-lapse-video",
+      "path": "/blog/coastal-large-time-lapse-video",
       "type": "post",
       "score": 54,
       "words": 87,
@@ -3760,7 +3760,7 @@
       "title": "Method Homes — Architect-designed prefab homes"
     },
     {
-      "path": "/journal/2014-palm-springs-modernism-week-in-review",
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
       "type": "post",
       "score": 61,
       "words": 552,
@@ -3787,7 +3787,7 @@
       "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/backyard-cottage-design-challenge-and-the-winners-are",
+      "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 61,
       "words": 278,
@@ -3813,7 +3813,7 @@
       "title": "Backyard Cottage Design Challenge- and the winners are... — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/come-celebrate-design-in-san-francisco-june-10-11",
+      "path": "/blog/come-celebrate-design-in-san-francisco-june-10-11",
       "type": "post",
       "score": 61,
       "words": 243,
@@ -3840,7 +3840,7 @@
       "title": "Come Celebrate Design in San Francisco June 10-11 — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/2013-green-washington-awards",
+      "path": "/blog/2013-green-washington-awards",
       "type": "post",
       "score": 62,
       "words": 177,
@@ -3866,7 +3866,7 @@
       "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+      "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
       "type": "post",
       "score": 62,
       "words": 137,
@@ -3892,7 +3892,7 @@
       "title": "Anchor Homes: Prefab Modular Homes From Around the World: Our Top 3 Picks for 2025 — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+      "path": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
       "type": "post",
       "score": 62,
       "words": 277,
@@ -3919,7 +3919,7 @@
       "title": "Architectural Digest: See How 16 Families are Rebuilding After the LA Fires — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/architectural-record-modular-classroom-makeover",
+      "path": "/blog/architectural-record-modular-classroom-makeover",
       "type": "post",
       "score": 62,
       "words": 150,
@@ -3945,7 +3945,7 @@
       "title": "Architectural Record: Modular Classroom Makeover — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
       "type": "post",
       "score": 62,
       "words": 180,
@@ -3972,7 +3972,7 @@
       "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/cabinets-being-installed-in-method-factory",
+      "path": "/blog/cabinets-being-installed-in-method-factory",
       "type": "post",
       "score": 62,
       "words": 137,
@@ -3998,7 +3998,7 @@
       "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/come-see-method-dwell-design-may-29-31",
+      "path": "/blog/come-see-method-dwell-design-may-29-31",
       "type": "post",
       "score": 62,
       "words": 156,
@@ -4024,7 +4024,7 @@
       "title": "Come see Method at Dwell on Design May 29-31 — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
       "type": "post",
       "score": 63,
       "words": 102,
@@ -4049,7 +4049,7 @@
       "title": "A Modular Mansion Replaces Fire-Destroyed Estate in California’s Napa Valley — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+      "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
       "type": "post",
       "score": 63,
       "words": 108,
@@ -4074,7 +4074,7 @@
       "title": "Absolutely Prefab-ulous: Why Luxury Buyers Are Moving Toward Modular — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/alaska-custom-cabin-girdwood-prefab-set",
+      "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
       "type": "post",
       "score": 63,
       "words": 218,
@@ -4100,7 +4100,7 @@
       "title": "Alaska Custom Cabin: Girdwood Prefab Set — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/balance-s-m-l-series-prefab-studio",
+      "path": "/blog/balance-s-m-l-series-prefab-studio",
       "type": "post",
       "score": 63,
       "words": 219,
@@ -4126,7 +4126,7 @@
       "title": "Introducing the Balance S-M-L Series of Prefab Homes + Studios — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/berkshires-custom-install-video",
+      "path": "/blog/berkshires-custom-install-video",
       "type": "post",
       "score": 63,
       "words": 88,
@@ -4151,7 +4151,7 @@
       "title": "Berkshires Custom Install Video — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/783",
+      "path": "/blog/783",
       "type": "post",
       "score": 64,
       "words": 155,
@@ -4176,7 +4176,7 @@
       "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/a-new-blog-method-homes-completes-spencer-lake-cabin",
+      "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
       "type": "post",
       "score": 64,
       "words": 153,
@@ -4201,7 +4201,7 @@
       "title": "Method Homes completes Spencer Lake cabin… — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/bccustom-off-grid-cabin",
+      "path": "/blog/bccustom-off-grid-cabin",
       "type": "post",
       "score": 64,
       "words": 171,
@@ -4226,7 +4226,7 @@
       "title": "B.C. Custom Off-Grid Cabin — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/bellingham-herald",
+      "path": "/blog/bellingham-herald",
       "type": "post",
       "score": 64,
       "words": 231,
@@ -4252,7 +4252,7 @@
       "title": "Bellingham Herald — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/best-of-install-photos",
+      "path": "/blog/best-of-install-photos",
       "type": "post",
       "score": 64,
       "words": 114,
@@ -4277,7 +4277,7 @@
       "title": "Best of: Method Modular Prefab Installs — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/blown-in-cellulose",
+      "path": "/blog/blown-in-cellulose",
       "type": "post",
       "score": 64,
       "words": 188,
@@ -4302,7 +4302,7 @@
       "title": "Blown in Cellulose — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/blue-ridge-cabin-foundation",
+      "path": "/blog/blue-ridge-cabin-foundation",
       "type": "post",
       "score": 64,
       "words": 153,
@@ -4327,7 +4327,7 @@
       "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/carmel-valley-residence-in-dwell-magazine",
+      "path": "/blog/carmel-valley-residence-in-dwell-magazine",
       "type": "post",
       "score": 64,
       "words": 133,
@@ -4352,7 +4352,7 @@
       "title": "Carmel Valley Residence in Dwell Magazine — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/carmel-valley-residence-on-america-bydesign",
+      "path": "/blog/carmel-valley-residence-on-america-bydesign",
       "type": "post",
       "score": 64,
       "words": 118,
@@ -4377,7 +4377,7 @@
       "title": "Carmel Valley Residence on America ByDesign — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/chimney-rock-residence-featured-in-2025-residential-design-awards",
+      "path": "/blog/chimney-rock-residence-featured-in-2025-residential-design-awards",
       "type": "post",
       "score": 64,
       "words": 124,
@@ -4402,7 +4402,7 @@
       "title": "Chimney Rock Residence featured in 2025 Residential Design Awards — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/annata-display-2017-dwell-on-design",
+      "path": "/blog/annata-display-2017-dwell-on-design",
       "type": "post",
       "score": 66,
       "words": 166,
@@ -4426,7 +4426,7 @@
       "title": "Annata Model on Display at 2017 Dwell on Design Conference in Los Angeles June 23-25 — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/blog-kickoff",
+      "path": "/blog/blog-kickoff",
       "type": "post",
       "score": 66,
       "words": 319,
@@ -4451,7 +4451,7 @@
       "title": "Blog Kickoff — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/come-see-modern-monogram-house-built-method-tour-now",
+      "path": "/blog/come-see-modern-monogram-house-built-method-tour-now",
       "type": "post",
       "score": 66,
       "words": 297,
@@ -4476,7 +4476,7 @@
       "title": "Come see the Modern Monogram House built by Method on tour now — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+      "path": "/blog/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
       "type": "post",
       "score": 67,
       "words": 202,
@@ -4500,7 +4500,7 @@
       "title": "Come see Method at Dwell on Design in LA! Complimentary One day passes available! — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal/backyard-cottages",
+      "path": "/blog/backyard-cottages",
       "type": "post",
       "score": 69,
       "words": 371,
@@ -4524,7 +4524,7 @@
       "title": "Backyard Cottages Design Showcase — Honors Journal | Method Homes"
     },
     {
-      "path": "/journal",
+      "path": "/blog",
       "type": "index",
       "score": 82,
       "words": 68,

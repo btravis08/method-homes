@@ -37,7 +37,7 @@ export async function GET() {
   const items = posts
     .filter((post) => post.slug && post.title)
     .map((post) => {
-      const url = `${base}/journal/${post.slug}`;
+      const url = `${base}/blog/${post.slug}`;
       const labels = [...(post.categories ?? []), ...(post.tags ?? [])];
       return [
         "    <item>",
@@ -67,8 +67,8 @@ export async function GET() {
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>${escapeXml(`${designops.site.name} — Honors Journal`)}</title>
-    <link>${escapeXml(`${base}/journal`)}</link>
-    <atom:link href="${escapeXml(`${base}/journal/rss.xml`)}" rel="self" type="application/rss+xml"/>
+    <link>${escapeXml(`${base}/blog`)}</link>
+    <atom:link href="${escapeXml(`${base}/blog/rss.xml`)}" rel="self" type="application/rss+xml"/>
     <description>People, ideas, &amp; culture — stories from the course and beyond the red.</description>
     <language>en-US</language>
 ${items}

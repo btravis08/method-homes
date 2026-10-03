@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
-import { JournalLanding } from "@/components/journal/JournalLanding";
+import { JournalLanding } from "@/components/blog/JournalLanding";
 import { JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
@@ -13,13 +13,13 @@ export const metadata: Metadata = {
   title: "Journal",
   description: "Articles on prefab construction, design and process from Method Homes.",
   alternates: {
-    canonical: `${designops.site.baseUrl}/journal`,
-    types: { "application/rss+xml": "/journal/rss.xml" },
+    canonical: `${designops.site.baseUrl}/blog`,
+    types: { "application/rss+xml": "/blog/rss.xml" },
   },
   openGraph: {
     title: "Journal",
     description: "Articles on prefab construction, design and process from Method Homes.",
-    url: `${designops.site.baseUrl}/journal`,
+    url: `${designops.site.baseUrl}/blog`,
   },
 };
 
@@ -51,13 +51,13 @@ export default async function JournalPage() {
     (extraStreams[post.category] ??= []).push({
       src,
       ratio: "3 / 4",
-      href: `/journal/${post.slug}`,
+      href: `/blog/${post.slug}`,
     });
   }
 
   return (
     <>
-      <JsonLd data={webPage({ type: "Blog", name: "Journal", description: "Articles on prefab construction, design and process from Method Homes.", path: "/journal" })} />
+      <JsonLd data={webPage({ type: "Blog", name: "Journal", description: "Articles on prefab construction, design and process from Method Homes.", path: "/blog" })} />
       <JournalLanding extraStreams={extraStreams} />
     </>
   );

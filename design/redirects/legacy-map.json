@@ -1,0 +1,1819 @@
+{
+  "generatedAt": "2026-10-03T23:04:01.649Z",
+  "source": "design/method-content/pages.json",
+  "counts": {
+    "keep": 191,
+    "redirect": 138,
+    "gone": 2,
+    "redirectLive": 118,
+    "redirectPending": 20,
+    "unmapped": 0
+  },
+  "entries": [
+    {
+      "from": "/",
+      "action": "keep"
+    },
+    {
+      "from": "/about",
+      "action": "keep"
+    },
+    {
+      "from": "/arc",
+      "action": "redirect",
+      "to": "/method-arc",
+      "live": false
+    },
+    {
+      "from": "/blog",
+      "action": "keep"
+    },
+    {
+      "from": "/blog/2013-green-washington-awards",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/2014-palm-springs-modernism-week-in-review",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/783",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/793",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/alaska-custom-cabin-girdwood-prefab-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/annata-display-2017-dwell-on-design",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/architectural-record-modular-classroom-makeover",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/backyard-cottages",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/bainbridge-island-option",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/balance-s-m-l-series-prefab-studio",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/bccustom-off-grid-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/bellingham-herald",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/berkshires-custom-install-video",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/best-of-install-photos",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/blog-kickoff",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/blown-in-cellulose",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/blue-ridge-cabin-foundation",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/cabinets-being-installed-in-method-factory",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/carmel-valley-residence-in-dwell-magazine",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/carmel-valley-residence-on-america-bydesign",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/chimney-rock-residence-featured-in-2025-residential-design-awards",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/coastal-large-time-lapse-video",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/come-celebrate-design-in-san-francisco-june-10-11",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/come-see-method-dwell-design-may-29-31",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/come-see-modern-monogram-house-built-method-tour-now",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/curbed-seattle",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/curbed-taproots-modular-addition-unveiled-this-friday",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/curbed-watch-west-seattle-townhomes-fall-into-place",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/custom-annata-iii-available-for-rent-in-the-heart-of-wine-country",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/deep-water-survey",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/design-challenge-for-sustainable-backyard-cottages",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/design-milk",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/design-milk-what-to-do-and-see-during-modernism-week",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/dwell-in-la-2018",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/dwell-method-homes-makes-bespoke-prefabs-that-dont-have-a-factory-feel",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/dwell-monogram-invite-monogram-modern-home",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/dwell-on-design",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/dwell-on-design-2013-in-review",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/east-coast-availibilty",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/first-layer-of-insulation-on-lake-whatcom-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/girdwood-construction-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/girdwood-custom-cabin-install",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/gizmag",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/h-o-m-e",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/habitat-for-humanity-celebrates-completion-of-hybrid-modular-net-zero-home-prototype",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/habitat-for-humanity-hoif-ribbon-cutting",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/homb-public-open-house",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/house-of-the-immediate-future-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/houzz-features-method-homes",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/how-this-prefab-retreat-weathers-the-winter-with-bifold-glass-doors",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/ilfi-ramp-up-event-getting-ready-for-the-seed-classroom",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/in-the-shop-jackson-hole-custom",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/inhabitat",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/interview-with-method-designer-and-methods-fireplace-vendor-partner-european-home",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/jackson-hole-custom-modular-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/just-in-time-for-the-holidays-seattles-taproot-theatre-unwraps-a-brand-new-modular-building",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/la-house-aka-eagle-rock",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lake-whatcom-cabin-nearing-completion",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lake-whatcom-cabin-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lake-whatcom-project-moving-right-along",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lake-whatcom-slab-prep-and-radiant-tubing",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/leed-whiterock-homes-prefab-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lid-park-almost-complete",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lid-park-finally-at-home-in-seattle",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lid-park-floor-framing-complete",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lid-park-floor-sheathing-complete",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/lid-park-starts-finishes-on-monday",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/los-angeles-times-method-homes-prefab-in-venice-take-a-look-inside-and-out",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/m2-foundation",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/m2-glacier-cabin-post-set-pics",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/m2-well-under-way",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/martis-camp-set-in-truckee-california",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-completes-20-homes-make-right-foundation-ft-peck-reservation",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-delivers-prefab-home-alaska",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-featured-in-san-francisco-chronicle",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-friday-harbor-cabin-ii-shop-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-2013-recap",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-announces-strategic-partnership-haiku-home",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-announces-the-simpatico-series-by-swatt-miers",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-big-creek-ranch-cabins-timelapse",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-builds-wet-cores-for-house-of-the-immediate-future",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-featured-in-puget-sound-business-journal",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-launches-new-model",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-ny-to-la-prefab-tour",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-pittsburgh-m2",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-showcases-a-green-prefab-home-at-modernism-week-2014",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-homes-summer-2013-recap",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-in-professional-builder-magazine",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-in-sonoma-county",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-launch",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-offers-zero-net-energy",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-prefab-on-orcas-island-cottage-style",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-prefab-sets-taproot-theatre-annex",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-prepares-to-set-custom-venice-beach-prefab",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-to-build-first-homb",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/method-unveils-custom-bainbridge-island-prefab",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/methods-new-facility-energy-efficient-modular-facility",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/modular-townhomes-to-go-up-in-west-seattle-over-2-days",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/monogram-modern-home-boston",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/new-glacier-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/new-home-drops-in-in-ketchum",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/new-m2-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/new-urban-series-in-the-works",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/northstar-yoga-studio-wins-a-sunset-magazine-mountain-magic-architecture-award",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/now-underway-west-seattle-townhomes",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/off-the-grid-b-c-site-work",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/on-the-set-greenwoods-taproot-theatre",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/open-house-happy-hour-april-30",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/open-houses-sunday-september-20th",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/orcas-island-custom-prefab",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-home",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-method-home-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-set-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/paradigm-prototype-now-available",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/past-current-and-upcoming-projects",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/peninsula-shift-prefab",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/peninsula-shift-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/plain-magazine-studio-schicketanz-designs-an-eco-friendly-residential-compound-in-california",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/portland-homb-arrives-at-site",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/prefab-homebuyer-seminar",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/prefab-homebuyers-seminar-june-9-10",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/prefabricated-home-shipments-on-the-rise-in-a-pricey-property-market",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/prefabulous-sustainable",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/presale-2017-monogram-modern-home-dwell",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/professional-builder-magazine-design-awards",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/project-spotlight-mountain-living-with-a-modern-twist",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/project-updates-seed-peninsula-shift-and-girdwood-alaska",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/puget-sound-business-journal-method-homes-opens-east-coast-factory",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/rebuilding-greenville",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/rent-a-new-method-cabin-in-oregon",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/s-m-l-prefab-series-by-balance-associates",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/san-juan-island-method-cabin-prefab-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-business-magazine-recognizes-method-homes-as-leader-in-sustainability-at-the-2013-green-washington-awards",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-business-the-washington-green",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-daily-journal-of-commerce",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-daily-journal-of-commerce-modular-townhomes-come-to-west-seattle",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-djc",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seattle-met",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/seed-collaborative-and-method-featured-in-seattle-daily-journal-of-commerce",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/sheetrock-hung-in-method-factory",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/siding-on-lake-whatcom-cabin",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/skylab-architecture-and-urban-series-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/solar-decathalon-on-the-mall-in-dc",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/sonoma-ca-home-complete",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/sonoma-county-element-3-pre-and-post-install",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/sonoma-element-3-install-video",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/south-bay-digs",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/spencer-lake",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/spencer-lake-method-cabin-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/spencer-lake-prefab-home-video",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/studio-29-discusses-the-new-method-cottage-series",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/taproot-ready-to-ship",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/taproot-theatre-almost-complete",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/taproot-theatre-grand-opening-celebration",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/taproot-theatre-in-progress",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/telluride-shelter-home-delivery-custom-engineering-and-sustainable-designs-put-the-fab-in-method-homes-prefabs",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/the-oregonian",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/the-press-democrat-prefabulous---6-stunning-sonoma-county-prefab-homes",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/tough-comute-home-today",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/urban-land",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/usa-today-brad-pitt-foundation-homes-arrive-on-reservation",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/vashon-island-cabin-install",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/venice-beach-prefab-home-set-method-homes",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/wall-street-journal-prefab-but-make-it-luxury",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/washington-coastal-cabin-large-prefab-set",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/we-are-permitted",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/were-back-to-blogging-with-some-exciting-new-things-on-the-horizon",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/west-coast-shop-update",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/west-seattle-herald",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/west-seattle-townhomes-modular-install",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/west-seattle-townhomes-set-day-1",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/white-rock-bc-shop-progress",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/whiterock-bc-modern-prefab",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/blog/window-of-nice-weather-today",
+      "action": "keep",
+      "note": "post slug unchanged; pruning decisions (keep/301/410) land here per post"
+    },
+    {
+      "from": "/calistoga",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/chimney-rock-estate",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/commercial",
+      "action": "keep"
+    },
+    {
+      "from": "/commercial-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "note": "portfolio index",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/chartwell-school-addition-with-grouparchitect",
+      "action": "redirect",
+      "to": "/projects/chartwell-school-addition-with-grouparchitect",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/fish-bay-cottages-lopez-island",
+      "action": "redirect",
+      "to": "/projects/fish-bay-cottages-lopez-island",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/make-it-right-fort-peck-sustainable-village",
+      "action": "redirect",
+      "to": "/projects/make-it-right-fort-peck-sustainable-village",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/northstar-yoga-studio",
+      "action": "redirect",
+      "to": "/projects/northstar-yoga-studio",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/rico-workforce-development-designed-by-lda-architects",
+      "action": "redirect",
+      "to": "/projects/rico-workforce-development-designed-by-lda-architects",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/seed-classroom-designed-by-stacy-smedley",
+      "action": "redirect",
+      "to": "/projects/seed-classroom-designed-by-stacy-smedley",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/skylodge",
+      "action": "redirect",
+      "to": "/projects/skylodge",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/tahoe-park-concession-commercial",
+      "action": "redirect",
+      "to": "/projects/tahoe-park-concession-commercial",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/taproot-theatre-commercial",
+      "action": "redirect",
+      "to": "/projects/taproot-theatre-commercial",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/the-valley-school-with-workshop-ad",
+      "action": "redirect",
+      "to": "/projects/the-valley-school-with-workshop-ad",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/village-north-affordable-workforce-housing-with-housing-lopez",
+      "action": "redirect",
+      "to": "/projects/village-north-affordable-workforce-housing-with-housing-lopez",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/village-walk-northstar-tahoe-commercial",
+      "action": "redirect",
+      "to": "/projects/village-walk-northstar-tahoe-commercial",
+      "live": true
+    },
+    {
+      "from": "/commercial-portfolio/west-seattle-townhomes-commercial",
+      "action": "redirect",
+      "to": "/projects/west-seattle-townhomes-commercial",
+      "live": true
+    },
+    {
+      "from": "/commercial-project-types/affordable-workforce-housing",
+      "action": "redirect",
+      "to": "/commercial/workforce-housing",
+      "live": false
+    },
+    {
+      "from": "/commercial-project-types/classrooms-and-school-additions",
+      "action": "redirect",
+      "to": "/commercial/schools",
+      "live": false
+    },
+    {
+      "from": "/commercial-project-types/multi-family-housing-units",
+      "action": "redirect",
+      "to": "/commercial/multifamily",
+      "live": false
+    },
+    {
+      "from": "/commercial-project-types/remote-ski-lodge-and-hospitality-projects",
+      "action": "redirect",
+      "to": "/commercial/hospitality",
+      "live": false
+    },
+    {
+      "from": "/commercial-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true
+    },
+    {
+      "from": "/commercial-survey-copy",
+      "action": "gone",
+      "note": "junk duplicate survey"
+    },
+    {
+      "from": "/custom-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "note": "portfolio index",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/bainbridge-island-custom",
+      "action": "redirect",
+      "to": "/projects/bainbridge-island-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/beehive-guesthouse-designed-by-method-arc",
+      "action": "redirect",
+      "to": "/projects/beehive-guesthouse-designed-by-method-arc",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/belmont-custom",
+      "action": "redirect",
+      "to": "/projects/belmont-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/brittania-beach-custom",
+      "action": "redirect",
+      "to": "/projects/brittania-beach-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/burlingame-custom-designed-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/burlingame-custom-designed-by-clever-homes",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/calistoga-custom",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/canopy-house",
+      "action": "redirect",
+      "to": "/projects/canopy-house",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/carmel-valley-residence-by-studio-schicketanz",
+      "action": "redirect",
+      "to": "/projects/carmel-valley-residence-by-studio-schicketanz",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/chimney-rock-designed-by-nick-noyes-architects",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/creekbend-residence",
+      "action": "redirect",
+      "to": "/projects/creekbend-residence",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/fish-creek-passage-by-method-arc",
+      "action": "redirect",
+      "to": "/projects/fish-creek-passage-by-method-arc",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/friday-harbor-custom-by-fish-mackay-architects",
+      "action": "redirect",
+      "to": "/projects/friday-harbor-custom-by-fish-mackay-architects",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/greenville-fire-rebuilds-custom",
+      "action": "redirect",
+      "to": "/projects/greenville-fire-rebuilds-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/guemes-tidelands-custom",
+      "action": "redirect",
+      "to": "/projects/guemes-tidelands-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/homb-portland",
+      "action": "redirect",
+      "to": "/projects/homb-portland",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/house-of-the-immediate-future-seattle-custom",
+      "action": "redirect",
+      "to": "/projects/house-of-the-immediate-future-seattle-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/idaho-mountain-home",
+      "action": "redirect",
+      "to": "/projects/idaho-mountain-home",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/jackson-hole-custom",
+      "action": "redirect",
+      "to": "/projects/jackson-hole-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/jackson-hole-custom-d1348",
+      "action": "redirect",
+      "to": "/projects/jackson-hole-custom-d1348",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/jefferson-knoll-custom",
+      "action": "redirect",
+      "to": "/projects/jefferson-knoll-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/jh-mountainview",
+      "action": "redirect",
+      "to": "/projects/jh-mountainview",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/ketchikan-custom",
+      "action": "redirect",
+      "to": "/projects/ketchikan-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/lid-park-custom",
+      "action": "redirect",
+      "to": "/projects/lid-park-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/martis-416-custom-home-designed-by-sagemodern-architects",
+      "action": "redirect",
+      "to": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/martis-476-custom",
+      "action": "redirect",
+      "to": "/projects/martis-476-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/martis-663-by-sagemodern",
+      "action": "redirect",
+      "to": "/projects/martis-663-by-sagemodern",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/martis-camp-custom",
+      "action": "redirect",
+      "to": "/projects/martis-camp-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/menlo-park-custom-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/menlo-park-custom-by-clever-homes",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/mercer-island-3-custom",
+      "action": "redirect",
+      "to": "/projects/mercer-island-3-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/moose-crossing-custom",
+      "action": "redirect",
+      "to": "/projects/moose-crossing-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/mountain-village-peak-custom",
+      "action": "redirect",
+      "to": "/projects/mountain-village-peak-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/oakland-custom",
+      "action": "redirect",
+      "to": "/projects/oakland-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/olympic-valley-custom-home",
+      "action": "redirect",
+      "to": "/projects/olympic-valley-custom-home",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/orcas-retreat-washington",
+      "action": "redirect",
+      "to": "/projects/orcas-retreat-washington",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/pacific-palisades-custom",
+      "action": "redirect",
+      "to": "/projects/pacific-palisades-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/palisades-tahoe-custom",
+      "action": "redirect",
+      "to": "/projects/palisades-tahoe-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/peninsula-custom-by-studio-s2",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/portola-custom",
+      "action": "redirect",
+      "to": "/projects/portola-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/portola-valley-custom",
+      "action": "redirect",
+      "to": "/projects/portola-valley-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/san-juan-custom",
+      "action": "redirect",
+      "to": "/projects/san-juan-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/san-juan-island-custom",
+      "action": "redirect",
+      "to": "/projects/san-juan-island-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/santa-rosa-custom-by-tobylongdesign",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+      "action": "redirect",
+      "to": "/projects/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/sun-valley-custom",
+      "action": "redirect",
+      "to": "/projects/sun-valley-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/sv-residence-custom",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/tahoe-custom",
+      "action": "redirect",
+      "to": "/projects/tahoe-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/truckee-custom",
+      "action": "redirect",
+      "to": "/projects/truckee-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/truckee-custom-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/truckee-custom-by-clever-homes",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/venice-beach-custom",
+      "action": "redirect",
+      "to": "/projects/venice-beach-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/vineyard-court",
+      "action": "redirect",
+      "to": "/projects/vineyard-court",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolio/west-end-wetlands-custom",
+      "action": "redirect",
+      "to": "/projects/west-end-wetlands-custom",
+      "live": true
+    },
+    {
+      "from": "/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "live": true
+    },
+    {
+      "from": "/custom-regions/city-and-urban",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "note": "lifestyle lander (city-and-urban) — no state equivalent; parent page",
+      "live": false
+    },
+    {
+      "from": "/custom-regions/island-and-waterfront-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "note": "lifestyle lander (island-and-waterfront-homes) — no state equivalent; parent page",
+      "live": false
+    },
+    {
+      "from": "/custom-regions/mountain-modern-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "note": "lifestyle lander (mountain-modern-homes) — no state equivalent; parent page",
+      "live": false
+    },
+    {
+      "from": "/custom-regions/valley-and-vineyard-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "note": "lifestyle lander (valley-and-vineyard-homes) — no state equivalent; parent page",
+      "live": false
+    },
+    {
+      "from": "/custom-residential",
+      "action": "redirect",
+      "to": "/custom-homes",
+      "live": true
+    },
+    {
+      "from": "/faq",
+      "action": "keep"
+    },
+    {
+      "from": "/featured-projects",
+      "action": "redirect",
+      "to": "/projects",
+      "live": true
+    },
+    {
+      "from": "/fish-creek",
+      "action": "redirect",
+      "to": "/projects/fish-creek-passage-by-method-arc",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/get-started",
+      "action": "keep"
+    },
+    {
+      "from": "/martis-camp-416",
+      "action": "redirect",
+      "to": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/martis-camp-663",
+      "action": "redirect",
+      "to": "/projects/martis-663-by-sagemodern",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/method-process",
+      "action": "redirect",
+      "to": "/process",
+      "live": false
+    },
+    {
+      "from": "/orcas-cabin-retreat",
+      "action": "redirect",
+      "to": "/projects/orcas-retreat-washington",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/partnerships-with-architects-and-developers",
+      "action": "redirect",
+      "to": "/architects",
+      "live": true
+    },
+    {
+      "from": "/peninsula",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "note": "portfolio index",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/bainbridge-island-option",
+      "action": "redirect",
+      "to": "/projects/bainbridge-island-option",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/big-creek-ranch-cabin",
+      "action": "redirect",
+      "to": "/projects/big-creek-ranch-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/big-creek-ranch-cabin-ii",
+      "action": "redirect",
+      "to": "/projects/big-creek-ranch-cabin-ii",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/bryant-option",
+      "action": "redirect",
+      "to": "/projects/bryant-option",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/camano-shift",
+      "action": "redirect",
+      "to": "/projects/camano-shift",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/coastal-cabin",
+      "action": "redirect",
+      "to": "/projects/coastal-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/custom-elemental-5",
+      "action": "redirect",
+      "to": "/projects/custom-elemental-5",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/deming-m2",
+      "action": "redirect",
+      "to": "/projects/deming-m2",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/glacier-cabin",
+      "action": "redirect",
+      "to": "/projects/glacier-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/hood-canal-m-series",
+      "action": "redirect",
+      "to": "/projects/hood-canal-m-series",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/lake-whatcom-cabin",
+      "action": "redirect",
+      "to": "/projects/lake-whatcom-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/lid-park-custom",
+      "action": "redirect",
+      "to": "/projects/lid-park-custom",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/lopez-island-cabin-2",
+      "action": "redirect",
+      "to": "/projects/lopez-island-cabin-2",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/marrowstone-island-elemental",
+      "action": "redirect",
+      "to": "/projects/marrowstone-island-elemental",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/modern-monogram-elemental",
+      "action": "redirect",
+      "to": "/projects/modern-monogram-elemental",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/obstruction-island-cabin",
+      "action": "redirect",
+      "to": "/projects/obstruction-island-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/orcas-island-cabin",
+      "action": "redirect",
+      "to": "/projects/orcas-island-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/paradigm-i",
+      "action": "redirect",
+      "to": "/projects/paradigm-i",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/peninsula-shift",
+      "action": "redirect",
+      "to": "/projects/peninsula-shift",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/phinney-option",
+      "action": "redirect",
+      "to": "/projects/phinney-option",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/san-juan-cabin",
+      "action": "redirect",
+      "to": "/projects/san-juan-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/santa-barbara-cabin",
+      "action": "redirect",
+      "to": "/projects/santa-barbara-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/santa-rosa-annata",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-annata",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/seattle-element-3",
+      "action": "redirect",
+      "to": "/projects/seattle-element-3",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/seattle-option",
+      "action": "redirect",
+      "to": "/projects/seattle-option",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/sonoma-elemental",
+      "action": "redirect",
+      "to": "/projects/sonoma-elemental",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/spencer-lake-cabin",
+      "action": "redirect",
+      "to": "/projects/spencer-lake-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/tahoe-cabin",
+      "action": "redirect",
+      "to": "/projects/tahoe-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/vashon-island-cabin",
+      "action": "redirect",
+      "to": "/projects/vashon-island-cabin",
+      "live": true
+    },
+    {
+      "from": "/predesigned-portfolio/white-rock-ii-custom",
+      "action": "redirect",
+      "to": "/projects/white-rock-ii-custom",
+      "live": true
+    },
+    {
+      "from": "/predesigned-residential",
+      "action": "redirect",
+      "to": "/predesigned",
+      "live": true
+    },
+    {
+      "from": "/predesigned-series/annata",
+      "action": "redirect",
+      "to": "/series/annata",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/cabin",
+      "action": "redirect",
+      "to": "/series/cabin",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/elemental",
+      "action": "redirect",
+      "to": "/series/elemental",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/m",
+      "action": "redirect",
+      "to": "/series/m",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/method-one",
+      "action": "redirect",
+      "to": "/series/method-one",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/option",
+      "action": "redirect",
+      "to": "/series/option",
+      "live": false
+    },
+    {
+      "from": "/predesigned-series/paradigm",
+      "action": "redirect",
+      "to": "/series/paradigm",
+      "live": false
+    },
+    {
+      "from": "/press",
+      "action": "redirect",
+      "to": "/blog",
+      "note": "old /press was a blog index; flip to keep when the press page ships",
+      "live": true
+    },
+    {
+      "from": "/pricing",
+      "action": "keep"
+    },
+    {
+      "from": "/privacy-policy",
+      "action": "redirect",
+      "to": "/privacy",
+      "live": false
+    },
+    {
+      "from": "/process-services",
+      "action": "redirect",
+      "to": "/process",
+      "live": false
+    },
+    {
+      "from": "/project/calistoga",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "note": "old detail page duplicating a portfolio entry (not imported as its own doc)",
+      "live": true
+    },
+    {
+      "from": "/project/peninsula",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "note": "old detail page duplicating a portfolio entry (not imported as its own doc)",
+      "live": true
+    },
+    {
+      "from": "/res-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true
+    },
+    {
+      "from": "/residential-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true
+    },
+    {
+      "from": "/residential-survey-copy",
+      "action": "gone",
+      "note": "junk duplicate survey"
+    },
+    {
+      "from": "/santa-rosa",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/search",
+      "action": "keep",
+      "note": "noindex"
+    },
+    {
+      "from": "/sustainability",
+      "action": "keep"
+    },
+    {
+      "from": "/sv-residence",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/sv-residence-arc",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "note": "flat vanity URL (likely to carry links)",
+      "live": true
+    },
+    {
+      "from": "/what-is-prefab",
+      "action": "redirect",
+      "to": "/prefab-101",
+      "live": false
+    }
+  ]
+}

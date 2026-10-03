@@ -16,7 +16,7 @@ const LIMITS = { title: 60, description: 160 };
 const PATH_PREFIX: Record<string, string> = {
   product: "/products/",
   collection: "/collections/",
-  post: "/journal/",
+  post: "/blog/",
   page: "/",
 };
 

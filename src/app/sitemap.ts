@@ -55,15 +55,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   return [
     entry("/", 1, "daily"),
     entry("/legacy", 0.8, "monthly"),
-    entry("/journal", 0.7, "weekly"),
+    entry("/blog", 0.7, "weekly"),
     /* the built-in design articles (JOURNAL_CATEGORIES) are the CMS-less
        fallback, not Method content — they stay out of the sitemap */
     ...pages.map((slug) => entry(`/${slug}`, 0.6, "weekly")),
     ...collections.map((slug) => entry(`/collections/${slug}`, 0.8, "daily")),
     ...products.map((slug) => entry(`/products/${slug}`, 0.7, "weekly")),
-    ...posts.map((slug) => entry(`/journal/${slug}`, 0.6, "weekly")),
+    ...posts.map((slug) => entry(`/blog/${slug}`, 0.6, "weekly")),
     ...postCategories.map((slug) =>
-      entry(`/journal/category/${slug}`, 0.5, "weekly"),
+      entry(`/blog/category/${slug}`, 0.5, "weekly"),
     ),
   ];
 }

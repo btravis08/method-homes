@@ -2,13 +2,13 @@ import { preload } from "react-dom";
 
 import { Carousel, FiftyFifty, ProductSlider } from "@/components/home/sections";
 import type { ProductCardData } from "@/components/home/ProductCard";
-import { ArticleTop } from "@/components/journal/ArticleTop";
+import { ArticleTop } from "@/components/blog/ArticleTop";
 import {
   ARTICLE_BODY,
   ARTICLE_LEAD,
   type JournalArticle,
   type JournalCategory,
-} from "@/components/journal/articles";
+} from "@/components/blog/articles";
 
 /*
   Honors Journal article: fullscreen dark hero with the breadcrumb +

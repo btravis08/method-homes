@@ -109,7 +109,12 @@
     "src/sanity/schemaTypes/seo.ts",
     "src/sanity/types.ts",
     "scripts/build-token-index.mjs",
-    "src/sanity/schemaTypes/shared.ts"
+    "src/sanity/schemaTypes/shared.ts",
+    "scripts/build-redirect-map.mjs",
+    "scripts/check-redirects.mjs",
+    ".github/workflows/redirects.yml",
+    "src/design/redirects.status.json",
+    "next.config.ts"
   ],
   "commerce": [
     "src/app/(site)/products/**",
@@ -166,7 +171,8 @@
       ".github/workflows/fetch-sdr-catalog.yml",
       ".github/workflows/capture-reference.yml",
       ".github/workflows/lighthouse.yml",
-      ".github/workflows/probe.yml"
+      ".github/workflows/probe.yml",
+      "design/redirects/**"
     ]
   },
   "site-example": {

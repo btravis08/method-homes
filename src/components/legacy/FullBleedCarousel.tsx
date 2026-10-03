@@ -38,31 +38,31 @@ export interface Slide {
 const SLIDES: Slide[] = [
   {
     title: "Precision",
-    bg: "/figma/journal/stream-10.jpg",
+    bg: "/figma/blog/stream-10.jpg",
     media: "/figma/legacy/float-putt.jpg",
     body: "Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   },
   {
     title: "Performance",
-    bg: "/figma/journal/stream-06.jpg",
-    media: "/figma/journal/stream-11.jpg",
+    bg: "/figma/blog/stream-06.jpg",
+    media: "/figma/blog/stream-11.jpg",
     body: "Enim diam in cursus duis arcu aliquet. Turpis id enim mi iaculis erat. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   },
   {
     title: "Quality",
     bg: "/figma/legacy/hero.jpg",
-    media: "/figma/journal/stream-03.jpg",
+    media: "/figma/blog/stream-03.jpg",
     body: "Sit nunc ut et lorem tellus vitae nibh dictum ornare. Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet.",
   },
   {
     title: "Comfort",
     bg: "/figma/legacy/float-crowd.jpg",
-    media: "/figma/journal/stream-01.jpg",
+    media: "/figma/blog/stream-01.jpg",
     body: "Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   },
   {
     title: "Craft",
-    bg: "/figma/journal/stream-05.jpg",
+    bg: "/figma/blog/stream-05.jpg",
     media: "/figma/legacy/float-shoes.jpg",
     body: "Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare. Turpis id enim mi iaculis erat.",
   },

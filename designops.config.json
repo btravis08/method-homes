@@ -4,7 +4,7 @@
     "baseUrl": "https://method-homes.vercel.app",
     "perfPages": [
       "/",
-      "/journal",
+      "/blog",
       "/projects"
     ]
   },

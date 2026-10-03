@@ -149,9 +149,9 @@ const words = (s) => clean(s).split(/\s+/).filter(Boolean);
 
 function pageType(p) {
   if (p === "/") return "home";
-  if (/^\/journal\/category\//.test(p)) return "category";
-  if (/^\/journal\/[^/]+$/.test(p)) return "post";
-  if (p === "/journal" || p === "/projects") return "index";
+  if (/^\/blog\/category\//.test(p)) return "category";
+  if (/^\/blog\/[^/]+$/.test(p)) return "post";
+  if (p === "/blog" || p === "/projects") return "index";
   if (/^\/projects\/[^/]+$/.test(p)) return "project";
   if (/^\/products\//.test(p)) return "product";
   if (/^\/collections\//.test(p)) return "collection";

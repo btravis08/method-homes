@@ -81,7 +81,7 @@ export function PostArticle({
           {category?.title && category.slug ? (
             <>
               <Link
-                href={`/journal/category/${category.slug}`}
+                href={`/blog/category/${category.slug}`}
                 className="transition-colors hover:text-ink"
               >
                 {category.title.toUpperCase()}
@@ -231,7 +231,7 @@ export function PostArticle({
               return (
                 <Link
                   key={item.slug}
-                  href={`/journal/${item.slug}`}
+                  href={`/blog/${item.slug}`}
                   className="group flex flex-col gap-4"
                 >
                   {src && (

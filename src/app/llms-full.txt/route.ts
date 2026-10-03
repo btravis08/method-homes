@@ -192,13 +192,13 @@ export async function GET() {
   }
 
   if (data.posts.length) {
-    out.push("", "# Journal", "", `Index: ${BASE}/journal`);
+    out.push("", "# Journal", "", `Index: ${BASE}/blog`);
     for (const p of data.posts) {
       const by = [p.author && `By ${p.author}`, p.reviewedBy && `Reviewed by ${p.reviewedBy}`].filter(Boolean).join(" · ");
       out.push(
         "",
         `## ${p.title}`,
-        `URL: ${BASE}/journal/${p.slug}${p.publishedAt ? ` · Published ${month(p.publishedAt)}` : ""}${p._updatedAt && p.publishedAt && p._updatedAt.slice(0, 7) !== p.publishedAt.slice(0, 7) ? ` · Updated ${month(p._updatedAt)}` : ""}${by ? ` · ${by}` : ""}${p.categories?.length ? ` · ${p.categories.join(", ")}` : ""}`,
+        `URL: ${BASE}/blog/${p.slug}${p.publishedAt ? ` · Published ${month(p.publishedAt)}` : ""}${p._updatedAt && p.publishedAt && p._updatedAt.slice(0, 7) !== p.publishedAt.slice(0, 7) ? ` · Updated ${month(p._updatedAt)}` : ""}${by ? ` · ${by}` : ""}${p.categories?.length ? ` · ${p.categories.join(", ")}` : ""}`,
       );
       if (p.excerpt) out.push("", clean(p.excerpt));
       const body = portable(p.body, 1500);

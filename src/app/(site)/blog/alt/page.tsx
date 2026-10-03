@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
-import { JournalGrid } from "@/components/journal/JournalGrid";
+import { JournalGrid } from "@/components/blog/JournalGrid";
 
 export const metadata: Metadata = {
   title: "Honors Journal — Field",
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: "#0b0b0b" };
 
 /* design experiment: the journal as an infinite draggable masonry
-   field (static /journal/alt wins over the [slug] article route) */
+   field (static /blog/alt wins over the [slug] article route) */
 export default function JournalAltPage() {
   return <JournalGrid />;
 }

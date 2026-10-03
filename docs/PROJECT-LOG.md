@@ -61,6 +61,43 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — URL scheme ACCEPTED (Bryce) — the C4 decision
+- `/series/<slug>` + `/series/<slug>/<plan>` · `/projects/<slug>` (one
+  URL per project; category is a filter, never a path) ·
+  `/where-we-build` + `/where-we-build/<state>` · `/commercial/<type>`
+  (`schools`, `multifamily`, `hospitality`, `workforce-housing`) ·
+  `/blog`, `/blog/<slug>`, `/blog/category/<c>`, `/blog/authors/<a>`
+  (the template's `/journal` route renamed; `/journal*` 301s) ·
+  renamed pages: `/custom-homes`, `/predesigned`, `/process`,
+  `/architects`, `/method-arc`, `/prefab-101`, `/privacy`, `/press`.
+  Trailing-slash 301s and real 404s preserved.
+- Redirect map: `design/redirects/legacy-map.json` generated from the
+  331 crawled URLs by `scripts/build-redirect-map.mjs` (192 keep ·
+  137 redirect · 2 gone). `next.config.ts` emits only `live` entries;
+  the ~20 pending ones (series, markets, commercial types, /process,
+  /method-arc, /prefab-101, /privacy) flip live when their routes
+  ship. `scripts/check-redirects.mjs` + `redirects.yml` verify one
+  hop against any origin (fails red on live breakage).
+- Vanity → canonical project mapping (by title, "Custom" wins over a
+  same-named predesigned entry): peninsula → peninsula-custom-by-
+  studio-s2; calistoga → calistoga-custom; chimney-rock-estate →
+  chimney-rock-designed-by-nick-noyes-architects; martis-camp-416 →
+  martis-416-custom-home-designed-by-sagemodern-architects;
+  martis-camp-663 → martis-663-by-sagemodern; santa-rosa →
+  santa-rosa-custom-by-tobylongdesign; orcas-cabin-retreat →
+  orcas-retreat-washington; sv-residence(+ -arc) →
+  sv-residence-custom; fish-creek → fish-creek-passage-by-method-arc.
+  `/custom-regions/*` → `/where-we-build` (lifestyle landers have no
+  state twin). Old `/press` → `/blog` until the press page exists.
+- Dataset: page slugs renamed (custom-residential → custom-homes,
+  predesigned-residential → predesigned,
+  partnerships-with-architects-and-developers → architects). The
+  interim flat pages `predesigned-series-*`, `custom-regions-*`,
+  `commercial-project-types-*` stay until series / market /
+  commercialType documents replace them, then get redirects.
+- Blog pruning (keep / 301 / 410 per post) is still open — the map
+  lists all 182 posts as keep with that note.
+
 ### 2026-10-03 — MCP access re-verified (Figma blocker was stale)
 - Figma MCP is authorized as brycetravis@gmail.com (Full seat, admin
   on the Pro teams) and reads/writes the Method library file; the IA

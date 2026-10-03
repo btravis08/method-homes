@@ -3,8 +3,8 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
-import { ENTRIES, bezier, flipToArticle } from "@/components/journal/field-flip";
-import { PhotoHeader } from "@/components/journal/PhotoHeader";
+import { ENTRIES, bezier, flipToArticle } from "@/components/blog/field-flip";
+import { PhotoHeader } from "@/components/blog/PhotoHeader";
 
 /*
   Alt journal landing v2 — a faithful photoyoshi.com recreation,

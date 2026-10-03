@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 
-import { PhotoHeader } from "@/components/journal/PhotoHeader";
+import { PhotoHeader } from "@/components/blog/PhotoHeader";
 
 export const metadata: Metadata = {
   title: "About — Honors Journal",
@@ -26,7 +26,7 @@ export default function JournalAboutPage() {
         <div className="h-[62svh] w-full md:h-full md:w-[43%]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/figma/journal/hero-03.jpg"
+            src="/figma/blog/hero-03.jpg"
             alt="Sun Day Red on course"
             fetchPriority="high"
             className="size-full object-cover"
@@ -34,7 +34,7 @@ export default function JournalAboutPage() {
         </div>
         <div className="flex flex-1 flex-col px-6 pb-10 md:px-[6.75rem] md:pb-0">
           <a
-            href="/journal"
+            href="/blog"
             className="mt-10 self-start text-[0.8125rem] font-medium underline decoration-1 underline-offset-4 md:mt-[9.375rem]"
           >
             Honors Journal

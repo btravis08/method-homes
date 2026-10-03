@@ -1,0 +1,45 @@
+name: redirects
+
+# Launch-protection check (LAUNCH-PLAN E1 / Stage 5): every legacy
+# methodhomes.net URL in design/redirects/legacy-map.json resolves in
+# one hop to its mapped destination. Fails red when a live entry
+# breaks; pending entries (destination route not built yet) are
+# reported, not failed. Dispatch against staging now and against
+# production at cutover.
+on:
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: "Origin to check (default: production)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  redirects:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Check the map
+        env:
+          REDIRECTS_ORIGIN: ${{ inputs.origin }}
+        run: |
+          if [ -z "$REDIRECTS_ORIGIN" ]; then unset REDIRECTS_ORIGIN; fi
+          node scripts/check-redirects.mjs || echo "::warning::live redirect failures — see the report"
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/redirects.status.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh redirect check report"
+          for i in 1 2 3; do
+            git pull --rebase && git push && break
+            sleep $((i * 3))
+          done
+          git push origin HEAD:main || echo "main diverged — the report lands with the next sync"

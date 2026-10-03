@@ -7,7 +7,7 @@ import { preload } from "react-dom";
 import { ArrowLink, ArrowSwap } from "@/components/home/ArrowHover";
 import { ArrowUpRight } from "@/components/icons";
 import { SmartLink } from "@/components/SmartLink";
-import { JOURNAL_CATEGORIES } from "@/components/journal/articles";
+import { JOURNAL_CATEGORIES } from "@/components/blog/articles";
 import { EASE_DRAMATIC, EASE_OUT } from "@/lib/motion";
 
 /*
@@ -43,7 +43,7 @@ const SECTIONS = JOURNAL_CATEGORIES.map((category) => ({
     article.stream.map((image) => ({
       ...image,
       src: image.src.replace(/\.jpg$/, ".thumb.jpg"),
-      href: `/journal/${article.slug}`,
+      href: `/blog/${article.slug}`,
     })),
   ),
 }));
@@ -418,7 +418,7 @@ export function JournalLanding({
       <header className="flex flex-col items-center justify-end gap-12 px-6 pb-8 pt-[8.75rem]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/figma/journal/hj-monogram.svg"
+          src="/figma/blog/hj-monogram.svg"
           alt="Honors Journal"
           width={171}
           height={104}

@@ -9,7 +9,7 @@ import { defineArrayMember, defineField, defineType } from "sanity";
   the platform (document drafts, history, Presentation, scheduled
   drafts / releases).
 
-  CMS posts render at /journal/<slug> and surface on the journal
+  CMS posts render at /blog/<slug> and surface on the journal
   landing inside their category's image stream — a category's slug
   must match one of the landing's stream categories (ambassadors,
   stories-from-the-course, on-craft-and-culture, in-the-press,

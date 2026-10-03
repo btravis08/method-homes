@@ -30,7 +30,7 @@ const columns: { heading: string; links: FooterLink[] }[] = [
     heading: "Company",
     links: [
       { label: "The Legacy" },
-      { label: "Honors Journal", href: "/journal" },
+      { label: "Honors Journal", href: "/blog" },
       { label: "TEAM SUN DAY RED" },
       { label: "Careers" },
     ],

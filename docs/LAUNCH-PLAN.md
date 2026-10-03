@@ -318,19 +318,22 @@ formSubmission, A/B + AEO traffic types)
 - [ ] Roles: Method editors as Sanity Editors, Bryce/Claude as
       Administrators; a `reviewer` role is unnecessary — use drafts +
       Presentation.
-- [ ] Redirect documents: import the full 301 map (SEO-PLAN Phase 1)
-      as `redirect` docs or `next.config.ts` redirects; CI check that
-      every legacy URL resolves in one hop (fetch-page/probe runner).
+- [x] Redirects live in `next.config.ts` from the generated map (not
+      as `redirect` docs — the map is code-owned and CI-checked;
+      `redirect` docs remain for editor-made one-offs). CI:
+      `redirects.yml` (2026-10-03).
 - [ ] Media: all migrated imagery re-uploaded through the CDN with
       alt seeded from `design/method-content/pages.json`; delete the
       >300 KB originals from `public/method/` once referenced from
       Sanity.
 
 ### C4 Decisions to take (Bryce) — each blocks a route
-- [ ] URL scheme: `/series/<slug>` + `/series/<slug>/<plan>` vs
-      `/plans/<slug>`; `/where-we-build/<state>` vs `/markets/<state>`;
-      `/commercial/<type>`; `/blog` vs `/journal` (code says
-      `/journal`; IA says Blog). Pick once; redirects follow.
+- [x] URL scheme DECIDED 2026-10-03: `/series/<slug>` +
+      `/series/<slug>/<plan>`; `/projects/<slug>`; `/where-we-build` +
+      `/where-we-build/<state>`; `/commercial/<type>`; `/blog` family
+      (journal route renamed); renamed pages /custom-homes
+      /predesigned /process /architects /method-arc /prefab-101
+      /privacy /press. Details + vanity mapping in PROJECT-LOG.
 - [ ] Journal pruning: which of the 182 posts keep (≈30), redirect,
       or 410 (SEO-PLAN Phase 1).
 - [ ] Author roster and organization byline name.
@@ -371,10 +374,10 @@ Schema = the entity node beyond WebPage + BreadcrumbList.
 | 2 | `/sustainability` | 37512:8092 | page | — (claims with sources) | yes | Measured, not marketed | [ ] |
 | 2 | `/architects` (partnerships) | 37511:7432 | page | Service | yes | — | [ ] |
 | 2 | `/method-arc` | 37512:7852 | page | Service/Brand | no | — | [ ] |
-| 2 | `/journal` (Blog) | 37512:8629 | posts + authors | Blog + ItemList; Authors row | no | — | [~] |
-| 2 | `/journal/<slug>` | 37512:8851 | post | BlogPosting + Person (+FAQPage if faq) | opt | Author & share | [~] visible Updated line pending |
-| 2 | `/journal/authors/<slug>` | 37530:15457 | author | ProfilePage + Person | no | Author hero | [ ] |
-| 2 | `/journal/category/<slug>` | — | postCategory | CollectionPage | no | — | [x] |
+| 2 | `/blog` | 37512:8629 | posts + authors | Blog + ItemList; Authors row | no | — | [~] |
+| 2 | `/blog/<slug>` | 37512:8851 | post | BlogPosting + Person (+FAQPage if faq) | opt | Author & share | [~] visible Updated line pending |
+| 2 | `/blog/authors/<slug>` | 37530:15457 | author | ProfilePage + Person | no | Author hero | [ ] |
+| 2 | `/blog/category/<slug>` | — | postCategory | CollectionPage | no | — | [x] |
 | 3 | `/press` | 37513:8922 | press docs | CollectionPage + ItemList(NewsArticle) | no | Press list, Logo row | [ ] |
 | 3 | `/privacy` (+ terms) | 37513:9086 | page (rich text) | WebPage, noindex optional | no | — | [ ] |
 | 3 | `/404` | 37513:9187 | code | — | no | — | [~] |
@@ -401,7 +404,12 @@ and only need content; the rest are build or content work.
   utility routes; `/llms.txt` + `/llms-full.txt`.
 - [ ] Single-hop apex → www (or www → apex) redirect at the DNS/Vercel
       layer; keep trailing-slash 301 and real 404s.
-- [ ] Full 301 map for all 330+ legacy URLs, one hop, CI-verified.
+- [~] Full 301 map for all 331 legacy URLs, one hop, CI-verified:
+      `design/redirects/legacy-map.json` (generated), live entries in
+      `next.config.ts`, `redirects.yml` check (2026-10-03). Still:
+      flip the 20 pending entries live as series / markets /
+      commercial / process / method-arc / prefab-101 / privacy routes
+      ship; per-post keep/301/410 decisions for the 182 blog URLs.
 - [ ] Sitemap extended to series, plans, markets, commercial types,
       press, authors; images sitemap optional.
 - [ ] `WebSite.potentialAction` SearchAction if /search stays public.
@@ -613,6 +621,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — URL scheme accepted (C4 decided). Journal route and
+  components renamed to blog (`/journal*` 301s); legacy redirect map
+  generated from the 331 crawled URLs (118 live, 20 pending, 191
+  keep, 2 gone) and wired into next.config.ts; `redirects.yml` one-hop
+  check; three CMS page slugs renamed (custom-homes, predesigned,
+  architects).
 - 2026-10-03 — First production QA baseline recorded (46/100, §0).
   Fixes from it: llms-full GROQ alias, visible Updated line + machine-
   readable byline on posts, checker accepts BlogPosting as the page

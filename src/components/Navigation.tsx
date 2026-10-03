@@ -154,14 +154,14 @@ const DEFAULT_NAV: NavData = {
       layout: "cards",
       cards: [
         { title: "The Legacy", image: "/figma/legacy-video.jpg", url: "#" },
-        { title: "Honors Journal", image: "/figma/campaign.jpg", url: "/journal" },
+        { title: "Honors Journal", image: "/figma/campaign.jpg", url: "/blog" },
         { title: "Team Sunday Red", image: "/figma/media-portrait.jpg", url: "#" },
       ],
     },
   ],
   company: [
     { label: "The Legacy", url: "#" },
-    { label: "Honors Journal", url: "/journal" },
+    { label: "Honors Journal", url: "/blog" },
     { label: "Team Sun Day Red", url: "#" },
     { label: "Careers", url: "#" },
   ],
@@ -420,13 +420,13 @@ export function Navigation({ data }: { data?: NavData | null }) {
   const isHome = pathname === "/";
   /* journal surfaces keep the sticky top nav and swap the mobile
      control bar for one PDP-dock hamburger chip pinned bottom right */
-  const minimized = pathname === "/journal" || pathname.startsWith("/journal/");
+  const minimized = pathname === "/blog" || pathname.startsWith("/blog/");
   /* the photoyoshi recreation carries its OWN header — the site's
      chrome (bar, chip, mobile pill) stays out of its way entirely */
   const lightField =
-    pathname === "/journal/alt2" || pathname === "/journal/alt2/about";
+    pathname === "/blog/alt2" || pathname === "/blog/alt2/about";
   /* the dark field + articles; the landings are light */
-  const minimizedDark = minimized && pathname !== "/journal" && !lightField;
+  const minimizedDark = minimized && pathname !== "/blog" && !lightField;
   /* pages with a full-bleed hero the nav floats transparently over:
      the homepage (dark imagery), product pages (light gray canvas),
      and the dark journal surfaces (field + article heroes) */
@@ -443,7 +443,7 @@ export function Navigation({ data }: { data?: NavData | null }) {
     /* the field pages drop the legacy band + revealed footer */
     document.documentElement.toggleAttribute(
       "data-journal-no-footer",
-      pathname === "/journal/alt" || pathname.startsWith("/journal/alt2"),
+      pathname === "/blog/alt" || pathname.startsWith("/blog/alt2"),
     );
     return () => {
       document.documentElement.removeAttribute("data-journal-dark");

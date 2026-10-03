@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 
-import { ArticleView } from "@/components/journal/ArticleView";
+import { ArticleView } from "@/components/blog/ArticleView";
 import { breadcrumbList, JsonLd } from "@/components/seo/JsonLd";
-import { PostArticle } from "@/components/journal/PostArticle";
-import type { PostDoc, RelatedPost } from "@/components/journal/PostArticle";
+import { PostArticle } from "@/components/blog/PostArticle";
+import type { PostDoc, RelatedPost } from "@/components/blog/PostArticle";
 import {
   ARTICLE_LEAD,
   JOURNAL_CATEGORIES,
   findArticle,
-} from "@/components/journal/articles";
+} from "@/components/blog/articles";
 import { toCards } from "@/sanity/lib/cards";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
@@ -37,7 +37,7 @@ export function generateStaticParams() {
 /* BlogPosting JSON-LD for a CMS post (seoMeta already covers the
    metadata; this is the structured twin the AEO grader checks for) */
 function articleJsonLd(post: PostDoc, slug: string) {
-  const url = `${designops.site.baseUrl}/journal/${slug}`;
+  const url = `${designops.site.baseUrl}/blog/${slug}`;
   let image: string | undefined;
   try {
     image = post.heroImage ? urlFor(post.heroImage).width(1200).height(630).fit("crop").url() : undefined;
@@ -88,7 +88,7 @@ export async function generateMetadata({
       seo: post.seo ? { ...post.seo, title: undefined } : null,
       title: `${base} — Honors Journal`,
       description: post.seo?.description || post.excerpt,
-      path: `/journal/${slug}`,
+      path: `/blog/${slug}`,
       image: post.heroImage,
     });
   }
@@ -131,11 +131,11 @@ export default async function JournalArticlePage({
         />
         <JsonLd
           data={breadcrumbList([
-            { name: "Journal", path: "/journal" },
+            { name: "Journal", path: "/blog" },
             ...(post.categories?.[0]?.title && post.categories[0].slug
-              ? [{ name: String(post.categories[0].title), path: `/journal/category/${post.categories[0].slug}` }]
+              ? [{ name: String(post.categories[0].title), path: `/blog/category/${post.categories[0].slug}` }]
               : []),
-            { name: post.title ?? slug, path: `/journal/${slug}` },
+            { name: post.title ?? slug, path: `/blog/${slug}` },
           ])}
         />
         <PostArticle post={post} related={related} />

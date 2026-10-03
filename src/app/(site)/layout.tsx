@@ -37,7 +37,7 @@ function img(source: SanityImageSource | undefined | null, width = 1400) {
 /* Site-owned routes for CMS links that predate their pages: entries in
    the navigation document still pointing at "#" get routed here by
    label, so the journal is reachable without a dataset edit */
-const OWNED_ROUTES: [RegExp, string][] = [[/honors\s*journal/i, "/journal"]];
+const OWNED_ROUTES: [RegExp, string][] = [[/honors\s*journal/i, "/blog"]];
 
 function ownedUrl(label: string, url: string): string {
   if (url && url !== "#") return url;

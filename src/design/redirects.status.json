@@ -1,0 +1,7 @@
+{
+  "generatedAt": "2026-10-03T00:00:00.000Z",
+  "origin": "https://method-homes.vercel.app",
+  "summary": {},
+  "rows": [],
+  "note": "Not run yet — dispatch the redirects workflow (GitHub Actions) or run `node scripts/check-redirects.mjs` against a build."
+}

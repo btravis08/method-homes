@@ -8,7 +8,7 @@ import {
   FLIP_COVERED_EVENT,
   HERO_READY_EVENT,
   takeFieldEntry,
-} from "@/components/journal/field-transition";
+} from "@/components/blog/field-transition";
 import { EASE_OUT } from "@/lib/motion";
 
 /*
@@ -17,7 +17,7 @@ import { EASE_OUT } from "@/lib/motion";
   breadcrumb and title rising over its lower edge.
 
   Direct loads render it fully visible from the server. A live field
-  transition (a tile clicked on /journal/alt) claims its pending
+  transition (a tile clicked on /blog/alt) claims its pending
   entry before paint, hides the hero and copy, and replays the
   entrance: the grid's overlay expands the clicked tile to the
   viewport, then its fade-out doubles as a crossfade into this
@@ -126,10 +126,10 @@ export function ArticleTop({
           className="flex items-center gap-3"
         >
           <span className="flex items-center gap-1.5">
-            <NavTextLink href="/journal" label="HONORS JOURNAL" />
+            <NavTextLink href="/blog" label="HONORS JOURNAL" />
             <Slash />
           </span>
-          <NavTextLink href="/journal" label={categoryTitle.toUpperCase()} />
+          <NavTextLink href="/blog" label={categoryTitle.toUpperCase()} />
         </m.nav>
         <m.h1
           initial={false}

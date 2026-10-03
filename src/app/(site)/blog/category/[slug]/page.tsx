@@ -68,7 +68,7 @@ export async function generateMetadata({
   return seoMeta({
     title: `${category.title} — Journal`,
     description: category.description ?? `${category.title} articles from the Method Homes journal.`,
-    path: `/journal/category/${slug}`,
+    path: `/blog/category/${slug}`,
   });
 }
 
@@ -99,7 +99,7 @@ export default async function JournalCategoryPage({
   if (page > pages) notFound();
 
   const withQuery = (n: number) =>
-    n <= 1 ? `/journal/category/${slug}` : `/journal/category/${slug}?page=${n}`;
+    n <= 1 ? `/blog/category/${slug}` : `/blog/category/${slug}?page=${n}`;
 
   return (
     <main data-mode="dark" className="w-full bg-surface pb-32 text-ink">
@@ -108,19 +108,19 @@ export default async function JournalCategoryPage({
           type: "CollectionPage",
           name: category?.title ?? "Journal",
           description: category?.description,
-          path: `/journal/category/${slug}`,
+          path: `/blog/category/${slug}`,
         })}
       />
       <JsonLd
         data={breadcrumbList([
-          { name: "Journal", path: "/journal" },
-          { name: category?.title ?? "Journal", path: `/journal/category/${slug}` },
+          { name: "Journal", path: "/blog" },
+          { name: category?.title ?? "Journal", path: `/blog/category/${slug}` },
         ])}
       />
       {/* masthead */}
       <header className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 pb-16 pt-[8.75rem] text-center">
         <p className="label text-ink-3">
-          <Link href="/journal" className="transition-colors hover:text-ink">
+          <Link href="/blog" className="transition-colors hover:text-ink">
             HONORS JOURNAL
           </Link>
         </p>
@@ -147,7 +147,7 @@ export default async function JournalCategoryPage({
           return (
             <Link
               key={post.slug}
-              href={`/journal/${post.slug}`}
+              href={`/blog/${post.slug}`}
               className="group flex flex-col gap-4"
             >
               {src && (

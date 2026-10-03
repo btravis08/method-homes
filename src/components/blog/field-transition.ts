@@ -1,5 +1,5 @@
 /*
-  Handoff between the journal field (/journal/alt) and an article:
+  Handoff between the journal field (/blog/alt) and an article:
   the grid stores which image was clicked just before navigating, and
   the article's top claims it on mount to open in fullscreen "field
   entry" mode (the expanded tile becomes the hero, title fading up

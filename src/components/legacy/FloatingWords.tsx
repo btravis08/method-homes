@@ -47,14 +47,14 @@ interface Card {
 /* the comp's ten Interactive Gallery Cards, left to right */
 const CARDS: Card[] = [
   { src: "/figma/legacy/float-putt.jpg",  meta: "Practice Green, 2024", x: 73.1,   y: 110.3, w: 266, aspect: "aspect-[320/400]" },
-  { src: "/figma/journal/stream-03.jpg",  meta: "Fitting Room, 2024",   x: 317.1,  y: 523.3, w: 308, aspect: "aspect-square", tone: "tint" },
-  { src: "/figma/journal/stream-11.jpg",  meta: "Media Day, 2024",      x: 730.9,  y: 286.1, w: 653, aspect: "aspect-square" },
-  { src: "/figma/journal/stream-10.jpg",  meta: "St Andrews, 2022",     x: 1505.3, y: 110.3, w: 200, aspect: "aspect-square" },
+  { src: "/figma/blog/stream-03.jpg",  meta: "Fitting Room, 2024",   x: 317.1,  y: 523.3, w: 308, aspect: "aspect-square", tone: "tint" },
+  { src: "/figma/blog/stream-11.jpg",  meta: "Media Day, 2024",      x: 730.9,  y: 286.1, w: 653, aspect: "aspect-square" },
+  { src: "/figma/blog/stream-10.jpg",  meta: "St Andrews, 2022",     x: 1505.3, y: 110.3, w: 200, aspect: "aspect-square" },
   { src: "/figma/legacy/float-crowd.jpg", meta: "Riviera, 2024",        x: 1629.2, y: 503.1, w: 308, aspect: "aspect-square" },
-  { src: "/figma/journal/stream-05.jpg",  meta: "The Range, 2024",      x: 2182.5, y: 612,   w: 266, aspect: "aspect-[320/400]" },
+  { src: "/figma/blog/stream-05.jpg",  meta: "The Range, 2024",      x: 2182.5, y: 612,   w: 266, aspect: "aspect-[320/400]" },
   { src: "/figma/legacy/float-shoes.jpg", meta: "Pebble Beach, 2024",   x: 2393.9, y: 198,   w: 200, aspect: "aspect-square" },
   { src: "/figma/legacy/hero.jpg",        meta: "Studio, 2024",         x: 2782.1, y: 60.6,  w: 653, aspect: "aspect-square" },
-  { src: "/figma/journal/stream-06.jpg",  meta: "Sawgrass, 2024",       x: 3604.2, y: 523.3, w: 308, aspect: "aspect-square" },
+  { src: "/figma/blog/stream-06.jpg",  meta: "Sawgrass, 2024",       x: 3604.2, y: 523.3, w: 308, aspect: "aspect-square" },
   { src: "/figma/legacy/float-putt.jpg",  meta: "Sunday, 2024",         x: 3826.9, y: 110.3, w: 266, aspect: "aspect-[320/400]" },
 ];
 

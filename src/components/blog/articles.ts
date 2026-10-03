@@ -2,7 +2,7 @@
   Honors Journal fake content — placeholder articles per category so
   the journal reads like a living publication before real editorial
   (or a CMS article schema) exists. Copy is the design's lorem; the
-  imagery is the design's editorial pool (public/figma/journal) plus
+  imagery is the design's editorial pool (public/figma/blog) plus
   campaign photography already shipped for other sections.
 */
 
@@ -41,8 +41,8 @@ export const ARTICLE_BODY: [string, string] = [
   "Orci faucibus erat cras sit. Sit duis elit orci ac amet. Risus nec turpis auctor vel id tortor. Ipsum integer donec et fringilla dictumst odio. Varius egestas vitae purus amet bibendum pharetra ac neque gravida. Aliquam non odio pretium urna. At eleifend amet elementum est pharetra aliquam pharetra nec. Porttitor sit a ligula arcu sed pretium molestie.",
 ];
 
-const J = (n: number) => `/figma/journal/stream-${String(n).padStart(2, "0")}.jpg`;
-const HERO = (n: number) => `/figma/journal/hero-0${n}.jpg`;
+const J = (n: number) => `/figma/blog/stream-${String(n).padStart(2, "0")}.jpg`;
+const HERO = (n: number) => `/figma/blog/hero-0${n}.jpg`;
 
 /* shared carousel imagery (product-forward, mirrors the home carousel) */
 const CAROUSEL = [

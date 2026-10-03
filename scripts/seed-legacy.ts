@@ -50,14 +50,14 @@ const MARK_COPY =
    code-owned — only imagery and captions live here) */
 const GALLERY_CARDS: Array<[string, string]> = [
   ["figma/legacy/float-putt.jpg", "Practice Green, 2024"],
-  ["figma/journal/stream-03.jpg", "Fitting Room, 2024"],
-  ["figma/journal/stream-11.jpg", "Media Day, 2024"],
-  ["figma/journal/stream-10.jpg", "St Andrews, 2022"],
+  ["figma/blog/stream-03.jpg", "Fitting Room, 2024"],
+  ["figma/blog/stream-11.jpg", "Media Day, 2024"],
+  ["figma/blog/stream-10.jpg", "St Andrews, 2022"],
   ["figma/legacy/float-crowd.jpg", "Riviera, 2024"],
-  ["figma/journal/stream-05.jpg", "The Range, 2024"],
+  ["figma/blog/stream-05.jpg", "The Range, 2024"],
   ["figma/legacy/float-shoes.jpg", "Pebble Beach, 2024"],
   ["figma/legacy/hero.jpg", "Studio, 2024"],
-  ["figma/journal/stream-06.jpg", "Sawgrass, 2024"],
+  ["figma/blog/stream-06.jpg", "Sawgrass, 2024"],
   ["figma/legacy/float-putt.jpg", "Sunday, 2024"],
 ];
 
@@ -65,31 +65,31 @@ const GALLERY_CARDS: Array<[string, string]> = [
 const SLIDES: Array<[string, string, string, string]> = [
   [
     "Precision",
-    "figma/journal/stream-10.jpg",
+    "figma/blog/stream-10.jpg",
     "figma/legacy/float-putt.jpg",
     "Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   ],
   [
     "Performance",
-    "figma/journal/stream-06.jpg",
-    "figma/journal/stream-11.jpg",
+    "figma/blog/stream-06.jpg",
+    "figma/blog/stream-11.jpg",
     "Enim diam in cursus duis arcu aliquet. Turpis id enim mi iaculis erat. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   ],
   [
     "Quality",
     "figma/legacy/hero.jpg",
-    "figma/journal/stream-03.jpg",
+    "figma/blog/stream-03.jpg",
     "Sit nunc ut et lorem tellus vitae nibh dictum ornare. Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet.",
   ],
   [
     "Comfort",
     "figma/legacy/float-crowd.jpg",
-    "figma/journal/stream-01.jpg",
+    "figma/blog/stream-01.jpg",
     "Turpis id enim mi iaculis erat. Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare.",
   ],
   [
     "Craft",
-    "figma/journal/stream-05.jpg",
+    "figma/blog/stream-05.jpg",
     "figma/legacy/float-shoes.jpg",
     "Enim diam in cursus duis arcu aliquet. Sit nunc ut et lorem tellus vitae nibh dictum ornare. Turpis id enim mi iaculis erat.",
   ],

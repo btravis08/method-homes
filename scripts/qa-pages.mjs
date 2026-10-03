@@ -20,7 +20,7 @@
  *   G8  JSON-LD: a WebPage-kind node + BreadcrumbList; FAQPage when
  *       the page shows a FAQ (details/summary with a question);
  *       the template's entity node (House on /projects/*, BlogPosting
- *       on /journal/*)
+ *       on /blog/*)
  *   G9  a visible "Updated <Month> <Year>" line (CMS pages, projects,
  *       posts)
  *   G10 no unfilled {placeholder}; a byline on posts
@@ -84,9 +84,9 @@ const typesOf = (nodes) => nodes.flatMap((n) => (Array.isArray(n?.["@type"]) ? n
 
 function kindOf(p) {
   if (p === "/") return "home";
-  if (p === "/projects" || p === "/journal" || p.startsWith("/journal/category/") || p === "/collections" || p === "/products") return "list";
+  if (p === "/projects" || p === "/blog" || p.startsWith("/blog/category/") || p === "/collections" || p === "/products") return "list";
   if (p.startsWith("/projects/")) return "project";
-  if (p.startsWith("/journal/")) return "post";
+  if (p.startsWith("/blog/")) return "post";
   if (p.startsWith("/products/") || p.startsWith("/collections/")) return "commerce";
   return "page";
 }

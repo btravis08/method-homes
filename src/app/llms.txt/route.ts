@@ -51,7 +51,7 @@ export async function GET() {
     line("Home", "/", "overview of the series, process and recent projects"),
     line("Get started", "/get-started", "the project intake: tell us about your site, timeline, size and budget and we match you to a series"),
     line("Projects", "/projects", "completed homes with location, size and series"),
-    line("Journal", "/journal", "articles on prefab construction, design and process"),
+    line("Journal", "/blog", "articles on prefab construction, design and process"),
   ];
 
   if (data.pages.length) {
@@ -64,7 +64,7 @@ export async function GET() {
   }
   if (data.posts.length) {
     out.push("", "## Journal");
-    for (const p of data.posts) out.push(line(p.title, `/journal/${p.slug}`, p.excerpt));
+    for (const p of data.posts) out.push(line(p.title, `/blog/${p.slug}`, p.excerpt));
   }
 
   return new Response(out.join("\n") + "\n", {

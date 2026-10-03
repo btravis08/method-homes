@@ -1,15 +1,15 @@
 "use client";
 
-import { JOURNAL_CATEGORIES } from "@/components/journal/articles";
+import { JOURNAL_CATEGORIES } from "@/components/blog/articles";
 import {
   FLIP_COVERED_EVENT,
   HERO_READY_EVENT,
   setFieldEntry,
-} from "@/components/journal/field-transition";
+} from "@/components/blog/field-transition";
 
 /*
-  Shared FLIP machinery for the journal fields (dark /journal/alt and
-  light /journal/alt2): the cover-entry list, the single-flight guard,
+  Shared FLIP machinery for the journal fields (dark /blog/alt and
+  light /blog/alt2): the cover-entry list, the single-flight guard,
   and the compositor-only tile → article-hero expansion overlay.
 */
 
@@ -28,7 +28,7 @@ export const ENTRIES: GridEntry[] = (() => {
       if (!seen.has(article.hero))
         seen.set(article.hero, {
           src: article.hero,
-          href: `/journal/${article.slug}`,
+          href: `/blog/${article.slug}`,
         });
   return [...seen.values()];
 })();
