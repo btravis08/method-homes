@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-28T00:17:26.272Z",
+  "generatedAt": "2026-10-03T23:27:40.310Z",
   "sources": {
     "figma": {
       "dir": "design/figma-tokens",
@@ -34,7 +34,7 @@
     },
     "css": {
       "file": "src/app/globals.css",
-      "updatedAt": "2026-09-27T05:14:09+00:00"
+      "updatedAt": "2026-09-28T00:19:31+00:00"
     }
   },
   "css": {
@@ -260,6 +260,14 @@
         "detail": {}
       },
       {
+        "path": "--spacing-3xl",
+        "name": "3xl",
+        "type": "spacing",
+        "value": "1.5rem",
+        "utility": "p-3xl · gap-3xl · m-3xl",
+        "detail": {}
+      },
+      {
         "path": "--spacing-4xl",
         "name": "4xl",
         "type": "spacing",
@@ -268,11 +276,27 @@
         "detail": {}
       },
       {
+        "path": "--spacing-5xl",
+        "name": "5xl",
+        "type": "spacing",
+        "value": "2.5rem",
+        "utility": "p-5xl · gap-5xl · m-5xl",
+        "detail": {}
+      },
+      {
         "path": "--spacing-6xl",
         "name": "6xl",
         "type": "spacing",
         "value": "3rem",
         "utility": "p-6xl · gap-6xl · m-6xl",
+        "detail": {}
+      },
+      {
+        "path": "--spacing-7xl",
+        "name": "7xl",
+        "type": "spacing",
+        "value": "4rem",
+        "utility": "p-7xl · gap-7xl · m-7xl",
         "detail": {}
       },
       {

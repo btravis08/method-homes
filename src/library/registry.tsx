@@ -2,7 +2,9 @@ import type { ReactNode } from "react";
 
 import {
   Carousel,
+  CtaBand,
   Faq,
+  FeatureList,
   FiftyFifty,
   FullWidth,
   Gallery,
@@ -10,7 +12,9 @@ import {
   InfoSlider,
   ProductSlider,
   Reviews,
+  StatsBar,
   TechSpecs,
+  TextIntro,
 } from "@/components/home/sections";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import { FloatingWords } from "@/components/legacy/FloatingWords";
@@ -222,6 +226,48 @@ export const SECTIONS: SectionEntry[] = [
     modes: ["light", "dark"],
     figmaNodeId: "37507:3841",
     render: (mode) => <Faq mode={mode} />,
+  },
+  {
+    slug: "text-intro",
+    title: "Text intro",
+    group: "Page sections",
+    schemaType: "sectionTextIntro",
+    description:
+      "Eyebrow + question-form H2 on the left, answer-first prose + related link on the right — how a page clears the 300-word depth gate.",
+    modes: ["light", "dark"],
+    figmaNodeId: "37505:3536",
+    render: (mode) => <TextIntro mode={mode} />,
+  },
+  {
+    slug: "stats-bar",
+    title: "Stats bar",
+    group: "Page sections",
+    schemaType: "sectionStats",
+    description:
+      "Proof bar: four value + label pairs between hairlines; every value carries a footnote marker to the dated sources line.",
+    modes: ["light", "dark"],
+    figmaNodeId: "37506:3714",
+    render: (mode) => <StatsBar mode={mode} />,
+  },
+  {
+    slug: "feature-list",
+    title: "Feature list",
+    group: "Page sections",
+    schemaType: "sectionFeatureList",
+    description: "Icon + title + body + link, 3 or 4 across under a section header.",
+    modes: ["light", "dark"],
+    figmaNodeId: "37508:4069",
+    render: (mode) => <FeatureList mode={mode} />,
+  },
+  {
+    slug: "cta-band",
+    title: "CTA band",
+    group: "Page sections",
+    schemaType: "sectionCtaBand",
+    description: "Dark conversion band: heading, reassurance copy, two CTAs. Closes most pages above the footer.",
+    modes: ["dark", "light"],
+    figmaNodeId: "37505:3598",
+    render: (mode) => <CtaBand mode={mode} />,
   },
   {
     slug: "ab-experiment",

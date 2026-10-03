@@ -907,6 +907,259 @@ export function Reviews({
   );
 }
 
+/* ---------- Method shared sections (Figma Method/Sections) ---------- */
+
+export interface LinkData {
+  label?: string;
+  url?: string;
+}
+
+/* 12px medium underline link with the library's wipe-out underline
+   (SecondaryTextButton without the uppercase, and with a real href) */
+export function UnderlineLink({ label, href = "/" }: { label: string; href?: string }) {
+  return (
+    <ArrowLink href={href} className="group relative inline-block self-start text-label-sm font-medium text-ink">
+      {label}
+      <span className="absolute inset-x-0 -bottom-0.5 h-px origin-right bg-ink transition-transform duration-300 group-hover:scale-x-0" />
+    </ArrowLink>
+  );
+}
+
+/* The library button: 48px tall, 8px radius, 14px medium label.
+   Primary = the mode's button tokens; secondary = ghost outline. A
+   /get-started href opens the intake tray (LazyGetStarted listens). */
+export function CtaButton({ label, href = "/get-started", variant = "primary" }: { label: string; href?: string; variant?: "primary" | "secondary" }) {
+  return (
+    <ArrowLink
+      href={href}
+      className={`inline-flex h-12 min-w-[9.375rem] items-center justify-center rounded-md px-[1.125rem] text-body-sm font-medium transition-opacity hover:opacity-80 ${
+        variant === "primary" ? "bg-btn text-btn-fg" : "border border-ink/70 bg-ink/10 text-ink"
+      }`}
+    >
+      {label}
+    </ArrowLink>
+  );
+}
+
+/* shared frame: 64px gutters on desktop, the 1280 content column */
+const SECTION_X = "px-4 md:px-7xl";
+const CONTAINER = "mx-auto w-full max-w-page";
+
+const defaultIntroParagraphs = [
+  "Opening paragraph answers the heading directly in 40–60 words. It names the thing, the audience, and the outcome, then the following paragraphs add the specifics — process, materials, timelines, locations — that make the answer complete.",
+  "Second paragraph carries the detail: numbers, named places, named certifications, and the limits of the claim. Third paragraphs are welcome; the page-level target is 300+ words of real content, not padding.",
+];
+
+/* Text intro (37505:3536): eyebrow + question-form H2 left, prose +
+   related link right. The H2 is the question an engine matches; the
+   first paragraph is the quotable answer. */
+export function TextIntro({
+  mode = "light",
+  eyebrow = "Eyebrow",
+  headline = "Question-form heading that a visitor would type?",
+  body,
+  paragraphs = defaultIntroParagraphs,
+  link = { label: "Related page link", url: "/" },
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  /* Portable Text from the CMS; `paragraphs` is the code default */
+  body?: React.ReactNode;
+  paragraphs?: string[];
+  link?: LinkData | null;
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} grid grid-cols-1 gap-6xl md:grid-cols-[minmax(0,32.5rem)_1fr] md:gap-9xl`}>
+        <div className="flex flex-col gap-xl">
+          {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+          <RevealText>
+            <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+          </RevealText>
+        </div>
+        <div className="flex flex-col gap-3xl text-body-md text-ink-2 [&_p]:max-w-prose">
+          {body ?? paragraphs.map((text, i) => <p key={i}>{text}</p>)}
+          {link?.label && <UnderlineLink label={link.label} href={link.url || "/"} />}
+        </div>
+      </SectionReveal>
+    </section>
+  );
+}
+
+export interface StatFactData {
+  _key?: string;
+  value?: string;
+  label?: string;
+  footnote?: number;
+}
+export interface SourceData {
+  _key?: string;
+  label?: string;
+  url?: string;
+  date?: string;
+}
+
+const defaultStats: StatFactData[] = [
+  { value: "400+", label: "Projects completed since 2007", footnote: 1 },
+  { value: "2007", label: "Founded in Seattle, Washington", footnote: 1 },
+  { value: "7", label: "Predesigned series · 32 floor plans", footnote: 2 },
+  { value: "6 states", label: "Delivered across the West and beyond", footnote: 2 },
+];
+const defaultSources: SourceData[] = [
+  { label: "Method Homes company records", date: "2026-09-01" },
+  { label: "Predesigned catalog, methodhomes.net", date: "2026-09-01" },
+];
+
+/* Stats bar (37506:3714): the proof bar. Values are DOM text (the
+   numbers an answer engine quotes) and each carries a footnote marker
+   to the dated sources line — the Rivian way of keeping claims honest. */
+export function StatsBar({
+  mode = "light",
+  stats = defaultStats,
+  sources = defaultSources,
+  id,
+}: {
+  mode?: Mode;
+  stats?: StatFactData[];
+  sources?: SourceData[];
+  /* anchor base for the footnotes when several bars share a page */
+  id?: string;
+}) {
+  const base = id ?? "stats";
+  const list = stats.filter((s) => s.value && s.label);
+  const used = sources.filter((s) => s.label);
+  const fmt = (d?: string) => (d ? new Date(d).toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }) : null);
+  return (
+    <section data-mode={mode} className={`w-full border-y border-line bg-surface text-ink ${SECTION_X} py-6xl md:py-8xl`}>
+      <div className={CONTAINER}>
+        <dl className="grid grid-cols-2 gap-x-4xl gap-y-6xl md:grid-cols-4 md:gap-x-7xl">
+          {list.map((s, i) => (
+            <div key={s._key ?? i} className="flex flex-col gap-md">
+              <dd className="order-1 font-display text-headline-md text-ink">
+                {s.value}
+                {s.footnote && used[s.footnote - 1] ? (
+                  <sup className="ml-0.5 text-label-sm font-medium text-ink-3">
+                    <a href={`#${base}-source-${s.footnote}`} aria-label={`Source ${s.footnote}`}>{s.footnote}</a>
+                  </sup>
+                ) : null}
+              </dd>
+              <dt className="order-2 text-body-sm text-ink-2">{s.label}</dt>
+            </div>
+          ))}
+        </dl>
+        {used.length > 0 && (
+          <ol className="mt-6xl flex flex-wrap gap-x-xl gap-y-xs label text-ink-3">
+            <li className="list-none">Sources</li>
+            {used.map((s, i) => (
+              <li key={s._key ?? i} id={`${base}-source-${i + 1}`} className="list-none">
+                <sup>{i + 1}</sup>{" "}
+                {s.url ? (
+                  <a href={s.url} className="underline-offset-2 hover:underline" rel="noopener">{s.label}</a>
+                ) : (
+                  s.label
+                )}
+                {fmt(s.date) ? `, ${fmt(s.date)}` : ""}
+              </li>
+            ))}
+          </ol>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export interface FeatureItemData {
+  _key?: string;
+  icon?: string;
+  title?: string;
+  body?: string;
+  link?: LinkData | null;
+}
+
+const defaultFeatures: FeatureItemData[] = [1, 2, 3].map(() => ({
+  title: "Feature title",
+  body: "Two or three sentences that explain the feature with a concrete detail a reader could verify.",
+  link: { label: "Learn more", url: "/" },
+}));
+
+/* Feature list (37508:4069): icon + title + body + link, 3 or 4
+   across under a section header. */
+export function FeatureList({
+  mode = "light",
+  eyebrow = "Eyebrow",
+  headline = "Heading that frames the set of features",
+  columns = 3,
+  items = defaultFeatures,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  columns?: 3 | 4;
+  items?: FeatureItemData[];
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col gap-6xl`}>
+        <div className="flex max-w-[47.5rem] flex-col gap-xl">
+          {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+          <RevealText>
+            <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+          </RevealText>
+        </div>
+        <ul className={`grid grid-cols-1 gap-4xl sm:grid-cols-2 ${columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"}`}>
+          {items.filter((f) => f.title).map((f, i) => (
+            <li key={f._key ?? i} className="flex flex-col gap-lg border-t border-line py-3xl">
+              {f.icon ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={f.icon} alt="" width={40} height={40} loading="lazy" decoding="async" className="size-10 rounded-md object-cover" />
+              ) : (
+                <span aria-hidden className="block size-10 rounded-md bg-wash" />
+              )}
+              <h3 className="font-display text-title-sm font-medium text-ink">{f.title}</h3>
+              {f.body && <p className="text-body-sm text-ink-2">{f.body}</p>}
+              {f.link?.label && <UnderlineLink label={f.link.label} href={f.link.url || "/"} />}
+            </li>
+          ))}
+        </ul>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* CTA band (37505:3598): the dark conversion band that closes most
+   pages above the footer. */
+export function CtaBand({
+  mode = "dark",
+  headline = "Ready to talk about your site, your budget, and your timeline?",
+  body = "A ten-minute intake tells us where you're building and what you need. We reply within two business days with a recommended path and a realistic range.",
+  primary = { label: "Get started", url: "/get-started" },
+  secondary = { label: "Talk to our team", url: "/contact" },
+}: {
+  mode?: Mode;
+  headline?: string;
+  body?: string;
+  primary?: LinkData | null;
+  secondary?: LinkData | null;
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col items-start gap-6xl md:flex-row md:items-center md:justify-between md:gap-9xl`}>
+        <div className="flex max-w-[47.5rem] flex-col gap-xl">
+          <RevealText>
+            <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+          </RevealText>
+          {body && <p className="text-body-md text-ink-2">{body}</p>}
+        </div>
+        <div className="flex shrink-0 flex-wrap gap-lg">
+          {primary?.label && <CtaButton label={primary.label} href={primary.url || "/get-started"} />}
+          {secondary?.label && <CtaButton label={secondary.label} href={secondary.url || "/contact"} variant="secondary" />}
+        </div>
+      </SectionReveal>
+    </section>
+  );
+}
+
 /* ---------- FAQ (question / answer accordion) ---------- */
 
 export interface FaqItemData {

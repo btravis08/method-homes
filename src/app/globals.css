@@ -117,8 +117,12 @@
     Figma spacing scale (design/figma-tokens/pdp-desktop.resolved
     .tokens.json): named steps ride alongside Tailwind's numeric
     scale, so `gap-sm`, `pt-6xl`, `px-4xl` resolve to the library's
-    exact values. Only steps confirmed in the file are defined —
-    2xl/3xl/5xl/7xl aren't used by any pulled node yet.
+    exact values. The Method library (Figma 9nqsOUuF2UrgukNYok3Oko)
+    uses 3xl = 24, 5xl = 40 and 7xl = 64 on its shared sections, so
+    those steps are defined too (2026-10-03). NOTE: Method's scale puts
+    2xl at 20 while the template mapped 2xl to 24 — the rebrand token
+    export (LAUNCH-PLAN A1) resolves that by replacing this block
+    wholesale; until then 2xl and 3xl both equal 24.
   */
   --spacing-xxs: 0.125rem; /* 2 */
   --spacing-xs: 0.25rem; /* 4 */
@@ -134,12 +138,18 @@
      an explicit spacing-2xl with a different value, this mapping is
      what needs revisiting. */
   --spacing-2xl: 1.5rem; /* 24 — Figma "space/small" */
+  --spacing-3xl: 1.5rem; /* 24 — Method spacing-3xl */
   --spacing-4xl: 2rem; /* 32 */
+  --spacing-5xl: 2.5rem; /* 40 — Method spacing-5xl */
   --spacing-6xl: 3rem; /* 48 */
+  --spacing-7xl: 4rem; /* 64 — Method spacing-7xl / container-padding-desktop-lg */
   --spacing-8xl: 5rem; /* 80 */
   --spacing-9xl: 6rem; /* 96 */
   --spacing-10xl: 8rem; /* 128 */
   --spacing-11xl: 10rem; /* 160 */
+
+  /* the Method content column (Figma max-width 1280) → `max-w-page` */
+  --container-page: 80rem;
 
   /*
     Fluid section padding (CMS S/M/L): interpolates 428px -> 1440px

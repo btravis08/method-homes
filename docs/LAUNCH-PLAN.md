@@ -176,11 +176,11 @@ contribution wired. Build order follows page priority in §5.
 | Hero / Page | 37505:3516 | sectionHero (variant) | lede paragraph is the answer-first copy | [ ] |
 | Hero / Series | 37525:15367 | series doc (hero fields) | breadcrumb + H1 wordmark + meta line (beds/baths/sqft/from) | [ ] |
 | Sub-nav | 37525:15383 | derived from page anchors | in-page anchors → heading ids | [ ] |
-| Text intro | 37505:3536 | sectionRichText / new sectionTextIntro | ≥120-word lede, H2 question | [ ] |
+| Text intro | 37505:3536 | sectionTextIntro | ≥120-word lede, H2 question | [x] 2026-10-03 |
 | 50/50 | 37505:3577 | sectionFiftyFifty | alt text required | [~] template |
 | Card + Card grid | 37506:3516/3646 | sectionCardGrid (new) | ItemList when cards link | [ ] |
 | Carousel | 37506:3699 | sectionCarousel | ImageObject captions | [~] template |
-| Stats bar | 37506:3714 | sectionStats (new) | numbers are DOM text with footnote markers | [ ] |
+| Stats bar | 37506:3714 | sectionStats | numbers are DOM text with footnote markers → dated sources line | [x] 2026-10-03 |
 | Testimonial | 37506:3733 | sectionTestimonial (new) → or project.testimonial | Review schema (named, dated, rated) | [ ] |
 | Logo row | 37506:3750 | sectionLogoRow (new) | press/partner logos link to citations | [ ] |
 | Spec table | 37507:3678 | sectionTechSpecs | Product additionalProperty on series | [~] template TechSpecs |
@@ -196,12 +196,12 @@ contribution wired. Build order follows page priority in §5.
 | Map block | 37508:3828 | market doc geo / siteSettings | Place/geo | [ ] |
 | Team grid | 37508:3875 | teamMember / author | Person per member on About | [ ] |
 | Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [ ] |
-| Feature list | 37508:4069 | sectionFeatureList (new) | bullets = liftable facts | [ ] |
+| Feature list | 37508:4069 | sectionFeatureList | bullets = liftable facts; 3 or 4 columns | [x] 2026-10-03 |
 | Link list | 37508:4097 | sectionLinkList (new) | internal linking hub | [ ] |
 | Glossary | 37508:4131 | glossary doc (new) | DefinedTerm set on /prefab-101 | [ ] |
 | Press list | 37508:4175 | press doc (new) | citations; NewsArticle refs | [ ] |
 | Plan drawings → Walk the plan | 37521:15819 | plan doc + PDF | crawlable PDFs; ImageObject | [ ] |
-| CTA band | 37505:3598 | sectionCtaBand (new) | — | [ ] |
+| CTA band | 37505:3598 | sectionCtaBand | primary CTA → /get-started opens the intake tray | [x] 2026-10-03 |
 | Footer + Location + newsletter | 37505:3650 / 37525:15440 | siteSettings NAP | NAP visible on every page; matches GBP | [~] footer exists; NAP fields added |
 | Interstitial ×5 | 37528:15397 | sectionInterstitial (new, kind) | styled `<p>`, lazy imgs, never LCP | [ ] |
 
@@ -623,6 +623,13 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Shared sections batch 1 in code: Text intro, Stats
+  bar (footnotes + sources), Feature list, CTA band — schema, preview
+  twin, /library entries, zero off-token readings. globals.css gained
+  spacing 3xl/5xl/7xl and `max-w-page` (1280). Token notes for the
+  rebrand: Method's 2xl is 20 (template 24); body-lg 18px has no
+  template step (rendered body-md); the comp's primary button is black
+  on the dark band while `bg-btn` flips white in dark mode.
 - 2026-10-03 — Figma page frames reconciled to the accepted scheme
   (13 frames renamed: series → /series/*, Portfolio → /projects,
   /architects, short commercial slugs); market slugs = full state

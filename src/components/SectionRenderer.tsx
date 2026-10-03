@@ -3,7 +3,9 @@ import { Suspense } from "react";
 
 import {
   Carousel,
+  CtaBand,
   Faq,
+  FeatureList,
   FiftyFifty,
   FullWidth,
   Gallery,
@@ -11,7 +13,9 @@ import {
   InfoSlider,
   ProductSlider,
   Reviews,
+  StatsBar,
   TechSpecs,
+  TextIntro,
   ThreeDViewer,
 } from "@/components/home/sections";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
@@ -342,6 +346,43 @@ export function SectionRenderer({ sections }: { sections: PageSection[] }) {
                 title={section.title}
                 intro={section.intro}
                 items={section.items}
+              />
+            );
+          case "sectionTextIntro":
+            return (
+              <TextIntro
+                key={section._key}
+                mode={section.colorMode}
+                eyebrow={section.eyebrow}
+                headline={section.headline}
+                body={section.body?.length ? <PortableText value={section.body} /> : undefined}
+                link={section.link}
+              />
+            );
+          case "sectionStats":
+            return (
+              <StatsBar key={section._key} id={`stats-${section._key}`} mode={section.colorMode} stats={section.stats} sources={section.sources} />
+            );
+          case "sectionFeatureList":
+            return (
+              <FeatureList
+                key={section._key}
+                mode={section.colorMode}
+                eyebrow={section.eyebrow}
+                headline={section.headline}
+                columns={section.columns}
+                items={section.items?.map((f) => ({ ...f, icon: img(f.icon, 80) }))}
+              />
+            );
+          case "sectionCtaBand":
+            return (
+              <CtaBand
+                key={section._key}
+                mode={section.colorMode}
+                headline={section.headline}
+                body={section.body}
+                primary={section.ctaPrimary}
+                secondary={section.ctaSecondary}
               />
             );
           case "sectionRichText":

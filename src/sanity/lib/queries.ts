@@ -104,6 +104,11 @@ const innerSectionFields = groq`
   intro,
   items,
   body,
+  link,
+  columns,
+  ctaPrimary,
+  ctaSecondary,
+  sources[] { _key, label, url, date },
   image,
   source,
   tag,
@@ -125,7 +130,7 @@ const innerSectionFields = groq`
     lookProducts[]->{ ${lookProductFields} }
   },
   rows[] { _key, label, value },
-  stats[] { _key, value, label },
+  stats[] { _key, value, label, footnote },
   slides[] {
     _key, image, mediaKind,
     "aspect": image.asset->metadata.dimensions.aspectRatio,

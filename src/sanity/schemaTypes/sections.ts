@@ -4,6 +4,8 @@ import designops from "../../../designops.config.json";
 import { defineArrayMember, defineField, defineType } from "sanity";
 import type { SanityClient } from "sanity";
 
+import { sources } from "./shared";
+
 /*
   Page-builder sections mirroring the Figma "[i] Design Library — SDR"
   components. Every section carries a colorMode matching the library's
@@ -691,6 +693,213 @@ export const sectionThreeD = defineType({
   },
 });
 
+/* ── Method shared sections (Figma Method/Sections, 37505:3440) ──
+   The four most-used blocks on the IA pages. Each is token-only and
+   carries its AEO job in the schema description so editors write the
+   right thing into it. */
+
+/* Text intro (37505:3536): eyebrow + question-form H2 on the left,
+   answer-first prose + one related link on the right. This is how a
+   page clears the 300-word depth gate. */
+export const sectionTextIntro = defineType({
+  name: "sectionTextIntro",
+  icon: icons["text"],
+  title: "Text intro",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Eyebrow" }),
+    defineField({
+      name: "headline",
+      title: "Heading (phrase it as the question a visitor would type)",
+      type: "string",
+      initialValue: "Question-form heading that a visitor would type?",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "body",
+      title: "Body",
+      description: "First paragraph answers the heading directly in 40–60 words; the rest add numbers, places, certifications and limits. Aim for 120–200 words here.",
+      type: "blockContent",
+      initialValue: () =>
+        [
+          "Opening paragraph answers the heading directly in 40–60 words. It names the thing, the audience, and the outcome, then the following paragraphs add the specifics — process, materials, timelines, locations — that make the answer complete.",
+          "Second paragraph carries the detail: numbers, named places, named certifications, and the limits of the claim. Third paragraphs are welcome; the page-level target is 300+ words of real content, not padding.",
+        ].map((text) => ({ _type: "block", _key: key(), style: "normal", markDefs: [], children: [{ _type: "span", _key: key(), text, marks: [] }] })),
+    }),
+    defineField({
+      name: "link",
+      title: "Related page link",
+      type: "object",
+      options: { columns: 2 },
+      fields: [
+        defineField({ name: "label", type: "string", initialValue: "Related page link" }),
+        defineField({ name: "url", type: "string", initialValue: "/" }),
+      ],
+    }),
+  ],
+  preview: {
+    select: { title: "headline", subtitle: "eyebrow" },
+    prepare: ({ title, subtitle }) => ({ title: title ?? "Text intro", subtitle }),
+  },
+});
+
+/* Stats bar (37506:3714): four value + label pairs between hairlines.
+   Values are literal facts and must read identically wherever they
+   appear; every number points at a dated source (footnote marker). */
+export const sectionStats = defineType({
+  name: "sectionStats",
+  icon: icons["bar-chart"],
+  title: "Stats bar",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({
+      name: "stats",
+      title: "Stats",
+      type: "array",
+      validation: (rule) => rule.min(2).max(4),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "statFact",
+          fields: [
+            defineField({ name: "value", title: "Value", type: "string", description: "As displayed: “400+”, “2007”, “7”.", validation: (rule) => rule.required() }),
+            defineField({ name: "label", title: "Label", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "footnote", title: "Source #", type: "number", description: "1-based index into Sources below; renders the superscript marker.", validation: (rule) => rule.min(1).integer() }),
+          ],
+          preview: { select: { title: "value", subtitle: "label" } },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["400+", "Projects completed since 2007", 1],
+          ["2007", "Founded in Seattle, Washington", 1],
+          ["7", "Predesigned series · 32 floor plans", 2],
+          ["6 states", "Delivered across the West and beyond", 2],
+        ].map(([value, label, footnote]) => ({ _type: "statFact", _key: key(), value, label, footnote })),
+    }),
+    sources(),
+  ],
+  preview: {
+    select: { stats: "stats" },
+    prepare: ({ stats }) => ({ title: "Stats bar", subtitle: ((stats as { value?: string }[] | undefined) ?? []).map((s) => s.value).filter(Boolean).join(" · ") }),
+  },
+});
+
+/* Feature list (37508:4069): icon + title + body + link, 3 or 4
+   across under a section header — benefits, partnership models,
+   financing options, certifications. Each item is a liftable fact. */
+export const sectionFeatureList = defineType({
+  name: "sectionFeatureList",
+  icon: icons["th-list"],
+  title: "Feature list",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Eyebrow" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Heading that frames the set of features" }),
+    defineField({
+      name: "columns",
+      title: "Columns",
+      type: "number",
+      options: { list: [3, 4], layout: "radio", direction: "horizontal" },
+      initialValue: 3,
+    }),
+    defineField({
+      name: "items",
+      title: "Features",
+      type: "array",
+      validation: (rule) => rule.min(2).max(8),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "feature",
+          fields: [
+            defineField({ name: "icon", title: "Icon", type: "image", description: "Optional 40px glyph; a neutral tile shows when empty." }),
+            defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "body", type: "text", rows: 3, description: "Two or three sentences with a concrete, checkable detail." }),
+            defineField({
+              name: "link",
+              title: "Link",
+              type: "object",
+              options: { columns: 2 },
+              fields: [
+                defineField({ name: "label", type: "string" }),
+                defineField({ name: "url", type: "string" }),
+              ],
+            }),
+          ],
+          preview: { select: { title: "title", subtitle: "body", media: "icon" } },
+        }),
+      ],
+      initialValue: () =>
+        [1, 2, 3].map(() => ({
+          _type: "feature",
+          _key: key(),
+          title: "Feature title",
+          body: "Two or three sentences that explain the feature with a concrete detail a reader could verify.",
+          link: { label: "Learn more", url: "/" },
+        })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", items: "items" },
+    prepare: ({ title, items }) => ({ title: title ?? "Feature list", subtitle: `${(items as unknown[] | undefined)?.length ?? 0} feature(s)` }),
+  },
+});
+
+/* CTA band (37505:3598): dark conversion band — heading, reassurance
+   copy, two CTAs. Closes most pages above the footer. The primary CTA
+   points at /get-started, which opens the intake tray in place. */
+export const sectionCtaBand = defineType({
+  name: "sectionCtaBand",
+  icon: icons["bolt"],
+  title: "CTA band",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("dark"),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Ready to talk about your site, your budget, and your timeline?", validation: (rule) => rule.required() }),
+    defineField({
+      name: "body",
+      title: "Reassurance copy",
+      type: "text",
+      rows: 3,
+      initialValue: "A ten-minute intake tells us where you're building and what you need. We reply within two business days with a recommended path and a realistic range.",
+    }),
+    defineField({
+      name: "ctaPrimary",
+      title: "Primary button",
+      type: "object",
+      options: { columns: 2 },
+      fields: [
+        defineField({ name: "label", type: "string", initialValue: "Get started" }),
+        defineField({ name: "url", type: "string", initialValue: "/get-started" }),
+      ],
+      initialValue: { label: "Get started", url: "/get-started" },
+    }),
+    defineField({
+      name: "ctaSecondary",
+      title: "Secondary button",
+      type: "object",
+      options: { columns: 2 },
+      fields: [
+        defineField({ name: "label", type: "string" }),
+        defineField({ name: "url", type: "string" }),
+      ],
+      initialValue: { label: "Talk to our team", url: "/contact" },
+    }),
+  ],
+  preview: {
+    select: { title: "headline" },
+    prepare: ({ title }) => ({ title: title ?? "CTA band", subtitle: "CTA band" }),
+  },
+});
+
 /* FAQ — question/answer accordion (Figma "FAQ" 37507:3841). Every
    item is emitted as FAQPage/Question/Answer JSON-LD by the page route,
    so the questions buyers actually type become quotable answers; the
@@ -825,6 +1034,10 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionReviews" }),
                 defineArrayMember({ type: "sectionThreeD" }),
                 defineArrayMember({ type: "sectionFaq" }),
+                defineArrayMember({ type: "sectionTextIntro" }),
+                defineArrayMember({ type: "sectionStats" }),
+                defineArrayMember({ type: "sectionFeatureList" }),
+                defineArrayMember({ type: "sectionCtaBand" }),
               ],
             }),
           ],
@@ -887,6 +1100,10 @@ export const sectionTypes = [
   sectionReviews,
   sectionThreeD,
   sectionFaq,
+  sectionTextIntro,
+  sectionStats,
+  sectionFeatureList,
+  sectionCtaBand,
   sectionExperiment,
   abResult,
 ];

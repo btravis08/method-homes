@@ -61,6 +61,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Shared sections batch 1 shipped (code)
+- Text intro, Stats bar, Feature list, CTA band built from the Figma
+  design context (37505:3536, 37506:3714, 37508:4069, 37505:3598):
+  Sanity object types with AEO-minded field descriptions, components
+  with Figma defaults, SectionRenderer + SectionList cases, /library
+  entries, page.ts + experiment of-lists. Verified: build, Playwright
+  at 1440 and 428 (no overflow), token inspector 0 off-token.
+- Decisions baked in: stat values are DOM text with a 1-based
+  `footnote` → `sources[]` (label, url, date) rendered as the dated
+  sources line; the CTA band's primary button points at /get-started
+  so the intake tray opens in place; feature icons are optional
+  images with a neutral tile fallback.
+- Token gaps to resolve at the rebrand export (A1): Method spacing
+  3xl/5xl/7xl added now (24/40/64) and `--container-page` 80rem; 2xl
+  stays 24 until Method's 20 replaces it; body-lg (18/28) has no
+  template type step (body-md used); the comp's black primary button
+  on the dark band conflicts with the mode-flipping `--btn` token.
+
 ### 2026-10-03 — Figma page frames reconciled to the scheme
 - Audit of the 39 page frames (their names embed the route): 32
   matched; 13 frames carried drift — series pages as

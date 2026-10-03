@@ -343,6 +343,64 @@ export interface SectionFaq extends SectionBase {
   items?: FaqItem[];
 }
 
+export interface SectionLink {
+  label?: string;
+  url?: string;
+}
+
+export interface SourceRef {
+  _key: string;
+  label?: string;
+  url?: string;
+  date?: string;
+}
+
+export interface SectionTextIntro extends SectionBase {
+  _type: "sectionTextIntro";
+  eyebrow?: string;
+  headline?: string;
+  body?: PortableTextBlock[];
+  link?: SectionLink | null;
+}
+
+export interface StatFact {
+  _key: string;
+  value?: string;
+  label?: string;
+  /* 1-based index into sources[] */
+  footnote?: number;
+}
+
+export interface SectionStats extends SectionBase {
+  _type: "sectionStats";
+  stats?: StatFact[];
+  sources?: SourceRef[];
+}
+
+export interface FeatureItem {
+  _key: string;
+  icon?: SanityImageSource;
+  title?: string;
+  body?: string;
+  link?: SectionLink | null;
+}
+
+export interface SectionFeatureList extends SectionBase {
+  _type: "sectionFeatureList";
+  eyebrow?: string;
+  headline?: string;
+  columns?: 3 | 4;
+  items?: FeatureItem[];
+}
+
+export interface SectionCtaBand extends SectionBase {
+  _type: "sectionCtaBand";
+  headline?: string;
+  body?: string;
+  ctaPrimary?: SectionLink | null;
+  ctaSecondary?: SectionLink | null;
+}
+
 export interface ExperimentVariant {
   _key: string;
   label?: string;
@@ -369,6 +427,10 @@ export type PageSection =
   | SectionReviews
   | SectionThreeD
   | SectionFaq
+  | SectionTextIntro
+  | SectionStats
+  | SectionFeatureList
+  | SectionCtaBand
   | SectionExperiment;
 
 export interface Page {
