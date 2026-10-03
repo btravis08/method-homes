@@ -119,10 +119,16 @@ this list (§8 is the per-template sheet).
 
 Owner Bryce (design), Claude (token export, scripting).
 
-- [ ] A1 Figma edit access for the MCP account on
-      `9nqsOUuF2UrgukNYok3Oko` (blocker since 2026-08). Then: export
-      the variable collections → `design/figma-tokens/`, map to
-      `globals.css` semantic vars, `npm run tokens`, commit.
+- [~] A1 Figma MCP access on `9nqsOUuF2UrgukNYok3Oko`: VERIFIED
+      2026-10-03 (connector authorized as brycetravis@gmail.com, Full
+      seat; reads and writes the file). The "blocker since 2026-08"
+      note was stale. Still to do: export the variable collections →
+      `design/figma-tokens/`, map to `globals.css` semantic vars,
+      `npm run tokens`, commit. Precondition on the design side: the
+      Method color/spacing/type variables must exist as a collection
+      with modes (today the library binds to Colors/Spacing/Radius
+      variables + Geist text styles — confirm these are the final
+      brand values before export).
 - [ ] A2 Fonts: license Method's production faces (Geist per the
       file, or the brand's choice); replace the SDR trial cuts in
       `src/fonts/`; add the "Display XL" text style (176px wordmark

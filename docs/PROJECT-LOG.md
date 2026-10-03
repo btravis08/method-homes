@@ -61,6 +61,17 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — MCP access re-verified (Figma blocker was stale)
+- Figma MCP is authorized as brycetravis@gmail.com (Full seat, admin
+  on the Pro teams) and reads/writes the Method library file; the IA
+  Design page, libraries and 39 page frames were all scripted through
+  it today. The "edit access denied" blocker in AGENTS.md dated from
+  the earlier bryce@weareenvoy.com authorization and is removed.
+  Sanity MCP and GitHub MCP are connected in the session too. What
+  still needs Bryce for access: Search Console (service account →
+  Actions secrets), Vercel env vars, Sanity CORS for the launch
+  domain — none of these are MCP connectors.
+
 ### 2026-10-03 — First production QA baseline: 46/100
 - `qa.yml` run 1 over 80 of 209 sitemap URLs. Strong: headings
   (78/80), alt text (78/80), indexability (79/80). Weak: metadata

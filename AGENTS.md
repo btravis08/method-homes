@@ -98,13 +98,16 @@ staging/design use.
 - File `9nqsOUuF2UrgukNYok3Oko` ("[i] Design Library — Method"),
   entry node 31158:18043; designops.figma.fileKey already points at
   it (arms drift-check + comp tooling).
-- BLOCKER: the Figma MCP connector (authorized as
-  bryce@weareenvoy.com) needs EDIT access to this file — currently
-  denied. Once granted: pull variable collections with
+- ACCESS (re-verified 2026-10-03): the Figma MCP connector is now
+  authorized as brycetravis@gmail.com with a Full seat (admin) on the
+  Pro teams, and it reads AND writes this file (the whole IA Design
+  page was scripted through it). The old "edit access denied" blocker
+  (connector then authorized as bryce@weareenvoy.com) is gone — do
+  not report it. Next: pull variable collections with
   get_variable_defs, map them into src/app/globals.css (replacing the
   SDR-derived palette), export tokens to design/figma-tokens/, run
   `npm run tokens`, swap fonts + Logo, and re-comp the section
-  library against Method frames.
+  library against Method frames. Rate limit ~200 tool calls/day.
 - Until the rebrand, fonts are SDR's TRIAL cuts (Feature Deck /
   Maison Neue) — licensing must be resolved before production.
 - IA Design page `36373:44911` (built 2026-10-03) holds the full
