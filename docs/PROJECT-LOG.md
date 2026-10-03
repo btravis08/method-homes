@@ -61,6 +61,33 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Figma restructured: every section and page is a component set with Device=Desktop|Mobile (Bryce's request)
+- Shared library (37505:3440): all 35 section components are now
+  component sets with a `Device` variant property (existing sets —
+  50/50, Card grid, Feature list — gained Device alongside their
+  Image/Columns props). Editorial library (37521:15243): all 13 sets
+  gained Device per state (e.g. Build journey 4 steps × 2 = 8
+  variants; Interstitial 5 kinds × 2 = 10). Pages (37509:3821): all
+  40 page frames became component sets `Page / <name> — <route>` with
+  Device=Desktop (the original 1440 frame) and Device=Mobile (a 428
+  clone whose every section instance is switched to its Mobile
+  variant). Labels re-attached; Pages re-flowed 3 per row.
+- The Mobile variants are a SCRIPTED FIRST PASS for Bryce to finesse
+  (A4): horizontal rows become vertical stacks, 24px gutters, fill
+  widths, type scaled one to two steps (60→40, 48→36, 40→32 …) with
+  108–120% line height, images proportional to the 380 column,
+  grids one column, nav/sub-nav/filter bar as wrapping bars (nav
+  hides its link list). Known rough spots: Carousel stacks its slides
+  (should scroll), Filter bar wraps tall, Footer/Author hero are long
+  stacks, the hero wordmark is 56px.
+- Scripting lessons (added to AGENTS.md): flipping a HORIZONTAL
+  auto-layout to VERTICAL while a child still has layoutGrow=1 makes
+  that child FILL the hug-sized parent and balloon to thousands of px
+  — set the child's `layoutSizingVertical = "HUG"` and `layoutGrow =
+  0` in the same pass; FILL cannot be set on absolute-positioned
+  children (guard `layoutPositioning === "ABSOLUTE"`); variant names
+  in a set must share the property keys (`Kind=Image, Device=Mobile`).
+
 ### 2026-10-03 — Shared sections batch 1 shipped (code)
 - Text intro, Stats bar, Feature list, CTA band built from the Figma
   design context (37505:3536, 37506:3714, 37508:4069, 37505:3598):

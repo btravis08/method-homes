@@ -136,11 +136,14 @@ Owner Bryce (design), Claude (token export, scripting).
 - [ ] A3 Logo + favicon + OG default image into `public/method/brand/`
       and wired as the `openGraph.images` fallback in the root layout
       (QA G4 fails site-wide on "no og:image" until then).
-- [ ] A4 Mobile (428) and tablet (1024) frames for all 31 shared
-      sections, the 9 editorial sections, the 6 Rivian-derived
-      patterns and the 5 interstitials. Hero / Series, Lineup, Finish
-      levels, Size it up and We deliver to you need explicit mobile
-      behavior (toggle → segmented control; diagram → stacked).
+- [~] A4 Mobile (428) variants: SCRIPTED FIRST PASS exists for every
+      section (shared + editorial) and every page as `Device=Mobile`
+      variants of their component sets (2026-10-03). Still: Bryce's
+      finesse pass — Carousel → horizontal scroller, Filter bar → one
+      scrolling row, Nav → hamburger pattern, Hero / Series wordmark
+      size, Lineup / Finish levels / Size it up / We deliver to you
+      toggles → segmented controls, diagrams stacked; then tablet
+      (1024) variants if wanted (a third Device value).
 - [ ] A5 Design finesse pass over the 39 frames. For each frame, the
       AEO review board (37514:13776) must stay green: words ≥300, ≥2
       question H2s, FAQ where listed in §5, byline on articles, NAP on
@@ -623,6 +626,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Figma restructured (Bryce's request): every section
+  (35 shared + 13 editorial sets) and all 40 pages are component sets
+  with Device=Desktop|Mobile; the Mobile variants are a scripted first
+  pass for the finesse pass (A4 now [~]).
 - 2026-10-03 — Shared sections batch 1 in code: Text intro, Stats
   bar (footnotes + sources), Feature list, CTA band — schema, preview
   twin, /library entries, zero off-token readings. globals.css gained
