@@ -1,10 +1,19 @@
 import type { PortableTextBlock } from "next-sanity";
 import type { SanityImageSource } from "@sanity/image-url";
 
-export type ProjectCategory = "residential" | "commercial";
+export type ProjectCategory = "residential" | "predesigned" | "commercial";
+
+export interface ProjectTestimonial {
+  quote?: string;
+  clientName?: string;
+  clientDetail?: string;
+  date?: string;
+  rating?: number;
+}
 
 export interface Project {
   _id: string;
+  _updatedAt?: string;
   title: string;
   slug: string;
   category: ProjectCategory;
@@ -17,6 +26,18 @@ export interface Project {
   bedrooms?: number;
   bathrooms?: number;
   completedYear?: number;
+  /* case-study facts (AEO play 7): the series it was built from, the
+     module count, contract-to-keys months, an optional cost band, and
+     the site's coordinates for House.geo */
+  series?: string;
+  modules?: number;
+  timelineMonths?: number;
+  costBand?: string;
+  geo?: { lat?: number; lng?: number } | null;
+  challenge?: string;
+  approach?: string;
+  testimonial?: ProjectTestimonial | null;
+  plans?: Array<{ _key: string; label?: string; url?: string; size?: number }>;
   body?: PortableTextBlock[];
 }
 
@@ -308,6 +329,20 @@ export interface SectionRichText extends SectionBase {
   body?: PortableTextBlock[];
 }
 
+export interface FaqItem {
+  _key: string;
+  question?: string;
+  answer?: string;
+}
+
+export interface SectionFaq extends SectionBase {
+  _type: "sectionFaq";
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  items?: FaqItem[];
+}
+
 export interface ExperimentVariant {
   _key: string;
   label?: string;
@@ -333,10 +368,14 @@ export type PageSection =
   | SectionGallery
   | SectionReviews
   | SectionThreeD
+  | SectionFaq
   | SectionExperiment;
 
 export interface Page {
   _id: string;
+  /* last publish — the page's dateModified (visible freshness line +
+     WebPage.dateModified) */
+  _updatedAt?: string;
   title: string;
   slug: string;
   showFooterTagline?: boolean;
@@ -399,6 +438,10 @@ export interface SiteSettings {
   phone?: string;
   email?: string;
   address?: string;
+  city?: string;
+  region?: string;
+  postalCode?: string;
+  sameAs?: string[];
   announcement?: {
     enabled?: boolean;
     text?: string;

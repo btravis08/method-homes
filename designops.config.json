@@ -96,7 +96,7 @@
       },
       {
         "stage": "consideration",
-        "text": "Method Homes vs Stillwater Dwellings vs Dvele \u2014 how do they compare?"
+        "text": "Method Homes vs Stillwater Dwellings vs Dvele — how do they compare?"
       },
       {
         "stage": "decision",
@@ -114,6 +114,8 @@
     "organization": {
       "legalName": "Method Homes",
       "logo": "/method/brand/logo-nav.webp",
+      "foundingDate": "2007",
+      "foundingLocation": "Seattle, Washington",
       "sameAs": [],
       "areaServed": [
         "Washington",
@@ -122,7 +124,8 @@
         "Idaho",
         "Montana",
         "British Columbia"
-      ]
+      ],
+      "_note": "foundingDate: keyMessages and the site copy say 2007; docs/SEO-PLAN.md recorded 2008 from the old site — Bryce to confirm the incorporation year, then both files agree. sameAs here is the fallback; Site Settings > Official profiles wins when set."
     },
     "competitors": [
       {

@@ -11,19 +11,31 @@ import { FooterTagline } from "@/components/FooterTagline";
 import { PageGate } from "@/components/PageGate";
 import { buildSliderCardMap, SectionRenderer } from "@/components/SectionRenderer";
 import { gateCookieName, gateCookieValue } from "@/lib/gate";
-import { JsonLd, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, faqPage, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
 import { seoMeta } from "@/sanity/lib/seo";
-import type { Page } from "@/sanity/types";
+import type { FaqItem, Page, PageSection } from "@/sanity/types";
+
+/* Every FAQ item the page shows — top-level FAQ sections plus those in
+   an experiment's CONTROL variant (the first one), which is what
+   no-JS visitors and crawlers receive. Pooled into one FAQPage node. */
+function collectFaq(sections: PageSection[] | undefined): FaqItem[] {
+  const out: FaqItem[] = [];
+  for (const section of sections ?? []) {
+    if (section._type === "sectionFaq") out.push(...(section.items ?? []));
+    else if (section._type === "sectionExperiment") out.push(...collectFaq(section.variants?.[0]?.sections));
+  }
+  return out;
+}
 
 /* Plain text from a section tree: strings and Portable Text blocks in
    copy-bearing fields, longest-first — the meta description fallback
    when the SEO field is empty, so no CMS page ships without one */
 function describeSections(sections: unknown, max = 155): string | undefined {
   const texts: string[] = [];
-  const KEYS = new Set(["body", "description", "copy", "text", "headline", "subtitle", "quote", "title"]);
+  const KEYS = new Set(["body", "description", "copy", "text", "headline", "subtitle", "quote", "title", "intro", "answer"]);
   const grab = (v: unknown): string => {
     if (typeof v === "string") return v;
     if (Array.isArray(v))
@@ -106,16 +118,41 @@ export default async function CmsPage({
     return <PreviewGate kind="page" slug={slug} initial={page} sliderCards={sliderCards} />;
   }
 
+  const path = `/${slug}`;
+  const crumbs = breadcrumbList([{ name: page.title, path }]);
+  const updated = updatedLabel(page._updatedAt);
+
   // Section-built page
   if (page.sections?.length) {
+    const faq = collectFaq(page.sections);
     return (
       <div data-mode="light" className="flex flex-col items-start bg-surface">
-        <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description || describeSections(page.sections), path: `/${slug}` })} />
+        <JsonLd
+          data={webPage({
+            /* a page that IS a FAQ types itself as one; a page with a
+               FAQ section among others stays a WebPage and carries the
+               FAQPage node beside it */
+            type: faq.length && page.sections.every((s) => s._type === "sectionFaq" || s._type === "sectionHero") ? "FAQPage" : "WebPage",
+            name: page.seo?.title || page.title,
+            description: page.seo?.description || describeSections(page.sections),
+            path,
+            dateModified: page._updatedAt,
+          })}
+        />
+        <JsonLd data={crumbs} />
+        <JsonLd data={faqPage(path, faq)} />
         {/* the document heading: section headlines are display copy,
             not the page's name — answer engines want exactly one H1 */}
         <h1 className="sr-only">{page.title}</h1>
         {page.showFooterTagline && <FooterTagline />}
         <SectionRenderer sections={page.sections} />
+        {/* visible freshness: the date an engine can read off the page
+            (its twin is WebPage.dateModified above) */}
+        {updated && (
+          <p className="label w-full px-4 py-6 text-ink-3 md:px-8">
+            <time dateTime={page._updatedAt}>{updated}</time>
+          </p>
+        )}
       </div>
     );
   }
@@ -123,7 +160,8 @@ export default async function CmsPage({
   // Legacy page (heroImage + body)
   return (
     <article>
-      <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path: `/${slug}` })} />
+      <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path, dateModified: page._updatedAt })} />
+      <JsonLd data={crumbs} />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
         <h1 className="max-w-[56rem] font-display text-display-xl text-ink">
           {page.title}
@@ -148,6 +186,11 @@ export default async function CmsPage({
           <div className="prose prose-neutral max-w-none dark:prose-invert">
             <PortableText value={page.body} />
           </div>
+          {updated && (
+            <p className="label pt-8 text-ink-3">
+              <time dateTime={page._updatedAt}>{updated}</time>
+            </p>
+          )}
         </div>
       )}
     </article>

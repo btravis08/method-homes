@@ -19,7 +19,7 @@ import { MotionProvider } from "@/components/MotionProvider";
 import { SmoothScroll } from "@/components/SmoothScroll";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
-import { navigationQuery, siteSettingsQuery } from "@/sanity/lib/queries";
+import { navigationQuery, projectRatingsQuery, siteSettingsQuery } from "@/sanity/lib/queries";
 import type { NavigationDoc, NavLinkDoc, SiteSettingsDoc } from "@/sanity/types";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -96,11 +96,38 @@ function toNavData(doc: NavigationDoc | null): NavData | undefined {
    answer engine resolves "Method Homes" to (name, logo, contact,
    service area, other profiles). Contact details come from Site
    Settings; the rest from designops aeo.organization. */
-function organizationJsonLd(settings: SiteSettingsDoc | null) {
+function organizationJsonLd(settings: SiteSettingsDoc | null, ratings: number[]) {
   const base = designops.site.baseUrl;
   const org = designops.aeo.organization;
   const name = settings?.companyName || designops.aeo.brand;
-  const address = typeof settings?.address === "string" ? settings.address : undefined;
+  const street = typeof settings?.address === "string" ? settings.address.replace(/\s*\n\s*/g, ", ").trim() : undefined;
+  const address =
+    street || settings?.city
+      ? {
+          "@type": "PostalAddress",
+          ...(street ? { streetAddress: street } : {}),
+          ...(settings?.city ? { addressLocality: settings.city } : {}),
+          ...(settings?.region ? { addressRegion: settings.region } : {}),
+          ...(settings?.postalCode ? { postalCode: settings.postalCode } : {}),
+          addressCountry: "US",
+        }
+      : undefined;
+  /* Site Settings' profile list wins; designops is the fallback */
+  const sameAs = (settings?.sameAs?.filter(Boolean).length ? settings.sameAs!.filter(Boolean) : org.sameAs) as string[];
+  /* AggregateRating from published client ratings on project pages —
+     computed, never typed, and only once there are enough to mean
+     something (a 5.0 from one review reads as a plant) */
+  const rated = ratings.filter((r) => typeof r === "number" && r >= 1 && r <= 5);
+  const aggregateRating =
+    rated.length >= 3
+      ? {
+          "@type": "AggregateRating",
+          ratingValue: Math.round((rated.reduce((a, b) => a + b, 0) / rated.length) * 10) / 10,
+          reviewCount: rated.length,
+          bestRating: 5,
+          worstRating: 1,
+        }
+      : undefined;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -113,11 +140,14 @@ function organizationJsonLd(settings: SiteSettingsDoc | null) {
         logo: `${base}${org.logo}`,
         description:
           "Architect-led prefab home builder: predesigned series and custom modular residences, built indoors and delivered to the site.",
+        ...(org.foundingDate ? { foundingDate: org.foundingDate } : {}),
+        ...(org.foundingLocation ? { foundingLocation: { "@type": "Place", name: org.foundingLocation } } : {}),
         ...(settings?.phone ? { telephone: settings.phone } : {}),
         ...(settings?.email ? { email: settings.email } : {}),
-        ...(address ? { address: { "@type": "PostalAddress", streetAddress: address } } : {}),
+        ...(address ? { address } : {}),
         areaServed: org.areaServed.map((area) => ({ "@type": "AdministrativeArea", name: area })),
-        ...(org.sameAs.length ? { sameAs: org.sameAs } : {}),
+        ...(sameAs.length ? { sameAs } : {}),
+        ...(aggregateRating ? { aggregateRating } : {}),
       },
       {
         "@type": "WebSite",
@@ -136,9 +166,10 @@ export default async function SiteLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [navDoc, settings] = await Promise.all([
+  const [navDoc, settings, ratings] = await Promise.all([
     sanityFetch<NavigationDoc | null>(navigationQuery, {}, null),
     sanityFetch<SiteSettingsDoc | null>(siteSettingsQuery, {}, null),
+    sanityFetch<number[]>(projectRatingsQuery, {}, []),
   ]);
   const { isEnabled: isDraft } = await draftMode();
 
@@ -187,7 +218,7 @@ export default async function SiteLayout({
         )}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(settings)) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd(settings, ratings)) }}
         />
         <Navigation data={toNavData(navDoc)} />
         <main className="flex-1">

@@ -29,9 +29,21 @@ export const siteSettings = defineType({
     }),
     defineField({
       name: "address",
-      title: "Address",
+      title: "Street address",
+      description: "Street and suite only — city, state and ZIP have their own fields so the PostalAddress schema is exact.",
       type: "text",
-      rows: 3,
+      rows: 2,
+    }),
+    defineField({ name: "city", title: "City", type: "string" }),
+    defineField({ name: "region", title: "State / province", description: "Two-letter code, e.g. WA.", type: "string" }),
+    defineField({ name: "postalCode", title: "ZIP / postal code", type: "string" }),
+    defineField({
+      name: "sameAs",
+      title: "Official profiles",
+      description:
+        "The company's other homes on the web — Google Business Profile, LinkedIn, Instagram, Houzz, Wikipedia/Wikidata if any. These let answer engines resolve “Method Homes” to one entity (Organization.sameAs). Name, address and phone must read identically on every one of them.",
+      type: "array",
+      of: [{ type: "url" }],
     }),
     defineField({
       name: "announcement",

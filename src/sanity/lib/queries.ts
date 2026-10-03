@@ -12,7 +12,8 @@ const projectFields = groq`
   squareFeet,
   bedrooms,
   bathrooms,
-  completedYear
+  completedYear,
+  series
 `;
 
 export const allProjectsQuery = groq`
@@ -38,9 +39,24 @@ export const featuredProjectsQuery = groq`
 export const projectBySlugQuery = groq`
   *[_type == "project" && slug.current == $slug][0] {
     ${projectFields},
+    _updatedAt,
+    modules,
+    timelineMonths,
+    costBand,
+    geo,
+    challenge,
+    approach,
+    testimonial,
+    plans[] { _key, label, "url": asset->url, "size": asset->size },
     gallery,
     body
   }
+`;
+
+/* every published client rating — the Organization's AggregateRating
+   (site layout) is computed from these, never typed by hand */
+export const projectRatingsQuery = groq`
+  *[_type == "project" && defined(testimonial.rating)].testimonial.rating
 `;
 
 /* Active products only (legacy documents without a status count as
@@ -85,6 +101,7 @@ const innerSectionFields = groq`
   secondaryCta,
   title,
   description,
+  intro,
   items,
   body,
   image,
@@ -238,6 +255,7 @@ export const storeSettingsQuery = groq`
 export const pageBySlugQuery = groq`
   *[_type == "page" && slug.current == $slug][0] {
     _id,
+    _updatedAt,
     title,
     "slug": slug.current,
     showFooterTagline,
@@ -281,6 +299,10 @@ export const siteSettingsQuery = groq`
     phone,
     email,
     address,
+    city,
+    region,
+    postalCode,
+    sameAs,
     announcement
   }
 `;

@@ -907,6 +907,88 @@ export function Reviews({
   );
 }
 
+/* ---------- FAQ (question / answer accordion) ---------- */
+
+export interface FaqItemData {
+  _key?: string;
+  question?: string;
+  answer?: string;
+}
+
+const defaultFaqItems: FaqItemData[] = [
+  {
+    question: "How long does a predesigned home take from contract to move-in?",
+    answer:
+      "Most predesigned homes are complete 8–12 months after contract: 6–8 weeks of design and permitting, 10–14 weeks in the factory, and 2–4 months of on-site finish after set day.",
+  },
+  {
+    question: "What does the price include?",
+    answer:
+      "The published series price covers the modules complete — structure, envelope, finishes, fixtures and appliances — delivered to the site. Foundation, utilities, site work and permits are quoted separately for your lot.",
+  },
+  {
+    question: "Where do you deliver?",
+    answer:
+      "We set homes across Washington, Oregon, California, Idaho, Montana and British Columbia from our factory in Ferndale, WA.",
+  },
+];
+
+/* Native <details>/<summary>: the answers are in the HTML for every
+   crawler and reader (no JS gate on the content an answer engine
+   quotes), the open/close needs no script, and the first item starts
+   open so the section never reads as an empty list of headings. The
+   questions are H3s on purpose — question-form headings are what the
+   AEO grader's Content pillar counts. */
+export function Faq({
+  mode = "light",
+  eyebrow = "FAQ",
+  title = "Questions we hear most",
+  intro,
+  items = defaultFaqItems,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  items?: FaqItemData[];
+}) {
+  const list = items.filter((item) => item.question && item.answer);
+  return (
+    <section data-mode={mode} className="w-full bg-surface text-ink">
+      <SectionReveal className="grid w-full grid-cols-1 gap-y-10 px-4 py-14 md:grid-cols-[minmax(0,26rem)_1fr] md:gap-x-10 md:px-8 md:py-24">
+        <div className="flex flex-col gap-4">
+          {eyebrow && <p className="label text-ink-2">{eyebrow}</p>}
+          <h2 className="font-display text-title-lg">{title}</h2>
+          {intro && <p className="max-w-[26rem] text-body-md text-ink-2">{intro}</p>}
+        </div>
+        <div className="flex flex-col">
+          <RevealLine className="h-[1.5px] w-full bg-line" />
+          {list.map((item, i) => (
+            <details
+              key={item._key ?? i}
+              open={i === 0}
+              className="group border-b-[1.5px] border-line"
+            >
+              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 py-6 [&::-webkit-details-marker]:hidden">
+                <h3 className="text-body-md font-medium">{item.question}</h3>
+                <span
+                  aria-hidden
+                  className="mt-1 flex size-5 shrink-0 items-center justify-center text-ink transition-transform duration-300 group-open:rotate-45"
+                >
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="M7 1v12M1 7h12" />
+                  </svg>
+                </span>
+              </summary>
+              <p className="max-w-[44rem] pb-8 text-body-md text-ink-2">{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </SectionReveal>
+    </section>
+  );
+}
+
 /* ---------- 3D Viewer (FIBL placeholder) ---------- */
 
 export function ThreeDViewer({

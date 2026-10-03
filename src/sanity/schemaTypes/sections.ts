@@ -691,6 +691,72 @@ export const sectionThreeD = defineType({
   },
 });
 
+/* FAQ — question/answer accordion (Figma "FAQ" 37507:3841). Every
+   item is emitted as FAQPage/Question/Answer JSON-LD by the page route,
+   so the questions buyers actually type become quotable answers; the
+   AEO grader counts question-form headings and FAQPage schema. Keep
+   answers self-contained (40–120 words, one fact-dense paragraph). */
+export const sectionFaq = defineType({
+  name: "sectionFaq",
+  icon: icons["help-circle"],
+  title: "FAQ",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "FAQ" }),
+    defineField({ name: "title", type: "string", initialValue: "Questions we hear most" }),
+    defineField({
+      name: "intro",
+      title: "Intro",
+      description: "One or two sentences framing the set, or empty.",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "items",
+      title: "Questions",
+      type: "array",
+      validation: (rule) => rule.min(1),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "faqItem",
+          fields: [
+            defineField({
+              name: "question",
+              type: "string",
+              description: "Phrase it the way a buyer would ask it (who / what / how much / how long…).",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "answer",
+              type: "text",
+              rows: 4,
+              description: "Answer in the first sentence; add the number or range when there is one.",
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          preview: { select: { title: "question", subtitle: "answer" } },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["How long does a predesigned home take from contract to move-in?", "Most predesigned homes are complete 8–12 months after contract: 6–8 weeks of design and permitting, 10–14 weeks in the factory, and 2–4 months of on-site finish after set day."],
+          ["What does the price include?", "The published series price covers the modules complete — structure, envelope, finishes, fixtures and appliances — delivered to the site. Foundation, utilities, site work and permits are quoted separately for your lot."],
+          ["Where do you deliver?", "We set homes across Washington, Oregon, California, Idaho, Montana and British Columbia from our factory in Ferndale, WA."],
+        ].map(([question, answer]) => ({ _type: "faqItem", _key: key(), question, answer })),
+    }),
+  ],
+  preview: {
+    select: { title: "title", items: "items" },
+    prepare: ({ title, items }) => ({
+      title: title ?? "FAQ",
+      subtitle: `${(items as unknown[] | undefined)?.length ?? 0} question(s)`,
+    }),
+  },
+});
+
 /* D1 — A/B experiment: two-to-four variants, each a stack of normal
    sections. The split happens client-side from a cookie set before
    first paint, so every visitor receives the same cached HTML; the
@@ -758,6 +824,7 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionGallery" }),
                 defineArrayMember({ type: "sectionReviews" }),
                 defineArrayMember({ type: "sectionThreeD" }),
+                defineArrayMember({ type: "sectionFaq" }),
               ],
             }),
           ],
@@ -819,6 +886,7 @@ export const sectionTypes = [
   sectionGallery,
   sectionReviews,
   sectionThreeD,
+  sectionFaq,
   sectionExperiment,
   abResult,
 ];

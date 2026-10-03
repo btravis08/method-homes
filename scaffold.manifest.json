@@ -1,5 +1,5 @@
 {
-  "description": "Module ownership map and copier spec for the create-CLI scaffolder. The CLI copies the whole template minus 'site-specific' (and packs/); feature modules always ship as files \u2014 cross-module imports exist (SectionRenderer uses commerce card math, the library registry uses the legacy sections) \u2014 and runtime flags in designops.config.json gate what the Studio and site expose. Module lists below document which feature owns each file.",
+  "description": "Module ownership map and copier spec for the create-CLI scaffolder. The CLI copies the whole template minus 'site-specific' (and packs/); feature modules always ship as files — cross-module imports exist (SectionRenderer uses commerce card math, the library registry uses the legacy sections) — and runtime flags in designops.config.json gate what the Studio and site expose. Module lists below document which feature owns each file.",
   "base": [
     "designops.config.json",
     "scaffold.manifest.json",
@@ -44,6 +44,11 @@
     "scripts/tokens.mjs",
     "scripts/collect-lighthouse.mjs",
     "scripts/aeo-audit.mjs",
+    "docs/PROJECT-LOG.md",
+    "src/components/seo/**",
+    "src/app/llms-full.txt/**",
+    "src/design/aeo.queries.json",
+    "scripts/aeo-queries.mjs",
     "scripts/lib/aeo-prompts.mjs",
     "src/sanity/tools/Aeo.tsx",
     "src/sanity/tools/AeoPane.tsx",

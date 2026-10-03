@@ -1,6 +1,7 @@
 "use client";
 
 import history from "@/design/aeo.history.json";
+import queries from "@/design/aeo.queries.json";
 import report from "@/design/aeo.status.json";
 
 import designops from "../../../designops.config.json";
@@ -73,8 +74,21 @@ type Report = {
 };
 type Run = { t: string; score: number; level: number; pillars: Record<string, number>; visibility: number | null; citationRate: number | null };
 
+type QueryRow = { query: string; page: string; clicks: number; impressions: number; ctr: number; position: number | null };
+type Queries = {
+  generatedAt: string;
+  ran: boolean;
+  reason?: string;
+  range?: { startDate: string; endDate: string };
+  totals?: { clicks: number; impressions: number; queries: number; questionQueries: number };
+  questions: QueryRow[];
+  byPage?: Record<string, string[]>;
+  top: QueryRow[];
+};
+
 const DATA = report as unknown as Report;
 const RUNS = (history as { runs: Run[] }).runs;
+const QUERIES = queries as unknown as Queries;
 
 const PILLAR_BLURB: Record<string, string> = {
   technical: "Can an answer engine reach, parse and trust the page?",
@@ -430,6 +444,83 @@ function Analytics() {
   );
 }
 
+/* Search Console's question-form queries (scripts/aeo-queries.mjs):
+   the FAQ brief. Each row is a question people already type, where it
+   lands today and how often — a question with impressions and no
+   direct answer on that page is a sectionFaq item to write. */
+function Questions() {
+  const q = QUERIES;
+  const rows = q.questions.slice(0, 40);
+  const pages = Object.entries(q.byPage ?? {}).sort((a, b) => b[1].length - a[1].length).slice(0, 8);
+  return (
+    <Panel>
+      <div className="flex flex-col gap-xl">
+        <div className="flex flex-wrap items-baseline justify-between gap-lg">
+          <div className="flex flex-col gap-xs">
+            <Eyebrow>Questions people already ask</Eyebrow>
+            <h2 className="text-body-md text-ink">Search Console queries phrased as questions — the FAQ brief</h2>
+          </div>
+          <p className="text-body-sm text-ink-3">
+            {q.ran
+              ? `${q.totals?.questionQueries ?? rows.length} of ${q.totals?.queries ?? "?"} queries · ${q.range?.startDate} → ${q.range?.endDate} · ${ago(q.generatedAt)}`
+              : "not connected"}
+          </p>
+        </div>
+        {!q.ran ? (
+          <div className="flex flex-col gap-md rounded-md border border-line bg-surface p-xl text-body-sm text-ink-2">
+            <p className="text-ink">{q.reason}</p>
+            <ol className="list-decimal space-y-xs pl-xl">
+              <li>Google Cloud → create a service account, download its JSON key.</li>
+              <li>Search Console → the property → Settings → Users and permissions → add the service account email (Restricted is enough).</li>
+              <li>GitHub → repo Settings → Secrets → <code>GSC_SERVICE_ACCOUNT_JSON</code> (the key file's contents) and <code>GSC_SITE_URL</code> (e.g. <code>sc-domain:methodhomes.net</code>).</li>
+              <li>Run the <strong>aeo</strong> workflow — this panel fills on the next grade.</li>
+            </ol>
+            <p className="text-ink-3">Until then the tracked prompts in designops.config.json → aeo.prompts stand in for the question list.</p>
+          </div>
+        ) : (
+          <div className="grid gap-xl lg:grid-cols-[1fr_minmax(0,22rem)]">
+            <table className="w-full border-collapse text-body-sm">
+              <thead>
+                <tr className="text-left text-ink-3">
+                  <th className="label border-b border-line py-sm pr-lg font-medium">Question</th>
+                  <th className="label border-b border-line py-sm pr-lg font-medium">Lands on</th>
+                  <th className="label border-b border-line py-sm pr-lg text-right font-medium">Impr.</th>
+                  <th className="label border-b border-line py-sm pr-lg text-right font-medium">Clicks</th>
+                  <th className="label border-b border-line py-sm text-right font-medium">Pos.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((r) => (
+                  <tr key={r.query} className="border-b border-line/60 align-top">
+                    <td className="py-sm pr-lg text-ink">{r.query}</td>
+                    <td className="py-sm pr-lg font-mono text-ink-2">{r.page}</td>
+                    <td className="py-sm pr-lg text-right text-ink-2">{r.impressions.toLocaleString()}</td>
+                    <td className="py-sm pr-lg text-right text-ink-2">{r.clicks.toLocaleString()}</td>
+                    <td className="py-sm text-right text-ink-2">{r.position ?? "—"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="flex flex-col gap-lg">
+              <Eyebrow>FAQ brief by page</Eyebrow>
+              {pages.map(([page, qs]) => (
+                <div key={page} className="flex flex-col gap-xs">
+                  <p className="font-mono text-body-sm text-ink">{page}</p>
+                  <ul className="list-disc space-y-xs pl-xl text-body-sm text-ink-2">
+                    {qs.slice(0, 6).map((s) => (
+                      <li key={s}>{s}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </Panel>
+  );
+}
+
 function Bots() {
   const allowed = DATA.bots.filter((b) => b.allowed).length;
   return (
@@ -606,6 +697,7 @@ export default function AeoPane() {
         </div>
         <Pillars />
         <Analytics />
+        <Questions />
         <Bots />
         <Recommendations />
         <Pages />

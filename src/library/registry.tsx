@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 
 import {
   Carousel,
+  Faq,
   FiftyFifty,
   FullWidth,
   Gallery,
@@ -210,6 +211,17 @@ export const SECTIONS: SectionEntry[] = [
       mobile: { width: 428, height: 1497 },
     },
     render: (mode) => <Reviews mode={mode} />,
+  },
+  {
+    slug: "faq",
+    title: "FAQ",
+    group: "Page sections",
+    schemaType: "sectionFaq",
+    description:
+      "Question/answer accordion (native details/summary). Each item is emitted as FAQPage schema by the page route; questions render as H3s.",
+    modes: ["light", "dark"],
+    figmaNodeId: "37507:3841",
+    render: (mode) => <Faq mode={mode} />,
   },
   {
     slug: "ab-experiment",

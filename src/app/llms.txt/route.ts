@@ -45,7 +45,7 @@ export async function GET() {
     "",
     `> ${name} designs and builds architect-led prefab (modular) homes — predesigned series and custom residences — manufactured indoors and delivered to sites across ${org.areaServed.join(", ")}.${data.settings?.tagline ? ` ${data.settings.tagline}` : ""}`,
     "",
-    `Site: ${BASE} · Sitemap: ${BASE}/sitemap.xml`,
+    `Site: ${BASE} · Sitemap: ${BASE}/sitemap.xml · Full text: ${BASE}/llms-full.txt`,
     "",
     "## Start here",
     line("Home", "/", "overview of the series, process and recent projects"),

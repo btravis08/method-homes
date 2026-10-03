@@ -121,6 +121,71 @@ export const project = defineType({
       title: "Year completed",
       type: "number",
     }),
+    /* ── case-study facts (AEO play 7) ─────────────────────────────
+       A project page that states series, modules, timeline, cost band
+       and location is a citable case study; one with a photo and a
+       paragraph is a gallery item. The facts render as the stats
+       strip and feed House JSON-LD (geo, additionalProperty). */
+    defineField({
+      name: "series",
+      title: "Series / design",
+      description: "The predesigned series it was built from (e.g. Elemental, Cabin) or “Custom”.",
+      type: "string",
+    }),
+    defineField({
+      name: "modules",
+      title: "Modules",
+      description: "Number of factory modules set on site.",
+      type: "number",
+      validation: (rule) => rule.min(1).integer(),
+    }),
+    defineField({
+      name: "timelineMonths",
+      title: "Contract to keys (months)",
+      description: "Whole months from signed contract to move-in.",
+      type: "number",
+      validation: (rule) => rule.min(1).max(60),
+    }),
+    defineField({
+      name: "costBand",
+      title: "Cost band",
+      description: "Optional, with the client's consent: a range like “$650–750k all-in” or “$410/sq ft modules”. Shown as published; never a precise figure.",
+      type: "string",
+    }),
+    defineField({
+      name: "geo",
+      title: "Site coordinates",
+      description: "Drop the pin on the town, not the house — emitted as House.geo so engines place the project on a map.",
+      type: "geopoint",
+    }),
+    defineField({
+      name: "challenge",
+      title: "The brief / challenge",
+      description: "Two or three sentences: what the site, budget or schedule demanded.",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "approach",
+      title: "What we did",
+      description: "Two or three sentences: the design and construction decisions that answered it.",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "testimonial",
+      title: "Client testimonial",
+      description: "A named review (AEO play 4): quoted on the page and emitted as a Review on the House; ratings roll up into the site's AggregateRating.",
+      type: "object",
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        defineField({ name: "quote", title: "Quote", type: "text", rows: 4 }),
+        defineField({ name: "clientName", title: "Client name", description: "First name + last initial is fine (“Dana R.”).", type: "string" }),
+        defineField({ name: "clientDetail", title: "Detail", description: "e.g. “Owner, Hood River OR” or “Set March 2025”.", type: "string" }),
+        defineField({ name: "date", title: "Date", type: "date" }),
+        defineField({ name: "rating", title: "Rating (1–5)", type: "number", validation: (rule) => rule.min(1).max(5) }),
+      ],
+    }),
     defineField({
       name: "body",
       title: "Full description",

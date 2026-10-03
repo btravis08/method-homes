@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProjectCard } from "@/components/ProjectCard";
-import { JsonLd, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, itemList, JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import {
   allProjectsQuery,
@@ -11,12 +11,15 @@ import {
 import type { Project } from "@/sanity/types";
 import { seoMeta } from "@/sanity/lib/seo";
 
+import designops from "../../../../designops.config.json";
+
 const DESCRIPTION = "Completed Method Homes projects — residential and commercial prefab builds with location, size and series.";
 export const metadata: Metadata = seoMeta({ title: "Projects", description: DESCRIPTION, path: "/projects" });
 
 const filters = [
   { value: undefined, label: "All" },
   { value: "residential", label: "Residential" },
+  { value: "predesigned", label: "Predesigned" },
   { value: "commercial", label: "Commercial" },
 ] as const;
 
@@ -27,7 +30,7 @@ export default async function ProjectsPage({
 }) {
   const { category } = await searchParams;
   const activeCategory =
-    category === "residential" || category === "commercial"
+    category === "residential" || category === "predesigned" || category === "commercial"
       ? category
       : undefined;
 
@@ -41,7 +44,11 @@ export default async function ProjectsPage({
 
   return (
     <div>
-      <JsonLd data={webPage({ type: "CollectionPage", name: "Projects", description: DESCRIPTION, path: "/projects" })} />
+      <JsonLd data={webPage({ type: "CollectionPage", name: "Projects", description: DESCRIPTION, path: "/projects", extra: { mainEntity: { "@id": `${designops.site.baseUrl}/projects#list` } } })} />
+      <JsonLd data={breadcrumbList([{ name: "Projects", path: "/projects" }])} />
+      {/* the members, named: "which projects has Method Homes built?"
+          answers from this list, not from card markup */}
+      <JsonLd data={itemList("/projects", projects.map((p) => ({ name: p.title, path: `/projects/${p.slug}` })), "Method Homes projects")} />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
         <p className="label font-medium text-ink-2">
           Residential + Commercial

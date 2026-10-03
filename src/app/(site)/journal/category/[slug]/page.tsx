@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-import { JsonLd, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { seoMeta } from "@/sanity/lib/seo";
 import { urlFor, sanitySrcSet } from "@/sanity/lib/image";
@@ -110,6 +110,12 @@ export default async function JournalCategoryPage({
           description: category?.description,
           path: `/journal/category/${slug}`,
         })}
+      />
+      <JsonLd
+        data={breadcrumbList([
+          { name: "Journal", path: "/journal" },
+          { name: category?.title ?? "Journal", path: `/journal/category/${slug}` },
+        ])}
       />
       {/* masthead */}
       <header className="mx-auto flex max-w-3xl flex-col items-center gap-4 px-6 pb-16 pt-[8.75rem] text-center">

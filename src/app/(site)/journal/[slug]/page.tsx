@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 
 import { ArticleView } from "@/components/journal/ArticleView";
+import { breadcrumbList, JsonLd } from "@/components/seo/JsonLd";
 import { PostArticle } from "@/components/journal/PostArticle";
 import type { PostDoc, RelatedPost } from "@/components/journal/PostArticle";
 import {
@@ -127,6 +128,15 @@ export default async function JournalArticlePage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd(post, slug)) }}
+        />
+        <JsonLd
+          data={breadcrumbList([
+            { name: "Journal", path: "/journal" },
+            ...(post.categories?.[0]?.title && post.categories[0].slug
+              ? [{ name: String(post.categories[0].title), path: `/journal/category/${post.categories[0].slug}` }]
+              : []),
+            { name: post.title ?? slug, path: `/journal/${slug}` },
+          ])}
         />
         <PostArticle post={post} related={related} />
       </>

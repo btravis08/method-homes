@@ -722,6 +722,33 @@ git/seeds. Restart the dev server after dependency or Sanity schema
 changes. Node >= 22.12 required (Sanity CLI).
 
 
+## Project log (read it before deciding anything)
+
+`docs/PROJECT-LOG.md` is the permanent ledger: dated decisions, the
+AEO plays with their shipped/owed status, every input still needed
+from Bryce/Method (author roster, NAP, sameAs, founding year, series
+facts, case-study facts, Search Console secrets, press list, plan
+PDFs), and the identifiers to resume work. Append to it whenever a
+decision is made or a play ships — flag schema/SEO implications the
+moment they appear, not after the design is done. `docs/SEO-PLAN.md`
+(the audit-driven plan) and `docs/PLAYBOOK.md` (engineering rules)
+sit beside it.
+
+AEO structured-data conventions (2026-10-03): page routes emit their
+WebPage node plus `breadcrumbList(...)`; CMS pages pool every
+`sectionFaq` (incl. an experiment's control variant) into one
+`faqPage(...)`; index pages add `itemList(...)`; dated pages render
+`updatedLabel(_updatedAt)` visibly and as `dateModified`. Helpers in
+`src/components/seo/JsonLd.tsx`. Project pages are case studies
+(series, modules, timeline, cost band, geo, brief/approach, named
+testimonial → House + Review; Organization.aggregateRating is
+computed from ≥3 published ratings, never typed). Site Settings
+carries structured NAP + Official profiles (sameAs); the designops
+`aeo.organization` block is the fallback. `/llms-full.txt` is the
+full-text companion to `/llms.txt`. Search Console questions arrive
+via `scripts/aeo-queries.mjs` (secrets `GSC_SERVICE_ACCOUNT_JSON`,
+`GSC_SITE_URL`) into the AEO pane's "Questions people already ask".
+
 ## Session-history note
 
 This file is the durable memory. The founding session's full history

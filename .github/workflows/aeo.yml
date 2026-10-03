@@ -37,11 +37,18 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node scripts/aeo-audit.mjs
+      # Search Console: the questions people already type (FAQ brief).
+      # Skips, keeping the last real run, until the two secrets exist.
+      - name: Questions people already ask
+        env:
+          GSC_SERVICE_ACCOUNT_JSON: ${{ secrets.GSC_SERVICE_ACCOUNT_JSON }}
+          GSC_SITE_URL: ${{ secrets.GSC_SITE_URL }}
+        run: node scripts/aeo-queries.mjs
       - name: Commit report
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add src/design/aeo.status.json src/design/aeo.history.json
+          git add src/design/aeo.status.json src/design/aeo.history.json src/design/aeo.queries.json
           git diff --cached --quiet && echo "No changes" && exit 0
           git commit -m "Refresh AEO grade (scheduled)"
           for i in 1 2 3; do

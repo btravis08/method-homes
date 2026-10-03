@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import {
   Carousel,
+  Faq,
   FiftyFifty,
   FullWidth,
   Gallery,
@@ -330,6 +331,17 @@ export function SectionRenderer({ sections }: { sections: PageSection[] }) {
                 mode={section.colorMode}
                 title={section.title}
                 image={img(section.image, 1600)}
+              />
+            );
+          case "sectionFaq":
+            return (
+              <Faq
+                key={section._key}
+                mode={section.colorMode}
+                eyebrow={section.eyebrow}
+                title={section.title}
+                intro={section.intro}
+                items={section.items}
               />
             );
           case "sectionRichText":
