@@ -129,10 +129,11 @@ Owner Bryce (design), Claude (token export, scripting).
       with modes (today the library binds to Colors/Spacing/Radius
       variables + Geist text styles — confirm these are the final
       brand values before export).
-- [ ] A2 Fonts: license Method's production faces (Geist per the
+- [~] A2 Fonts: license Method's production faces (Geist per the
       file, or the brand's choice); replace the SDR trial cuts in
-      `src/fonts/`; add the "Display XL" text style (176px wordmark
-      H1 on Hero / Series) so it stops being an override.
+      `src/fonts/`. Done 2026-10-03: the "Display XL/Regular" text
+      style exists, bound to `Font size/display-xl` (176/120/72 by
+      device) — the Hero / Series wordmark is no longer an override.
 - [ ] A3 Logo + favicon + OG default image into `public/method/brand/`
       and wired as the `openGraph.images` fallback in the root layout
       (QA G4 fails site-wide on "no og:image" until then).
@@ -626,6 +627,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Libraries bound to the system: text styles on all
+  text, spacing/container variables on all paddings and gaps, Mobile
+  variants driven by the Typography collection's Mobile mode; Display
+  XL/Regular style + `Font size/display-xl` variable added (A2's
+  "Display XL" item done).
 - 2026-10-03 — Figma restructured (Bryce's request): every section
   (35 shared + 13 editorial sets) and all 40 pages are component sets
   with Device=Desktop|Mobile; the Mobile variants are a scripted first

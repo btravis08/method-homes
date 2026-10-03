@@ -61,6 +61,29 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Figma libraries bound to the variables and text styles (Bryce: "use the spacing variables and type variables")
+- The first mobile pass had written raw paddings, gaps and scaled
+  font sizes. Replaced: every unstyled text in both libraries now
+  carries a text style (1,199 nodes; Mobile twins take their Desktop
+  twin's style, uppercase/tracking preserved); 343 raw paddings and
+  gaps are bound to `spacing-*` (3. Spacing) or the container paddings
+  (`container-padding-desktop-lg` 64 on Desktop roots,
+  `container-padding-mobile` 16 on Mobile roots — the system's mobile
+  gutter is 16, not the 24 I had typed).
+- Mobile type now comes from the Typography collection's **Mobile
+  mode** (`setExplicitVariableModeForCollection`) on every Mobile
+  variant (sections and pages), not from hand-scaled sizes — the
+  styles' font sizes are bound to the `Font size/*` variables, which
+  carry Desktop/Tablet/Mobile values. Tablet variants would be the
+  same mechanism with the Tablet mode.
+- New: text style **Display XL/Regular** bound to a new
+  `Font size/display-xl` variable (176 / 120 / 72 by device) and
+  `Line height/display-xl-tight` (160 / 112 / 68) — the Hero / Series
+  wordmark is no longer a size override (closes the AGENTS.md TODO).
+- Lesson: switching a frame's variable mode re-lays-out every text
+  node, so every font in the subtree (including Noto Sans Symbols for
+  arrows) must be loaded first or the call throws.
+
 ### 2026-10-03 — Figma restructured: every section and page is a component set with Device=Desktop|Mobile (Bryce's request)
 - Shared library (37505:3440): all 35 section components are now
   component sets with a `Device` variant property (existing sets —
