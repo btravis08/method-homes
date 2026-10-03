@@ -110,6 +110,9 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   commercialType documents replace them, then get redirects.
 - Blog pruning (keep / 301 / 410 per post) is still open — the map
   lists all 182 posts as keep with that note.
+- Verified on production the same evening (`redirects.yml` run 1):
+  311 pass, 20 pending, 0 fail — all 118 live redirects resolve in one
+  hop and every kept URL answers 200.
 
 ### 2026-10-03 — MCP access re-verified (Figma blocker was stale)
 - Figma MCP is authorized as brycetravis@gmail.com (Full seat, admin

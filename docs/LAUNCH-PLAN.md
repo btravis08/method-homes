@@ -406,7 +406,9 @@ and only need content; the rest are build or content work.
       layer; keep trailing-slash 301 and real 404s.
 - [~] Full 301 map for all 331 legacy URLs, one hop, CI-verified:
       `design/redirects/legacy-map.json` (generated), live entries in
-      `next.config.ts`, `redirects.yml` check (2026-10-03). Still:
+      `next.config.ts`, `redirects.yml` check (2026-10-03). First
+      production run 2026-10-03 23:16 UTC: **311 pass · 20 pending ·
+      0 fail** (every live redirect one hop, every kept URL 200). Still:
       flip the 20 pending entries live as series / markets /
       commercial / process / method-arc / prefab-101 / privacy routes
       ship; per-post keep/301/410 decisions for the 182 blog URLs.
