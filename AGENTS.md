@@ -110,24 +110,27 @@ staging/design use.
   `Questions|:0|Answer`); hidden children drop out of `children`, so
   hide index-addressed rows last-first; mobile (428) frames are NOT
   designed yet.
-- Section `Method/Experiential — bespoke sections` (37516:13784) =
-  nine page-specific experiential components, each a variant set
-  whose variants are the interaction STATES, with an "Interaction
-  spec" card beside it (trigger, motion tokens, states, no-JS /
-  reduced-motion fallback, perf budget, AEO rule): Build journey
-  (3D) [Stage=Design|Fabrication|Delivery|Install] → /process;
-  Budget builder [Path=Series|Custom] → /pricing; Floor plan
-  explorer [View=Plan|Modules|3D] → series + plan pages (replaces
-  Plan drawings there); Delivery route map [State=Empty|Result] →
-  /where-we-build; Series explorer [State=Default|Filtered] →
-  /predesigned; Module stacker [Config=24 units|48 units] →
-  /commercial; Set day sequence [Time=06:10|14:40] → /; Performance
-  comparison [Metric=Waste|Schedule|Airtightness|Energy] →
-  /sustainability; Prefab types explainer
-  [Type=Modular|Panelized|Manufactured] → /prefab-101. Rule for all
-  of them: every fact lives in DOM text (canvases are aria-hidden),
-  the shared component next to them is the no-JS twin, and the
-  interactive chunk loads via an ssr:false client gate after idle.
+- Section `Method/Experiential v2 — editorial` (37521:15243) = the
+  nine page-specific bespoke sections that are actually placed on
+  the pages. REGISTER (user direction 2026-10-03, Rivian / Apple
+  landing pages): statement headline in Display Small, one large
+  photograph, ONE toggle (pill, 2+ options) or ONE slider, bullets
+  and accordions for detail, large-type numbers — never dashboards,
+  wireframe 3D stages, chip walls or data tables. Variants = the
+  interaction states; a "How it works" card beside each (pattern,
+  interaction, fallback). Build journey [Step=…] → /process; What it
+  costs [Path=Predesigned|Custom] → /pricing; Walk the plan
+  [View=Plan|Modules|Photos] → series + plan pages (replaces Plan
+  drawings there); We deliver to you [State=Empty|Result] →
+  /where-we-build; Find your fit [State=Default|Filtered] →
+  /predesigned; Scale, simply [Config=24 units|48 units] →
+  /commercial; Set day [Time=06:10|14:40] → /; Measured, not marketed
+  [Show=Method|Site-built] → /sustainability; Three kinds of prefab
+  [Type=Modular|Panelized|Manufactured] → /prefab-101. Rules: every
+  fact is DOM text, the shared component beside it is the no-JS
+  twin, and any interactive chunk loads via an ssr:false client gate
+  after idle. `Method/Experiential — v1 (superseded …, too techy)`
+  (37516:13784) is kept for reference only — don't place it.
 
 ## Ops apparatus
 
