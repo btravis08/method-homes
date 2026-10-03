@@ -61,6 +61,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Content model for the catalog and landers
+- Six document types added so content entry can start before the
+  routes exist: `series`, `plan`, `market`, `commercialType`,
+  `press`, `glossary` (all under the projects feature module).
+  Shared helpers give every type the same AEO furniture: FAQ items,
+  dated sources (footnotes), images with required alt.
+- Facts policy encoded in the schema: a series publishes either an
+  exact `priceFrom` or a `priceBand` (never both blank when a price
+  is public) plus `priceNote` saying what the price includes;
+  ranges (beds, baths, sqft, modules, timeline) are min/max pairs.
+- FAQ stays a page section (`sectionFaq`) and a field on the new
+  types; no standalone FAQ document type (revisit only if one Q/A
+  must appear on >3 pages).
+- Desk: Projects now has saved views "Case studies (facts filled)"
+  and "Missing facts" so the content gap is visible in the Studio.
+- QA gates G3–G11 are now machine-checked by `scripts/qa-pages.mjs`
+  (`qa.yml`); the report is the input to the per-template QA sheet.
+
 ### 2026-10-03 — Running docs rule
 - Any idea Bryce approves that affects design or dev is recorded in
   the same turn: a dated entry here (§3, plus §1/§2 when relevant),

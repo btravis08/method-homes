@@ -11,6 +11,10 @@ import { page } from "./page";
 import { redirect } from "./redirect";
 import { seo } from "./seo";
 import { author, post, postCategory } from "./blog";
+import { plan, series } from "./catalog";
+import { glossary } from "./glossary";
+import { commercialType, market } from "./markets";
+import { press } from "./press";
 import { product } from "./product";
 import { project } from "./project";
 import { sectionTypes } from "./sections";
@@ -44,7 +48,10 @@ const base = [
 
 const commerce = [product, collection, discount, story, storeSettings];
 const blog = [post, author, postCategory];
-const projects = [project, teamMember];
+/* the Method catalog + service landers ride with the projects module:
+   series/plans reference projects, markets list them, commercial types
+   cite them as case studies, press clippings point at them */
+const projects = [project, teamMember, series, plan, market, commercialType, press, glossary];
 
 export const schemaTypes = [
   ...base,

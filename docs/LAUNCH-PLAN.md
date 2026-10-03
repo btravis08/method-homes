@@ -115,7 +115,9 @@ Owner Bryce (design), Claude (token export, scripting).
       file, or the brand's choice); replace the SDR trial cuts in
       `src/fonts/`; add the "Display XL" text style (176px wordmark
       H1 on Hero / Series) so it stops being an override.
-- [ ] A3 Logo + favicon + OG default image into `public/method/brand/`.
+- [ ] A3 Logo + favicon + OG default image into `public/method/brand/`
+      and wired as the `openGraph.images` fallback in the root layout
+      (QA G4 fails site-wide on "no og:image" until then).
 - [ ] A4 Mobile (428) and tablet (1024) frames for all 31 shared
       sections, the 9 editorial sections, the 6 Rivian-derived
       patterns and the 5 interstitials. Hero / Series, Lineup, Finish
@@ -218,46 +220,56 @@ Owner Claude (schema/code), Method (content), Bryce (decisions).
 postCategory, teamMember, navigation, siteSettings, redirect, seo,
 formSubmission, A/B + AEO traffic types)
 
-- [ ] `series` (7: Elemental, Option, Cabin, M, Paradigm, Method One,
-      Annata): name, slug, tagline, hero image, lede, beds/baths/sqft
-      ranges, modules, starting price or price band, finishLevels[]
-      {name, tagline, from, numbers, includes, optional}, plans[] →
-      plan refs, gallery, specs rows, FAQ items, related projects
-      (auto by project.series), architect credit, SEO. Emits
-      Product + Offer(s) + ItemList of plans.
-- [ ] `plan` (per floor plan): series ref, name, beds, baths, sqft,
-      modules, dimensions A–H (Size it up), PDF, plan image, photos,
-      SEO. Route `/series/<series>/<plan>` or `/plans/<slug>` (decide
-      in C4).
-- [ ] `market` (WA, OR, CA, ID, MT, CO, UT + BC): name, slug, hero,
-      lede, delivery notes, factory distance, permitting notes, local
-      projects (auto by project.location/state), FAQ, geo for the
-      map, SEO. Emits Service with areaServed.
-- [ ] `commercialType` (Schools, Multifamily, Hospitality, Workforce
-      housing): hero, lede, Scale-simply config data, case studies,
-      FAQ, SEO.
-- [ ] `press` (publication, title, date, url, quote, logo, project
-      ref). Powers /press and Logo rows. Emits citations list.
-- [ ] `glossary` (term, definition, related page). Powers /prefab-101
-      glossary; emits DefinedTermSet.
+- [x] `series` (7: Elemental, Option, Cabin, M, Paradigm, Method One,
+      Annata): name, slug, tagline, hero image, lede, beds/baths/sqft/
+      modules ranges, priceFrom or priceBand + priceNote, timeline
+      range, specs rows, finishLevels[] {name, tagline, from, three
+      numbers, includes, optional}, gallery, FAQ, sources (footnotes),
+      architect credit, SEO. Plans reference the series (so the
+      ItemList is derived). Emits Product + Offer(s) once a route
+      exists. (schema 2026-10-03; `src/sanity/schemaTypes/catalog.ts`)
+- [x] `plan` (per floor plan): series ref, name, lede, beds, baths,
+      sqft, modules, stories, priceFrom override, dimensions A–H (Size
+      it up), plan image, module diagram, PDF, photos, SEO.
+      (schema 2026-10-03) Route still to decide in C4.
+- [x] `market` (WA, OR, CA, ID, MT, CO, UT + BC): name, slug, code,
+      country, lede, hero, body, geo pin, factory distance, delivery
+      days/notes, permitting notes, regions served, local partners,
+      FAQ, sources, SEO. Projects list by `project.state`.
+      (schema 2026-10-03; `markets.ts`)
+- [x] `commercialType` (Schools, Multifamily, Hospitality, Workforce
+      housing): lede, hero, body, case studies (project refs),
+      configurations[] for Scale simply (label, units, modules, sqft,
+      months), FAQ, sources, SEO. (schema 2026-10-03)
+- [x] `press` (publication, headline, url, date, journalist, pull
+      quote, logo, project/series ref, featured, kind). (schema
+      2026-10-03; `press.ts`)
+- [x] `glossary` (term, slug anchor, 40–90-word definition, aliases,
+      read-more ref, order). (schema 2026-10-03; `glossary.ts`)
+- [x] Shared field helpers (`shared.ts`): `faqItems()`, `sources()`
+      footnotes, `imageWithAlt()` (alt required), `galleryWithAlt()`.
+      New types use them; retrofit page sections + project + post.
+- [ ] Routes, GROQ projections, TS types and Presentation locations
+      for all six types — after the C4 URL decision.
 - [ ] `faq` as a reusable document? Decision: NO — FAQ stays a
       page section (sectionFaq) so each page owns its answers; a
       shared FAQ page is a page built from several sectionFaq
       sections. Revisit only if the same Q/A must appear on >3 pages.
 - [ ] `author` → add `teamMember` sync or merge decision (one person,
       one document). Keep both until the roster exists, then merge.
-- [ ] `project` → add `state` (two-letter) for market auto-lists,
-      `architect`, `certifications[]`, `series` → change from string
-      to reference once `series` exists (migration script).
+- [~] `project` → `state`, `architect`, `certifications[]` added
+      (2026-10-03). Still: `series` string → reference to the series
+      doc (migration script once the seven series exist).
 - [ ] `post` → `updatedAt` override (editorial "last reviewed"),
       `faq[]` items for FAQPage on posts, `relatedProjects[]`.
 
 ### C2 Studio
-- [ ] Desk structure mirrors the IA: Pages · Series · Plans ·
-      Projects · Markets · Commercial · Journal (Posts, Authors,
-      Categories) · Press · Glossary · Team · Forms inbox · Settings
-      (Site, Navigation, Redirects) · Tools (Overview, AEO, Traffic,
-      Analytics, Calendar, Sections, Tokens).
+- [~] Desk structure mirrors the IA (2026-10-03): Blog · Pages ·
+      Navigation · Inbox · Series & plans · Projects (All / Custom /
+      Predesigned / Commercial / Case studies / Missing facts) ·
+      Where we build · Commercial types · Press · Glossary · Team ·
+      Site settings. Still: a Redirects list item and the Create
+      menu order review with Method's editors.
 - [ ] Presentation preview for every route (series, plans, markets,
       commercial types, press, authors) — `PagePreview`-style shells
       with `useQuery`/`useLiveMode`; SectionList kept in sync.
@@ -453,11 +465,15 @@ Exit: P1 pages pass G1–G16 on staging with real or clearly marked
 interim content; `npm run build` clean; Playwright suite green.
 
 ### Stage 2 — QA (continuous, formalized at end of Dev)
-- [ ] QA tooling: `scripts/qa-pages.mjs` runs G3–G11 per URL from the
-      sitemap (one H1, title/description lengths, canonical, JSON-LD
-      types present, alt coverage, word count, Updated line) and
-      writes `src/design/qa.status.json` for a Studio card. Runs on a
-      workflow against staging.
+- [~] QA tooling (2026-10-03): `scripts/qa-pages.mjs` runs G3–G11 per
+      sitemap URL (one H1 + heading order, title/description/canonical/
+      og:image, alt coverage, noindex, word count + question headings,
+      JSON-LD kinds incl. FAQPage/House/BlogPosting, Updated line,
+      placeholders/lorem/byline, llms-full presence) and writes
+      `src/design/qa.status.json`; `qa.yml` runs it on demand against
+      production (or an `origin` input) and commits the report. Still:
+      a Studio Overview card reading the report; nightly schedule
+      once content entry starts.
 - [ ] Playwright suite covers: nav + Link navigation, forms end to
       end (submission in inbox), FAQ toggle, bespoke toggles/sliders
       (state changes are DOM-visible), sliders settle, reveals finish,
@@ -574,6 +590,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Sanity model: series, plan, market, commercialType,
+  press, glossary document types + shared AEO field helpers; desk
+  restructured; project gains state/architect/certifications. QA
+  gate checker (`scripts/qa-pages.mjs`, `qa.yml`) added; its first
+  local run found the home page had no WebPage node (fixed) and no
+  default og:image site-wide (open: needs the brand asset, A3).
 - 2026-10-03 — Running docs rule adopted (AGENTS.md): approved
   design/dev ideas are logged here and in PROJECT-LOG in the same
   turn.

@@ -1,0 +1,13 @@
+{
+  "generatedAt": "2026-10-03T00:00:00.000Z",
+  "origin": "https://method-homes.vercel.app",
+  "durationMs": 0,
+  "sitemapUrls": 0,
+  "checked": 0,
+  "score": 0,
+  "byGate": {},
+  "llmsFull": { "ok": false, "bytes": 0 },
+  "errors": [],
+  "pages": [],
+  "note": "Not run yet — dispatch the qa workflow (GitHub Actions) or run `node scripts/qa-pages.mjs` against a build."
+}

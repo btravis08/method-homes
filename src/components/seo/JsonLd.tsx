@@ -1,3 +1,5 @@
+import type { FaqItem, PageSection } from "@/sanity/types";
+
 import designops from "../../../designops.config.json";
 
 /*
@@ -61,6 +63,18 @@ export function breadcrumbList(crumbs: { name: string; path: string }[]) {
       item: `${BASE}${crumb.path}`,
     })),
   };
+}
+
+/* Every FAQ item a section-built page shows — top-level FAQ sections
+   plus those in an experiment's CONTROL variant (the first one), which
+   is what no-JS visitors and crawlers receive. */
+export function collectFaq(sections: PageSection[] | undefined): FaqItem[] {
+  const out: FaqItem[] = [];
+  for (const section of sections ?? []) {
+    if (section._type === "sectionFaq") out.push(...(section.items ?? []));
+    else if (section._type === "sectionExperiment") out.push(...collectFaq(section.variants?.[0]?.sections));
+  }
+  return out;
 }
 
 /* FAQPage node for a page's question/answer items (every FAQ section

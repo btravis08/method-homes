@@ -11,24 +11,12 @@ import { FooterTagline } from "@/components/FooterTagline";
 import { PageGate } from "@/components/PageGate";
 import { buildSliderCardMap, SectionRenderer } from "@/components/SectionRenderer";
 import { gateCookieName, gateCookieValue } from "@/lib/gate";
-import { breadcrumbList, faqPage, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, collectFaq, faqPage, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
 import { seoMeta } from "@/sanity/lib/seo";
-import type { FaqItem, Page, PageSection } from "@/sanity/types";
-
-/* Every FAQ item the page shows — top-level FAQ sections plus those in
-   an experiment's CONTROL variant (the first one), which is what
-   no-JS visitors and crawlers receive. Pooled into one FAQPage node. */
-function collectFaq(sections: PageSection[] | undefined): FaqItem[] {
-  const out: FaqItem[] = [];
-  for (const section of sections ?? []) {
-    if (section._type === "sectionFaq") out.push(...(section.items ?? []));
-    else if (section._type === "sectionExperiment") out.push(...collectFaq(section.variants?.[0]?.sections));
-  }
-  return out;
-}
+import type { Page } from "@/sanity/types";
 
 /* Plain text from a section tree: strings and Portable Text blocks in
    copy-bearing fields, longest-first — the meta description fallback

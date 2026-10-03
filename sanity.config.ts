@@ -199,10 +199,66 @@ S.listItem()
       ...(designops.features.projects
         ? [
 S.listItem()
+        .title("Series & plans")
+        .icon(icons["home"])
+        .child(
+          S.list()
+            .title("Series & plans")
+            .items([
+              S.listItem()
+                .title("Series")
+                .schemaType("series")
+                .child(S.documentTypeList("series").title("Series").defaultOrdering([{ field: "order", direction: "asc" }])),
+              S.listItem()
+                .title("Floor plans")
+                .schemaType("plan")
+                .child(S.documentTypeList("plan").title("Floor plans")),
+            ]),
+        ),
+S.listItem()
         .title("Projects")
         .icon(icons["case"])
-        .schemaType("project")
-        .child(S.documentTypeList("project").title("Projects")),
+        .child(
+          S.list()
+            .title("Projects")
+            .items([
+              S.listItem().title("All projects").schemaType("project").child(S.documentTypeList("project").title("All projects")),
+              ...(
+                [
+                  ["Custom residential", 'category == "residential"'],
+                  ["Predesigned", 'category == "predesigned"'],
+                  ["Commercial", 'category == "commercial"'],
+                  ["Case studies (facts filled)", "defined(series) && defined(timelineMonths) && defined(testimonial.quote)"],
+                  ["Missing facts", "!defined(series) || !defined(timelineMonths) || !defined(state)"],
+                ] as const
+              ).map(([title, where]) =>
+                S.listItem()
+                  .title(title)
+                  .schemaType("project")
+                  .child(S.documentList().title(title).apiVersion(apiVersion).schemaType("project").filter(`_type == "project" && ${where}`)),
+              ),
+            ]),
+        ),
+S.listItem()
+        .title("Where we build")
+        .icon(icons["pin"])
+        .schemaType("market")
+        .child(S.documentTypeList("market").title("Markets").defaultOrdering([{ field: "order", direction: "asc" }])),
+S.listItem()
+        .title("Commercial types")
+        .icon(icons["block-content"])
+        .schemaType("commercialType")
+        .child(S.documentTypeList("commercialType").title("Commercial types").defaultOrdering([{ field: "order", direction: "asc" }])),
+S.listItem()
+        .title("Press")
+        .icon(icons["bookmark"])
+        .schemaType("press")
+        .child(S.documentTypeList("press").title("Press").defaultOrdering([{ field: "date", direction: "desc" }])),
+S.listItem()
+        .title("Glossary")
+        .icon(icons["bookmark-filled"])
+        .schemaType("glossary")
+        .child(S.documentTypeList("glossary").title("Glossary").defaultOrdering([{ field: "term", direction: "asc" }])),
 S.listItem()
         .title("Team")
         .icon(icons["users"])
@@ -380,7 +436,7 @@ export default defineConfig({
         ...(designops.features.commerce
           ? ["product", "collection", "discount", "story"]
           : []),
-        ...(designops.features.projects ? ["project"] : []),
+        ...(designops.features.projects ? ["project", "series", "plan", "market", "commercialType", "press", "glossary"] : []),
         "redirect",
       ];
       const rank = new Map(order.map((id, i) => [id, i]));

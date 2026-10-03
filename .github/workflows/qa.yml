@@ -1,0 +1,52 @@
+name: qa
+
+# Launch-plan gate check (docs/LAUNCH-PLAN.md §1, gates G3–G11) over
+# every sitemap URL on production. scripts/qa-pages.mjs writes
+# src/design/qa.status.json (per-page pass/fail with reasons); the
+# data commit is mirrored to main so the Studio can read it.
+# Dispatch by hand after a content or template change, or nightly
+# once the schedule is enabled.
+on:
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: "Origin to check (default: production)"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  group: qa
+  cancel-in-progress: false
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install
+        run: npm ci
+      - name: Check gates
+        env:
+          QA_ORIGIN: ${{ inputs.origin }}
+        run: |
+          if [ -z "$QA_ORIGIN" ]; then unset QA_ORIGIN; fi
+          node scripts/qa-pages.mjs
+      - name: Commit report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/design/qa.status.json
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "Refresh QA gate report"
+          for i in 1 2 3; do
+            git pull --rebase && git push && break
+            sleep $((i * 3))
+          done
+          git push origin HEAD:main || echo "main diverged — the report lands with the next sync"

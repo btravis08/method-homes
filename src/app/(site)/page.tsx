@@ -13,6 +13,7 @@ import {
 } from "@/components/home/sections";
 import { preload } from "react-dom";
 
+import { collectFaq, faqPage, JsonLd, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { sanitySrcSet, urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery } from "@/sanity/lib/queries";
@@ -75,6 +76,20 @@ export default async function Home() {
 
   return (
     <div data-mode="light" className="flex flex-col items-start bg-surface">
+      {/* the home page's own node beside the layout's Organization +
+          WebSite graph (gate G8); FAQ items on the home page pool into
+          one FAQPage like any CMS page */}
+      <JsonLd
+        data={webPage({
+          name: page?.seo?.title || `${designops.aeo.brand} — architect-designed prefab homes`,
+          description:
+            page?.seo?.description ||
+            "Architect-led prefab home builder: predesigned series and custom modular residences, built indoors and delivered to the site.",
+          path: "/",
+          dateModified: page?._updatedAt,
+        })}
+      />
+      <JsonLd data={faqPage("/", collectFaq(page?.sections))} />
       {/* document heading for the entity page; the hero's headline is campaign copy */}
       <h1 className="sr-only">{designops.aeo.brand} — architect-designed prefab homes</h1>
       {page?.showFooterTagline && <FooterTagline />}

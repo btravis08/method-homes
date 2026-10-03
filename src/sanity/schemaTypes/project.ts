@@ -85,6 +85,22 @@ export const project = defineType({
       type: "string",
     }),
     defineField({
+      name: "state",
+      title: "State / province code",
+      description: "Two letters (WA, OR, BC). Lists the project on that market's page automatically.",
+      type: "string",
+      validation: (rule) => rule.uppercase().length(2),
+    }),
+    defineField({ name: "architect", title: "Architect / design credit", type: "string" }),
+    defineField({
+      name: "certifications",
+      title: "Certifications",
+      type: "array",
+      of: [{ type: "string" }],
+      options: { layout: "tags" },
+      description: "LEED, Energy Star, Passive House, Living Building Challenge… as awarded to this project.",
+    }),
+    defineField({
       name: "squareFeet",
       title: "Square feet",
       type: "number",

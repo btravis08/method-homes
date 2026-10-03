@@ -50,6 +50,9 @@
     "src/app/llms-full.txt/**",
     "src/design/aeo.queries.json",
     "scripts/aeo-queries.mjs",
+    "src/design/qa.status.json",
+    ".github/workflows/qa.yml",
+    "scripts/qa-pages.mjs",
     "scripts/lib/aeo-prompts.mjs",
     "src/sanity/tools/Aeo.tsx",
     "src/sanity/tools/AeoPane.tsx",
@@ -105,7 +108,8 @@
     "src/sanity/schemaTypes/formSubmission.ts",
     "src/sanity/schemaTypes/seo.ts",
     "src/sanity/types.ts",
-    "scripts/build-token-index.mjs"
+    "scripts/build-token-index.mjs",
+    "src/sanity/schemaTypes/shared.ts"
   ],
   "commerce": [
     "src/app/(site)/products/**",
@@ -133,7 +137,11 @@
   "projects": [
     "src/app/(site)/projects/**",
     "src/sanity/schemaTypes/project.ts",
-    "src/components/ProjectCard.tsx"
+    "src/components/ProjectCard.tsx",
+    "src/sanity/schemaTypes/catalog.ts",
+    "src/sanity/schemaTypes/markets.ts",
+    "src/sanity/schemaTypes/press.ts",
+    "src/sanity/schemaTypes/glossary.ts"
   ],
   "packs": {
     "description": "Sample packs the create-CLI can copy into a scaffold as sample-pack/ (seeded by scripts/seed-pack.ts). The packs and the CLI itself live under packages/ and are never copied.",
