@@ -1,0 +1,578 @@
+# Method Homes rebuild — Launch plan (marching orders)
+
+The one file that takes the project from today to launch. It lists
+every idea we have agreed to for SEO/AEO, every practical wiring job
+in Sanity, Vercel and the integrations, and the order and acceptance
+gates for Dev → QA → Alpha → Beta → Launch → Post-launch. When the
+designs are finessed, each section and page is checked against the
+requirements here before it is called done.
+
+How this file relates to the others:
+
+- **This file** = what to do, in what order, and what "done" means.
+- `docs/PROJECT-LOG.md` = what has happened, dated decisions, the
+  open inputs ledger. New decisions go there first, then change this
+  plan.
+- `docs/SEO-PLAN.md` = the 2026-08-05 audit evidence behind the
+  SEO items. This plan supersedes its phase list; the evidence
+  stays there.
+- `docs/PLAYBOOK.md` and `AGENTS.md` = binding engineering rules.
+  The gates below reference them rather than repeating them.
+
+Conventions: `[ ]` open · `[x]` done · `[~]` partial (say what is
+left) · **Owner** is Bryce (design/decisions), Method (content,
+accounts, facts), Claude (code, Figma scripting, verification).
+Stage order is Alpha before Beta (internal before friendly-external);
+if Method prefers the reverse naming, swap the labels, not the gates.
+
+Maintained by Claude. Every push that lands an item flips its box;
+every new idea gets a line here the same day.
+
+---
+
+## 0. Where we are (2026-10-03)
+
+- Site runs on Vercel staging (method-homes.vercel.app) in the
+  TEMPLATE's design system with Method's migrated content (24 pages,
+  93+ projects, 182 posts, ~800 images). The Method rebrand has not
+  been applied to code yet; fonts are SDR trial cuts.
+- Figma: 31 shared section components, 9 editorial bespoke sections,
+  6 Rivian-derived patterns, 5 interstitial kinds, 39 desktop page
+  frames, an AEO review board. No mobile frames yet.
+- Shipped platform: AEO grader + Studio panes, forms engine with
+  inbox, A/B sections, gated pages, announcement bar, SEO object,
+  structured data layer (Organization, WebPage kinds, FAQPage,
+  BreadcrumbList, ItemList, House/Review, Article), llms.txt +
+  llms-full.txt, Search Console ingestion (awaiting secrets).
+- Blocking inputs: see PROJECT-LOG §1 (author roster, NAP, sameAs,
+  founding year, series facts, case-study facts, GSC secrets, press
+  list, plan PDFs, Vercel env).
+
+---
+
+## 1. Definition of done — the gates every page must pass
+
+A page is launch-ready only when all of these hold. QA tests exactly
+this list (§8 is the per-template sheet).
+
+**Design fidelity**
+- G1 Matches its Figma frame at 1440, 1024 and 428 (mobile frames
+  must exist first — see Workstream A). Compare-bar DIFFERENCE check
+  in /library for every section it uses.
+- G2 Zero `off-token` readings in the token inspector (`?inspect=1`).
+
+**SEO**
+- G3 One H1, semantic heading order, no decorative headings.
+- G4 Title ≤60 chars and description 120–155 chars from the SEO
+  object or the template fallback; self-canonical; OG + Twitter card
+  with a real image.
+- G5 Every image: alt text, explicit width/height or aspect box,
+  `urlFor().width()` sized to its surface, lazy unless LCP.
+- G6 In the sitemap with real lastmod; not noindex unless intended.
+
+**AEO**
+- G7 ≥300 words of body copy that answers the page's question in
+  the first 120 words (the "lede"); at least two question-form H2/H3s.
+- G8 Structured data: WebPage kind correct + BreadcrumbList; FAQPage
+  when the page has a FAQ section; the entity node its template
+  requires (House, Article, Person, Product/Series, HowTo).
+- G9 Visible "Updated {Month YYYY}" and `dateModified`.
+- G10 Byline (Person) on every article; Organization.sameAs and NAP
+  resolvable; no unfilled `{placeholder}` facts.
+- G11 Appears in `/llms-full.txt` with its copy intact.
+
+**Performance** (PLAYBOOK is binding)
+- G12 Mobile Lighthouse ≥90 performance on `lighthouse.yml`; LCP
+  <2.5 s, CLS <0.1, INP <200 ms in field data once available.
+- G13 HTML <100 KB, no base64 images, LCP image eager + preloaded,
+  never faded.
+
+**Behavior**
+- G14 Playwright: navigation works (pathname changes on Link click),
+  reveals complete (overlay opacity 0), sliders settle on step,
+  forms submit and appear in the inbox, no console errors.
+- G15 Accessible: keyboard reachable, focus visible, labels and
+  live regions on forms, reduced-motion respected.
+
+**Content ops**
+- G16 Editable in Studio with Presentation preview working; every
+  value on the page comes from Sanity or a code default documented in
+  the registry.
+
+---
+
+## 2. Workstream A — Design: rebrand tokens, mobile frames, finesse
+
+Owner Bryce (design), Claude (token export, scripting).
+
+- [ ] A1 Figma edit access for the MCP account on
+      `9nqsOUuF2UrgukNYok3Oko` (blocker since 2026-08). Then: export
+      the variable collections → `design/figma-tokens/`, map to
+      `globals.css` semantic vars, `npm run tokens`, commit.
+- [ ] A2 Fonts: license Method's production faces (Geist per the
+      file, or the brand's choice); replace the SDR trial cuts in
+      `src/fonts/`; add the "Display XL" text style (176px wordmark
+      H1 on Hero / Series) so it stops being an override.
+- [ ] A3 Logo + favicon + OG default image into `public/method/brand/`.
+- [ ] A4 Mobile (428) and tablet (1024) frames for all 31 shared
+      sections, the 9 editorial sections, the 6 Rivian-derived
+      patterns and the 5 interstitials. Hero / Series, Lineup, Finish
+      levels, Size it up and We deliver to you need explicit mobile
+      behavior (toggle → segmented control; diagram → stacked).
+- [ ] A5 Design finesse pass over the 39 frames. For each frame, the
+      AEO review board (37514:13776) must stay green: words ≥300, ≥2
+      question H2s, FAQ where listed in §5, byline on articles, NAP on
+      About/Contact, zero `{placeholders}` once facts exist.
+- [ ] A6 Dev Mode annotations on every section: spacing rationale,
+      responsive behavior, states, motion (the code reads these as
+      spec).
+- [ ] A7 Comps exported for /library's compare bar: `get_screenshot`
+      at 1440/1024/428 → `scripts/fetch-figma-assets.sh` →
+      fetch-figma-assets workflow → set `comps` sizes in the registry.
+- [ ] A8 Decide and document the color-mode mapping (Figma modes →
+      `data-mode` light / light-mid / dark-mid / dark) in globals.css.
+
+Exit: tokens in code, fonts licensed, every section has three
+breakpoints and a comp, review board green.
+
+---
+
+## 3. Workstream B — Sections: build the library in code
+
+Owner Claude. Each section ships with: Sanity object type (if
+CMS-composable), component with Figma defaults, SectionRenderer AND
+SectionList cases, registry entry with `figmaNodeId` + comps, token
+sweep, three-breakpoint Playwright check, and its structured-data
+contribution wired. Build order follows page priority in §5.
+
+### B1 Shared sections (Figma `Method/Sections`, 37505:3440)
+
+| Section | Figma | Sanity type | AEO/SEO contribution | Status |
+|---|---|---|---|---|
+| Nav | 37505:3463 | navigation singleton | SiteNavigationElement optional; breadcrumbs live in pages | [~] exists in template skin |
+| Hero / Home | 37505:3489 | sectionHero | LCP image eager+preload; H1 stays sr-only on CMS pages | [~] template Hero |
+| Hero / Page | 37505:3516 | sectionHero (variant) | lede paragraph is the answer-first copy | [ ] |
+| Hero / Series | 37525:15367 | series doc (hero fields) | breadcrumb + H1 wordmark + meta line (beds/baths/sqft/from) | [ ] |
+| Sub-nav | 37525:15383 | derived from page anchors | in-page anchors → heading ids | [ ] |
+| Text intro | 37505:3536 | sectionRichText / new sectionTextIntro | ≥120-word lede, H2 question | [ ] |
+| 50/50 | 37505:3577 | sectionFiftyFifty | alt text required | [~] template |
+| Card + Card grid | 37506:3516/3646 | sectionCardGrid (new) | ItemList when cards link | [ ] |
+| Carousel | 37506:3699 | sectionCarousel | ImageObject captions | [~] template |
+| Stats bar | 37506:3714 | sectionStats (new) | numbers are DOM text with footnote markers | [ ] |
+| Testimonial | 37506:3733 | sectionTestimonial (new) → or project.testimonial | Review schema (named, dated, rated) | [ ] |
+| Logo row | 37506:3750 | sectionLogoRow (new) | press/partner logos link to citations | [ ] |
+| Spec table | 37507:3678 | sectionTechSpecs | Product additionalProperty on series | [~] template TechSpecs |
+| Compare table | 37507:3753 | sectionCompare (new) | comparison pages (play 6); table semantics | [ ] |
+| Process timeline | 37507:3797 | sectionProcess (new) | HowTo schema on /process | [ ] |
+| FAQ | 37507:3841 | sectionFaq | FAQPage | [x] shipped 2026-10-03 |
+| Author & share | 37507:3851 | post.author / reviewedBy | Person + links to author page | [~] byline exists; links pending |
+| Article body | 37507:3864 | post.body | Article; H2 ids for anchors | [~] PostArticle |
+| Inline CTA | 37507:3880 | sectionCta (new) | — | [ ] |
+| Filter bar | 37508:3695 | route-level (projects, blog) | URL params, not JS-only state | [~] projects filters |
+| Gallery | 37508:3726 | sectionGallery | ImageObject with captions | [~] template |
+| Form block | 37508:3799 | FormDef + LazyMultiStepForm | — | [x] engine |
+| Map block | 37508:3828 | market doc geo / siteSettings | Place/geo | [ ] |
+| Team grid | 37508:3875 | teamMember / author | Person per member on About | [ ] |
+| Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [ ] |
+| Feature list | 37508:4069 | sectionFeatureList (new) | bullets = liftable facts | [ ] |
+| Link list | 37508:4097 | sectionLinkList (new) | internal linking hub | [ ] |
+| Glossary | 37508:4131 | glossary doc (new) | DefinedTerm set on /prefab-101 | [ ] |
+| Press list | 37508:4175 | press doc (new) | citations; NewsArticle refs | [ ] |
+| Plan drawings → Walk the plan | 37521:15819 | plan doc + PDF | crawlable PDFs; ImageObject | [ ] |
+| CTA band | 37505:3598 | sectionCtaBand (new) | — | [ ] |
+| Footer + Location + newsletter | 37505:3650 / 37525:15440 | siteSettings NAP | NAP visible on every page; matches GBP | [~] footer exists; NAP fields added |
+| Interstitial ×5 | 37528:15397 | sectionInterstitial (new, kind) | styled `<p>`, lazy imgs, never LCP | [ ] |
+
+### B2 Editorial bespoke sections (37521:15243)
+
+Rules (AGENTS.md): every fact is DOM text, the shared component beside
+it is the no-JS twin, interactive chunks load via an ssr:false client
+gate after idle. Each has one toggle or slider at most.
+
+| Section | Page | States | Status |
+|---|---|---|---|
+| Build journey | /process | Step | [ ] |
+| What it costs | /pricing | Path=Predesigned/Custom | [ ] |
+| Walk the plan | series, plan pages | View=Plan/Modules/Photos | [ ] |
+| We deliver to you | /where-we-build | State=Empty/Result | [ ] |
+| Lineup (replaces Find your fit) | /predesigned | Series | [ ] |
+| Scale, simply | /commercial | Config=24/48 units | [ ] |
+| Set day | / | Time=06:10/14:40 | [ ] |
+| Measured, not marketed | /sustainability | Show=Method/Site-built | [ ] |
+| Three kinds of prefab | /prefab-101 | Type=Modular/Panelized/Manufactured | [ ] |
+| Size it up | floor-plan pages | Plan | [ ] |
+
+Exit: every row above `[x]`, registry complete, compare-bar diff
+≤ visible threshold per section, SectionList in sync (the preview
+twin renders every type).
+
+---
+
+## 4. Workstream C — Sanity: content model, wiring, operations
+
+Owner Claude (schema/code), Method (content), Bryce (decisions).
+
+### C1 Document types to add (today: page, project, post, author,
+postCategory, teamMember, navigation, siteSettings, redirect, seo,
+formSubmission, A/B + AEO traffic types)
+
+- [ ] `series` (7: Elemental, Option, Cabin, M, Paradigm, Method One,
+      Annata): name, slug, tagline, hero image, lede, beds/baths/sqft
+      ranges, modules, starting price or price band, finishLevels[]
+      {name, tagline, from, numbers, includes, optional}, plans[] →
+      plan refs, gallery, specs rows, FAQ items, related projects
+      (auto by project.series), architect credit, SEO. Emits
+      Product + Offer(s) + ItemList of plans.
+- [ ] `plan` (per floor plan): series ref, name, beds, baths, sqft,
+      modules, dimensions A–H (Size it up), PDF, plan image, photos,
+      SEO. Route `/series/<series>/<plan>` or `/plans/<slug>` (decide
+      in C4).
+- [ ] `market` (WA, OR, CA, ID, MT, CO, UT + BC): name, slug, hero,
+      lede, delivery notes, factory distance, permitting notes, local
+      projects (auto by project.location/state), FAQ, geo for the
+      map, SEO. Emits Service with areaServed.
+- [ ] `commercialType` (Schools, Multifamily, Hospitality, Workforce
+      housing): hero, lede, Scale-simply config data, case studies,
+      FAQ, SEO.
+- [ ] `press` (publication, title, date, url, quote, logo, project
+      ref). Powers /press and Logo rows. Emits citations list.
+- [ ] `glossary` (term, definition, related page). Powers /prefab-101
+      glossary; emits DefinedTermSet.
+- [ ] `faq` as a reusable document? Decision: NO — FAQ stays a
+      page section (sectionFaq) so each page owns its answers; a
+      shared FAQ page is a page built from several sectionFaq
+      sections. Revisit only if the same Q/A must appear on >3 pages.
+- [ ] `author` → add `teamMember` sync or merge decision (one person,
+      one document). Keep both until the roster exists, then merge.
+- [ ] `project` → add `state` (two-letter) for market auto-lists,
+      `architect`, `certifications[]`, `series` → change from string
+      to reference once `series` exists (migration script).
+- [ ] `post` → `updatedAt` override (editorial "last reviewed"),
+      `faq[]` items for FAQPage on posts, `relatedProjects[]`.
+
+### C2 Studio
+- [ ] Desk structure mirrors the IA: Pages · Series · Plans ·
+      Projects · Markets · Commercial · Journal (Posts, Authors,
+      Categories) · Press · Glossary · Team · Forms inbox · Settings
+      (Site, Navigation, Redirects) · Tools (Overview, AEO, Traffic,
+      Analytics, Calendar, Sections, Tokens).
+- [ ] Presentation preview for every route (series, plans, markets,
+      commercial types, press, authors) — `PagePreview`-style shells
+      with `useQuery`/`useLiveMode`; SectionList kept in sync.
+- [ ] Validation: required alt on every image field; SEO description
+      counter; slug uniqueness across types that share a URL space.
+- [ ] Initial values: every new section arrives pre-filled (lorem +
+      placeholder asset) — keep the convention.
+- [ ] Studio Overview card for "launch readiness" reading this file's
+      gate results (optional, after QA tooling exists).
+
+### C3 Wiring and operations
+- [ ] Sanity → Vercel revalidation webhook (`/api/revalidate`,
+      `SANITY_REVALIDATE_SECRET`) on publish of every type; verify
+      with a publish → curl loop on staging.
+- [ ] CORS origins: localhost:3000, method-homes.vercel.app,
+      preview domain(s), **methodhomes.net** + www (credentials on)
+      before launch.
+- [ ] Vercel env (production + preview): SANITY_API_READ_TOKEN,
+      SANITY_API_WRITE_TOKEN, SANITY_REVALIDATE_SECRET, FORMS_SECRET,
+      RESEND_API_KEY, FORMS_NOTIFY_TO/FROM, FORMS_WEBHOOK_URL(+SECRET),
+      TURNSTILE keys, NEXT_PUBLIC_MAPBOX_TOKEN, NEXT_PUBLIC_BOOKING_URL,
+      NEXT_PUBLIC_SANITY_* if the project/dataset ever changes.
+- [ ] Actions secrets: ANTHROPIC_API_KEY (prompt insights),
+      GSC_SERVICE_ACCOUNT_JSON + GSC_SITE_URL (questions), Sanity
+      write token for import workflows (rotate after launch).
+- [ ] Dataset backup workflow re-enabled on a schedule before
+      content entry begins (it was paused 2026-09-25).
+- [ ] Roles: Method editors as Sanity Editors, Bryce/Claude as
+      Administrators; a `reviewer` role is unnecessary — use drafts +
+      Presentation.
+- [ ] Redirect documents: import the full 301 map (SEO-PLAN Phase 1)
+      as `redirect` docs or `next.config.ts` redirects; CI check that
+      every legacy URL resolves in one hop (fetch-page/probe runner).
+- [ ] Media: all migrated imagery re-uploaded through the CDN with
+      alt seeded from `design/method-content/pages.json`; delete the
+      >300 KB originals from `public/method/` once referenced from
+      Sanity.
+
+### C4 Decisions to take (Bryce) — each blocks a route
+- [ ] URL scheme: `/series/<slug>` + `/series/<slug>/<plan>` vs
+      `/plans/<slug>`; `/where-we-build/<state>` vs `/markets/<state>`;
+      `/commercial/<type>`; `/blog` vs `/journal` (code says
+      `/journal`; IA says Blog). Pick once; redirects follow.
+- [ ] Journal pruning: which of the 182 posts keep (≈30), redirect,
+      or 410 (SEO-PLAN Phase 1).
+- [ ] Author roster and organization byline name.
+- [ ] Founding year (2007 vs 2008).
+- [ ] Price publishing policy: exact starting prices, bands, or
+      "from" per finish level — determines Offer schema and the
+      Pricing page copy.
+
+Exit: every IA route has a document type and a desk entry; preview
+works for all; webhook revalidation proven; env complete in Vercel.
+
+---
+
+## 5. Workstream D — Pages: the 39 routes, with requirements
+
+Owner Claude (build), Method (copy/facts), Bryce (design sign-off).
+Build in priority order (P1 → P3). "FAQ" = carries a sectionFaq.
+Schema = the entity node beyond WebPage + BreadcrumbList.
+
+| P | Route | Figma | Sanity source | Schema | FAQ | Bespoke | Status |
+|---|---|---|---|---|---|---|---|
+| 1 | `/` Home | 37509:3822 | page "home" | Organization graph (layout) | no | Set day; Interstitial | [~] |
+| 1 | `/predesigned` | 37509:4289 | page + series list | ItemList of series | yes | Lineup; Interstitial | [ ] |
+| 1 | `/series/<slug>` ×7 (Elemental 37513:9343, Option 9729, Cabin 10115, M 10501, Paradigm 10887, Method One 11273, Annata 37509:4620) | templates | series doc | Product + Offer + ItemList(plans) | yes | Hero/Series, Sub-nav, Walk the plan, Finish levels | [ ] |
+| 1 | `/series/<slug>/<plan>` (Floor plan detail) | 37509:5006 | plan doc | Product (variant) + plan PDF | no | Size it up, Walk the plan | [ ] |
+| 1 | `/pricing` | 37510:5762 | page | FAQPage; Offer refs | yes | What it costs, Finish levels | [ ] |
+| 1 | `/process` | 37510:6259 | page | HowTo (steps from Process timeline) | yes | Build journey, Set day | [ ] |
+| 1 | `/custom-homes` | 37509:4036 | page | Service | yes | Interstitial | [ ] |
+| 1 | `/contact` (+ /get-started sheet) | 37510:6059 | page + siteSettings | ContactPage + LocalBusiness NAP | yes | Location + newsletter | [~] |
+| 2 | `/projects` | 37511:6447 | project list | CollectionPage + ItemList | no | Filter bar | [x] |
+| 2 | `/projects/<slug>` | 37511:6702 | project doc | House + Review | no | — | [x] code; content pending |
+| 2 | `/where-we-build` | 37511:6962 | page + markets | Service.areaServed; ItemList | yes | We deliver to you | [ ] |
+| 2 | `/where-we-build/<state>` ×7 (WA 37511:7208, OR 12406, CA 12630, ID 12854, MT 13078, CO 13302, UT 13526) | templates | market doc | Service + Place + ItemList(projects) | yes | Map block | [ ] |
+| 2 | `/commercial` | 37510:5217 | page + types | Service | yes | Scale, simply | [ ] |
+| 2 | `/commercial/<type>` ×4 (Workforce 37510:5513, Schools 11659, Multifamily 11908, Hospitality 12157) | templates | commercialType doc | Service + case studies | yes | — | [ ] |
+| 2 | `/about` | 37512:7598 | page + team + siteSettings | AboutPage + Person per member + NAP | no | Interstitial; Location card | [ ] |
+| 2 | `/prefab-101` | 37512:8343 | page + glossary | FAQPage + DefinedTermSet | yes | Three kinds of prefab | [ ] |
+| 2 | `/sustainability` | 37512:8092 | page | — (claims with sources) | yes | Measured, not marketed | [ ] |
+| 2 | `/architects` (partnerships) | 37511:7432 | page | Service | yes | — | [ ] |
+| 2 | `/method-arc` | 37512:7852 | page | Service/Brand | no | — | [ ] |
+| 2 | `/journal` (Blog) | 37512:8629 | posts + authors | Blog + ItemList; Authors row | no | — | [~] |
+| 2 | `/journal/<slug>` | 37512:8851 | post | BlogPosting + Person (+FAQPage if faq) | opt | Author & share | [~] visible Updated line pending |
+| 2 | `/journal/authors/<slug>` | 37530:15457 | author | ProfilePage + Person | no | Author hero | [ ] |
+| 2 | `/journal/category/<slug>` | — | postCategory | CollectionPage | no | — | [x] |
+| 3 | `/press` | 37513:8922 | press docs | CollectionPage + ItemList(NewsArticle) | no | Press list, Logo row | [ ] |
+| 3 | `/privacy` (+ terms) | 37513:9086 | page (rich text) | WebPage, noindex optional | no | — | [ ] |
+| 3 | `/404` | 37513:9187 | code | — | no | — | [~] |
+| 3 | `/search` | — | code | noindex | no | — | [~] |
+| 3 | `/faq` (standalone) | — | page of sectionFaq | FAQPage (page-level type) | yes | — | [ ] decide keep/merge |
+
+Per-page copy requirements (Method): lede ≤120 words that answers the
+page question; ≥300 words total; every number sourced (footnote →
+dated sources line); FAQ of 4–8 real questions (seed from the
+"Questions people already ask" panel once GSC is connected).
+
+Exit: every P1 row `[x]` for Alpha; P1+P2 for Beta; all for Launch.
+
+---
+
+## 6. Workstream E — SEO/AEO: the complete idea inventory
+
+Everything agreed, in one place. Items marked ✔ are shipped in code
+and only need content; the rest are build or content work.
+
+### E1 Technical foundation
+- ✔ robots.txt with named AI crawlers; sitemap from Sanity with
+  lastmod; canonical + OG/Twitter via the SEO object; noindex on
+  utility routes; `/llms.txt` + `/llms-full.txt`.
+- [ ] Single-hop apex → www (or www → apex) redirect at the DNS/Vercel
+      layer; keep trailing-slash 301 and real 404s.
+- [ ] Full 301 map for all 330+ legacy URLs, one hop, CI-verified.
+- [ ] Sitemap extended to series, plans, markets, commercial types,
+      press, authors; images sitemap optional.
+- [ ] `WebSite.potentialAction` SearchAction if /search stays public.
+- [ ] hreflang none (US-only); `inLanguage` en-US already set.
+
+### E2 Structured data (per template)
+- ✔ Organization + HomeAndConstructionBusiness (structured NAP,
+  foundingDate/Location, sameAs, computed AggregateRating).
+- ✔ WebPage kinds, BreadcrumbList, FAQPage pooling, ItemList,
+  House + Review, BlogPosting + Person, dateModified.
+- [ ] Product + Offer per series and plan (needs series facts).
+- [ ] HowTo on /process from the Process timeline steps.
+- [ ] ProfilePage + Person on author pages; Person per team member.
+- [ ] Service + areaServed on markets and commercial types.
+- [ ] DefinedTermSet on /prefab-101 glossary.
+- [ ] ImageObject with captions on galleries; VideoObject for install
+      videos (Set day footage) when published.
+- [ ] Validation step in QA: Rich Results Test on one URL per
+      template; `probe.yml` greps `application/ld+json` per template.
+
+### E3 Content plays
+- ✔ FAQ sections (play 1) — write 4–8 real Q/A per P1/P2 page.
+- ✔ Search Console questions → FAQ brief (play 2) — connect secrets.
+- ✔ Visible freshness (play 3) — add the Updated line to posts.
+- ✔ Named reviews (play 4) — collect ≥3 testimonials with consent.
+- ✔ Entity consistency (play 5) — fill NAP/sameAs; align GBP; claim
+  Bing Places, Apple Business Connect; Wikidata item if eligible.
+- [ ] Comparison pages (play 6): modular vs panelized vs manufactured;
+      prefab vs site-built cost and timeline; "Method vs {competitor}"
+      only with sourced public facts. Compare table + FAQ each.
+- ✔ Case-study projects (play 7) — fill facts for 8–12 flagships.
+- [ ] Press & citations (play 8): press doc type + /press; outreach
+      list (Dwell, Dezeen, Builder, local business journals) with the
+      factory-tour and set-day angles; link every clipping.
+- ✔ Crawlable plan PDFs (play 9) — upload PDFs; later proxy under
+  the site domain (`/plans/<slug>.pdf`).
+- ✔ llms-full.txt (play 10) — re-check size after content lands.
+- [ ] Pillars from SEO-PLAN Phase 4: /pricing cost pillar, /prefab-101
+      pillar, four market landers, four commercial service pages,
+      ADU/backyard cottage page, fire-rebuild expertise page, FAQ
+      maintained; About with named team and certifications.
+- [ ] Internal linking: Link list sections on pillars; series ↔
+      projects ↔ markets related blocks; every post links one money
+      page.
+- [ ] Author pages + bylines on ≥80% of posts (Authority gate).
+- [ ] Image alt coverage 100% (seed from crawl alts), captions on
+      galleries, descriptive file names via Sanity.
+- [ ] Footnoted numbers: every stat carries a marker to a dated
+      sources line (the Rivian pattern) — a code component
+      (`Footnotes`) + a `sources[]` field on sections that carry
+      numbers.
+
+### E4 Measurement
+- ✔ AEO grader nightly; Studio AEO/Traffic/Analytics panes; edge bot
+  counters; prompt insights (needs ANTHROPIC_API_KEY).
+- [ ] Search Console + Bing Webmaster verified on the launch domain;
+      GSC property for staging too.
+- [ ] GA4 or Vercel Analytics events: `mh:form` steps, CTA clicks,
+      toggle usage on bespoke sections (so we learn which state sells).
+- [ ] Rank tracking for the keyword map (SEO-PLAN Phase 4) from a
+      pre-launch baseline.
+- [ ] Monitoring schedules re-enabled: lighthouse-history, audit,
+      check-links, dataset-backup, design-drift.
+
+---
+
+## 7. Stage plan
+
+### Stage 1 — Dev (now → all P1 pages built)
+Entry: this plan accepted. Work in parallel:
+- A1–A4 (tokens, fonts, mobile frames) — Bryce + Claude.
+- C1 doc types `series`, `plan`, `market`, `commercialType`, `press`,
+  `glossary`; C2 desk + previews; C3 webhook + env.
+- B1/B2 sections in the order the P1 pages need them.
+- D: P1 pages built from Sanity with CMS-bound values.
+- E1 redirects map encoded; E2 Product/HowTo/Service nodes.
+- Method starts content: inputs 1–9 in PROJECT-LOG, P1 copy and FAQs.
+Exit: P1 pages pass G1–G16 on staging with real or clearly marked
+interim content; `npm run build` clean; Playwright suite green.
+
+### Stage 2 — QA (continuous, formalized at end of Dev)
+- [ ] QA tooling: `scripts/qa-pages.mjs` runs G3–G11 per URL from the
+      sitemap (one H1, title/description lengths, canonical, JSON-LD
+      types present, alt coverage, word count, Updated line) and
+      writes `src/design/qa.status.json` for a Studio card. Runs on a
+      workflow against staging.
+- [ ] Playwright suite covers: nav + Link navigation, forms end to
+      end (submission in inbox), FAQ toggle, bespoke toggles/sliders
+      (state changes are DOM-visible), sliders settle, reveals finish,
+      reduced-motion path, 428/1024/1440.
+- [ ] Lighthouse mobile on every P1/P2 route via `lighthouse.yml`.
+- [ ] Structured data: Rich Results Test per template (manual) +
+      probe greps (automated).
+- [ ] Accessibility: axe pass per template; keyboard walk of the
+      intake sheet.
+- [ ] Redirect map test: all legacy URLs one hop (runner).
+- [ ] Content QA sheet (§8) filled per page by Bryce/Method.
+Exit: zero P1 failures; P2 failures triaged with owners and dates.
+
+### Stage 3 — Alpha (internal, Method team + Envoy)
+- [ ] Staging password gate ON (announcement bar off); Method editors
+      invited to Studio; 60-minute editor training (sections, SEO
+      object, FAQ, preview, publish → live in ~1 min).
+- [ ] Method completes P1+P2 content in Sanity; author roster
+      entered; 182-post triage executed (keep/redirect/410).
+- [ ] Case-study facts and testimonials for flagships entered.
+- [ ] Feedback captured as GitHub issues labeled `alpha`; fix cycle
+      weekly; re-run QA tooling after each cycle.
+Exit: P1+P2 pages pass gates with REAL content; no `{placeholder}`
+left on indexable pages; inbox receiving test leads and emails.
+
+### Stage 4 — Beta (friendly external: past clients, partners, 2 weeks)
+- [ ] Gate off for invited users (shared passphrase or unlisted
+      domain); `noindex` remains on staging domain.
+- [ ] Real-device matrix: iOS Safari (sheet, history Back, snap),
+      Android Chrome, Safari macOS, Edge; the iOS-only behaviors in
+      AGENTS.md re-tested on device by Bryce.
+- [ ] Field CWV from Vercel Speed Insights reviewed; INP on bespoke
+      toggles.
+- [ ] Intake funnel review: step drop-off from `mh:form` events; copy
+      fixes.
+- [ ] Legal/content sign-off: privacy policy, accessibility
+      statement, image rights (all project photography cleared),
+      testimonial consents on file, price-publishing policy applied.
+- [ ] Final content capture of the old site (fetch-method-content) and
+      redirect map reconciled against it.
+Exit: no P1/P2 open defects; Method sign-off recorded in PROJECT-LOG.
+
+### Stage 5 — Launch
+Pre-cutover (T-7 to T-1)
+- [ ] Production Vercel project with `methodhomes.net` + www added;
+      single-hop redirect chosen; SSL issued; env vars copied;
+      `designops.site.baseUrl` → https://methodhomes.net (search for
+      every hard-coded staging URL); `aeo.brandDomains` updated.
+- [ ] Sanity CORS + Presentation preview origin for the new domain;
+      webhook target updated.
+- [ ] Sitemap, robots, llms.txt regenerated with the new base; staging
+      domain set to `noindex` + redirect to production after cutover.
+- [ ] Redirect map loaded; CI check green against production preview.
+- [ ] Rank/traffic baseline snapshot taken (SEO-PLAN Phase 0).
+Cutover (T-0)
+- [ ] DNS switch; verify apex/www single hop; verify 20 top legacy
+      URLs by hand; verify forms + emails on production; verify
+      Studio at /studio on the production domain.
+- [ ] Search Console: add + verify the new property (domain
+      property), submit sitemap, use Change of Address if the host
+      changes; Bing Webmaster import from GSC.
+- [ ] GBP website URL + NAP checked; social profile links updated.
+- [ ] Run `probe.yml`, `lighthouse.yml`, `aeo.yml` against production;
+      record results in PROJECT-LOG.
+Post-launch (T+1 to T+14)
+- [ ] Daily: GSC coverage + 404 report, Vercel logs for 404/500,
+      inbox health; fix same day.
+- [ ] T+7: CWV field check; AEO grade compared to pre-launch; first
+      "Questions people already ask" run → FAQ additions.
+- [ ] T+14: retire the old Webflow site (keep redirects at the old
+      host if it stays alive); close the launch in PROJECT-LOG.
+
+### Stage 6 — Ongoing cadence
+- Weekly: inbox review, journal post (calendar), AEO pane check.
+- Monthly: Lighthouse + link check, GSC questions → FAQ updates,
+  dateModified refreshes on pillars, new case study.
+- Quarterly: thin-content review, redirect hygiene, token/Figma drift
+  check, dependency updates.
+
+---
+
+## 8. Per-template QA sheet (copy per page into the QA run)
+
+```
+Route: ______            Figma frame: ______        Owner: ______
+[ ] G1 matches frame @1440/1024/428   [ ] G2 no off-token
+[ ] G3 one H1 / heading order         [ ] G4 title/desc/canonical/OG
+[ ] G5 images alt+size+lazy           [ ] G6 sitemap + index state
+[ ] G7 ≥300 words, lede answers, ≥2 question H2s
+[ ] G8 schema: WebPage kind ___ + Breadcrumb + FAQPage? + entity ___
+[ ] G9 Updated line + dateModified    [ ] G10 byline/NAP/no placeholders
+[ ] G11 present in /llms-full.txt     [ ] G12 Lighthouse mobile ≥90
+[ ] G13 HTML <100KB, LCP eager        [ ] G14 Playwright green
+[ ] G15 a11y pass                     [ ] G16 editable + preview works
+Notes / defects (issue #): ______
+```
+
+---
+
+## 9. Risk register
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Figma edit access still denied | Rebrand blocked; design/code drift | Escalate access (A1); meanwhile build sections against the IA frames' values read via scripts |
+| Series prices unpublished | Pricing/Lineup/Finish levels show bands or nothing; Offer schema thin | Decide price policy (C4); bands are acceptable; never fabricate |
+| 182 thin posts migrate as-is | Content-depth gate fails; crawl budget wasted | Triage in Alpha; 301/410 before launch |
+| Nightly AEO commits land on main | Rebase conflicts | Always `git fetch && rebase` before push; never commit regenerated status JSON from the sandbox |
+| Trial fonts in production | Licensing exposure | A2 before Beta |
+| Sandbox egress limits (figma, sanity, vercel, methodhomes.net) | Verification gaps | Use the Actions workflows (probe, fetch-page, lighthouse, aeo) as the network path |
+| Testimonials without consent | Legal/trust | Consent on file per testimonial before publish |
+| Launch redirect misses | Equity loss | CI one-hop check on all 330+ URLs; manual top-20 check at cutover |
+
+---
+
+## 10. Change log
+
+- 2026-10-03 — Created. Consolidates SEO-PLAN phases, the ten AEO
+  plays, the Figma IA/section inventories, the Sanity model gaps and
+  the stage gates into one plan. Status reflects the repo at commit
+  6f27fdb.

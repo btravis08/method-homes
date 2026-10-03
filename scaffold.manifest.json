@@ -45,6 +45,7 @@
     "scripts/collect-lighthouse.mjs",
     "scripts/aeo-audit.mjs",
     "docs/PROJECT-LOG.md",
+    "docs/LAUNCH-PLAN.md",
     "src/components/seo/**",
     "src/app/llms-full.txt/**",
     "src/design/aeo.queries.json",

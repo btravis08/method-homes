@@ -722,7 +722,16 @@ git/seeds. Restart the dev server after dependency or Sanity schema
 changes. Node >= 22.12 required (Sanity CLI).
 
 
-## Project log (read it before deciding anything)
+## Launch plan + project log (read both before deciding anything)
+
+`docs/LAUNCH-PLAN.md` is the marching orders (user request
+2026-10-03): the 16 definition-of-done gates every page must pass,
+the workstreams (design rebrand, section library, Sanity model +
+wiring, the 39 routes with their schema/FAQ/bespoke requirements, the
+full SEO/AEO idea inventory) and the stage plan Dev → QA → Alpha →
+Beta → Launch → ongoing. Keep it current: flip a box the same push
+that lands the item; add a line the day a new idea is agreed; check
+finessed designs against §1 and §5 before building them.
 
 `docs/PROJECT-LOG.md` is the permanent ledger: dated decisions, the
 AEO plays with their shipped/owed status, every input still needed

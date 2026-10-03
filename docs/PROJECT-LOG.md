@@ -7,9 +7,12 @@ open ledger*. Append, don't rewrite: new entries go at the top of
 each section with their date. (Started 2026-10-03 at Bryce's request
 after the author-schema play was flagged late.)
 
-Companion documents: `docs/SEO-PLAN.md` (the 2026-08-05 audit-driven
-SEO plan, phased) · `docs/PLAYBOOK.md` (performance/engineering
-rules) · AGENTS.md (binding working agreements).
+Companion documents: `docs/LAUNCH-PLAN.md` (the marching orders:
+every workstream, gate and stage from Dev to Launch — the file to
+check designs and builds against) · `docs/SEO-PLAN.md` (the
+2026-08-05 audit-driven SEO plan, phased) · `docs/PLAYBOOK.md`
+(performance/engineering rules) · AGENTS.md (binding working
+agreements).
 
 ---
 
