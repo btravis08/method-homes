@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-02T15:57:59.429Z",
+  "generatedAt": "2026-10-03T14:26:17.230Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 63,
@@ -224,7 +224,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-02",
+    "since": "2026-09-03",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -235,7 +235,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 2d ago",
+    "model": "Claude web search (manual, session probe) · recorded 3d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1176,38 +1176,53 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9333333333333333,
-      "detail": "54/60 pages pass",
+      "ratio": 0.9166666666666666,
+      "detail": "51/60 pages pass",
       "pages": [
         {
           "path": "/journal/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2265 ms"
-        },
-        {
-          "path": "/journal/2014-palm-springs-modernism-week-in-review",
-          "ratio": 0,
-          "detail": "2226 ms"
+          "detail": "2132 ms"
         },
         {
           "path": "/",
           "ratio": 0.5,
-          "detail": "990 ms"
+          "detail": "1027 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "972 ms"
+          "detail": "1115 ms"
         },
         {
           "path": "/journal",
           "ratio": 0.5,
-          "detail": "915 ms"
+          "detail": "963 ms"
         },
         {
           "path": "/about",
           "ratio": 0.5,
-          "detail": "1450 ms"
+          "detail": "1192 ms"
+        },
+        {
+          "path": "/journal/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0.5,
+          "detail": "865 ms"
+        },
+        {
+          "path": "/journal/793",
+          "ratio": 0.5,
+          "detail": "1173 ms"
+        },
+        {
+          "path": "/journal/bellingham-herald",
+          "ratio": 0.5,
+          "detail": "805 ms"
+        },
+        {
+          "path": "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+          "ratio": 0.5,
+          "detail": "808 ms"
         }
       ]
     },
@@ -2446,7 +2461,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "6 run(s) recorded",
+      "detail": "7 run(s) recorded",
       "pages": []
     },
     {
@@ -2965,18 +2980,21 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "effort": "high",
-      "impact": 0,
+      "impact": 0.1,
       "priority": 0.02,
-      "detail": "54/60 pages pass",
+      "detail": "51/60 pages pass",
       "pages": [
-        "/journal/2013-green-washington-awards — 2265 ms",
-        "/journal/2014-palm-springs-modernism-week-in-review — 2226 ms",
-        "/ — 990 ms",
-        "/legacy — 972 ms",
-        "/journal — 915 ms",
-        "/about — 1450 ms"
+        "/journal/2013-green-washington-awards — 2132 ms",
+        "/ — 1027 ms",
+        "/legacy — 1115 ms",
+        "/journal — 963 ms",
+        "/about — 1192 ms",
+        "/journal/2014-palm-springs-modernism-week-in-review — 865 ms",
+        "/journal/793 — 1173 ms",
+        "/journal/bellingham-herald — 805 ms",
+        "/journal/berkshires-custom-residence-board-formed-concrete-foundation-pour — 808 ms"
       ],
-      "pagesAffected": 6
+      "pagesAffected": 9
     },
     {
       "id": "indexable",
@@ -3389,7 +3407,7 @@
     {
       "path": "/journal/793",
       "type": "post",
-      "score": 50,
+      "score": 49,
       "words": 76,
       "schema": [
         "Organization",
@@ -3401,6 +3419,7 @@
         "title",
         "description",
         "landmarks",
+        "ttfb",
         "answer-first",
         "question-headings",
         "faq",
@@ -3743,7 +3762,7 @@
     {
       "path": "/journal/2014-palm-springs-modernism-week-in-review",
       "type": "post",
-      "score": 60,
+      "score": 61,
       "words": 552,
       "schema": [
         "Organization",
@@ -3940,6 +3959,7 @@
         "title",
         "description",
         "landmarks",
+        "ttfb",
         "question-headings",
         "faq",
         "depth",
@@ -4219,6 +4239,7 @@
       "fails": [
         "description",
         "landmarks",
+        "ttfb",
         "question-headings",
         "faq",
         "depth",
