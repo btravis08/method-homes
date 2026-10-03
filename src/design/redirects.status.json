@@ -1,7 +1,2603 @@
 {
-  "generatedAt": "2026-10-03T00:00:00.000Z",
+  "generatedAt": "2026-10-03T23:16:42.865Z",
   "origin": "https://method-homes.vercel.app",
-  "summary": {},
-  "rows": [],
-  "note": "Not run yet — dispatch the redirects workflow (GitHub Actions) or run `node scripts/check-redirects.mjs` against a build."
+  "summary": {
+    "pass": 311,
+    "pending": 20
+  },
+  "rows": [
+    {
+      "from": "/",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/about",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/arc",
+      "action": "redirect",
+      "to": "/method-arc",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/blog",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/2013-green-washington-awards",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/2014-palm-springs-modernism-week-in-review",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/783",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/793",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/alaska-custom-cabin-girdwood-prefab-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/annata-display-2017-dwell-on-design",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/architectural-digest-see-how-16-families-are-rebuilding-after-the-la-fires",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/architectural-record-modular-classroom-makeover",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/backyard-cottages",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/bainbridge-island-option",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/balance-s-m-l-series-prefab-studio",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/bccustom-off-grid-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/bellingham-herald",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/berkshires-custom-install-video",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/best-of-install-photos",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/blog-kickoff",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/blown-in-cellulose",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/blue-ridge-cabin-foundation",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/cabinets-being-installed-in-method-factory",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/carmel-valley-residence-in-dwell-magazine",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/carmel-valley-residence-on-america-bydesign",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/chimney-rock-residence-featured-in-2025-residential-design-awards",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/coastal-large-time-lapse-video",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/come-celebrate-design-in-san-francisco-june-10-11",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/come-see-method-dwell-design-la-complimentary-one-day-passes-available",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/come-see-method-dwell-design-may-29-31",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/come-see-modern-monogram-house-built-method-tour-now",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/curbed-seattle",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/curbed-taproots-modular-addition-unveiled-this-friday",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/curbed-watch-west-seattle-townhomes-fall-into-place",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/custom-annata-iii-available-for-rent-in-the-heart-of-wine-country",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/deep-water-survey",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/design-challenge-for-sustainable-backyard-cottages",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/design-milk",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/design-milk-what-to-do-and-see-during-modernism-week",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/dwell-in-la-2018",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/dwell-method-homes-makes-bespoke-prefabs-that-dont-have-a-factory-feel",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/dwell-monogram-invite-monogram-modern-home",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/dwell-on-design",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/dwell-on-design-2013-in-review",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/east-coast-availibilty",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/first-layer-of-insulation-on-lake-whatcom-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/girdwood-construction-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/girdwood-custom-cabin-install",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/gizmag",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/h-o-m-e",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/habitat-for-humanity-celebrates-completion-of-hybrid-modular-net-zero-home-prototype",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/habitat-for-humanity-hoif-ribbon-cutting",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/homb-public-open-house",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/house-of-the-immediate-future-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/houzz-features-method-homes",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/how-this-prefab-retreat-weathers-the-winter-with-bifold-glass-doors",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/ilfi-ramp-up-event-getting-ready-for-the-seed-classroom",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/in-the-shop-jackson-hole-custom",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/inhabitat",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/interview-with-method-designer-and-methods-fireplace-vendor-partner-european-home",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/jackson-hole-custom-modular-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/just-in-time-for-the-holidays-seattles-taproot-theatre-unwraps-a-brand-new-modular-building",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/la-house-aka-eagle-rock",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lake-whatcom-cabin-nearing-completion",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lake-whatcom-cabin-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lake-whatcom-project-moving-right-along",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lake-whatcom-slab-prep-and-radiant-tubing",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/leed-whiterock-homes-prefab-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lid-park-almost-complete",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lid-park-finally-at-home-in-seattle",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lid-park-floor-framing-complete",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lid-park-floor-sheathing-complete",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/lid-park-starts-finishes-on-monday",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/los-angeles-times-method-homes-prefab-in-venice-take-a-look-inside-and-out",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/m2-foundation",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/m2-glacier-cabin-post-set-pics",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/m2-well-under-way",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/martis-camp-set-in-truckee-california",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-completes-20-homes-make-right-foundation-ft-peck-reservation",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-delivers-prefab-home-alaska",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-featured-in-san-francisco-chronicle",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-friday-harbor-cabin-ii-shop-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-2013-recap",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-announces-strategic-partnership-haiku-home",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-announces-the-simpatico-series-by-swatt-miers",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-big-creek-ranch-cabins-timelapse",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-builds-wet-cores-for-house-of-the-immediate-future",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-featured-in-puget-sound-business-journal",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-launches-new-model",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-ny-to-la-prefab-tour",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-pittsburgh-m2",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-showcases-a-green-prefab-home-at-modernism-week-2014",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-homes-summer-2013-recap",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-in-professional-builder-magazine",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-in-sonoma-county",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-launch",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-offers-zero-net-energy",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-prefab-on-orcas-island-cottage-style",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-prefab-sets-taproot-theatre-annex",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-prepares-to-set-custom-venice-beach-prefab",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-to-build-first-homb",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/method-unveils-custom-bainbridge-island-prefab",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/methods-new-facility-energy-efficient-modular-facility",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/modular-townhomes-to-go-up-in-west-seattle-over-2-days",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/monogram-modern-home-boston",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/new-glacier-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/new-home-drops-in-in-ketchum",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/new-m2-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/new-urban-series-in-the-works",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/northstar-yoga-studio-wins-a-sunset-magazine-mountain-magic-architecture-award",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/now-underway-west-seattle-townhomes",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/off-the-grid-b-c-site-work",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/on-the-set-greenwoods-taproot-theatre",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/open-house-happy-hour-april-30",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/open-houses-sunday-september-20th",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/orcas-island-custom-prefab",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-home",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-method-home-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/orcas-island-prefab-set-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/paradigm-prototype-now-available",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/past-current-and-upcoming-projects",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/peninsula-shift-prefab",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/peninsula-shift-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/plain-magazine-studio-schicketanz-designs-an-eco-friendly-residential-compound-in-california",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/portland-homb-arrives-at-site",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/prefab-homebuyer-seminar",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/prefab-homebuyers-seminar-june-9-10",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/prefabricated-home-shipments-on-the-rise-in-a-pricey-property-market",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/prefabulous-sustainable",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/presale-2017-monogram-modern-home-dwell",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/professional-builder-magazine-design-awards",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/project-spotlight-mountain-living-with-a-modern-twist",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/project-updates-seed-peninsula-shift-and-girdwood-alaska",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/puget-sound-business-journal-method-homes-opens-east-coast-factory",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/rebuilding-greenville",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/rent-a-new-method-cabin-in-oregon",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/s-m-l-prefab-series-by-balance-associates",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/san-juan-island-method-cabin-prefab-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-business-magazine-recognizes-method-homes-as-leader-in-sustainability-at-the-2013-green-washington-awards",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-business-the-washington-green",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-daily-journal-of-commerce",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-daily-journal-of-commerce-modular-townhomes-come-to-west-seattle",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-djc",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seattle-met",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/seed-collaborative-and-method-featured-in-seattle-daily-journal-of-commerce",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/sheetrock-hung-in-method-factory",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/siding-on-lake-whatcom-cabin",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/skylab-architecture-and-urban-series-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/solar-decathalon-on-the-mall-in-dc",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/sonoma-ca-home-complete",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/sonoma-county-element-3-pre-and-post-install",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/sonoma-element-3-install-video",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/south-bay-digs",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/spencer-lake",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/spencer-lake-method-cabin-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/spencer-lake-prefab-home-video",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/studio-29-discusses-the-new-method-cottage-series",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/taproot-ready-to-ship",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/taproot-theatre-almost-complete",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/taproot-theatre-grand-opening-celebration",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/taproot-theatre-in-progress",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/telluride-shelter-home-delivery-custom-engineering-and-sustainable-designs-put-the-fab-in-method-homes-prefabs",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/the-oregonian",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/the-press-democrat-prefabulous---6-stunning-sonoma-county-prefab-homes",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/tough-comute-home-today",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/urban-land",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/usa-today-brad-pitt-foundation-homes-arrive-on-reservation",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/vashon-island-cabin-install",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/venice-beach-prefab-home-set-method-homes",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/wall-street-journal-prefab-but-make-it-luxury",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/washington-coastal-cabin-large-prefab-set",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/we-are-permitted",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/were-back-to-blogging-with-some-exciting-new-things-on-the-horizon",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/west-coast-shop-update",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/west-seattle-herald",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/west-seattle-townhomes-modular-install",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/west-seattle-townhomes-set-day-1",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/white-rock-bc-shop-progress",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/whiterock-bc-modern-prefab",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/blog/window-of-nice-weather-today",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/calistoga",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/calistoga-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/chimney-rock-estate",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "live": true,
+      "status": 308,
+      "location": "/projects",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/chartwell-school-addition-with-grouparchitect",
+      "action": "redirect",
+      "to": "/projects/chartwell-school-addition-with-grouparchitect",
+      "live": true,
+      "status": 308,
+      "location": "/projects/chartwell-school-addition-with-grouparchitect",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/fish-bay-cottages-lopez-island",
+      "action": "redirect",
+      "to": "/projects/fish-bay-cottages-lopez-island",
+      "live": true,
+      "status": 308,
+      "location": "/projects/fish-bay-cottages-lopez-island",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/make-it-right-fort-peck-sustainable-village",
+      "action": "redirect",
+      "to": "/projects/make-it-right-fort-peck-sustainable-village",
+      "live": true,
+      "status": 308,
+      "location": "/projects/make-it-right-fort-peck-sustainable-village",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/northstar-yoga-studio",
+      "action": "redirect",
+      "to": "/projects/northstar-yoga-studio",
+      "live": true,
+      "status": 308,
+      "location": "/projects/northstar-yoga-studio",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/rico-workforce-development-designed-by-lda-architects",
+      "action": "redirect",
+      "to": "/projects/rico-workforce-development-designed-by-lda-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/rico-workforce-development-designed-by-lda-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/seed-classroom-designed-by-stacy-smedley",
+      "action": "redirect",
+      "to": "/projects/seed-classroom-designed-by-stacy-smedley",
+      "live": true,
+      "status": 308,
+      "location": "/projects/seed-classroom-designed-by-stacy-smedley",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/skylodge",
+      "action": "redirect",
+      "to": "/projects/skylodge",
+      "live": true,
+      "status": 308,
+      "location": "/projects/skylodge",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/tahoe-park-concession-commercial",
+      "action": "redirect",
+      "to": "/projects/tahoe-park-concession-commercial",
+      "live": true,
+      "status": 308,
+      "location": "/projects/tahoe-park-concession-commercial",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/taproot-theatre-commercial",
+      "action": "redirect",
+      "to": "/projects/taproot-theatre-commercial",
+      "live": true,
+      "status": 308,
+      "location": "/projects/taproot-theatre-commercial",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/the-valley-school-with-workshop-ad",
+      "action": "redirect",
+      "to": "/projects/the-valley-school-with-workshop-ad",
+      "live": true,
+      "status": 308,
+      "location": "/projects/the-valley-school-with-workshop-ad",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/village-north-affordable-workforce-housing-with-housing-lopez",
+      "action": "redirect",
+      "to": "/projects/village-north-affordable-workforce-housing-with-housing-lopez",
+      "live": true,
+      "status": 308,
+      "location": "/projects/village-north-affordable-workforce-housing-with-housing-lopez",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/village-walk-northstar-tahoe-commercial",
+      "action": "redirect",
+      "to": "/projects/village-walk-northstar-tahoe-commercial",
+      "live": true,
+      "status": 308,
+      "location": "/projects/village-walk-northstar-tahoe-commercial",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-portfolio/west-seattle-townhomes-commercial",
+      "action": "redirect",
+      "to": "/projects/west-seattle-townhomes-commercial",
+      "live": true,
+      "status": 308,
+      "location": "/projects/west-seattle-townhomes-commercial",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-project-types/affordable-workforce-housing",
+      "action": "redirect",
+      "to": "/commercial/workforce-housing",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/commercial-project-types/classrooms-and-school-additions",
+      "action": "redirect",
+      "to": "/commercial/schools",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/commercial-project-types/multi-family-housing-units",
+      "action": "redirect",
+      "to": "/commercial/multifamily",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/commercial-project-types/remote-ski-lodge-and-hospitality-projects",
+      "action": "redirect",
+      "to": "/commercial/hospitality",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/commercial-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true,
+      "status": 308,
+      "location": "/get-started",
+      "result": "pass"
+    },
+    {
+      "from": "/commercial-survey-copy",
+      "action": "gone",
+      "status": 404,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "live": true,
+      "status": 308,
+      "location": "/projects",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/bainbridge-island-custom",
+      "action": "redirect",
+      "to": "/projects/bainbridge-island-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/bainbridge-island-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/beehive-guesthouse-designed-by-method-arc",
+      "action": "redirect",
+      "to": "/projects/beehive-guesthouse-designed-by-method-arc",
+      "live": true,
+      "status": 308,
+      "location": "/projects/beehive-guesthouse-designed-by-method-arc",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/belmont-custom",
+      "action": "redirect",
+      "to": "/projects/belmont-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/belmont-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/brittania-beach-custom",
+      "action": "redirect",
+      "to": "/projects/brittania-beach-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/brittania-beach-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/burlingame-custom-designed-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/burlingame-custom-designed-by-clever-homes",
+      "live": true,
+      "status": 308,
+      "location": "/projects/burlingame-custom-designed-by-clever-homes",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/calistoga-custom",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/calistoga-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/canopy-house",
+      "action": "redirect",
+      "to": "/projects/canopy-house",
+      "live": true,
+      "status": 308,
+      "location": "/projects/canopy-house",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/carmel-valley-residence-by-studio-schicketanz",
+      "action": "redirect",
+      "to": "/projects/carmel-valley-residence-by-studio-schicketanz",
+      "live": true,
+      "status": 308,
+      "location": "/projects/carmel-valley-residence-by-studio-schicketanz",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/chimney-rock-designed-by-nick-noyes-architects",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/creekbend-residence",
+      "action": "redirect",
+      "to": "/projects/creekbend-residence",
+      "live": true,
+      "status": 308,
+      "location": "/projects/creekbend-residence",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/fish-creek-passage-by-method-arc",
+      "action": "redirect",
+      "to": "/projects/fish-creek-passage-by-method-arc",
+      "live": true,
+      "status": 308,
+      "location": "/projects/fish-creek-passage-by-method-arc",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/friday-harbor-custom-by-fish-mackay-architects",
+      "action": "redirect",
+      "to": "/projects/friday-harbor-custom-by-fish-mackay-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/friday-harbor-custom-by-fish-mackay-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/greenville-fire-rebuilds-custom",
+      "action": "redirect",
+      "to": "/projects/greenville-fire-rebuilds-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/greenville-fire-rebuilds-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/guemes-tidelands-custom",
+      "action": "redirect",
+      "to": "/projects/guemes-tidelands-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/guemes-tidelands-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/homb-portland",
+      "action": "redirect",
+      "to": "/projects/homb-portland",
+      "live": true,
+      "status": 308,
+      "location": "/projects/homb-portland",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/house-of-the-immediate-future-seattle-custom",
+      "action": "redirect",
+      "to": "/projects/house-of-the-immediate-future-seattle-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/house-of-the-immediate-future-seattle-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/idaho-mountain-home",
+      "action": "redirect",
+      "to": "/projects/idaho-mountain-home",
+      "live": true,
+      "status": 308,
+      "location": "/projects/idaho-mountain-home",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/jackson-hole-custom",
+      "action": "redirect",
+      "to": "/projects/jackson-hole-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/jackson-hole-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/jackson-hole-custom-d1348",
+      "action": "redirect",
+      "to": "/projects/jackson-hole-custom-d1348",
+      "live": true,
+      "status": 308,
+      "location": "/projects/jackson-hole-custom-d1348",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/jefferson-knoll-custom",
+      "action": "redirect",
+      "to": "/projects/jefferson-knoll-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/jefferson-knoll-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/jh-mountainview",
+      "action": "redirect",
+      "to": "/projects/jh-mountainview",
+      "live": true,
+      "status": 308,
+      "location": "/projects/jh-mountainview",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/ketchikan-custom",
+      "action": "redirect",
+      "to": "/projects/ketchikan-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/ketchikan-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/lid-park-custom",
+      "action": "redirect",
+      "to": "/projects/lid-park-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/lid-park-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/martis-416-custom-home-designed-by-sagemodern-architects",
+      "action": "redirect",
+      "to": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/martis-476-custom",
+      "action": "redirect",
+      "to": "/projects/martis-476-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-476-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/martis-663-by-sagemodern",
+      "action": "redirect",
+      "to": "/projects/martis-663-by-sagemodern",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-663-by-sagemodern",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/martis-camp-custom",
+      "action": "redirect",
+      "to": "/projects/martis-camp-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-camp-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/menlo-park-custom-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/menlo-park-custom-by-clever-homes",
+      "live": true,
+      "status": 308,
+      "location": "/projects/menlo-park-custom-by-clever-homes",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/mercer-island-3-custom",
+      "action": "redirect",
+      "to": "/projects/mercer-island-3-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/mercer-island-3-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/moose-crossing-custom",
+      "action": "redirect",
+      "to": "/projects/moose-crossing-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/moose-crossing-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/mountain-village-peak-custom",
+      "action": "redirect",
+      "to": "/projects/mountain-village-peak-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/mountain-village-peak-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/oakland-custom",
+      "action": "redirect",
+      "to": "/projects/oakland-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/oakland-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/olympic-valley-custom-home",
+      "action": "redirect",
+      "to": "/projects/olympic-valley-custom-home",
+      "live": true,
+      "status": 308,
+      "location": "/projects/olympic-valley-custom-home",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/orcas-retreat-washington",
+      "action": "redirect",
+      "to": "/projects/orcas-retreat-washington",
+      "live": true,
+      "status": 308,
+      "location": "/projects/orcas-retreat-washington",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/pacific-palisades-custom",
+      "action": "redirect",
+      "to": "/projects/pacific-palisades-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/pacific-palisades-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/palisades-tahoe-custom",
+      "action": "redirect",
+      "to": "/projects/palisades-tahoe-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/palisades-tahoe-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/peninsula-custom-by-studio-s2",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "live": true,
+      "status": 308,
+      "location": "/projects/peninsula-custom-by-studio-s2",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/portola-custom",
+      "action": "redirect",
+      "to": "/projects/portola-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/portola-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/portola-valley-custom",
+      "action": "redirect",
+      "to": "/projects/portola-valley-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/portola-valley-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/san-juan-custom",
+      "action": "redirect",
+      "to": "/projects/san-juan-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/san-juan-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/san-juan-island-custom",
+      "action": "redirect",
+      "to": "/projects/san-juan-island-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/san-juan-island-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/santa-rosa-custom-by-tobylongdesign",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "live": true,
+      "status": 308,
+      "location": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+      "action": "redirect",
+      "to": "/projects/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+      "live": true,
+      "status": 308,
+      "location": "/projects/snowflake-lodge-by-grouparchitect-with-dowbuilt",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/sun-valley-custom",
+      "action": "redirect",
+      "to": "/projects/sun-valley-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/sun-valley-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/sv-residence-custom",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/sv-residence-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/tahoe-custom",
+      "action": "redirect",
+      "to": "/projects/tahoe-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/tahoe-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/truckee-custom",
+      "action": "redirect",
+      "to": "/projects/truckee-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/truckee-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/truckee-custom-by-clever-homes",
+      "action": "redirect",
+      "to": "/projects/truckee-custom-by-clever-homes",
+      "live": true,
+      "status": 308,
+      "location": "/projects/truckee-custom-by-clever-homes",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/venice-beach-custom",
+      "action": "redirect",
+      "to": "/projects/venice-beach-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/venice-beach-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/vineyard-court",
+      "action": "redirect",
+      "to": "/projects/vineyard-court",
+      "live": true,
+      "status": 308,
+      "location": "/projects/vineyard-court",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolio/west-end-wetlands-custom",
+      "action": "redirect",
+      "to": "/projects/west-end-wetlands-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/west-end-wetlands-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-portfolios-new-design/chimney-rock-designed-by-nick-noyes-architects",
+      "action": "redirect",
+      "to": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/chimney-rock-designed-by-nick-noyes-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/custom-regions/city-and-urban",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/custom-regions/island-and-waterfront-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/custom-regions/mountain-modern-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/custom-regions/valley-and-vineyard-homes",
+      "action": "redirect",
+      "to": "/where-we-build",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/custom-residential",
+      "action": "redirect",
+      "to": "/custom-homes",
+      "live": true,
+      "status": 308,
+      "location": "/custom-homes",
+      "result": "pass"
+    },
+    {
+      "from": "/faq",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/featured-projects",
+      "action": "redirect",
+      "to": "/projects",
+      "live": true,
+      "status": 308,
+      "location": "/projects",
+      "result": "pass"
+    },
+    {
+      "from": "/fish-creek",
+      "action": "redirect",
+      "to": "/projects/fish-creek-passage-by-method-arc",
+      "live": true,
+      "status": 308,
+      "location": "/projects/fish-creek-passage-by-method-arc",
+      "result": "pass"
+    },
+    {
+      "from": "/get-started",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/martis-camp-416",
+      "action": "redirect",
+      "to": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-416-custom-home-designed-by-sagemodern-architects",
+      "result": "pass"
+    },
+    {
+      "from": "/martis-camp-663",
+      "action": "redirect",
+      "to": "/projects/martis-663-by-sagemodern",
+      "live": true,
+      "status": 308,
+      "location": "/projects/martis-663-by-sagemodern",
+      "result": "pass"
+    },
+    {
+      "from": "/method-process",
+      "action": "redirect",
+      "to": "/process",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/orcas-cabin-retreat",
+      "action": "redirect",
+      "to": "/projects/orcas-retreat-washington",
+      "live": true,
+      "status": 308,
+      "location": "/projects/orcas-retreat-washington",
+      "result": "pass"
+    },
+    {
+      "from": "/partnerships-with-architects-and-developers",
+      "action": "redirect",
+      "to": "/architects",
+      "live": true,
+      "status": 308,
+      "location": "/architects",
+      "result": "pass"
+    },
+    {
+      "from": "/peninsula",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "live": true,
+      "status": 308,
+      "location": "/projects/peninsula-custom-by-studio-s2",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio",
+      "action": "redirect",
+      "to": "/projects",
+      "live": true,
+      "status": 308,
+      "location": "/projects",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/bainbridge-island-option",
+      "action": "redirect",
+      "to": "/projects/bainbridge-island-option",
+      "live": true,
+      "status": 308,
+      "location": "/projects/bainbridge-island-option",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/big-creek-ranch-cabin",
+      "action": "redirect",
+      "to": "/projects/big-creek-ranch-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/big-creek-ranch-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/big-creek-ranch-cabin-ii",
+      "action": "redirect",
+      "to": "/projects/big-creek-ranch-cabin-ii",
+      "live": true,
+      "status": 308,
+      "location": "/projects/big-creek-ranch-cabin-ii",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/bryant-option",
+      "action": "redirect",
+      "to": "/projects/bryant-option",
+      "live": true,
+      "status": 308,
+      "location": "/projects/bryant-option",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/camano-shift",
+      "action": "redirect",
+      "to": "/projects/camano-shift",
+      "live": true,
+      "status": 308,
+      "location": "/projects/camano-shift",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/coastal-cabin",
+      "action": "redirect",
+      "to": "/projects/coastal-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/coastal-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/custom-elemental-5",
+      "action": "redirect",
+      "to": "/projects/custom-elemental-5",
+      "live": true,
+      "status": 308,
+      "location": "/projects/custom-elemental-5",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/deming-m2",
+      "action": "redirect",
+      "to": "/projects/deming-m2",
+      "live": true,
+      "status": 308,
+      "location": "/projects/deming-m2",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/glacier-cabin",
+      "action": "redirect",
+      "to": "/projects/glacier-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/glacier-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/hood-canal-m-series",
+      "action": "redirect",
+      "to": "/projects/hood-canal-m-series",
+      "live": true,
+      "status": 308,
+      "location": "/projects/hood-canal-m-series",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/lake-whatcom-cabin",
+      "action": "redirect",
+      "to": "/projects/lake-whatcom-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/lake-whatcom-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/lid-park-custom",
+      "action": "redirect",
+      "to": "/projects/lid-park-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/lid-park-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/lopez-island-cabin-2",
+      "action": "redirect",
+      "to": "/projects/lopez-island-cabin-2",
+      "live": true,
+      "status": 308,
+      "location": "/projects/lopez-island-cabin-2",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/marrowstone-island-elemental",
+      "action": "redirect",
+      "to": "/projects/marrowstone-island-elemental",
+      "live": true,
+      "status": 308,
+      "location": "/projects/marrowstone-island-elemental",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/modern-monogram-elemental",
+      "action": "redirect",
+      "to": "/projects/modern-monogram-elemental",
+      "live": true,
+      "status": 308,
+      "location": "/projects/modern-monogram-elemental",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/obstruction-island-cabin",
+      "action": "redirect",
+      "to": "/projects/obstruction-island-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/obstruction-island-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/orcas-island-cabin",
+      "action": "redirect",
+      "to": "/projects/orcas-island-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/orcas-island-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/paradigm-i",
+      "action": "redirect",
+      "to": "/projects/paradigm-i",
+      "live": true,
+      "status": 308,
+      "location": "/projects/paradigm-i",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/peninsula-shift",
+      "action": "redirect",
+      "to": "/projects/peninsula-shift",
+      "live": true,
+      "status": 308,
+      "location": "/projects/peninsula-shift",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/phinney-option",
+      "action": "redirect",
+      "to": "/projects/phinney-option",
+      "live": true,
+      "status": 308,
+      "location": "/projects/phinney-option",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/san-juan-cabin",
+      "action": "redirect",
+      "to": "/projects/san-juan-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/san-juan-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/santa-barbara-cabin",
+      "action": "redirect",
+      "to": "/projects/santa-barbara-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/santa-barbara-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/santa-rosa-annata",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-annata",
+      "live": true,
+      "status": 308,
+      "location": "/projects/santa-rosa-annata",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/seattle-element-3",
+      "action": "redirect",
+      "to": "/projects/seattle-element-3",
+      "live": true,
+      "status": 308,
+      "location": "/projects/seattle-element-3",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/seattle-option",
+      "action": "redirect",
+      "to": "/projects/seattle-option",
+      "live": true,
+      "status": 308,
+      "location": "/projects/seattle-option",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/sonoma-elemental",
+      "action": "redirect",
+      "to": "/projects/sonoma-elemental",
+      "live": true,
+      "status": 308,
+      "location": "/projects/sonoma-elemental",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/spencer-lake-cabin",
+      "action": "redirect",
+      "to": "/projects/spencer-lake-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/spencer-lake-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/tahoe-cabin",
+      "action": "redirect",
+      "to": "/projects/tahoe-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/tahoe-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/vashon-island-cabin",
+      "action": "redirect",
+      "to": "/projects/vashon-island-cabin",
+      "live": true,
+      "status": 308,
+      "location": "/projects/vashon-island-cabin",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-portfolio/white-rock-ii-custom",
+      "action": "redirect",
+      "to": "/projects/white-rock-ii-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/white-rock-ii-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-residential",
+      "action": "redirect",
+      "to": "/predesigned",
+      "live": true,
+      "status": 308,
+      "location": "/predesigned",
+      "result": "pass"
+    },
+    {
+      "from": "/predesigned-series/annata",
+      "action": "redirect",
+      "to": "/series/annata",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/cabin",
+      "action": "redirect",
+      "to": "/series/cabin",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/elemental",
+      "action": "redirect",
+      "to": "/series/elemental",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/m",
+      "action": "redirect",
+      "to": "/series/m",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/method-one",
+      "action": "redirect",
+      "to": "/series/method-one",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/option",
+      "action": "redirect",
+      "to": "/series/option",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/predesigned-series/paradigm",
+      "action": "redirect",
+      "to": "/series/paradigm",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/press",
+      "action": "redirect",
+      "to": "/blog",
+      "live": true,
+      "status": 308,
+      "location": "/blog",
+      "result": "pass"
+    },
+    {
+      "from": "/pricing",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/privacy-policy",
+      "action": "redirect",
+      "to": "/privacy",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/process-services",
+      "action": "redirect",
+      "to": "/process",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    },
+    {
+      "from": "/project/calistoga",
+      "action": "redirect",
+      "to": "/projects/calistoga-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/calistoga-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/project/peninsula",
+      "action": "redirect",
+      "to": "/projects/peninsula-custom-by-studio-s2",
+      "live": true,
+      "status": 308,
+      "location": "/projects/peninsula-custom-by-studio-s2",
+      "result": "pass"
+    },
+    {
+      "from": "/res-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true,
+      "status": 308,
+      "location": "/get-started",
+      "result": "pass"
+    },
+    {
+      "from": "/residential-survey",
+      "action": "redirect",
+      "to": "/get-started",
+      "live": true,
+      "status": 308,
+      "location": "/get-started",
+      "result": "pass"
+    },
+    {
+      "from": "/residential-survey-copy",
+      "action": "gone",
+      "status": 404,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/santa-rosa",
+      "action": "redirect",
+      "to": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "live": true,
+      "status": 308,
+      "location": "/projects/santa-rosa-custom-by-tobylongdesign",
+      "result": "pass"
+    },
+    {
+      "from": "/search",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/sustainability",
+      "action": "keep",
+      "status": 200,
+      "location": null,
+      "result": "pass"
+    },
+    {
+      "from": "/sv-residence",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/sv-residence-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/sv-residence-arc",
+      "action": "redirect",
+      "to": "/projects/sv-residence-custom",
+      "live": true,
+      "status": 308,
+      "location": "/projects/sv-residence-custom",
+      "result": "pass"
+    },
+    {
+      "from": "/what-is-prefab",
+      "action": "redirect",
+      "to": "/prefab-101",
+      "live": false,
+      "status": 404,
+      "location": null,
+      "result": "pending"
+    }
+  ]
 }
