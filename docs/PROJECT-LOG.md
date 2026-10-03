@@ -61,6 +61,15 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Running docs rule
+- Any idea Bryce approves that affects design or dev is recorded in
+  the same turn: a dated entry here (§3, plus §1/§2 when relevant),
+  the task line(s) with owner and status in `docs/LAUNCH-PLAN.md`,
+  AGENTS.md only for rules, and a Figma Dev Mode annotation when a
+  section's spec changes. The full rule lives in AGENTS.md → Working
+  agreements. `docs/LAUNCH-PLAN.md` created the same day as the
+  marching orders Dev → QA → Alpha → Beta → Launch.
+
 ### 2026-10-03 — Authors are real people; one organization byline
 - 3–5 real Method people + one organization byline for news. Never a
   persona. Each person gets `/blog/authors/[slug]` (ProfilePage +

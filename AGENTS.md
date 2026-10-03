@@ -13,6 +13,24 @@ real content migration below).
 
 ## Working agreements
 
+- RUNNING DOCS RULE (Bryce, 2026-10-03 — binding): any idea Bryce
+  approves that affects design or dev is written into the running
+  docs IN THE SAME TURN it is approved, before or alongside the work
+  itself — never "later". Where it goes:
+  - `docs/PROJECT-LOG.md` §3 Decisions: a dated entry (what was
+    decided, why, Figma/route ids); §1 Open inputs if it needs
+    something from Bryce/Method; §2 if it changes an AEO play.
+  - `docs/LAUNCH-PLAN.md`: the task line(s) with owner and `[ ]`
+    in the right workstream (A design, B sections, C Sanity, D pages,
+    E SEO/AEO) and stage; a new gate in §1 if it changes "done";
+    flip boxes the same push that lands the item; §10 change log.
+  - AGENTS.md: only if it is a rule or convention future sessions
+    must follow (not a one-off task).
+  - Figma: Dev Mode annotation on the affected component when the
+    idea changes a section's behavior or spec.
+  A turn that ends with an approved design/dev idea recorded nowhere
+  is incomplete. Before closing any turn, ask: "did an idea get
+  approved here, and is it in the docs?"
 - Written deliverables (proposals, audits, plans, question lists,
   cleanup docs) are created as GOOGLE DOCS via the Google Drive
   connector — always, by default (user preference, 2026-09-25).

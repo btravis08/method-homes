@@ -26,7 +26,9 @@ Stage order is Alpha before Beta (internal before friendly-external);
 if Method prefers the reverse naming, swap the labels, not the gates.
 
 Maintained by Claude. Every push that lands an item flips its box;
-every new idea gets a line here the same day.
+every approved idea that affects design or dev gets its line here in
+the same turn it is approved (the Running docs rule in AGENTS.md),
+with a dated entry in PROJECT-LOG.
 
 ---
 
@@ -572,6 +574,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Running docs rule adopted (AGENTS.md): approved
+  design/dev ideas are logged here and in PROJECT-LOG in the same
+  turn.
 - 2026-10-03 — Created. Consolidates SEO-PLAN phases, the ten AEO
   plays, the Figma IA/section inventories, the Sanity model gaps and
   the stage gates into one plan. Status reflects the repo at commit
