@@ -61,6 +61,19 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-03 — Figma page frames reconciled to the scheme
+- Audit of the 39 page frames (their names embed the route): 32
+  matched; 13 frames carried drift — series pages as
+  `/predesigned/<series>` and the plan as `/predesigned/annata/annata-1`,
+  Portfolio as `/portfolio[/<slug>]`, `/architects-developers`,
+  `/commercial/schools-and-classrooms`, `/commercial/multifamily-housing`.
+  Bryce chose to KEEP the accepted `/series/<slug>` form over the
+  design's nesting under /predesigned; frames, labels and
+  "Portfolio" copy renamed in Figma to match.
+- Settled by the frames: market slugs are full state names
+  (`/where-we-build/washington`, `/where-we-build/oregon`, …); the
+  `market` document slug is the state name.
+
 ### 2026-10-03 — URL scheme ACCEPTED (Bryce) — the C4 decision
 - `/series/<slug>` + `/series/<slug>/<plan>` · `/projects/<slug>` (one
   URL per project; category is a filter, never a path) ·

@@ -31,9 +31,12 @@ real content migration below).
   A turn that ends with an approved design/dev idea recorded nowhere
   is incomplete. Before closing any turn, ask: "did an idea get
   approved here, and is it in the docs?"
-- URL SCHEME (accepted 2026-10-03 — binding): `/series/<slug>`,
-  `/series/<slug>/<plan>`, `/projects/<slug>` (category is a filter,
-  never a path segment), `/where-we-build`, `/where-we-build/<state>`,
+- URL SCHEME (accepted 2026-10-03 — binding; Bryce re-confirmed
+  `/series` over the design's `/predesigned/<series>` nesting):
+  `/series/<slug>`, `/series/<slug>/<plan>`, `/projects/<slug>`
+  (category is a filter, never a path segment), `/where-we-build`,
+  `/where-we-build/<state>` (state slug = full name: washington,
+  oregon, california, idaho, montana, colorado, utah),
   `/commercial/<type>`, `/blog`, `/blog/<slug>`, `/blog/category/<c>`,
   `/blog/authors/<a>`, `/custom-homes`, `/predesigned`, `/process`,
   `/pricing`, `/architects`, `/method-arc`, `/prefab-101`,

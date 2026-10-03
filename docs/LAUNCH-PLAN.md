@@ -621,6 +621,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-03 — Figma page frames reconciled to the accepted scheme
+  (13 frames renamed: series → /series/*, Portfolio → /projects,
+  /architects, short commercial slugs); market slugs = full state
+  names. Bryce kept /series over the design's /predesigned nesting.
 - 2026-10-03 — URL scheme accepted (C4 decided). Journal route and
   components renamed to blog (`/journal*` 301s); legacy redirect map
   generated from the 331 crawled URLs (118 live, 20 pending, 191
