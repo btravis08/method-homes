@@ -24,6 +24,8 @@ export const teamMember = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({ name: "role", title: "Role / title", type: "string" }),
+    defineField({ name: "credentials", title: "Credentials", type: "string", description: "One line: “AIA · LEED AP · Passive House designer” or “Founded Method Homes in 2007”." }),
+    defineField({ name: "linkedin", title: "LinkedIn URL", type: "url", description: "Person.sameAs — the profile that proves the person is real." }),
     defineField({
       name: "photo",
       title: "Photo",

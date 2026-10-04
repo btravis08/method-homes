@@ -1305,6 +1305,222 @@ export const sectionSpecTable = defineType({
   },
 });
 
+/* Testimonial (37506:3733): a centered pull quote with a named, dated,
+   place-specific attribution and a link to the project — the pattern
+   reviews schema and answer engines trust. Pick a project to pull its
+   testimonial, or type one. The page route emits a Review node. */
+export const sectionTestimonial = defineType({
+  name: "sectionTestimonial",
+  icon: icons["star"],
+  title: "Testimonial",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light-mid" as "light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "What clients say" }),
+    defineField({
+      name: "project",
+      title: "Project (pulls its testimonial)",
+      type: "reference",
+      to: [{ type: "project" }],
+      description: "Optional. The project's testimonial, series, location and year fill the quote and attribution; the link goes to its page. Fields below override.",
+    }),
+    defineField({ name: "quote", title: "Quote", type: "text", rows: 3, initialValue: "The factory build meant our house was weather-tight in weeks, not months — and the finish quality was better than anything we saw on site-built homes nearby." }),
+    defineField({ name: "clientName", title: "Client name", type: "string", initialValue: "Client name" }),
+    defineField({ name: "clientDetail", title: "Detail line", type: "string", description: "Series · place · year, e.g. “Elemental Series · Bainbridge Island, WA · 2024”.", initialValue: "Elemental Series · Bainbridge Island, WA · 2024" }),
+    defineField({ name: "date", title: "Date", type: "date", description: "When the client said it (Review.datePublished)." }),
+    defineField({ name: "rating", title: "Rating (1–5)", type: "number", validation: (rule) => rule.min(1).max(5) }),
+    linkField("link", "Link", "Read the project story", "/projects"),
+  ],
+  preview: {
+    select: { title: "clientName", subtitle: "quote", project: "project.title" },
+    prepare: ({ title, subtitle, project }) => ({ title: title ?? project ?? "Testimonial", subtitle: `Testimonial · ${subtitle ?? ""}` }),
+  },
+});
+
+/* Logo row (37506:3750): partner / certification marks under a
+   centered eyebrow. Every mark is named in text (alt, or the name
+   itself when no image is set) so it counts as an entity mention. */
+export const sectionLogoRow = defineType({
+  name: "sectionLogoRow",
+  icon: icons["th-list"],
+  title: "Logo row",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Partners & certifications" }),
+    defineField({
+      name: "logos",
+      title: "Logos",
+      type: "array",
+      validation: (rule) => rule.min(2).max(8),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "logo",
+          fields: [
+            defineField({ name: "name", title: "Name", type: "string", validation: (rule) => rule.required(), description: "The organization or certification, as it should be cited." }),
+            defineField({ name: "image", title: "Mark", type: "image", description: "SVG or PNG on a transparent background. Shown at 56px tall." }),
+            defineField({ name: "url", title: "Link", type: "url" }),
+          ],
+          preview: { select: { title: "name", media: "image" } },
+        }),
+      ],
+      initialValue: () =>
+        ["Passive House Institute US", "USGBC · LEED", "ENERGY STAR", "Built Green", "AIA Seattle", "Living Building Challenge"].map((name) => ({ _type: "logo", _key: key(), name })),
+    }),
+  ],
+  preview: {
+    select: { title: "eyebrow", logos: "logos" },
+    prepare: ({ title, logos }) => ({ title: title ?? "Logo row", subtitle: `Logo row · ${(logos as unknown[] | undefined)?.length ?? 0} marks` }),
+  },
+});
+
+/* Team grid (37508:3875): four-up people grid — portrait, name, role,
+   credentials — from Team member documents. Leave the list empty to
+   show every team member in their sort order. Each person is a
+   Person node (jobTitle, sameAs → LinkedIn). */
+export const sectionTeamGrid = defineType({
+  name: "sectionTeamGrid",
+  icon: icons["users"],
+  title: "Team grid",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Team" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "The people who design and build Method homes" }),
+    linkField("link", "Link", "Careers", "/careers"),
+    defineField({
+      name: "members",
+      title: "People",
+      type: "array",
+      description: "Pick and order the people to show. Empty = everyone, by sort order.",
+      of: [defineArrayMember({ type: "reference", to: [{ type: "teamMember" }] })],
+    }),
+  ],
+  preview: {
+    select: { title: "headline", members: "members" },
+    prepare: ({ title, members }) => ({ title: title ?? "Team grid", subtitle: `Team grid · ${(members as unknown[] | undefined)?.length ? `${(members as unknown[]).length} people` : "everyone"}` }),
+  },
+});
+
+/* Map block (37508:3828): the service-area map beside a market list
+   (state → named places). Rows come from the Market documents (name,
+   regions served) or are typed by hand; they link to the market pages
+   once those ship (Link rows). The Organization's areaServed mirrors
+   this list. */
+export const sectionMapBlock = defineType({
+  name: "sectionMapBlock",
+  icon: icons["pin"],
+  title: "Map block",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Where we build" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Delivering across the West from one factory in Washington" }),
+    defineField({ name: "body", title: "Body", type: "text", rows: 3, initialValue: "Modules travel by truck from Ferndale, Washington. Distance adds transport cost, not quality — remote and island sites are where factory building saves the most." }),
+    defineField({
+      name: "image",
+      title: "Map image",
+      type: "image",
+      options: { hotspot: true },
+      fields: [defineField({ name: "alt", title: "Alternative text", type: "string", initialValue: "Service map — Western United States with the Ferndale, WA factory and markets we deliver to" })],
+    }),
+    defineField({
+      name: "source",
+      title: "Rows",
+      type: "string",
+      options: { list: [{ title: "From the Market documents", value: "markets" }, { title: "Typed below", value: "manual" }], layout: "radio", direction: "horizontal" },
+      initialValue: "markets",
+    }),
+    defineField({ name: "linkRows", title: "Link rows to the market pages", type: "boolean", initialValue: false, description: "Turn on once /where-we-build/<state> exists." }),
+    defineField({
+      name: "rows",
+      title: "Market rows",
+      type: "array",
+      hidden: ({ parent }) => (parent as { source?: string })?.source !== "manual",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "marketRow",
+          fields: [
+            defineField({ name: "label", title: "State / region", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "value", title: "Named places", type: "string", description: "“Seattle & Puget Sound · San Juan Islands · Methow Valley”." }),
+            defineField({ name: "url", title: "Link", type: "string" }),
+          ],
+          preview: { select: { title: "label", subtitle: "value" } },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["Washington", "Seattle & Puget Sound · San Juan Islands · Methow Valley · Spokane"],
+          ["Oregon", "Portland · Bend · the coast"],
+          ["California", "Bay Area · Tahoe · Sonoma & Napa · Los Angeles"],
+          ["Idaho & Montana", "Sun Valley · Boise · Bozeman · Whitefish"],
+          ["Colorado & Utah", "Front Range · Roaring Fork · Park City"],
+          ["Farther afield", "Alaska, Hawaii and British Columbia case by case"],
+        ].map(([label, value]) => ({ _type: "marketRow", _key: key(), label, value })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", source: "source" },
+    prepare: ({ title, source }) => ({ title: title ?? "Map block", subtitle: `Map block · ${source === "manual" ? "typed rows" : "market documents"}` }),
+  },
+});
+
+/* Form block (37508:3799): the contact form beside a heading and the
+   NAP details. Phone and email come from Site Settings (one source
+   for the Organization's contactPoint); office, factory and hours are
+   typed here. Posts to /api/forms as the simple form "contact". */
+export const sectionFormBlock = defineType({
+  name: "sectionFormBlock",
+  icon: icons["envelope"],
+  title: "Form block",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Contact" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Tell us about your project" }),
+    defineField({ name: "body", title: "Body", type: "text", rows: 3, initialValue: "We read every message and reply within two business days. For a faster, more specific answer, the Get started intake asks the right questions in about ten minutes." }),
+    defineField({
+      name: "rows",
+      title: "Contact details (after phone and email)",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "detailRow",
+          options: { columns: 2 },
+          fields: [
+            defineField({ name: "label", title: "Label", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "value", title: "Value", type: "string", validation: (rule) => rule.required() }),
+          ],
+          preview: { select: { title: "label", subtitle: "value" } },
+        }),
+      ],
+      initialValue: () =>
+        [["Office", "Seattle, Washington"], ["Factory", "Ferndale, Washington · tours by appointment"], ["Hours", "Monday–Friday, 8am–5pm Pacific"]].map(([label, value]) => ({ _type: "detailRow", _key: key(), label, value })),
+    }),
+    defineField({
+      name: "options",
+      title: "“What are you planning?” choices",
+      type: "array",
+      of: [{ type: "string" }],
+      initialValue: ["Predesigned series home", "Custom home", "ADU or backyard studio", "Commercial or multifamily", "Something else"],
+    }),
+    defineField({ name: "submitLabel", title: "Button label", type: "string", initialValue: "Send message" }),
+    defineField({ name: "note", title: "Privacy note", type: "string", initialValue: "We never share your details. Protected by a honeypot and rate limit, not a CAPTCHA." }),
+  ],
+  preview: {
+    select: { title: "headline" },
+    prepare: ({ title }) => ({ title: title ?? "Form block", subtitle: "Form block · posts to /api/forms (contact)" }),
+  },
+});
+
 /* FAQ — question/answer accordion (Figma "FAQ" 37507:3841). Every
    item is emitted as FAQPage/Question/Answer JSON-LD by the page route,
    so the questions buyers actually type become quotable answers; the
@@ -1451,6 +1667,11 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionHeroPage" }),
                 defineArrayMember({ type: "sectionSubNav" }),
                 defineArrayMember({ type: "sectionSpecTable" }),
+                defineArrayMember({ type: "sectionTestimonial" }),
+                defineArrayMember({ type: "sectionLogoRow" }),
+                defineArrayMember({ type: "sectionTeamGrid" }),
+                defineArrayMember({ type: "sectionMapBlock" }),
+                defineArrayMember({ type: "sectionFormBlock" }),
               ],
             }),
           ],
@@ -1525,6 +1746,11 @@ export const sectionTypes = [
   sectionHeroPage,
   sectionSubNav,
   sectionSpecTable,
+  sectionTestimonial,
+  sectionLogoRow,
+  sectionTeamGrid,
+  sectionMapBlock,
+  sectionFormBlock,
   sectionExperiment,
   abResult,
 ];

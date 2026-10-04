@@ -115,6 +115,20 @@ export const seriesListQuery = groq`
   }
 `;
 
+/* every team member in sort order (Team grid with no picks) */
+export const teamMembersQuery = groq`
+  *[_type == "teamMember"] | order(order asc, name asc) {
+    _id, name, "slug": slug.current, role, credentials, linkedin, photo
+  }
+`;
+
+/* the market list for the Map block rows: state → named regions */
+export const marketRowsQuery = groq`
+  *[_type == "market" && defined(slug.current)] | order(order asc, name asc) {
+    "_key": _id, "label": name, "value": array::join(regionsServed, " · "), "url": "/where-we-build/" + slug.current
+  }
+`;
+
 /* Active products only (legacy documents without a status count as
    active) */
 const activeFilter = groq`(!defined(status) || status == "active")`;
@@ -197,7 +211,11 @@ const innerSectionFields = groq`
     "videoUrl": video.asset->url,
     lookProducts[]->{ ${lookProductFields} }
   },
-  rows[] { _key, label, value, cells },
+  rows[] { _key, label, value, cells, url },
+  quote, clientName, clientDetail, date, rating, source, linkRows, options, submitLabel, note,
+  project->{ title, "slug": slug.current, series, location, completedYear, testimonial },
+  logos[] { _key, name, image, url },
+  members[]->{ _id, name, "slug": slug.current, role, credentials, linkedin, photo },
   stats[] { _key, value, label, footnote },
   slides[] {
     _key, image, mediaKind,

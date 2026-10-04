@@ -1845,3 +1845,301 @@ export function SpecTable({
     </section>
   );
 }
+
+/* ---------- Testimonial (37506:3733) — a Review ---------- */
+
+/* Centered pull quote with a named, dated, place-specific attribution
+   and a link to the project: the pattern reviews schema and answer
+   engines trust. The quote is a <blockquote>; the route emits Review. */
+export function Testimonial({
+  mode = "light-mid",
+  eyebrow = "What clients say",
+  quote = "The factory build meant our house was weather-tight in weeks, not months — and the finish quality was better than anything we saw on site-built homes nearby.",
+  clientName = "Client name",
+  clientDetail = "Elemental Series · Bainbridge Island, WA · 2024",
+  date,
+  rating,
+  link = { label: "Read the project story", url: "/projects" },
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  quote?: string;
+  clientName?: string;
+  clientDetail?: string;
+  date?: string;
+  rating?: number;
+  link?: LinkData | null;
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col items-center gap-4xl text-center`}>
+        {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+        <figure className="flex flex-col items-center gap-4xl">
+          <blockquote className="max-w-[55rem] font-display text-title-lg text-ink">
+            <RevealText>“{quote}”</RevealText>
+          </blockquote>
+          <figcaption className="flex flex-col items-center gap-xs">
+            <span className="text-body-sm font-medium text-ink">{clientName}</span>
+            {(clientDetail || date) && (
+              <span className="text-body-sm text-ink-3">
+                {clientDetail}
+                {date && !clientDetail?.includes(date.slice(0, 4)) ? ` · ${date.slice(0, 4)}` : ""}
+              </span>
+            )}
+            {rating ? <span className="text-body-sm text-ink-3" aria-label={`${rating} out of 5`}>{"★".repeat(Math.round(rating))}</span> : null}
+          </figcaption>
+        </figure>
+        {link?.label && link.url && <UnderlineLink label={link.label} href={link.url} />}
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Logo row (37506:3750) ---------- */
+
+export interface LogoData {
+  _key?: string;
+  name?: string;
+  image?: string;
+  url?: string;
+}
+
+const defaultLogos: LogoData[] = ["Passive House Institute US", "USGBC · LEED", "ENERGY STAR", "Built Green", "AIA Seattle", "Living Building Challenge"].map((name) => ({ name }));
+
+/* Partner / certification marks under a centered eyebrow. Each mark is
+   named in text (the alt, or the name itself when no image is set) so
+   it counts as an entity mention, and links to the certifier. */
+export function LogoRow({ mode = "light", eyebrow = "Partners & certifications", logos = defaultLogos }: { mode?: Mode; eyebrow?: string; logos?: LogoData[] }) {
+  const list = logos.filter((l) => l.name);
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-6xl md:py-8xl`}>
+      <div className={`${CONTAINER} flex flex-col items-center gap-4xl`}>
+        {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+        <ul role="list" className="flex w-full flex-wrap items-center justify-center gap-4xl md:justify-between">
+          {list.map((l, i) => {
+            const tile = l.image ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={l.image} alt={l.name} loading="lazy" decoding="async" className="h-14 w-auto max-w-[11.25rem] object-contain" />
+            ) : (
+              <span className="label flex h-14 w-[11.25rem] items-center justify-center rounded-xs bg-wash px-xl text-center normal-case tracking-normal text-ink-3">{l.name}</span>
+            );
+            return (
+              <li key={l._key ?? i} className="shrink-0">
+                {l.url ? (
+                  <a href={l.url} rel="noopener" className="block transition-opacity hover:opacity-70" aria-label={l.name}>{tile}</a>
+                ) : (
+                  tile
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Team grid (37508:3875) — Person nodes ---------- */
+
+export interface PersonData {
+  _key?: string;
+  name?: string;
+  role?: string;
+  credentials?: string;
+  image?: string;
+  url?: string;
+}
+
+const defaultPeople: PersonData[] = [
+  { name: "Person name", role: "Founder & CEO", credentials: "Founded Method Homes in 2007" },
+  { name: "Person name", role: "Director of Architecture", credentials: "AIA · LEED AP · Passive House designer" },
+  { name: "Person name", role: "Director of Operations", credentials: "Factory and field production" },
+  { name: "Person name", role: "Project Manager", credentials: "Client lead from intake to keys" },
+];
+
+/* Four-up people grid: portrait, name, role, credentials. Named people
+   with credentials become Person nodes on the page; the link goes to
+   their LinkedIn (sameAs) when set. */
+export function TeamGrid({
+  mode = "light",
+  eyebrow = "Team",
+  headline = "The people who design and build Method homes",
+  link = { label: "Careers", url: "/careers" },
+  people = defaultPeople,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  link?: LinkData | null;
+  people?: PersonData[];
+}) {
+  const list = people.filter((p) => p.name);
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col gap-6xl`}>
+        <SectionHeader eyebrow={eyebrow} headline={headline} link={link} />
+        <ul role="list" className="grid grid-cols-1 gap-4xl sm:grid-cols-2 lg:grid-cols-4">
+          {list.map((p, i) => (
+            <li key={p._key ?? i} className="flex flex-col gap-lg">
+              <div className="relative aspect-[296/360] w-full overflow-hidden rounded-xs bg-wash">
+                {p.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={p.image} alt={`Portrait — ${p.name}${p.role ? `, ${p.role}` : ""}`} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+                ) : (
+                  <span className="label absolute inset-0 flex items-center justify-center px-2xl text-center normal-case tracking-normal text-ink-3">Portrait — {p.role ?? p.name}</span>
+                )}
+              </div>
+              <div className="flex flex-col gap-xxs">
+                <p className="text-body-sm font-medium text-ink">
+                  {p.url ? <a href={p.url} rel="noopener me" className="hover:underline underline-offset-2">{p.name}</a> : p.name}
+                </p>
+                {p.role && <p className="text-body-sm text-ink-2">{p.role}</p>}
+                {p.credentials && <p className="label normal-case tracking-normal text-ink-3">{p.credentials}</p>}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Map block (37508:3828) ---------- */
+
+export interface MarketRowData {
+  _key?: string;
+  label?: string;
+  value?: string;
+  url?: string;
+}
+
+const defaultMarketRows: MarketRowData[] = [
+  { label: "Washington", value: "Seattle & Puget Sound · San Juan Islands · Methow Valley · Spokane" },
+  { label: "Oregon", value: "Portland · Bend · the coast" },
+  { label: "California", value: "Bay Area · Tahoe · Sonoma & Napa · Los Angeles" },
+  { label: "Idaho & Montana", value: "Sun Valley · Boise · Bozeman · Whitefish" },
+  { label: "Colorado & Utah", value: "Front Range · Roaring Fork · Park City" },
+  { label: "Farther afield", value: "Alaska, Hawaii and British Columbia case by case" },
+];
+
+/* Service-area map beside the market list (state → named places). The
+   named places are the entities local prompts use; the Organization's
+   areaServed mirrors this list. Rows link to the market pages when
+   `linkRows` is on. */
+export function MapBlock({
+  mode = "light",
+  eyebrow = "Where we build",
+  headline = "Delivering across the West from one factory in Washington",
+  body = "Modules travel by truck from Ferndale, Washington. Distance adds transport cost, not quality — remote and island sites are where factory building saves the most.",
+  image,
+  alt = "Service map — Western United States with the Ferndale, WA factory and markets we deliver to",
+  rows = defaultMarketRows,
+  linkRows = false,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  image?: string;
+  alt?: string;
+  rows?: MarketRowData[];
+  linkRows?: boolean;
+}) {
+  const list = rows.filter((r) => r.label);
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} grid grid-cols-1 items-center gap-6xl md:grid-cols-[minmax(0,47.5rem)_1fr] md:gap-9xl`}>
+        <div className="relative aspect-[760/560] w-full overflow-hidden rounded-xs bg-wash">
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} alt={alt} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+          ) : (
+            <span className="label absolute inset-0 flex items-center justify-center px-2xl text-center normal-case tracking-normal text-ink-3">{alt}</span>
+          )}
+        </div>
+        <div className="flex flex-col gap-4xl">
+          <div className="flex flex-col gap-xl">
+            {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+            <RevealText>
+              <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+            </RevealText>
+            {body && <p className="text-body-md text-ink-2">{body}</p>}
+          </div>
+          <dl className="flex flex-col border-t border-line">
+            {list.map((r, i) => (
+              <div key={r._key ?? i} className="flex flex-col gap-xs border-b border-line py-xl md:flex-row md:gap-3xl">
+                <dt className="w-full shrink-0 text-body-md font-medium text-ink md:w-[11.25rem]">
+                  {linkRows && r.url ? <ArrowLink href={r.url} className="hover:underline underline-offset-2">{r.label}</ArrowLink> : r.label}
+                </dt>
+                <dd className="flex-1 text-body-md text-ink-2">{r.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Form block (37508:3799) ---------- */
+
+export interface DetailRowData {
+  _key?: string;
+  label?: string;
+  value?: string;
+  href?: string;
+}
+
+const defaultDetails: DetailRowData[] = [
+  { label: "Phone", value: "{phone from Site Settings}" },
+  { label: "Email", value: "{email from Site Settings}" },
+  { label: "Office", value: "Seattle, Washington" },
+  { label: "Factory", value: "Ferndale, Washington · tours by appointment" },
+  { label: "Hours", value: "Monday–Friday, 8am–5pm Pacific" },
+];
+
+/* Heading + the NAP details beside the contact form. Phone and email
+   are the Site Settings values (the Organization's contactPoint) so
+   the page and the schema can never disagree. */
+export function FormBlock({
+  mode = "light",
+  eyebrow = "Contact",
+  headline = "Tell us about your project",
+  body = "We read every message and reply within two business days. For a faster, more specific answer, the Get started intake asks the right questions in about ten minutes.",
+  details = defaultDetails,
+  form,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  details?: DetailRowData[];
+  /* the form element (ContactForm, a client component) */
+  form?: React.ReactNode;
+}) {
+  const list = details.filter((d) => d.label && d.value);
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <div className={`${CONTAINER} grid grid-cols-1 gap-6xl md:grid-cols-[minmax(0,25rem)_1fr] md:gap-9xl`}>
+        <div className="flex flex-col gap-4xl">
+          <div className="flex flex-col gap-xl">
+            {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+            <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+            {body && <p className="text-body-md text-ink-2">{body}</p>}
+          </div>
+          {list.length > 0 && (
+            <dl className="flex flex-col">
+              {list.map((d, i) => (
+                <div key={d._key ?? i} className="flex gap-3xl border-b border-line py-lg">
+                  <dt className="w-24 shrink-0 text-body-sm font-medium text-ink-3">{d.label}</dt>
+                  <dd className="flex-1 text-body-md text-ink">{d.href ? <a href={d.href} className="hover:underline underline-offset-2">{d.value}</a> : d.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+        <div>{form}</div>
+      </div>
+    </section>
+  );
+}

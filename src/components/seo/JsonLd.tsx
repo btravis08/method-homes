@@ -90,6 +90,66 @@ export function collectHowTo(sections: PageSection[] | undefined): { name?: stri
   return null;
 }
 
+/* Every testimonial on a section-built page → Review nodes of the
+   Organization (the entity every page links to). A section that
+   pulls a project's testimonial reviews the Organization too. */
+export function reviewNodes(path: string, sections: PageSection[] | undefined) {
+  const out: Record<string, unknown>[] = [];
+  const walk = (list: PageSection[] | undefined) => {
+    for (const s of list ?? []) {
+      if (s._type === "sectionTestimonial") {
+        const t = s.project?.testimonial;
+        const quote = s.quote || t?.quote;
+        const name = s.clientName || t?.clientName;
+        if (!quote || !name) continue;
+        const date = s.date || t?.date;
+        const rating = s.rating ?? t?.rating;
+        out.push({
+          "@context": "https://schema.org",
+          "@type": "Review",
+          "@id": `${BASE}${path}#review-${s._key}`,
+          reviewBody: quote,
+          author: { "@type": "Person", name },
+          ...(date ? { datePublished: date } : {}),
+          ...(rating ? { reviewRating: { "@type": "Rating", ratingValue: rating, bestRating: 5, worstRating: 1 } } : {}),
+          itemReviewed: { "@id": `${BASE}/#organization` },
+          isPartOf: { "@id": pageId(path) },
+        });
+      } else if (s._type === "sectionExperiment") walk(s.variants?.[0]?.sections);
+    }
+  };
+  walk(sections);
+  return out;
+}
+
+/* Named people on the page (Team grid picks) → Person nodes who work
+   for the Organization; LinkedIn is their sameAs. The "everyone"
+   case resolves server-side, so pass the resolved members in. */
+export function personNodes(path: string, people: { _id: string; name?: string; role?: string; credentials?: string; linkedin?: string }[]) {
+  return people
+    .filter((p) => p.name)
+    .map((p) => ({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "@id": `${BASE}${path}#person-${p._id}`,
+      name: p.name,
+      ...(p.role ? { jobTitle: p.role } : {}),
+      ...(p.credentials ? { description: p.credentials } : {}),
+      ...(p.linkedin ? { sameAs: [p.linkedin] } : {}),
+      worksFor: { "@id": `${BASE}/#organization` },
+    }));
+}
+
+/* the Team grid picks on a page (top level or control variant) */
+export function collectPeople(sections: PageSection[] | undefined): { _id: string; name?: string; role?: string; credentials?: string; linkedin?: string }[] {
+  const out: { _id: string; name?: string; role?: string; credentials?: string; linkedin?: string }[] = [];
+  for (const s of sections ?? []) {
+    if (s._type === "sectionTeamGrid") out.push(...((s.members ?? []).filter(Boolean) as { _id: string; name?: string; role?: string; credentials?: string; linkedin?: string }[]));
+    else if (s._type === "sectionExperiment") out.push(...collectPeople(s.variants?.[0]?.sections));
+  }
+  return out;
+}
+
 /* "6–8 weeks" → ISO 8601 duration of the upper bound (P8W); anything
    that does not parse is left out rather than guessed */
 function isoDuration(s?: string) {

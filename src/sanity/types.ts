@@ -515,6 +515,87 @@ export interface SectionSpecTable extends SectionBase {
   rows?: SpecRow[];
 }
 
+export interface SectionTestimonial extends SectionBase {
+  _type: "sectionTestimonial";
+  eyebrow?: string;
+  project?: {
+    title?: string;
+    slug?: string;
+    series?: string;
+    location?: string;
+    completedYear?: number;
+    testimonial?: ProjectTestimonial | null;
+  } | null;
+  quote?: string;
+  clientName?: string;
+  clientDetail?: string;
+  date?: string;
+  rating?: number;
+  link?: SectionLink | null;
+}
+
+export interface LogoItem {
+  _key: string;
+  name?: string;
+  image?: SanityImageSource | null;
+  url?: string;
+}
+
+export interface SectionLogoRow extends SectionBase {
+  _type: "sectionLogoRow";
+  eyebrow?: string;
+  logos?: LogoItem[];
+}
+
+export interface TeamMember {
+  _id: string;
+  name: string;
+  slug?: string;
+  role?: string;
+  credentials?: string;
+  linkedin?: string;
+  photo?: SanityImageSource | null;
+  bio?: string;
+}
+
+export interface SectionTeamGrid extends SectionBase {
+  _type: "sectionTeamGrid";
+  eyebrow?: string;
+  headline?: string;
+  link?: SectionLink | null;
+  /* resolved references; empty = every team member (renderer fetches) */
+  members?: Array<TeamMember | null>;
+}
+
+export interface MarketRow {
+  _key: string;
+  label?: string;
+  value?: string;
+  url?: string;
+}
+
+export interface SectionMapBlock extends SectionBase {
+  _type: "sectionMapBlock";
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  image?: (SanityImageSource & { alt?: string }) | null;
+  source?: "markets" | "manual";
+  linkRows?: boolean;
+  rows?: MarketRow[];
+}
+
+export interface SectionFormBlock extends SectionBase {
+  _type: "sectionFormBlock";
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  rows?: { _key: string; label?: string; value?: string }[];
+  options?: string[];
+  submitLabel?: string;
+  note?: string;
+}
+
 export interface ExperimentVariant {
   _key: string;
   label?: string;
@@ -553,6 +634,11 @@ export type PageSection =
   | SectionHeroPage
   | SectionSubNav
   | SectionSpecTable
+  | SectionTestimonial
+  | SectionLogoRow
+  | SectionTeamGrid
+  | SectionMapBlock
+  | SectionFormBlock
   | SectionExperiment;
 
 /* ---------- predesigned catalog (series + plans) ---------- */

@@ -16,16 +16,22 @@ import {
   InfoSlider,
   Interstitial,
   LinkList,
+  LogoRow,
+  MapBlock,
+  FormBlock,
   ProcessTimeline,
   ProductSlider,
   Reviews,
   SpecTable,
   StatsBar,
+  TeamGrid,
   TechSpecs,
+  Testimonial,
   TextIntro,
   ThreeDViewer,
 } from "@/components/home/sections";
 import { SubNav } from "@/components/home/SubNav";
+import { ContactForm } from "@/components/forms/ContactForm";
 import type { LookProductData } from "@/components/home/MediaBlock";
 import type { ProductCardData } from "@/components/home/ProductCard";
 import { formatPrice } from "@/sanity/lib/commerce";
@@ -334,6 +340,69 @@ export function SectionList({
             case "sectionSpecTable":
               return (
                 <SpecTable key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} body={section.body} link={section.link} rows={section.rows} />
+              );
+            case "sectionTestimonial": {
+              const t = section.project?.testimonial;
+              const p = section.project;
+              const detail = section.clientDetail || [p?.series ? `${p.series} Series` : null, p?.location, p?.completedYear].filter(Boolean).join(" · ");
+              return (
+                <Testimonial
+                  key={section._key}
+                  mode={section.colorMode}
+                  eyebrow={section.eyebrow}
+                  quote={section.quote || t?.quote}
+                  clientName={section.clientName || t?.clientName}
+                  clientDetail={detail || t?.clientDetail}
+                  date={section.date || t?.date}
+                  rating={section.rating ?? t?.rating}
+                  link={section.link?.url ? section.link : p?.slug ? { label: section.link?.label || "Read the project story", url: `/projects/${p.slug}` } : null}
+                />
+              );
+            }
+            case "sectionLogoRow":
+              return (
+                <LogoRow key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} logos={section.logos?.map((l) => ({ ...l, image: img(l.image ?? undefined, 400) }))} />
+              );
+            case "sectionTeamGrid": {
+              /* the preview shows the picked people; "everyone" resolves
+                 on the server (SectionRenderer) */
+              const picked = (section.members ?? []).filter(Boolean);
+              return (
+                <TeamGrid
+                  key={section._key}
+                  mode={section.colorMode}
+                  eyebrow={section.eyebrow}
+                  headline={section.headline}
+                  link={section.link}
+                  people={picked.length ? picked.map((m) => ({ _key: m!._id, name: m!.name, role: m!.role, credentials: m!.credentials, image: img(m!.photo ?? undefined, 600), url: m!.linkedin })) : undefined}
+                />
+              );
+            }
+            case "sectionMapBlock":
+              return (
+                <MapBlock
+                  key={section._key}
+                  mode={section.colorMode}
+                  eyebrow={section.eyebrow}
+                  headline={section.headline}
+                  body={section.body}
+                  image={img(section.image ?? undefined, 1600)}
+                  alt={section.image?.alt}
+                  rows={section.source === "manual" && section.rows?.length ? section.rows : undefined}
+                  linkRows={section.linkRows}
+                />
+              );
+            case "sectionFormBlock":
+              return (
+                <FormBlock
+                  key={section._key}
+                  mode={section.colorMode}
+                  eyebrow={section.eyebrow}
+                  headline={section.headline}
+                  body={section.body}
+                  details={[{ _key: "phone", label: "Phone", value: "{phone from Site Settings}" }, { _key: "email", label: "Email", value: "{email from Site Settings}" }, ...(section.rows ?? [])]}
+                  form={<ContactForm options={section.options} submitLabel={section.submitLabel} note={section.note} />}
+                />
               );
             case "sectionRichText":
               return (

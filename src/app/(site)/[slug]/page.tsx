@@ -11,7 +11,10 @@ import { FooterTagline } from "@/components/FooterTagline";
 import { PageGate } from "@/components/PageGate";
 import { buildSliderCardMap, SectionRenderer } from "@/components/SectionRenderer";
 import { gateCookieName, gateCookieValue } from "@/lib/gate";
-import { breadcrumbList, collectFaq, collectHowTo, faqPage, howTo, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, collectFaq, collectHowTo, collectPeople, faqPage, howTo, JsonLd, personNodes, reviewNodes, updatedLabel, webPage } from "@/components/seo/JsonLd";
+import { sanityFetch as fetchTeam } from "@/sanity/lib/fetch";
+import { teamMembersQuery } from "@/sanity/lib/queries";
+import type { TeamMember } from "@/sanity/types";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
@@ -113,6 +116,11 @@ export default async function CmsPage({
   // Section-built page
   if (page.sections?.length) {
     const faq = collectFaq(page.sections);
+    const hasForm = page.sections.some((s) => s._type === "sectionFormBlock");
+    /* Person nodes: the Team grid's picks, or everyone when it shows all */
+    const picked = collectPeople(page.sections);
+    const showsEveryone = page.sections.some((s) => s._type === "sectionTeamGrid" && !(s.members ?? []).filter(Boolean).length);
+    const people = showsEveryone ? await fetchTeam<TeamMember[]>(teamMembersQuery, {}, []) : picked;
     return (
       <div data-mode="light" className="flex flex-col items-start bg-surface">
         <JsonLd
@@ -120,7 +128,11 @@ export default async function CmsPage({
             /* a page that IS a FAQ types itself as one; a page with a
                FAQ section among others stays a WebPage and carries the
                FAQPage node beside it */
-            type: faq.length && page.sections.every((s) => s._type === "sectionFaq" || s._type === "sectionHero") ? "FAQPage" : "WebPage",
+            type: hasForm
+              ? "ContactPage"
+              : faq.length && page.sections.every((s) => s._type === "sectionFaq" || s._type === "sectionHero")
+                ? "FAQPage"
+                : "WebPage",
             name: page.seo?.title || page.title,
             description: page.seo?.description || describeSections(page.sections),
             path,
@@ -130,6 +142,8 @@ export default async function CmsPage({
         <JsonLd data={crumbs} />
         <JsonLd data={faqPage(path, faq)} />
         <JsonLd data={howTo(path, collectHowTo(page.sections), page.seo?.description)} />
+        {reviewNodes(path, page.sections).map((r) => <JsonLd key={String(r["@id"])} data={r} />)}
+        {personNodes(path, people).map((n) => <JsonLd key={n["@id"]} data={n} />)}
         {/* the document heading: section headlines are display copy,
             not the page's name — answer engines want exactly one H1 */}
         <h1 className="sr-only">{page.title}</h1>

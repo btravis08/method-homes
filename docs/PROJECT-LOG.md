@@ -61,6 +61,26 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — Shared sections batch 3 (code): Testimonial, Logo row, Team grid, Map block, Form block
+- B1 is complete: every shared section in the Figma library now has
+  a Sanity type, a component, a preview twin and a /library entry.
+- Testimonial can pull a project's testimonial (reference) or be
+  typed; the page emits a Review of the Organization. Team grid
+  shows picked Team members or everyone (server resolves "everyone";
+  the preview shows picks); teamMember gained `credentials` and
+  `linkedin` (Person.sameAs). Map block rows come from the Market
+  documents (name → regions served) or are typed; the row links are
+  behind a `linkRows` switch so no page links to /where-we-build
+  before that route exists. Form block = ContactForm posting to
+  /api/forms as the simple form "contact" (name, email, message +
+  phone/location/planning as extra fields; honeypot, rate limit,
+  spam heuristics inherited); phone and email render from Site
+  Settings so the page and Organization.contactPoint cannot drift; a
+  page carrying a Form block types itself ContactPage.
+- Pending on Method: logo marks (SVG) and certifier URLs, team
+  portraits + credentials + LinkedIn, the service map image, phone
+  and email in Site Settings, Market documents for the map rows.
+
 ### 2026-10-04 — Type scale generated from the Figma device modes (Bryce)
 - Bryce's rule: keep the Figma Mobile / Tablet / Desktop font
   variables as the anchors so designing stays in the three modes;

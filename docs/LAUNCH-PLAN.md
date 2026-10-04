@@ -185,8 +185,8 @@ contribution wired. Build order follows page priority in §5.
 | Card + Card grid | 37506:3516/3646 | sectionCardGrid | cards with eyebrow/title/body/meta; link wraps the card | [x] 2026-10-04 |
 | Carousel | 37506:3699 | sectionCarousel | ImageObject captions | [~] template |
 | Stats bar | 37506:3714 | sectionStats | numbers are DOM text with footnote markers → dated sources line | [x] 2026-10-03 |
-| Testimonial | 37506:3733 | sectionTestimonial (new) → or project.testimonial | Review schema (named, dated, rated) | [ ] |
-| Logo row | 37506:3750 | sectionLogoRow (new) | press/partner logos link to citations | [ ] |
+| Testimonial | 37506:3733 | sectionTestimonial (fields, or pulls a project's testimonial) | `<blockquote>` + `<figcaption>`; page emits Review of the Organization (named, dated, rated) | [x] 2026-10-04 |
+| Logo row | 37506:3750 | sectionLogoRow | every mark named in text (alt or label), links to the certifier | [x] 2026-10-04 |
 | Spec table | 37507:3678 | sectionSpecTable (`<dl>`) | rows → Product additionalProperty on series and plan pages | [x] 2026-10-04 |
 | Compare table | 37507:3753 | sectionCompare | real `<table>` with header row + sources; comparison pages (play 6) | [x] 2026-10-04 |
 | Process timeline | 37507:3797 | sectionProcess | `<ol>` of steps; page route emits HowTo (steps, ISO durations) | [x] 2026-10-04 |
@@ -196,9 +196,9 @@ contribution wired. Build order follows page priority in §5.
 | Inline CTA | 37507:3880 | sectionCta (new) | — | [ ] |
 | Filter bar | 37508:3695 | route-level (projects, blog) | URL params, not JS-only state | [~] projects filters |
 | Gallery | 37508:3726 | sectionGallery | ImageObject with captions | [~] template |
-| Form block | 37508:3799 | FormDef + LazyMultiStepForm | — | [x] engine |
-| Map block | 37508:3828 | market doc geo / siteSettings | Place/geo | [ ] |
-| Team grid | 37508:3875 | teamMember / author | Person per member on About | [ ] |
+| Form block | 37508:3799 | sectionFormBlock + ContactForm (simple form “contact” → /api/forms) | NAP from Site Settings beside the form; page becomes ContactPage | [x] 2026-10-04 |
+| Map block | 37508:3828 | sectionMapBlock (rows from Market docs or typed) | named places = areaServed entities; rows link to market pages when `linkRows` is on | [x] 2026-10-04 (links off until /where-we-build ships) |
+| Team grid | 37508:3875 | sectionTeamGrid → teamMember docs (+credentials, linkedin) | Person nodes (jobTitle, sameAs) per member | [x] 2026-10-04 |
 | Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [ ] |
 | Feature list | 37508:4069 | sectionFeatureList | bullets = liftable facts; 3 or 4 columns | [x] 2026-10-03 |
 | Link list | 37508:4097 | sectionLinkList | internal linking hub (descriptive anchors) | [x] 2026-10-04 |
@@ -631,6 +631,13 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — Shared sections batch 3: Testimonial (Review),
+  Logo row, Team grid (Person nodes; teamMember gained credentials +
+  LinkedIn), Map block (rows from Market documents; links gated on
+  `linkRows` until /where-we-build ships), Form block (contact form →
+  /api/forms simple form “contact”; phone/email from Site Settings;
+  page types itself ContactPage). Every shared section in the Figma
+  library (B1) now exists in code.
 - 2026-10-04 — Generated type scale (Bryce's spec: respect the Figma
   Mobile / Tablet / Desktop variables, clamp between them, keep
   scaling above 1440). `design/type-scale.json` + `npm run type` →

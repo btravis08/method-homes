@@ -28,6 +28,7 @@ const query = groq`{
         cards[]{ title, body, meta }, panels[]{ title, eyebrow, body },
         rows[]{ label, value, cells }, stats[]{ value, label },
         steps[]{ title, body, duration }, links[]{ title, description },
+        quote, clientName, clientDetail, logos[]{ name }, members[]->{ name, role, credentials },
         "variantSections": variants[0].sections[]{ _type, eyebrow, headline, title, intro, description, items, body, rows[]{ label, value } }
       },
       body
@@ -77,6 +78,11 @@ type Section = {
   stats?: { value?: number | string; label?: string }[];
   steps?: { title?: string; body?: string; duration?: string }[];
   links?: { title?: string; description?: string }[];
+  quote?: string;
+  clientName?: string;
+  clientDetail?: string;
+  logos?: { name?: string }[];
+  members?: ({ name?: string; role?: string; credentials?: string } | null)[];
   /* an experiment's control-variant sections (aliased in GROQ — a bare
      `variants[0].sections[]{}` attribute is a syntax error that made
      the whole query fall back to empty on the first production run) */
@@ -168,6 +174,9 @@ function sectionText(s: Section): string[] {
   for (const st of s.stats ?? []) if (st.label) out.push(`- ${st.value ?? ""} ${clean(st.label)}`.trim());
   (s.steps ?? []).forEach((st, i) => { if (st.title) out.push(`${i + 1}. ${clean(st.title)}${st.body ? ` — ${clean(st.body)}` : ""}${st.duration ? ` (${clean(st.duration)})` : ""}`); });
   for (const l of s.links ?? []) if (l.title) out.push(`- ${clean(l.title)}${l.description ? `: ${clean(l.description)}` : ""}`);
+  if (s.quote && s.clientName) out.push(`“${clean(s.quote)}” — ${clean(s.clientName)}${s.clientDetail ? `, ${clean(s.clientDetail)}` : ""}`);
+  if (s.logos?.length) out.push(`Partners & certifications: ${s.logos.map((l) => clean(l.name)).filter(Boolean).join(", ")}`);
+  for (const m of s.members ?? []) if (m?.name) out.push(`- ${clean(m.name)}${m.role ? `, ${clean(m.role)}` : ""}${m.credentials ? ` (${clean(m.credentials)})` : ""}`);
   const body = portable(s.body);
   if (body) out.push(body);
   /* experiments: the control variant's sections are the page's canon */

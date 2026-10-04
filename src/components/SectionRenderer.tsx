@@ -16,16 +16,22 @@ import {
   InfoSlider,
   Interstitial,
   LinkList,
+  LogoRow,
+  MapBlock,
+  FormBlock,
   ProcessTimeline,
   ProductSlider,
   Reviews,
   SpecTable,
   StatsBar,
+  TeamGrid,
   TechSpecs,
+  Testimonial,
   TextIntro,
   ThreeDViewer,
 } from "@/components/home/sections";
 import { SubNav } from "@/components/home/SubNav";
+import { ContactForm } from "@/components/forms/ContactForm";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import type { LookProductData } from "@/components/home/MediaBlock";
 import type { ProductCardData } from "@/components/home/ProductCard";
@@ -41,16 +47,25 @@ import { urlFor } from "@/sanity/lib/image";
 import {
   automaticDiscountsQuery,
   collectionProductsQuery,
+  marketRowsQuery,
   productsByTagQuery,
+  siteSettingsQuery,
   smartCollectionProductsQuery,
   storeSettingsQuery,
+  teamMembersQuery,
 } from "@/sanity/lib/queries";
 import type {
   Discount,
+  MarketRow,
   PageSection,
+  SectionFormBlock,
+  SectionMapBlock,
   SectionProductSlider,
+  SectionTeamGrid,
+  SiteSettings,
   SliderProduct,
   StoreSettings,
+  TeamMember,
 } from "@/sanity/types";
 import type { SanityImageSource } from "@sanity/image-url";
 
@@ -205,6 +220,64 @@ const PAD_BOTTOM = {
   m: "pb-section-m",
   l: "pb-section-l",
 } as const;
+
+/* ---- data-backed sections (server only; SectionList shows the
+   section's own fields or placeholders in the preview) ---- */
+
+const person = (m: TeamMember | null) =>
+  m ? { _key: m._id, name: m.name, role: m.role, credentials: m.credentials, image: img(m.photo ?? undefined, 600), url: m.linkedin } : null;
+
+/* every team member when the editor picked none */
+async function TeamGridData({ section }: { section: SectionTeamGrid }) {
+  const picked = (section.members ?? []).filter(Boolean) as TeamMember[];
+  const members = picked.length ? picked : await sanityFetch<TeamMember[]>(teamMembersQuery, {}, []);
+  return (
+    <TeamGrid
+      mode={section.colorMode}
+      eyebrow={section.eyebrow}
+      headline={section.headline}
+      link={section.link}
+      people={members.length ? (members.map(person).filter(Boolean) as NonNullable<ReturnType<typeof person>>[]) : undefined}
+    />
+  );
+}
+
+/* market rows from the Market documents (state → regions served) */
+async function MapBlockData({ section }: { section: SectionMapBlock }) {
+  const rows = section.source === "manual" ? (section.rows ?? []) : await sanityFetch<MarketRow[]>(marketRowsQuery, {}, []);
+  return (
+    <MapBlock
+      mode={section.colorMode}
+      eyebrow={section.eyebrow}
+      headline={section.headline}
+      body={section.body}
+      image={img(section.image ?? undefined, 1600)}
+      alt={section.image?.alt}
+      rows={rows.length ? rows : undefined}
+      linkRows={section.linkRows}
+    />
+  );
+}
+
+/* phone + email from Site Settings, then the typed rows */
+async function FormBlockData({ section }: { section: SectionFormBlock }) {
+  const settings = await sanityFetch<SiteSettings | null>(siteSettingsQuery, {}, null);
+  const details = [
+    settings?.phone ? { _key: "phone", label: "Phone", value: settings.phone, href: `tel:${settings.phone.replace(/[^+\d]/g, "")}` } : null,
+    settings?.email ? { _key: "email", label: "Email", value: settings.email, href: `mailto:${settings.email}` } : null,
+    ...(section.rows ?? []),
+  ].filter(Boolean) as { _key: string; label?: string; value?: string; href?: string }[];
+  return (
+    <FormBlock
+      mode={section.colorMode}
+      eyebrow={section.eyebrow}
+      headline={section.headline}
+      body={section.body}
+      details={details}
+      form={<ContactForm options={section.options} submitLabel={section.submitLabel} note={section.note} />}
+    />
+  );
+}
 
 export function SectionRenderer({
   sections,
@@ -452,6 +525,34 @@ export function SectionRenderer({
             return (
               <SpecTable key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} body={section.body} link={section.link} rows={section.rows} />
             );
+          case "sectionTestimonial": {
+            const t = section.project?.testimonial;
+            const p = section.project;
+            const detail = section.clientDetail || [p?.series ? `${p.series} Series` : null, p?.location, p?.completedYear].filter(Boolean).join(" · ");
+            return (
+              <Testimonial
+                key={section._key}
+                mode={section.colorMode}
+                eyebrow={section.eyebrow}
+                quote={section.quote || t?.quote}
+                clientName={section.clientName || t?.clientName}
+                clientDetail={detail || t?.clientDetail}
+                date={section.date || t?.date}
+                rating={section.rating ?? t?.rating}
+                link={section.link?.url ? section.link : p?.slug ? { label: section.link?.label || "Read the project story", url: `/projects/${p.slug}` } : null}
+              />
+            );
+          }
+          case "sectionLogoRow":
+            return (
+              <LogoRow key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} logos={section.logos?.map((l) => ({ ...l, image: img(l.image ?? undefined, 400) }))} />
+            );
+          case "sectionTeamGrid":
+            return <TeamGridData key={section._key} section={section} />;
+          case "sectionMapBlock":
+            return <MapBlockData key={section._key} section={section} />;
+          case "sectionFormBlock":
+            return <FormBlockData key={section._key} section={section} />;
           case "sectionRichText":
             return (
               <section
