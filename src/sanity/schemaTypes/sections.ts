@@ -900,6 +900,283 @@ export const sectionCtaBand = defineType({
   },
 });
 
+const linkField = (name: string, title: string, label?: string, url?: string) =>
+  defineField({
+    name,
+    title,
+    type: "object",
+    options: { columns: 2 },
+    fields: [
+      defineField({ name: "label", type: "string", ...(label ? { initialValue: label } : {}) }),
+      defineField({ name: "url", type: "string", ...(url ? { initialValue: url } : {}) }),
+    ],
+  });
+
+/* Card grid (37506:3646): section header + N cards (image 4:3,
+   eyebrow, title, description, meta) in 2, 3 or 4 columns. Cards
+   that link emit an ItemList from the page route. */
+export const sectionCardGrid = defineType({
+  name: "sectionCardGrid",
+  icon: icons["th-large"],
+  title: "Card grid",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Eyebrow" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Grid heading that names the set" }),
+    linkField("link", "See-all link", "See all", "/"),
+    defineField({ name: "columns", title: "Columns", type: "number", options: { list: [2, 3, 4], layout: "radio", direction: "horizontal" }, initialValue: 3 }),
+    defineField({
+      name: "cards",
+      title: "Cards",
+      type: "array",
+      validation: (rule) => rule.min(1),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "gridCard",
+          fields: [
+            defineField({
+              name: "image",
+              title: "Image (4:3)",
+              type: "image",
+              options: { hotspot: true },
+              fields: [defineField({ name: "alt", title: "Alternative text", type: "string", description: "Subject, place — required when an image is set." })],
+            }),
+            defineField({ name: "eyebrow", title: "Eyebrow · meta", type: "string" }),
+            defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "body", type: "text", rows: 2 }),
+            defineField({ name: "meta", title: "Meta line", type: "string", description: "e.g. “1,590–2,250 sq ft · 2 floor plans”." }),
+            defineField({ name: "url", title: "Link", type: "string" }),
+          ],
+          preview: { select: { title: "title", subtitle: "eyebrow", media: "image" } },
+        }),
+      ],
+      initialValue: () =>
+        [1, 2, 3].map(() => ({
+          _type: "gridCard",
+          _key: key(),
+          eyebrow: "Eyebrow · meta",
+          title: "Card title",
+          body: "One or two sentences of description that say what this is and why it matters to the reader.",
+          meta: "Meta line · 1,590–2,250 sq ft · 2 floor plans",
+          url: "/",
+        })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", cards: "cards" },
+    prepare: ({ title, cards }) => ({ title: title ?? "Card grid", subtitle: `${(cards as unknown[] | undefined)?.length ?? 0} card(s)` }),
+  },
+});
+
+/* Process timeline (37507:3797): numbered steps with title,
+   description and typical duration — HowTo-shaped. The page route
+   emits a HowTo node from it; durations are real ranges, not
+   placeholders, before publishing. */
+export const sectionProcess = defineType({
+  name: "sectionProcess",
+  icon: icons["olist"],
+  title: "Process timeline",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Process" }),
+    defineField({ name: "headline", title: "Heading (question form)", type: "string", initialValue: "How does a Method home get built?" }),
+    linkField("link", "Link", "See the full process", "/process"),
+    defineField({
+      name: "steps",
+      title: "Steps",
+      type: "array",
+      validation: (rule) => rule.min(2).max(8),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "processStep",
+          fields: [
+            defineField({ name: "title", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "body", type: "text", rows: 3 }),
+            defineField({ name: "duration", title: "Typical duration", type: "string", description: "“6–8 weeks”, “Varies by jurisdiction”. Also emitted as the HowTo step's time when it parses." }),
+          ],
+          preview: { select: { title: "title", subtitle: "duration" } },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["Discovery & feasibility", "Site, budget, zoning and access review. We confirm a path — series or custom — and a realistic range.", "2–4 weeks"],
+          ["Design & engineering", "Architects and engineers finalize the plan, selections and structural package in one process.", "8–12 weeks"],
+          ["Permits & site prep", "Permitting runs while the foundation and utilities are prepared on site.", "Varies by jurisdiction"],
+          ["Factory build", "Modules are built indoors, finished and inspected while site work completes in parallel.", "10–14 weeks"],
+          ["Set & finish", "Modules are delivered and craned onto the foundation; crews stitch, finish and commission.", "6–10 weeks"],
+        ].map(([title, body, duration]) => ({ _type: "processStep", _key: key(), title, body, duration })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", steps: "steps" },
+    prepare: ({ title, steps }) => ({ title: title ?? "Process timeline", subtitle: `${(steps as unknown[] | undefined)?.length ?? 0} step(s)` }),
+  },
+});
+
+/* Compare table (37507:3753): a real <table> with a header row — the
+   most-cited structure for "X vs Y" prompts. */
+export const sectionCompare = defineType({
+  name: "sectionCompare",
+  icon: icons["block-content"],
+  title: "Compare table",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Compare" }),
+    defineField({ name: "headline", title: "Heading (question form)", type: "string", initialValue: "Which Method series fits your site and budget?" }),
+    linkField("link", "Link", "Pricing guide", "/pricing"),
+    defineField({
+      name: "headers",
+      title: "Column headers",
+      description: "The first header labels the row-name column.",
+      type: "array",
+      of: [{ type: "string" }],
+      validation: (rule) => rule.min(2).max(7),
+      initialValue: ["Series", "Size range", "Floor plans", "Bedrooms", "Starting range", "Best for"],
+    }),
+    defineField({
+      name: "rows",
+      title: "Rows",
+      type: "array",
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "compareRow",
+          fields: [
+            defineField({ name: "label", title: "Row name", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "cells", title: "Cells (one per remaining header)", type: "array", of: [{ type: "string" }] }),
+          ],
+          preview: { select: { title: "label", cells: "cells" }, prepare: ({ title, cells }) => ({ title, subtitle: ((cells as string[] | undefined) ?? []).join(" · ") }) },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["Elemental", ["624–3,500 sq ft", "8", "1–4", "On request", "Flexible single-storey to family-size plans"]],
+          ["Option", ["922–2,320 sq ft", "9", "1–4", "On request", "Modern plans with the most layouts to choose from"]],
+          ["Cabin", ["1,298–2,800 sq ft", "5", "2–4", "On request", "Retreats and rural sites"]],
+          ["M", ["655–1,740 sq ft", "5", "1–3", "On request", "Compact modern homes and ADUs"]],
+          ["Paradigm", ["656–1,868 sq ft", "3", "1–3", "On request", "Efficient contemporary plans"]],
+          ["Annata", ["1,590–2,250 sq ft", "2", "3–4", "On request", "Warm, gabled family homes"]],
+          ["Method One", ["Custom", "—", "—", "On request", "Our original flagship, tailored to the site"]],
+        ].map(([label, cells]) => ({ _type: "compareRow", _key: key(), label, cells })),
+    }),
+    sources(),
+  ],
+  preview: {
+    select: { title: "headline", rows: "rows" },
+    prepare: ({ title, rows }) => ({ title: title ?? "Compare table", subtitle: `${(rows as unknown[] | undefined)?.length ?? 0} row(s)` }),
+  },
+});
+
+/* Link list (37508:4097): side heading + rows of titled internal links
+   with one-line descriptions — every page links to ≥3 related pages
+   with descriptive anchor text. */
+export const sectionLinkList = defineType({
+  name: "sectionLinkList",
+  icon: icons["link"],
+  title: "Link list",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Related" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "Keep reading" }),
+    defineField({ name: "intro", title: "Intro", type: "text", rows: 2, initialValue: "Guides and pages that answer the next question." }),
+    defineField({
+      name: "links",
+      title: "Links",
+      type: "array",
+      validation: (rule) => rule.min(2).max(8),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "linkRow",
+          fields: [
+            defineField({ name: "title", type: "string", description: "Descriptive anchor text — what the page is, not “click here”.", validation: (rule) => rule.required() }),
+            defineField({ name: "description", type: "string" }),
+            defineField({ name: "url", type: "string", validation: (rule) => rule.required() }),
+          ],
+          preview: { select: { title: "title", subtitle: "url" } },
+        }),
+      ],
+      initialValue: () =>
+        [1, 2, 3, 4].map(() => ({ _type: "linkRow", _key: key(), title: "Link title", description: "One line on what the reader will find there.", url: "/" })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", links: "links" },
+    prepare: ({ title, links }) => ({ title: title ?? "Link list", subtitle: `${(links as unknown[] | undefined)?.length ?? 0} link(s)` }),
+  },
+});
+
+/* Interstitial (37528:15397): a moment of pause between chapters —
+   one message, one medium. At most two per page. The text is a styled
+   paragraph, never a heading (it is not a document section). */
+export const sectionInterstitial = defineType({
+  name: "sectionInterstitial",
+  icon: icons["sparkles"],
+  title: "Interstitial",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({
+      name: "kind",
+      title: "Kind",
+      type: "string",
+      options: {
+        list: [
+          { title: "Statement — headline alone", value: "statement" },
+          { title: "Image — one photograph", value: "image" },
+          { title: "Floating images — headline with drifting photos", value: "floating" },
+          { title: "Word over image — one word on a full-bleed photo", value: "word" },
+          { title: "Number — one figure, one line", value: "number" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "statement",
+    }),
+    defineField({ name: "text", title: "Text", type: "string", description: "The statement, the word, or the number.", initialValue: "Built indoors. Finished on your land." }),
+    defineField({ name: "subline", title: "Subline", type: "string", description: "Number and Word kinds: the one line under the figure/word. End a stat with its footnote marker (¹).", hidden: ({ parent }) => !["number", "word"].includes((parent as { kind?: string })?.kind ?? "") }),
+    defineField({
+      name: "image",
+      title: "Photograph",
+      type: "image",
+      options: { hotspot: true },
+      fields: [
+        defineField({ name: "alt", title: "Alternative text", type: "string" }),
+        defineField({ name: "caption", title: "Caption", type: "string", description: "Image kind: project, place, year." }),
+      ],
+      hidden: ({ parent }) => !["image", "word"].includes((parent as { kind?: string })?.kind ?? ""),
+    }),
+    defineField({
+      name: "floats",
+      title: "Floating photographs (4–6)",
+      type: "array",
+      validation: (rule) => rule.max(6),
+      of: [
+        defineArrayMember({
+          type: "image",
+          options: { hotspot: true },
+          fields: [defineField({ name: "alt", title: "Alternative text", type: "string", validation: (rule) => rule.required() })],
+        }),
+      ],
+      hidden: ({ parent }) => (parent as { kind?: string })?.kind !== "floating",
+    }),
+  ],
+  preview: {
+    select: { title: "text", kind: "kind" },
+    prepare: ({ title, kind }) => ({ title: title ?? "Interstitial", subtitle: `Interstitial · ${kind ?? "statement"}` }),
+  },
+});
+
 /* FAQ — question/answer accordion (Figma "FAQ" 37507:3841). Every
    item is emitted as FAQPage/Question/Answer JSON-LD by the page route,
    so the questions buyers actually type become quotable answers; the
@@ -1038,6 +1315,11 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionStats" }),
                 defineArrayMember({ type: "sectionFeatureList" }),
                 defineArrayMember({ type: "sectionCtaBand" }),
+                defineArrayMember({ type: "sectionCardGrid" }),
+                defineArrayMember({ type: "sectionProcess" }),
+                defineArrayMember({ type: "sectionCompare" }),
+                defineArrayMember({ type: "sectionLinkList" }),
+                defineArrayMember({ type: "sectionInterstitial" }),
               ],
             }),
           ],
@@ -1104,6 +1386,11 @@ export const sectionTypes = [
   sectionStats,
   sectionFeatureList,
   sectionCtaBand,
+  sectionCardGrid,
+  sectionProcess,
+  sectionCompare,
+  sectionLinkList,
+  sectionInterstitial,
   sectionExperiment,
   abResult,
 ];

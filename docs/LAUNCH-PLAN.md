@@ -182,14 +182,14 @@ contribution wired. Build order follows page priority in §5.
 | Sub-nav | 37525:15383 | derived from page anchors | in-page anchors → heading ids | [ ] |
 | Text intro | 37505:3536 | sectionTextIntro | ≥120-word lede, H2 question | [x] 2026-10-03 |
 | 50/50 | 37505:3577 | sectionFiftyFifty | alt text required | [~] template |
-| Card + Card grid | 37506:3516/3646 | sectionCardGrid (new) | ItemList when cards link | [ ] |
+| Card + Card grid | 37506:3516/3646 | sectionCardGrid | cards with eyebrow/title/body/meta; link wraps the card | [x] 2026-10-04 |
 | Carousel | 37506:3699 | sectionCarousel | ImageObject captions | [~] template |
 | Stats bar | 37506:3714 | sectionStats | numbers are DOM text with footnote markers → dated sources line | [x] 2026-10-03 |
 | Testimonial | 37506:3733 | sectionTestimonial (new) → or project.testimonial | Review schema (named, dated, rated) | [ ] |
 | Logo row | 37506:3750 | sectionLogoRow (new) | press/partner logos link to citations | [ ] |
 | Spec table | 37507:3678 | sectionTechSpecs | Product additionalProperty on series | [~] template TechSpecs |
-| Compare table | 37507:3753 | sectionCompare (new) | comparison pages (play 6); table semantics | [ ] |
-| Process timeline | 37507:3797 | sectionProcess (new) | HowTo schema on /process | [ ] |
+| Compare table | 37507:3753 | sectionCompare | real `<table>` with header row + sources; comparison pages (play 6) | [x] 2026-10-04 |
+| Process timeline | 37507:3797 | sectionProcess | `<ol>` of steps; page route emits HowTo (steps, ISO durations) | [x] 2026-10-04 |
 | FAQ | 37507:3841 | sectionFaq | FAQPage | [x] shipped 2026-10-03 |
 | Author & share | 37507:3851 | post.author / reviewedBy | Person + links to author page | [~] byline exists; links pending |
 | Article body | 37507:3864 | post.body | Article; H2 ids for anchors | [~] PostArticle |
@@ -201,13 +201,13 @@ contribution wired. Build order follows page priority in §5.
 | Team grid | 37508:3875 | teamMember / author | Person per member on About | [ ] |
 | Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [ ] |
 | Feature list | 37508:4069 | sectionFeatureList | bullets = liftable facts; 3 or 4 columns | [x] 2026-10-03 |
-| Link list | 37508:4097 | sectionLinkList (new) | internal linking hub | [ ] |
+| Link list | 37508:4097 | sectionLinkList | internal linking hub (descriptive anchors) | [x] 2026-10-04 |
 | Glossary | 37508:4131 | glossary doc (new) | DefinedTerm set on /prefab-101 | [ ] |
 | Press list | 37508:4175 | press doc (new) | citations; NewsArticle refs | [ ] |
 | Plan drawings → Walk the plan | 37521:15819 | plan doc + PDF | crawlable PDFs; ImageObject | [ ] |
 | CTA band | 37505:3598 | sectionCtaBand | primary CTA → /get-started opens the intake tray | [x] 2026-10-03 |
 | Footer + Location + newsletter | 37505:3650 / 37525:15440 | siteSettings NAP | NAP visible on every page; matches GBP | [~] footer exists; NAP fields added |
-| Interstitial ×5 | 37528:15397 | sectionInterstitial (new, kind) | styled `<p>`, lazy imgs, never LCP | [ ] |
+| Interstitial ×5 | 37528:15397 | sectionInterstitial (kind) | styled `<p>`, lazy imgs, depth parallax (static under reduced motion), never LCP | [x] 2026-10-04 |
 
 ### B2 Editorial bespoke sections (37521:15243)
 
@@ -432,7 +432,9 @@ and only need content; the rest are build or content work.
 - ✔ WebPage kinds, BreadcrumbList, FAQPage pooling, ItemList,
   House + Review, BlogPosting + Person, dateModified.
 - [ ] Product + Offer per series and plan (needs series facts).
-- [ ] HowTo on /process from the Process timeline steps.
+- [x] HowTo from the Process timeline steps (route emits it for the
+      first Process section on any CMS page; durations like “6–8
+      weeks” become ISO `P8W`). 2026-10-04.
 - [ ] ProfilePage + Person on author pages; Person per team member.
 - [ ] Service + areaServed on markets and commercial types.
 - [ ] DefinedTermSet on /prefab-101 glossary.
@@ -627,6 +629,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — Shared sections batch 2 in code: Card grid, Process
+  timeline (+ HowTo JSON-LD), Compare table, Link list, Interstitial
+  (5 kinds, floating parallax). `text-display-2xl` token added for
+  Method's Display XL (72→176). All 10 P1 shared sections now exist
+  in code; Hero / Page, Hero / Series, Sub-nav, Gallery, Testimonial,
+  Logo row, Spec table, Team grid, Map block, Form block remain.
 - 2026-10-03 — Libraries bound to the system: text styles on all
   text, spacing/container variables on all paddings and gaps, Mobile
   variants driven by the Typography collection's Mobile mode; Display

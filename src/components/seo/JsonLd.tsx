@@ -77,6 +77,50 @@ export function collectFaq(sections: PageSection[] | undefined): FaqItem[] {
   return out;
 }
 
+/* The first Process timeline on a page (top level or in the control
+   variant) — the HowTo the route emits */
+export function collectHowTo(sections: PageSection[] | undefined): { name?: string; steps: { title?: string; body?: string; duration?: string }[] } | null {
+  for (const section of sections ?? []) {
+    if (section._type === "sectionProcess" && section.steps?.length) return { name: section.headline, steps: section.steps };
+    if (section._type === "sectionExperiment") {
+      const inner = collectHowTo(section.variants?.[0]?.sections);
+      if (inner) return inner;
+    }
+  }
+  return null;
+}
+
+/* "6–8 weeks" → ISO 8601 duration of the upper bound (P8W); anything
+   that does not parse is left out rather than guessed */
+function isoDuration(s?: string) {
+  const m = s?.match(/(\d+)(?:\s*[–-]\s*(\d+))?\s*(week|month|day)s?/i);
+  if (!m) return undefined;
+  const n = Number(m[2] ?? m[1]);
+  const unit = m[3].toLowerCase();
+  return unit === "week" ? `P${n}W` : unit === "month" ? `P${n}M` : `P${n}D`;
+}
+
+export function howTo(path: string, data: { name?: string; steps: { title?: string; body?: string; duration?: string }[] } | null, description?: string | null) {
+  if (!data || !data.steps.length) return null;
+  const steps = data.steps.filter((s) => s.title);
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "@id": `${BASE}${path}#howto`,
+    name: data.name ?? "How a Method home gets built",
+    ...(description ? { description } : {}),
+    isPartOf: { "@id": pageId(path) },
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.title,
+      ...(s.body ? { text: s.body } : {}),
+      ...(isoDuration(s.duration) ? { timeRequired: isoDuration(s.duration) } : {}),
+      url: `${BASE}${path}#step-${i + 1}`,
+    })),
+  };
+}
+
 /* FAQPage node for a page's question/answer items (every FAQ section
    on the page pooled into one list — Google wants one FAQPage per
    page). Returns null when there is nothing to say. */

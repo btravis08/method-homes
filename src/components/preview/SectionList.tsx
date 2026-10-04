@@ -2,7 +2,9 @@ import { PortableText } from "next-sanity";
 import { Suspense } from "react";
 
 import {
+  CardGrid,
   Carousel,
+  CompareTable,
   CtaBand,
   Faq,
   FeatureList,
@@ -11,6 +13,9 @@ import {
   Gallery,
   Hero,
   InfoSlider,
+  Interstitial,
+  LinkList,
+  ProcessTimeline,
   ProductSlider,
   Reviews,
   StatsBar,
@@ -275,6 +280,44 @@ export function SectionList({
                   body={section.body}
                   primary={section.ctaPrimary}
                   secondary={section.ctaSecondary}
+                />
+              );
+            case "sectionCardGrid":
+              return (
+                <CardGrid
+                  key={section._key}
+                  mode={section.colorMode}
+                  eyebrow={section.eyebrow}
+                  headline={section.headline}
+                  link={section.link}
+                  columns={section.columns}
+                  cards={section.cards?.map((c) => ({ ...c, image: img(c.image ?? undefined, 800), alt: c.image?.alt }))}
+                />
+              );
+            case "sectionProcess":
+              return (
+                <ProcessTimeline key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} link={section.link} steps={section.steps} />
+              );
+            case "sectionCompare":
+              return (
+                <CompareTable key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} link={section.link} headers={section.headers} rows={section.rows} sources={section.sources} />
+              );
+            case "sectionLinkList":
+              return (
+                <LinkList key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} intro={section.intro} links={section.links} />
+              );
+            case "sectionInterstitial":
+              return (
+                <Interstitial
+                  key={section._key}
+                  mode={section.colorMode}
+                  kind={section.kind}
+                  text={section.text}
+                  subline={section.subline}
+                  image={img(section.image ?? undefined, 2000)}
+                  alt={section.image?.alt}
+                  caption={section.image?.caption}
+                  floats={section.floats?.map((f) => ({ src: img(f, 600) ?? "", alt: f.alt ?? "" }))}
                 />
               );
             case "sectionRichText":

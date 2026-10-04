@@ -24,9 +24,10 @@ const query = groq`{
       title, "slug": slug.current, _updatedAt,
       "description": coalesce(seo.description, ""),
       sections[]{
-        _type, eyebrow, headline, title, intro, description, items, body,
-        cards[]{ title, body }, panels[]{ title, eyebrow, body },
-        rows[]{ label, value }, stats[]{ value, label },
+        _type, eyebrow, headline, title, intro, description, items, body, text, subline, headers,
+        cards[]{ title, body, meta }, panels[]{ title, eyebrow, body },
+        rows[]{ label, value, cells }, stats[]{ value, label },
+        steps[]{ title, body, duration }, links[]{ title, description },
         "variantSections": variants[0].sections[]{ _type, eyebrow, headline, title, intro, description, items, body, rows[]{ label, value } }
       },
       body
@@ -54,10 +55,15 @@ type Section = {
   description?: string;
   items?: unknown;
   body?: Block[];
-  cards?: { title?: string; body?: string }[];
+  text?: string;
+  subline?: string;
+  headers?: string[];
+  cards?: { title?: string; body?: string; meta?: string }[];
   panels?: { title?: string; eyebrow?: string; body?: string }[];
-  rows?: { label?: string; value?: string }[];
-  stats?: { value?: number; label?: string }[];
+  rows?: { label?: string; value?: string; cells?: string[] }[];
+  stats?: { value?: number | string; label?: string }[];
+  steps?: { title?: string; body?: string; duration?: string }[];
+  links?: { title?: string; description?: string }[];
   /* an experiment's control-variant sections (aliased in GROQ — a bare
      `variants[0].sections[]{}` attribute is a syntax error that made
      the whole query fall back to empty on the first production run) */
@@ -115,10 +121,18 @@ function sectionText(s: Section): string[] {
       else if (it?.title || it?.body) out.push(`- ${[clean(it.title), clean(it.body)].filter(Boolean).join(": ")}`);
     }
   }
-  for (const c of s.cards ?? []) if (c.title || c.body) out.push(`- ${[clean(c.title), clean(c.body)].filter(Boolean).join(": ")}`);
+  if (clean(s.text)) out.push([clean(s.text), clean(s.subline)].filter(Boolean).join(" — "));
+  for (const c of s.cards ?? []) if (c.title || c.body) out.push(`- ${[clean(c.title), clean(c.body), clean(c.meta)].filter(Boolean).join(": ")}`);
   for (const p of s.panels ?? []) if (p.title || p.body) out.push(`- ${[clean(p.eyebrow), clean(p.title), clean(p.body)].filter(Boolean).join(": ")}`);
-  for (const r of s.rows ?? []) if (r.label) out.push(`- ${clean(r.label)}: ${clean(r.value)}`);
+  if (s.headers?.length && s.rows?.some((r) => r.cells?.length)) {
+    out.push(`| ${s.headers.map(clean).join(" | ")} |`);
+    for (const r of s.rows ?? []) if (r.label) out.push(`| ${[clean(r.label), ...(r.cells ?? []).map(clean)].join(" | ")} |`);
+  } else {
+    for (const r of s.rows ?? []) if (r.label) out.push(`- ${clean(r.label)}: ${clean(r.value)}`);
+  }
   for (const st of s.stats ?? []) if (st.label) out.push(`- ${st.value ?? ""} ${clean(st.label)}`.trim());
+  (s.steps ?? []).forEach((st, i) => { if (st.title) out.push(`${i + 1}. ${clean(st.title)}${st.body ? ` — ${clean(st.body)}` : ""}${st.duration ? ` (${clean(st.duration)})` : ""}`); });
+  for (const l of s.links ?? []) if (l.title) out.push(`- ${clean(l.title)}${l.description ? `: ${clean(l.description)}` : ""}`);
   const body = portable(s.body);
   if (body) out.push(body);
   /* experiments: the control variant's sections are the page's canon */

@@ -11,7 +11,7 @@ import { FooterTagline } from "@/components/FooterTagline";
 import { PageGate } from "@/components/PageGate";
 import { buildSliderCardMap, SectionRenderer } from "@/components/SectionRenderer";
 import { gateCookieName, gateCookieValue } from "@/lib/gate";
-import { breadcrumbList, collectFaq, faqPage, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
+import { breadcrumbList, collectFaq, collectHowTo, faqPage, howTo, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
 import { pageBySlugQuery, pagePassphraseQuery } from "@/sanity/lib/queries";
@@ -129,6 +129,7 @@ export default async function CmsPage({
         />
         <JsonLd data={crumbs} />
         <JsonLd data={faqPage(path, faq)} />
+        <JsonLd data={howTo(path, collectHowTo(page.sections), page.seo?.description)} />
         {/* the document heading: section headlines are display copy,
             not the page's name — answer engines want exactly one H1 */}
         <h1 className="sr-only">{page.title}</h1>

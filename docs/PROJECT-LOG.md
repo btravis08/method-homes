@@ -61,6 +61,22 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — Shared sections batch 2 shipped (code)
+- Card grid (2/3/4 columns, linked cards), Process timeline (ordered
+  steps → HowTo node with ISO durations parsed from "6–8 weeks"),
+  Compare table (real `<table>` + sources; scrolls sideways on
+  phones), Link list, Interstitial (statement / image / floating
+  images with depth parallax / word over image / number). Verified on
+  the built server: correct semantics (`<ol>`, `<th>` ×6, H3s), 0
+  off-token readings, no mobile overflow, parallax offsets scale with
+  each float's depth.
+- Tokens: `--text-display-2xl` (4.5rem→11rem) is Method's Display XL
+  in code (wordmark, interstitial word/number); the template's
+  `display-xl` (40–64px) maps to Method's Display Small for the
+  statement kind. Both get reconciled at the rebrand export.
+- Rule kept: interstitial text is a `<p>`, never a heading; floating
+  photographs are lazy `<img>` with alt (neutral tile when unfilled).
+
 ### 2026-10-03 — Figma libraries bound to the variables and text styles (Bryce: "use the spacing variables and type variables")
 - The first mobile pass had written raw paddings, gaps and scaled
   font sizes. Replaced: every unstyled text in both libraries now

@@ -109,6 +109,13 @@ const innerSectionFields = groq`
   ctaPrimary,
   ctaSecondary,
   sources[] { _key, label, url, date },
+  kind,
+  text,
+  subline,
+  floats,
+  headers,
+  steps[] { _key, title, body, duration },
+  links[] { _key, title, description, url },
   image,
   source,
   tag,
@@ -118,7 +125,7 @@ const innerSectionFields = groq`
   "videoUrl": video.asset->url,
   lookProducts[]->{ ${lookProductFields} },
   cards[] {
-    _key, title, body, image, mediaKind,
+    _key, title, body, image, mediaKind, eyebrow, meta, url,
     "videoUrl": video.asset->url
   },
   collection->{ _id, title, type, match, rules, sortOrder },
@@ -129,7 +136,7 @@ const innerSectionFields = groq`
     "videoUrl": video.asset->url,
     lookProducts[]->{ ${lookProductFields} }
   },
-  rows[] { _key, label, value },
+  rows[] { _key, label, value, cells },
   stats[] { _key, value, label, footnote },
   slides[] {
     _key, image, mediaKind,

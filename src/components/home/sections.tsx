@@ -6,6 +6,8 @@ import { ArrowInViewPlay, ArrowLink, ArrowSwap } from "@/components/home/ArrowHo
 import type { LookProductData } from "@/components/home/MediaBlock";
 import type { ProductCardData } from "@/components/home/ProductCard";
 import { SectionReveal, RevealLine, RevealText } from "@/components/home/SectionReveal";
+import { FloatingImages } from "@/components/home/FloatingImages";
+import type { FloatData } from "@/components/home/FloatingImages";
 import { ArrowUpRight } from "@/components/icons";
 
 /* Heavy interactive client components load as their own chunks
@@ -1156,6 +1158,365 @@ export function CtaBand({
           {secondary?.label && <CtaButton label={secondary.label} href={secondary.url || "/contact"} variant="secondary" />}
         </div>
       </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Card grid (37506:3646) ---------- */
+
+export interface GridCardData {
+  _key?: string;
+  image?: string;
+  alt?: string;
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  meta?: string;
+  url?: string;
+}
+
+const defaultGridCards: GridCardData[] = [1, 2, 3].map(() => ({
+  eyebrow: "Eyebrow · meta",
+  title: "Card title",
+  body: "One or two sentences of description that say what this is and why it matters to the reader.",
+  meta: "Meta line · 1,590–2,250 sq ft · 2 floor plans",
+  url: "/",
+}));
+
+function SectionHeader({ eyebrow, headline, link }: { eyebrow?: string; headline?: string; link?: LinkData | null }) {
+  return (
+    <div className="flex w-full flex-col items-start justify-between gap-xl md:flex-row md:items-end md:gap-7xl">
+      <div className="flex max-w-[47.5rem] flex-col gap-xl">
+        {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+        <RevealText>
+          <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+        </RevealText>
+      </div>
+      {link?.label && <UnderlineLink label={link.label} href={link.url || "/"} />}
+    </div>
+  );
+}
+
+export function CardGrid({
+  mode = "light",
+  eyebrow = "Eyebrow",
+  headline = "Grid heading that names the set",
+  link = { label: "See all", url: "/" },
+  columns = 3,
+  cards = defaultGridCards,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  link?: LinkData | null;
+  columns?: 2 | 3 | 4;
+  cards?: GridCardData[];
+}) {
+  const cols = columns === 2 ? "lg:grid-cols-2" : columns === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3";
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col gap-6xl`}>
+        <SectionHeader eyebrow={eyebrow} headline={headline} link={link} />
+        <ul className={`grid grid-cols-1 gap-4xl sm:grid-cols-2 ${cols}`}>
+          {cards.filter((c) => c.title).map((c, i) => {
+            const Wrap = c.url ? ArrowLink : "div";
+            return (
+              <li key={c._key ?? i} className="flex flex-col gap-2xl">
+                <Wrap {...(c.url ? { href: c.url } : {})} className="group flex flex-col gap-2xl">
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xs bg-wash">
+                    {c.image ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={c.image} alt={c.alt ?? c.title ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                    ) : (
+                      <span className="label absolute inset-0 flex items-center justify-center text-ink-3">{c.alt ?? "Image"}</span>
+                    )}
+                  </div>
+                  <div className="flex flex-col gap-md">
+                    {c.eyebrow && <p className="label text-ink-3">{c.eyebrow}</p>}
+                    <h3 className="font-display text-title-sm font-medium text-ink">{c.title}</h3>
+                    {c.body && <p className="text-body-sm text-ink-2">{c.body}</p>}
+                    {c.meta && <p className="text-label-sm font-medium text-ink-3">{c.meta}</p>}
+                  </div>
+                </Wrap>
+              </li>
+            );
+          })}
+        </ul>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Process timeline (37507:3797) — HowTo-shaped ---------- */
+
+export interface ProcessStepData {
+  _key?: string;
+  title?: string;
+  body?: string;
+  duration?: string;
+}
+
+export const defaultProcessSteps: ProcessStepData[] = [
+  { title: "Discovery & feasibility", body: "Site, budget, zoning and access review. We confirm a path — series or custom — and a realistic range.", duration: "2–4 weeks" },
+  { title: "Design & engineering", body: "Architects and engineers finalize the plan, selections and structural package in one process.", duration: "8–12 weeks" },
+  { title: "Permits & site prep", body: "Permitting runs while the foundation and utilities are prepared on site.", duration: "Varies by jurisdiction" },
+  { title: "Factory build", body: "Modules are built indoors, finished and inspected while site work completes in parallel.", duration: "10–14 weeks" },
+  { title: "Set & finish", body: "Modules are delivered and craned onto the foundation; crews stitch, finish and commission.", duration: "6–10 weeks" },
+];
+
+export function ProcessTimeline({
+  mode = "light",
+  eyebrow = "Process",
+  headline = "How does a Method home get built?",
+  link = { label: "See the full process", url: "/process" },
+  steps = defaultProcessSteps,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  link?: LinkData | null;
+  steps?: ProcessStepData[];
+}) {
+  const list = steps.filter((s) => s.title);
+  const cols = list.length >= 5 ? "lg:grid-cols-5" : list.length === 4 ? "lg:grid-cols-4" : list.length === 3 ? "lg:grid-cols-3" : "lg:grid-cols-2";
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col gap-6xl`}>
+        <SectionHeader eyebrow={eyebrow} headline={headline} link={link} />
+        {/* an ordered list: the steps ARE the HowTo */}
+        <ol className={`grid grid-cols-1 gap-4xl sm:grid-cols-2 ${cols}`}>
+          {list.map((s, i) => (
+            <li key={s._key ?? i} className="flex flex-col gap-lg border-t border-line py-3xl">
+              <p className="text-label-sm font-medium text-ink-3">{String(i + 1).padStart(2, "0")}</p>
+              <h3 className="font-display text-title-sm font-medium text-ink">{s.title}</h3>
+              {s.body && <p className="text-body-sm text-ink-2">{s.body}</p>}
+              {s.duration && <p className="text-label-sm font-medium text-ink-3">{/^[A-Z]/.test(s.duration) ? s.duration : `Typical: ${s.duration}`}</p>}
+            </li>
+          ))}
+        </ol>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Compare table (37507:3753) ---------- */
+
+export interface CompareRowData {
+  _key?: string;
+  label?: string;
+  cells?: string[];
+}
+
+const defaultCompareHeaders = ["Series", "Size range", "Floor plans", "Bedrooms", "Starting range", "Best for"];
+const defaultCompareRows: CompareRowData[] = [
+  { label: "Elemental", cells: ["624–3,500 sq ft", "8", "1–4", "On request", "Flexible single-storey to family-size plans"] },
+  { label: "Option", cells: ["922–2,320 sq ft", "9", "1–4", "On request", "Modern plans with the most layouts to choose from"] },
+  { label: "Cabin", cells: ["1,298–2,800 sq ft", "5", "2–4", "On request", "Retreats and rural sites"] },
+  { label: "M", cells: ["655–1,740 sq ft", "5", "1–3", "On request", "Compact modern homes and ADUs"] },
+  { label: "Paradigm", cells: ["656–1,868 sq ft", "3", "1–3", "On request", "Efficient contemporary plans"] },
+  { label: "Annata", cells: ["1,590–2,250 sq ft", "2", "3–4", "On request", "Warm, gabled family homes"] },
+  { label: "Method One", cells: ["Custom", "—", "—", "On request", "Our original flagship, tailored to the site"] },
+];
+
+export function CompareTable({
+  mode = "light",
+  eyebrow = "Compare",
+  headline = "Which Method series fits your site and budget?",
+  link = { label: "Pricing guide", url: "/pricing" },
+  headers = defaultCompareHeaders,
+  rows = defaultCompareRows,
+  sources = [],
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  link?: LinkData | null;
+  headers?: string[];
+  rows?: CompareRowData[];
+  sources?: SourceData[];
+}) {
+  const [first, ...rest] = headers;
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} flex flex-col gap-6xl`}>
+        <SectionHeader eyebrow={eyebrow} headline={headline} link={link} />
+        {/* a real table — the structure engines lift for "X vs Y"; it
+            scrolls sideways on narrow screens rather than reflowing */}
+        <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-[48rem] border-collapse text-left">
+            <thead>
+              <tr className="border-b border-line">
+                <th scope="col" className="label w-[12.5rem] py-lg pr-3xl font-medium text-ink-3">{first}</th>
+                {rest.map((h, i) => (
+                  <th key={i} scope="col" className="label py-lg pr-3xl font-medium text-ink-3">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {rows.filter((r) => r.label).map((r, i) => (
+                <tr key={r._key ?? i} className="border-b border-line align-middle">
+                  <th scope="row" className="py-2xl pr-3xl text-body-md font-medium text-ink">{r.label}</th>
+                  {rest.map((_, j) => (
+                    <td key={j} className="py-2xl pr-3xl text-body-md text-ink-2">{r.cells?.[j] ?? "—"}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {sources.filter((s) => s.label).length > 0 && (
+          <ol className="flex flex-wrap gap-x-xl gap-y-xs label text-ink-3">
+            <li className="list-none">Sources</li>
+            {sources.filter((s) => s.label).map((s, i) => (
+              <li key={s._key ?? i} className="list-none"><sup>{i + 1}</sup> {s.url ? <a href={s.url} rel="noopener" className="underline-offset-2 hover:underline">{s.label}</a> : s.label}</li>
+            ))}
+          </ol>
+        )}
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Link list (37508:4097) ---------- */
+
+export interface LinkRowData {
+  _key?: string;
+  title?: string;
+  description?: string;
+  url?: string;
+}
+
+const defaultLinkRows: LinkRowData[] = [1, 2, 3, 4].map(() => ({ title: "Link title", description: "One line on what the reader will find there.", url: "/" }));
+
+export function LinkList({
+  mode = "light",
+  eyebrow = "Related",
+  headline = "Keep reading",
+  intro = "Guides and pages that answer the next question.",
+  links = defaultLinkRows,
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  intro?: string;
+  links?: LinkRowData[];
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} grid grid-cols-1 gap-6xl md:grid-cols-[minmax(0,25rem)_1fr] md:gap-9xl`}>
+        <div className="flex flex-col gap-xl">
+          {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+          <RevealText>
+            <h2 className="font-display text-headline-md text-ink">{headline}</h2>
+          </RevealText>
+          {intro && <p className="text-body-md text-ink-2">{intro}</p>}
+        </div>
+        <ul className="flex flex-col border-t border-line">
+          {links.filter((l) => l.title && l.url).map((l, i) => (
+            <li key={l._key ?? i} className="border-b border-line">
+              <ArrowLink href={l.url!} className="group flex items-center justify-between gap-4xl py-2xl">
+                <span className="flex flex-col gap-xs">
+                  <span className="text-body-md font-medium text-ink">{l.title}</span>
+                  {l.description && <span className="text-body-sm text-ink-2">{l.description}</span>}
+                </span>
+                <span aria-hidden className="font-display text-title-sm font-medium text-ink transition-transform duration-300 group-hover:translate-x-1">→</span>
+              </ArrowLink>
+            </li>
+          ))}
+        </ul>
+      </SectionReveal>
+    </section>
+  );
+}
+
+/* ---------- Interstitial (37528:15397) — moments of pause ---------- */
+
+export type InterstitialKindData = "statement" | "image" | "floating" | "word" | "number";
+
+const defaultFloats: FloatData[] = [
+  "interior detail — oak stair",
+  "cedar siding and window trim",
+  "module on a trailer at dawn",
+  "floor plan drawing",
+  "factory floor — framing a wall",
+  "client portrait at the door",
+].map((alt) => ({ src: "", alt }));
+
+/* One message, one medium, no eyebrow or buttons. The text is a
+   styled <p> (it is not a document section); numeric statements end
+   with their footnote marker; the Image kind is never the LCP (lazy). */
+export function Interstitial({
+  mode = "light",
+  kind = "statement",
+  text = "Built indoors. Finished on your land.",
+  subline,
+  image,
+  alt,
+  caption,
+  floats = defaultFloats,
+}: {
+  mode?: Mode;
+  kind?: InterstitialKindData;
+  text?: string;
+  subline?: string;
+  image?: string;
+  alt?: string;
+  caption?: string;
+  floats?: FloatData[];
+}) {
+  if (kind === "image") {
+    return (
+      <section data-mode="dark" className="relative w-full bg-surface text-ink">
+        <div className="relative min-h-[47.5rem] w-full overflow-hidden">
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} alt={alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+          ) : (
+            <span className="label absolute left-7xl top-6xl text-ink-2">{alt ?? "Photograph"}</span>
+          )}
+          {caption && <p className="absolute bottom-6xl left-6xl text-body-sm text-ink-2">{caption}</p>}
+        </div>
+      </section>
+    );
+  }
+  if (kind === "word") {
+    return (
+      <section data-mode="dark" className="relative w-full bg-surface text-ink">
+        <div className={`relative flex min-h-[51.25rem] w-full flex-col items-center justify-center gap-3xl overflow-hidden ${SECTION_X}`}>
+          {image && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} alt={alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+          )}
+          <p className="relative z-10 text-center font-display text-display-2xl text-ink">{text}</p>
+          {subline && <p className="relative z-10 max-w-[45rem] text-center text-body-md text-ink-2">{subline}</p>}
+        </div>
+      </section>
+    );
+  }
+  if (kind === "number") {
+    return (
+      <section data-mode={mode} className={`w-full bg-surface-2 text-ink ${SECTION_X} py-11xl`}>
+        <div className={`${CONTAINER} flex min-h-[20rem] flex-col items-center justify-center gap-xl text-center`}>
+          <p className="font-display text-display-2xl text-ink">{text}</p>
+          {subline && <p className="max-w-[45rem] text-body-md text-ink-2">{subline}</p>}
+        </div>
+      </section>
+    );
+  }
+  if (kind === "floating") {
+    return (
+      <section data-mode={mode} className={`w-full overflow-hidden bg-surface text-ink ${SECTION_X}`}>
+        <FloatingImages floats={floats.filter((f) => f.src || f.alt)}>
+          <p className="max-w-[45rem] text-center font-display text-display-xl text-ink">{text}</p>
+        </FloatingImages>
+      </section>
+    );
+  }
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-11xl`}>
+      <div className={`${CONTAINER} flex min-h-[20rem] items-center justify-center`}>
+        <p className="max-w-[60rem] text-center font-display text-display-xl text-ink">{text}</p>
+      </div>
     </section>
   );
 }

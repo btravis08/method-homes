@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T23:27:40.310Z",
+  "generatedAt": "2026-10-04T00:17:13.000Z",
   "modes": [
     "light",
     "light-mid",
@@ -442,6 +442,17 @@
       "detail": {
         "lineHeight": "1.2",
         "letterSpacing": "-0.02em"
+      }
+    },
+    {
+      "path": "--text-display-2xl",
+      "name": "display-2xl",
+      "type": "fontSize",
+      "value": "clamp(4.5rem, 1.751rem + 10.2767vw, 11rem)",
+      "utility": "text-display-2xl",
+      "detail": {
+        "lineHeight": "0.91",
+        "letterSpacing": "-0.03em"
       }
     }
   ],

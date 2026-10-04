@@ -401,6 +401,82 @@ export interface SectionCtaBand extends SectionBase {
   ctaSecondary?: SectionLink | null;
 }
 
+export interface GridCard {
+  _key: string;
+  image?: (SanityImageSource & { alt?: string }) | null;
+  eyebrow?: string;
+  title?: string;
+  body?: string;
+  meta?: string;
+  url?: string;
+}
+
+export interface SectionCardGrid extends SectionBase {
+  _type: "sectionCardGrid";
+  eyebrow?: string;
+  headline?: string;
+  link?: SectionLink | null;
+  columns?: 2 | 3 | 4;
+  cards?: GridCard[];
+}
+
+export interface ProcessStep {
+  _key: string;
+  title?: string;
+  body?: string;
+  duration?: string;
+}
+
+export interface SectionProcess extends SectionBase {
+  _type: "sectionProcess";
+  eyebrow?: string;
+  headline?: string;
+  link?: SectionLink | null;
+  steps?: ProcessStep[];
+}
+
+export interface CompareRow {
+  _key: string;
+  label?: string;
+  cells?: string[];
+}
+
+export interface SectionCompare extends SectionBase {
+  _type: "sectionCompare";
+  eyebrow?: string;
+  headline?: string;
+  link?: SectionLink | null;
+  headers?: string[];
+  rows?: CompareRow[];
+  sources?: SourceRef[];
+}
+
+export interface LinkRow {
+  _key: string;
+  title?: string;
+  description?: string;
+  url?: string;
+}
+
+export interface SectionLinkList extends SectionBase {
+  _type: "sectionLinkList";
+  eyebrow?: string;
+  headline?: string;
+  intro?: string;
+  links?: LinkRow[];
+}
+
+export type InterstitialKind = "statement" | "image" | "floating" | "word" | "number";
+
+export interface SectionInterstitial extends SectionBase {
+  _type: "sectionInterstitial";
+  kind?: InterstitialKind;
+  text?: string;
+  subline?: string;
+  image?: (SanityImageSource & { alt?: string; caption?: string }) | null;
+  floats?: Array<SanityImageSource & { _key: string; alt?: string }>;
+}
+
 export interface ExperimentVariant {
   _key: string;
   label?: string;
@@ -431,6 +507,11 @@ export type PageSection =
   | SectionStats
   | SectionFeatureList
   | SectionCtaBand
+  | SectionCardGrid
+  | SectionProcess
+  | SectionCompare
+  | SectionLinkList
+  | SectionInterstitial
   | SectionExperiment;
 
 export interface Page {
