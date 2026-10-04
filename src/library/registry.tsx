@@ -32,6 +32,7 @@ import {
 import { SubNav } from "@/components/home/SubNav";
 import { Lineup } from "@/components/home/Lineup";
 import { ContactForm } from "@/components/forms/ContactForm";
+import { LazyPlanViewer } from "@/components/model/LazyPlanViewer";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import { FloatingWords } from "@/components/legacy/FloatingWords";
 import { FullBleedCarousel } from "@/components/legacy/FullBleedCarousel";
@@ -433,6 +434,25 @@ export const SECTIONS: SectionEntry[] = [
     modes: ["light", "dark"],
     figmaNodeId: "37508:3799",
     render: (mode) => <FormBlock mode={mode} form={<ContactForm />} />,
+  },
+  {
+    slug: "plan-viewer",
+    title: "3D plan viewer",
+    group: "Page sections",
+    description: "Prototype (2026-10-04): the pipeline's GLB of a sample house turns on its vertical axis; “Floor plan” flies the camera to a north-up top view while a section cut descends to 1.2 m above the chosen storey and the palette turns to a drawing. Loads after idle + in view behind a poster; the plan page's photo, drawing and PDF stay the twin.",
+    modes: ["light"],
+    tall: true,
+    render: () => (
+      <section data-mode="light" className="w-full bg-surface px-4 py-8xl text-ink md:px-7xl md:py-10xl">
+        <div className="mx-auto flex w-full max-w-page flex-col gap-3xl">
+          <div className="flex flex-col gap-xl">
+            <p className="label text-ink-3">Walk the plan</p>
+            <h2 className="font-display text-headline-md text-ink">Sample house — 3D and floor plan</h2>
+          </div>
+          <LazyPlanViewer src="/models/sample/basic-house.glb" alt="Sample two-storey house model" />
+        </div>
+      </section>
+    ),
   },
   {
     slug: "ab-experiment",

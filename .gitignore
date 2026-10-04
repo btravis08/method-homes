@@ -40,3 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 !.env.local.example
+
+# pipeline intermediates (public/models keeps only the compressed GLB)
+*.raw.glb

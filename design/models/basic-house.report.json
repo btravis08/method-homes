@@ -1,0 +1,109 @@
+{
+  "input": "/home/user/andrewisen/bim-whale-ifc-samples/BasicHouse/IFC/BasicHouse.ifc",
+  "output": "public/models/sample/basic-house.glb",
+  "bytes": 14217044,
+  "triangles": 552087,
+  "seconds": 4.9,
+  "schema": "IFC2X3",
+  "northDeg": -0.0,
+  "footprint": {
+    "width_m": 23.8,
+    "depth_m": 10.7,
+    "height_m": 3.92
+  },
+  "storeys": [
+    {
+      "index": 0,
+      "name": "Floor 0",
+      "elevation_m": 0.3,
+      "habitable": true
+    },
+    {
+      "index": 1,
+      "name": "Floor 1",
+      "elevation_m": 2.7,
+      "habitable": false
+    }
+  ],
+  "kept": {
+    "IfcWindow": 19,
+    "IfcWallStandardCase": 13,
+    "IfcDoor": 8,
+    "IfcSlab": 3
+  },
+  "dropped": {
+    "IfcFurnishingElement": 71,
+    "IfcOpeningElement": 28,
+    "IfcDistributionPort": 19,
+    "IfcFlowTerminal": 7,
+    "IfcBuildingElementProxy": 4,
+    "IfcBuildingStorey": 2,
+    "IfcRoof": 1,
+    "IfcBuilding": 1,
+    "IfcSite": 1
+  },
+  "proxies": [
+    {
+      "name": "M_Cook Top-4 Unit:0915 x 500mm:1298105",
+      "id": "2DedXznHnDaeAWsrTB_q8c",
+      "size_m": 0.99,
+      "kept": false,
+      "reason": "name"
+    },
+    {
+      "name": "M_Refrigerator:600 x 660mm:1298106",
+      "id": "2DedXznHnDaeAWsrTB_q8b",
+      "size_m": 1.83,
+      "kept": false,
+      "reason": "name"
+    },
+    {
+      "name": "M_Refrigerator:600 x 660mm:1298107",
+      "id": "2DedXznHnDaeAWsrTB_q8a",
+      "size_m": 1.83,
+      "kept": false,
+      "reason": "name"
+    },
+    {
+      "name": "Model Text:600mm Arial:1310456",
+      "id": "1kRPPrPK119PBys6QizW2g",
+      "size_m": 10.96,
+      "kept": false,
+      "reason": "name"
+    }
+  ],
+  "smallDropped": [],
+  "nodes": [
+    {
+      "node": "storey0_door",
+      "storey": 0,
+      "category": "door",
+      "triangles": 5544
+    },
+    {
+      "node": "storey0_floor",
+      "storey": 0,
+      "category": "floor",
+      "triangles": 12
+    },
+    {
+      "node": "storey0_glass",
+      "storey": 0,
+      "category": "glass",
+      "triangles": 545899
+    },
+    {
+      "node": "storey0_wall",
+      "storey": 0,
+      "category": "wall",
+      "triangles": 608
+    },
+    {
+      "node": "storey1_floor",
+      "storey": 1,
+      "category": "floor",
+      "triangles": 24
+    }
+  ],
+  "compressedBytes": 127568
+}

@@ -219,7 +219,7 @@ gate after idle. Each has one toggle or slider at most.
 |---|---|---|---|
 | Build journey | /process | Step | [ ] |
 | What it costs | /pricing | Path=Predesigned/Custom | [ ] |
-| Walk the plan | series, plan pages | View=Plan/Modules/Photos | [ ] |
+| Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04) | [~] 3D viewer prototype in code; Plan/Modules/Photos pending Bryce's design pass |
 | We deliver to you | /where-we-build | State=Empty/Result | [ ] |
 | Lineup (replaces Find your fit) | /predesigned | Series | [x] 2026-10-04 — pills are real links to /series/*, JS swaps in place (state-driven cross-fade); twin = Card grid + Compare table on the same page |
 | Scale, simply | /commercial | Config=24/48 units | [ ] |
@@ -631,6 +631,18 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — 3D plan viewer prototype (Bryce: interactive floor
+  plans — the home spins on its vertical axis, "Floor plans" flies to
+  a north-up top view and cuts the model into a drawing). IFC → GLB
+  pipeline `scripts/model/ifc-to-glb.py` (IfcOpenShell + trimesh:
+  keep architecture by IfcType, drop furniture/fixtures/services/site,
+  re-material by category, one mesh per storey × category, metres,
+  Y-up, centred, TrueNorth stored) + gltf-transform compression;
+  viewer `src/components/model/PlanViewer.tsx` (three + React Three
+  Fiber) behind `LazyPlanViewer` (ssr:false, idle + in view, WebGL
+  check, poster). Floor plan docs gained `model` (GLB) + `northDeg`;
+  the plan page shows the viewer above the drawing when a model is
+  uploaded; /library/plan-viewer runs the sample house.
 - 2026-10-04 — Shared sections batch 3: Testimonial (Review),
   Logo row, Team grid (Person nodes; teamMember gained credentials +
   LinkedIn), Map block (rows from Market documents; links gated on

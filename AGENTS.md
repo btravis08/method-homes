@@ -111,6 +111,25 @@ staging/design use.
 - Every remote call retries 4x with backoff (one ECONNRESET killed a
   40-minute run once).
 
+## 3D models (plan viewer)
+
+- Models reach the web ONLY through `scripts/model/ifc-to-glb.py` →
+  gltf-transform (or the `model-pipeline.yml` workflow, which runs
+  both and attaches the GLB to the plan document). Never hand-export
+  a GLB: the pipeline is what strips furniture/services, re-materials
+  by category, normalises units/orientation and stores storeys +
+  TrueNorth in the glTF extras the viewer depends on.
+- IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
+  products also carry 2D Axis representations that fail conversion
+  for the whole element. Keep the geometry cache (`--cache`) when
+  iterating on export logic.
+- `PlanViewer` (three + React Three Fiber) is never imported
+  statically: only through `LazyPlanViewer` (ssr:false, idle + in
+  view, WebGL check, poster). The plan page's photo/drawing/PDF stay
+  the twin; facts never live only inside the canvas. Frame-loop
+  mutation belongs in `ViewerState`, not component code (React
+  Compiler immutability lint).
+
 ## Design source (Figma) — THE REBRAND
 
 - File `9nqsOUuF2UrgukNYok3Oko` ("[i] Design Library — Method"),

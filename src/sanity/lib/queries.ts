@@ -95,6 +95,8 @@ export const planBySlugQuery = groq`
     dimensions[] { _key, label, value },
     moduleImage,
     "pdf": pdf.asset-> { url, size, originalFilename },
+    "model": model.asset-> { url, size },
+    northDeg,
     seo,
     "series": series-> {
       _id, name, "slug": slug.current, priceFrom, priceBand, priceNote, timelineMonths,

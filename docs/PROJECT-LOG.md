@@ -61,6 +61,70 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — Interactive floor plans: IFC → GLB pipeline + 3D plan viewer (prototype, Bryce)
+- Bryce's idea, approved for a sample test: a 3D model of each home
+  that turns on its vertical axis; "Floor plans" animates to a top
+  view, north up, and the rendered view becomes a floor plan.
+- Tool decision: real-time three.js (React Three Fiber) over
+  pre-rendered turntables or hosted viewers (Sketchfab, model-viewer,
+  Spline), because it is the only route that gives the plan-cut
+  transition and stays within our bundle rules (ssr:false client
+  gate, idle + in view, static twin). Turntable frames remain the
+  fallback if Method has renderings but no models.
+- Cleanup is scripted, not manual (Bryce is not a modeller):
+  `scripts/model/ifc-to-glb.py` reads IFC (the BIM exchange format
+  every Revit/ArchiCAD seat exports), keeps architecture by IfcType,
+  drops furniture/fixtures/services/spaces/site, keeps untyped
+  proxies only above 1.5 m (listed for allow/deny), re-materials by
+  category so source materials never reach the web, merges per
+  storey × category, converts to metres / Y-up / centred, stores
+  TrueNorth and storeys in glTF extras, then gltf-transform welds,
+  simplifies and meshopt-compresses. A geometry cache (--cache) makes
+  export tweaks instant. The IfcOpenShell multi-threaded iterator
+  was far slower than one-by-one create_shape on the Revit sample
+  (>20 min vs ~4) — opt-in flag until understood. The pipeline is
+  meant to run in GitHub Actions (model-pipeline.yml, next step):
+  Method uploads an IFC, the workflow attaches the GLB to the plan.
+- Viewer: one clipping plane shared by all materials (normal down)
+  descends from above the roof to storey elevation + 1.2 m; palette
+  lerps render → drawing (walls dark, floors light, roof fades);
+  camera flies to straight above with FOV 35° → 8° at 6× footprint
+  distance (≈ orthographic) and the model settles to north-up; storey
+  pills choose the cut level; auto-rotation pauses on pointer down
+  and is off under prefers-reduced-motion. Frame-loop mutation lives
+  in a plain class (ViewerState) because the React Compiler's
+  immutability lint forbids mutating hook values in component code.
+- Sample: BasicHouse (andrewisen/bim-whale-ifc-samples, Revit IFC2x3,
+  52.7 MB, 13 walls / 19 windows / 8 doors / roof, 71 furnishing
+  elements to strip). Result: 43 elements kept, 134 dropped (all
+  furniture, fixtures, services, openings, site; appliances and Model
+  Text caught by the proxy name filter), 552k raw triangles →
+  **127 KB GLB** after gltf-transform (weld + simplify 0.001 +
+  meshopt). Headless Chromium: 3D turntable renders, "Floor plan"
+  produces a true section cut (dark walls, glass lines, doors), no
+  console errors; the three.js chunk (≈985 KB uncompressed) loads
+  only on the viewer's page. Report: design/models/
+  basic-house.report.json; sample at /library/plan-viewer.
+- Lessons: (1) Revit walls also carry a 2D "Axis" representation and
+  IfcOpenShell fails the whole product on it — restrict conversion to
+  the Body context (`context-ids`), or every wall is lost silently.
+  (2) Revit exports its roof level as an IfcBuildingStorey; the
+  pipeline marks storeys `habitable` (has walls/doors/windows) and the
+  viewer offers only those. (3) The multi-threaded iterator was 5×
+  slower than one-by-one create_shape on this file. (4) The React
+  Compiler lint forbids mutating hook values even in frame callbacks;
+  keep three.js mutation in a plain class driven from useFrame.
+- Still to do for production: stencil caps on the section cut
+  (clipped wall tops currently show the inner faces, which read as
+  solid only because they share the wall colour), room labels from
+  IfcSpace as HTML overlays (also DOM text), dimension strings,
+  turntable poster rendered by the pipeline, the Actions workflow run
+  for real (model-pipeline.yml committed, needs SANITY_AUTH_TOKEN write
+  scope confirmed), and the Figma state in "Walk the plan" during
+  Bryce's design pass.
+- Ask of Method: one IFC per floor plan, architecture model only,
+  one storey per IfcBuildingStorey; a sample first.
+
 ### 2026-10-04 — Shared sections batch 3 (code): Testimonial, Logo row, Team grid, Map block, Form block
 - B1 is complete: every shared section in the Figma library now has
   a Sanity type, a component, a preview twin and a /library entry.

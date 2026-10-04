@@ -735,6 +735,9 @@ export interface Plan extends PlanCard {
   dimensions?: { _key: string; label?: string; value?: string }[];
   moduleImage?: SanityImageSource | null;
   pdf?: { url?: string; size?: number; originalFilename?: string } | null;
+  /* the 3D viewer's GLB (ifc-to-glb pipeline) and its north override */
+  model?: { url?: string; size?: number } | null;
+  northDeg?: number;
   seo?: SeoDoc | null;
   series?: {
     _id: string;

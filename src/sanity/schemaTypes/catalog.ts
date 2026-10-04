@@ -248,6 +248,15 @@ export const plan = defineType({
       description: "Optional: the plan with module seams marked (Walk the plan → Modules).",
     }),
     defineField({
+      name: "model",
+      title: "3D model (GLB)",
+      type: "file",
+      group: "files",
+      options: { accept: ".glb,model/gltf-binary" },
+      description: "The web model from the IFC pipeline (scripts/model/ifc-to-glb.py → gltf-transform). Under 2 MB. Powers the 3D / Floor plan viewer; the drawing and photo stay the fallback.",
+    }),
+    defineField({ name: "northDeg", title: "North rotation (°)", type: "number", group: "files", description: "Override for the model's stored TrueNorth: degrees to turn the model so plan view is north-up." }),
+    defineField({
       name: "pdf",
       title: "Plan PDF",
       type: "file",

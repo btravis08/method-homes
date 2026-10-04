@@ -4,6 +4,7 @@ import { PortableText } from "next-sanity";
 import { preload } from "react-dom";
 
 import { CardGrid, CtaBand, Gallery, HeroPage, SpecTable } from "@/components/home/sections";
+import { LazyPlanViewer } from "@/components/model/LazyPlanViewer";
 import { breadcrumbList, JsonLd, updatedLabel, webPage } from "@/components/seo/JsonLd";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlFor } from "@/sanity/lib/image";
@@ -162,6 +163,17 @@ export default async function PlanPage({ params }: { params: Promise<{ slug: str
         primary={{ label: "Get a range for this plan", url: "/get-started" }}
         secondary={p.pdf?.url ? { label: "Download the floor plan (PDF)", url: p.pdf.url } : series ? { label: `All ${series.name} plans`, url: `/series/${series.slug}` } : null}
       />
+
+      {p.model?.url && (
+        /* Walk the plan, 3D view: a progressive layer over the drawing
+           below — loads after idle + in view; the drawing is its poster */
+        <section className="w-full bg-surface px-4 pb-8xl text-ink md:px-7xl md:pb-10xl">
+          <div className="mx-auto flex w-full max-w-page flex-col gap-xl">
+            <LazyPlanViewer src={p.model.url} poster={img(p.heroImage ?? p.planImage, 1600)} alt={`${p.name} — 3D model`} northDeg={p.northDeg} />
+            <p className="text-body-sm text-ink-3">Drag to turn the home. “Floor plan” cuts the model at 1.2 m and turns it north-up.</p>
+          </div>
+        </section>
+      )}
 
       {drawing && (
         <section className="w-full bg-surface px-4 pb-8xl text-ink md:px-7xl md:pb-10xl">
