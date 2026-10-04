@@ -27,7 +27,7 @@ feature.
 | 2 | **Site Settings NAP**: street address, city, state, ZIP, phone, email — exactly as written on Google Business Profile | Organization/LocalBusiness schema, footer, llms-full.txt | Studio → Site settings |
 | 3 | **Official profiles (sameAs)**: Google Business Profile URL, LinkedIn, Instagram, Houzz, Facebook, YouTube, Wikidata if any | Entity resolution (Organization.sameAs) | Studio → Site settings → Official profiles (fallback: designops.config.json aeo.organization.sameAs) |
 | 4 | **Founding year**: 2007 or 2008? Site copy and keyMessages say 2007; the old site's SEO plan recorded 2008 | Organization.foundingDate (currently "2007") | designops.config.json aeo.organization.foundingDate + SEO-PLAN.md |
-| 5 | **Series facts**: beds / baths / sq ft / module count / starting price (or price band) per series (Elemental, Option, Cabin, M, Paradigm, Method One) | Series pages' {facts} placeholders, Product/House schema per series, Pricing page, comparison pages | Sanity (series content, when the series doc type lands) |
+| 5 | **Series facts**: beds / baths / sq ft / module count / starting price (or price band) / timeline / specs / finish levels / FAQ / photos per series (Elemental, Option, Cabin, M, Paradigm, Method One, Annata) + each floor plan (beds, baths, sq ft, modules, dimensions, drawing, PDF) | `/series/<slug>` and `/series/<slug>/<plan>` pages (code shipped 2026-10-04; they 404 until the documents exist), Product/Offer schema, Pricing page, comparison pages | Studio → Series & plans |
 | 6 | **Project case-study facts** for the 8–12 flagship projects: series, modules, contract-to-keys months, cost band (with client consent), town coordinates, brief, approach, a named testimonial with rating and date | Case studies + House/Review schema + AggregateRating (needs ≥3 ratings) | Studio → Projects → new fields |
 | 7 | **Search Console access**: service-account JSON + property URL as Actions secrets `GSC_SERVICE_ACCOUNT_JSON`, `GSC_SITE_URL` | "Questions people already ask" panel → FAQ brief | GitHub → repo Secrets |
 | 8 | **Press list**: publications, dates, URLs of existing coverage; press contact | Press page (Figma 37513:8922), citations | Studio (press doc type to add) |
@@ -60,6 +60,38 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 ---
 
 ## 3. Decisions (newest first)
+
+### 2026-10-04 — Series routes + Hero / Page, Hero / Series, Sub-nav, Spec table (code)
+- `/series/<slug>` and `/series/<slug>/<plan>` ship, built from the
+  `series`/`plan` documents (not the page builder). Sections render
+  only when the document has the content, and the Sub-nav lists only
+  the anchors that exist — it never links to nothing.
+- Structured data decided: a series is a Product (brand/manufacturer
+  = the Organization, category "Predesigned prefab home", specs →
+  additionalProperty, plans → hasVariant) with an AggregateOffer ONLY
+  when an exact `priceFrom` exists (a price band renders as text and
+  emits no price — never fabricate a number). A plan is a Product
+  `isVariantOf` its series with an Offer when it or the series has a
+  from-price, and its PDF as `subjectOf` DigitalDocument. Plans list
+  as an ItemList on the series page; series FAQ → FAQPage.
+- Every section now has an optional `anchor` id (rendered on the
+  wrapper) so editors can target Sub-nav links on CMS pages; on CMS
+  pages Hero / Page demotes its heading to H2 (the page keeps its one
+  sr-only H1) and gets the breadcrumb from the route.
+- Token: `--text-body-xl` (Figma Body XLarge 20/30; 18→20 fluid) for
+  the lede under page/series H1s. Known accepted off-token readings:
+  the library button's 18px horizontal padding and the ghost button's
+  10% ink surface (both pre-existing primitives).
+- Redirects: `/series/*` legacy URLs flipped live (125 live · 13
+  pending). Sitemap/llms.txt/llms-full.txt extended with series +
+  plans. Presentation locations for series/plan documents added.
+- Verified on the built server: four sections 0 off-token except the
+  button primitives above, no mobile overflow, Sub-nav sticks and
+  the active anchor follows the scroll (click → `#features` active,
+  hash updated), unknown series/plan slugs 404 cleanly.
+- Content now blocking the pages: the seven series documents and
+  their plans (Method facts: beds/baths/sqft/modules, from-price or
+  band, timeline, specs, finish levels, FAQ, photos, plan PDFs).
 
 ### 2026-10-04 — Shared sections batch 2 shipped (code)
 - Card grid (2/3/4 columns, linked cards), Process timeline (ordered

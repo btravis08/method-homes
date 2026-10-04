@@ -53,6 +53,8 @@ interface SectionBase {
   /* vertical spacing around the section: 0 / 32 / 48 / 96 */
   paddingTop?: SectionPad;
   paddingBottom?: SectionPad;
+  /* in-page anchor id (Sub-nav target), set on the wrapper */
+  anchor?: string;
 }
 
 export interface SectionHero extends SectionBase {
@@ -477,6 +479,42 @@ export interface SectionInterstitial extends SectionBase {
   floats?: Array<SanityImageSource & { _key: string; alt?: string }>;
 }
 
+export interface SectionHeroPage extends SectionBase {
+  _type: "sectionHeroPage";
+  headline?: string;
+  lede?: string;
+  ctaPrimary?: SectionLink | null;
+  ctaSecondary?: SectionLink | null;
+}
+
+export interface SubNavAnchor {
+  _key: string;
+  label?: string;
+  anchor?: string;
+}
+
+export interface SectionSubNav extends SectionBase {
+  _type: "sectionSubNav";
+  contextName?: string;
+  anchors?: SubNavAnchor[];
+  cta?: SectionLink | null;
+}
+
+export interface SpecRow {
+  _key: string;
+  label?: string;
+  value?: string;
+}
+
+export interface SectionSpecTable extends SectionBase {
+  _type: "sectionSpecTable";
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  link?: SectionLink | null;
+  rows?: SpecRow[];
+}
+
 export interface ExperimentVariant {
   _key: string;
   label?: string;
@@ -512,7 +550,92 @@ export type PageSection =
   | SectionCompare
   | SectionLinkList
   | SectionInterstitial
+  | SectionHeroPage
+  | SectionSubNav
+  | SectionSpecTable
   | SectionExperiment;
+
+/* ---------- predesigned catalog (series + plans) ---------- */
+
+export interface Range {
+  min?: number;
+  max?: number;
+}
+
+export interface FinishLevel {
+  _key: string;
+  name?: string;
+  tagline?: string;
+  from?: number;
+  numbers?: { _key?: string; value?: string; label?: string }[];
+  includes?: string[];
+  optional?: string[];
+}
+
+export interface PlanCard {
+  _id: string;
+  name: string;
+  slug: string;
+  lede?: string;
+  beds?: number;
+  baths?: number;
+  sqft?: number;
+  modules?: number;
+  stories?: number;
+  priceFrom?: number;
+  heroImage?: (SanityImageSource & { alt?: string }) | null;
+  planImage?: (SanityImageSource & { alt?: string }) | null;
+}
+
+export interface Series {
+  _id: string;
+  _updatedAt?: string;
+  name: string;
+  slug: string;
+  tagline?: string;
+  lede?: string;
+  heroImage?: (SanityImageSource & { alt?: string }) | null;
+  heroLqip?: string;
+  body?: PortableTextBlock[];
+  gallery?: Array<SanityImageSource & { _key: string; alt?: string; caption?: string; aspect?: number }>;
+  architect?: string;
+  beds?: Range | null;
+  baths?: Range | null;
+  sqft?: Range | null;
+  modules?: Range | null;
+  storiesMax?: number;
+  priceFrom?: number;
+  priceBand?: string;
+  priceNote?: string;
+  timelineMonths?: Range | null;
+  specs?: SpecRow[];
+  finishLevels?: FinishLevel[];
+  faq?: FaqItem[];
+  sources?: SourceRef[];
+  seo?: SeoDoc | null;
+  plans?: PlanCard[];
+}
+
+export interface Plan extends PlanCard {
+  _updatedAt?: string;
+  body?: PortableTextBlock[];
+  photos?: Array<SanityImageSource & { _key: string; alt?: string; caption?: string; aspect?: number }>;
+  dimensions?: { _key: string; label?: string; value?: string }[];
+  moduleImage?: SanityImageSource | null;
+  pdf?: { url?: string; size?: number; originalFilename?: string } | null;
+  seo?: SeoDoc | null;
+  series?: {
+    _id: string;
+    name: string;
+    slug: string;
+    priceFrom?: number;
+    priceBand?: string;
+    priceNote?: string;
+    timelineMonths?: Range | null;
+    /* sibling plans in the same series, for the "other plans" row */
+    plans?: PlanCard[];
+  } | null;
+}
 
 export interface Page {
   _id: string;

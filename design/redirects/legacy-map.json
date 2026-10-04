@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-10-03T23:04:01.649Z",
+  "generatedAt": "2026-10-04T00:31:18.484Z",
   "source": "design/method-content/pages.json",
   "counts": {
     "keep": 191,
     "redirect": 138,
     "gone": 2,
-    "redirectLive": 118,
-    "redirectPending": 20,
+    "redirectLive": 125,
+    "redirectPending": 13,
     "unmapped": 0
   },
   "entries": [
@@ -1687,43 +1687,43 @@
       "from": "/predesigned-series/annata",
       "action": "redirect",
       "to": "/series/annata",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/cabin",
       "action": "redirect",
       "to": "/series/cabin",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/elemental",
       "action": "redirect",
       "to": "/series/elemental",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/m",
       "action": "redirect",
       "to": "/series/m",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/method-one",
       "action": "redirect",
       "to": "/series/method-one",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/option",
       "action": "redirect",
       "to": "/series/option",
-      "live": false
+      "live": true
     },
     {
       "from": "/predesigned-series/paradigm",
       "action": "redirect",
       "to": "/series/paradigm",
-      "live": false
+      "live": true
     },
     {
       "from": "/press",

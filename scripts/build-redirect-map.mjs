@@ -39,7 +39,7 @@ const old = [...new Set(pages.map((p) => pathOf(p.url)))].sort();
 
 /* routes that exist on the rebuilt site today; everything else a
    redirect points at is `live: false` until its route ships */
-const LIVE_PREFIXES = ["/projects/", "/blog"];
+const LIVE_PREFIXES = ["/projects/", "/blog", "/series/"];
 const LIVE_EXACT = new Set(["/", "/about", "/commercial", "/pricing", "/faq", "/sustainability", "/get-started", "/projects", "/blog", "/search", "/custom-homes", "/predesigned", "/architects"]);
 const isLive = (to) => LIVE_EXACT.has(to) || LIVE_PREFIXES.some((p) => to.startsWith(p));
 

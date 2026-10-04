@@ -12,17 +12,20 @@ import {
   FullWidth,
   Gallery,
   Hero,
+  HeroPage,
   InfoSlider,
   Interstitial,
   LinkList,
   ProcessTimeline,
   ProductSlider,
   Reviews,
+  SpecTable,
   StatsBar,
   TechSpecs,
   TextIntro,
   ThreeDViewer,
 } from "@/components/home/sections";
+import { SubNav } from "@/components/home/SubNav";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import type { LookProductData } from "@/components/home/MediaBlock";
 import type { ProductCardData } from "@/components/home/ProductCard";
@@ -203,7 +206,14 @@ const PAD_BOTTOM = {
   l: "pb-section-l",
 } as const;
 
-export function SectionRenderer({ sections }: { sections: PageSection[] }) {
+export function SectionRenderer({
+  sections,
+  crumbs,
+}: {
+  sections: PageSection[];
+  /* the page's breadcrumb trail (without Home), for a Hero / Page */
+  crumbs?: { name: string; path?: string }[];
+}) {
   return (
     <>
       {sections.map((section, sectionIndex) => {
@@ -428,6 +438,20 @@ export function SectionRenderer({ sections }: { sections: PageSection[] }) {
                 floats={section.floats?.map((f) => ({ src: img(f, 600) ?? "", alt: f.alt ?? "" }))}
               />
             );
+          case "sectionHeroPage":
+            /* CMS pages already carry an sr-only H1 (their title); the
+               hero's heading is the visible H2 twin */
+            return (
+              <HeroPage key={section._key} mode={section.colorMode} as="h2" crumbs={crumbs ?? [{ name: section.headline ?? "" }]} headline={section.headline} lede={section.lede} primary={section.ctaPrimary} secondary={section.ctaSecondary} />
+            );
+          case "sectionSubNav":
+            return (
+              <SubNav key={section._key} mode={section.colorMode} contextName={section.contextName} anchors={section.anchors} cta={section.cta} />
+            );
+          case "sectionSpecTable":
+            return (
+              <SpecTable key={section._key} mode={section.colorMode} eyebrow={section.eyebrow} headline={section.headline} body={section.body} link={section.link} rows={section.rows} />
+            );
           case "sectionRichText":
             return (
               <section
@@ -489,9 +513,11 @@ export function SectionRenderer({ sections }: { sections: PageSection[] }) {
            The first section stays boundary-free: it hydrates first. */
         const wrapped =
           sectionIndex > 0 ? <Suspense fallback={null}>{node}</Suspense> : node;
+        /* an Anchor id (Sub-nav target) needs a wrapper to live on */
+        const anchor = section.anchor?.trim() || undefined;
         if (!pt && !pb)
-          return cv ? (
-            <div key={section._key} className={`w-full ${cv}`}>
+          return cv || anchor ? (
+            <div key={section._key} id={anchor} className={`w-full ${cv} ${anchor ? "scroll-mt-(--anchor-offset)" : ""}`}>
               {wrapped}
             </div>
           ) : (
@@ -507,8 +533,9 @@ export function SectionRenderer({ sections }: { sections: PageSection[] }) {
         return (
           <div
             key={section._key}
+            id={anchor}
             data-mode={shellMode}
-            className={`w-full bg-surface ${pt} ${pb} ${cv}`}
+            className={`w-full bg-surface ${pt} ${pb} ${cv} ${anchor ? "scroll-mt-(--anchor-offset)" : ""}`}
           >
             {wrapped}
           </div>

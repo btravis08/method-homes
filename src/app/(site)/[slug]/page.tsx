@@ -134,7 +134,7 @@ export default async function CmsPage({
             not the page's name — answer engines want exactly one H1 */}
         <h1 className="sr-only">{page.title}</h1>
         {page.showFooterTagline && <FooterTagline />}
-        <SectionRenderer sections={page.sections} />
+        <SectionRenderer sections={page.sections} crumbs={[{ name: page.title, path }]} />
         {/* visible freshness: the date an engine can read off the page
             (its twin is WebPage.dateModified above) */}
         {updated && (

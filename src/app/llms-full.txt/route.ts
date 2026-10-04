@@ -24,7 +24,7 @@ const query = groq`{
       title, "slug": slug.current, _updatedAt,
       "description": coalesce(seo.description, ""),
       sections[]{
-        _type, eyebrow, headline, title, intro, description, items, body, text, subline, headers,
+        _type, eyebrow, headline, title, intro, lede, description, items, body, text, subline, headers,
         cards[]{ title, body, meta }, panels[]{ title, eyebrow, body },
         rows[]{ label, value, cells }, stats[]{ value, label },
         steps[]{ title, body, duration }, links[]{ title, description },
@@ -42,7 +42,19 @@ const query = groq`{
       title, "slug": slug.current, excerpt, publishedAt, _updatedAt, body,
       "author": author->name, "reviewedBy": reviewedBy->name,
       "categories": categories[]->title
+    },
+  "series": *[_type == "series" && defined(slug.current)] | order(order asc, name asc){
+    name, "slug": slug.current, tagline, lede, _updatedAt, architect,
+    beds, baths, sqft, modules, storiesMax, priceFrom, priceBand, priceNote, timelineMonths,
+    specs[]{ label, value },
+    finishLevels[]{ name, tagline, from, includes },
+    faq[]{ question, answer },
+    body,
+    "plans": *[_type == "plan" && series._ref == ^._id && defined(slug.current)] | order(sqft asc){
+      name, "slug": slug.current, lede, beds, baths, sqft, modules, stories, priceFrom,
+      dimensions[]{ label, value }, "pdf": pdf.asset->url
     }
+  }
 }`;
 
 type Block = { _type?: string; children?: { text?: string }[]; style?: string };
@@ -52,6 +64,7 @@ type Section = {
   headline?: string;
   title?: string;
   intro?: string;
+  lede?: string;
   description?: string;
   items?: unknown;
   body?: Block[];
@@ -82,7 +95,29 @@ interface Data {
     title: string; slug: string; excerpt?: string; publishedAt?: string; _updatedAt?: string; body?: Block[];
     author?: string; reviewedBy?: string; categories?: string[];
   }[];
+  series: {
+    name: string; slug: string; tagline?: string; lede?: string; _updatedAt?: string; architect?: string;
+    beds?: Rng; baths?: Rng; sqft?: Rng; modules?: Rng; storiesMax?: number;
+    priceFrom?: number; priceBand?: string; priceNote?: string; timelineMonths?: Rng;
+    specs?: { label?: string; value?: string }[];
+    finishLevels?: { name?: string; tagline?: string; from?: number; includes?: string[] }[];
+    faq?: { question?: string; answer?: string }[];
+    body?: Block[];
+    plans: {
+      name: string; slug: string; lede?: string; beds?: number; baths?: number; sqft?: number; modules?: number;
+      stories?: number; priceFrom?: number; dimensions?: { label?: string; value?: string }[]; pdf?: string;
+    }[];
+  }[];
 }
+type Rng = { min?: number; max?: number } | null;
+
+const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
+const rng = (r?: Rng, unit = "") => {
+  if (!r || (r.min == null && r.max == null)) return "";
+  const f = (n: number) => n.toLocaleString("en-US");
+  const v = r.min != null && r.max != null && r.min !== r.max ? `${f(r.min)}–${f(r.max)}` : f((r.min ?? r.max)!);
+  return unit ? `${v} ${unit}` : v;
+};
 
 const clean = (s?: string | null) => (s ?? "").replace(/\s+/g, " ").trim();
 const month = (iso?: string) => (iso ? new Date(iso).toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" }) : "");
@@ -114,7 +149,7 @@ function sectionText(s: Section): string[] {
   const head = clean(s.headline || s.title);
   if (head) out.push(`## ${head}`);
   else if (s.eyebrow) out.push(`## ${clean(s.eyebrow)}`);
-  for (const p of [s.intro, s.description]) if (clean(p)) out.push(clean(p));
+  for (const p of [s.lede, s.intro, s.description]) if (clean(p)) out.push(clean(p));
   if (Array.isArray(s.items)) {
     for (const it of s.items as { question?: string; answer?: string; title?: string; body?: string }[]) {
       if (it?.question && it.answer) out.push(`Q: ${clean(it.question)}\nA: ${clean(it.answer)}`);
@@ -141,7 +176,7 @@ function sectionText(s: Section): string[] {
 }
 
 export async function GET() {
-  const data = await sanityFetch<Data>(query, {}, { settings: null, pages: [], projects: [], posts: [] });
+  const data = await sanityFetch<Data>(query, {}, { settings: null, pages: [], projects: [], posts: [], series: [] });
   const name = data.settings?.companyName || designops.aeo.brand;
   const org = designops.aeo.organization;
   const s = data.settings;
@@ -176,6 +211,48 @@ export async function GET() {
       }
       const body = portable(p.body);
       if (body) out.push("", body);
+    }
+  }
+
+  if (data.series.length) {
+    out.push("", "# Predesigned series", "", `Index: ${BASE}/predesigned`);
+    for (const s of data.series) {
+      out.push("", `## ${s.name} series`, `URL: ${BASE}/series/${s.slug}${s._updatedAt ? ` · Updated ${month(s._updatedAt)}` : ""}`);
+      if (s.tagline) out.push(clean(s.tagline));
+      if (s.lede) out.push(clean(s.lede));
+      const facts = [
+        rng(s.beds) && `Bedrooms: ${rng(s.beds)}`,
+        rng(s.baths) && `Bathrooms: ${rng(s.baths)}`,
+        rng(s.sqft) && `Size: ${rng(s.sqft, "sq ft")}`,
+        rng(s.modules) && `Modules: ${rng(s.modules)}`,
+        s.storiesMax && `Stories: up to ${s.storiesMax}`,
+        s.priceFrom ? `Starting price: ${usd(s.priceFrom)}` : s.priceBand && `Price band: ${s.priceBand}`,
+        s.priceNote && `Price includes: ${clean(s.priceNote)}`,
+        rng(s.timelineMonths) && `Contract to keys: ${rng(s.timelineMonths, "months")}`,
+        s.architect && `Design: ${s.architect}`,
+        s.plans.length && `Floor plans: ${s.plans.length}`,
+      ].filter(Boolean) as string[];
+      if (facts.length) out.push(facts.map((f) => `- ${f}`).join("\n"));
+      for (const r of s.specs ?? []) if (r.label) out.push(`- ${clean(r.label)}: ${clean(r.value)}`);
+      for (const f of s.finishLevels ?? []) if (f.name) out.push(`- Finish level ${clean(f.name)}${f.from ? ` from ${usd(f.from)}` : ""}${f.tagline ? ` — ${clean(f.tagline)}` : ""}${f.includes?.length ? `. Includes: ${f.includes.map(clean).join("; ")}` : ""}`);
+      const body = portable(s.body, 2500);
+      if (body) out.push(body);
+      for (const q of s.faq ?? []) if (q.question && q.answer) out.push(`Q: ${clean(q.question)}\nA: ${clean(q.answer)}`);
+      for (const p of s.plans) {
+        out.push("", `### ${p.name}`, `URL: ${BASE}/series/${s.slug}/${p.slug}`);
+        if (p.lede) out.push(clean(p.lede));
+        const pf = [
+          p.beds != null && `Bedrooms: ${p.beds}`,
+          p.baths != null && `Bathrooms: ${p.baths}`,
+          p.sqft && `Size: ${p.sqft.toLocaleString()} sq ft`,
+          p.modules && `Modules: ${p.modules}`,
+          p.stories && `Stories: ${p.stories}`,
+          p.priceFrom && `Starting price: ${usd(p.priceFrom)}`,
+          p.pdf && `Floor plan PDF: ${p.pdf}`,
+        ].filter(Boolean) as string[];
+        if (pf.length) out.push(pf.map((f) => `- ${f}`).join("\n"));
+        for (const d of p.dimensions ?? []) if (d.label) out.push(`- ${clean(d.label)}: ${clean(d.value)}`);
+      }
     }
   }
 

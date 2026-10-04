@@ -74,6 +74,15 @@ const paddingField = (name: string, title: string) =>
 const paddingFields = () => [
   paddingField("paddingTop", "Padding top"),
   paddingField("paddingBottom", "Padding bottom"),
+  /* the id a Sub-nav anchor (and any in-page link) points at — the
+     renderer puts it on the section's wrapper */
+  defineField({
+    name: "anchor",
+    title: "Anchor id",
+    type: "string",
+    description: "Optional. Lowercase, dashes only (e.g. “plans”). A Sub-nav link “#plans” jumps here.",
+    validation: (rule) => rule.regex(/^[a-z0-9-]{1,40}$/, { name: "lowercase letters, numbers, dashes" }),
+  }),
 ];
 
 const colorMode = (initialValue: "light" | "dark") =>
@@ -1177,6 +1186,125 @@ export const sectionInterstitial = defineType({
   },
 });
 
+/* Hero / Page (37505:3516): breadcrumb + H1 + lede + actions. The H1
+   and the lede are the page's metadata pair (title / description
+   fallback); the breadcrumb is the route's BreadcrumbList made
+   visible. One per page, first in the stack. */
+export const sectionHeroPage = defineType({
+  name: "sectionHeroPage",
+  icon: icons["document-text"],
+  title: "Hero / Page",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "headline", title: "Heading (H1)", type: "string", description: "≤60 characters: the page's name as a search result would show it.", initialValue: "Page heading that names the thing" }),
+    defineField({
+      name: "lede",
+      title: "Lede",
+      type: "text",
+      rows: 3,
+      description: "One or two sentences (≤160 characters) that answer the heading directly — also the meta description fallback.",
+      initialValue: "One or two sentences that answer the heading directly: who this is for, what it is, and the number or place that makes it concrete.",
+    }),
+    linkField("ctaPrimary", "Primary button", "Get started", "/get-started"),
+    linkField("ctaSecondary", "Secondary link", "See the plans", "/predesigned"),
+  ],
+  preview: {
+    select: { title: "headline" },
+    prepare: ({ title }) => ({ title: title ?? "Hero / Page", subtitle: "Hero / Page" }),
+  },
+});
+
+/* Sub-nav (37525:15383): a sticky strip under the Nav with the page's
+   name, in-page anchors and a short primary button. Anchors are real
+   links (crawlable, keyboard-reachable); the active one follows the
+   scroll. Place it right after the hero; point each link at a
+   section's Anchor id. */
+export const sectionSubNav = defineType({
+  name: "sectionSubNav",
+  icon: icons["hash"],
+  title: "Sub-nav",
+  type: "object",
+  fields: [
+    defineField({ name: "contextName", title: "Context name", type: "string", description: "The page or series name shown at the left.", initialValue: "Page name" }),
+    defineField({
+      name: "anchors",
+      title: "Anchors",
+      type: "array",
+      validation: (rule) => rule.min(2).max(7),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "subNavAnchor",
+          options: { columns: 2 },
+          fields: [
+            defineField({ name: "label", title: "Label", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "anchor", title: "Anchor id", type: "string", description: "Matches a section's Anchor id (without #).", validation: (rule) => rule.required().regex(/^[a-z0-9-]{1,40}$/, { name: "lowercase letters, numbers, dashes" }) }),
+          ],
+          preview: { select: { title: "label", subtitle: "anchor" } },
+        }),
+      ],
+      initialValue: () =>
+        [["Overview", "overview"], ["Plans", "plans"], ["Features", "features"], ["Gallery", "gallery"], ["FAQ", "faq"]].map(([label, anchor]) => ({ _type: "subNavAnchor", _key: key(), label, anchor })),
+    }),
+    linkField("cta", "Button", "Get a range", "/get-started"),
+  ],
+  preview: {
+    select: { title: "contextName", anchors: "anchors" },
+    prepare: ({ title, anchors }) => ({ title: title ?? "Sub-nav", subtitle: `Sub-nav · ${(anchors as unknown[] | undefined)?.length ?? 0} anchors` }),
+  },
+});
+
+/* Spec table (37507:3678): heading column + label/value rows. Rows
+   are the facts an engine lifts as Product/House additionalProperty;
+   keep values short and literal (a number and its unit). */
+export const sectionSpecTable = defineType({
+  name: "sectionSpecTable",
+  icon: icons["list"],
+  title: "Spec table",
+  type: "object",
+  fields: [
+    ...paddingFields(),
+    colorMode("light"),
+    defineField({ name: "eyebrow", type: "string", initialValue: "Specifications" }),
+    defineField({ name: "headline", title: "Heading", type: "string", initialValue: "High-level specs" }),
+    defineField({ name: "body", title: "Body", type: "text", rows: 3, initialValue: "What every home in the series is built to — structure, envelope, systems and the certifications they carry. Site-specific items are confirmed in your range." }),
+    linkField("link", "Link", "Download the spec sheet (PDF)", "/"),
+    defineField({
+      name: "rows",
+      title: "Rows",
+      type: "array",
+      validation: (rule) => rule.min(1),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "specRow",
+          options: { columns: 2 },
+          fields: [
+            defineField({ name: "label", title: "Label", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "value", title: "Value", type: "text", rows: 2, validation: (rule) => rule.required() }),
+          ],
+          preview: { select: { title: "label", subtitle: "value" } },
+        }),
+      ],
+      initialValue: () =>
+        [
+          ["Structure", "Steel-reinforced wood frame modules, 2×6 exterior walls"],
+          ["Envelope", "Continuous exterior insulation; triple-pane windows"],
+          ["Systems", "All-electric; heat pump HVAC; ERV ventilation"],
+          ["Roof", "Standing-seam metal, solar-ready"],
+          ["Certifications", "ENERGY STAR; Built Green 4-Star eligible"],
+          ["Warranty", "10-year structural"],
+        ].map(([label, value]) => ({ _type: "specRow", _key: key(), label, value })),
+    }),
+  ],
+  preview: {
+    select: { title: "headline", rows: "rows" },
+    prepare: ({ title, rows }) => ({ title: title ?? "Spec table", subtitle: `Spec table · ${(rows as unknown[] | undefined)?.length ?? 0} rows` }),
+  },
+});
+
 /* FAQ — question/answer accordion (Figma "FAQ" 37507:3841). Every
    item is emitted as FAQPage/Question/Answer JSON-LD by the page route,
    so the questions buyers actually type become quotable answers; the
@@ -1320,6 +1448,9 @@ export const sectionExperiment = defineType({
                 defineArrayMember({ type: "sectionCompare" }),
                 defineArrayMember({ type: "sectionLinkList" }),
                 defineArrayMember({ type: "sectionInterstitial" }),
+                defineArrayMember({ type: "sectionHeroPage" }),
+                defineArrayMember({ type: "sectionSubNav" }),
+                defineArrayMember({ type: "sectionSpecTable" }),
               ],
             }),
           ],
@@ -1391,6 +1522,9 @@ export const sectionTypes = [
   sectionCompare,
   sectionLinkList,
   sectionInterstitial,
+  sectionHeroPage,
+  sectionSubNav,
+  sectionSpecTable,
   sectionExperiment,
   abResult,
 ];

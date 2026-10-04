@@ -1636,3 +1636,208 @@ export function ThreeDViewer({
     </section>
   );
 }
+
+/* ---------- Breadcrumb (visible twin of BreadcrumbList) ---------- */
+
+export interface CrumbData {
+  name: string;
+  path?: string;
+}
+
+/* Home / Section / Page — Body Small, tertiary ink, the current page
+   unlinked. The route emits the matching BreadcrumbList JSON-LD. */
+export function Breadcrumb({ crumbs, className = "" }: { crumbs: CrumbData[]; className?: string }) {
+  const all = [{ name: "Home", path: "/" }, ...crumbs];
+  return (
+    <nav aria-label="Breadcrumb" className={className}>
+      <ol className="flex flex-wrap items-center gap-x-md gap-y-xs text-body-sm text-ink-3">
+        {all.map((c, i) => {
+          const last = i === all.length - 1;
+          return (
+            <li key={`${c.path ?? c.name}-${i}`} className="flex items-center gap-md">
+              {c.path && !last ? (
+                <ArrowLink href={c.path} className="transition-colors hover:text-ink">{c.name}</ArrowLink>
+              ) : (
+                <span aria-current={last ? "page" : undefined} className={last ? "text-ink-2" : undefined}>{c.name}</span>
+              )}
+              {!last && <span aria-hidden>/</span>}
+            </li>
+          );
+        })}
+      </ol>
+    </nav>
+  );
+}
+
+/* ---------- Hero / Page (37505:3516) ---------- */
+
+/* Breadcrumb + H1 (Headline Large, 960 max) + lede (Body XLarge,
+   720 max) + primary button and underline link. The H1 and lede are
+   the page's title/description pair; no image, so the LCP is text. */
+export function HeroPage({
+  mode = "light",
+  crumbs = [{ name: "Page name" }],
+  headline = "Page heading that names the thing",
+  lede = "One or two sentences that answer the heading directly: who this is for, what it is, and the number or place that makes it concrete.",
+  primary = { label: "Get started", url: "/get-started" },
+  secondary = { label: "See the plans", url: "/predesigned" },
+  as = "h1",
+}: {
+  mode?: Mode;
+  crumbs?: CrumbData[];
+  headline?: string;
+  lede?: string;
+  primary?: LinkData | null;
+  secondary?: LinkData | null;
+  /* a CMS page already renders an sr-only H1 from its title; the
+     section then demotes to a visible H2 so the page keeps one H1 */
+  as?: "h1" | "h2";
+}) {
+  const Heading = as;
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-9xl`}>
+      <div className={`${CONTAINER} flex flex-col gap-3xl`}>
+        <Breadcrumb crumbs={crumbs} />
+        <Heading className="max-w-[60rem] font-display text-headline-lg text-ink">{headline}</Heading>
+        {lede && <p className="max-w-[45rem] text-body-xl text-ink-2">{lede}</p>}
+        {(primary?.label || secondary?.label) && (
+          <div className="flex flex-wrap items-center gap-lg pt-md">
+            {primary?.label && <CtaButton label={primary.label} href={primary.url || "/get-started"} />}
+            {secondary?.label && (
+              <ArrowLink href={secondary.url || "/"} className="group relative inline-flex h-12 items-center text-body-sm font-medium text-ink">
+                {secondary.label}
+                <span className="absolute inset-x-0 bottom-3 h-px origin-right bg-ink transition-transform duration-300 group-hover:scale-x-0" />
+              </ArrowLink>
+            )}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Hero / Series (37525:15367) ---------- */
+
+/* Breadcrumb, the series wordmark as the H1 (Display XL, centered),
+   one full-width photograph (the LCP: eager, high priority, never
+   faded), then the facts column: the one-sentence answer, the meta
+   line (from price · size range · plan count · months to set day) and
+   two buttons. Every number is DOM text with its footnote marker. */
+export function HeroSeries({
+  mode = "light",
+  crumbs = [{ name: "Predesigned Series", path: "/predesigned" }, { name: "Annata" }],
+  name = "Annata",
+  sentence = "A two-story series for narrow and sloped lots, built from two to four modules and finished on your land in about ten months.",
+  meta = "From $585k¹ · 1,590–2,250 sq ft · 2 floor plans · 9–11 months to set day²",
+  image,
+  alt,
+  lqip,
+  primary = { label: "Get a range for your site", url: "/get-started" },
+  secondary = { label: "Explore the plans", url: "#plans" },
+}: {
+  mode?: Mode;
+  crumbs?: CrumbData[];
+  name?: string;
+  sentence?: string;
+  meta?: string;
+  image?: string;
+  alt?: string;
+  lqip?: string;
+  primary?: LinkData | null;
+  secondary?: LinkData | null;
+}) {
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-9xl`}>
+      <div className={`${CONTAINER} flex flex-col items-center gap-6xl`}>
+        <Breadcrumb crumbs={crumbs} className="self-start" />
+        <h1 className="w-full text-center font-display text-display-2xl text-ink">{name}</h1>
+        <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md bg-wash md:h-[40rem] md:aspect-auto">
+          {image ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={image}
+              alt={alt ?? `${name} series home`}
+              fetchPriority="high"
+              decoding="async"
+              className="absolute inset-0 size-full object-cover"
+              style={lqip ? { backgroundImage: `url(${lqip})`, backgroundSize: "cover" } : undefined}
+            />
+          ) : (
+            <span className="label absolute inset-0 flex items-center justify-center text-ink-3">{alt ?? `${name} series photograph`}</span>
+          )}
+        </div>
+        <div className="flex w-full max-w-[55rem] flex-col items-center gap-3xl text-center">
+          <p className="text-body-xl text-ink">{sentence}</p>
+          {meta && <p className="text-body-md text-ink-2">{meta}</p>}
+          <div className="flex flex-wrap items-center justify-center gap-lg pt-md">
+            {primary?.label && <CtaButton label={primary.label} href={primary.url || "/get-started"} />}
+            {secondary?.label && <CtaButton label={secondary.label} href={secondary.url || "#plans"} variant="secondary" />}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Spec table (37507:3678) ---------- */
+
+export interface SpecRowData {
+  _key?: string;
+  label?: string;
+  value?: string;
+}
+
+const defaultSpecTableRows: SpecRowData[] = [
+  { label: "Structure", value: "Steel-reinforced wood frame modules, 2×6 exterior walls" },
+  { label: "Envelope", value: "Continuous exterior insulation; triple-pane windows" },
+  { label: "Systems", value: "All-electric; heat pump HVAC; ERV ventilation" },
+  { label: "Roof", value: "Standing-seam metal, solar-ready" },
+  { label: "Certifications", value: "ENERGY STAR; Built Green 4-Star eligible" },
+  { label: "Warranty", value: "10-year structural" },
+];
+
+/* Heading column (eyebrow, H2, body, link) beside label/value rows.
+   A description list: each row is a term + definition, the shape an
+   engine lifts as Product/House additionalProperty. */
+export function SpecTable({
+  mode = "light",
+  eyebrow = "Specifications",
+  headline = "High-level specs",
+  body = "What every home in the series is built to — structure, envelope, systems and the certifications they carry. Site-specific items are confirmed in your range.",
+  link = { label: "Download the spec sheet (PDF)", url: "/" },
+  rows = defaultSpecTableRows,
+  as = "h2",
+}: {
+  mode?: Mode;
+  eyebrow?: string;
+  headline?: string;
+  body?: string;
+  link?: LinkData | null;
+  rows?: SpecRowData[];
+  as?: "h2" | "h3";
+}) {
+  const Heading = as;
+  const list = rows.filter((r) => r.label && r.value);
+  return (
+    <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-8xl md:py-10xl`}>
+      <SectionReveal className={`${CONTAINER} grid grid-cols-1 gap-6xl md:grid-cols-[minmax(0,25rem)_1fr] md:gap-9xl`}>
+        <div className="flex flex-col gap-xl">
+          {eyebrow && <p className="label text-ink-3">{eyebrow}</p>}
+          <RevealText>
+            <Heading className="font-display text-headline-md text-ink">{headline}</Heading>
+          </RevealText>
+          {body && <p className="text-body-md text-ink-2">{body}</p>}
+          {link?.label && link.url && <UnderlineLink label={link.label} href={link.url} />}
+        </div>
+        <dl className="flex flex-col border-t border-line">
+          {list.map((r, i) => (
+            <div key={r._key ?? i} className="flex flex-col gap-xs border-b border-line py-xl md:flex-row md:gap-4xl">
+              <dt className="w-full shrink-0 text-body-sm font-medium text-ink-2 md:w-[16.25rem]">{r.label}</dt>
+              <dd className="flex-1 text-body-md text-ink">{r.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </SectionReveal>
+    </section>
+  );
+}

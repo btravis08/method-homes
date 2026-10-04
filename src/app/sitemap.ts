@@ -21,7 +21,11 @@ const slugsQuery = groq`{
   "posts": *[_type == "post" && defined(slug.current)].slug.current,
   "postCategories": *[_type == "postCategory" && defined(slug.current)
     && count(*[_type == "post" && ^.slug.current in categories[]->slug.current]) > 0
-  ].slug.current
+  ].slug.current,
+  "series": *[_type == "series" && defined(slug.current)].slug.current,
+  "plans": *[_type == "plan" && defined(slug.current) && defined(series->slug.current)]{
+    "slug": slug.current, "series": series->slug.current
+  }
 }`;
 
 interface Slugs {
@@ -30,16 +34,20 @@ interface Slugs {
   collections: string[];
   posts: string[];
   postCategories: string[];
+  series: string[];
+  plans: { slug: string; series: string }[];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const { pages, products, collections, posts, postCategories } =
+  const { pages, products, collections, posts, postCategories, series, plans } =
     await sanityFetch<Slugs>(slugsQuery, {}, {
       pages: [],
       products: [],
       collections: [],
       posts: [],
       postCategories: [],
+      series: [],
+      plans: [],
     });
 
   const entry = (
@@ -59,6 +67,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     /* the built-in design articles (JOURNAL_CATEGORIES) are the CMS-less
        fallback, not Method content — they stay out of the sitemap */
     ...pages.map((slug) => entry(`/${slug}`, 0.6, "weekly")),
+    ...series.map((slug) => entry(`/series/${slug}`, 0.9, "weekly")),
+    ...plans.map((p) => entry(`/series/${p.series}/${p.slug}`, 0.7, "monthly")),
     ...collections.map((slug) => entry(`/collections/${slug}`, 0.8, "daily")),
     ...products.map((slug) => entry(`/products/${slug}`, 0.7, "weekly")),
     ...posts.map((slug) => entry(`/blog/${slug}`, 0.6, "weekly")),

@@ -368,6 +368,24 @@ export default defineConfig({
               ],
             }),
           }),
+          series: defineLocations({
+            select: { title: "name", slug: "slug.current" },
+            resolve: (doc) => ({
+              locations: [
+                { title: doc?.title ?? "Series", href: `/series/${doc?.slug}` },
+                { title: "Predesigned", href: "/predesigned" },
+              ],
+            }),
+          }),
+          plan: defineLocations({
+            select: { title: "name", slug: "slug.current", series: "series.slug.current" },
+            resolve: (doc) => ({
+              locations: [
+                { title: doc?.title ?? "Floor plan", href: `/series/${doc?.series}/${doc?.slug}` },
+                { title: "Its series", href: `/series/${doc?.series}` },
+              ],
+            }),
+          }),
           /* singletons: static state, no fields to select */
           navigation: {
             locations: [{ title: "Site navigation", href: "/" }],
@@ -393,6 +411,14 @@ export default defineConfig({
           {
             route: "/legacy",
             filter: `_type == "legacyPage"`,
+          },
+          {
+            route: "/series/:slug/:plan",
+            filter: `_type == "plan" && slug.current == $plan`,
+          },
+          {
+            route: "/series/:slug",
+            filter: `_type == "series" && slug.current == $slug`,
           },
           {
             route: "/:slug",

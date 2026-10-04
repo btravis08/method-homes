@@ -177,9 +177,9 @@ contribution wired. Build order follows page priority in §5.
 |---|---|---|---|---|
 | Nav | 37505:3463 | navigation singleton | SiteNavigationElement optional; breadcrumbs live in pages | [~] exists in template skin |
 | Hero / Home | 37505:3489 | sectionHero | LCP image eager+preload; H1 stays sr-only on CMS pages | [~] template Hero |
-| Hero / Page | 37505:3516 | sectionHero (variant) | lede paragraph is the answer-first copy | [ ] |
-| Hero / Series | 37525:15367 | series doc (hero fields) | breadcrumb + H1 wordmark + meta line (beds/baths/sqft/from) | [ ] |
-| Sub-nav | 37525:15383 | derived from page anchors | in-page anchors → heading ids | [ ] |
+| Hero / Page | 37505:3516 | sectionHeroPage | breadcrumb (visible BreadcrumbList) + H1/lede = title/description pair; `text-body-xl` added for the lede | [x] 2026-10-04 |
+| Hero / Series | 37525:15367 | series doc (route-built, not a section type) | breadcrumb + Display XL wordmark H1 + eager LCP photo + sentence + meta line with footnote markers | [x] 2026-10-04 |
+| Sub-nav | 37525:15383 | sectionSubNav (+ every section's `anchor` field) | real `#anchor` links, active follows scroll, Lenis scrollTo; series route builds it from the sections present | [x] 2026-10-04 |
 | Text intro | 37505:3536 | sectionTextIntro | ≥120-word lede, H2 question | [x] 2026-10-03 |
 | 50/50 | 37505:3577 | sectionFiftyFifty | alt text required | [~] template |
 | Card + Card grid | 37506:3516/3646 | sectionCardGrid | cards with eyebrow/title/body/meta; link wraps the card | [x] 2026-10-04 |
@@ -187,7 +187,7 @@ contribution wired. Build order follows page priority in §5.
 | Stats bar | 37506:3714 | sectionStats | numbers are DOM text with footnote markers → dated sources line | [x] 2026-10-03 |
 | Testimonial | 37506:3733 | sectionTestimonial (new) → or project.testimonial | Review schema (named, dated, rated) | [ ] |
 | Logo row | 37506:3750 | sectionLogoRow (new) | press/partner logos link to citations | [ ] |
-| Spec table | 37507:3678 | sectionTechSpecs | Product additionalProperty on series | [~] template TechSpecs |
+| Spec table | 37507:3678 | sectionSpecTable (`<dl>`) | rows → Product additionalProperty on series and plan pages | [x] 2026-10-04 |
 | Compare table | 37507:3753 | sectionCompare | real `<table>` with header row + sources; comparison pages (play 6) | [x] 2026-10-04 |
 | Process timeline | 37507:3797 | sectionProcess | `<ol>` of steps; page route emits HowTo (steps, ISO durations) | [x] 2026-10-04 |
 | FAQ | 37507:3841 | sectionFaq | FAQPage | [x] shipped 2026-10-03 |
@@ -361,8 +361,8 @@ Schema = the entity node beyond WebPage + BreadcrumbList.
 |---|---|---|---|---|---|---|---|
 | 1 | `/` Home | 37509:3822 | page "home" | Organization graph (layout) | no | Set day; Interstitial | [~] |
 | 1 | `/predesigned` | 37509:4289 | page + series list | ItemList of series | yes | Lineup; Interstitial | [ ] |
-| 1 | `/series/<slug>` ×7 (Elemental 37513:9343, Option 9729, Cabin 10115, M 10501, Paradigm 10887, Method One 11273, Annata 37509:4620) | templates | series doc | Product + Offer + ItemList(plans) | yes | Hero/Series, Sub-nav, Walk the plan, Finish levels | [ ] |
-| 1 | `/series/<slug>/<plan>` (Floor plan detail) | 37509:5006 | plan doc | Product (variant) + plan PDF | no | Size it up, Walk the plan | [ ] |
+| 1 | `/series/<slug>` ×7 (Elemental 37513:9343, Option 9729, Cabin 10115, M 10501, Paradigm 10887, Method One 11273, Annata 37509:4620) | templates | series doc | Product (+AggregateOffer when a price is published, hasVariant per plan, additionalProperty from specs) + ItemList(plans) + FAQPage | yes | Hero/Series, Sub-nav, Walk the plan, Finish levels | [~] route shipped 2026-10-04 (finish-level cards are the shared-component twin; Walk the plan bespoke pending); content: 7 series docs |
+| 1 | `/series/<slug>/<plan>` (Floor plan detail) | 37509:5006 | plan doc | Product isVariantOf series (+Offer, subjectOf DigitalDocument PDF, dimensions as additionalProperty) | no | Size it up, Walk the plan | [~] route shipped 2026-10-04 (Size it up = Spec table twin with lettered rows; bespoke pending); content: plan docs |
 | 1 | `/pricing` | 37510:5762 | page | FAQPage; Offer refs | yes | What it costs, Finish levels | [ ] |
 | 1 | `/process` | 37510:6259 | page | HowTo (steps from Process timeline) | yes | Build journey, Set day | [ ] |
 | 1 | `/custom-homes` | 37509:4036 | page | Service | yes | Interstitial | [ ] |
@@ -412,12 +412,13 @@ and only need content; the rest are build or content work.
       `design/redirects/legacy-map.json` (generated), live entries in
       `next.config.ts`, `redirects.yml` check (2026-10-03). First
       production run 2026-10-03 23:16 UTC: **311 pass · 20 pending ·
-      0 fail** (every live redirect one hop, every kept URL 200). Still:
-      flip the 20 pending entries live as series / markets /
-      commercial / process / method-arc / prefab-101 / privacy routes
-      ship; per-post keep/301/410 decisions for the 182 blog URLs.
-- [ ] Sitemap extended to series, plans, markets, commercial types,
-      press, authors; images sitemap optional.
+      0 fail** (every live redirect one hop, every kept URL 200).
+      2026-10-04: `/series/*` flipped live (125 live · 13 pending).
+      Still: flip the 13 pending entries live as markets / commercial /
+      process / method-arc / prefab-101 / privacy routes ship; per-post
+      keep/301/410 decisions for the 182 blog URLs.
+- [~] Sitemap extended to series + plans (2026-10-04); still markets,
+      commercial types, press, authors; images sitemap optional.
 - [ ] `WebSite.potentialAction` SearchAction if /search stays public.
 - [ ] hreflang none (US-only); `inLanguage` en-US already set.
 - [ ] Title/description fallback patterns per template (SEO-PLAN
@@ -431,7 +432,8 @@ and only need content; the rest are build or content work.
   foundingDate/Location, sameAs, computed AggregateRating).
 - ✔ WebPage kinds, BreadcrumbList, FAQPage pooling, ItemList,
   House + Review, BlogPosting + Person, dateModified.
-- [ ] Product + Offer per series and plan (needs series facts).
+- [x] Product + Offer per series and plan — code shipped 2026-10-04;
+      emits only when `priceFrom` is published (band → text only).
 - [x] HowTo from the Process timeline steps (route emits it for the
       first Process section on any CMS page; durations like “6–8
       weeks” become ISO `P8W`). 2026-10-04.
@@ -628,6 +630,18 @@ Notes / defects (issue #): ______
 ---
 
 ## 10. Change log
+
+- 2026-10-04 — Series routes: `/series/<slug>` (Hero / Series,
+  Sub-nav, overview, facts bar, plans grid, finish levels, Spec
+  table, gallery, FAQ, CTA; WebPage→Product+AggregateOffer+hasVariant,
+  ItemList, FAQPage, BreadcrumbList) and `/series/<slug>/<plan>`
+  (Hero / Page, drawing as LCP, Size-it-up spec table with lettered
+  dimensions, PDF link, photos, sibling plans; Product isVariantOf +
+  Offer + DigitalDocument). New section types Hero / Page, Sub-nav,
+  Spec table; every section gained an `anchor` id field; Presentation
+  locations + routes for series/plan; sitemap, llms.txt and
+  llms-full.txt carry series + plans; `/series/*` redirects live.
+  `text-body-xl` token (Body XLarge 18→20) added.
 
 - 2026-10-04 — Shared sections batch 2 in code: Card grid, Process
   timeline (+ HowTo JSON-LD), Compare table, Link list, Interstitial

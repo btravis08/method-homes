@@ -59,6 +59,58 @@ export const projectRatingsQuery = groq`
   *[_type == "project" && defined(testimonial.rating)].testimonial.rating
 `;
 
+/* ---------- predesigned catalog ---------- */
+
+const planCardFields = groq`
+  _id, name, "slug": slug.current, lede, beds, baths, sqft, modules, stories, priceFrom,
+  heroImage, planImage
+`;
+
+/* a series with its plans (every plan that references it), smallest
+   first — the ItemList the route emits */
+export const seriesBySlugQuery = groq`
+  *[_type == "series" && slug.current == $slug][0] {
+    _id, _updatedAt, name, "slug": slug.current, tagline, lede,
+    heroImage, "heroLqip": heroImage.asset->metadata.lqip,
+    body,
+    gallery[] { ..., "aspect": asset->metadata.dimensions.aspectRatio },
+    architect, beds, baths, sqft, modules, storiesMax,
+    priceFrom, priceBand, priceNote, timelineMonths,
+    specs[] { _key, label, value },
+    finishLevels[] { _key, name, tagline, from, numbers[] { _key, value, label }, includes, optional },
+    faq[] { _key, question, answer },
+    sources[] { _key, label, url, date },
+    seo,
+    "plans": *[_type == "plan" && series._ref == ^._id && defined(slug.current)] | order(sqft asc, name asc) { ${planCardFields} }
+  }
+`;
+
+/* a plan by its own slug, scoped to its series slug so the URL pair
+   is authoritative */
+export const planBySlugQuery = groq`
+  *[_type == "plan" && slug.current == $plan && series->slug.current == $series][0] {
+    ${planCardFields},
+    _updatedAt, body,
+    photos[] { ..., "aspect": asset->metadata.dimensions.aspectRatio },
+    dimensions[] { _key, label, value },
+    moduleImage,
+    "pdf": pdf.asset-> { url, size, originalFilename },
+    seo,
+    "series": series-> {
+      _id, name, "slug": slug.current, priceFrom, priceBand, priceNote, timelineMonths,
+      "plans": *[_type == "plan" && series._ref == ^._id && defined(slug.current)] | order(sqft asc, name asc) { ${planCardFields} }
+    }
+  }
+`;
+
+/* every series, for the lineup/index and the sitemap */
+export const seriesListQuery = groq`
+  *[_type == "series" && defined(slug.current)] | order(order asc, name asc) {
+    _id, name, "slug": slug.current, tagline, heroImage, beds, sqft, priceFrom, priceBand,
+    "planCount": count(*[_type == "plan" && series._ref == ^._id])
+  }
+`;
+
 /* Active products only (legacy documents without a status count as
    active) */
 const activeFilter = groq`(!defined(status) || status == "active")`;
@@ -94,8 +146,13 @@ const innerSectionFields = groq`
   colorMode,
   paddingTop,
   paddingBottom,
+  anchor,
   eyebrow,
   headline,
+  lede,
+  contextName,
+  anchors[] { _key, label, anchor },
+  cta,
   align,
   primaryCta,
   secondaryCta,

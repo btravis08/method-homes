@@ -150,6 +150,11 @@
 
   /* the Method content column (Figma max-width 1280) → `max-w-page` */
   --container-page: 80rem;
+  /* where an in-page anchor lands: under the fixed Nav (3.75rem) + the
+     sticky Sub-nav (3.5rem) + the announcement bar's measured height.
+     Used by scroll-margin on anchored sections and by the Sub-nav's
+     scroll offset / active line, so the three agree. */
+  --anchor-offset: calc(var(--announce-h, 0px) + 7.25rem);
 
   /*
     Fluid section padding (CMS S/M/L): interpolates 428px -> 1440px
@@ -186,6 +191,10 @@
   /* 15 → 16 */
   --text-body-md: clamp(0.9375rem, 0.9111rem + 0.0988vw, 1rem);
   --text-body-md--line-height: 1.5;
+  /* Method "Body XLarge" (Figma Font size/body-xl 20, Line height/
+     text-xl 30): the lede under a page or series H1. 18 → 20. */
+  --text-body-xl: clamp(1.125rem, 1.0721rem + 0.1976vw, 1.25rem);
+  --text-body-xl--line-height: 1.5;
   /* Title XSmall/Regular — fixed 18 (the scale's smallest serif) */
   --text-title-xs: 1.125rem;
   --text-title-xs--line-height: 1.1;

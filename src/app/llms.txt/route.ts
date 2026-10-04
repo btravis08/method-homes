@@ -22,7 +22,11 @@ const query = groq`{
   "posts": *[_type == "post" && defined(slug.current) && defined(publishedAt)]
     | order(publishedAt desc)[0...40]{ title, "slug": slug.current, excerpt, publishedAt },
   "projects": *[_type == "project" && defined(slug.current)]
-    | order(completedYear desc)[0...40]{ title, "slug": slug.current, location, completedYear }
+    | order(completedYear desc)[0...40]{ title, "slug": slug.current, location, completedYear },
+  "series": *[_type == "series" && defined(slug.current)] | order(order asc, name asc){
+    name, "slug": slug.current, tagline, sqft, priceFrom, priceBand,
+    "plans": *[_type == "plan" && series._ref == ^._id && defined(slug.current)] | order(sqft asc){ name, "slug": slug.current, beds, sqft }
+  }
 }`;
 
 interface Data {
@@ -30,13 +34,20 @@ interface Data {
   pages: { title: string; slug: string; description: string }[];
   posts: { title: string; slug: string; excerpt?: string; publishedAt?: string }[];
   projects: { title: string; slug: string; location?: string; completedYear?: number }[];
+  series: {
+    name: string; slug: string; tagline?: string; sqft?: { min?: number; max?: number } | null;
+    priceFrom?: number; priceBand?: string;
+    plans: { name: string; slug: string; beds?: number; sqft?: number }[];
+  }[];
 }
+
+const usd = (n: number) => `$${Math.round(n).toLocaleString("en-US")}`;
 
 const line = (title: string, path: string, note?: string) =>
   `- [${title}](${BASE}${path})${note ? `: ${note.replace(/\s+/g, " ").trim()}` : ""}`;
 
 export async function GET() {
-  const data = await sanityFetch<Data>(query, {}, { settings: null, pages: [], posts: [], projects: [] });
+  const data = await sanityFetch<Data>(query, {}, { settings: null, pages: [], posts: [], projects: [], series: [] });
   const name = data.settings?.companyName || designops.aeo.brand;
   const org = designops.aeo.organization;
 
@@ -57,6 +68,15 @@ export async function GET() {
   if (data.pages.length) {
     out.push("", "## Pages");
     for (const p of data.pages) out.push(line(p.title, `/${p.slug}`, p.description));
+  }
+  if (data.series.length) {
+    out.push("", "## Predesigned series");
+    for (const s of data.series) {
+      const size = s.sqft?.min && s.sqft?.max ? `${s.sqft.min.toLocaleString()}–${s.sqft.max.toLocaleString()} sq ft` : s.sqft?.min ? `from ${s.sqft.min.toLocaleString()} sq ft` : "";
+      const price = s.priceFrom ? `from ${usd(s.priceFrom)}` : s.priceBand || "";
+      out.push(line(`${s.name} series`, `/series/${s.slug}`, [s.tagline, size, price, s.plans.length ? `${s.plans.length} floor plan${s.plans.length === 1 ? "" : "s"}` : ""].filter(Boolean).join(" · ")));
+      for (const p of s.plans) out.push(`  ${line(p.name, `/series/${s.slug}/${p.slug}`, [p.beds != null ? `${p.beds} bed` : "", p.sqft ? `${p.sqft.toLocaleString()} sq ft` : ""].filter(Boolean).join(", "))}`);
+    }
   }
   if (data.projects.length) {
     out.push("", "## Projects");
