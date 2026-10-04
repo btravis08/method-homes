@@ -67,6 +67,34 @@ export const series = defineType({
     range("sqft", "Size", "sq ft"),
     range("modules", "Modules"),
     defineField({ name: "storiesMax", title: "Stories (max)", type: "number", group: "facts" }),
+    range("factoryWeeks", "Weeks in the factory"),
+    defineField({
+      name: "bestFor",
+      title: "Best for",
+      type: "string",
+      group: "facts",
+      description: "≤8 words for the Compare table's “Best for” column (e.g. “Retreats and rural sites”). Falls back to the tagline.",
+    }),
+    defineField({
+      name: "palette",
+      title: "Exterior palette",
+      type: "array",
+      group: "facts",
+      description: "The exterior finish colors shown as swatches on the Lineup (4–6). Name + hex.",
+      validation: (rule) => rule.max(6),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "swatch",
+          options: { columns: 2 },
+          fields: [
+            defineField({ name: "name", title: "Name", type: "string", validation: (rule) => rule.required() }),
+            defineField({ name: "color", title: "Hex", type: "string", validation: (rule) => rule.required().regex(/^#[0-9a-fA-F]{6}$/, { name: "hex color like #8a6a4b" }) }),
+          ],
+          preview: { select: { title: "name", subtitle: "color" } },
+        }),
+      ],
+    }),
     defineField({
       name: "priceFrom",
       title: "Starting price (USD)",

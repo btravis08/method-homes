@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T00:38:47.072Z",
+  "generatedAt": "2026-10-04T04:02:11.120Z",
   "modes": [
     "light",
     "light-mid",
@@ -481,6 +481,14 @@
       "type": "radius",
       "value": "0.5rem",
       "utility": "rounded-md",
+      "detail": {}
+    },
+    {
+      "path": "--radius-full",
+      "name": "full",
+      "type": "radius",
+      "value": "9999px",
+      "utility": "rounded-full",
       "detail": {}
     }
   ],

@@ -221,7 +221,7 @@ gate after idle. Each has one toggle or slider at most.
 | What it costs | /pricing | Path=Predesigned/Custom | [ ] |
 | Walk the plan | series, plan pages | View=Plan/Modules/Photos | [ ] |
 | We deliver to you | /where-we-build | State=Empty/Result | [ ] |
-| Lineup (replaces Find your fit) | /predesigned | Series | [ ] |
+| Lineup (replaces Find your fit) | /predesigned | Series | [x] 2026-10-04 — pills are real links to /series/*, JS swaps in place (state-driven cross-fade); twin = Card grid + Compare table on the same page |
 | Scale, simply | /commercial | Config=24/48 units | [ ] |
 | Set day | / | Time=06:10/14:40 | [ ] |
 | Measured, not marketed | /sustainability | Show=Method/Site-built | [ ] |
@@ -360,7 +360,7 @@ Schema = the entity node beyond WebPage + BreadcrumbList.
 | P | Route | Figma | Sanity source | Schema | FAQ | Bespoke | Status |
 |---|---|---|---|---|---|---|---|
 | 1 | `/` Home | 37509:3822 | page "home" | Organization graph (layout) | no | Set day; Interstitial | [~] |
-| 1 | `/predesigned` | 37509:4289 | page + series list | ItemList of series | yes | Lineup; Interstitial | [ ] |
+| 1 | `/predesigned` | 37565:18408 | series list (+ optional page doc “predesigned” for hero/intro/FAQ/SEO overrides) | CollectionPage + ItemList of series Products + FAQPage | yes | Lineup; Interstitial (Number) | [x] route 2026-10-04; renders the designed defaults until the series docs exist |
 | 1 | `/series/<slug>` ×7 (Elemental 37513:9343, Option 9729, Cabin 10115, M 10501, Paradigm 10887, Method One 11273, Annata 37509:4620) | templates | series doc | Product (+AggregateOffer when a price is published, hasVariant per plan, additionalProperty from specs) + ItemList(plans) + FAQPage | yes | Hero/Series, Sub-nav, Walk the plan, Finish levels | [~] route shipped 2026-10-04 (finish-level cards are the shared-component twin; Walk the plan bespoke pending); content: 7 series docs |
 | 1 | `/series/<slug>/<plan>` (Floor plan detail) | 37509:5006 | plan doc | Product isVariantOf series (+Offer, subjectOf DigitalDocument PDF, dimensions as additionalProperty) | no | Size it up, Walk the plan | [~] route shipped 2026-10-04 (Size it up = Spec table twin with lettered rows; bespoke pending); content: plan docs |
 | 1 | `/pricing` | 37510:5762 | page | FAQPage; Offer refs | yes | What it costs, Finish levels | [ ] |
@@ -631,6 +631,16 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — `/predesigned` lineup page: Hero / Page, series Card
+  grid (4 cols), Lineup editorial section (pill toggle → photo,
+  sentence, meta, four numbers, exterior palette; pills link to the
+  series pages), Number interstitial (plan count), "Why a series"
+  Text intro, Compare table (6 columns from the catalog), FAQ (5
+  designed questions, page-doc override), CTA band. CollectionPage +
+  ItemList of series Products + FAQPage + Breadcrumb. Series schema
+  gained `factoryWeeks`, `bestFor`, `palette[]`. FAQ section/component
+  gained a side link. Every number on the page comes from the series
+  documents; footnotes ¹²³ → catalog / prices / schedules.
 - 2026-10-04 — Series routes: `/series/<slug>` (Hero / Series,
   Sub-nav, overview, facts bar, plans grid, finish levels, Spec
   table, gallery, FAQ, CTA; WebPage→Product+AggregateOffer+hasVariant,

@@ -25,6 +25,7 @@ import {
   TextIntro,
 } from "@/components/home/sections";
 import { SubNav } from "@/components/home/SubNav";
+import { Lineup } from "@/components/home/Lineup";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import { FloatingWords } from "@/components/legacy/FloatingWords";
 import { FullBleedCarousel } from "@/components/legacy/FullBleedCarousel";
@@ -366,6 +367,16 @@ export const SECTIONS: SectionEntry[] = [
     modes: ["light", "dark"],
     figmaNodeId: "37507:3678",
     render: (mode) => <SpecTable mode={mode} />,
+  },
+  {
+    slug: "lineup",
+    title: "Lineup",
+    group: "Page sections",
+    description: "Editorial section (/predesigned, built from the series documents): a pill toggle across the series swaps one photograph, a sentence, the meta line, four big numbers and the exterior palette. Pills are real links to the series pages; JS turns a click into an in-place swap.",
+    modes: ["light", "dark"],
+    tall: true,
+    figmaNodeId: "37525:15056",
+    render: (mode) => <Lineup mode={mode} />,
   },
   {
     slug: "ab-experiment",

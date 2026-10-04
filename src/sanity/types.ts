@@ -604,6 +604,9 @@ export interface Series {
   sqft?: Range | null;
   modules?: Range | null;
   storiesMax?: number;
+  factoryWeeks?: Range | null;
+  bestFor?: string;
+  palette?: { _key: string; name?: string; color?: string }[];
   priceFrom?: number;
   priceBand?: string;
   priceNote?: string;
@@ -614,6 +617,29 @@ export interface Series {
   sources?: SourceRef[];
   seo?: SeoDoc | null;
   plans?: PlanCard[];
+}
+
+/* the lineup / index projection of a series (seriesListQuery) */
+export interface SeriesCard {
+  _id: string;
+  _updatedAt?: string;
+  name: string;
+  slug: string;
+  tagline?: string;
+  lede?: string;
+  bestFor?: string;
+  heroImage?: (SanityImageSource & { alt?: string }) | null;
+  heroLqip?: string;
+  beds?: Range | null;
+  sqft?: Range | null;
+  modules?: Range | null;
+  factoryWeeks?: Range | null;
+  timelineMonths?: Range | null;
+  priceFrom?: number;
+  priceBand?: string;
+  palette?: { _key: string; name?: string; color?: string }[];
+  sources?: SourceRef[];
+  planCount: number;
 }
 
 export interface Plan extends PlanCard {

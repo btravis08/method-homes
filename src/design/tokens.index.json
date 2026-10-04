@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T00:38:47.072Z",
+  "generatedAt": "2026-10-04T04:02:11.120Z",
   "sources": {
     "figma": {
       "dir": "design/figma-tokens",
@@ -34,7 +34,7 @@
     },
     "css": {
       "file": "src/app/globals.css",
-      "updatedAt": "2026-10-04T00:20:15+00:00"
+      "updatedAt": "2026-10-04T02:30:58+00:00"
     }
   },
   "css": {
@@ -519,6 +519,14 @@
         "type": "radius",
         "value": "0.5rem",
         "utility": "rounded-md",
+        "detail": {}
+      },
+      {
+        "path": "--radius-full",
+        "name": "full",
+        "type": "radius",
+        "value": "9999px",
+        "utility": "rounded-full",
         "detail": {}
       }
     ],

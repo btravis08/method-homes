@@ -106,8 +106,12 @@ export const planBySlugQuery = groq`
 /* every series, for the lineup/index and the sitemap */
 export const seriesListQuery = groq`
   *[_type == "series" && defined(slug.current)] | order(order asc, name asc) {
-    _id, name, "slug": slug.current, tagline, heroImage, beds, sqft, priceFrom, priceBand,
-    "planCount": count(*[_type == "plan" && series._ref == ^._id])
+    _id, _updatedAt, name, "slug": slug.current, tagline, lede, bestFor,
+    heroImage, "heroLqip": heroImage.asset->metadata.lqip,
+    beds, sqft, modules, factoryWeeks, timelineMonths, priceFrom, priceBand,
+    palette[] { _key, name, color },
+    sources[] { _key, label, url, date },
+    "planCount": count(*[_type == "plan" && series._ref == ^._id && defined(slug.current)])
   }
 `;
 

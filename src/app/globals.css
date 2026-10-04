@@ -236,6 +236,10 @@
   /* radius-md from the Figma library: buttons, chips, inputs, option
      rows and icon buttons (rem so the >1920px root zoom carries it) */
   --radius-md: 0.5rem;
+  /* radius-full from the Figma library: pill toggles and swatches
+     (a finite value so the inspector can match it; Tailwind's own
+     rounded-full computes to an infinite radius it cannot name) */
+  --radius-full: 9999px;
 }
 
 /*

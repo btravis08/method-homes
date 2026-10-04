@@ -61,6 +61,37 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — /predesigned lineup page (code)
+- Built from the series documents, not the page builder: every
+  number (sizes, plan counts, bedrooms, weeks in the factory, prices,
+  timelines) is the catalog's, rendered once as DOM text in the Card
+  grid, the Lineup, the Number interstitial and the Compare table.
+  A `page` doc with slug `predesigned` is the editorial override for
+  hero copy, the why-intro, the FAQ and SEO — no doc, designed
+  defaults render.
+- Lineup interaction model: the pills are real links to `/series/*`
+  (crawlable, no-JS works, modifier-click opens the page); with JS a
+  click swaps the stage in place through a state-driven cross-fade
+  (fade out → swap → fade in, `aria-live="polite"`), never a mount
+  animation. One toggle, nothing else interactive.
+- Series schema gained `factoryWeeks` (range), `bestFor` (Compare
+  table column, falls back to tagline) and `palette[]` (name + hex,
+  the exterior swatches). Figma Lineup uses `bg-tertiary` (#b4b4b1)
+  for the toggle track and image wells; the code has no token for
+  that value, so the track uses `--line-2` and wells `--wash` — flag
+  for the token re-export (same gap as the Card image placeholders).
+  `--radius-full` (the library's radius-full, 9999px — pill toggles)
+  added to the code tokens; it was the only new off-token reading.
+  The swatch fills are catalog data (hex per finish), not themed
+  surfaces, so the inspector lists them by design.
+- Default FAQ copy on the route is the design's questions with
+  answers drawn from the sections' approved defaults plus two new
+  ones (customization; code equivalence of modular homes) — Method
+  to review before launch, or override in the page doc.
+- Hero lede states the series count, plan count and size range from
+  the data; "set within N months" appears only when timelines exist.
+  Prices show only where a series publishes `priceFrom` or a band.
+
 ### 2026-10-04 — Series routes + Hero / Page, Hero / Series, Sub-nav, Spec table (code)
 - `/series/<slug>` and `/series/<slug>/<plan>` ship, built from the
   `series`/`plan` documents (not the page builder). Sections render

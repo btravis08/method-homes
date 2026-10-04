@@ -1559,12 +1559,15 @@ export function Faq({
   title = "Questions we hear most",
   intro,
   items = defaultFaqItems,
+  link,
 }: {
   mode?: Mode;
   eyebrow?: string;
   title?: string;
   intro?: string;
   items?: FaqItemData[];
+  /* side-column link under the intro ("Ask us a question") */
+  link?: LinkData | null;
 }) {
   const list = items.filter((item) => item.question && item.answer);
   return (
@@ -1574,6 +1577,7 @@ export function Faq({
           {eyebrow && <p className="label text-ink-2">{eyebrow}</p>}
           <h2 className="font-display text-title-lg">{title}</h2>
           {intro && <p className="max-w-[26rem] text-body-md text-ink-2">{intro}</p>}
+          {link?.label && link.url && <UnderlineLink label={link.label} href={link.url} />}
         </div>
         <div className="flex flex-col">
           <RevealLine className="h-[1.5px] w-full bg-line" />
