@@ -140,7 +140,7 @@ export default async function ProjectPage({
         >
           ← All projects
         </Link>
-        <h1 className="max-w-[56rem] font-display text-display-xl text-ink">
+        <h1 className="max-w-[56rem] font-display text-display-sm text-ink">
           {project.title}
         </h1>
         {project.summary && (

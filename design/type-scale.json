@@ -1,0 +1,197 @@
+{
+  "_source": "Figma file 9nqsOUuF2UrgukNYok3Oko, variable collection “6. Typography” (modes Desktop / Tablet / Mobile). Font size/* aliases resolve through the Typography/text-* primitives (text-xs 12 … text-9xl 88); display-xl is literal 176/120/72. Re-pull with a read-only use_figma script (see docs/PROJECT-LOG.md 2026-10-04) and edit the values here — never hand-edit the generated CSS.",
+  "anchors": {
+    "mobile": 428,
+    "tablet": 1024,
+    "desktop": 1440
+  },
+  "aboveDesktop": {
+    "_note": "Above the desktop frame the scale keeps growing at `rate` × the viewport's growth until `until`, where the root font-size zoom (html { font-size: max(100%, 0.83333vw) }, 1920+) carries type and layout together. rate 1 = fonts grow 1:1 with the viewport (seamless with the root zoom); 0.5 = half as fast.",
+    "rate": 0.5,
+    "until": 1920
+  },
+  "styles": {
+    "label-xs": {
+      "mobile": 11,
+      "tablet": 11,
+      "desktop": 11,
+      "lineHeight": 1.818,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Label XSmall"
+    },
+    "label-sm": {
+      "mobile": 12,
+      "tablet": 12,
+      "desktop": 12,
+      "lineHeight": 1.3,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Label Small/Medium"
+    },
+    "label-md": {
+      "mobile": 14,
+      "tablet": 14,
+      "desktop": 14,
+      "lineHeight": 1,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Label Medium/Medium"
+    },
+    "label-lg": {
+      "mobile": 16,
+      "tablet": 16,
+      "desktop": 16,
+      "lineHeight": 1.5,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Label Large"
+    },
+    "body-xs": {
+      "mobile": 12,
+      "tablet": 12,
+      "desktop": 12,
+      "lineHeight": 1.667,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Body XSmall"
+    },
+    "body-sm": {
+      "mobile": 14,
+      "tablet": 14,
+      "desktop": 14,
+      "lineHeight": 1.43,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Body Small"
+    },
+    "body-md": {
+      "mobile": 16,
+      "tablet": 16,
+      "desktop": 16,
+      "lineHeight": 1.5,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Body Medium"
+    },
+    "body-lg": {
+      "mobile": 18,
+      "tablet": 18,
+      "desktop": 18,
+      "lineHeight": 1.556,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Body Large"
+    },
+    "body-xl": {
+      "mobile": 18,
+      "tablet": 20,
+      "desktop": 20,
+      "lineHeight": 1.5,
+      "tracking": 0,
+      "family": "sans",
+      "figma": "Body XLarge"
+    },
+    "title-xs": {
+      "mobile": 18,
+      "tablet": 18,
+      "desktop": 18,
+      "lineHeight": 1.1,
+      "tracking": 0,
+      "family": "display",
+      "figma": null,
+      "scaleAbove": false,
+      "_note": "Template-only (SDR InfoSlider / cart / collection story titles). Not in the Method library — retire with those components."
+    },
+    "title-sm": {
+      "mobile": 18,
+      "tablet": 20,
+      "desktop": 20,
+      "lineHeight": 1.4,
+      "tracking": 0,
+      "family": "display",
+      "figma": "Title Small"
+    },
+    "title-md": {
+      "mobile": 20,
+      "tablet": 24,
+      "desktop": 24,
+      "lineHeight": 1.333,
+      "tracking": 0,
+      "family": "display",
+      "figma": "Title Medium"
+    },
+    "title-lg": {
+      "mobile": 24,
+      "tablet": 28,
+      "desktop": 28,
+      "lineHeight": 1.143,
+      "tracking": 0,
+      "family": "display",
+      "figma": "Title Large"
+    },
+    "headline-sm": {
+      "mobile": 28,
+      "tablet": 32,
+      "desktop": 32,
+      "lineHeight": 1.1875,
+      "tracking": 0,
+      "family": "display",
+      "figma": "Headline Small"
+    },
+    "headline-md": {
+      "mobile": 32,
+      "tablet": 40,
+      "desktop": 40,
+      "lineHeight": 1.1,
+      "tracking": -0.02,
+      "family": "display",
+      "figma": "Headline Medium"
+    },
+    "headline-lg": {
+      "mobile": 40,
+      "tablet": 48,
+      "desktop": 48,
+      "lineHeight": 1.2,
+      "tracking": -0.02,
+      "family": "display",
+      "figma": "Headline Large/Regular"
+    },
+    "display-sm": {
+      "mobile": 48,
+      "tablet": 60,
+      "desktop": 60,
+      "lineHeight": 1.2,
+      "tracking": -0.02,
+      "family": "display",
+      "figma": "Display Small"
+    },
+    "display-md": {
+      "mobile": 48,
+      "tablet": 60,
+      "desktop": 72,
+      "lineHeight": 1.25,
+      "tracking": -0.02,
+      "family": "display",
+      "figma": "Display Medium"
+    },
+    "display-lg": {
+      "mobile": 48,
+      "tablet": 60,
+      "desktop": 88,
+      "lineHeight": 1.023,
+      "tracking": -0.02,
+      "family": "display",
+      "figma": "Display Large"
+    },
+    "display-xl": {
+      "mobile": 72,
+      "tablet": 120,
+      "desktop": 176,
+      "lineHeight": 0.91,
+      "tracking": -0.03,
+      "family": "display",
+      "figma": "Display XL/Regular (line height display-xl-tight 68/112/160)"
+    }
+  }
+}

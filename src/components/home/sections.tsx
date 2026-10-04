@@ -1487,7 +1487,7 @@ export function Interstitial({
             // eslint-disable-next-line @next/next/no-img-element
             <img src={image} alt={alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
           )}
-          <p className="relative z-10 text-center font-display text-display-2xl text-ink">{text}</p>
+          <p className="relative z-10 text-center font-display text-display-xl text-ink">{text}</p>
           {subline && <p className="relative z-10 max-w-[45rem] text-center text-body-md text-ink-2">{subline}</p>}
         </div>
       </section>
@@ -1497,7 +1497,7 @@ export function Interstitial({
     return (
       <section data-mode={mode} className={`w-full bg-surface-2 text-ink ${SECTION_X} py-11xl`}>
         <div className={`${CONTAINER} flex min-h-[20rem] flex-col items-center justify-center gap-xl text-center`}>
-          <p className="font-display text-display-2xl text-ink">{text}</p>
+          <p className="font-display text-display-xl text-ink">{text}</p>
           {subline && <p className="max-w-[45rem] text-body-md text-ink-2">{subline}</p>}
         </div>
       </section>
@@ -1507,7 +1507,7 @@ export function Interstitial({
     return (
       <section data-mode={mode} className={`w-full overflow-hidden bg-surface text-ink ${SECTION_X}`}>
         <FloatingImages floats={floats.filter((f) => f.src || f.alt)}>
-          <p className="max-w-[45rem] text-center font-display text-display-xl text-ink">{text}</p>
+          <p className="max-w-[45rem] text-center font-display text-display-sm text-ink">{text}</p>
         </FloatingImages>
       </section>
     );
@@ -1515,7 +1515,7 @@ export function Interstitial({
   return (
     <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-11xl`}>
       <div className={`${CONTAINER} flex min-h-[20rem] items-center justify-center`}>
-        <p className="max-w-[60rem] text-center font-display text-display-xl text-ink">{text}</p>
+        <p className="max-w-[60rem] text-center font-display text-display-sm text-ink">{text}</p>
       </div>
     </section>
   );
@@ -1754,7 +1754,7 @@ export function HeroSeries({
     <section data-mode={mode} className={`w-full bg-surface text-ink ${SECTION_X} py-9xl`}>
       <div className={`${CONTAINER} flex flex-col items-center gap-6xl`}>
         <Breadcrumb crumbs={crumbs} className="self-start" />
-        <h1 className="w-full text-center font-display text-display-2xl text-ink">{name}</h1>
+        <h1 className="w-full text-center font-display text-display-xl text-ink">{name}</h1>
         <div className="relative aspect-[2/1] w-full overflow-hidden rounded-md bg-wash md:h-[40rem] md:aspect-auto">
           {image ? (
             // eslint-disable-next-line @next/next/no-img-element

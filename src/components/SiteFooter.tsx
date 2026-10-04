@@ -197,13 +197,13 @@ export function SiteFooter() {
       {showTagline && (
         <div className="flex w-full items-center justify-center overflow-hidden border-b border-line px-2.5 py-32 md:py-[11.25rem]">
           <div className="relative h-[9.4375rem] w-[28.9375rem] shrink-0 scale-[0.7] sm:scale-100">
-            <p className="absolute left-[8.75rem] top-0 whitespace-nowrap font-display text-display-xl">
+            <p className="absolute left-[8.75rem] top-0 whitespace-nowrap font-display text-display-sm">
               Pursue
             </p>
-            <p className="absolute left-0 top-[3.40625rem] whitespace-nowrap font-display text-display-xl">
+            <p className="absolute left-0 top-[3.40625rem] whitespace-nowrap font-display text-display-sm">
               Better
             </p>
-            <p className="absolute left-[17.9375rem] top-[3.59375rem] whitespace-nowrap font-display text-display-xl">
+            <p className="absolute left-[17.9375rem] top-[3.59375rem] whitespace-nowrap font-display text-display-sm">
               Always
             </p>
             <span

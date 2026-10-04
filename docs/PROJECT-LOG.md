@@ -61,6 +61,42 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — Type scale generated from the Figma device modes (Bryce)
+- Bryce's rule: keep the Figma Mobile / Tablet / Desktop font
+  variables as the anchors so designing stays in the three modes;
+  clamp between them; above 1440 keep scaling at a relational rate.
+- Implementation: `design/type-scale.json` (per style: mobile /
+  tablet / desktop px, unitless line-height, em tracking, family,
+  Figma style name) → `scripts/build-type-scale.mjs` → the
+  `@generated:type-scale` block inside `@theme` in globals.css. Each
+  token is one `clamp(min, <nested min/max of three linear segments>,
+  max)`; the generator picks the shortest nesting that reproduces
+  the target curve at every sampled width (320–2600), so there are no
+  breakpoint jumps and the inspector has a single value to match.
+- Above desktop: `aboveDesktop.rate` = 0.5 (fonts grow half as fast
+  as the viewport) until 1920, where the existing root font-size
+  zoom (`html { font-size: max(100%, .83333vw) }`) scales type and
+  layout together 1:1. rate 1 would make the two slopes continuous;
+  0.5 keeps body text from outrunning the layout between 1440 and
+  1920. One number to change if the feel is off. Micro labels now
+  scale too (the old "12px stays fixed" exception is gone).
+- Naming now mirrors Figma: label-xs/sm/md/lg, body-xs/sm/md/lg/xl,
+  title-sm/md/lg, headline-sm/md/lg, display-sm/md/lg/xl. The SDR
+  template's `display-xl` (40→64) became `display-sm` (48/60/60) and
+  the interim `display-2xl` became `display-xl` (72/120/176);
+  `title-xs` (18 fixed) stays as a code-only template leftover.
+  Line-heights follow the /Regular styles (Headline Large 1.2, Title
+  Small 1.4 — the template's 1.1 was wrong for Method).
+- Figma side unchanged by design. Hygiene to fix in the finesse
+  pass: styles on Inter / Neue Haas Grotesk instead of Geist (Body
+  Small underlined, Display Large/Regular), two Body Small weights
+  without a font, percent line-heights that disagree with siblings
+  (Headline Large/Regular, Headline Small/Regular, Display
+  Small/Medium, Label Medium/Medium).
+- Measured on the built server (px): Headline Large 40 → 48 → 48 →
+  56 → 74.7 and Body Medium 16 → 16 → 16 → 18.7 → 24.9 at 428 / 1024 /
+  1440 / 1920 / 2560; Display XL 72 → 120 → 176 → 205 → 274.
+
 ### 2026-10-04 — /predesigned lineup page (code)
 - Built from the series documents, not the page builder: every
   number (sizes, plan counts, bedrooms, weeks in the factory, prices,

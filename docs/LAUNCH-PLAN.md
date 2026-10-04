@@ -631,6 +631,18 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — Generated type scale (Bryce's spec: respect the Figma
+  Mobile / Tablet / Desktop variables, clamp between them, keep
+  scaling above 1440). `design/type-scale.json` + `npm run type` →
+  the `@generated:type-scale` block in globals.css: 20 styles named
+  as in Figma (label-xs…display-xl), two linear segments 428→1024→1440,
+  then ×0.5 of the viewport's growth to 1920 where the root zoom takes
+  over; one clamp() per token. Renames: template `text-display-xl`
+  (40→64) → `text-display-sm`; `text-display-2xl` → `text-display-xl`.
+  New tokens: label-xs/lg, body-xs/lg, display-sm/md/lg. Verified at
+  nine widths (e.g. Headline Large 40 / 48 / 48 / 56 / 74.7 at 428 /
+  1024 / 1440 / 1920 / 2560) and 0 off-token type readings across
+  the swept sections.
 - 2026-10-04 — `/predesigned` lineup page: Hero / Page, series Card
   grid (4 cols), Lineup editorial section (pill toggle → photo,
   sentence, meta, four numbers, exterior palette; pills link to the

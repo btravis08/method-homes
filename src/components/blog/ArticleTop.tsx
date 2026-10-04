@@ -139,7 +139,7 @@ export function ArticleTop({
               ? { duration: 0.65, ease: [...EASE_OUT], delay: 0.09 }
               : { duration: 0 }
           }
-          className="mt-3 font-display text-display-xl text-ink"
+          className="mt-3 font-display text-display-sm text-ink"
         >
           {title}
         </m.h1>

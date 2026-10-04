@@ -165,71 +165,83 @@
   --spacing-section-m: clamp(1.5rem, 0.4427rem + 3.9526vw, 4rem);
   --spacing-section-l: clamp(3rem, 1.7312rem + 4.7431vw, 6rem);
 
+  /* @generated:type-scale — do not edit by hand; edit design/type-scale.json and run `npm run type` */
   /*
-    Fluid type scale from the Figma text styles.
-
-    Sizes interpolate linearly between the library's device frames —
-    mobile 428px (26.75rem) and desktop 1440px (90rem) — via clamp():
-      slope = (max − min) / 63.25
-      preferred = (min − slope × 26.75) + slope × 100vw
-    Values are rem so user zoom scales correctly; line-heights are
-    unitless and tracking is em so both ride along with the size.
-    Micro labels (12px mono) intentionally stay fixed.
+    Fluid type scale — generated from design/type-scale.json (the
+    Figma Typography collection's Mobile / Tablet / Desktop values).
+    Anchors: 428px → 1024px → 1440px, then × 0.5 of the viewport's
+    growth to 1920px, where the root font-size zoom takes over. One
+    clamp() per token (nested min/max of the linear segments): no
+    breakpoint jumps. Line-heights are unitless and tracking is em so
+    both ride along with the size. Values are rem so user zoom works.
   */
-  /* Label Small/Medium carries zero tracking in the current library
-     export (was 0.02em in the older file) */
-  --text-label-sm: 0.75rem;
+  /* label-xs — 11 → 11 → 11 → 12.8 @1920 · Figma Label XSmall */
+  --text-label-xs: clamp(0.6875rem, calc(0.3437rem + 0.3819vw), 0.8021rem);
+  --text-label-xs--line-height: 1.818;
+  /* label-sm — 12 → 12 → 12 → 14 @1920 · Figma Label Small/Medium */
+  --text-label-sm: clamp(0.75rem, calc(0.375rem + 0.4167vw), 0.875rem);
   --text-label-sm--line-height: 1.3;
-  --text-label-sm--letter-spacing: 0;
-  /* 13 → 14 */
-  --text-label-md: clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem);
+  /* label-md — 14 → 14 → 14 → 16.3 @1920 · Figma Label Medium/Medium */
+  --text-label-md: clamp(0.875rem, calc(0.4375rem + 0.4861vw), 1.0208rem);
   --text-label-md--line-height: 1;
-  --text-label-md--letter-spacing: 0.02em;
-  /* 13 → 14 */
-  --text-body-sm: clamp(0.8125rem, 0.7861rem + 0.0988vw, 0.875rem);
+  /* label-lg — 16 → 16 → 16 → 18.7 @1920 · Figma Label Large */
+  --text-label-lg: clamp(1rem, calc(0.5rem + 0.5556vw), 1.1667rem);
+  --text-label-lg--line-height: 1.5;
+  /* body-xs — 12 → 12 → 12 → 14 @1920 · Figma Body XSmall */
+  --text-body-xs: clamp(0.75rem, calc(0.375rem + 0.4167vw), 0.875rem);
+  --text-body-xs--line-height: 1.667;
+  /* body-sm — 14 → 14 → 14 → 16.3 @1920 · Figma Body Small */
+  --text-body-sm: clamp(0.875rem, calc(0.4375rem + 0.4861vw), 1.0208rem);
   --text-body-sm--line-height: 1.43;
-  /* 15 → 16 */
-  --text-body-md: clamp(0.9375rem, 0.9111rem + 0.0988vw, 1rem);
+  /* body-md — 16 → 16 → 16 → 18.7 @1920 · Figma Body Medium */
+  --text-body-md: clamp(1rem, calc(0.5rem + 0.5556vw), 1.1667rem);
   --text-body-md--line-height: 1.5;
-  /* Method "Body XLarge" (Figma Font size/body-xl 20, Line height/
-     text-xl 30): the lede under a page or series H1. 18 → 20. */
-  --text-body-xl: clamp(1.125rem, 1.0721rem + 0.1976vw, 1.25rem);
+  /* body-lg — 18 → 18 → 18 → 21 @1920 · Figma Body Large */
+  --text-body-lg: clamp(1.125rem, calc(0.5625rem + 0.625vw), 1.3125rem);
+  --text-body-lg--line-height: 1.556;
+  /* body-xl — 18 → 20 → 20 → 23.3 @1920 · Figma Body XLarge */
+  --text-body-xl: clamp(1.125rem, max(min(1.0352rem + 0.3356vw, 1.25rem), 0.625rem + 0.6944vw), 1.4583rem);
   --text-body-xl--line-height: 1.5;
-  /* Title XSmall/Regular — fixed 18 (the scale's smallest serif) */
+  /* title-xs — 18 → 18 → 18 · code-only · Template-only (SDR InfoSlider / cart / collection story titles). Not in the Method library — retire with those components. */
   --text-title-xs: 1.125rem;
   --text-title-xs--line-height: 1.1;
-  /* 18 → 20 */
-  --text-title-sm: clamp(1.125rem, 1.0721rem + 0.1976vw, 1.25rem);
-  --text-title-sm--line-height: 1.1;
-  /* 20 → 24 */
-  --text-title-md: clamp(1.25rem, 1.1443rem + 0.3953vw, 1.5rem);
+  /* title-sm — 18 → 20 → 20 → 23.3 @1920 · Figma Title Small */
+  --text-title-sm: clamp(1.125rem, max(min(1.0352rem + 0.3356vw, 1.25rem), 0.625rem + 0.6944vw), 1.4583rem);
+  --text-title-sm--line-height: 1.4;
+  /* title-md — 20 → 24 → 24 → 28 @1920 · Figma Title Medium */
+  --text-title-md: clamp(1.25rem, max(min(1.0705rem + 0.6711vw, 1.5rem), 0.75rem + 0.8333vw), 1.75rem);
   --text-title-md--line-height: 1.333;
-  /* 24 → 28 — Title Large/Regular (28/32 at desktop in the current
-     library; mobile end PROVISIONAL until the 428px PDP frame is
-     pulled) */
-  --text-title-lg: clamp(1.5rem, 1.3943rem + 0.3953vw, 1.75rem);
+  /* title-lg — 24 → 28 → 28 → 32.7 @1920 · Figma Title Large */
+  --text-title-lg: clamp(1.5rem, max(min(1.3205rem + 0.6711vw, 1.75rem), 0.875rem + 0.9722vw), 2.0417rem);
   --text-title-lg--line-height: 1.143;
-  /* 24 → 32 */
-  --text-headline-sm: clamp(1.5rem, 1.2885rem + 0.7905vw, 2rem);
+  /* headline-sm — 28 → 32 → 32 → 37.3 @1920 · Figma Headline Small */
+  --text-headline-sm: clamp(1.75rem, max(min(1.5705rem + 0.6711vw, 2rem), 1rem + 1.1111vw), 2.3333rem);
   --text-headline-sm--line-height: 1.1875;
-  /* 32 → 40 — Headline Medium/Regular (journal article titles) */
-  --text-headline-md: clamp(2rem, 1.7885rem + 0.7905vw, 2.5rem);
+  /* headline-md — 32 → 40 → 40 → 46.7 @1920 · Figma Headline Medium */
+  --text-headline-md: clamp(2rem, max(min(1.6409rem + 1.3423vw, 2.5rem), 1.25rem + 1.3889vw), 2.9167rem);
   --text-headline-md--line-height: 1.1;
   --text-headline-md--letter-spacing: -0.02em;
-  /* 32 → 48 */
-  --text-headline-lg: clamp(2rem, 1.5771rem + 1.581vw, 3rem);
+  /* headline-lg — 40 → 48 → 48 → 56 @1920 · Figma Headline Large/Regular */
+  --text-headline-lg: clamp(2.5rem, max(min(2.1409rem + 1.3423vw, 3rem), 1.5rem + 1.6667vw), 3.5rem);
   --text-headline-lg--line-height: 1.2;
   --text-headline-lg--letter-spacing: -0.02em;
-  /* 40 → 64 */
-  --text-display-xl: clamp(2.5rem, 1.8656rem + 2.3715vw, 4rem);
-  --text-display-xl--line-height: 1.2;
-  --text-display-xl--letter-spacing: -0.02em;
-  /* Method "Display XL" (Figma Font size/display-xl: 72 mobile → 176
-     desktop): the Hero / Series wordmark and the Interstitial word /
-     number. 4.5rem → 11rem across the 428→1440 frames. */
-  --text-display-2xl: clamp(4.5rem, 1.751rem + 10.2767vw, 11rem);
-  --text-display-2xl--line-height: 0.91;
-  --text-display-2xl--letter-spacing: -0.03em;
+  /* display-sm — 48 → 60 → 60 → 70 @1920 · Figma Display Small */
+  --text-display-sm: clamp(3rem, max(min(2.4614rem + 2.0134vw, 3.75rem), 1.875rem + 2.0833vw), 4.375rem);
+  --text-display-sm--line-height: 1.2;
+  --text-display-sm--letter-spacing: -0.02em;
+  /* display-md — 48 → 60 → 72 → 84 @1920 · Figma Display Medium */
+  --text-display-md: clamp(3rem, max(2.4614rem + 2.0134vw, min(1.9038rem + 2.8846vw, 2.25rem + 2.5vw)), 5.25rem);
+  --text-display-md--line-height: 1.25;
+  --text-display-md--letter-spacing: -0.02em;
+  /* display-lg — 48 → 60 → 88 → 102.7 @1920 · Figma Display Large */
+  --text-display-lg: clamp(3rem, min(max(2.4614rem + 2.0134vw, -0.5577rem + 6.7308vw), 2.75rem + 3.0556vw), 6.4167rem);
+  --text-display-lg--line-height: 1.023;
+  --text-display-lg--letter-spacing: -0.02em;
+  /* display-xl — 72 → 120 → 176 → 205.3 @1920 · Figma Display XL/Regular (line height display-xl-tight 68/112/160) */
+  --text-display-xl: clamp(4.5rem, min(max(2.3456rem + 8.0537vw, -1.1154rem + 13.4615vw), 5.5rem + 6.1111vw), 12.8333rem);
+  --text-display-xl--line-height: 0.91;
+  --text-display-xl--letter-spacing: -0.03em;
+  /* @end:type-scale */
 
   /* Subtle 1px rounding on tiles, cards, and media wells */
   --radius-xs: 1px;
@@ -292,10 +304,12 @@ body {
    Maison Neue Medium; the mono cut stays available as an alternative
    via the font-mono utility (--font-mono token). */
 @utility label {
+  /* Label Small/Medium, uppercase — rides the generated scale so it
+     keeps scaling above the desktop frame like everything else */
   font-family: var(--font-maison), Arial, Helvetica, sans-serif;
   font-weight: 500;
-  font-size: 0.75rem;
-  line-height: 1.3;
+  font-size: var(--text-label-sm);
+  line-height: var(--text-label-sm--line-height);
   letter-spacing: 0;
   text-transform: uppercase;
 }

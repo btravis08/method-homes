@@ -11,6 +11,7 @@
     "start": "next start",
     "lint": "eslint",
     "tokens": "node scripts/build-token-index.mjs",
+    "type": "node scripts/build-type-scale.mjs",
     "audit": "node scripts/audit-sections.mjs",
     "drift": "node scripts/check-design-drift.mjs",
     "aeo": "node scripts/aeo-audit.mjs"

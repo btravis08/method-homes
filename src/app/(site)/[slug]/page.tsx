@@ -152,7 +152,7 @@ export default async function CmsPage({
       <JsonLd data={webPage({ name: page.seo?.title || page.title, description: page.seo?.description, path, dateModified: page._updatedAt })} />
       <JsonLd data={crumbs} />
       <div className="flex flex-col gap-6 px-6 pb-12 pt-16 sm:pt-24">
-        <h1 className="max-w-[56rem] font-display text-display-xl text-ink">
+        <h1 className="max-w-[56rem] font-display text-display-sm text-ink">
           {page.title}
         </h1>
       </div>

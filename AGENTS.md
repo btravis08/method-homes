@@ -564,12 +564,23 @@ Build from the tokens; never invent a value, never eyeball a comp.
   plus `--spacing-section-s|m|l`) via `p-*`, `gap-*`, `m-*`. Arbitrary
   values (`p-[13px]`) are a defect unless the comp value genuinely has
   no token — in which case say so rather than silently inventing one.
-- **Type**: the fluid scale only — `text-label-sm|md`,
-  `text-body-sm|md`, `text-title-xs|sm|md|lg`,
-  `text-headline-sm|md|lg`, `text-display-xl`. Each carries its own
-  line-height and tracking; don't override them. Fonts are
-  `font-display` (Feature Deck), `font-sans` (Maison Neue),
-  `font-mono` — never a raw family.
+- **Type**: the fluid scale only — `text-label-xs|sm|md|lg`,
+  `text-body-xs|sm|md|lg|xl`, `text-title-sm|md|lg`,
+  `text-headline-sm|md|lg`, `text-display-sm|md|lg|xl` (the Figma
+  Font size names; `text-title-xs` is a template leftover). Each
+  carries its own line-height and tracking; don't override them.
+  TYPE SCALE RULE (2026-10-04): the scale is GENERATED —
+  `design/type-scale.json` holds each style's Figma Mobile (428) /
+  Tablet (1024) / Desktop (1440) values, `npm run type` writes the
+  clamp() block between the `@generated:type-scale` markers in
+  globals.css, then `npm run tokens`. Sizes interpolate between the
+  three anchors and keep growing above 1440 at `aboveDesktop.rate`
+  (0.5) of the viewport's growth until 1920, where the root font-size
+  zoom carries type and layout together. Never hand-edit the block;
+  when the Figma Typography collection changes, re-pull the values
+  into the JSON and regenerate. Designers work in the three Figma
+  modes and nothing else. Fonts are `font-display` (Feature Deck),
+  `font-sans` (Maison Neue), `font-mono` — never a raw family.
 - **Radius**: `rounded-md` (8px, the library's `radius-md`) on every
   button, chip, toggle, input, option row and icon button — the
   standard since 2026-09-28; `rounded-xs` (1px) stays for tiles, cards
