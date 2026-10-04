@@ -117,7 +117,10 @@ PROXY_DENY = re.compile(
 )
 
 
-def category_for(element) -> str | None:
+ROOF_NAME = re.compile(r"roof|\btak\b|plåttak|dach|toit|tetto|cubierta", re.IGNORECASE)
+
+
+def category_for(element, aggregate_parent=None) -> str | None:
     t = element.is_a()
     for prefix in DROP_PREFIXES:
         if t.startswith(prefix):
@@ -134,8 +137,13 @@ def category_for(element) -> str | None:
     if cat is None:
         return None
     predefined = getattr(element, "PredefinedType", None)
-    if element.is_a("IfcSlab") and predefined == "ROOF":
-        return "roof"
+    if element.is_a("IfcSlab"):
+        # Revit exports roofs as IfcSlab NOTDEFINED under an IfcRoof
+        # aggregate (BasicHouse: "Basic Roof:Svart plåttak") — the parent
+        # or the family name says roof when the type does not
+        name = f"{element.Name or ''} {element.ObjectType or ''}"
+        if predefined == "ROOF" or (aggregate_parent is not None and aggregate_parent.is_a("IfcRoof")) or ROOF_NAME.search(name):
+            return "roof"
     if element.is_a("IfcCovering"):
         return "floor" if predefined in ("FLOORING", None) else None
     return cat
@@ -277,6 +285,12 @@ def main() -> int:
     groups: dict[tuple[int, str], list[trimesh.Trimesh]] = defaultdict(list)
     tri_total = 0
 
+    # aggregate parents (IfcRoof → its slabs, stairs → flights…)
+    parent_of: dict[int, object] = {}
+    for rel in model.by_type("IfcRelAggregates"):
+        for child in rel.RelatedObjects or []:
+            parent_of[child.id()] = rel.RelatingObject
+
     # pass 1: decide by type (cheap) — only kept elements get geometry
     wanted: dict[str, tuple] = {}
     for el in model.by_type("IfcProduct"):
@@ -284,7 +298,7 @@ def main() -> int:
         if t in drop_types or el.GlobalId in deny or (el.Name and el.Name in deny):
             dropped[t] += 1
             continue
-        cat = category_for(el)
+        cat = category_for(el, parent_of.get(el.id()))
         if cat is None and t in extra_keep:
             cat = extra_keep[t]
         if cat is None:

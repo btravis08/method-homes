@@ -114,6 +114,28 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   slower than one-by-one create_shape on this file. (4) The React
   Compiler lint forbids mutating hook values even in frame callbacks;
   keep three.js mutation in a plain class driven from useFrame.
+- Finish (Bryce, same day): grey fibre-cement panel siding and a
+  black standing-seam metal roof. Done as PROCEDURAL materials, not
+  textures — the model has no UVs and stays ~129 KB: the shader
+  derives 4 × 8 ft panel reveals (12 mm joints, per-panel tone) and
+  16 in standing seams (30 mm rib, light/shade flanks, lower
+  roughness on the rib) from world position and the face normal
+  (screen derivatives, not the smoothed vertex normal, or seams bend
+  across a plane). Flat shading for crisp planes; image-based light
+  from three's procedural RoomEnvironment (no HDR fetch) so the metal
+  reflects; ACES tone mapping; drei ContactShadows to ground the
+  home. Both finishes fade out with the plan transition (uPlan
+  uniform) so the drawing stays flat. Finish presets per series/
+  finish level (Figma Finish levels) are the natural next step — the
+  category palette is already one table.
+- gltf-transform gotcha: `optimize` runs a palette + join pass that
+  merged every opaque mesh into one and replaced the colours with a
+  palette texture, silently destroying the per-category materials the
+  viewer keys on. Run it with `--palette false --join false --flatten
+  false` (workflow updated).
+- Revit roofs: IfcSlab NOTDEFINED under an IfcRoof aggregate; the
+  pipeline now classifies slabs by their aggregate parent and by
+  family name (roof / tak / dach / toit…).
 - Still to do for production: stencil caps on the section cut
   (clipped wall tops currently show the inner faces, which read as
   solid only because they share the wall colour), room labels from

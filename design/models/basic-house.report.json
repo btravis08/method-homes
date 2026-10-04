@@ -1,9 +1,9 @@
 {
   "input": "/home/user/andrewisen/bim-whale-ifc-samples/BasicHouse/IFC/BasicHouse.ifc",
   "output": "public/models/sample/basic-house.glb",
-  "bytes": 14217044,
+  "bytes": 14217244,
   "triangles": 552087,
-  "seconds": 4.9,
+  "seconds": 3.1,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -99,11 +99,11 @@
       "triangles": 608
     },
     {
-      "node": "storey1_floor",
+      "node": "storey1_roof",
       "storey": 1,
-      "category": "floor",
+      "category": "roof",
       "triangles": 24
     }
   ],
-  "compressedBytes": 127568
+  "compressedBytes": 128868
 }

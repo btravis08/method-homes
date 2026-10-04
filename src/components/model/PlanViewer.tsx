@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
-import { OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 
 /*
   3D plan viewer — the interactive floor plan prototype.
@@ -54,10 +55,100 @@ const SPIN = 0.15; // rad/s
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
 /* the two palettes, keyed by the pipeline's category names */
+/* the render finish: grey fibre-cement panel siding, black standing-
+   seam metal roof, dark bronze doors and rails, concrete floors. The
+   siding and roof get procedural relief in the shader (see FINISH). */
 const RENDER: Record<string, [string, number]> = {
-  wall: ["#ece9e2", 1], floor: ["#cfc9bf", 1], roof: ["#5b5b58", 1], glass: ["#9dbccb", 0.5],
-  door: ["#8b6d52", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#99948c", 1], misc: ["#bfbab2", 1],
+  wall: ["#7d8083", 1], floor: ["#b9b5ad", 1], roof: ["#141516", 1], glass: ["#8fb0c2", 0.45],
+  door: ["#2a2622", 1], stair: ["#8e8a84", 1], rail: ["#2a2a28", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
 };
+/* PBR per category: [roughness, metalness] */
+const SURFACE: Record<string, [number, number]> = {
+  wall: [0.82, 0], floor: [0.95, 0], roof: [0.42, 0.55], glass: [0.12, 0.1],
+  door: [0.5, 0.3], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], misc: [0.9, 0],
+};
+
+/*
+  FINISH — procedural relief computed from world position, so the
+  model needs no UVs or texture files:
+  - siding: 4 × 8 ft fibre-cement panels (1.2192 × 2.4384 m) with a
+    12 mm reveal joint, a touch of per-panel tone variation; applied
+    to vertical faces only
+  - roof: standing seams every 16 in (0.4064 m) running down the
+    slope (derived from the face normal), a 30 mm rib with light and
+    shade on its flanks and a lower roughness on the rib; roof planes
+    only (fascia edges skip it)
+  Both fade out with uPlan so the drawing palette stays flat.
+*/
+const PRELUDE = /* glsl */ `
+  varying vec3 vWorldPos;
+  varying vec3 vWorldNrm;
+  uniform float uPlan;
+  float gRib = 0.0;
+`;
+const VERTEX_WORLD = /* glsl */ `
+  #include <project_vertex>
+  vWorldPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
+  vWorldNrm = normalize(mat3(modelMatrix) * objectNormal);
+`;
+const SIDING_COLOR = /* glsl */ `
+  #include <color_fragment>
+  {
+    /* the true face normal (derivatives), not the smoothed vertex
+       normal — otherwise seams and joints bend across a plane */
+    vec3 n = normalize(cross(dFdx(vWorldPos), dFdy(vWorldPos)));
+    vec2 uv = abs(n.x) > abs(n.z) ? vec2(vWorldPos.z, vWorldPos.y) : vec2(vWorldPos.x, vWorldPos.y);
+    vec2 panel = vec2(1.2192, 2.4384);
+    vec2 f = fract(uv / panel);
+    vec2 cell = floor(uv / panel);
+    vec2 d = min(f, 1.0 - f) * panel;
+    float joint = 1.0 - smoothstep(0.005, 0.012, min(d.x, d.y));
+    float tone = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453) * 0.08 - 0.04;
+    float vertical = 1.0 - step(0.85, abs(n.y));
+    float k = (1.0 - uPlan) * vertical;
+    diffuseColor.rgb *= 1.0 + tone * k;
+    diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.45, joint * k);
+  }
+`;
+const ROOF_COLOR = /* glsl */ `
+  #include <color_fragment>
+  {
+    /* the true face normal (derivatives), not the smoothed vertex
+       normal — otherwise seams and joints bend across a plane */
+    vec3 n = normalize(cross(dFdx(vWorldPos), dFdy(vWorldPos)));
+    vec2 dh = n.xz;
+    float l = length(dh);
+    vec2 along = l > 0.03 ? dh / l : vec2(1.0, 0.0);
+    vec2 across = vec2(-along.y, along.x);
+    float pitch = 0.4064;
+    float t = dot(vWorldPos.xz, across);
+    float f = fract(t / pitch) * pitch;
+    float c = pitch * 0.5;
+    float rib = 1.0 - smoothstep(0.012, 0.017, abs(f - c));
+    float flank = clamp((f - c) / 0.015, -1.0, 1.0);
+    float plane = step(0.25, abs(n.y));
+    float k = (1.0 - uPlan) * plane;
+    gRib = rib * k;
+    diffuseColor.rgb *= 1.0 + rib * k * 0.9 + flank * rib * k * 0.6;
+  }
+`;
+const ROOF_ROUGHNESS = /* glsl */ `
+  #include <roughnessmap_fragment>
+  roughnessFactor = mix(roughnessFactor, roughnessFactor * 0.6, gRib);
+`;
+
+function finish(mat: THREE.MeshStandardMaterial, cat: string) {
+  if (cat !== "wall" && cat !== "roof") return;
+  mat.onBeforeCompile = (shader) => {
+    shader.uniforms.uPlan = { value: 0 };
+    shader.vertexShader = PRELUDE + shader.vertexShader.replace("#include <project_vertex>", VERTEX_WORLD);
+    shader.fragmentShader = PRELUDE + shader.fragmentShader
+      .replace("#include <color_fragment>", cat === "wall" ? SIDING_COLOR : ROOF_COLOR)
+      .replace("#include <roughnessmap_fragment>", cat === "roof" ? ROOF_ROUGHNESS : "#include <roughnessmap_fragment>");
+    mat.userData.shader = shader;
+  };
+  mat.customProgramCacheKey = () => `finish-${cat}`;
+}
 const PLAN: Record<string, [string, number]> = {
   wall: ["#161716", 1], floor: ["#f7f8f4", 1], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
   door: ["#8b6d52", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
@@ -80,8 +171,16 @@ class ViewerState {
   private look = new THREE.Vector3();
   private top = new THREE.Vector3();
 
-  attach(scene: THREE.Object3D, gl: THREE.WebGLRenderer, initial: Mode) {
+  attach(scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, initial: Mode) {
     gl.localClippingEnabled = true;
+    /* image-based light from a procedural room — reflections for the
+       metal roof and glass without fetching an HDR */
+    if (!root.environment) {
+      const pmrem = new THREE.PMREMGenerator(gl);
+      root.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      root.environmentIntensity = 0.3;
+      pmrem.dispose();
+    }
     const extras = (scene.userData as Extras | undefined) ?? {};
     if (extras.storeys?.length) this.storeys = extras.storeys;
     if (extras.footprint) this.footprint = extras.footprint;
@@ -94,15 +193,20 @@ class ViewerState {
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
+        const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
         const mat = new THREE.MeshStandardMaterial({
           color: (RENDER[cat] ?? RENDER.misc)[0],
-          roughness: cat === "glass" ? 0.25 : 0.9,
-          metalness: 0,
+          roughness: rough,
+          metalness: metal,
           transparent: true,
           opacity: (RENDER[cat] ?? RENDER.misc)[1],
           side: THREE.DoubleSide,
           clippingPlanes: [this.plane],
+          /* architecture is planes: flat shading keeps roofs and walls
+             crisp instead of smearing light across welded normals */
+          flatShading: true,
         });
+        finish(mat, cat);
         mat.userData.viewer = true;
         (o.material as THREE.Material).dispose?.();
         o.material = mat;
@@ -138,6 +242,12 @@ class ViewerState {
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
       mat.opacity = THREE.MathUtils.lerp(oa, ob, e) * THREE.MathUtils.lerp(1, above, e);
       mat.visible = mat.opacity > 0.01;
+      /* the drawing is matte: metal and gloss fade with the palette */
+      const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
+      mat.roughness = THREE.MathUtils.lerp(rough, 1, e);
+      mat.metalness = THREE.MathUtils.lerp(metal, 0, e);
+      const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
+      if (shader) shader.uniforms.uPlan.value = e;
     }
 
     /* yaw: spin in 3D, settle to north-up in plan */
@@ -174,11 +284,13 @@ class ViewerState {
 }
 
 /* imperative hand-off from React land to the viewer state */
-function wire(vs: React.RefObject<ViewerState | null>, group: THREE.Group | null, scene: THREE.Object3D, gl: THREE.WebGLRenderer, mode: Mode) {
+function wire(vs: React.RefObject<ViewerState | null>, group: THREE.Group | null, scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, mode: Mode) {
   const v = vs.current;
   if (!v) return;
   v.group = group;
-  v.attach(scene, gl, mode);
+  v.attach(scene, gl, root, mode);
+  /* inspectable from the console / Playwright: window.__planViewer */
+  (window as unknown as { __planViewer?: ViewerState }).__planViewer = v;
 }
 
 function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerState | null>; input: Inputs }) {
@@ -191,10 +303,10 @@ function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerStat
     ref.current = input;
   }, [input]);
   /* wiring the loaded scene into the viewer state is a side effect */
-  const { gl } = useThree();
+  const { gl, scene: root } = useThree();
   useEffect(() => {
-    wire(vs, group.current, scene, gl, ref.current.mode);
-  }, [scene, gl, vs]);
+    wire(vs, group.current, scene, gl, root, ref.current.mode);
+  }, [scene, gl, root, vs]);
   useFrame((state, dt) => {
     vs.current?.tick(state, Math.min(dt, 0.1), ref.current);
   });
@@ -244,14 +356,17 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
         <Canvas
           dpr={[1, 1.5]}
           camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: 0.1, far: 500 }}
-          gl={{ antialias: true, alpha: true, powerPreference: "low-power" }}
+          gl={{ antialias: true, alpha: true, powerPreference: "low-power", toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.95 }}
           onPointerDown={() => setSpinning(false)}
           onPointerUp={() => setSpinning(true)}
         >
-          <hemisphereLight args={["#ffffff", "#8a8a86", 1.1]} />
-          <directionalLight position={[8, 14, 6]} intensity={1.4} />
-          <directionalLight position={[-10, 6, -8]} intensity={0.5} />
+          <hemisphereLight args={["#f4f3ef", "#6d6c68", 0.45]} />
+          <directionalLight position={[12, 16, 8]} intensity={1.25} />
+          <directionalLight position={[-10, 6, -8]} intensity={0.3} />
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
+          {/* a soft contact shadow grounds the home (hidden under the
+              floor slab in plan view, so nothing to fade) */}
+          <ContactShadows position={[0, 0.005, 0]} opacity={0.45} scale={Math.max(fp.width_m, fp.depth_m) * 2.2} blur={2.6} far={fp.height_m} resolution={512} frames={reduce || mode === "plan" ? 1 : Infinity} color="#1a1a18" />
           <OrbitControls
             ref={(c) => {
               const v = vs.current;
