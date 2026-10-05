@@ -589,6 +589,18 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   `project.order`, `series.brochure`. Still missing after import
   (Input 5/6): series finish levels, FAQ, timelines; project modules,
   months, cost band, testimonials, geo — the export never had them.
+- IMPORT RUN (2026-10-05 21:03–21:44Z, import-webflow run 6): 7 series,
+  36 plans (3 drafts), 109 projects (12 drafts — one Webflow draft was
+  already live from the crawl, so it stays published), 4 commercial
+  types, 4 region pages, 3 post categories, 257 posts (75 drafts); 1,096
+  assets uploaded, 0 failed, 0 Studio-edited docs skipped. Every crawl
+  post was re-written from its Webflow row (none orphaned). Leftovers to
+  delete by hand when ready: the crawl's three
+  `method-page-custom-regions-*` pages (superseded by
+  `method-page-custom-homes-*`). GitHub gotcha: the `ubuntu-latest`
+  pool refused to acquire the job four times ("not acquired by Runner
+  of type hosted") while `ubuntu-22.04` ran at once — the workflow now
+  pins 22.04.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
