@@ -47,9 +47,10 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
       hdr.dispose();
       root.environment?.dispose();
       root.environment = env;
-      /* HDR skies are in absolute-ish units with a hot sun; keep the
-         image light modest and let the directional light cast */
-      root.environmentIntensity = 0.55;
+      /* a real sky's diffuse light is modest (mean luminance ≈ 0.7 for
+         the Poly Haven partly-cloudy map) — lift it so the shaded sides
+         still read, and let the directional light carry the sun */
+      root.environmentIntensity = 1.3;
       root.userData.envSource = "hdri";
     } catch {
       /* keep the procedural room */
@@ -430,10 +431,11 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           onPointerDown={() => setSpinning(false)}
           onPointerUp={() => setSpinning(true)}
         >
-          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.25 : 0.45]} />
+          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.4 : 0.45]} />
           {/* the sun: aligned with the HDRI's once env.json arrives */}
-          <directionalLight position={sun ? [sun[0] * 30, sun[1] * 30, sun[2] * 30] : [12, 16, 8]} intensity={sun ? 1.6 : 1.25} />
-          <directionalLight position={[-10, 6, -8]} intensity={0.3} />
+          <directionalLight position={sun ? [sun[0] * 30, sun[1] * 30, sun[2] * 30] : [12, 16, 8]} intensity={sun ? 2.2 : 1.25} />
+          {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
+          <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.5 : 0.3} />
           <SkyEnvironment base={envBase} onSun={setSun} />
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
