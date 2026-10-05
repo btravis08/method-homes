@@ -30,6 +30,18 @@ on:
         description: "Upload the GLB to Sanity and attach it to the plan (needs a write token)"
         type: boolean
         default: true
+      render:
+        description: "Also render the Cycles turntable + plan-cut frames (public/models/<slug>/turntable); slow — about 1–2 min a frame on a runner"
+        type: boolean
+        default: true
+      frames:
+        description: "Orbit frame count for the render (the plan flight uses two thirds of it)"
+        required: false
+        default: "36"
+      samples:
+        description: "Cycles samples per pixel for the render"
+        required: false
+        default: "96"
 
 permissions:
   contents: write
@@ -37,7 +49,7 @@ permissions:
 jobs:
   convert:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 330
     env:
       SANITY_PROJECT_ID: i2wd5pr1
       SANITY_DATASET: production
@@ -79,8 +91,8 @@ jobs:
           python scripts/model/ifc-to-glb.py source.ifc "public/models/$SLUG.raw.glb" --report "design/models/$SLUG.report.json" \
             ${{ github.event.inputs.allow && format('--allow "{0}"', github.event.inputs.allow) || '' }} \
             ${{ github.event.inputs.deny && format('--deny "{0}"', github.event.inputs.deny) || '' }}
-          npx -y @gltf-transform/cli@4 optimize "public/models/$SLUG.raw.glb" "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001
-          rm -f "public/models/$SLUG.raw.glb"
+          npx -y @gltf-transform/cli@4 optimize "public/models/$SLUG.raw.glb" "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001 --palette false --join false --flatten false
+          mv "public/models/$SLUG.raw.glb" /tmp/source.raw.glb  # the render step reads the uncompressed copy
           ls -la "public/models/$SLUG.glb"
           python - <<'PY'
           import json, os, sys
@@ -92,6 +104,21 @@ jobs:
           if r["proxies"]:
               print("proxies:", ", ".join(f"{p['name']} ({p['size_m']} m) {'kept' if p['kept'] else 'dropped'}" for p in r["proxies"]))
           PY
+
+      - name: Render the turntable (Blender Cycles)
+        if: ${{ github.event.inputs.render == 'true' }}
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.inputs.slug }}"
+          ORBIT="${{ github.event.inputs.frames }}"
+          PLAN=$(( ORBIT * 2 / 3 ))
+          NORTH=$(python -c "import json; print(json.load(open('design/models/$SLUG.report.json'))['northDeg'])")
+          python -m pip install -q bpy==4.5.14
+          npm install --no-save sharp
+          python scripts/model/render-turntable.py /tmp/source.raw.glb /tmp/frames \
+            --orbit "$ORBIT" --plan "$PLAN" --samples "${{ github.event.inputs.samples }}" --north "$NORTH" --width 1440 --height 900
+          node scripts/model/encode-frames.mjs /tmp/frames "public/models/$SLUG/turntable"
+          du -sh "public/models/$SLUG/turntable"
 
       - name: Attach to the plan in Sanity
         if: ${{ github.event.inputs.attach == 'true' && env.SANITY_AUTH_TOKEN != '' }}
@@ -117,7 +144,8 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "public/models/$SLUG.glb" "design/models/$SLUG.report.json"
+          [ -d "public/models/$SLUG/turntable" ] && git add "public/models/$SLUG/turntable"
           git diff --cached --quiet && { echo "nothing changed"; exit 0; }
-          git commit -q -m "models: $SLUG (ifc-to-glb pipeline)"
+          git commit -q -m "models: $SLUG (ifc-to-glb pipeline${{ github.event.inputs.render == 'true' && ' + turntable render' || '' }})"
           git pull --rebase -q origin main
           git push -q origin HEAD:main

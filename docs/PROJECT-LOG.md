@@ -61,6 +61,83 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
 
 ## 3. Decisions (newest first)
 
+### 2026-10-04 — Photoreal layer: offline Blender Cycles turntable + plan-cut frame sequence (Bryce: "Start")
+- Bryce judged the real-time viewer's look ("early 2000s game",
+  fake HDRI reflections, aliased edges) and asked for a more
+  sophisticated rendering technique. Decision: render OFFLINE with
+  a path tracer and ship frames, not a real-time shader. Blender
+  Cycles as a Python module (`pip install bpy`, 4.5 LTS) runs on the
+  Actions runner; the browser only shows images. The raster
+  PlanViewer stays as the interactive/plan twin; Gaussian splats
+  remain a later option for photographed homes.
+- `scripts/model/render-turntable.py` builds the scene from scratch
+  per run from the pipeline's uncompressed GLB: Nishita sky (the
+  physically based atmosphere; no HDRI file — download.blender.org
+  and Poly Haven are 403 from the sandbox, and the sky's own sun is
+  importance-sampled), hazier late-afternoon sun (intensity 0.55,
+  dust 2.0, exposure −0.8 under AgX so sunlit faces don't bleach),
+  per-category materials — fibre-cement panels as a procedural brick
+  grid whose horizontal axis follows each face's normal (4 × 8 ft,
+  12 mm reveals, bump), Kynar-black standing seam as a dark
+  DIELECTRIC paint (Fresnel sky reflections at grazing, near-black
+  face-on; a metallic black reflects nothing) with 16 in ribs as
+  bump, physical glass (IOR 1.52, transmission) over a dark interior
+  box capped below the eaves, concrete slab — and a lawn disc
+  (two-scale noise shader, radial alpha fade) on a transparent film
+  so frames sit on the page surface. Orbit: 36 frames at 26°
+  elevation. Plan flight: 24 frames easing to straight above with
+  the lens going 40 → 160 mm (≈ orthographic) and the model turning
+  north-up; over the last 40% the camera's clip start descends in
+  WORLD height from above the ridge to 1.2 m above the storey (a
+  true section cut, no booleans), the roof stops casting/bouncing
+  light and the sun climbs to noon so the opened floors read evenly,
+  and every material mixes to the drawing palette (walls black,
+  floors paper, glass blue). Output PNGs + manifest.json;
+  `scripts/model/encode-frames.mjs` (sharp) writes AVIF (q55, 4:2:0,
+  alpha) + WebP fallback + a 48 px blurred poster and copies the
+  manifest with byte sizes.
+- `TurntableViewer` (client; no WebGL): drag or arrow keys turn the
+  home through the orbit frames (the nearest LOADED frame always
+  shows, so a drag never flashes empty); "Floor plan" plays the
+  flight forward at 24 fps and holds on the drawing, "3D" plays it
+  back; frames preload progressively (first frame, then every 8th,
+  4th, 2nd, rest; plan frames on first request); reduced motion
+  jumps. Sample at /library/turntable, frames in
+  public/models/sample/turntable/ — the sandbox set (24 orbit + 16
+  plan frames at 1280 × 800, 48 samples, 34 min on 4 CPU cores) is
+  **0.41 MB of AVIF for all 40 frames** (5–14 KB each; the WebP
+  fallback set is 2.6 MB), far under the 3–5 MB budget, so the
+  workflow's 1440 × 900 / 96-sample set has room. Headless Chromium:
+  drag turns, arrow keys step, Floor plan plays to the drawing and
+  back, 41 image requests all unique, no console errors. Gotcha: AVIF
+  support must be probed by DECODING a tiny AVIF — Chrome decodes AVIF
+  but refuses to encode it, so canvas.toDataURL says "no" everywhere
+  and the WebP fallback would have shipped to every visitor.
+  model-pipeline.yml gained a
+  render step (inputs render/frames/samples; ~1–2 min a frame on a
+  runner at 1440 × 900, so the job timeout is 5.5 h) that commits
+  public/models/<slug>/turntable/ beside the GLB.
+- Lessons: (1) a driver on a shader Value socket never evaluated in
+  module mode — every material sat at the node's 0.5 default and the
+  whole house tinted toward the plan palette; set the Value nodes
+  directly per frame. (2) The camera clip plane hides geometry from
+  the camera only — the roof still blocked light and the opened plan
+  rendered black until the roof's ray visibility was switched off for
+  the cut. (3) The interior box must stop below the eaves, or it
+  pokes through the roof slopes as "beige slabs". (4) Hair-particle
+  grass is pointless from 40 m: 9 cm blades are sub-pixel; a two-scale
+  lawn shader does the work for free. (5) Express the section cut in
+  world height, not as a fraction of the camera distance — at 150 m
+  the latter only bit in the final two frames. (6) The lawn's radial
+  fade must be in unit-disc coordinates (scale object coords by
+  1/radius) or the gradient is 1 m wide.
+- Still to do: run the workflow's render step for real against the
+  sample (runner timing), HDRI option when a host is reachable from
+  Actions (Poly Haven from the runner, not the sandbox), per-series
+  finish presets, a storey selector for multi-storey plans (render
+  one plan sequence per habitable storey), and the plan page
+  preferring the turntable when its manifest exists.
+
 ### 2026-10-04 — Interactive floor plans: IFC → GLB pipeline + 3D plan viewer (prototype, Bryce)
 - Bryce's idea, approved for a sample test: a 3D model of each home
   that turns on its vertical axis; "Floor plans" animates to a top

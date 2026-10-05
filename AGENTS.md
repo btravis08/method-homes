@@ -129,6 +129,19 @@ staging/design use.
   the twin; facts never live only inside the canvas. Frame-loop
   mutation belongs in `ViewerState`, not component code (React
   Compiler immutability lint).
+- The photoreal layer is OFFLINE: `scripts/model/render-turntable.py`
+  (Blender Cycles via `pip install bpy`, Nishita sky, procedural
+  finishes, lawn, transparent film) renders the orbit + plan-cut
+  frames; `scripts/model/encode-frames.mjs` makes AVIF/WebP + poster
+  + manifest; `TurntableViewer` plays them (no WebGL). Don't chase
+  realism in the raster viewer's shaders — tune the Blender scene and
+  re-render (workflow render step). Frames live in
+  public/models/<slug>/turntable/ (sample: public/models/sample/
+  turntable/). Gotchas: drivers on shader sockets don't evaluate in
+  module mode (set Value nodes per frame); the camera clip cut hides
+  the roof from the camera only — switch its ray visibility off for
+  the cut or the plan renders black; express the cut in world height.
+  Sanity check a `--quick --only orbit-14` frame before a full run.
 
 ## Design source (Figma) — THE REBRAND
 

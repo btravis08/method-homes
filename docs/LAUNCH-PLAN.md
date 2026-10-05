@@ -219,7 +219,7 @@ gate after idle. Each has one toggle or slider at most.
 |---|---|---|---|
 | Build journey | /process | Step | [ ] |
 | What it costs | /pricing | Path=Predesigned/Custom | [ ] |
-| Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04) | [~] 3D viewer prototype in code; Plan/Modules/Photos pending Bryce's design pass |
+| Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04; photoreal Cycles turntable + plan-cut frames, same day) | [~] 3D viewer + rendered turntable prototypes in code (/library/plan-viewer, /library/turntable); Plan/Modules/Photos pending Bryce's design pass |
 | We deliver to you | /where-we-build | State=Empty/Result | [ ] |
 | Lineup (replaces Find your fit) | /predesigned | Series | [x] 2026-10-04 — pills are real links to /series/*, JS swaps in place (state-driven cross-fade); twin = Card grid + Compare table on the same page |
 | Scale, simply | /commercial | Config=24/48 units | [ ] |
@@ -631,6 +631,20 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-04 — Photoreal layer for the plan viewer (Bryce: the
+  real-time look read as a game; "Start" on offline rendering).
+  `scripts/model/render-turntable.py` renders the pipeline GLB with
+  Blender Cycles (bpy module): Nishita sky + sun, procedural
+  fibre-cement panels and black standing seam, physical glass over an
+  interior, lawn pad on a transparent film; 36 orbit frames + a
+  24-frame flight to a north-up plan with a true section cut (camera
+  clip start) and a palette fade to the drawing.
+  `scripts/model/encode-frames.mjs` → AVIF + WebP + poster +
+  manifest; `TurntableViewer` (no WebGL: drag to turn, "Floor plan"
+  plays the sequence, progressive preload) at /library/turntable
+  with the sample house's frames in public/models/sample/turntable/.
+  model-pipeline.yml gained a render step (inputs render/frames/
+  samples). Docs: PROJECT-LOG decision + lessons, AGENTS 3D rules.
 - 2026-10-04 — 3D plan viewer prototype (Bryce: interactive floor
   plans — the home spins on its vertical axis, "Floor plans" flies to
   a north-up top view and cuts the model into a drawing). IFC → GLB

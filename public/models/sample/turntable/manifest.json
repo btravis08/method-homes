@@ -1,0 +1,224 @@
+{
+  "generator": "method-homes render-turntable (Blender Cycles)",
+  "blender": "4.5.14 LTS",
+  "width": 1280,
+  "height": 800,
+  "orbit": [
+    "orbit-00",
+    "orbit-01",
+    "orbit-02",
+    "orbit-03",
+    "orbit-04",
+    "orbit-05",
+    "orbit-06",
+    "orbit-07",
+    "orbit-08",
+    "orbit-09",
+    "orbit-10",
+    "orbit-11",
+    "orbit-12",
+    "orbit-13",
+    "orbit-14",
+    "orbit-15",
+    "orbit-16",
+    "orbit-17",
+    "orbit-18",
+    "orbit-19",
+    "orbit-20",
+    "orbit-21",
+    "orbit-22",
+    "orbit-23"
+  ],
+  "plan": [
+    "plan-00",
+    "plan-01",
+    "plan-02",
+    "plan-03",
+    "plan-04",
+    "plan-05",
+    "plan-06",
+    "plan-07",
+    "plan-08",
+    "plan-09",
+    "plan-10",
+    "plan-11",
+    "plan-12",
+    "plan-13",
+    "plan-14",
+    "plan-15"
+  ],
+  "footprint": {
+    "width_m": 23.8,
+    "depth_m": 10.7,
+    "height_m": 3.92
+  },
+  "northDeg": 0,
+  "cutHeight_m": 1.2,
+  "samples": 48,
+  "seconds": 2012.3,
+  "encodedWidth": 1280,
+  "quality": 55,
+  "sizes": {
+    "orbit-00": {
+      "avif": 10824,
+      "webp": 90402
+    },
+    "orbit-01": {
+      "avif": 10177,
+      "webp": 90564
+    },
+    "orbit-02": {
+      "avif": 10163,
+      "webp": 91484
+    },
+    "orbit-03": {
+      "avif": 9667,
+      "webp": 90770
+    },
+    "orbit-04": {
+      "avif": 9483,
+      "webp": 89516
+    },
+    "orbit-05": {
+      "avif": 10361,
+      "webp": 92606
+    },
+    "orbit-06": {
+      "avif": 11690,
+      "webp": 94726
+    },
+    "orbit-07": {
+      "avif": 12513,
+      "webp": 95216
+    },
+    "orbit-08": {
+      "avif": 12403,
+      "webp": 94884
+    },
+    "orbit-09": {
+      "avif": 11509,
+      "webp": 94040
+    },
+    "orbit-10": {
+      "avif": 11599,
+      "webp": 94068
+    },
+    "orbit-11": {
+      "avif": 12950,
+      "webp": 95668
+    },
+    "orbit-12": {
+      "avif": 13218,
+      "webp": 96342
+    },
+    "orbit-13": {
+      "avif": 12783,
+      "webp": 95208
+    },
+    "orbit-14": {
+      "avif": 11925,
+      "webp": 94710
+    },
+    "orbit-15": {
+      "avif": 11827,
+      "webp": 93598
+    },
+    "orbit-16": {
+      "avif": 11312,
+      "webp": 92902
+    },
+    "orbit-17": {
+      "avif": 11698,
+      "webp": 94528
+    },
+    "orbit-18": {
+      "avif": 12057,
+      "webp": 94362
+    },
+    "orbit-19": {
+      "avif": 12304,
+      "webp": 94312
+    },
+    "orbit-20": {
+      "avif": 11800,
+      "webp": 93238
+    },
+    "orbit-21": {
+      "avif": 10384,
+      "webp": 90206
+    },
+    "orbit-22": {
+      "avif": 9250,
+      "webp": 88790
+    },
+    "orbit-23": {
+      "avif": 10175,
+      "webp": 89712
+    },
+    "plan-00": {
+      "avif": 10824,
+      "webp": 90402
+    },
+    "plan-01": {
+      "avif": 9280,
+      "webp": 77506
+    },
+    "plan-02": {
+      "avif": 8755,
+      "webp": 30308
+    },
+    "plan-03": {
+      "avif": 7848,
+      "webp": 19388
+    },
+    "plan-04": {
+      "avif": 6090,
+      "webp": 15120
+    },
+    "plan-05": {
+      "avif": 5833,
+      "webp": 13610
+    },
+    "plan-06": {
+      "avif": 6166,
+      "webp": 14218
+    },
+    "plan-07": {
+      "avif": 9264,
+      "webp": 20294
+    },
+    "plan-08": {
+      "avif": 14085,
+      "webp": 30552
+    },
+    "plan-09": {
+      "avif": 15036,
+      "webp": 32118
+    },
+    "plan-10": {
+      "avif": 13968,
+      "webp": 31210
+    },
+    "plan-11": {
+      "avif": 12739,
+      "webp": 30084
+    },
+    "plan-12": {
+      "avif": 12287,
+      "webp": 29916
+    },
+    "plan-13": {
+      "avif": 11973,
+      "webp": 29748
+    },
+    "plan-14": {
+      "avif": 5900,
+      "webp": 16454
+    },
+    "plan-15": {
+      "avif": 5844,
+      "webp": 16136
+    }
+  },
+  "totalAvifBytes": 427964
+}

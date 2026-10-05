@@ -33,6 +33,8 @@ import { SubNav } from "@/components/home/SubNav";
 import { Lineup } from "@/components/home/Lineup";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { LazyPlanViewer } from "@/components/model/LazyPlanViewer";
+import { TurntableViewer } from "@/components/model/TurntableViewer";
+import sampleTurntable from "../../public/models/sample/turntable/manifest.json";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
 import { FloatingWords } from "@/components/legacy/FloatingWords";
 import { FullBleedCarousel } from "@/components/legacy/FullBleedCarousel";
@@ -450,6 +452,25 @@ export const SECTIONS: SectionEntry[] = [
             <h2 className="font-display text-headline-md text-ink">Sample house — 3D and floor plan</h2>
           </div>
           <LazyPlanViewer src="/models/sample/basic-house.glb" alt="Sample two-storey house model" />
+        </div>
+      </section>
+    ),
+  },
+  {
+    slug: "turntable",
+    title: "Rendered turntable",
+    group: "Page sections",
+    description: "The photoreal layer (2026-10-04): the same sample house rendered offline in Blender Cycles — sky and sun, glass with an interior, standing-seam roof, fibre-cement panels, a lawn pad — as a drag-to-turn frame sequence, with “Floor plan” playing the flight and section cut to a north-up drawing. AVIF frames with a WebP fallback, loaded progressively behind a blurred poster; no WebGL. Built by scripts/model/render-turntable.py + encode-frames.mjs (the model-pipeline workflow's render step).",
+    modes: ["light"],
+    tall: true,
+    render: () => (
+      <section data-mode="light" className="w-full bg-surface px-4 py-8xl text-ink md:px-7xl md:py-10xl">
+        <div className="mx-auto flex w-full max-w-page flex-col gap-3xl">
+          <div className="flex flex-col gap-xl">
+            <p className="label text-ink-3">Walk the plan</p>
+            <h2 className="font-display text-headline-md text-ink">Sample house — rendered</h2>
+          </div>
+          <TurntableViewer base="/models/sample/turntable" manifest={sampleTurntable} alt="Rendered sample house, turning" />
         </div>
       </section>
     ),
