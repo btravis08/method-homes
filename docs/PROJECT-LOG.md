@@ -251,6 +251,21 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   which floor-to-ceiling windows defeated — so windows read as
   openings instead of black blocks. Materials also lerp envMapIntensity → 0.15 in plan so the
   sky's blue cast leaves the drawing.
+- Finish + transition (Bryce, 2026-10-05: "off-white exterior with
+  black mullion windows, black standing seam"; "the transition spins
+  unnecessarily, jumps into place and looks low quality"). Palette in
+  both viewers: siding #e9e5dd off-white, roof #0e0f10, frames #111.
+  The flight was a per-frame lerp chasing the top view with a snap at
+  98%, and the north turn ran on its own curve. Now it is a pure
+  function of progress: the camera follows a spherical path from the
+  orbit pose it left (polar angle closes, azimuth HELD, radius eases),
+  on one cubic in-out curve over ~1.2 s, and the model turns by the
+  shortest way to north + the held azimuth (screen-up in the top view
+  is −(sin θ, cos θ)), so plan lands north-up from any angle with a
+  turn of at most 180° (measured 29°–49°). The PerformanceMonitor now
+  needs a sustained dip (6 × 1.5 s windows) before lowering
+  resolution, so a flight never reads as a quality drop. The turntable
+  frames were re-rendered on Actions in the new palette.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

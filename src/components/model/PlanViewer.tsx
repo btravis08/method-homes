@@ -122,17 +122,19 @@ const FOV_3D = 8;
 const FOV_PLAN = 8; // narrow + far ≈ orthographic
 const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
 const GLASS_TRANSMISSION = 0.92;
-const SPEED = 1.6; // mode transition, 1/s
+const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 const SPIN = 0.15; // rad/s
-const ease = (t: number) => 1 - Math.pow(1 - t, 3);
+/* cubic in-out: the flight leaves and arrives gently, no snap */
+const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /* the two palettes, keyed by the pipeline's category names */
-/* the render finish: grey fibre-cement panel siding, black standing-
-   seam metal roof, dark bronze doors and rails, concrete floors. The
-   siding and roof get procedural relief in the shader (see FINISH). */
+/* the render finish (Bryce, 2026-10-05): off-white fibre-cement panel
+   siding, black standing-seam metal roof, black window mullions, dark
+   doors, concrete floors. The siding and roof get procedural relief in
+   the shader (see FINISH). */
 const RENDER: Record<string, [string, number]> = {
-  wall: ["#7d8083", 1], floor: ["#b9b5ad", 1], roof: ["#141516", 1], glass: ["#8fb0c2", 0.45],
-  door: ["#2a2622", 1], frame: ["#1d1c1a", 1], stair: ["#8e8a84", 1], rail: ["#2a2a28", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
+  wall: ["#e9e5dd", 1], floor: ["#b9b5ad", 1], roof: ["#0e0f10", 1], glass: ["#8fb0c2", 0.45],
+  door: ["#1a1918", 1], frame: ["#111111", 1], stair: ["#8e8a84", 1], rail: ["#1a1a19", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
 };
 /* PBR per category: [roughness, metalness] */
 const SURFACE: Record<string, [number, number]> = {
@@ -263,7 +265,12 @@ class ViewerState {
   private a = new THREE.Color();
   private b = new THREE.Color();
   private look = new THREE.Vector3();
-  private top = new THREE.Vector3();
+  /* the flight is a pure function of progress between the orbit pose the
+     user left and the top view: spherical path, azimuth held */
+  private orbitPos = new THREE.Vector3();
+  private sph = new THREE.Spherical();
+  private hasOrbitPos = false;
+  private flightTheta = 0;
 
   attach(scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, initial: Mode) {
     gl.localClippingEnabled = true;
@@ -336,6 +343,14 @@ class ViewerState {
     this.progress = Math.abs(d) < 0.001 ? target : this.progress + Math.sign(d) * Math.min(Math.abs(d), dt * speed);
     const e = ease(this.progress);
     const f = this.footprint;
+    /* capture the orbit pose the moment a flight starts; it anchors both
+       the camera path and the north-up turn */
+    if (this.progress > 0.001 && !this.hasOrbitPos) {
+      this.orbitPos.copy(state.camera.position);
+      this.sph.setFromVector3(this.orbitPos);
+      this.flightTheta = this.sph.theta;
+      this.hasOrbitPos = true;
+    }
 
     /* section cut descends from above the roof to the storey's cut height */
     const cutY = (this.storeys[input.storey]?.elevation_m ?? 0) + CUT_ABOVE_FLOOR;
@@ -370,7 +385,10 @@ class ViewerState {
 
     /* yaw: spin in 3D, settle to north-up in plan */
     if (this.group) {
-      const north = THREE.MathUtils.degToRad(input.northDeg);
+      /* the camera keeps its azimuth θ on the flight, so screen-up in the
+         top view is −(sin θ, cos θ); turning the model by θ more lands
+         north on screen-up by the shortest way round */
+      const north = THREE.MathUtils.degToRad(input.northDeg) + (this.hasOrbitPos ? this.flightTheta : 0);
       if (target === 0 && input.spinning && !input.reduce && this.progress < 0.01) this.yaw += dt * SPIN;
       const twoPi = Math.PI * 2;
       this.yaw = ((this.yaw % twoPi) + twoPi) % twoPi;
@@ -382,14 +400,22 @@ class ViewerState {
     const cam = state.camera as THREE.PerspectiveCamera;
     if (this.controls) this.controls.enabled = this.progress < 0.02;
     if (this.progress > 0.001) {
+      /* spherical path from the orbit pose to straight above: the polar
+         angle closes to the top, the azimuth holds (no camera spin — the
+         only turn is the model settling north-up), the radius eases to
+         the plan distance. Deterministic in e, so no chase and no snap. */
       const topDistance = Math.max(f.width_m, f.depth_m) * 6;
-      this.top.set(0, topDistance, 0.0001);
-      cam.position.lerp(this.top, Math.min(1, e * 0.25 + (e > 0.98 ? 1 : 0)));
+      this.sph.setFromVector3(this.orbitPos);
+      const phi = THREE.MathUtils.lerp(this.sph.phi, 0.012, e);
+      const r = THREE.MathUtils.lerp(this.sph.radius, topDistance, e);
+      this.sph.set(r, phi, this.sph.theta);
+      cam.position.setFromSpherical(this.sph);
       cam.fov = THREE.MathUtils.lerp(FOV_3D, FOV_PLAN, e);
       this.look.set(0, THREE.MathUtils.lerp(f.height_m * 0.4, 0, e), 0);
       cam.lookAt(this.look);
       cam.updateProjectionMatrix();
     } else {
+      this.hasOrbitPos = false;
       if (Math.abs(cam.fov - FOV_3D) > 0.01) {
         cam.fov = FOV_3D;
         cam.updateProjectionMatrix();
@@ -509,7 +535,9 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
           <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.5 : 0.3} />
           <SkyEnvironment base={envBase} onSun={setSun} />
-          <PerformanceMonitor onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={3} onFallback={() => setDpr(1)} />
+          {/* resolution steps down only on a sustained low frame rate, never
+              on the brief dip of a mode flight (that read as a quality drop) */}
+          <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
               floor slab in plan view, so nothing to fade) */}

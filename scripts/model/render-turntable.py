@@ -176,9 +176,10 @@ def mat_siding(fade_obj):
     brick.inputs["Bias"].default_value = 0.0
     brick.inputs["Brick Width"].default_value = 1.2192
     brick.inputs["Row Height"].default_value = 2.4384
-    brick.inputs["Color1"].default_value = (0.115, 0.12, 0.126, 1)  # fibre-cement grey (linear ≈ sRGB 38%)
-    brick.inputs["Color2"].default_value = (0.1, 0.105, 0.11, 1)
-    brick.inputs["Mortar"].default_value = (0.06, 0.062, 0.064, 1)
+    # off-white fibre-cement (Bryce, 2026-10-05): sRGB #e9e5dd ≈ linear 0.81/0.78/0.72; reveals a shadowed mid grey
+    brick.inputs["Color1"].default_value = (0.81, 0.78, 0.72, 1)
+    brick.inputs["Color2"].default_value = (0.76, 0.73, 0.67, 1)
+    brick.inputs["Mortar"].default_value = (0.22, 0.215, 0.2, 1)
     nt.links.new(comb.outputs["Result"], brick.inputs["Vector"])
     render_color = brick.outputs["Color"]
     tex = pbr(nt, "siding", 2.4)
@@ -250,7 +251,7 @@ def mat_roof(fade_obj):
     nt.links.new(rib.outputs[0], bump.inputs["Height"])
     nt.links.new(bump.outputs["Normal"], bsdf.inputs["Normal"])
     base = nt.nodes.new("ShaderNodeRGB")
-    base.outputs[0].default_value = (0.012, 0.012, 0.013, 1)
+    base.outputs[0].default_value = (0.006, 0.006, 0.007, 1)  # black standing seam
     color = plan_mix(nt, base.outputs[0], (0.5, 0.5, 0.48), fade)
     nt.links.new(color, bsdf.inputs["Base Color"])
     # Kynar-painted steel: a dark dielectric paint film — Fresnel sky
@@ -447,7 +448,7 @@ def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, e
         "door": mat_flat("door", (0.03, 0.025, 0.02), 0.45, 0.2, (0.3, 0.2, 0.13), fade_obj),
         # window frames (the pipeline splits them from the panes): dark
         # bronze anodised aluminium — a satin metal, not matte paint
-        "frame": mat_flat("frame", (0.022, 0.02, 0.018), 0.38, 0.6, (0.008, 0.008, 0.008), fade_obj),
+        "frame": mat_flat("frame", (0.006, 0.006, 0.006), 0.35, 0.6, (0.008, 0.008, 0.008), fade_obj),  # black mullions
         "rail": mat_flat("rail", (0.02, 0.02, 0.02), 0.4, 0.7, (0.02, 0.02, 0.02), fade_obj),
         "floor": mat_concrete(fade_obj),
         "stair": mat_flat("stair", (0.3, 0.28, 0.25), 0.8, 0.0, (0.5, 0.48, 0.45), fade_obj),
