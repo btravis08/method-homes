@@ -31,7 +31,7 @@ concurrency:
 
 jobs:
   import:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04 # ubuntu-latest (24.04) pool refused to acquire the job 4× on 2026-10-05
     timeout-minutes: 120
     steps:
       - name: Mask token
