@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T14:58:13.615Z",
+  "generatedAt": "2026-10-05T18:49:12.870Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 67,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-04",
+    "since": "2026-09-05",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 4d ago",
+    "model": "Claude web search (manual, session probe) · recorded 5d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,48 +1181,63 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9333333333333333,
-      "detail": "52/60 pages pass",
+      "ratio": 0.8666666666666667,
+      "detail": "49/60 pages pass",
       "pages": [
+        {
+          "path": "/blog/2013-green-washington-awards",
+          "ratio": 0,
+          "detail": "2581 ms"
+        },
+        {
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0,
+          "detail": "2464 ms"
+        },
+        {
+          "path": "/blog/783",
+          "ratio": 0,
+          "detail": "2282 ms"
+        },
+        {
+          "path": "/blog/793",
+          "ratio": 0,
+          "detail": "2321 ms"
+        },
+        {
+          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
+          "ratio": 0,
+          "detail": "2134 ms"
+        },
         {
           "path": "/",
           "ratio": 0.5,
-          "detail": "825 ms"
+          "detail": "1129 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "877 ms"
-        },
-        {
-          "path": "/blog/2013-green-washington-awards",
-          "ratio": 0.5,
-          "detail": "860 ms"
+          "detail": "1052 ms"
         },
         {
           "path": "/about",
           "ratio": 0.5,
-          "detail": "1045 ms"
+          "detail": "1528 ms"
         },
         {
-          "path": "/blog/2014-palm-springs-modernism-week-in-review",
+          "path": "/commercial",
           "ratio": 0.5,
-          "detail": "1260 ms"
+          "detail": "859 ms"
         },
         {
-          "path": "/blog/793",
+          "path": "/commercial-project-types-affordable-workforce-housing",
           "ratio": 0.5,
-          "detail": "1222 ms"
+          "detail": "871 ms"
         },
         {
           "path": "/commercial-project-types-classrooms-and-school-additions",
           "ratio": 0.5,
-          "detail": "890 ms"
-        },
-        {
-          "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
-          "ratio": 0.5,
-          "detail": "1176 ms"
+          "detail": "854 ms"
         }
       ]
     },
@@ -2376,7 +2391,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "8 run(s) recorded",
+      "detail": "9 run(s) recorded",
       "pages": []
     },
     {
@@ -2869,6 +2884,30 @@
       "pagesAffected": 2
     },
     {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0.1,
+      "priority": 0.04,
+      "detail": "49/60 pages pass",
+      "pages": [
+        "/blog/2013-green-washington-awards — 2581 ms",
+        "/blog/2014-palm-springs-modernism-week-in-review — 2464 ms",
+        "/blog/783 — 2282 ms",
+        "/blog/793 — 2321 ms",
+        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 2134 ms",
+        "/ — 1129 ms",
+        "/legacy — 1052 ms",
+        "/about — 1528 ms",
+        "/commercial — 859 ms",
+        "/commercial-project-types-affordable-workforce-housing — 871 ms",
+        "/commercial-project-types-classrooms-and-school-additions — 854 ms"
+      ],
+      "pagesAffected": 11
+    },
+    {
       "id": "broken-links",
       "pillar": "technical",
       "title": "Internal links resolve",
@@ -2879,27 +2918,6 @@
       "detail": "1 broken of 79 checked",
       "pages": [],
       "pagesAffected": 0
-    },
-    {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0,
-      "priority": 0.02,
-      "detail": "52/60 pages pass",
-      "pages": [
-        "/ — 825 ms",
-        "/legacy — 877 ms",
-        "/blog/2013-green-washington-awards — 860 ms",
-        "/about — 1045 ms",
-        "/blog/2014-palm-springs-modernism-week-in-review — 1260 ms",
-        "/blog/793 — 1222 ms",
-        "/commercial-project-types-classrooms-and-school-additions — 890 ms",
-        "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley — 1176 ms"
-      ],
-      "pagesAffected": 8
     },
     {
       "id": "indexable",
@@ -2946,7 +2964,7 @@
     {
       "path": "/blog/793",
       "type": "post",
-      "score": 49,
+      "score": 48,
       "words": 76,
       "schema": [
         "Organization",
@@ -3081,6 +3099,33 @@
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
+      "path": "/commercial",
+      "type": "page",
+      "score": 55,
+      "words": 9,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links"
+      ],
+      "title": "Commercial Projects | Method Homes"
+    },
+    {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
       "score": 55,
@@ -3106,32 +3151,6 @@
         "internal-links"
       ],
       "title": "Method is experienced in building in remote island and waterfront environments, including the San Juan Islands, Bainbridge Island, and the islands of British Columbia. | Method Homes"
-    },
-    {
-      "path": "/commercial",
-      "type": "page",
-      "score": 56,
-      "words": 9,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links"
-      ],
-      "title": "Commercial Projects | Method Homes"
     },
     {
       "path": "/custom-homes",
@@ -3418,6 +3437,32 @@
       "title": "Method Homes — Architect-designed prefab homes"
     },
     {
+      "path": "/commercial-project-types-affordable-workforce-housing",
+      "type": "page",
+      "score": 58,
+      "words": 39,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "open-graph",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "internal-links"
+      ],
+      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
+    },
+    {
       "path": "/commercial-project-types-classrooms-and-school-additions",
       "type": "page",
       "score": 58,
@@ -3494,31 +3539,6 @@
       "title": "Sustainability at Method Homes | Method Homes"
     },
     {
-      "path": "/commercial-project-types-affordable-workforce-housing",
-      "type": "page",
-      "score": 59,
-      "words": 39,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "open-graph",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "internal-links"
-      ],
-      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
-    },
-    {
       "path": "/commercial-project-types-multi-family-housing-units",
       "type": "page",
       "score": 59,
@@ -3569,6 +3589,34 @@
       "title": "Method Homes has built remote ski lodge and hospitality projects for a variety of clients. | Method Homes"
     },
     {
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
+      "type": "post",
+      "score": 60,
+      "words": 552,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
+    },
+    {
       "path": "/custom-regions-city-and-urban",
       "type": "page",
       "score": 60,
@@ -3617,34 +3665,6 @@
         "internal-links"
       ],
       "title": "Method Homes has experience building in beautiful valley, vineyard, and peninsula settings, in places such as the Bay Area and Napa Valley. | Method Homes"
-    },
-    {
-      "path": "/blog/2014-palm-springs-modernism-week-in-review",
-      "type": "post",
-      "score": 61,
-      "words": 552,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
@@ -3700,6 +3720,60 @@
         "references"
       ],
       "title": "Come Celebrate Design in San Francisco June 10-11 — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/blog/2013-green-washington-awards",
+      "type": "post",
+      "score": 62,
+      "words": 177,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/blog/783",
+      "type": "post",
+      "score": 62,
+      "words": 155,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "bylines",
+        "references"
+      ],
+      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
@@ -3917,33 +3991,6 @@
       "title": "Come see Method at Dwell on Design May 29-31 — Honors Journal | Method Homes"
     },
     {
-      "path": "/blog/2013-green-washington-awards",
-      "type": "post",
-      "score": 63,
-      "words": 177,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "2013 Green Washington Awards — Honors Journal | Method Homes"
-    },
-    {
       "path": "/blog/absolutely-prefab-ulous-why-luxury-buyers-are-moving-toward-modular",
       "type": "post",
       "score": 63,
@@ -4048,32 +4095,6 @@
         "references"
       ],
       "title": "Berkshires Custom Install Video — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/blog/783",
-      "type": "post",
-      "score": 64,
-      "words": 155,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "bylines",
-        "references"
-      ],
-      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
