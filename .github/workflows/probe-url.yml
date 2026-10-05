@@ -1,0 +1,58 @@
+name: probe-url
+
+# Network escape hatch for "what is this built with?": the sandbox cannot
+# reach most hosts, the runner can. Fetches a PUBLIC page and prints its
+# script sources, framework hints, 3D/rendering libraries and asset types,
+# then greps its JS bundles for library signatures. Read the job log;
+# nothing is committed. (probe.yml stays the production-site inspector.)
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Public page to inspect"
+        required: true
+      bundles:
+        description: "Also download the page's JS bundles and grep them for library signatures"
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch and inspect
+        run: |
+          set -uo pipefail
+          URL="${{ github.event.inputs.url }}"
+          UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
+          curl -sSL -A "$UA" -o page.html -w "HTTP %{http_code} · %{size_download} B · final %{url_effective}\n" "$URL"
+          echo "::group::script and stylesheet sources"
+          grep -oiE '<(script|link)[^>]+>' page.html | grep -oiE '(src|href)="[^"]+"' | sed -E 's/^(src|href)="//; s/"$//' | sort -u | head -80
+          echo "::endgroup::"
+          echo "::group::generator / framework hints"
+          grep -oiE '<meta[^>]+generator[^>]+>' page.html | head -5
+          grep -oiE '__NEXT_DATA__|__next_f|_next/static|__NUXT__|__remixContext|data-wf-page|webflow|framer|gatsby|astro-island|__sveltekit|data-reactroot|ng-version|data-v-app|/_app/immutable' page.html | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -20
+          echo "::endgroup::"
+          echo "::group::3D / rendering / asset hints in the HTML"
+          grep -oiE 'three(\.js|js)?|@react-three|babylon|playcanvas|model-viewer|spline|unity|unreal|webgl|webgpu|<canvas|\.glb|\.gltf|\.usdz|\.ktx2|draco|meshopt|basisu|\.hdr|\.exr|\.avif|\.webp|\.mp4|\.webm|\.m3u8|turntable|sequence|sprite|threekit|emersya|cylindo|vntana|zerolight|sketchfab|lottie|rive' page.html | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -40
+          echo "::endgroup::"
+          echo "::group::hosts referenced"
+          grep -oiE 'https?://[a-z0-9.-]+\.[a-z]{2,}' page.html | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -30
+          echo "::endgroup::"
+          if [ "${{ github.event.inputs.bundles }}" = "true" ]; then
+            echo "::group::JS bundle signatures"
+            ORIGIN=$(python3 -c 'import sys,urllib.parse as u; p=u.urlparse(sys.argv[1]); print(f"{p.scheme}://{p.netloc}")' "$URL")
+            grep -oiE '<script[^>]+src="[^"]+"' page.html | grep -oiE 'src="[^"]+"' | sed -E 's/^src="//; s/"$//' | sort -u | head -40 | while read -r s; do
+              case "$s" in http*) full="$s";; //*) full="https:$s";; /*) full="$ORIGIN$s";; *) full="$ORIGIN/$s";; esac
+              curl -sSL -A "$UA" -m 60 -o bundle.js "$full" || continue
+              size=$(stat -c %s bundle.js)
+              hits=$(grep -oiE 'three\.js|THREE\.|WebGLRenderer|WebGPURenderer|@react-three/fiber|react-three-fiber|@react-three/drei|BABYLON|playcanvas|model-viewer|@splinetool|GLTFLoader|DRACOLoader|KTX2Loader|MeshoptDecoder|RGBELoader|PMREMGenerator|EquirectangularReflectionMapping|OrbitControls|OffscreenCanvas|createImageBitmap|\.glb|\.gltf|\.usdz|\.ktx2|\.avif|\.webp|\.mp4|\.webm|HTMLVideoElement|spriteSheet|turntable|threekit|emersya|cylindo|vntana|zerolight|UnityLoader|pixi\.js|lottie|rive' bundle.js | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -14 | tr '\n' ' ')
+              echo "$full ($size B): ${hits:-no signatures}"
+            done
+            echo "::endgroup::"
+          fi
