@@ -100,6 +100,9 @@ jobs:
             # what the source ships (alpha lives in an RGBA PNG or a separate map)
             (cd "$dir" && find . -type f ! -name files.json -exec file {} \; | sed 's#^\./##' | sort)
             python3 -c 'import json,sys; f=json.load(open(sys.argv[1])); print("maps:", {k: sorted((f[k].get("1k") or {}).keys()) for k in f if isinstance(f[k], dict)})' "$dir/files.json"
+            # leaf cut-outs ship as a separate alpha map: bake it into the diffuse
+            python3 -c "import PIL" 2>/dev/null || pip install --quiet --break-system-packages pillow
+            python3 scripts/model/merge-alpha.py "$dir" "$RES"
             grep -o '"alphaMode"[^,}]*\|"uri"[^,}]*' "$dir/model.gltf" | sort | uniq -c || true
             npx -y @gltf-transform/cli@4 optimize "$dir/model.gltf" "public/models/plants/$id.glb" \
               --compress meshopt --texture-compress webp --texture-size "$SIZE" --simplify-error 0.002 --palette false --join false --flatten false
