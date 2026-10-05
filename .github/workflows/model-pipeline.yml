@@ -1,21 +1,29 @@
 name: model-pipeline
 
-# IFC → web GLB for the 3D plan viewer, unattended. Give it an IFC (a
-# URL, or a Floor plan slug whose document carries a `sourceModel`
-# file) and it runs scripts/model/ifc-to-glb.py + gltf-transform,
-# commits public/models/<slug>.glb and design/models/<slug>.report.json
-# back to main, and — when SANITY_AUTH_TOKEN can write — uploads the
-# GLB to the dataset and attaches it to the plan's `model` field, so
-# the plan page gains its 3D view with no manual step.
+# IFC → web GLB for the 3D plan viewer, plus the photoreal turntable,
+# unattended. Give it an IFC (a URL, or a Floor plan slug whose document
+# carries a `sourceModel` file) and:
 #
-# The sandbox cannot reach sanity.io or most hosts, so this is where
-# the pipeline runs for real. Dispatch from the Actions tab.
+#   convert  runs scripts/model/ifc-to-glb.py + gltf-transform, commits
+#            public/models/<slug>.glb + design/models/<slug>.report.json
+#            to main and — when SANITY_AUTH_TOKEN can write — uploads the
+#            GLB to the dataset and attaches it to the plan's `model` field
+#   render   (optional) renders the Cycles turntable + plan-cut frames
+#            with Blender as a Python module, SHARDED across parallel
+#            runner jobs (a frame is ~2.5 min on a runner; six shards turn
+#            a 96-frame set around in under an hour), with a Poly Haven
+#            sky + PBR sets fetched through its API
+#   encode   merges the shards, encodes AVIF/WebP + poster + manifest with
+#            scripts/model/encode-frames.mjs and commits the frames folder
+#
+# The sandbox cannot reach sanity.io, polyhaven.com or most hosts, so this
+# is where the pipeline runs for real. Dispatch from the Actions tab.
 
 on:
   workflow_dispatch:
     inputs:
       slug:
-        description: "Floor plan slug (names the output; also looked up in Sanity when ifc_url is empty)"
+        description: "Floor plan slug (names the output; also looked up in Sanity when ifc_url is empty). May be nested, e.g. sample/basic-house"
         required: true
       ifc_url:
         description: "URL of the IFC to convert (optional when the plan document has a sourceModel)"
@@ -31,7 +39,7 @@ on:
         type: boolean
         default: true
       render:
-        description: "Also render the Cycles turntable + plan-cut frames (public/models/<slug>/turntable); slow — about 1–2 min a frame on a runner"
+        description: "Also render the Cycles turntable + plan-cut frames"
         type: boolean
         default: true
       frames:
@@ -45,7 +53,7 @@ on:
       samples:
         description: "Cycles samples per pixel for the render"
         required: false
-        default: "96"
+        default: "64"
       frames_dir:
         description: "Where the encoded frames go (default public/models/<slug>/turntable; the sample uses public/models/sample/turntable)"
         required: false
@@ -53,14 +61,17 @@ on:
 permissions:
   contents: write
 
+env:
+  SANITY_PROJECT_ID: i2wd5pr1
+  SANITY_DATASET: production
+  SANITY_API_VERSION: "2026-07-01"
+
 jobs:
   convert:
     runs-on: ubuntu-latest
-    timeout-minutes: 330
-    env:
-      SANITY_PROJECT_ID: i2wd5pr1
-      SANITY_DATASET: production
-      SANITY_API_VERSION: "2026-07-01"
+    timeout-minutes: 45
+    outputs:
+      north: ${{ steps.report.outputs.north }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -82,7 +93,6 @@ jobs:
           set -euo pipefail
           URL="${{ github.event.inputs.ifc_url }}"
           if [ -z "$URL" ]; then
-            Q='*[_type=="plan" \&\& slug.current==$slug][0]{ "url": sourceModel.asset->url }'
             URL=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type==\"plan\" && slug.current==\"${{ github.event.inputs.slug }}\"][0]{ \"url\": sourceModel.asset->url }")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; print(json.load(sys.stdin)["result"]["url"] or "")')
           fi
           [ -n "$URL" ] || { echo "no IFC: pass ifc_url or upload a Source model (IFC) on the plan"; exit 1; }
@@ -91,61 +101,35 @@ jobs:
           ls -la source.ifc
 
       - name: Convert
+        id: report
         run: |
           set -euo pipefail
           SLUG="${{ github.event.inputs.slug }}"
           mkdir -p "$(dirname "public/models/$SLUG.glb")" "$(dirname "design/models/$SLUG.report.json")"
-          python scripts/model/ifc-to-glb.py source.ifc "public/models/$SLUG.raw.glb" --report "design/models/$SLUG.report.json" \
+          python scripts/model/ifc-to-glb.py source.ifc /tmp/source.raw.glb --report "design/models/$SLUG.report.json" \
             ${{ github.event.inputs.allow && format('--allow "{0}"', github.event.inputs.allow) || '' }} \
             ${{ github.event.inputs.deny && format('--deny "{0}"', github.event.inputs.deny) || '' }}
-          npx -y @gltf-transform/cli@4 optimize "public/models/$SLUG.raw.glb" "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001 --palette false --join false --flatten false
-          mv "public/models/$SLUG.raw.glb" /tmp/source.raw.glb  # the render step reads the uncompressed copy
+          npx -y @gltf-transform/cli@4 optimize /tmp/source.raw.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001 --palette false --join false --flatten false
           ls -la "public/models/$SLUG.glb"
           python - <<'PY'
-          import json, os, sys
-          slug = os.environ.get("SLUG") or "${{ github.event.inputs.slug }}"
+          import json, os
+          slug = "${{ github.event.inputs.slug }}"
           r = json.load(open(f"design/models/{slug}.report.json"))
           r["compressedBytes"] = os.path.getsize(f"public/models/{slug}.glb")
           json.dump(r, open(f"design/models/{slug}.report.json", "w"), indent=2)
           print(f"kept {sum(r['kept'].values())} / dropped {sum(r['dropped'].values())} · {r['triangles']:,} tris · {r['compressedBytes']/1024:.0f} KB · storeys {len(r['storeys'])} · north {r['northDeg']}°")
           if r["proxies"]:
               print("proxies:", ", ".join(f"{p['name']} ({p['size_m']} m) {'kept' if p['kept'] else 'dropped'}" for p in r["proxies"]))
+          open(os.environ["GITHUB_OUTPUT"], "a").write(f"north={r['northDeg']}\n")
           PY
 
-      - name: Render the turntable (Blender Cycles)
+      - name: Keep the uncompressed model for the render shards
         if: ${{ github.event.inputs.render == 'true' }}
-        run: |
-          set -euo pipefail
-          SLUG="${{ github.event.inputs.slug }}"
-          ORBIT="${{ github.event.inputs.frames }}"
-          PLAN="${{ github.event.inputs.plan_frames }}"; PLAN="${PLAN:-24}"
-          NORTH=$(python -c "import json; print(json.load(open('design/models/$SLUG.report.json'))['northDeg'])")
-          python -m pip install -q bpy==4.5.14
-          npm install --no-save sharp
-          # Poly Haven (CC0) HDRI + PBR sets through its API; each one is
-          # optional — a missing download leaves that material procedural
-          mkdir -p /tmp/assets/siding /tmp/assets/roof /tmp/assets/concrete
-          fetch() { # fetch <asset-id> <json-path> <out-file>
-            url=$(curl -sS "https://api.polyhaven.com/files/$1" | python -c "import json,sys
-            try: print(json.load(sys.stdin)$2['url'])
-            except Exception: print('')") || true
-            [ -n "$url" ] && curl -sS -L -o "$3" "$url" && echo "  $1 → $3" || echo "  $1 unavailable ($2)"
-          }
-          fetch kloofendal_48d_partly_cloudy_puresky "['hdri']['2k']['hdr']" /tmp/assets/sky.hdr
-          fetch painted_plaster_wall "['Diffuse']['2k']['jpg']" /tmp/assets/siding/diff.jpg
-          fetch painted_plaster_wall "['Rough']['2k']['jpg']" /tmp/assets/siding/rough.jpg
-          fetch metal_plate "['Rough']['2k']['jpg']" /tmp/assets/roof/rough.jpg
-          fetch concrete_floor_worn_001 "['Diffuse']['2k']['jpg']" /tmp/assets/concrete/diff.jpg
-          fetch concrete_floor_worn_001 "['Rough']['2k']['jpg']" /tmp/assets/concrete/rough.jpg
-          HDRI_FLAG=""; [ -s /tmp/assets/sky.hdr ] && HDRI_FLAG="--hdri /tmp/assets/sky.hdr --hdri-rotation 120"
-          python scripts/model/render-turntable.py /tmp/source.raw.glb /tmp/frames \
-            --orbit "$ORBIT" --plan "$PLAN" --samples "${{ github.event.inputs.samples }}" --north "$NORTH" --width 1440 --height 900 \
-            --style studio --textures /tmp/assets $HDRI_FLAG
-          FRAMES_DIR="${{ github.event.inputs.frames_dir }}"; FRAMES_DIR="${FRAMES_DIR:-public/models/$SLUG/turntable}"
-          rm -rf "$FRAMES_DIR"
-          node scripts/model/encode-frames.mjs /tmp/frames "$FRAMES_DIR"
-          du -sh "$FRAMES_DIR"
-          echo "FRAMES_DIR=$FRAMES_DIR" >> "$GITHUB_ENV"
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-raw
+          path: /tmp/source.raw.glb
+          retention-days: 1
 
       - name: Attach to the plan in Sanity
         if: ${{ github.event.inputs.attach == 'true' && env.SANITY_AUTH_TOKEN != '' }}
@@ -154,7 +138,7 @@ jobs:
         run: |
           set -euo pipefail
           SLUG="${{ github.event.inputs.slug }}"
-          ASSET=$(curl -sS -X POST "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/assets/files/$SANITY_DATASET?filename=$SLUG.glb" \
+          ASSET=$(curl -sS -X POST "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/assets/files/$SANITY_DATASET?filename=$(basename "$SLUG").glb" \
             -H "Authorization: Bearer $SANITY_AUTH_TOKEN" -H "Content-Type: model/gltf-binary" --data-binary "@public/models/$SLUG.glb" | python -c 'import json,sys; print(json.load(sys.stdin)["document"]["_id"])')
           NORTH=$(python -c "import json; print(json.load(open('design/models/$SLUG.report.json'))['northDeg'])")
           ID=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type==\"plan\" && slug.current==\"$SLUG\"][0]._id")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; print(json.load(sys.stdin)["result"] or "")')
@@ -171,8 +155,97 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add "public/models/$SLUG.glb" "design/models/$SLUG.report.json"
-          [ -n "${FRAMES_DIR:-}" ] && [ -d "$FRAMES_DIR" ] && git add -A "$FRAMES_DIR"
           git diff --cached --quiet && { echo "nothing changed"; exit 0; }
-          git commit -q -m "models: $SLUG (ifc-to-glb pipeline${{ github.event.inputs.render == 'true' && ' + turntable render' || '' }})"
+          git commit -q -m "models: $SLUG (ifc-to-glb pipeline)"
+          git pull --rebase -q origin main
+          git push -q origin HEAD:main
+
+  render:
+    needs: convert
+    if: ${{ github.event.inputs.render == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: actions/download-artifact@v4
+        with:
+          name: model-raw
+          path: /tmp/model
+      - name: Install Blender (bpy)
+        run: python -m pip install -q bpy==4.5.14
+
+      - name: Fetch the sky and textures (Poly Haven, CC0)
+        run: |
+          set -uo pipefail
+          # through api.polyhaven.com/files/<id>; each asset is optional — a
+          # missing download leaves that material procedural
+          mkdir -p /tmp/assets/siding /tmp/assets/roof /tmp/assets/concrete
+          fetch() { # fetch <asset-id> <key/path/in/json> <out-file>
+            url=$(curl -sS "https://api.polyhaven.com/files/$1" | python -c 'import json,sys,functools; print(functools.reduce(lambda a,k: a[k], sys.argv[1].split("/"), json.load(sys.stdin))["url"])' "$2" 2>/dev/null || true)
+            if [ -n "$url" ] && curl -sS -L -o "$3" "$url"; then echo "  $1 ($2) → $3 $(stat -c %s "$3") B"; else echo "  $1 ($2) unavailable"; rm -f "$3"; fi
+          }
+          fetch kloofendal_48d_partly_cloudy_puresky hdri/2k/hdr /tmp/assets/sky.hdr
+          fetch painted_plaster_wall Diffuse/2k/jpg /tmp/assets/siding/diff.jpg
+          fetch painted_plaster_wall Rough/2k/jpg /tmp/assets/siding/rough.jpg
+          fetch metal_plate Rough/2k/jpg /tmp/assets/roof/rough.jpg
+          fetch concrete_floor_worn_001 Diffuse/2k/jpg /tmp/assets/concrete/diff.jpg
+          fetch concrete_floor_worn_001 Rough/2k/jpg /tmp/assets/concrete/rough.jpg
+
+      - name: Render shard ${{ matrix.shard }}
+        run: |
+          set -euo pipefail
+          HDRI_FLAG=""; [ -s /tmp/assets/sky.hdr ] && HDRI_FLAG="--hdri /tmp/assets/sky.hdr --hdri-rotation 120"
+          python scripts/model/render-turntable.py /tmp/model/source.raw.glb /tmp/frames \
+            --orbit "${{ github.event.inputs.frames }}" --plan "${{ github.event.inputs.plan_frames }}" --samples "${{ github.event.inputs.samples }}" \
+            --north "${{ needs.convert.outputs.north }}" --width 1440 --height 900 \
+            --style studio --textures /tmp/assets $HDRI_FLAG --shard ${{ matrix.shard }}/6
+          ls /tmp/frames | wc -l
+      - uses: actions/upload-artifact@v4
+        with:
+          name: frames-${{ matrix.shard }}
+          path: /tmp/frames
+          retention-days: 3
+
+  encode:
+    needs: render
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: frames-*
+          path: /tmp/shards
+      - name: Merge the shards and encode
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.inputs.slug }}"
+          FRAMES_DIR="${{ github.event.inputs.frames_dir }}"; FRAMES_DIR="${FRAMES_DIR:-public/models/$SLUG/turntable}"
+          mkdir -p /tmp/frames
+          for d in /tmp/shards/frames-*; do cp "$d"/*.png /tmp/frames/; cp "$d"/manifest.json /tmp/frames/manifest.json; done
+          echo "$(ls /tmp/frames/*.png | wc -l) frames merged"
+          npm install --no-save sharp > /dev/null 2>&1
+          rm -rf "$FRAMES_DIR"
+          node scripts/model/encode-frames.mjs /tmp/frames "$FRAMES_DIR"
+          du -sh "$FRAMES_DIR"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A "$FRAMES_DIR"
+          git diff --cached --quiet && { echo "nothing changed"; exit 0; }
+          git commit -q -m "models: $SLUG turntable frames (Cycles render)"
           git pull --rebase -q origin main
           git push -q origin HEAD:main

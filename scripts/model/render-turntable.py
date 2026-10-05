@@ -619,11 +619,18 @@ def main():
     ap.add_argument("--exposure", type=float, default=-0.8, help="view-transform exposure (stops)")
     ap.add_argument("--quick", action="store_true", help="low samples — for checks")
     ap.add_argument("--only", help="render a single frame id (orbit-00 / plan-23) for checks")
+    ap.add_argument("--shard", help="k/n: render only every n-th frame starting at k (orbit then plan), for parallel runner jobs; every shard writes the full manifest")
     args = ap.parse_args()
 
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
+    shard_k, shard_n = (int(x) for x in args.shard.split("/")) if args.shard else (0, 1)
+
+    def mine(global_index: int, fid: str) -> bool:
+        if args.only:
+            return args.only == fid
+        return global_index % shard_n == shard_k
     scene, cam, house, fade_obj, size, storeys = build(Path(args.glb), args.north, args.quick, args.sky, args.exposure, args.style, args.hdri, args.hdri_rotation, args.textures)
     noon = bpy.data.objects.get("noon")
     scene.render.resolution_x = args.width
@@ -646,7 +653,7 @@ def main():
     # ---- orbit frames
     for i in range(args.orbit):
         fid = f"orbit-{i:02d}"
-        if args.only and args.only != fid:
+        if not mine(i, fid):
             continue
         set_fade(0.0)
         if noon is not None:
@@ -669,7 +676,7 @@ def main():
     sky = next((n for n in scene.world.node_tree.nodes if n.bl_idname == "ShaderNodeTexSky"), None)
     for j in range(args.plan):
         fid = f"plan-{j:02d}"
-        if args.only and args.only != fid:
+        if not mine(args.orbit + j, fid):
             continue
         t = j / max(1, args.plan - 1)
         e = 1 - (1 - t) ** 3  # ease-out
