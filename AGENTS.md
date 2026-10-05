@@ -159,6 +159,10 @@ staging/design use.
   in plan. A leaf that renders as a solid quad or not at all has lost
   its alpha (Poly Haven ships it separately — merge-alpha.py) or is
   losing it in the mips (keep the mip-scaled alpha in plants.ts).
+  Plants stay on PLANT_LAYER, out of the contact shadow (its depth
+  override ignores alpha). No screen-space AO in the viewer — it
+  smeared grey over the ground as the model turned (removed
+  2026-10-05).
 
 ## Design source (Figma) — THE REBRAND
 

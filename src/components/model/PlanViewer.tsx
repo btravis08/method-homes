@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
-import { EffectComposer, HueSaturation, N8AO, ToneMapping } from "@react-three/postprocessing";
+import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
 import { buildFoliage, plantingPlan, type FoliageHandle } from "./foliage";
 import { loadPlants, type PlantsHandle } from "./plants";
 import { ToneMappingMode } from "postprocessing";
@@ -131,7 +131,6 @@ const FOV_3D = 8;
 const FOV_PLAN = 8; // narrow + far ≈ orthographic
 const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
 const GLASS_TRANSMISSION = 0.92;
-const AO_INTENSITY = 3;
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 const SPIN = 0.15; // rad/s
 /* cubic in-out: the flight leaves and arrives gently, no snap */
@@ -275,8 +274,6 @@ class ViewerState {
   controls: { enabled: boolean } | null = null;
   /* the ground contact shadow: fades out with the floor in plan */
   shadow: THREE.Object3D | null = null;
-  /* the ambient occlusion pass: full in 3D, gone in the plan drawing */
-  ao: { enabled: boolean; configuration: { intensity: number } } | null = null;
   /* desaturation at the end of the chain: 0 in 3D, full grey in plan */
   sat: { saturation: number } | null = null;
   /* painterly planting around the home (foliage.ts); dissolves in plan */
@@ -364,6 +361,7 @@ class ViewerState {
     /* planting rides the model group, so it turns north-up with the home */
     if (this.group && !this.foliage) {
       this.foliage = buildFoliage(this.footprint);
+      plantLayer(this.foliage.group);
       this.group.add(this.foliage.group);
     }
     this.loadRealPlants();
@@ -384,6 +382,7 @@ class ViewerState {
         }
         this.plants = h;
         h.setFade(this.fade);
+        plantLayer(h.group);
         group.add(h.group);
         if (this.foliage) {
           this.foliage.group.removeFromParent();
@@ -545,12 +544,6 @@ class ViewerState {
     this.plants?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     if (this.sat) this.sat.saturation = -e;
-    if (this.ao) {
-      /* AO fades out over the first half of the flight; the drawing is flat */
-      const k = Math.max(0, 1 - e * 2);
-      this.ao.configuration.intensity = AO_INTENSITY * k;
-      this.ao.enabled = k > 0.001;
-    }
     if (this.shadow) {
       if (this.shadowMats == null) {
         const found: THREE.Material[] = [];
@@ -591,6 +584,17 @@ class ViewerState {
       if (len < r * 0.8 || len > r * 1.25) cam.position.setLength(r);
     }
   }
+}
+
+/* PLANTS LIVE ON THEIR OWN LAYER. The ground contact shadow renders the
+   scene with one override depth material that ignores alpha, so every
+   leaf card printed as a solid rectangle, blurred into grey smears that
+   swam across the ground as the home turned. Its camera sees layer 0
+   only; the view camera enables PLANT_LAYER too, so plants still draw
+   (and are lit) but leave the ground to the house's own shadow. */
+const PLANT_LAYER = 1;
+function plantLayer(root: THREE.Object3D) {
+  root.traverse((o) => o.layers.set(PLANT_LAYER));
 }
 
 /* imperative hand-off from React land to the viewer state */
@@ -684,6 +688,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
     <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
       <div className="aspect-[4/3] w-full md:aspect-[16/9]">
         <Canvas
+          onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
           dpr={interacting ? Math.min(dpr, 1.25) : dpr}
           /* near/far hug the orbit radius: with the camera ~170 m out a
              0.1 m near plane would starve depth precision and the panes
@@ -727,30 +732,14 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
             target={[0, fp.height_m * 0.4, 0]}
             enableDamping
           />
-          {/* SCREEN-SPACE AMBIENT OCCLUSION (N8AO): soft contact darkening
-              where roof meets wall, in window reveals and under eaves. FULL
-              resolution (half-res stair-stepped the base silhouette); the
-              PerformanceMonitor and the drag-time ratio drop carry the cost
-              on slow GPUs. Fades out over the first half of the plan
-              flight, so the drawing stays flat. MSAA ×4 on the
-              composer's buffer keeps edges as clean as the plain canvas;
-              stencilBuffer keeps the plan's section fill working. Tone
-              mapping moves to the end of the chain (three skips it for
-              render targets). AO is in metres: a 1.5 m radius reads at
-              the scale of eaves, reveals and the slab edge. */}
+          {/* POST CHAIN: Neutral tone mapping (three skips it for render
+              targets, so it moves here) and the plan's desaturation. MSAA
+              ×4 on the composer's buffer keeps edges as clean as the plain
+              canvas; stencilBuffer keeps the plan's section fill working.
+              No ambient occlusion: screen-space AO painted grey patches on
+              the ground that swam as the house turned (removed 2026-10-05,
+              Bryce). */}
           <EffectComposer multisampling={4} stencilBuffer enableNormalPass={false}>
-            <N8AO
-              ref={(p) => {
-                const v = vs.current;
-                if (v) v.ao = p as unknown as ViewerState["ao"];
-              }}
-              aoRadius={1.5}
-              distanceFalloff={1}
-              intensity={AO_INTENSITY}
-              quality="medium"
-              halfRes={false}
-              color="black"
-            />
             <ToneMapping mode={ToneMappingMode.NEUTRAL} />
             <HueSaturation
               ref={(s) => {

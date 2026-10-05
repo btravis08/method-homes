@@ -631,6 +631,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer: ambient occlusion removed (Bryce: it
+  painted grey onto the ground as the house spun), and plants moved to
+  their own render layer so the ground contact shadow no longer prints
+  their leaf cards as grey smears. Docs: PROJECT-LOG decision + lesson,
+  AGENTS rule.
 - 2026-10-05 — Real scanned planting in the real-time viewer (Bryce:
   "It needs to be real time"). plants.yml fetches Poly Haven CC0
   plants, merges their separate leaf alpha (merge-alpha.py),

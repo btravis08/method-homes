@@ -312,8 +312,8 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) â
   alpha-to-coverage under the composer's MSAA keeps dab edges smooth.
   Placement is generic until a site plan exists: shrubs along both
   long elevations, clumps at the corners, two trees off the short
-  ends. It rides the model group (turns north-up with the home), casts
-  dappled contact shadows and picks up AO, and DISSOLVES (alphaTest
+  ends. It rides the model group (turns north-up with the home) and
+  DISSOLVES (alphaTest
   rising) over the first half of the plan flight. Plan colour: the
   plan palette is greys only and a HueSaturation effect at the end of
   the chain goes to âˆ’1 as the view lands, so nothing can tint the
@@ -357,6 +357,19 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) â
   foliage reflects the sky at 0.45 (full strength silvered it). Weight,
   only for visitors who open the viewer: 1.3 MB (one tree GLB), ~98k
   triangles for the whole garden. The fetched shrub GLBs were deleted.
+- Ambient occlusion REMOVED (Bryce, 2026-10-05: "It appears to paint
+  gray onto the ground as the house spins"). Screen-space AO (N8AO)
+  is view-dependent: on this low-contrast ground its halo darkened
+  patches that swam as the model turned, for a gain of ~0.5 % of the
+  frame. The composer stays for Neutral tone mapping and the plan's
+  desaturation. A second source of the same smear: the ground contact
+  shadow renders with an alpha-blind depth override, so every leaf
+  card printed as a solid blurred rectangle. Plants now live on their
+  own render layer (PLANT_LAYER in PlanViewer.tsx) that the view camera
+  enables and the shadow camera doesn't, so the ground carries only
+  the house's shadow. Lesson: don't add screen-space AO or contact
+  shadows over alpha-cut foliage on a plain ground â€” both print
+  artefacts the eye reads as dirt, worst while the model moves.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
