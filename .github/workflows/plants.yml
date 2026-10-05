@@ -8,7 +8,9 @@ name: plants
 #   ids set   → for each id: download the 1k glTF with its textures, run
 #               gltf-transform (WebP textures ≤ 1024 px, meshopt geometry,
 #               light simplify), and commit public/models/plants/<id>.glb
-#               plus public/models/plants/plants.json (sizes, credits)
+#               plus public/models/plants/plants.json (sizes, credits);
+#               ids listed in `thin` then get the foliage LOD
+#               (scripts/model/thin-plant.mjs)
 
 on:
   workflow_dispatch:
@@ -24,6 +26,10 @@ on:
         description: "Max texture edge after compression (px)"
         required: false
         default: "1024"
+      thin:
+        description: "Foliage LOD per id, id:keep[:bark[:tex]] comma list (scripts/model/thin-plant.mjs)"
+        required: false
+        default: "jacaranda_tree:0.15:0.2:512"
 
 permissions:
   contents: write
@@ -87,9 +93,20 @@ jobs:
               urllib.request.urlretrieve(inc["url"], out)
           print("downloaded", entry["url"].split("/")[-1], "+", len(entry.get("include") or {}), "files")
           PY
+            # what the source ships (alpha lives in an RGBA PNG or a separate map)
+            (cd "$dir" && find . -type f ! -name files.json -exec file {} \; | sed 's#^\./##' | sort)
+            grep -o '"alphaMode"[^,}]*\|"uri"[^,}]*' "$dir/model.gltf" | sort | uniq -c || true
             npx -y @gltf-transform/cli@4 optimize "$dir/model.gltf" "public/models/plants/$id.glb" \
               --compress meshopt --texture-compress webp --texture-size "$SIZE" --simplify-error 0.002 --palette false --join false --flatten false
             ls -la "public/models/plants/$id.glb"
+            # foliage LOD: keep a fraction of the leaf cards, simplify the bark
+            spec="$(echo "${{ github.event.inputs.thin }}" | tr ',' '\n' | grep "^$id:" || true)"
+            if [ -n "$spec" ]; then
+              IFS=':' read -r _ keep bark tex <<< "$spec"
+              [ -d node_modules/@gltf-transform/functions ] || npm install --no-save --no-package-lock @gltf-transform/core@4 @gltf-transform/extensions@4 @gltf-transform/functions@4 meshoptimizer sharp >/dev/null
+              node scripts/model/thin-plant.mjs "public/models/plants/$id.glb" "public/models/plants/$id.glb" --keep "${keep:-0.15}" --bark "${bark:-0.2}" --tex "${tex:-512}"
+              ls -la "public/models/plants/$id.glb"
+            fi
             npx -y @gltf-transform/cli@4 inspect "public/models/plants/$id.glb" --format md | head -40 || true
             echo "::endgroup::"
           done
