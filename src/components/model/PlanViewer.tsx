@@ -3,9 +3,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
+import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
+import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
-import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
 
 /* the web-sized copy of the render HDRI (scripts/model/prep-env.py →
    public/models/env/{sky.hdr, env.json}); the viewer falls back to the
@@ -35,7 +37,7 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
       const meta = (await res.json()) as EnvMeta;
       if (!live) return;
       if (meta.sun) onSun(sunDirection(meta.sun));
-      const hdr = await new RGBELoader().loadAsync(`${base}/${meta.file}`);
+      const hdr = await new HDRLoader().loadAsync(`${base}/${meta.file}`);
       if (!live) {
         hdr.dispose();
         return;
@@ -122,6 +124,7 @@ const FOV_3D = 8;
 const FOV_PLAN = 8; // narrow + far ≈ orthographic
 const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
 const GLASS_TRANSMISSION = 0.92;
+const AO_INTENSITY = 3;
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 const SPIN = 0.15; // rad/s
 /* cubic in-out: the flight leaves and arrives gently, no snap */
@@ -263,6 +266,8 @@ class ViewerState {
   controls: { enabled: boolean } | null = null;
   /* the ground contact shadow: fades out with the floor in plan */
   shadow: THREE.Object3D | null = null;
+  /* the ambient occlusion pass: full in 3D, gone in the plan drawing */
+  ao: { enabled: boolean; configuration: { intensity: number } } | null = null;
   private shadowMats: THREE.Material[] | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
@@ -481,6 +486,12 @@ class ViewerState {
       this.cap.position.y = this.plane.constant;
       this.cap.visible = e > 0.01;
     }
+    if (this.ao) {
+      /* AO fades out over the first half of the flight; the drawing is flat */
+      const k = Math.max(0, 1 - e * 2);
+      this.ao.configuration.intensity = AO_INTENSITY * k;
+      this.ao.enabled = k > 0.001;
+    }
     if (this.shadow) {
       if (this.shadowMats == null) {
         const found: THREE.Material[] = [];
@@ -620,7 +631,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: radius * 0.3, far: radius * 3 }}
           /* Neutral (Khronos PBR) tone mapping keeps material colour
              faithful — a product shot, not a film look */
-          gl={{ antialias: true, alpha: true, stencil: true, powerPreference: "low-power", toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0 }}
+          gl={{ antialias: false, alpha: true, stencil: true, powerPreference: "low-power", toneMapping: THREE.NoToneMapping }}
           onPointerDown={onDown}
           onPointerUp={onUp}
           onPointerCancel={onUp}
@@ -656,6 +667,29 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
             target={[0, fp.height_m * 0.4, 0]}
             enableDamping
           />
+          {/* SCREEN-SPACE AMBIENT OCCLUSION (N8AO): soft contact darkening
+              where roof meets wall, in window reveals and under eaves. Half
+              resolution with depth-aware upsampling; MSAA ×4 on the
+              composer's buffer keeps edges as clean as the plain canvas;
+              stencilBuffer keeps the plan's section fill working. Tone
+              mapping moves to the end of the chain (three skips it for
+              render targets). AO is in metres: a 1.5 m radius reads at
+              the scale of eaves, reveals and the slab edge. */}
+          <EffectComposer multisampling={4} stencilBuffer enableNormalPass={false}>
+            <N8AO
+              ref={(p) => {
+                const v = vs.current;
+                if (v) v.ao = p as unknown as ViewerState["ao"];
+              }}
+              aoRadius={1.5}
+              distanceFalloff={1}
+              intensity={AO_INTENSITY}
+              quality="medium"
+              halfRes={false}
+              color="black"
+            />
+            <ToneMapping mode={ToneMappingMode.NEUTRAL} />
+          </EffectComposer>
         </Canvas>
       </div>
 

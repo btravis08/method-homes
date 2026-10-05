@@ -283,6 +283,23 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   after the model (the glass transmission pass has no stencil
   buffer), the canvas asks for stencil: true, and sills fade with the
   floor so openings read as true gaps.
+- Ambient occlusion (Bryce, 2026-10-05: "Can we do ambient
+  occlusion?"). N8AO through @react-three/postprocessing: an
+  EffectComposer with MSAA ×4 and a stencil buffer (the plan's section
+  fill needs it), N8AO at full resolution (half-res stair-stepped the
+  base silhouette against the background), radius 1.5 m, intensity 3,
+  then Neutral tone mapping as the last effect (three skips tone
+  mapping when rendering to a target, so the renderer runs
+  NoToneMapping and canvas antialias is off — the composer does both).
+  AO fades out over the first half of the plan flight. Measured with
+  a matched-pose on/off pair: it darkens the band under the eaves, the
+  window reveals and frames, and the gable/wall junction, with no
+  halo or ground artefacts — about 0.5 % of the frame on this sample,
+  because the BIM house is a convex box with flush windows and no
+  deck; a detailed model gives it far more to find. Cost: the lazy
+  viewer chunk grows 269 → 370 KB gzip (+101 KB), paid only by
+  visitors who reach the viewer. The HDR loader moved to three's
+  HDRLoader (RGBELoader is deprecated).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
