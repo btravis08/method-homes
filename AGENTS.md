@@ -93,6 +93,27 @@ real content migration below).
 Client's copyrighted content, migrated for the platform rebuild —
 staging/design use.
 
+- SOURCE OF TRUTH since 2026-10-05: the Webflow CMS export in
+  `design/webflow-export/*.csv` (10 collections Bryce exported from the
+  old site) + `scripts/import-webflow.ts` + import-webflow.yml
+  (workflow_dispatch; uses the SANITY_AUTH_TOKEN secret, or a token
+  input). It supersedes the crawl import below for everything the CMS
+  held: 109 projects (4 portfolio collections merged by slug —
+  published row wins, then latest-updated), 7 series + 36 plans (bullet
+  facts parsed to numbers; series ranges/priceFrom rolled up from
+  plans), 4 commercial types (case studies by slug), 4 custom-region
+  pages (`custom-homes-<slug>`), 257 posts in three postCategory docs
+  (Articles / Press / Events). Same deterministic ids
+  (method-project-<slug>, method-post-<slug>, method-series-<slug>,
+  method-plan-<slug>, method-commercial-type-<slug>, method-page-…), so
+  it converges with the crawl import. Webflow drafts become Sanity
+  drafts unless the slug was already published (the old site served
+  it). Anything edited in the Studio after 2026-08-06 is kept and
+  listed. Images come from the Webflow CDN URLs in the CSV, deduped by
+  CDN filename. `--dry` writes design/webflow-export/preview.json
+  (gitignored) for inspection; run it locally after changing the
+  mapping. Re-export from Webflow → overwrite the CSVs → dispatch.
+
 - `scripts/fetch-method-content.mjs` + fetch-method-content.yml
   (workflow_dispatch): crawls the live site on an Actions runner (the
   sandbox cannot reach methodhomes.net — 403s). Resumable across

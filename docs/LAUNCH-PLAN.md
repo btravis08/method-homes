@@ -631,6 +631,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Webflow CMS export imported: 109 projects, 7 series,
+  36 plans, 4 commercial types, 4 custom-region pages, 257 posts
+  (scripts/import-webflow.ts via import-webflow.yml). Series and plan
+  pages now have real facts and PDFs; case-study facts still pending.
 - 2026-10-05 — Plan viewer realism (Samara comparison): soft real-time
   sun shadows, board-and-batten siding and visible roof seams, calmer
   wall/roof colours, lighting rebalanced to a strong key over a modest

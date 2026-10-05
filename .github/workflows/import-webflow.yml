@@ -1,0 +1,55 @@
+name: import-webflow
+
+# Imports the Webflow CMS export (design/webflow-export/*.csv) into the
+# Sanity dataset from a runner — the dev sandbox reaches neither
+# sanity.io nor Webflow's CDN. Idempotent: deterministic ids, images
+# deduped by filename, so re-runs converge. Uses the repo's
+# SANITY_AUTH_TOKEN secret; a token passed as an input overrides it
+# (masked in the log).
+
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Comma list of imports to run"
+        required: false
+        default: "projects,series,plans,commercial,regions,posts"
+        type: string
+      dry:
+        description: "Dry run (build documents, touch nothing)"
+        required: false
+        default: false
+        type: boolean
+      sanity_token:
+        description: "Sanity write token (optional override)"
+        required: false
+        type: string
+
+concurrency:
+  group: import-webflow
+  cancel-in-progress: false
+
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - name: Mask token
+        if: ${{ inputs.sanity_token != '' }}
+        run: echo "::add-mask::${{ inputs.sanity_token }}"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install
+        run: npm install --no-audit --no-fund
+      - name: Import
+        env:
+          SANITY_TOKEN: ${{ inputs.sanity_token != '' && inputs.sanity_token || secrets.SANITY_AUTH_TOKEN }}
+        run: npx -y tsx scripts/import-webflow.ts --only="${{ inputs.only }}" ${{ inputs.dry && '--dry' || '' }}
+      - name: Keep the dry-run preview
+        if: ${{ inputs.dry }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: webflow-import-preview
+          path: design/webflow-export/preview.json

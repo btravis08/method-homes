@@ -568,6 +568,27 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   only Annata 1 exists), and the Author page has no IA card. A stray
   nav instance uses the uninstalled "FG Culture Medium TRIAL" font, so
   the API can't move it. It is parked under the pages row.
+- WEBFLOW CMS IMPORT (Bryce, 2026-10-05: "organize the information and
+  place within our CMS"). Bryce exported all 10 Webflow collections to
+  Drive; they now live in design/webflow-export/ (no personal data:
+  projects are named by place, blog items are public posts; drafts are
+  unfinished portfolio entries). `scripts/import-webflow.ts` maps them
+  onto our types and runs from import-webflow.yml. What the export
+  revealed: three overlapping portfolio collections (Custom, a 2024
+  "New Designs" redesign that is all drafts, Predesigned) plus
+  Commercial — 109 unique projects, 16 the crawl never saw; the crawl's
+  "21-image galleries" were page chrome, the real galleries are 1–25
+  photos; plan facts live only as bullet HTML (sq ft, deck/garage,
+  Modular price, Modular+Site price, beds/baths, modules, stories) —
+  parsed to numbers with ranges kept as dimension rows; series
+  descriptions name the architects (Annata/Elemental: Chris Pardo
+  Design, Cabin/M: Prentiss + Balance + Wickline, Option:
+  Grouparchitect, Paradigm: Bogue Trondowski, Method One: Method Arc);
+  blog = 200 articles, 44 press, 13 events, 75 drafts, 1,050 unique
+  images. Schema grew `project.status` (completed / in-progress),
+  `project.order`, `series.brochure`. Still missing after import
+  (Input 5/6): series finish levels, FAQ, timelines; project modules,
+  months, cost band, testimonials, geo — the export never had them.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

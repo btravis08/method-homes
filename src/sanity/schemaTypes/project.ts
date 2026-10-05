@@ -137,6 +137,24 @@ export const project = defineType({
       title: "Year completed",
       type: "number",
     }),
+    /* carried over from the Webflow portfolio (2026-10-05): an
+       in-progress project stays listed but reads as such */
+    defineField({
+      name: "status",
+      title: "Status",
+      type: "string",
+      options: { list: [
+        { title: "Completed", value: "completed" },
+        { title: "In progress", value: "in-progress" },
+      ], layout: "radio", direction: "horizontal" },
+      initialValue: "completed",
+    }),
+    defineField({
+      name: "order",
+      title: "Portfolio sort order",
+      description: "Lower first. Ties fall back to year completed.",
+      type: "number",
+    }),
     /* ── case-study facts (AEO play 7) ─────────────────────────────
        A project page that states series, modules, timeline, cost band
        and location is a citable case study; one with a photo and a

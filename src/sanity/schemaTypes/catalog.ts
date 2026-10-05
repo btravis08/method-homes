@@ -58,6 +58,7 @@ export const series = defineType({
     imageWithAlt("heroImage", "Hero photograph", "One large photograph; the LCP image of the page."),
     defineField({ name: "body", title: "Story", type: "blockContent", group: "content" }),
     galleryWithAlt(),
+    defineField({ name: "brochure", title: "Series brochure (PDF)", type: "file", options: { accept: "application/pdf" }, group: "content", description: "The series PDF Method hands to buyers; linked from the series page." }),
     defineField({ name: "architect", title: "Architect / design credit", type: "string", group: "content" }),
     defineField({ name: "featured", title: "Featured in the Lineup", type: "boolean", group: "content", initialValue: true }),
     defineField({ name: "order", title: "Sort order", type: "number", group: "content", initialValue: 100 }),

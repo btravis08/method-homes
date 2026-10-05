@@ -44,3 +44,4 @@ next-env.d.ts
 # pipeline intermediates (public/models keeps only the compressed GLB)
 *.raw.glb
 __pycache__/
+design/webflow-export/preview.json
