@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
 import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
-import { buildFoliage, plantingPlan, type FoliageHandle } from "./foliage";
+import { buildFoliage, plantingPlan, type Door, type FoliageHandle, type Plant } from "./foliage";
+import { findDoors } from "./doors";
 import { loadPlants, type PlantsHandle } from "./plants";
 import { buildLawn, type LawnHandle } from "./lawn";
 import { ToneMappingMode } from "postprocessing";
@@ -283,6 +284,9 @@ class ViewerState {
   plants: PlantsHandle | null = null;
   /* organic lawn round the home (lawn.ts); dissolves in plan */
   lawn: LawnHandle | null = null;
+  /* the planting plan (foliage.ts) and the exterior doors it keeps clear */
+  doors: Door[] = [];
+  plan: Plant[] = [];
   plantsBase = DEFAULT_PLANTS_BASE;
   private plantsLoading = false;
   private fade = 0;
@@ -362,13 +366,16 @@ class ViewerState {
     });
     this.buildCap(scene, root);
     /* planting rides the model group, so it turns north-up with the home */
+    /* doors first: the plan and the lawn both keep their approaches clear */
+    this.doors = findDoors(scene);
+    this.plan = plantingPlan(this.footprint, 7, this.doors);
     if (this.group && !this.foliage) {
-      this.foliage = buildFoliage(this.footprint);
+      this.foliage = buildFoliage(this.plan);
       plantLayer(this.foliage.group);
       this.group.add(this.foliage.group);
     }
     if (this.group && !this.lawn) {
-      this.lawn = buildLawn(this.footprint, plantingPlan(this.footprint));
+      this.lawn = buildLawn(this.footprint, this.plan, this.doors);
       plantLayer(this.lawn.group);
       this.group.add(this.lawn.group);
     }
@@ -381,7 +388,7 @@ class ViewerState {
     const group = this.group;
     if (!group || this.plants || this.plantsLoading || !this.plantsBase) return;
     this.plantsLoading = true;
-    loadPlants(this.plantsBase, plantingPlan(this.footprint))
+    loadPlants(this.plantsBase, this.plan)
       .then((h) => {
         if (!h) return;
         if (this.group !== group) {

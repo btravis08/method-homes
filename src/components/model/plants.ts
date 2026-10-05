@@ -23,31 +23,39 @@ import { buildClumpGeometry, type Plant } from "./foliage";
   bark and leaves alike — so the drawing never carries planting.
 */
 
-/* which scanned models play which part. Only trees are whole models:
-   Poly Haven's shrubs are wild, leggy sprigs that read as weeds beside a
-   house, so the shrub and corner spots are PHOTO CLUMPS instead — the
-   volumetric clump technique (foliage.ts) skinned with the scanned
-   tree's own frond atlas: full, garden-like masses with photographic
-   leaves, in one draw call. Roles left empty fall to the clumps. */
-type Role = Plant["kind"] | "ground";
-const CAST: Record<Role, string[]> = {
-  shrub: [],
-  corner: [],
-  tree: ["jacaranda_tree"],
-  ground: [],
-};
-/* the model whose leaf material dresses the photo clumps, and the
-   fronds on its atlas (u0, v0, u1, v1; v down, as glTF stores it) */
-const ATLAS = {
-  model: "jacaranda_tree",
-  material: /leaves/i,
-  rects: [
-    [0.16, 0.03, 1.0, 0.46],
-    [0.0, 0.33, 0.43, 0.7],
-    [0.25, 0.58, 1.0, 0.98],
-  ],
-  aspect: 0.5,
-};
+/* Only trees are whole scanned models: Poly Haven's shrubs are wild,
+   leggy sprigs that read as weeds beside a house. Shrubs are PHOTO
+   CLUMPS — the volumetric clump technique (foliage.ts) skinned with real
+   leaf atlases — in several SPECIES so neighbouring plants differ. */
+const TREES = ["jacaranda_tree"];
+
+/* the shrub looks, indexed by Plant.species (foliage.ts SPECIES must
+   match the count). Each is a CC0 Poly Haven leaf atlas (alpha merged;
+   v down, as glTF stores it) — `atlas: null` = the scanned tree's own
+   fronds — with a colour, card density/size and habit (rise = height
+   relative to the plan's size: upright > 1, spreading < 1). */
+interface Look {
+  name: string;
+  atlas: string | null;
+  rects: number[][];
+  aspect: number;
+  color: [number, number, number];
+  cards: number;
+  card: number;
+  rise: number;
+}
+const LOOKS: Look[] = [
+  /* feathery fronds (the jacaranda's own), airy mound */
+  { name: "feather", atlas: null, rects: [[0.16, 0.03, 1.0, 0.46], [0.0, 0.33, 0.43, 0.7], [0.25, 0.58, 1.0, 0.98]], aspect: 0.5, color: [1, 1, 1], cards: 70, card: 0.75, rise: 1 },
+  /* long sage-silver lance leaves (shrub_02), upright; toned down —
+     full strength read white in the sun */
+  { name: "willow", atlas: "atlas-willow.webp", rects: [[0.2, 0.03, 0.6, 0.97], [0.55, 0.0, 0.97, 0.88]], aspect: 2.2, color: [0.62, 0.72, 0.7], cards: 120, card: 0.5, rise: 1.35 },
+  /* broad heart leaves (shrub_03), deepened from lime, low and spreading */
+  { name: "heart", atlas: "atlas-heart.webp", rects: [[0.02, 0.02, 0.62, 0.52], [0.02, 0.45, 0.62, 0.95]], aspect: 0.85, color: [0.7, 0.84, 0.6], cards: 110, card: 0.55, rise: 0.7 },
+  /* small rounded leaves (shrub_04), dense tidy dome */
+  { name: "pittosporum", atlas: "atlas-obovate.webp", rects: [[0.0, 0.05, 0.36, 0.95], [0.3, 0.05, 0.67, 0.95]], aspect: 2.4, color: [0.8, 0.9, 0.84], cards: 150, card: 0.42, rise: 0.9 },
+];
+const FRONDS = /leaves/i; // the tree material that carries the fronds
 
 export interface PlantsHandle {
   group: THREE.Group;
@@ -102,51 +110,6 @@ function variants(root: THREE.Object3D): Part[][] {
       if (o instanceof THREE.Mesh) parts.push(...bake(o, fix));
     });
     if (parts.length) out.push(parts);
-  }
-  return out;
-}
-
-/* seeded scatter of low cover round the shrubs (mulberry32) */
-function rng(seed: number) {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = a;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-interface Spot {
-  role: Role;
-  x: number;
-  z: number;
-  size: number;
-  yaw: number;
-}
-
-function spots(plan: Plant[]): Spot[] {
-  const rand = rng(23);
-  const out: Spot[] = plan.map((p) => ({ role: p.kind, x: p.x, z: p.z, size: p.size, yaw: p.yaw }));
-  for (const p of plan) {
-    if (p.kind === "tree" || !CAST.ground.length) continue;
-    /* "outward" = away from the house: shrubs sit off the long walls (z),
-       corner clumps off both */
-    const ox = p.kind === "corner" ? Math.sign(p.x) : 0;
-    const oz = Math.sign(p.z) || 1;
-    const n = p.kind === "corner" ? 4 : 3;
-    for (let i = 0; i < n; i++) {
-      const along = p.kind === "corner" ? (rand() - 0.3) * 1.6 : (rand() - 0.5) * 2.2;
-      const out_ = 0.35 + rand() * 0.9;
-      out.push({
-        role: "ground",
-        x: p.x + (ox ? ox * out_ : along),
-        z: p.z + oz * (p.kind === "corner" ? (rand() - 0.3) * 1.6 : out_),
-        size: 0.3 + rand() * 0.3,
-        yaw: rand() * Math.PI * 2,
-      });
-    }
   }
   return out;
 }
@@ -224,43 +187,49 @@ export async function loadPlants(base: string, plan: Plant[], signal?: AbortSign
   if (!res.ok) return null;
   const manifest = (await res.json()) as Manifest;
 
-  /* load every model any role casts that the manifest lists */
-  const ids = [...new Set([...Object.values(CAST).flat(), ATLAS.model])].filter((id) => manifest[id]);
-  if (!ids.length) return null;
+  /* the trees, and the leaf atlases for the shrub looks */
+  const ids = TREES.filter((id) => manifest[id]);
   const loader = new GLTFLoader();
   loader.setMeshoptDecoder(MeshoptDecoder);
   const models = new Map<string, Part[][]>();
-  await Promise.all(
-    ids.map(async (id) => {
+  const texLoader = new THREE.TextureLoader();
+  const atlases = new Map<string, THREE.Texture>();
+  await Promise.all([
+    ...ids.map(async (id) => {
       const gltf = await loader.loadAsync(`${base}/${manifest[id].file}`, undefined);
       models.set(id, variants(gltf.scene));
     }),
-  );
+    ...LOOKS.filter((l) => l.atlas).map(async (l) => {
+      try {
+        const tex = await texLoader.loadAsync(`${base}/${l.atlas}`);
+        tex.flipY = false; // rects are in glTF's v-down space
+        tex.colorSpace = THREE.SRGBColorSpace;
+        tex.anisotropy = 4;
+        tex.needsUpdate = true;
+        atlases.set(l.name, tex);
+      } catch {
+        /* a missing atlas: its plants borrow another look */
+      }
+    }),
+  ]);
   if (signal?.aborted) return null;
-
-  /* deal the spots across every (model, variant) its role casts */
-  const pools: Record<string, [string, number][]> = {};
-  for (const role of Object.keys(CAST) as Role[]) {
-    pools[role] = CAST[role].filter((id) => models.has(id)).flatMap((id) => models.get(id)!.map((_, v) => [id, v] as [string, number]));
-  }
-  const byVariant = new Map<string, Spot[]>();
-  const turn: Record<string, number> = {};
-  for (const sp of spots(plan)) {
-    const pool = pools[sp.role];
-    if (!pool?.length) continue;
-    const i = turn[sp.role] ?? 0;
-    turn[sp.role] = i + 1;
-    const [id, v] = pool[i % pool.length];
+  const treeSpots = plan.filter((p) => p.kind === "tree");
+  const variantsOf = ids.flatMap((id) => models.get(id)!.map((_, v) => [id, v] as [string, number]));
+  const byVariant = new Map<string, Plant[]>();
+  treeSpots.forEach((sp, i) => {
+    if (!variantsOf.length) return;
+    const [id, v] = variantsOf[i % variantsOf.length];
     const key = `${id}#${v}`;
     if (!byVariant.has(key)) byVariant.set(key, []);
     byVariant.get(key)!.push(sp);
-  }
+  });
 
   const fade = { value: 0 };
   const group = new THREE.Group();
   group.name = "plants";
   const mats = new Map<THREE.Material, THREE.Material>();
   const geos: THREE.BufferGeometry[] = [];
+  const textures: THREE.Texture[] = [];
   let triangles = 0;
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
@@ -294,25 +263,48 @@ export async function loadPlants(base: string, plan: Plant[], signal?: AbortSign
   }
   geos.push(...allGeos);
 
-  /* photo clumps for every shrub / corner spot no model was cast for */
-  const leafSrc = models
-    .get(ATLAS.model)
-    ?.flat()
-    .find((p) => ATLAS.material.test(p.mat.name))?.mat;
-  const open = plan.filter((p) => (p.kind === "shrub" || p.kind === "corner") && !pools[p.kind]?.length);
-  if (leafSrc && open.length) {
-    const src = leafSrc.clone() as THREE.MeshStandardMaterial;
-    src.vertexColors = true;
+  /* photo clumps: one geometry + material per shrub look */
+  const fronds = [...models.values()].flat(2).find((p) => FRONDS.test(p.mat.name))?.mat;
+  const lookMat = (l: Look): THREE.Material | null => {
+    if (!l.atlas) {
+      if (!fronds) return null;
+      const src = fronds.clone() as THREE.MeshStandardMaterial;
+      src.vertexColors = true;
+      const mat = dissolve(src, fade);
+      src.dispose();
+      return mat;
+    }
+    const map = atlases.get(l.name);
+    if (!map) return null;
+    const src = new THREE.MeshStandardMaterial({ map, vertexColors: true, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.85, metalness: 0 });
     const mat = dissolve(src, fade);
     src.dispose();
-    const geo = buildClumpGeometry(open, { rects: ATLAS.rects, aspect: ATLAS.aspect, tint: false });
-    geos.push(geo);
-    mats.set(mat, mat);
-    const mesh = new THREE.Mesh(geo, mat);
-    mesh.name = "plant_clumps";
-    group.add(mesh);
-    triangles += (geo.index?.count ?? 0) / 3;
+    return mat;
+  };
+  const ready = LOOKS.map((l) => ({ l, mat: lookMat(l) }));
+  const usable = ready.filter((r) => r.mat);
+  if (usable.length) {
+    const shrubs = plan.filter((p) => p.kind === "shrub");
+    /* a plant whose look failed to load borrows the next usable one */
+    const lookFor = (i: number) => (ready[i]?.mat ? ready[i] : usable[i % usable.length]);
+    const groups = new Map<(typeof ready)[number], Plant[]>();
+    for (const p of shrubs) {
+      const r = lookFor(p.species);
+      if (!groups.has(r)) groups.set(r, []);
+      groups.get(r)!.push(p);
+    }
+    for (const [r, list] of groups) {
+      const l = r.l;
+      const geo = buildClumpGeometry(list, { rects: l.rects, aspect: l.aspect, tint: false, color: l.color, cards: l.cards, card: l.card, rise: l.rise });
+      geos.push(geo);
+      mats.set(r.mat!, r.mat!);
+      const mesh = new THREE.Mesh(geo, r.mat!);
+      mesh.name = `plant_clumps_${l.name}`;
+      group.add(mesh);
+      triangles += (geo.index?.count ?? 0) / 3;
+    }
   }
+  for (const t of atlases.values()) textures.push(t);
   if (!group.children.length) return null;
 
   return {
@@ -326,6 +318,7 @@ export async function loadPlants(base: string, plan: Plant[], signal?: AbortSign
     },
     dispose() {
       for (const g of geos) g.dispose();
+      for (const t of textures) t.dispose();
       for (const [src, mat] of mats) {
         src.dispose();
         mat.dispose();

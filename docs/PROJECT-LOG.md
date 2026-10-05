@@ -390,6 +390,35 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   dissolves with the planting on the flight to plan. Greens are muted
   (#3a5426–#5f7a3e): the strong sun lifts them, and the first pass at
   #66843f read lime.
+- Planting RULES (Bryce, 2026-10-05: vary the shrubs so they don't look
+  like duplicates; keep them in clusters, "a few around the trees", not
+  lining the house; no grass or shrubs in front of front doors). The
+  one planting plan (`plantingPlan`, foliage.ts) now encodes them:
+  - Clusters, never rows: 3 shrubs round each tree's base, a drift of
+    3–5 at two corners on a DIAGONAL (one per long side, so both
+    elevations get one), one drift of 3 partway along a long side. Each
+    drift has a big anchor plant and smaller ones round it.
+  - Variety: four shrub LOOKS (plants.ts `LOOKS`), each a CC0 Poly Haven
+    leaf atlas with its own colour, density and habit — feathery
+    jacaranda fronds (airy mound), sage-silver lance leaves from
+    shrub_02 (upright), broad heart leaves from shrub_03 (low,
+    spreading, deepened from lime), small rounded leaves from shrub_04
+    (dense dome). Each drift leads with a different look and mixes in
+    an accent. The atlases are standalone 512 px WebPs
+    (public/models/plants/atlas-*.webp, 56 KB total) cut from the
+    earlier alpha-merged shrub GLBs.
+  - Doors: src/components/model/doors.ts finds EXTERIOR doors in the
+    model itself — the pipeline merges a storey's doors into one mesh,
+    so door vertices are binned on a 25 cm grid and flood-filled with a
+    ~1 m join (rejoining jambs without merging doors); a door on the
+    ground storey's outer wall line is exterior, with an outward normal.
+    The sample house yields its two (one per long side). `doorClear`
+    keeps a strip the door's width + 0.9 m each side, running outward,
+    free of shrubs, and the lawn's coverage field carves the same
+    strip (ragged sides), so every door gets a bare approach path.
+  Bug found on the way: the lawn mat's baked texture was mirrored in z
+  against the tufts (a -90° X-rotated plane puts v = 0 at +z); it read
+  fine until the path made the asymmetry visible.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

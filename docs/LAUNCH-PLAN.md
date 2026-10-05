@@ -631,6 +631,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer planting rules (Bryce): shrubs in mixed
+  clusters (round each tree, two diagonal corners, one drift) instead
+  of rows along the walls; four shrub looks from CC0 leaf atlases so
+  neighbours differ; exterior doors found in the model (doors.ts) get
+  a clear approach — no shrubs, and a bare path through the lawn.
+  Docs: PROJECT-LOG decision, AGENTS rule.
 - 2026-10-05 — Plan viewer: organic lawn (Bryce). Procedural grass
   (src/components/model/lawn.ts): a noise-edged coverage field around
   the home that reaches out under the trees; a baked mat with a frayed,

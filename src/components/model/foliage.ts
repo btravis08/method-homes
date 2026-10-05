@@ -102,6 +102,13 @@ interface Skin {
   rects: number[][];
   aspect: number;
   tint: boolean;
+  /* photo skins: a colour the species' cards are multiplied by */
+  color?: [number, number, number];
+  /* cards per clump at a 0.7 m radius (scaled by the clump's footprint),
+     card size in m, and height relative to the plan's size */
+  cards?: number;
+  card?: number;
+  rise?: number;
 }
 const DAB: Skin = { rects: [[0, 0, 1, 1]], aspect: 1, tint: true };
 
@@ -125,7 +132,10 @@ function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[]
     /* height within the clump: 0 at the base, 1 at the top */
     const h = THREE.MathUtils.clamp((p.y - (clump.c.y - clump.r.y)) / (2 * clump.r.y), 0, 1);
     if (skin.tint) base.set(GREENS[Math.floor(rand() * GREENS.length)]);
-    else base.setRGB(0.92 + rand() * 0.16, 0.92 + rand() * 0.16, 0.9 + rand() * 0.12);
+    else {
+      const [cr, cg, cb] = skin.color ?? [1, 1, 1];
+      base.setRGB(cr * (0.92 + rand() * 0.16), cg * (0.92 + rand() * 0.16), cb * (0.9 + rand() * 0.12));
+    }
     const shade = 0.55 + 0.45 * h; // darker toward the base
     const [u0, v0, u1, v1] = skin.rects[Math.floor(rand() * skin.rects.length)];
     const vi = pos.length / 3;
@@ -151,55 +161,157 @@ function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[]
 }
 
 /* THE PLANTING PLAN: where every plant goes, shared by the procedural
-   cards below and the real scanned plants (plants.ts), so swapping one
-   for the other never moves the garden. `size` is the plant's height. */
+   cards below, the real plants (plants.ts) and the lawn (lawn.ts), so
+   swapping one for another never moves the garden. `size` is the plant's
+   height; `species` picks the shrub's look (plants.ts SPECIES). */
 export interface Plant {
-  kind: "shrub" | "corner" | "tree";
+  kind: "shrub" | "tree";
   x: number;
   z: number;
   size: number;
-  /* plan footprint radii of the procedural clump (x, z) */
+  /* plan footprint radii (x, z) */
   rx: number;
   rz: number;
   yaw: number;
+  species: number;
 }
 
-export function plantingPlan(fp: Footprint, seed = 7): Plant[] {
+/* an exterior door, found in the model (doors.ts): centre on the wall
+   line, width along the wall, outward unit normal */
+export interface Door {
+  x: number;
+  z: number;
+  w: number;
+  nx: number;
+  nz: number;
+}
+
+/* how many shrub looks the plan deals between (plants.ts SPECIES) */
+export const SPECIES = 4;
+
+/* the clear approach in front of a door: wider than the door, running
+   out from the wall indefinitely — no shrub, no grass */
+export const DOOR_CLEAR = 0.9; // m beyond each jamb
+export function doorClear(doors: Door[], x: number, z: number, r = 0): boolean {
+  return doors.some((d) => {
+    const dx = x - d.x;
+    const dz = z - d.z;
+    const out = dx * d.nx + dz * d.nz;
+    const along = Math.abs(-dx * d.nz + dz * d.nx);
+    return out > -0.6 - r && along < d.w / 2 + DOOR_CLEAR + r;
+  });
+}
+
+/*
+  PLANTING RULES (Bryce, 2026-10-05):
+  - shrubs grow in CLUSTERS (drifts of 3–5), never as a row along the
+    walls: one round each tree's base, two at corners of the home, one
+    drift partway along a long side;
+  - every cluster mixes species: a dominant look (its biggest plant and
+    most of the rest) plus an accent, and neighbouring clusters lead
+    with different species, so no two drifts read as copies;
+  - sizes step down from a big anchor plant to smaller ones in front;
+  - nothing in front of an exterior door (doorClear); the lawn leaves
+    the same strip bare, so each door gets a clear approach.
+*/
+export function plantingPlan(fp: Footprint, seed = 7, doors: Door[] = []): Plant[] {
   const rand = rng(seed);
   const hw = fp.width_m / 2;
   const hd = fp.depth_m / 2;
   const out: Plant[] = [];
-  /* shrubs along both long elevations, just outside the walls */
-  for (const side of [-1, 1]) {
-    let x = -hw + 0.6 + rand() * 1.2;
-    while (x < hw - 0.6) {
-      const r = 0.45 + rand() * 0.45;
-      const h = 0.35 + rand() * 0.35;
-      const z = side * (hd + 0.45 + rand() * 0.5);
-      out.push({ kind: "shrub", x, z, size: h * 2, rx: r, rz: r * (0.7 + rand() * 0.3), yaw: rand() * Math.PI * 2 });
-      x += 1.2 + rand() * 2.6;
-    }
-  }
-  /* low clumps at the corners */
-  for (const sx of [-1, 1])
-    for (const sz of [-1, 1]) {
-      const r = 0.7 + rand() * 0.4;
-      out.push({ kind: "corner", x: sx * (hw + 0.6), z: sz * (hd + 0.6), size: r * 1.4, rx: r, rz: r, yaw: rand() * Math.PI * 2 });
-    }
   /* two trees off the short ends */
+  const trees: Plant[] = [];
   for (const sx of [-1, 1]) {
     const x = sx * (hw + 3.2 + rand() * 1.5);
     const z = (rand() - 0.5) * fp.depth_m * 0.8;
     const size = 4.5 + rand() * 1.5;
-    out.push({ kind: "tree", x, z, size, rx: 2, rz: 2, yaw: rand() * Math.PI * 2 });
+    trees.push({ kind: "tree", x, z, size, rx: 2, rz: 2, yaw: rand() * Math.PI * 2, species: 0 });
+  }
+  out.push(...trees);
+
+  const overlaps = (x: number, z: number, r: number) =>
+    out.some((p) => Math.hypot(p.x - x, p.z - z) < (p.kind === "tree" ? 0.9 : p.rx * 0.8) + r * 0.8);
+  const onHouse = (x: number, z: number, r: number) => Math.abs(x) < hw + r * 0.5 && Math.abs(z) < hd + r * 0.5;
+
+  /* species order shuffled per seed; each new cluster leads with the
+     next one, so neighbours differ */
+  const order = Array.from({ length: SPECIES }, (_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  let lead = 0;
+  const cluster = (cx: number, cz: number, n: number, ring?: number) => {
+    const dom = order[lead % SPECIES];
+    const accent = order[(lead + 1 + Math.floor(rand() * (SPECIES - 1))) % SPECIES];
+    lead++;
+    const a0 = rand() * Math.PI * 2;
+    for (let i = 0; i < n; i++) {
+      const anchor = i === 0 && ring === undefined;
+      const size = anchor ? 1.15 + rand() * 0.45 : 0.55 + rand() * 0.5;
+      const r = size * (0.55 + rand() * 0.2);
+      let placed = false;
+      for (let t = 0; t < 6 && !placed; t++) {
+        let x: number;
+        let z: number;
+        if (ring !== undefined) {
+          /* round a tree's base, spread over most of the circle */
+          const a = a0 + (i / n) * Math.PI * 2 * (0.75 + rand() * 0.2) + t * 0.5;
+          const d = ring * (0.85 + rand() * 0.4);
+          x = cx + Math.cos(a) * d;
+          z = cz + Math.sin(a) * d;
+        } else if (anchor && t === 0) {
+          x = cx;
+          z = cz;
+        } else {
+          const a = rand() * Math.PI * 2;
+          const d = 0.9 + rand() * 1.3 + t * 0.2;
+          x = cx + Math.cos(a) * d;
+          z = cz + Math.sin(a) * d;
+        }
+        if (onHouse(x, z, r) || doorClear(doors, x, z, r) || overlaps(x, z, r)) continue;
+        const species = i === 0 || rand() < 0.6 ? dom : accent;
+        out.push({ kind: "shrub", x, z, size, rx: r, rz: r * (0.8 + rand() * 0.2), yaw: rand() * Math.PI * 2, species });
+        placed = true;
+      }
+    }
+  };
+
+  /* round each tree's base */
+  for (const t of trees) cluster(t.x, t.z, 3, 1.7);
+  /* two corners of the home on a DIAGONAL (one on each long side, so
+     both elevations get a drift), skipping any beside a door */
+  const sx0 = rand() < 0.5 ? -1 : 1;
+  const sz0 = rand() < 0.5 ? -1 : 1;
+  const diagonals = [
+    [
+      [sx0, sz0],
+      [-sx0, -sz0],
+    ],
+    [
+      [-sx0, sz0],
+      [sx0, -sz0],
+    ],
+  ];
+  const free = ([sx, sz]: number[]) => !doorClear(doors, sx * (hw + 1.2), sz * (hd + 1.2), 2);
+  const pick = diagonals.find((d) => d.every(free)) ?? diagonals.flat().filter(free).slice(0, 2);
+  for (const [sx, sz] of pick) cluster(sx * (hw + 1.2), sz * (hd + 1.2), rand() < 0.5 ? 3 : 5);
+  /* one drift partway along a long side, clear of doors */
+  const side = rand() < 0.5 ? -1 : 1;
+  for (let t = 0; t < 8; t++) {
+    const x = (rand() * 2 - 1) * (hw - 3);
+    const z = side * (hd + 1.3);
+    if (doorClear(doors, x, z, 2.2)) continue;
+    cluster(x, z, 3);
+    break;
   }
   return out;
 }
 
-/* PHOTO CLUMPS: the same volumetric clumps for the plan's shrub and
-   corner spots, skinned with a real leaf atlas instead of painted dabs
-   (plants.ts feeds it the scanned tree's frond atlas). Returns one
-   geometry; the caller supplies the material. */
+/* PHOTO CLUMPS: volumetric clumps for the plan's shrubs, skinned with
+   a real leaf atlas instead of painted dabs (plants.ts gives each
+   species its atlas, colour, density and habit). Returns one geometry;
+   the caller supplies the material. */
 export function buildClumpGeometry(plan: Plant[], skin: Skin, seed = 7): THREE.BufferGeometry {
   const rand = rng(seed + 2);
   const pos: number[] = [];
@@ -208,13 +320,10 @@ export function buildClumpGeometry(plan: Plant[], skin: Skin, seed = 7): THREE.B
   const uv: number[] = [];
   const idx: number[] = [];
   for (const p of plan) {
-    if (p.kind === "shrub") {
-      const h = p.size / 2;
-      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards: 70, card: 0.75 }, rand, pos, nrm, col, uv, idx, skin);
-    } else if (p.kind === "corner") {
-      const r = p.rx;
-      addClump({ c: new THREE.Vector3(p.x, r * 0.7, p.z), r: new THREE.Vector3(r, r * 0.7, r), cards: 100, card: 0.85 }, rand, pos, nrm, col, uv, idx, skin);
-    }
+    if (p.kind !== "shrub") continue;
+    const h = (p.size / 2) * (skin.rise ?? 1);
+    const cards = Math.round(THREE.MathUtils.clamp((skin.cards ?? 80) * ((p.rx * p.rz) / 0.49), 24, 220));
+    addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: skin.card ?? 0.7 }, rand, pos, nrm, col, uv, idx, skin);
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
@@ -227,7 +336,7 @@ export function buildClumpGeometry(plan: Plant[], skin: Skin, seed = 7): THREE.B
 }
 export type { Skin };
 
-export function buildFoliage(fp: Footprint, seed = 7): FoliageHandle {
+export function buildFoliage(plan: Plant[], seed = 7): FoliageHandle {
   const rand = rng(seed + 1);
   const pos: number[] = [];
   const nrm: number[] = [];
@@ -236,15 +345,11 @@ export function buildFoliage(fp: Footprint, seed = 7): FoliageHandle {
   const idx: number[] = [];
   const trunks: THREE.BufferGeometry[] = [];
 
-  for (const p of plantingPlan(fp, seed)) {
+  for (const p of plan) {
     if (p.kind === "shrub") {
       const h = p.size / 2;
-      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards: 90, card: 0.5 }, rand, pos, nrm, col, uv, idx);
-      continue;
-    }
-    if (p.kind === "corner") {
-      const r = p.rx;
-      addClump({ c: new THREE.Vector3(p.x, r * 0.7, p.z), r: new THREE.Vector3(r, r * 0.7, r), cards: 130, card: 0.56 }, rand, pos, nrm, col, uv, idx);
+      const cards = Math.round(THREE.MathUtils.clamp(100 * ((p.rx * p.rz) / 0.49), 30, 220));
+      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: 0.5 }, rand, pos, nrm, col, uv, idx);
       continue;
     }
     /* a tree: a trunk and a canopy of several clumps */

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import type { Plant } from "./foliage";
+import { DOOR_CLEAR, type Door, type Plant } from "./foliage";
 
 /*
   ORGANIC LAWN — procedural, no assets.
@@ -83,7 +83,7 @@ const TREE_SKIRT = 3.4;
 const EDGE_WOBBLE = 0.32; // coverage units of edge noise
 const TUFTS = 20000;
 
-export function buildLawn(fp: Footprint, plan: Plant[], seed = 7): LawnHandle {
+export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed = 7): LawnHandle {
   const hw = fp.width_m / 2;
   const hd = fp.depth_m / 2;
   const trees = plan.filter((p) => p.kind === "tree");
@@ -100,7 +100,20 @@ export function buildLawn(fp: Footprint, plan: Plant[], seed = 7): LawnHandle {
       const d = Math.hypot(x - t.x, z - t.z) / TREE_SKIRT;
       c = Math.max(c, (1 - d) * 1.2);
     }
-    return c + nEdge(x * 0.22, z * 0.22) * EDGE_WOBBLE;
+    c += nEdge(x * 0.22, z * 0.22) * EDGE_WOBBLE;
+    /* a bare approach to every exterior door: the strip in front of it
+       (as wide as the planting keeps clear) carries no grass, its sides
+       slightly ragged like a worn path */
+    for (const d of doors) {
+      const dx = x - d.x;
+      const dz = z - d.z;
+      const out = dx * d.nx + dz * d.nz;
+      if (out < -0.6) continue;
+      const along = Math.abs(-dx * d.nz + dz * d.nx);
+      const half = d.w / 2 + DOOR_CLEAR * 0.6 + nEdge(out * 0.9 + 31, d.x * 0.3) * 0.12;
+      c = Math.min(c, (along - half) * 2.5);
+    }
+    return c;
   };
 
   /* extent: everything the field could reach, with room for the wobble */
@@ -125,7 +138,8 @@ export function buildLawn(fp: Footprint, plan: Plant[], seed = 7): LawnHandle {
   for (let j = 0; j < res; j++) {
     for (let i = 0; i < res; i++) {
       const x = ((i + 0.5) / res - 0.5) * 2 * ex;
-      const z = ((j + 0.5) / res - 0.5) * 2 * ez;
+      /* row 0 is v = 0, which the rotated plane puts at +z */
+      const z = (0.5 - (j + 0.5) / res) * 2 * ez;
       const f = field(x, z);
       /* mottling: broad patches + finer clumps */
       const t = THREE.MathUtils.clamp(0.5 + nTone(x * 0.35, z * 0.35) * 0.9 + nTone(x * 1.6 + 9, z * 1.6) * 0.35, 0, 1);
