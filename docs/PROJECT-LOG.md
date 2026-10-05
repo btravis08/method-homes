@@ -266,6 +266,23 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   needs a sustained dip (6 × 1.5 s windows) before lowering
   resolution, so a flight never reads as a quality drop. The turntable
   frames were re-rendered on Actions in the new palette.
+- Plan drawing as poché (Bryce, 2026-10-05: "keep the walls filled
+  black and fade out the white floor"). The floor now fades to 0 with
+  the transition, and the ground contact shadow fades with it. Walls
+  had read as outlines: each wall's underside sits exactly on the slab
+  top and the slab won the z-fight, and face/height heuristics for
+  "inside the wall" broke on reversed winding and floor-to-ceiling
+  windows. Replaced with a STENCIL CAP, the standard section-fill
+  technique: every wall/structure solid gets two invisible clipped
+  copies (back faces +1, front faces −1 on the stencil), then a black
+  plane riding the cut height draws only where the stencil is
+  non-zero, i.e. exactly where the cut passes through solid wall.
+  Openings are gaps in the solid at the cut, so windows and doors stay
+  open by construction; overlapping solids and reversed winding still
+  count non-zero. The counters and cap live in the transparent list
+  after the model (the glass transmission pass has no stencil
+  buffer), the canvas asks for stencil: true, and sills fade with the
+  floor so openings read as true gaps.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

@@ -196,7 +196,9 @@ const SIDING_COLOR = /* glsl */ `
        stay ink, which keeps the cut walls solid. */
     float horizontal = step(0.85, abs(n.y));
     float sill = horizontal * (gl_FrontFacing ? 1.0 : 0.0);
-    diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.93, 0.94, 0.92), sill * uPlan);
+    /* sills fade out with the floor, so an opening is a true gap in the
+       black wall fill */
+    diffuseColor.a *= 1.0 - sill * uPlan;
   }
 `;
 const ROOF_COLOR = /* glsl */ `
@@ -244,7 +246,10 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string) {
   mat.customProgramCacheKey = () => `finish-${cat}`;
 }
 const PLAN: Record<string, [string, number]> = {
-  wall: ["#161716", 1], floor: ["#f7f8f4", 1], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
+  /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
+     — with the slab gone, each cut wall shows its own underside as a
+     solid ink fill instead of losing a z-fight to the slab top */
+  wall: ["#111111", 1], floor: ["#f7f8f4", 0], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
   /* frames read as openings in the drawing (glass-blue), not as wall */
   door: ["#8b6d52", 1], frame: ["#b7cdd8", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
 };
@@ -256,6 +261,9 @@ class ViewerState {
   group: THREE.Group | null = null;
   root: THREE.Scene | null = null; // for the debug hook (window.__planViewer)
   controls: { enabled: boolean } | null = null;
+  /* the ground contact shadow: fades out with the floor in plan */
+  shadow: THREE.Object3D | null = null;
+  private shadowMats: THREE.Material[] | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
@@ -294,7 +302,7 @@ class ViewerState {
     this.progress = initial === "plan" ? 1 : 0;
     this.mats = [];
     scene.traverse((o) => {
-      if (!(o instanceof THREE.Mesh)) return;
+      if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
       const m = o.name.match(/^storey(\d+)_(\w+)$/);
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
@@ -329,6 +337,75 @@ class ViewerState {
       }
       this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey });
     });
+    this.buildCap(scene, root);
+  }
+
+  /* SECTION FILL (poché): a stencil cap. Each wall/structure solid gets two
+     invisible clipped copies — back faces add 1 to the stencil, front
+     faces subtract 1 — so after them the stencil is non-zero exactly where
+     the cut plane lies inside a solid (overlapping solids and reversed
+     winding still read non-zero). A black plane at the cut height then
+     draws only there. Openings are gaps in the solid at the cut, so they
+     stay open by construction — no guessing from faces or heights.
+     Everything is in the transparent list (renderOrder after the model) so
+     the glass transmission pass, which has no stencil buffer, never sees
+     the cap. */
+  cap: THREE.Mesh | null = null;
+  private buildCap(scene: THREE.Object3D, root: THREE.Scene) {
+    if (this.cap) {
+      this.cap.removeFromParent();
+      this.cap.geometry.dispose();
+      (this.cap.material as THREE.Material).dispose();
+      this.cap = null;
+    }
+    const solids: THREE.Mesh[] = [];
+    scene.traverse((o) => {
+      if (o instanceof THREE.Mesh && /_(wall|structure)$/.test(o.name) && !o.userData.capped) solids.push(o);
+    });
+    const counter = (side: THREE.Side, op: THREE.StencilOp) =>
+      new THREE.MeshBasicMaterial({
+        side,
+        transparent: true,
+        colorWrite: false,
+        depthWrite: false,
+        depthTest: false,
+        clippingPlanes: [this.plane],
+        stencilWrite: true,
+        stencilFunc: THREE.AlwaysStencilFunc,
+        stencilFail: op,
+        stencilZFail: op,
+        stencilZPass: op,
+      });
+    const back = counter(THREE.BackSide, THREE.IncrementWrapStencilOp);
+    const front = counter(THREE.FrontSide, THREE.DecrementWrapStencilOp);
+    for (const s of solids) {
+      s.userData.capped = true;
+      for (const mat of [back, front]) {
+        const m = new THREE.Mesh(s.geometry, mat);
+        m.renderOrder = 10;
+        m.userData.stencil = true;
+        s.add(m);
+      }
+    }
+    const span = Math.max(this.footprint.width_m, this.footprint.depth_m) * 3;
+    const cap = new THREE.Mesh(
+      new THREE.PlaneGeometry(span, span).rotateX(-Math.PI / 2),
+      new THREE.MeshBasicMaterial({
+        color: PLAN.wall[0],
+        transparent: true,
+        toneMapped: false,
+        stencilWrite: true,
+        stencilRef: 0,
+        stencilFunc: THREE.NotEqualStencilFunc,
+        stencilFail: THREE.ReplaceStencilOp,
+        stencilZFail: THREE.ReplaceStencilOp,
+        stencilZPass: THREE.ReplaceStencilOp,
+      }),
+    );
+    cap.renderOrder = 11;
+    cap.visible = false;
+    root.add(cap);
+    this.cap = cap;
   }
 
   radius() {
@@ -399,6 +476,25 @@ class ViewerState {
     /* camera: orbit (OrbitControls) in 3D, flight to the top in plan */
     const cam = state.camera as THREE.PerspectiveCamera;
     if (this.controls) this.controls.enabled = this.progress < 0.02;
+    /* the section fill rides the cut plane (plane: −y + c = 0 → y = c) */
+    if (this.cap) {
+      this.cap.position.y = this.plane.constant;
+      this.cap.visible = e > 0.01;
+    }
+    if (this.shadow) {
+      if (this.shadowMats == null) {
+        const found: THREE.Material[] = [];
+        this.shadow.traverse((o) => {
+          if (o instanceof THREE.Mesh && o.material instanceof THREE.Material) {
+            o.material.userData.baseOpacity ??= o.material.opacity;
+            found.push(o.material);
+          }
+        });
+        if (found.length) this.shadowMats = found;
+      }
+      for (const m of this.shadowMats ?? []) m.opacity = (m.userData.baseOpacity as number) * (1 - e);
+      this.shadow.visible = e < 0.99;
+    }
     if (this.progress > 0.001) {
       /* spherical path from the orbit pose to straight above: the polar
          angle closes to the top, the azimuth holds (no camera spin — the
@@ -524,7 +620,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: radius * 0.3, far: radius * 3 }}
           /* Neutral (Khronos PBR) tone mapping keeps material colour
              faithful — a product shot, not a film look */
-          gl={{ antialias: true, alpha: true, powerPreference: "low-power", toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0 }}
+          gl={{ antialias: true, alpha: true, stencil: true, powerPreference: "low-power", toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0 }}
           onPointerDown={onDown}
           onPointerUp={onUp}
           onPointerCancel={onUp}
@@ -541,7 +637,13 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
               floor slab in plan view, so nothing to fade) */}
-          <ContactShadows position={[0, 0.005, 0]} opacity={0.45} scale={Math.max(fp.width_m, fp.depth_m) * 2.2} blur={2.6} far={fp.height_m} resolution={512} frames={reduce || mode === "plan" ? 1 : Infinity} color="#1a1a18" />
+          <ContactShadows
+            ref={(g) => {
+              const v = vs.current;
+              if (v) v.shadow = g as THREE.Object3D | null;
+            }}
+            position={[0, 0.005, 0]}
+            opacity={0.45} scale={Math.max(fp.width_m, fp.depth_m) * 2.2} blur={2.6} far={fp.height_m} resolution={512} frames={reduce || mode === "plan" ? 1 : Infinity} color="#1a1a18" />
           <OrbitControls
             ref={(c) => {
               const v = vs.current;
