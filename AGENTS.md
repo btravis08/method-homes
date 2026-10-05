@@ -173,7 +173,9 @@ staging/design use.
 - The lawn (lawn.ts) is one coverage field — change its shape there
   (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the mat or the tufts. Keep
   world-space noise grains ≥ ~8 cm: finer ones go sub-pixel at the
-  viewer's distance and shimmer while the model spins.
+  viewer's distance and shimmer while the model spins. The lawn must
+  read as a calm SURFACE: tufts stay short (≤ ~10 cm) and within a
+  shade of the mat, greens stay grey-green (Bryce, 2026-10-05).
 
 ## Design source (Figma) — THE REBRAND
 

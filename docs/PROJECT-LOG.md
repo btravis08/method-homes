@@ -419,6 +419,15 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   Bug found on the way: the lawn mat's baked texture was mirrored in z
   against the tufts (a -90° X-rotated plane puts v = 0 at +z); it read
   fine until the path made the asymmetry visible.
+- Lawn toned down (Bryce, 2026-10-05: "too 3d … looks too large and
+  out of scale, less grass, less green"). At the viewer's distance a
+  10–25 cm tuft reads as knee-high meadow. Now: 7k tufts (≈5k placed)
+  at 3.5–10 cm, narrower and close in value to the mat, so they add
+  grain rather than a second layer; the mat is soft grey-green
+  (#55624a–#69755b) with a muted fringe; the lawn reaches 3.4 m past
+  the walls and 2.8 m round trees (was 4.4 / 3.4). Lesson: ground
+  cover at product-shot distance should read as a surface, not
+  geometry — scale and saturation both shout.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

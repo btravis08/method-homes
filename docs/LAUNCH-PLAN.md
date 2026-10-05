@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer lawn toned down (Bryce: too 3D, out of
+  scale, too green): fewer, shorter tufts close to the mat's value, a
+  soft grey-green mat, and a tighter reach round the home and trees.
 - 2026-10-05 — Plan viewer planting rules (Bryce): shrubs in mixed
   clusters (round each tree, two diagonal corners, one drift) instead
   of rows along the walls; four shrub looks from CC0 leaf atlases so

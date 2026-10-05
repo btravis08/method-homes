@@ -78,10 +78,10 @@ function noise2(seed: number) {
 }
 
 /* how far the lawn reaches past the walls, and how wide a tree's skirt is */
-const MARGIN = 4.4;
-const TREE_SKIRT = 3.4;
+const MARGIN = 3.4;
+const TREE_SKIRT = 2.8;
 const EDGE_WOBBLE = 0.32; // coverage units of edge noise
-const TUFTS = 20000;
+const TUFTS = 7000;
 
 export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed = 7): LawnHandle {
   const hw = fp.width_m / 2;
@@ -129,10 +129,12 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
   const data = new Uint8Array(res * res * 4);
   /* muted, slightly cool lawn greens (the sun is strong: these read
      brighter lit than they look here) and a straw fringe */
-  const deep = new THREE.Color("#3a5426");
-  const mid = new THREE.Color("#4c6832");
-  const light = new THREE.Color("#5f7a3e");
-  const dry = new THREE.Color("#5f6038");
+  /* soft grey-greens (Bryce: "less green"), close in value so the lawn
+     reads as a calm ground plane, not a texture */
+  const deep = new THREE.Color("#55624a");
+  const mid = new THREE.Color("#5f6c52");
+  const light = new THREE.Color("#69755b");
+  const dry = new THREE.Color("#6d6d58");
   const c = new THREE.Color();
   const srgb = { r: 0, g: 0, b: 0 };
   for (let j = 0; j < res; j++) {
@@ -210,11 +212,13 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
   const tp: number[] = [];
   const tc: number[] = [];
   const tr = rng(seed + 31);
-  const base = new THREE.Color("#2f4420");
-  const tip = new THREE.Color("#6a8443");
+  /* tufts sit a shade either side of the mat, so they add grain, not
+     a second, louder layer */
+  const base = new THREE.Color("#4c5843");
+  const tip = new THREE.Color("#6b7660");
   for (let b = 0; b < blades; b++) {
     const a = (b / blades) * Math.PI * 2 + tr() * 0.8;
-    const w = 0.018;
+    const w = 0.011;
     const h = 0.75 + tr() * 0.5;
     const lean = 0.25 + tr() * 0.35;
     const ox = Math.cos(a) * 0.02;
@@ -273,12 +277,14 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
     const z = (pr() * 2 - 1) * ez;
     if (Math.abs(x) < hw - 0.05 && Math.abs(z) < hd - 0.05) continue;
     const f = field(x, z);
-    const p = f > 0 ? 0.12 + 0.88 * THREE.MathUtils.smoothstep(f, 0, 0.6) : f > -0.12 ? 0.05 : 0;
+    /* sparse: a fine grain, densest by the walls, a few strays at the edge */
+    const p = f > 0 ? 0.08 + 0.6 * THREE.MathUtils.smoothstep(f, 0, 0.6) : f > -0.12 ? 0.03 : 0;
     if (pr() > p) continue;
     q.setFromAxisAngle(up, pr() * Math.PI * 2);
     /* taller toward the fringe (the mown part is near the house) */
-    const h = 0.09 + pr() * 0.07 + THREE.MathUtils.clamp(0.4 - f, 0, 0.4) * 0.18;
-    sv.set(1 + pr() * 0.4, h, 1 + pr() * 0.4);
+    /* short (Bryce: tall tufts read out of scale at this distance) */
+    const h = 0.035 + pr() * 0.025 + THREE.MathUtils.clamp(0.4 - f, 0, 0.4) * 0.04;
+    sv.set(0.6 + pr() * 0.3, h, 0.6 + pr() * 0.3);
     tv.set(x, 0, z);
     mats.push(new THREE.Matrix4().compose(tv, q, sv));
     const k = 0.82 + pr() * 0.36;
