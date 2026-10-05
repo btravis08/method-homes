@@ -631,6 +631,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer: organic lawn (Bryce). Procedural grass
+  (src/components/model/lawn.ts): a noise-edged coverage field around
+  the home that reaches out under the trees; a baked mat with a frayed,
+  clumping edge plus 20k instanced tufts thinning toward the fringe;
+  dissolves in plan. No downloads. Docs: PROJECT-LOG decision, AGENTS.
 - 2026-10-05 — Plan viewer: ambient occlusion removed (Bryce: it
   painted grey onto the ground as the house spun), and plants moved to
   their own render layer so the ground contact shadow no longer prints

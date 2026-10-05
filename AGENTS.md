@@ -163,6 +163,10 @@ staging/design use.
   override ignores alpha). No screen-space AO in the viewer — it
   smeared grey over the ground as the model turned (removed
   2026-10-05).
+- The lawn (lawn.ts) is one coverage field — change its shape there
+  (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the mat or the tufts. Keep
+  world-space noise grains ≥ ~8 cm: finer ones go sub-pixel at the
+  viewer's distance and shimmer while the model spins.
 
 ## Design source (Figma) — THE REBRAND
 

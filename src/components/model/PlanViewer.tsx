@@ -6,6 +6,7 @@ import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@rea
 import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
 import { buildFoliage, plantingPlan, type FoliageHandle } from "./foliage";
 import { loadPlants, type PlantsHandle } from "./plants";
+import { buildLawn, type LawnHandle } from "./lawn";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -280,6 +281,8 @@ class ViewerState {
   foliage: FoliageHandle | null = null;
   /* the real scanned plants (plants.ts): replace the cards once loaded */
   plants: PlantsHandle | null = null;
+  /* organic lawn round the home (lawn.ts); dissolves in plan */
+  lawn: LawnHandle | null = null;
   plantsBase = DEFAULT_PLANTS_BASE;
   private plantsLoading = false;
   private fade = 0;
@@ -363,6 +366,11 @@ class ViewerState {
       this.foliage = buildFoliage(this.footprint);
       plantLayer(this.foliage.group);
       this.group.add(this.foliage.group);
+    }
+    if (this.group && !this.lawn) {
+      this.lawn = buildLawn(this.footprint, plantingPlan(this.footprint));
+      plantLayer(this.lawn.group);
+      this.group.add(this.lawn.group);
     }
     this.loadRealPlants();
   }
@@ -542,6 +550,7 @@ class ViewerState {
     this.fade = e;
     this.foliage?.setFade(e);
     this.plants?.setFade(e);
+    this.lawn?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     if (this.sat) this.sat.saturation = -e;
     if (this.shadow) {

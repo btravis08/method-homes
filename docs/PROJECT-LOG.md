@@ -370,6 +370,26 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the house's shadow. Lesson: don't add screen-space AO or contact
   shadows over alpha-cut foliage on a plain ground — both print
   artefacts the eye reads as dirt, worst while the model moves.
+- Organic lawn (Bryce, 2026-10-05: grass that "thins out as it moves
+  farther from the house … the grass edge undulates around the home and
+  under the trees and shrubs"). src/components/model/lawn.ts, procedural,
+  no assets. One coverage field drives it: the max of a superellipse
+  ~4.4 m out from the walls and a soft 3.4 m disc under each tree, plus
+  fBm value noise, so the edge forms bays and promontories and the lawn
+  reaches out to wrap the trees. Layer 1 is a ground mat whose colour
+  (mottled greens drying to straw at the fringe) and alpha (coverage)
+  are baked into a 256² texture; its shader jitters the alpha with an
+  8 cm world-space grain under alpha-to-coverage, so the edge breaks
+  into clumps (a 3 cm grain went sub-pixel and shimmered on the spin).
+  Layer 2 is 20k five-blade tufts in one InstancedMesh (100k
+  triangles), placed with probability rising with coverage — dense by
+  the walls, thinning outward, a few strays past the edge — taller
+  toward the fringe, with up-facing normals so tufts light like the
+  turf. The lawn rides the model group, sits on the plant layer (out of
+  the contact shadow, which still darkens it near the walls), and
+  dissolves with the planting on the flight to plan. Greens are muted
+  (#3a5426–#5f7a3e): the strong sun lifts them, and the first pass at
+  #66843f read lime.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
