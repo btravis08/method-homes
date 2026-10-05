@@ -154,6 +154,23 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   trees, pool) is MODEL and SCENE DRESSING. A real Method model
   through the pipeline is the next test; entourage needs an asset
   library pass.
+- Smoothness (Bryce, same day: "so jumpy", then "the 3D plan viewer
+  is smoother"). A frame sequence can only show the angles it has, so
+  the viewer now (1) draws decoded frames to a canvas — swapping an
+  <img> src re-decoded and flashed on every step, (2) keeps the turn
+  as a continuous angle with momentum on release that settles onto an
+  exact frame, (3) cross-fades the two frames either side of the
+  current angle while moving, so the idle spin and a drag read as
+  motion rather than steps, (4) spins slowly on its own until the
+  first touch. The real set is 72 orbit frames (5° steps) instead of
+  the sandbox's 24 (15°). The workflow render is sharded across six
+  runner jobs (a frame is ~2.5 min on a runner at 1440 × 900 / 64
+  samples — slower than the sandbox — so 96 frames were a 4-hour job;
+  convert → render × 6 → encode now turns a set around in under an
+  hour). Gotcha: the inline Python in the Poly Haven fetch carried
+  YAML indentation and raised IndentationError, so the first runner
+  render silently fell back to the procedural sky; the lookup is a
+  one-liner and logs each asset's byte size.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
