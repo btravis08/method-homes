@@ -16,6 +16,9 @@ on:
         description: "Also download the page's JS bundles and grep them for library signatures"
         type: boolean
         default: true
+      pattern:
+        description: "Optional regex: print every match with 100 chars of context, from the HTML and the bundles"
+        required: false
 
 permissions:
   contents: read
@@ -53,6 +56,17 @@ jobs:
               size=$(stat -c %s bundle.js)
               hits=$(grep -oiE 'three\.js|THREE\.|WebGLRenderer|WebGPURenderer|@react-three/fiber|react-three-fiber|@react-three/drei|BABYLON|playcanvas|model-viewer|@splinetool|GLTFLoader|DRACOLoader|KTX2Loader|MeshoptDecoder|RGBELoader|PMREMGenerator|EquirectangularReflectionMapping|OrbitControls|OffscreenCanvas|createImageBitmap|\.glb|\.gltf|\.usdz|\.ktx2|\.avif|\.webp|\.mp4|\.webm|HTMLVideoElement|spriteSheet|turntable|threekit|emersya|cylindo|vntana|zerolight|UnityLoader|pixi\.js|lottie|rive' bundle.js | tr 'A-Z' 'a-z' | sort | uniq -c | sort -rn | head -14 | tr '\n' ' ')
               echo "$full ($size B): ${hits:-no signatures}"
+              cp bundle.js "bundle-$(echo "$full" | md5sum | cut -c1-8).js"
+            done
+            echo "::endgroup::"
+          fi
+          PAT="${{ github.event.inputs.pattern }}"
+          if [ -n "$PAT" ]; then
+            echo "::group::context for /$PAT/"
+            for f in page.html bundle-*.js; do
+              [ -f "$f" ] || continue
+              echo "--- $f"
+              grep -oiE ".{0,100}($PAT).{0,100}" "$f" | head -60
             done
             echo "::endgroup::"
           fi
