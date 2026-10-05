@@ -3,7 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
-import { EffectComposer, N8AO, ToneMapping } from "@react-three/postprocessing";
+import { EffectComposer, HueSaturation, N8AO, ToneMapping } from "@react-three/postprocessing";
+import { buildFoliage, type FoliageHandle } from "./foliage";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -252,9 +253,11 @@ const PLAN: Record<string, [string, number]> = {
   /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
      — with the slab gone, each cut wall shows its own underside as a
      solid ink fill instead of losing a z-fight to the slab top */
-  wall: ["#111111", 1], floor: ["#f7f8f4", 0], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
-  /* frames read as openings in the drawing (glass-blue), not as wall */
-  door: ["#8b6d52", 1], frame: ["#b7cdd8", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
+  /* the plan has NO colour (Bryce, 2026-10-05): ink, greys and paper only;
+     a desaturation pass at the end of the chain guarantees it */
+  wall: ["#111111", 1], floor: ["#f7f7f7", 0], roof: ["#f7f7f7", 0], glass: ["#c4c4c4", 0.9],
+  /* frames read as openings in the drawing (light grey), not as wall */
+  door: ["#7a7a7a", 1], frame: ["#c8c8c8", 1], stair: ["#a9a9a9", 1], rail: ["#4d4d4d", 1], structure: ["#111111", 1], misc: ["#b4b4b4", 1],
 };
 
 interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean; spinning: boolean }
@@ -268,6 +271,10 @@ class ViewerState {
   shadow: THREE.Object3D | null = null;
   /* the ambient occlusion pass: full in 3D, gone in the plan drawing */
   ao: { enabled: boolean; configuration: { intensity: number } } | null = null;
+  /* desaturation at the end of the chain: 0 in 3D, full grey in plan */
+  sat: { saturation: number } | null = null;
+  /* painterly planting around the home (foliage.ts); dissolves in plan */
+  foliage: FoliageHandle | null = null;
   private shadowMats: THREE.Material[] | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
@@ -343,6 +350,11 @@ class ViewerState {
       this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey });
     });
     this.buildCap(scene, root);
+    /* planting rides the model group, so it turns north-up with the home */
+    if (this.group && !this.foliage) {
+      this.foliage = buildFoliage(this.footprint);
+      this.group.add(this.foliage.group);
+    }
   }
 
   /* SECTION FILL (poché): a stencil cap. Each wall/structure solid gets two
@@ -486,6 +498,9 @@ class ViewerState {
       this.cap.position.y = this.plane.constant;
       this.cap.visible = e > 0.01;
     }
+    this.foliage?.setFade(e);
+    /* the plan has no colour: saturation goes to −1 (full grey) on landing */
+    if (this.sat) this.sat.saturation = -e;
     if (this.ao) {
       /* AO fades out over the first half of the flight; the drawing is flat */
       const k = Math.max(0, 1 - e * 2);
@@ -692,6 +707,13 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
               color="black"
             />
             <ToneMapping mode={ToneMappingMode.NEUTRAL} />
+            <HueSaturation
+              ref={(s) => {
+                const v = vs.current;
+                if (v) v.sat = s as unknown as ViewerState["sat"];
+              }}
+              saturation={0}
+            />
           </EffectComposer>
         </Canvas>
       </div>

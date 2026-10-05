@@ -300,6 +300,27 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   viewer chunk grows 269 → 370 KB gzip (+101 KB), paid only by
   visitors who reach the viewer. The HDR loader moved to three's
   HDRLoader (RGBELoader is deprecated).
+- Painterly planting + a colourless plan (Bryce, 2026-10-05: "more
+  painterly / realistic foliage around the house?"; "I don't want plan
+  view to have any color"). src/components/model/foliage.ts builds
+  procedural planting with no assets: each shrub or tree crown is a
+  cloud of leaf CARDS carrying a canvas-painted dab texture, with
+  normals pointing out from the clump centre (lifted skyward) so the
+  clump lights as one soft volume — the stylised-foliage technique —
+  plus per-card muted greens darkening toward the base. One merged
+  geometry per material (leaves, trunks), seeded so planting is stable;
+  alpha-to-coverage under the composer's MSAA keeps dab edges smooth.
+  Placement is generic until a site plan exists: shrubs along both
+  long elevations, clumps at the corners, two trees off the short
+  ends. It rides the model group (turns north-up with the home), casts
+  dappled contact shadows and picks up AO, and DISSOLVES (alphaTest
+  rising) over the first half of the plan flight. Plan colour: the
+  plan palette is greys only and a HueSaturation effect at the end of
+  the chain goes to −1 as the view lands, so nothing can tint the
+  drawing (measured: no chroma in the canvas beyond the page surface
+  behind it). Photoreal planting for the Cycles turntable — Poly Haven
+  CC0 plant models scattered in Blender on the runner — is the
+  follow-up.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
