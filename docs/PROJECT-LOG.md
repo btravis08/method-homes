@@ -171,6 +171,21 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   YAML indentation and raised IndentationError, so the first runner
   render silently fell back to the procedural sky; the lookup is a
   one-liner and logs each asset's byte size.
+- The raster viewer takes the same HDRI (Bryce: "Can the procedural
+  one use hdri?"). `scripts/model/prep-env.py` (numpy only — a small
+  Radiance RGBE reader/writer with RLE) downsamples the render's sky
+  to 512 × 256, bakes the render's rotation into the image (Blender's
+  Mapping-node +θ shows the sky turned −θ; roll the columns by θ/360;
+  Blender's Z-up and three's Y-up equirect lookups agree once the
+  GLB's axis swap is applied, so no mirror), and finds the sun
+  (brightest 5 × 5 region) → public/models/env/{sky.hdr, env.json}.
+  PlanViewer loads env.json + the HDR through RGBELoader → PMREM as
+  scene.environment (intensity 0.55) and points its directional light
+  at the HDRI's sun, so glass and metal reflect a real sky and the
+  shadows agree with the turntable frames; RoomEnvironment remains
+  the fallback. The workflow gained an `env` job that refreshes the
+  folder from Poly Haven. Budget: a real 512 × 256 sky is a few hundred
+  KB, fetched only inside the lazy viewer chunk.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

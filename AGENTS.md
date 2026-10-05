@@ -142,6 +142,13 @@ staging/design use.
   the roof from the camera only — switch its ray visibility off for
   the cut or the plan renders black; express the cut in world height.
   Sanity check a `--quick --only orbit-14` frame before a full run.
+- Both viewers share ONE sky: the workflow's `env` job downsamples the
+  render HDRI with `scripts/model/prep-env.py` into public/models/env
+  (sky.hdr ≈ 512 × 256 + env.json with the sun direction, the render's
+  rotation baked into the image) and PlanViewer loads it for
+  reflections and aligns its shadow light to that sun, falling back
+  to RoomEnvironment when the folder is absent. Change the HDRI or
+  its rotation in one place (the workflow) and re-run both jobs.
 
 ## Design source (Figma) — THE REBRAND
 

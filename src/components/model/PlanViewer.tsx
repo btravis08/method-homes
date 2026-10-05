@@ -5,6 +5,70 @@ import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
+
+/* the web-sized copy of the render HDRI (scripts/model/prep-env.py →
+   public/models/env/{sky.hdr, env.json}); the viewer falls back to the
+   procedural RoomEnvironment when it is absent */
+export const DEFAULT_ENV_BASE = "/models/env";
+interface EnvMeta { file: string; sun?: { azimuthDeg: number; elevationDeg: number; strength?: number } }
+
+/* direction of the HDRI's sun in three's frame (see prep-env.py) */
+function sunDirection(sun: EnvMeta["sun"]): [number, number, number] {
+  if (!sun) return [12, 16, 8];
+  const theta = THREE.MathUtils.degToRad(sun.azimuthDeg - 180);
+  const el = THREE.MathUtils.degToRad(sun.elevationDeg);
+  return [Math.cos(theta) * Math.cos(el), Math.sin(el), Math.sin(theta) * Math.cos(el)];
+}
+
+/* loads env.json + the HDR, prefilters it and makes it the scene's light;
+   reports the sun so the shadow light can line up with the reflections.
+   (A plain function: three.js mutation stays out of component code for
+   the React Compiler's immutability lint.) Returns a cleanup. */
+function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun: (dir: [number, number, number]) => void) {
+  let live = true;
+  let env: THREE.Texture | null = null;
+  (async () => {
+    try {
+      const res = await fetch(`${base}/env.json`);
+      if (!res.ok) return;
+      const meta = (await res.json()) as EnvMeta;
+      if (!live) return;
+      if (meta.sun) onSun(sunDirection(meta.sun));
+      const hdr = await new RGBELoader().loadAsync(`${base}/${meta.file}`);
+      if (!live) {
+        hdr.dispose();
+        return;
+      }
+      hdr.mapping = THREE.EquirectangularReflectionMapping;
+      const pmrem = new THREE.PMREMGenerator(gl);
+      env = pmrem.fromEquirectangular(hdr).texture;
+      pmrem.dispose();
+      hdr.dispose();
+      root.environment?.dispose();
+      root.environment = env;
+      /* HDR skies are in absolute-ish units with a hot sun; keep the
+         image light modest and let the directional light cast */
+      root.environmentIntensity = 0.55;
+      root.userData.envSource = "hdri";
+    } catch {
+      /* keep the procedural room */
+    }
+  })();
+  return () => {
+    live = false;
+    if (env && root.environment === env) {
+      root.environment = null;
+      env.dispose();
+    }
+  };
+}
+
+function SkyEnvironment({ base, onSun }: { base: string; onSun: (dir: [number, number, number]) => void }) {
+  const { gl, scene: root } = useThree();
+  useEffect(() => loadSky(base, gl, root, onSun), [base, gl, root, onSun]);
+  return null;
+}
 
 /*
   3D plan viewer — the interactive floor plan prototype.
@@ -40,6 +104,8 @@ export interface PlanViewerProps {
   mode?: "3d" | "plan";
   onModeChange?: (mode: "3d" | "plan") => void;
   className?: string;
+  /* folder with env.json + the HDR (prep-env.py); default /models/env */
+  envBase?: string;
 }
 
 type Mode = "3d" | "plan";
@@ -159,6 +225,7 @@ interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean
 /* all mutable three.js state, driven from the frame loop */
 class ViewerState {
   group: THREE.Group | null = null;
+  root: THREE.Scene | null = null; // for the debug hook (window.__planViewer)
   controls: { enabled: boolean } | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
@@ -173,12 +240,14 @@ class ViewerState {
 
   attach(scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, initial: Mode) {
     gl.localClippingEnabled = true;
-    /* image-based light from a procedural room — reflections for the
-       metal roof and glass without fetching an HDR */
+    this.root = root;
+    /* image-based light: a procedural room until (or unless) the HDRI
+       copy loads — SkyEnvironment swaps in the real sky */
     if (!root.environment) {
       const pmrem = new THREE.PMREMGenerator(gl);
       root.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
       root.environmentIntensity = 0.3;
+      root.userData.envSource = "room";
       pmrem.dispose();
     }
     const extras = (scene.userData as Extras | undefined) ?? {};
@@ -317,11 +386,12 @@ function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerStat
   );
 }
 
-export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "" }: PlanViewerProps) {
+export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE }: PlanViewerProps) {
   const [mode, setMode] = useState<Mode>(initialMode);
   const [storey, setStorey] = useState(0);
   const [spinning, setSpinning] = useState(true);
   const [reduce, setReduce] = useState(false);
+  const [sun, setSun] = useState<[number, number, number] | null>(null);
   const vs = useRef<ViewerState | null>(null);
   if (vs.current == null) {
     vs.current = new ViewerState();
@@ -360,9 +430,11 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           onPointerDown={() => setSpinning(false)}
           onPointerUp={() => setSpinning(true)}
         >
-          <hemisphereLight args={["#f4f3ef", "#6d6c68", 0.45]} />
-          <directionalLight position={[12, 16, 8]} intensity={1.25} />
+          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.25 : 0.45]} />
+          {/* the sun: aligned with the HDRI's once env.json arrives */}
+          <directionalLight position={sun ? [sun[0] * 30, sun[1] * 30, sun[2] * 30] : [12, 16, 8]} intensity={sun ? 1.6 : 1.25} />
           <directionalLight position={[-10, 6, -8]} intensity={0.3} />
+          <SkyEnvironment base={envBase} onSun={setSun} />
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
               floor slab in plan view, so nothing to fade) */}
