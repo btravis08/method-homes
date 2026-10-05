@@ -35,9 +35,13 @@ on:
         type: boolean
         default: true
       frames:
-        description: "Orbit frame count for the render (the plan flight uses two thirds of it)"
+        description: "Orbit frame count for the render (72 = 5° steps, smooth to drag)"
         required: false
-        default: "36"
+        default: "72"
+      plan_frames:
+        description: "Frames in the flight-and-cut sequence to the floor plan"
+        required: false
+        default: "24"
       samples:
         description: "Cycles samples per pixel for the render"
         required: false
@@ -114,7 +118,7 @@ jobs:
           set -euo pipefail
           SLUG="${{ github.event.inputs.slug }}"
           ORBIT="${{ github.event.inputs.frames }}"
-          PLAN=$(( ORBIT * 2 / 3 ))
+          PLAN="${{ github.event.inputs.plan_frames }}"; PLAN="${PLAN:-24}"
           NORTH=$(python -c "import json; print(json.load(open('design/models/$SLUG.report.json'))['northDeg'])")
           python -m pip install -q bpy==4.5.14
           npm install --no-save sharp

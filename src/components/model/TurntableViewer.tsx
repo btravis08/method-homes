@@ -6,15 +6,18 @@ import { useCallback, useEffect, useRef, useState } from "react";
   Turntable viewer — the photoreal layer of the plan viewer.
 
   Plays pre-rendered frames from render-turntable.py / encode-frames
-  (Blender Cycles: sky, sun, glass, lawn): drag or use the arrow keys
-  to turn the home through the orbit frames; "Floor plan" plays the
-  flight-and-cut sequence forward and holds on the drawing, "3D" plays
-  it back. Frames load progressively: the tiny poster paints at once,
-  the first orbit frame replaces it, the rest of the orbit arrives in
-  the background in an order that keeps the nearest frames ready
-  (every 4th, then every 2nd, then the rest), and the plan frames
-  load on the first request. AVIF with a WebP fallback. Reduced motion
-  jumps between states instead of playing the sequence.
+  (Blender Cycles): drag or use the arrow keys to turn the home through
+  the orbit frames; "Floor plan" plays the flight-and-cut sequence
+  forward and holds on the drawing, "3D" plays it back.
+
+  Smoothness: frames are decoded once and drawn to a canvas (swapping an
+  <img> src re-decodes on every step and flashes), the turn is a
+  continuous angle with momentum on release, and the home spins slowly
+  on its own until the first touch. With 72 orbit frames a step is 5°.
+  Frames load progressively (first frame, then every 8th, 4th, 2nd, the
+  rest) and the nearest LOADED frame always shows, so a drag never
+  shows an empty canvas. AVIF (decode-probed) with a WebP fallback.
+  Reduced motion: no idle spin, no momentum, the plan sequence jumps.
 
   The static twin (photo, drawing, dimensions, PDF) stays on the page.
 */
@@ -33,6 +36,8 @@ export interface TurntableViewerProps {
   manifest: TurntableManifest;
   alt?: string;
   className?: string;
+  /* seconds for one idle revolution (0 disables the idle spin) */
+  spinSeconds?: number;
 }
 
 type Mode = "3d" | "plan";
@@ -63,8 +68,37 @@ function spread(n: number) {
   return out;
 }
 
-export function TurntableViewer({ base, manifest, alt = "3D view of the home", className = "" }: TurntableViewerProps) {
+const wrap = (a: number, n: number) => ((a % n) + n) % n;
+
+/* the turn: a continuous angle in frame units + momentum, kept off React
+   state so pointer moves don't re-render (only the shown frame does) */
+class Turn {
+  angle = 0;
+  velocity = 0; // frames per ms
+  lastX = 0;
+  lastT = 0;
+  dragging = false;
+  touched = false;
+  raf = 0;
+}
+
+export function TurntableViewer({ base, manifest, alt = "3D view of the home", className = "", spinSeconds = 24 }: TurntableViewerProps) {
+  const n = manifest.orbit.length;
   const [ext, setExt] = useState<"avif" | "webp" | null>(null);
+  const [mode, setMode] = useState<Mode>("3d");
+  const [orbitIndex, setOrbitIndex] = useState(0);
+  const [planIndex, setPlanIndex] = useState(-1); // -1 = not in the plan sequence
+  const [loaded, setLoaded] = useState<Set<string>>(() => new Set());
+  const [reduce, setReduce] = useState(false);
+  const [drawn, setDrawn] = useState(false);
+  const cache = useRef(new Map<string, HTMLImageElement>());
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const turn = useRef<Turn | null>(null);
+  if (turn.current == null) {
+    turn.current = new Turn();
+  }
+  const playRaf = useRef(0);
+
   useEffect(() => {
     let live = true;
     supportsAvif().then((ok) => live && setExt(ok ? "avif" : "webp"));
@@ -72,16 +106,6 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
       live = false;
     };
   }, []);
-  const url = useCallback((id: string) => `${base}/${id}.${ext ?? "webp"}`, [base, ext]);
-  const [mode, setMode] = useState<Mode>("3d");
-  const [orbitIndex, setOrbitIndex] = useState(0);
-  const [planIndex, setPlanIndex] = useState(-1); // -1 = not in the plan sequence
-  const [loaded, setLoaded] = useState<Set<string>>(() => new Set());
-  const [reduce, setReduce] = useState(false);
-  const cache = useRef(new Map<string, HTMLImageElement>());
-  const drag = useRef<{ x: number; index: number } | null>(null);
-  const raf = useRef(0);
-
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const on = () => setReduce(mq.matches);
@@ -90,14 +114,21 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
     return () => mq.removeEventListener("change", on);
   }, []);
 
-  /* progressive preload of the orbit */
+  const url = useCallback((id: string) => `${base}/${id}.${ext ?? "webp"}`, [base, ext]);
+
+  /* decode once, keep the bitmap */
   const load = useCallback(
     (id: string) =>
       new Promise<void>((resolve) => {
         if (cache.current.has(id)) return resolve();
         const img = new Image();
         img.decoding = "async";
-        img.onload = () => {
+        img.onload = async () => {
+          try {
+            await img.decode();
+          } catch {
+            /* drawImage still works */
+          }
           cache.current.set(id, img);
           setLoaded((s) => new Set(s).add(id));
           resolve();
@@ -108,12 +139,13 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
     [url],
   );
 
+  /* progressive preload of the orbit */
   useEffect(() => {
     if (!ext) return; // wait for the format probe so every frame is one format
     let cancelled = false;
     (async () => {
       await load(manifest.orbit[0]);
-      for (const i of spread(manifest.orbit.length)) {
+      for (const i of spread(n)) {
         if (cancelled) return;
         await load(manifest.orbit[i]);
       }
@@ -121,12 +153,92 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
     return () => {
       cancelled = true;
     };
-  }, [manifest.orbit, load, ext]);
+  }, [manifest.orbit, n, load, ext]);
+
+  /* which frame to show: a plan frame while in/after the sequence, else
+     the nearest LOADED orbit frame so turning never flashes empty */
+  let frameId: string | null = null;
+  if (planIndex >= 0) frameId = manifest.plan[planIndex];
+  else if (loaded.has(manifest.orbit[orbitIndex])) frameId = manifest.orbit[orbitIndex];
+  else {
+    for (let d = 1; d < n; d++) {
+      const a = manifest.orbit[wrap(orbitIndex - d, n)];
+      const b = manifest.orbit[wrap(orbitIndex + d, n)];
+      if (loaded.has(a)) { frameId = a; break; }
+      if (loaded.has(b)) { frameId = b; break; }
+    }
+  }
+
+  /* draw the shown frame */
+  useEffect(() => {
+    const c = canvas.current;
+    if (!c || !frameId) return;
+    const img = cache.current.get(frameId);
+    if (!img) return;
+    if (c.width !== manifest.width || c.height !== manifest.height) {
+      c.width = manifest.width;
+      c.height = manifest.height;
+    }
+    const ctx = c.getContext("2d");
+    if (!ctx) return;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    setDrawn(true);
+  }, [frameId, manifest.width, manifest.height]);
+
+  /* the turn loop: momentum after a drag, idle spin before the first touch */
+  const showAngle = useCallback(
+    (a: number) => {
+      const idx = wrap(Math.round(a), n);
+      setOrbitIndex((cur) => (cur === idx ? cur : idx));
+    },
+    [n],
+  );
+  const stopTurn = useCallback(() => {
+    const t = turn.current!;
+    cancelAnimationFrame(t.raf);
+    t.raf = 0;
+  }, []);
+  const runTurn = useCallback(() => {
+    const t = turn.current!;
+    cancelAnimationFrame(t.raf);
+    let last = performance.now();
+    const step = (now: number) => {
+      const dt = Math.min(64, now - last);
+      last = now;
+      if (t.dragging) return;
+      if (Math.abs(t.velocity) > 0.0004) {
+        t.angle += t.velocity * dt;
+        t.velocity *= Math.pow(0.9955, dt); // ≈ 1.5 s to settle
+        showAngle(t.angle);
+        t.raf = requestAnimationFrame(step);
+        return;
+      }
+      t.velocity = 0;
+      if (!t.touched && spinSeconds > 0) {
+        t.angle += (n / (spinSeconds * 1000)) * dt;
+        showAngle(t.angle);
+        t.raf = requestAnimationFrame(step);
+        return;
+      }
+      t.raf = 0;
+    };
+    t.raf = requestAnimationFrame(step);
+  }, [n, showAngle, spinSeconds]);
+
+  const ready = loaded.has(manifest.orbit[0]);
+  const pct = Math.round((loaded.size / Math.max(1, n)) * 100);
+  const spinReady = pct >= 50; // enough frames in for the idle spin to look continuous
+  useEffect(() => {
+    if (mode !== "3d" || reduce || !spinReady) return;
+    runTurn();
+    return stopTurn;
+  }, [mode, reduce, spinReady, runTurn, stopTurn]);
 
   /* the plan sequence: play forward on "Floor plan", back on "3D" */
   const play = useCallback(
     async (dir: 1 | -1) => {
-      cancelAnimationFrame(raf.current);
+      cancelAnimationFrame(playRaf.current);
       const ids = manifest.plan;
       if (!ids.length) return;
       if (reduce) {
@@ -145,60 +257,75 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
           setPlanIndex(i);
           i += dir;
         }
-        if (i >= 0 && i < ids.length) raf.current = requestAnimationFrame(step);
+        if (i >= 0 && i < ids.length) playRaf.current = requestAnimationFrame(step);
         else if (dir === -1) setPlanIndex(-1);
       };
-      raf.current = requestAnimationFrame(step);
+      playRaf.current = requestAnimationFrame(step);
     },
     [manifest.plan, load, reduce],
   );
 
   const change = (m: Mode) => {
     if (m === mode) return;
+    const t = turn.current!;
+    t.touched = true;
+    t.velocity = 0;
+    stopTurn();
+    if (m === "plan") t.angle = 0; // the flight starts from the first orbit pose
     setMode(m);
     void play(m === "plan" ? 1 : -1);
   };
 
   /* drag / keys turn the home (3D only) */
-  const n = manifest.orbit.length;
   const onPointerDown = (e: React.PointerEvent) => {
     if (mode !== "3d") return;
-    drag.current = { x: e.clientX, index: orbitIndex };
+    const t = turn.current!;
+    t.dragging = true;
+    t.touched = true;
+    t.velocity = 0;
+    t.lastX = e.clientX;
+    t.lastT = performance.now();
+    stopTurn();
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
   const onPointerMove = (e: React.PointerEvent) => {
-    if (!drag.current) return;
+    const t = turn.current!;
+    if (!t.dragging) return;
     const width = (e.currentTarget as HTMLElement).clientWidth || 1;
-    const delta = Math.round(((e.clientX - drag.current.x) / width) * n * 1.2);
-    setOrbitIndex((((drag.current.index - delta) % n) + n) % n);
+    const now = performance.now();
+    const dFrames = -((e.clientX - t.lastX) / width) * n * 1.1; // a full-width drag ≈ one turn
+    const dt = Math.max(1, now - t.lastT);
+    t.angle += dFrames;
+    t.velocity = 0.6 * t.velocity + 0.4 * (dFrames / dt);
+    t.lastX = e.clientX;
+    t.lastT = now;
+    showAngle(t.angle);
   };
   const onPointerUp = () => {
-    drag.current = null;
+    const t = turn.current!;
+    if (!t.dragging) return;
+    t.dragging = false;
+    if (performance.now() - t.lastT > 80) t.velocity = 0; // held still before release: no fling
+    if (reduce) t.velocity = 0;
+    const idx = wrap(Math.round(t.angle), n);
+    t.angle = Math.round(t.angle);
+    setOrbitIndex(idx);
+    if (t.velocity !== 0) runTurn();
   };
   const onKey = (e: React.KeyboardEvent) => {
     if (mode !== "3d") return;
-    if (e.key === "ArrowLeft") setOrbitIndex((i) => (i - 1 + n) % n);
-    if (e.key === "ArrowRight") setOrbitIndex((i) => (i + 1) % n);
+    const t = turn.current!;
+    if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") return;
+    e.preventDefault();
+    t.touched = true;
+    t.velocity = 0;
+    stopTurn();
+    t.angle = Math.round(t.angle) + (e.key === "ArrowLeft" ? -1 : 1);
+    showAngle(t.angle);
   };
 
-  /* which frame to show: a plan frame while in/after the sequence, else
-     the nearest LOADED orbit frame so dragging never flashes empty */
-  const frameId = (() => {
-    if (planIndex >= 0) return manifest.plan[planIndex];
-    if (loaded.has(manifest.orbit[orbitIndex])) return manifest.orbit[orbitIndex];
-    for (let d = 1; d < n; d++) {
-      const a = manifest.orbit[(orbitIndex - d + n) % n];
-      const b = manifest.orbit[(orbitIndex + d) % n];
-      if (loaded.has(a)) return a;
-      if (loaded.has(b)) return b;
-    }
-    return null;
-  })();
-  const ready = loaded.has(manifest.orbit[0]);
-  const pct = Math.round((loaded.size / Math.max(1, manifest.orbit.length)) * 100);
-
   return (
-    <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
+    <div className={`relative w-full overflow-hidden rounded-md ${className}`} data-mode-3d={mode} data-frame={frameId ?? undefined}>
       <div
         role="img"
         aria-label={alt}
@@ -214,12 +341,9 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
         {/* poster: tiny and blurred, paints at once — the browser picks the format */}
         <picture>
           <source srcSet={`${base}/poster.avif`} type="image/avif" />
-          <img src={`${base}/poster.webp`} alt="" aria-hidden className={`absolute inset-0 size-full object-contain transition-opacity duration-500 ${ready ? "opacity-0" : "opacity-100"}`} />
+          <img src={`${base}/poster.webp`} alt="" aria-hidden className={`absolute inset-0 size-full object-contain transition-opacity duration-500 ${drawn ? "opacity-0" : "opacity-100"}`} />
         </picture>
-        {frameId && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key="frame" src={url(frameId)} alt="" aria-hidden draggable={false} className="absolute inset-0 size-full object-contain" />
-        )}
+        <canvas ref={canvas} aria-hidden className={`absolute inset-0 size-full ${drawn ? "opacity-100" : "opacity-0"}`} />
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-lg p-xl">
@@ -236,7 +360,8 @@ export function TurntableViewer({ base, manifest, alt = "3D view of the home", c
             </button>
           ))}
         </div>
-        {mode === "3d" && pct < 100 && <p className="label text-ink-3">Loading {pct}%</p>}
+        {mode === "3d" && !ready && <p className="label text-ink-3">Loading…</p>}
+        {mode === "3d" && ready && pct < 100 && <p className="label text-ink-3">Loading {pct}%</p>}
         {mode === "3d" && pct >= 100 && <p className="label text-ink-3">Drag to turn</p>}
       </div>
       {mode === "plan" && planIndex >= manifest.plan.length - 1 && <p aria-hidden className="label absolute right-xl top-xl text-ink-3">N ↑</p>}
