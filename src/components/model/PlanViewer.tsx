@@ -695,7 +695,12 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: radius * 0.3, far: radius * 3 }}
           /* Neutral (Khronos PBR) tone mapping keeps material colour
              faithful — a product shot, not a film look */
-          gl={{ antialias: false, alpha: true, stencil: true, powerPreference: "low-power", toneMapping: THREE.NoToneMapping }}
+          /* premultipliedAlpha false: the post chain writes STRAIGHT alpha
+             to this transparent canvas, and a premultiplied canvas added
+             the page behind it twice wherever the image is part-transparent
+             — a pale glow (and over-bright pixels) round the lawn's soft
+             edge */
+          gl={{ antialias: false, alpha: true, premultipliedAlpha: false, stencil: true, powerPreference: "low-power", toneMapping: THREE.NoToneMapping }}
           onPointerDown={onDown}
           onPointerUp={onUp}
           onPointerCancel={onUp}

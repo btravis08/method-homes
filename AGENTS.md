@@ -174,7 +174,13 @@ staging/design use.
   (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the texture. It is ONE
   blended, mipmapped ground plane: no instanced tufts, no alpha test,
   no per-pixel shader noise — anything sub-pixel shimmers while the
-  model spins. Greens stay soft grey-green (Bryce, 2026-10-05).
+  model spins — but texture features must still be ≥ ~5 cm or they
+  mipmap away to flat colour (a screen pixel ≈ 2 cm of lawn). Greens
+  stay muted grey-green, with visible mottling, not a flat fill (Bryce,
+  2026-10-05). Tree lawns join the main lawn (bridge + smooth union).
+  The viewer canvas is premultipliedAlpha: false — the post chain
+  writes straight alpha; flipping it back puts a pale halo on every
+  soft edge.
 
 ## Design source (Figma) — THE REBRAND
 

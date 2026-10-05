@@ -80,10 +80,17 @@ function noise2(seed: number) {
 /* how far the lawn reaches past the walls, and how wide a tree's skirt is */
 const MARGIN = 3.4;
 const TREE_SKIRT = 2.8;
+const BRIDGE = 2.2; // half-width (m) of the neck joining a tree's lawn to the home's
 const EDGE_WOBBLE = 0.32; // coverage units of edge noise
-const EDGE_SOFT: [number, number] = [-0.03, 0.07]; // coverage over which alpha fades 0 → 1 (~25 cm: soft but not a glow)
+/* coverage over which alpha fades 0 → 1. The field changes ~0.12 per m at
+   the edge, so 0.03 ≈ 25 cm: soft, but not a pale glow over the ground */
+const EDGE_SOFT: [number, number] = [-0.01, 0.02];
 const CONTACT = { depth: 0.38, reach: 0.55 }; // wall-foot darkening: strength, falloff (m)
-const DETAIL_TILE = 1.6; // m per repeat of the turf grain
+/* m per repeat of the turf grain. At the viewer's distance a screen
+   pixel is ~2 cm of lawn, so the grain's features must be 5–20 cm or
+   mipmapping averages them to flat grey (a 1.6 m tile of 1 cm strokes
+   vanished entirely) */
+const DETAIL_TILE = 6;
 
 /* the turf grain: short strokes of lighter and darker blades on a mid
    grey, tiled. Grey-centred so it modulates the colour without shifting
@@ -96,20 +103,38 @@ function detailTexture(seed: number): THREE.CanvasTexture {
   g.fillStyle = "rgb(128,128,128)";
   g.fillRect(0, 0, size, size);
   const r = rng(seed);
-  for (let i = 0; i < 2600; i++) {
+  /* drawn 9× (wrapped) so the tile is seamless */
+  const blot = (x: number, y: number, draw: (x: number, y: number) => void) => {
+    for (const ox of [0, -size, size]) for (const oy of [0, -size, size]) draw(x + ox, y + oy);
+  };
+  /* clumps: soft blotches 5–20 cm across, lighter and darker */
+  for (let i = 0; i < 900; i++) {
     const x = r() * size;
     const y = r() * size;
-    const v = Math.round(r() < 0.5 ? 92 + r() * 22 : 146 + r() * 26);
+    const rad = 2 + r() * 6;
+    const v = Math.round(r() < 0.5 ? 70 + r() * 30 : 160 + r() * 40);
+    blot(x, y, (px, py) => {
+      const grd = g.createRadialGradient(px, py, 0, px, py, rad);
+      grd.addColorStop(0, `rgba(${v},${v + 6},${v},0.5)`);
+      grd.addColorStop(1, `rgba(${v},${v + 6},${v},0)`);
+      g.fillStyle = grd;
+      g.fillRect(px - rad, py - rad, rad * 2, rad * 2);
+    });
+  }
+  /* tufts: short strokes ~3 × 10 cm */
+  for (let i = 0; i < 2200; i++) {
+    const x = r() * size;
+    const y = r() * size;
+    const v = Math.round(r() < 0.5 ? 78 + r() * 26 : 150 + r() * 34);
     const a = r() * Math.PI;
-    g.fillStyle = `rgba(${v},${v + 4},${v},0.55)`;
-    for (const ox of [0, -size, size])
-      for (const oy of [0, -size, size]) {
-        g.save();
-        g.translate(x + ox, y + oy);
-        g.rotate(a);
-        g.fillRect(-0.6, -2.2, 1.2, 4.4);
-        g.restore();
-      }
+    g.fillStyle = `rgba(${v},${v + 4},${v},0.6)`;
+    blot(x, y, (px, py) => {
+      g.save();
+      g.translate(px, py);
+      g.rotate(a);
+      g.fillRect(-0.7, -2.2, 1.4, 4.4);
+      g.restore();
+    });
   }
   const tex = new THREE.CanvasTexture(c);
   tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
@@ -128,13 +153,36 @@ export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null
   /* the coverage field: > 0 is lawn */
   const ax = hw + MARGIN;
   const az = hd + MARGIN;
+  /* each tree's lawn is joined to the home's by a broad BRIDGE (a
+     capsule from the trunk to the nearest point of the walls), and all
+     the pieces meet through a SMOOTH union, so a tree's grass flows
+     into the main lawn with a waisted neck — never a separate circle
+     (Bryce, 2026-10-05) */
+  const bridges = trees.map((t) => ({
+    ax: t.x,
+    az: t.z,
+    bx: THREE.MathUtils.clamp(t.x, -hw, hw),
+    bz: THREE.MathUtils.clamp(t.z, -hd, hd),
+  }));
+  const capsule = (x: number, z: number, b: (typeof bridges)[number]) => {
+    const vx = b.bx - b.ax;
+    const vz = b.bz - b.az;
+    const len2 = vx * vx + vz * vz || 1;
+    const k = THREE.MathUtils.clamp(((x - b.ax) * vx + (z - b.az) * vz) / len2, 0, 1);
+    return Math.hypot(x - (b.ax + vx * k), z - (b.az + vz * k));
+  };
+  const smax = (a: number, b: number, k: number) => {
+    const h = Math.max(k - Math.abs(a - b), 0) / k;
+    return Math.max(a, b) + h * h * k * 0.25;
+  };
   const field = (x: number, z: number) => {
     const se = Math.pow(Math.pow(Math.abs(x) / ax, 4) + Math.pow(Math.abs(z) / az, 4), 0.25);
     let c = (1 - se) * 1.6;
-    for (const t of trees) {
-      const d = Math.hypot(x - t.x, z - t.z) / TREE_SKIRT;
-      c = Math.max(c, (1 - d) * 1.2);
-    }
+    trees.forEach((t, i) => {
+      const disc = (1 - Math.hypot(x - t.x, z - t.z) / TREE_SKIRT) * 1.2;
+      const neck = (1 - capsule(x, z, bridges[i]) / BRIDGE) * 1.1;
+      c = smax(c, smax(disc, neck, 0.5), 0.6);
+    });
     return c + nEdge(x * 0.22, z * 0.22) * EDGE_WOBBLE;
   };
 
@@ -159,10 +207,11 @@ export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null
   const data = new Uint8Array(res * res * 4);
   /* soft grey-greens (Bryce: "less green"), close in value so the lawn
      reads as a calm ground plane */
-  const deep = new THREE.Color("#55624a");
-  const mid = new THREE.Color("#5f6c52");
-  const light = new THREE.Color("#69755b");
-  const dry = new THREE.Color("#6d6d58");
+  /* a shade darker, with more spread between patches (Bryce: the first
+     grey-green pass was too even) */
+  const deep = new THREE.Color("#3f4c35");
+  const mid = new THREE.Color("#4e5c41");
+  const light = new THREE.Color("#63724f");
   const c = new THREE.Color();
   const srgb = { r: 0, g: 0, b: 0 };
   for (let j = 0; j < res; j++) {
@@ -171,10 +220,10 @@ export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null
       /* row 0 is v = 0, which the rotated plane puts at +z */
       const z = (0.5 - (j + 0.5) / res) * 2 * ez;
       const f = field(x, z);
-      const t = THREE.MathUtils.clamp(0.5 + nTone(x * 0.35, z * 0.35) * 0.9 + nTone(x * 1.6 + 9, z * 1.6) * 0.35, 0, 1);
+      const t = THREE.MathUtils.clamp(0.5 + nTone(x * 0.35, z * 0.35) * 1.15 + nTone(x * 1.6 + 9, z * 1.6) * 0.5, 0, 1);
       c.copy(deep).lerp(mid, Math.min(1, t * 1.6));
       if (t > 0.62) c.lerp(light, (t - 0.62) / 0.38);
-      c.lerp(dry, THREE.MathUtils.clamp(1 - f / 0.35, 0, 1) * 0.35);
+      /* (no paler fringe: over the light ground it read as a glow) */
       /* grounding: darker right at the foot of the walls, gone by ~1 m */
       c.multiplyScalar(1 - CONTACT.depth * Math.exp(-outside(x, z) / CONTACT.reach));
       const k = (j * res + i) * 4;
@@ -214,7 +263,7 @@ export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null
         `#include <map_fragment>
         /* turf grain, tiled in the lawn's own space (it turns with the
            home), filtered so it stays steady in motion */
-        diffuseColor.rgb *= 0.55 + 0.9 * texture2D(uDetail, vLawnXZ / ${DETAIL_TILE.toFixed(2)}).g;`,
+        diffuseColor.rgb *= 0.4 + 1.2 * texture2D(uDetail, vLawnXZ / ${DETAIL_TILE.toFixed(2)}).g;`,
       );
   };
   mat.customProgramCacheKey = () => "lawn";

@@ -452,6 +452,23 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   Lesson: in a spinning product view, anything that is re-rendered per
   frame from a second camera, or that is smaller than a pixel, reads as
   dirt or fizz. Bake it or filter it.
+- Lawn joined, darker, textured (Bryce, 2026-10-05: the grass round a
+  tree was a separate circle; a shade darker; slightly more texture —
+  "you over indexed on the sameness"). Each tree's disc now meets the
+  home's lawn through a BRIDGE (a capsule from the trunk to the nearest
+  wall point) under a smooth union, so it flows in with a waisted neck.
+  Greens dropped a shade with wider spread (#3f4c35–#63724f) and
+  stronger mottling. The turf grain is now drawn at a scale that
+  survives filtering: at the viewer's distance a screen pixel is ~2 cm
+  of lawn, so the old 1 cm strokes on a 1.6 m tile mipmapped to flat
+  grey; the new 6 m tile carries 5–20 cm clumps plus strokes.
+  The pale glow round the lawn edge was COMPOSITING, not colour: the
+  post chain writes straight alpha to the transparent canvas, and the
+  canvas was premultiplied, so wherever the image was part-transparent
+  the page behind was added twice (measured: edge pixels brighter than
+  the bare ground). The Canvas now sets premultipliedAlpha: false. The
+  edge fade was also tightened to ~25 cm (the field changes ~0.12/m
+  there, so the old 0.1-wide fade was ~80 cm of half-transparent lawn).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

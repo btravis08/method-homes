@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer lawn: tree lawns join the main lawn (no
+  circles), a shade darker with more visible mottling, and the pale
+  rim at the edge fixed (canvas alpha compositing). Docs: PROJECT-LOG.
 - 2026-10-05 — Plan viewer ground made stable (Bryce): the per-frame
   contact shadow (the footprint smear) is gone, replaced by a static
   darkening baked into the lawn; the lawn is one filtered, blended
