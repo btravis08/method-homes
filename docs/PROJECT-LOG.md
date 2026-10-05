@@ -556,6 +556,18 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) â
   balance is now a product shot's: sky 0.45, hemisphere 0.12, fill 0.15,
   key sun 7 (slightly warm). The glass reflection boost was raised
   (4.8) to keep its old strength.
+- FIGMA REORG (Bryce, 2026-10-05: "move all the UX components to the
+  UX page, order the UX pages the same way the IA cards are, left to
+  right, so I can check the IA against the UX"). Moved Experiential v2,
+  the Get Started intake and tray flows, and two orphaned mobile
+  variants from IA Design to UX Design. The components stay on the
+  left. The pages are now an auto-layout row with one column per IA
+  card, aligned under a 6.2Ã— IA instance (every column within 6 px of
+  its card). Gaps this exposed: six floor-plan pages are missing
+  (Method One, Cabin, Elemental, M Series, Option and Paradigm plans;
+  only Annata 1 exists), and the Author page has no IA card. A stray
+  nav instance uses the uninstalled "FG Culture Medium TRIAL" font, so
+  the API can't move it. It is parked under the pages row.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
@@ -1029,7 +1041,11 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) â
   method-homes.vercel.app Â· session branch `claude/new-session-96edb4`.
 - **Sanity**: project `i2wd5pr1`, dataset `production`.
 - **Figma**: file `9nqsOUuF2UrgukNYok3Oko`; IA Design page
-  36373:44911; library 37505:3440; pages 37509:3821; AEO board
+  36373:44911 (IA board + AEO board); UX Design page 36371:44705
+  (everything else since 2026-10-05: library section 37581:41071,
+  pages-in-IA-order frame 37586:31063 in section 37581:41072,
+  Experiential v2 section 37521:15243). Superseded ids: library
+  37505:3440; pages 37509:3821; AEO board
   37514:13776; experiential v2 37521:15243; interstitials 37528:15397.
   Component ids and page ids are listed in AGENTS.md â†’ Design source.
 - **Workflows** (Actions, main): `aeo.yml` (grade + Search Console),

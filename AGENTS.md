@@ -222,7 +222,23 @@ staging/design use.
   library against Method frames. Rate limit ~200 tool calls/day.
 - Until the rebrand, fonts are SDR's TRIAL cuts (Feature Deck /
   Maison Neue) — licensing must be resolved before production.
-- IA Design page `36373:44911` (built 2026-10-03) holds the full
+- UX LAYOUT (Bryce, 2026-10-05): all UX lives on the "↳ UX Design"
+  page `36371:44705`; IA Design keeps only the IA board, its tag
+  legend and the AEO review. Components sit in columns on the LEFT
+  (Experiential v2 37521:15243, Experiential v1 37581:41113, section
+  library 37581:41071, plus a "Loose components" holding section
+  37584:27244). Pages run LEFT → RIGHT in IA order: the auto-layout
+  frame `Pages — in IA order` (37586:31063, inside section
+  37581:41072) mirrors the IA board's tiers. It has one 2040-wide
+  column per IA card, using the IA's 60/140 gaps × 6.2, and the IA
+  instance (37353:29831) is scaled 6.2× directly above, so each page
+  sits under its card. Template cards hold a note, and cards with no
+  page hold a dashed MISSING box. Market Detail pages stack in the
+  Market template column. Author sits in a trailing "Not in the IA
+  yet" group. The Get Started intake and tray flows sit under the
+  pages row. A new page goes in its card's column, never loose. A new
+  IA card needs a matching column in the same position.
+- (History) IA Design page `36373:44911` (built 2026-10-03) held the full
   desktop UX: section `Method/Sections — component library`
   (37505:3440) = 31 editable 1440-wide section components (Nav, Hero
   Home/Page, Text intro, 50/50 [Image=Left|Right], Card + Card grid
