@@ -668,8 +668,11 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
             enableDamping
           />
           {/* SCREEN-SPACE AMBIENT OCCLUSION (N8AO): soft contact darkening
-              where roof meets wall, in window reveals and under eaves. Half
-              resolution with depth-aware upsampling; MSAA ×4 on the
+              where roof meets wall, in window reveals and under eaves. FULL
+              resolution (half-res stair-stepped the base silhouette); the
+              PerformanceMonitor and the drag-time ratio drop carry the cost
+              on slow GPUs. Fades out over the first half of the plan
+              flight, so the drawing stays flat. MSAA ×4 on the
               composer's buffer keeps edges as clean as the plain canvas;
               stencilBuffer keeps the plan's section fill working. Tone
               mapping moves to the end of the chain (three skips it for
