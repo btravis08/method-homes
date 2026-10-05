@@ -26,6 +26,10 @@ on:
         description: "Max texture edge after compression (px)"
         required: false
         default: "1024"
+      dry_run:
+        description: "true = fetch + log only, commit nothing"
+        required: false
+        default: "false"
       thin:
         description: "Foliage LOD per id, id:keep[:bark[:tex]] comma list (scripts/model/thin-plant.mjs)"
         required: false
@@ -95,6 +99,7 @@ jobs:
           PY
             # what the source ships (alpha lives in an RGBA PNG or a separate map)
             (cd "$dir" && find . -type f ! -name files.json -exec file {} \; | sed 's#^\./##' | sort)
+            python3 -c 'import json,sys; f=json.load(open(sys.argv[1])); print("maps:", {k: sorted((f[k].get("1k") or {}).keys()) for k in f if isinstance(f[k], dict)})' "$dir/files.json"
             grep -o '"alphaMode"[^,}]*\|"uri"[^,}]*' "$dir/model.gltf" | sort | uniq -c || true
             npx -y @gltf-transform/cli@4 optimize "$dir/model.gltf" "public/models/plants/$id.glb" \
               --compress meshopt --texture-compress webp --texture-size "$SIZE" --simplify-error 0.002 --palette false --join false --flatten false
@@ -134,7 +139,7 @@ jobs:
           PY
 
       - name: Commit
-        if: ${{ github.event.inputs.ids != '' }}
+        if: ${{ github.event.inputs.ids != '' && github.event.inputs.dry_run != 'true' }}
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
