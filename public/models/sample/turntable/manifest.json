@@ -111,394 +111,394 @@
   "northDeg": 0,
   "cutHeight_m": 1.2,
   "samples": 64,
-  "seconds": 1355,
+  "seconds": 2711,
   "encodedWidth": 1440,
   "quality": 55,
   "sizes": {
     "orbit-00": {
-      "avif": 7605,
-      "webp": 46420
+      "avif": 9741,
+      "webp": 45754
     },
     "orbit-01": {
-      "avif": 8139,
-      "webp": 49080
+      "avif": 10169,
+      "webp": 48632
     },
     "orbit-02": {
-      "avif": 7978,
-      "webp": 51796
+      "avif": 9812,
+      "webp": 50588
     },
     "orbit-03": {
-      "avif": 8011,
-      "webp": 50090
+      "avif": 9762,
+      "webp": 50052
     },
     "orbit-04": {
-      "avif": 7814,
-      "webp": 51036
+      "avif": 9464,
+      "webp": 49624
     },
     "orbit-05": {
-      "avif": 7495,
-      "webp": 49306
+      "avif": 9079,
+      "webp": 48198
     },
     "orbit-06": {
-      "avif": 6993,
-      "webp": 46970
+      "avif": 8538,
+      "webp": 47006
     },
     "orbit-07": {
-      "avif": 6566,
-      "webp": 43924
+      "avif": 8324,
+      "webp": 44614
     },
     "orbit-08": {
-      "avif": 5859,
-      "webp": 40380
+      "avif": 7647,
+      "webp": 41450
     },
     "orbit-09": {
-      "avif": 5321,
-      "webp": 37118
+      "avif": 7030,
+      "webp": 38718
     },
     "orbit-10": {
-      "avif": 4881,
-      "webp": 34524
+      "avif": 6394,
+      "webp": 36586
     },
     "orbit-11": {
-      "avif": 3288,
-      "webp": 31164
+      "avif": 4634,
+      "webp": 34702
     },
     "orbit-12": {
-      "avif": 4497,
-      "webp": 33684
+      "avif": 6136,
+      "webp": 37060
     },
     "orbit-13": {
-      "avif": 4656,
-      "webp": 35824
+      "avif": 6257,
+      "webp": 37602
     },
     "orbit-14": {
-      "avif": 4742,
-      "webp": 37826
+      "avif": 6451,
+      "webp": 38200
     },
     "orbit-15": {
-      "avif": 5087,
-      "webp": 37260
+      "avif": 6522,
+      "webp": 38310
     },
     "orbit-16": {
-      "avif": 5279,
-      "webp": 39136
+      "avif": 6754,
+      "webp": 39476
     },
     "orbit-17": {
-      "avif": 5514,
-      "webp": 40836
+      "avif": 7040,
+      "webp": 40322
     },
     "orbit-18": {
-      "avif": 5641,
-      "webp": 41218
+      "avif": 7290,
+      "webp": 39708
     },
     "orbit-19": {
-      "avif": 5787,
-      "webp": 41006
+      "avif": 7460,
+      "webp": 38640
     },
     "orbit-20": {
-      "avif": 6003,
-      "webp": 41426
+      "avif": 8010,
+      "webp": 40312
     },
     "orbit-21": {
-      "avif": 5727,
-      "webp": 41404
+      "avif": 7797,
+      "webp": 39646
     },
     "orbit-22": {
-      "avif": 5767,
-      "webp": 40756
+      "avif": 7501,
+      "webp": 38228
     },
     "orbit-23": {
-      "avif": 5824,
-      "webp": 41254
+      "avif": 7401,
+      "webp": 36712
     },
     "orbit-24": {
-      "avif": 5587,
-      "webp": 42250
+      "avif": 6979,
+      "webp": 36334
     },
     "orbit-25": {
-      "avif": 5297,
-      "webp": 41602
+      "avif": 6534,
+      "webp": 34382
     },
     "orbit-26": {
-      "avif": 5134,
-      "webp": 40562
+      "avif": 6013,
+      "webp": 33528
     },
     "orbit-27": {
-      "avif": 4762,
-      "webp": 39132
+      "avif": 5706,
+      "webp": 32166
     },
     "orbit-28": {
-      "avif": 4620,
-      "webp": 37892
+      "avif": 5526,
+      "webp": 31020
     },
     "orbit-29": {
-      "avif": 4057,
-      "webp": 36158
+      "avif": 4790,
+      "webp": 29174
     },
     "orbit-30": {
-      "avif": 4471,
-      "webp": 36142
+      "avif": 5249,
+      "webp": 28284
     },
     "orbit-31": {
-      "avif": 4690,
-      "webp": 36714
+      "avif": 5536,
+      "webp": 28910
     },
     "orbit-32": {
-      "avif": 5457,
-      "webp": 37792
+      "avif": 6363,
+      "webp": 30696
     },
     "orbit-33": {
-      "avif": 5935,
-      "webp": 37726
+      "avif": 7112,
+      "webp": 32800
     },
     "orbit-34": {
-      "avif": 6592,
-      "webp": 38618
+      "avif": 7955,
+      "webp": 34028
     },
     "orbit-35": {
-      "avif": 6881,
-      "webp": 41306
+      "avif": 8627,
+      "webp": 37880
     },
     "orbit-36": {
-      "avif": 7110,
-      "webp": 42556
+      "avif": 9128,
+      "webp": 39784
     },
     "orbit-37": {
-      "avif": 7211,
-      "webp": 43600
+      "avif": 9240,
+      "webp": 39868
     },
     "orbit-38": {
-      "avif": 6861,
-      "webp": 43250
+      "avif": 8584,
+      "webp": 40286
     },
     "orbit-39": {
-      "avif": 6569,
-      "webp": 42474
+      "avif": 8320,
+      "webp": 39778
     },
     "orbit-40": {
-      "avif": 6641,
-      "webp": 43218
+      "avif": 8403,
+      "webp": 40862
     },
     "orbit-41": {
-      "avif": 6297,
-      "webp": 42718
+      "avif": 7935,
+      "webp": 38672
     },
     "orbit-42": {
-      "avif": 6062,
-      "webp": 41080
+      "avif": 7707,
+      "webp": 36894
     },
     "orbit-43": {
-      "avif": 5791,
-      "webp": 39564
+      "avif": 7235,
+      "webp": 34856
     },
     "orbit-44": {
-      "avif": 5454,
-      "webp": 39194
+      "avif": 7053,
+      "webp": 34186
     },
     "orbit-45": {
-      "avif": 5205,
-      "webp": 37748
+      "avif": 6707,
+      "webp": 33338
     },
     "orbit-46": {
-      "avif": 4732,
-      "webp": 37604
+      "avif": 6050,
+      "webp": 32302
     },
     "orbit-47": {
-      "avif": 3268,
-      "webp": 31178
+      "avif": 4271,
+      "webp": 28180
     },
     "orbit-48": {
-      "avif": 4596,
-      "webp": 34574
+      "avif": 6049,
+      "webp": 33112
     },
     "orbit-49": {
-      "avif": 5162,
-      "webp": 35292
+      "avif": 6386,
+      "webp": 34952
     },
     "orbit-50": {
-      "avif": 5382,
-      "webp": 36280
+      "avif": 6895,
+      "webp": 35078
     },
     "orbit-51": {
-      "avif": 5494,
-      "webp": 38312
+      "avif": 6881,
+      "webp": 36344
     },
     "orbit-52": {
-      "avif": 5641,
-      "webp": 38874
+      "avif": 7177,
+      "webp": 37408
     },
     "orbit-53": {
-      "avif": 5958,
-      "webp": 39988
+      "avif": 7566,
+      "webp": 37848
     },
     "orbit-54": {
-      "avif": 6040,
-      "webp": 39154
+      "avif": 7647,
+      "webp": 38096
     },
     "orbit-55": {
-      "avif": 5695,
-      "webp": 39020
+      "avif": 7491,
+      "webp": 37726
     },
     "orbit-56": {
-      "avif": 5891,
-      "webp": 39982
+      "avif": 7896,
+      "webp": 38492
     },
     "orbit-57": {
-      "avif": 5829,
-      "webp": 45338
+      "avif": 7857,
+      "webp": 39518
     },
     "orbit-58": {
-      "avif": 5765,
-      "webp": 40100
+      "avif": 7734,
+      "webp": 38480
     },
     "orbit-59": {
-      "avif": 5676,
-      "webp": 38648
+      "avif": 7376,
+      "webp": 37246
     },
     "orbit-60": {
-      "avif": 5623,
-      "webp": 38356
+      "avif": 7303,
+      "webp": 37206
     },
     "orbit-61": {
-      "avif": 5288,
-      "webp": 36506
+      "avif": 6876,
+      "webp": 35802
     },
     "orbit-62": {
-      "avif": 5176,
-      "webp": 36632
+      "avif": 6428,
+      "webp": 34178
     },
     "orbit-63": {
-      "avif": 5152,
-      "webp": 35022
+      "avif": 6202,
+      "webp": 32774
     },
     "orbit-64": {
-      "avif": 4929,
-      "webp": 34120
+      "avif": 5956,
+      "webp": 32674
     },
     "orbit-65": {
-      "avif": 4814,
-      "webp": 34922
+      "avif": 5768,
+      "webp": 33866
     },
     "orbit-66": {
-      "avif": 4963,
-      "webp": 35574
+      "avif": 6025,
+      "webp": 34746
     },
     "orbit-67": {
-      "avif": 5157,
-      "webp": 36152
+      "avif": 6237,
+      "webp": 35250
     },
     "orbit-68": {
-      "avif": 5789,
-      "webp": 37534
+      "avif": 6977,
+      "webp": 36218
     },
     "orbit-69": {
-      "avif": 6451,
-      "webp": 45118
+      "avif": 7988,
+      "webp": 37092
     },
     "orbit-70": {
-      "avif": 7116,
-      "webp": 45674
+      "avif": 8799,
+      "webp": 44192
     },
     "orbit-71": {
-      "avif": 7274,
-      "webp": 45692
+      "avif": 9161,
+      "webp": 44398
     },
     "plan-00": {
-      "avif": 7605,
-      "webp": 46420
+      "avif": 9741,
+      "webp": 45754
     },
     "plan-01": {
-      "avif": 8781,
-      "webp": 49316
+      "avif": 11003,
+      "webp": 46794
     },
     "plan-02": {
-      "avif": 8775,
-      "webp": 50046
+      "avif": 10866,
+      "webp": 47726
     },
     "plan-03": {
-      "avif": 8053,
-      "webp": 49182
+      "avif": 9723,
+      "webp": 47682
     },
     "plan-04": {
-      "avif": 6756,
-      "webp": 47672
+      "avif": 8161,
+      "webp": 46128
     },
     "plan-05": {
-      "avif": 6108,
-      "webp": 48208
+      "avif": 7060,
+      "webp": 47290
     },
     "plan-06": {
-      "avif": 5507,
-      "webp": 49386
+      "avif": 6154,
+      "webp": 48510
     },
     "plan-07": {
-      "avif": 5970,
-      "webp": 48832
+      "avif": 6692,
+      "webp": 43074
     },
     "plan-08": {
-      "avif": 6632,
-      "webp": 47792
+      "avif": 6887,
+      "webp": 37476
     },
     "plan-09": {
-      "avif": 7214,
-      "webp": 46466
+      "avif": 7478,
+      "webp": 37014
     },
     "plan-10": {
-      "avif": 8203,
-      "webp": 44784
+      "avif": 8110,
+      "webp": 38034
     },
     "plan-11": {
-      "avif": 9410,
-      "webp": 50126
+      "avif": 9711,
+      "webp": 43846
     },
     "plan-12": {
-      "avif": 11095,
-      "webp": 54834
+      "avif": 11335,
+      "webp": 50528
     },
     "plan-13": {
-      "avif": 11090,
-      "webp": 62164
+      "avif": 11435,
+      "webp": 57854
     },
     "plan-14": {
-      "avif": 9743,
-      "webp": 57198
+      "avif": 10097,
+      "webp": 56066
     },
     "plan-15": {
-      "avif": 9597,
-      "webp": 56724
+      "avif": 9827,
+      "webp": 55274
     },
     "plan-16": {
-      "avif": 9375,
-      "webp": 55580
+      "avif": 9575,
+      "webp": 55182
     },
     "plan-17": {
-      "avif": 9186,
-      "webp": 55606
+      "avif": 9374,
+      "webp": 55302
     },
     "plan-18": {
-      "avif": 8934,
-      "webp": 55064
+      "avif": 9075,
+      "webp": 54808
     },
     "plan-19": {
-      "avif": 8836,
-      "webp": 54922
+      "avif": 8973,
+      "webp": 55014
     },
     "plan-20": {
-      "avif": 8872,
-      "webp": 55212
+      "avif": 8779,
+      "webp": 55134
     },
     "plan-21": {
-      "avif": 8745,
-      "webp": 55044
+      "avif": 8732,
+      "webp": 54940
     },
     "plan-22": {
-      "avif": 3895,
-      "webp": 44780
+      "avif": 3941,
+      "webp": 44794
     },
     "plan-23": {
-      "avif": 3855,
-      "webp": 45944
+      "avif": 3867,
+      "webp": 46012
     }
   },
-  "totalAvifBytes": 606256
+  "totalAvifBytes": 729507
 }
