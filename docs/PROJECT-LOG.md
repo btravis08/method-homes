@@ -213,6 +213,19 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   from a detailed authored model with baked textures. The frame
   turntable remains our photoreal layer; the real-time viewer is the
   one to invest in for interaction.
+- Aliasing pass on the raster viewer (Bryce: "jumpy jagged lines").
+  Two sources: the canvas rendered at ≤1.5 × device pixels, and the
+  procedural reveals (12 mm) and seams (30 mm) were drawn with hard
+  metre-width edges, so at a distance they were sub-pixel and
+  shimmered as the model turned. Fixes: device pixel ratio up to 2
+  with drei's PerformanceMonitor stepping it down only when the frame
+  rate sags (Samara caps at 2 and lowers resolution during drags);
+  analytic anti-aliasing in the finish shaders — edge ramps at least
+  one screen pixel wide via fwidth(), and a coverage term that fades a
+  line out as its width drops below a pixel, so distant joints read as
+  a faint even tone instead of sparkling. Verified at 2 × in headless
+  Chromium: 2560 × 1440 backing store, clean edges, seams fading with
+  distance, no errors.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

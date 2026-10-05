@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
-import { ContactShadows, OrbitControls, useGLTF } from "@react-three/drei";
+import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
@@ -169,12 +169,20 @@ const SIDING_COLOR = /* glsl */ `
     vec2 f = fract(uv / panel);
     vec2 cell = floor(uv / panel);
     vec2 d = min(f, 1.0 - f) * panel;
-    float joint = 1.0 - smoothstep(0.005, 0.012, min(d.x, d.y));
+    float dm = min(d.x, d.y);
+    /* analytic anti-aliasing: the reveal is 12 mm wide; the edge ramp is
+       at least one screen pixel wide (fwidth) and the whole line fades
+       as it becomes sub-pixel, so distant joints read as a faint even
+       tone instead of sparkling */
+    float px = max(fwidth(dm), 1e-4);
+    float w = max(0.003, px);
+    float joint = 1.0 - smoothstep(0.006 - w, 0.006 + w, dm);
+    float coverage = clamp(0.012 / px, 0.0, 1.0);
     float tone = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453) * 0.08 - 0.04;
     float vertical = 1.0 - step(0.85, abs(n.y));
     float k = (1.0 - uPlan) * vertical;
     diffuseColor.rgb *= 1.0 + tone * k;
-    diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.45, joint * k);
+    diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.45, joint * coverage * k);
   }
 `;
 const ROOF_COLOR = /* glsl */ `
@@ -191,10 +199,15 @@ const ROOF_COLOR = /* glsl */ `
     float t = dot(vWorldPos.xz, across);
     float f = fract(t / pitch) * pitch;
     float c = pitch * 0.5;
-    float rib = 1.0 - smoothstep(0.012, 0.017, abs(f - c));
-    float flank = clamp((f - c) / 0.015, -1.0, 1.0);
+    /* analytic anti-aliasing (see the siding): one-pixel edge ramps and a
+       coverage fade so the 30 mm ribs never shimmer at a distance */
+    float px = max(fwidth(f), 1e-4);
+    float w = max(0.003, px);
+    float rib = 1.0 - smoothstep(0.015 - w, 0.015 + w, abs(f - c));
+    float coverage = clamp(0.03 / px, 0.0, 1.0);
+    float flank = clamp((f - c) / max(0.015, px), -1.0, 1.0);
     float plane = step(0.25, abs(n.y));
-    float k = (1.0 - uPlan) * plane;
+    float k = (1.0 - uPlan) * plane * coverage;
     gRib = rib * k;
     diffuseColor.rgb *= 1.0 + rib * k * 0.9 + flank * rib * k * 0.6;
   }
@@ -393,6 +406,10 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   const [spinning, setSpinning] = useState(true);
   const [reduce, setReduce] = useState(false);
   const [sun, setSun] = useState<[number, number, number] | null>(null);
+  /* render at full device pixels (edges and the procedural reveals stay
+     crisp); PerformanceMonitor steps it down only when the frame rate
+     actually sags, and back up when it recovers */
+  const [dpr, setDpr] = useState(2);
   const vs = useRef<ViewerState | null>(null);
   if (vs.current == null) {
     vs.current = new ViewerState();
@@ -425,7 +442,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
     <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
       <div className="aspect-[4/3] w-full md:aspect-[16/9]">
         <Canvas
-          dpr={[1, 1.5]}
+          dpr={dpr}
           camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: 0.1, far: 500 }}
           gl={{ antialias: true, alpha: true, powerPreference: "low-power", toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.95 }}
           onPointerDown={() => setSpinning(false)}
@@ -437,6 +454,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
           <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.5 : 0.3} />
           <SkyEnvironment base={envBase} onSun={setSun} />
+          <PerformanceMonitor onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={3} onFallback={() => setDpr(1)} />
           <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
               floor slab in plan view, so nothing to fade) */}
