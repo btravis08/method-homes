@@ -170,6 +170,12 @@ staging/design use.
   2026-10-05). Shrub looks are tinted to the tree's leaf colour. A new
   model needs no hand placement; if its doors aren't found, check its
   door/wall node names (storey<N>_door / _wall from the pipeline).
+- The viewer never shows a swap: it reveals ONCE when house, planting
+  and sky are settled (`checkReady`), behind LazyPlanViewer's poster.
+  Don't add anything that draws a placeholder and replaces it in view.
+  It never spins on its own: the turn is tied to scroll position
+  (REST_YAW/SWEEP in PlanViewer.tsx) until the user drags (Bryce,
+  2026-10-05).
 - The lawn (lawn.ts) is one coverage field — change its shape there
   (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the texture. It is ONE
   blended, mipmapped ground plane: no instanced tufts, no alpha test,

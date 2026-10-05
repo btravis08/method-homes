@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
 import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
@@ -33,13 +33,16 @@ function sunDirection(sun: EnvMeta["sun"]): [number, number, number] {
    reports the sun so the shadow light can line up with the reflections.
    (A plain function: three.js mutation stays out of component code for
    the React Compiler's immutability lint.) Returns a cleanup. */
-function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun: (dir: [number, number, number]) => void) {
+function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun: (dir: [number, number, number]) => void, onDone: () => void) {
   let live = true;
   let env: THREE.Texture | null = null;
   (async () => {
     try {
       const res = await fetch(`${base}/env.json`);
-      if (!res.ok) return;
+      if (!res.ok) {
+        onDone();
+        return;
+      }
       const meta = (await res.json()) as EnvMeta;
       if (!live) return;
       if (meta.sun) onSun(sunDirection(meta.sun));
@@ -63,6 +66,7 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
     } catch {
       /* keep the procedural room */
     }
+    if (live) onDone();
   })();
   return () => {
     live = false;
@@ -73,9 +77,9 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
   };
 }
 
-function SkyEnvironment({ base, onSun }: { base: string; onSun: (dir: [number, number, number]) => void }) {
+function SkyEnvironment({ base, onSun, onDone }: { base: string; onSun: (dir: [number, number, number]) => void; onDone: () => void }) {
   const { gl, scene: root } = useThree();
-  useEffect(() => loadSky(base, gl, root, onSun), [base, gl, root, onSun]);
+  useEffect(() => loadSky(base, gl, root, onSun, onDone), [base, gl, root, onSun, onDone]);
   return null;
 }
 
@@ -118,6 +122,11 @@ export interface PlanViewerProps {
   /* folder with plants.json + plant GLBs; default /models/plants, "" keeps
      the procedural planting only */
   plantsBase?: string;
+  /* called once when the view has fully settled and faded in */
+  onReady?: () => void;
+  /* show the built-in "Loading 3D view…" label (off when a wrapper,
+     e.g. LazyPlanViewer, keeps its own poster up until onReady) */
+  showLoading?: boolean;
 }
 
 type Mode = "3d" | "plan";
@@ -134,7 +143,13 @@ const FOV_PLAN = 8; // narrow + far ≈ orthographic
 const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
 const GLASS_TRANSMISSION = 0.92;
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
-const SPIN = 0.15; // rad/s
+/* SCROLL-TIED TURN (Bryce, 2026-10-05: no free spin). As the viewer
+   scrolls into view the home turns from REST_YAW − SWEEP to REST_YAW,
+   reaching rest when the viewer is centred in the window; scrolling back
+   unwinds it. The first drag hands control to the user for good. */
+const REST_YAW = 0; // rad: the framed three-quarter view
+const SWEEP = THREE.MathUtils.degToRad(100);
+const YAW_DAMP = 7; // 1/s: how quickly the turn catches up with the scroll
 /* cubic in-out: the flight leaves and arrives gently, no snap */
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -267,7 +282,7 @@ const PLAN: Record<string, [string, number]> = {
   door: ["#7a7a7a", 1], frame: ["#c8c8c8", 1], stair: ["#a9a9a9", 1], rail: ["#4d4d4d", 1], structure: ["#111111", 1], misc: ["#b4b4b4", 1],
 };
 
-interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean; spinning: boolean }
+interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean }
 
 /* all mutable three.js state, driven from the frame loop */
 class ViewerState {
@@ -285,6 +300,21 @@ class ViewerState {
   /* the planting plan (foliage.ts) and the exterior doors it keeps clear */
   doors: Door[] = [];
   plan: Plant[] = [];
+  /* NO FLASH ON LOAD: the canvas stays hidden until the house, the
+     planting (real or, on failure, the painterly fallback) and the sky
+     have all settled, then fades in once (PlanViewer `ready`). */
+  private plantsSettled = false;
+  skySettled = false;
+  isReady = false;
+  onReady: (() => void) | null = null;
+  private appear = 1; // plants' dissolve-in, 0 → 1
+  /* the scroll-tied turn; `dragged` freezes it once the user takes over */
+  dragged = false;
+  checkReady() {
+    if (this.isReady || !this.plantsSettled || !this.skySettled || !this.group) return;
+    this.isReady = true;
+    this.onReady?.();
+  }
   plantsBase = DEFAULT_PLANTS_BASE;
   private plantsLoading = false;
   private fade = 0;
@@ -366,47 +396,60 @@ class ViewerState {
     /* doors first: the plan and the lawn both keep their approaches clear */
     this.doors = findDoors(scene);
     this.plan = plantingPlan(this.footprint, 7, this.doors);
-    if (this.group && !this.foliage) {
-      this.foliage = buildFoliage(this.plan);
-      plantLayer(this.foliage.group);
-      this.group.add(this.foliage.group);
-    }
     if (this.group && !this.lawn) {
       this.lawn = buildLawn(this.footprint, this.plan, wallBounds(scene));
       plantLayer(this.lawn.group);
       this.group.add(this.lawn.group);
     }
     this.loadRealPlants();
+    this.checkReady();
+  }
+
+  /* the painterly cards: only when the real planting can't load */
+  private fallbackFoliage() {
+    if (!this.group || this.foliage || this.plants) return;
+    this.foliage = buildFoliage(this.plan);
+    plantLayer(this.foliage.group);
+    this.foliage.setFade(this.fade);
+    this.group.add(this.foliage.group);
   }
 
   /* fetched after the house is up, so they never compete with it; the
      cards hold the same spots until the swap, and stay on any failure */
   private loadRealPlants() {
     const group = this.group;
-    if (!group || this.plants || this.plantsLoading || !this.plantsBase) return;
+    if (!group || this.plants || this.plantsLoading) return;
+    if (!this.plantsBase) {
+      this.fallbackFoliage();
+      this.plantsSettled = true;
+      return;
+    }
     this.plantsLoading = true;
     loadPlants(this.plantsBase, this.plan)
       .then((h) => {
-        if (!h) return;
+        if (!h) {
+          this.fallbackFoliage();
+          return;
+        }
         if (this.group !== group) {
           h.dispose();
           return;
         }
         this.plants = h;
-        h.setFade(this.fade);
+        /* hidden canvas: no visible swap; if they arrive after the
+           reveal (slow network), they dissolve in over half a second */
+        this.appear = this.isReady ? 0 : 1;
+        h.setFade(Math.max(this.fade, (1 - this.appear) / 2));
         plantLayer(h.group);
         group.add(h.group);
-        if (this.foliage) {
-          this.foliage.group.removeFromParent();
-          this.foliage.dispose();
-          this.foliage = null;
-        }
       })
       .catch(() => {
-        /* keep the painterly cards */
+        this.fallbackFoliage();
       })
       .finally(() => {
         this.plantsLoading = false;
+        this.plantsSettled = true;
+        this.checkReady();
       });
   }
 
@@ -536,10 +579,19 @@ class ViewerState {
          top view is −(sin θ, cos θ); turning the model by θ more lands
          north on screen-up by the shortest way round */
       const north = THREE.MathUtils.degToRad(input.northDeg) + (this.hasOrbitPos ? this.flightTheta : 0);
-      if (target === 0 && input.spinning && !input.reduce && this.progress < 0.01) this.yaw += dt * SPIN;
+      if (!this.dragged && this.progress < 0.01) {
+        /* scroll-tied: 0 as the viewer's top enters the bottom of the
+           window, 1 once the viewer is centred */
+        const r = state.gl.domElement.getBoundingClientRect();
+        const vh = window.innerHeight || 1;
+        const p = THREE.MathUtils.clamp((vh - r.top) / ((vh + r.height) / 2), 0, 1);
+        const goal = REST_YAW - SWEEP * (1 - ease(p));
+        /* hidden (not yet revealed) or reduced motion: sit on the goal, so
+           the first visible frame is already in the right pose */
+        this.yaw = input.reduce ? REST_YAW : !this.isReady ? goal : this.yaw + (goal - this.yaw) * (1 - Math.exp(-dt * YAW_DAMP));
+      }
       const twoPi = Math.PI * 2;
-      this.yaw = ((this.yaw % twoPi) + twoPi) % twoPi;
-      const diff = ((north - this.yaw + Math.PI + twoPi) % twoPi) - Math.PI;
+      const diff = ((((north - this.yaw + Math.PI) % twoPi) + twoPi) % twoPi) - Math.PI;
       this.group.rotation.y = this.yaw + diff * e;
     }
 
@@ -553,7 +605,10 @@ class ViewerState {
     }
     this.fade = e;
     this.foliage?.setFade(e);
-    this.plants?.setFade(e);
+    if (this.plants) {
+      this.appear = Math.min(1, this.appear + dt / 0.5);
+      this.plants.setFade(Math.max(e, (1 - this.appear) / 2));
+    }
     this.lawn?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     if (this.sat) this.sat.saturation = -e;
@@ -631,10 +686,11 @@ function House({ src, vs, input, plantsBase }: { src: string; vs: React.RefObjec
   );
 }
 
-export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE, plantsBase = DEFAULT_PLANTS_BASE }: PlanViewerProps) {
+export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE, plantsBase = DEFAULT_PLANTS_BASE, onReady, showLoading = true }: PlanViewerProps) {
   const [mode, setMode] = useState<Mode>(initialMode);
   const [storey, setStorey] = useState(0);
-  const [spinning, setSpinning] = useState(true);
+  /* the canvas fades in once, when everything has settled (no flash) */
+  const [ready, setReady] = useState(false);
   const [reduce, setReduce] = useState(false);
   const [sun, setSun] = useState<[number, number, number] | null>(null);
   /* render at full device pixels (edges and the procedural reveals stay
@@ -662,13 +718,41 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   const onDown = () => {
     window.clearTimeout(restore.current);
     setInteracting(true);
-    setSpinning(false);
+    /* the user has the model now: scroll no longer turns it */
+    const v = vs.current;
+    if (v) v.dragged = true;
   };
   const onUp = () => {
-    setSpinning(true);
     window.clearTimeout(restore.current);
     restore.current = window.setTimeout(() => setInteracting(false), 200);
   };
+
+  useEffect(() => {
+    const v = vs.current;
+    if (!v) return;
+    v.onReady = () => setReady(true);
+    if (v.isReady) setReady(true);
+    /* never hold the view back for long: reveal after 6 s regardless (a
+       late planting then dissolves in) */
+    const t = window.setTimeout(() => setReady(true), 6000);
+    return () => {
+      window.clearTimeout(t);
+      v.onReady = null;
+    };
+  }, []);
+  const readyCb = useRef(onReady);
+  useEffect(() => {
+    readyCb.current = onReady;
+  }, [onReady]);
+  useEffect(() => {
+    if (ready) readyCb.current?.();
+  }, [ready]);
+  const onSkyDone = useCallback(() => {
+    const v = vs.current;
+    if (!v) return;
+    v.skySettled = true;
+    v.checkReady();
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -685,7 +769,8 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
 
   return (
     <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
-      <div className="aspect-[4/3] w-full md:aspect-[16/9]">
+      {!ready && showLoading && <p className="label absolute bottom-xl left-xl z-10 rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>}
+      <div className="aspect-[4/3] w-full transition-opacity duration-700 ease-out md:aspect-[16/9]" style={{ opacity: ready ? 1 : 0 }}>
         <Canvas
           onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
           dpr={interacting ? Math.min(dpr, 1.25) : dpr}
@@ -710,11 +795,11 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           <directionalLight position={sun ? [sun[0] * 30, sun[1] * 30, sun[2] * 30] : [12, 16, 8]} intensity={sun ? 2.2 : 1.25} />
           {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
           <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.5 : 0.3} />
-          <SkyEnvironment base={envBase} onSun={setSun} />
+          <SkyEnvironment base={envBase} onSun={setSun} onDone={onSkyDone} />
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}
           <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
-          <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey, northDeg: north, reduce, spinning }} />
+          <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey, northDeg: north, reduce }} />
           <OrbitControls
             ref={(c) => {
               const v = vs.current;

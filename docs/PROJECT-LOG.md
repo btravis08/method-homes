@@ -469,6 +469,29 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the bare ground). The Canvas now sets premultipliedAlpha: false. The
   edge fade was also tightened to ~25 cm (the field changes ~0.12/m
   there, so the old 0.1-wide fade was ~80 cm of half-transparent lawn).
+- No load flash; scroll-tied turn instead of a free spin (Bryce,
+  2026-10-05, from a phone: "on load the old trees and textures load
+  then the new ones … it flashes"; "I don't want the model to freely
+  spin … tie it to scroll depth … rotates into a final resting position
+  … then can be dragged").
+  - Flash: the painterly cards drew first and were swapped for the
+    scanned plants, and the sky could re-light the scene when the HDRI
+    landed. Now nothing is swapped in view: the canvas stays at opacity
+    0 until the house, the planting and the sky have all settled
+    (ViewerState.checkReady; a 6 s cap, after which a late planting
+    dissolves in over 0.5 s), then fades in once. The painterly cards
+    are built ONLY if the real planting fails. LazyPlanViewer keeps the
+    page's poster on top until the viewer reports ready (onReady), then
+    cross-fades — no photo → grey → 3D. Measured sequence: poster 1 /
+    canvas 0 → ready with plants, no fallback → canvas 1 → poster 0.
+  - Turn: the free spin is gone. Yaw = REST − 100° × (1 − ease(p)),
+    p = 0 as the viewer's top enters the bottom of the window → 1 when
+    it is centred, damped (7/s) so the turn trails the scroll softly;
+    scrolling back unwinds it. Read from the canvas rect in the frame
+    loop (no scroll listeners). The first pointer-down hands the model
+    to the user for good (OrbitControls drag); reduced motion sits at
+    rest. Measured: −100° below the fold, −92° entering, 0° centred,
+    unchanged after a drag and scroll-up.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

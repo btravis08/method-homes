@@ -17,6 +17,9 @@ const PlanViewer = dynamic(() => import("./PlanViewer").then((m) => m.PlanViewer
 export function LazyPlanViewer({ src, poster, alt, northDeg, className = "" }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
+  /* the 3D view mounts UNDER the poster and only replaces it once it has
+     fully settled (house, planting, sky) — no photo → grey → 3D flash */
+  const [shown, setShown] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
@@ -49,19 +52,20 @@ export function LazyPlanViewer({ src, poster, alt, northDeg, className = "" }: {
 
   return (
     <div ref={ref} className={`relative w-full ${className}`}>
-      {ready ? (
-        <PlanViewer src={src} northDeg={northDeg} />
-      ) : (
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-md bg-surface-2 md:aspect-[16/9]">
-          {poster ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={poster} alt={alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
-          ) : (
-            <span className="label absolute inset-0 flex items-center justify-center text-ink-3">{alt ?? "3D model"}</span>
-          )}
-          <p className="label absolute bottom-xl left-xl rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>
-        </div>
-      )}
+      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} />}
+      <div
+        aria-hidden={shown}
+        className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} aspect-[4/3] w-full overflow-hidden rounded-md bg-surface-2 transition-opacity duration-700 ease-out md:aspect-[16/9]`}
+        style={{ opacity: shown ? 0 : 1 }}
+      >
+        {poster ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={poster} alt={alt ?? ""} loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
+        ) : (
+          <span className="label absolute inset-0 flex items-center justify-center text-ink-3">{alt ?? "3D model"}</span>
+        )}
+        <p className="label absolute bottom-xl left-xl rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>
+      </div>
     </div>
   );
 }

@@ -631,6 +631,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer: no load flash (the view and the page's
+  poster hand over once, when house, planting and sky are all ready;
+  the painterly stand-ins only appear if the real planting fails) and
+  no free spin — the home turns into its resting view as it scrolls
+  into the window, then the user can drag it. Docs: PROJECT-LOG, AGENTS.
 - 2026-10-05 — Plan viewer lawn: tree lawns join the main lawn (no
   circles), a shade darker with more visible mottling, and the pale
   rim at the edge fixed (canvas alpha compositing). Docs: PROJECT-LOG.
