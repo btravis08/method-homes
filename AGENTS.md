@@ -227,17 +227,20 @@ staging/design use.
   legend and the AEO review. Components sit in columns on the LEFT
   (Experiential v2 37521:15243, Experiential v1 37581:41113, section
   library 37581:41071, plus a "Loose components" holding section
-  37584:27244). Pages run LEFT → RIGHT in IA order: the auto-layout
-  frame `Pages — in IA order` (37586:31063, inside section
-  37581:41072) mirrors the IA board's tiers. It has one 2040-wide
-  column per IA card, using the IA's 60/140 gaps × 6.2, and the IA
-  instance (37353:29831) is scaled 6.2× directly above, so each page
-  sits under its card. Template cards hold a note, and cards with no
-  page hold a dashed MISSING box. Market Detail pages stack in the
-  Market template column. Author sits in a trailing "Not in the IA
-  yet" group. The Get Started intake and tray flows sit under the
-  pages row. A new page goes in its card's column, never loose. A new
-  IA card needs a matching column in the same position.
+  37584:27244). Pages run LEFT → RIGHT in IA order inside section
+  37581:41072, with one nested SECTION per IA tier. Columns are 2040
+  wide, using the IA's 60/140 gaps × 6.2, and the IA instance
+  (37353:29831) is scaled 6.2× directly above, so each page sits under
+  its card. Template cards hold a note, and cards with no page hold a
+  dashed MISSING box. Market Detail pages stack in the Market template
+  column. Author sits in a trailing "Not in the IA yet" section. The
+  Get Started intake and tray flows sit under the pages. A new page
+  goes in its card's column, never loose.
+  GOTCHA: never wrap annotated page sets in a FRAME (auto-layout or
+  otherwise). Dev Mode lays annotation callouts out against the
+  outermost frame, so all 170 callouts stacked on one edge with leader
+  lines across every page (2026-10-05). Group with SECTIONS, which
+  don't do this.
 - (History) IA Design page `36373:44911` (built 2026-10-03) held the full
   desktop UX: section `Method/Sections — component library`
   (37505:3440) = 31 editable 1440-wide section components (Nav, Hero
