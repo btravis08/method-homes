@@ -4,7 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
 import { EffectComposer, HueSaturation, N8AO, ToneMapping } from "@react-three/postprocessing";
-import { buildFoliage, type FoliageHandle } from "./foliage";
+import { buildFoliage, plantingPlan, type FoliageHandle } from "./foliage";
+import { loadPlants, type PlantsHandle } from "./plants";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -14,6 +15,8 @@ import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
    public/models/env/{sky.hdr, env.json}); the viewer falls back to the
    procedural RoomEnvironment when it is absent */
 export const DEFAULT_ENV_BASE = "/models/env";
+/* folder with plants.json + the plant GLBs (plants.yml); "" = cards only */
+export const DEFAULT_PLANTS_BASE = "/models/plants";
 interface EnvMeta { file: string; sun?: { azimuthDeg: number; elevationDeg: number; strength?: number } }
 
 /* direction of the HDRI's sun in three's frame (see prep-env.py) */
@@ -110,6 +113,9 @@ export interface PlanViewerProps {
   className?: string;
   /* folder with env.json + the HDR (prep-env.py); default /models/env */
   envBase?: string;
+  /* folder with plants.json + plant GLBs; default /models/plants, "" keeps
+     the procedural planting only */
+  plantsBase?: string;
 }
 
 type Mode = "3d" | "plan";
@@ -275,6 +281,11 @@ class ViewerState {
   sat: { saturation: number } | null = null;
   /* painterly planting around the home (foliage.ts); dissolves in plan */
   foliage: FoliageHandle | null = null;
+  /* the real scanned plants (plants.ts): replace the cards once loaded */
+  plants: PlantsHandle | null = null;
+  plantsBase = DEFAULT_PLANTS_BASE;
+  private plantsLoading = false;
+  private fade = 0;
   private shadowMats: THREE.Material[] | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
@@ -355,6 +366,37 @@ class ViewerState {
       this.foliage = buildFoliage(this.footprint);
       this.group.add(this.foliage.group);
     }
+    this.loadRealPlants();
+  }
+
+  /* fetched after the house is up, so they never compete with it; the
+     cards hold the same spots until the swap, and stay on any failure */
+  private loadRealPlants() {
+    const group = this.group;
+    if (!group || this.plants || this.plantsLoading || !this.plantsBase) return;
+    this.plantsLoading = true;
+    loadPlants(this.plantsBase, plantingPlan(this.footprint))
+      .then((h) => {
+        if (!h) return;
+        if (this.group !== group) {
+          h.dispose();
+          return;
+        }
+        this.plants = h;
+        h.setFade(this.fade);
+        group.add(h.group);
+        if (this.foliage) {
+          this.foliage.group.removeFromParent();
+          this.foliage.dispose();
+          this.foliage = null;
+        }
+      })
+      .catch(() => {
+        /* keep the painterly cards */
+      })
+      .finally(() => {
+        this.plantsLoading = false;
+      });
   }
 
   /* SECTION FILL (poché): a stencil cap. Each wall/structure solid gets two
@@ -498,7 +540,9 @@ class ViewerState {
       this.cap.position.y = this.plane.constant;
       this.cap.visible = e > 0.01;
     }
+    this.fade = e;
     this.foliage?.setFade(e);
+    this.plants?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     if (this.sat) this.sat.saturation = -e;
     if (this.ao) {
@@ -550,16 +594,17 @@ class ViewerState {
 }
 
 /* imperative hand-off from React land to the viewer state */
-function wire(vs: React.RefObject<ViewerState | null>, group: THREE.Group | null, scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, mode: Mode) {
+function wire(vs: React.RefObject<ViewerState | null>, group: THREE.Group | null, scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, mode: Mode, plantsBase: string) {
   const v = vs.current;
   if (!v) return;
   v.group = group;
+  v.plantsBase = plantsBase;
   v.attach(scene, gl, root, mode);
   /* inspectable from the console / Playwright: window.__planViewer */
   (window as unknown as { __planViewer?: ViewerState }).__planViewer = v;
 }
 
-function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerState | null>; input: Inputs }) {
+function House({ src, vs, input, plantsBase }: { src: string; vs: React.RefObject<ViewerState | null>; input: Inputs; plantsBase: string }) {
   const { scene } = useGLTF(src);
   const group = useRef<THREE.Group>(null);
   /* the frame loop reads the latest inputs through a ref (updated in
@@ -571,8 +616,8 @@ function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerStat
   /* wiring the loaded scene into the viewer state is a side effect */
   const { gl, scene: root } = useThree();
   useEffect(() => {
-    wire(vs, group.current, scene, gl, root, ref.current.mode);
-  }, [scene, gl, root, vs]);
+    wire(vs, group.current, scene, gl, root, ref.current.mode, plantsBase);
+  }, [scene, gl, root, vs, plantsBase]);
   useFrame((state, dt) => {
     vs.current?.tick(state, Math.min(dt, 0.1), ref.current);
   });
@@ -583,7 +628,7 @@ function House({ src, vs, input }: { src: string; vs: React.RefObject<ViewerStat
   );
 }
 
-export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE }: PlanViewerProps) {
+export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE, plantsBase = DEFAULT_PLANTS_BASE }: PlanViewerProps) {
   const [mode, setMode] = useState<Mode>(initialMode);
   const [storey, setStorey] = useState(0);
   const [spinning, setSpinning] = useState(true);
@@ -660,7 +705,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}
           <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
-          <House src={src} vs={vs} input={{ mode, storey, northDeg: north, reduce, spinning }} />
+          <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey, northDeg: north, reduce, spinning }} />
           {/* a soft contact shadow grounds the home (hidden under the
               floor slab in plan view, so nothing to fade) */}
           <ContactShadows

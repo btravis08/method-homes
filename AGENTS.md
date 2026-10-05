@@ -149,6 +149,16 @@ staging/design use.
   reflections and aligns its shadow light to that sun, falling back
   to RoomEnvironment when the folder is absent. Change the HDRI or
   its rotation in one place (the workflow) and re-run both jobs.
+- Planting in the real-time viewer: trees are scanned CC0 models
+  (public/models/plants via plants.yml; over ~60k triangles they get a
+  `thin` entry → scripts/model/thin-plant.mjs), shrubs are photo clumps
+  skinned with the tree's frond atlas (`CAST`/`ATLAS` in
+  src/components/model/plants.ts), all placed by the ONE planting plan
+  in foliage.ts (the painterly cards are the instant fallback at the
+  same spots). Keep it instanced, loaded after the house, dissolving
+  in plan. A leaf that renders as a solid quad or not at all has lost
+  its alpha (Poly Haven ships it separately — merge-alpha.py) or is
+  losing it in the mips (keep the mip-scaled alpha in plants.ts).
 
 ## Design source (Figma) — THE REBRAND
 

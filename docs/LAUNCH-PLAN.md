@@ -219,7 +219,7 @@ gate after idle. Each has one toggle or slider at most.
 |---|---|---|---|
 | Build journey | /process | Step | [ ] |
 | What it costs | /pricing | Path=Predesigned/Custom | [ ] |
-| Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04; photoreal Cycles turntable + plan-cut frames, same day) | [~] 3D viewer + rendered turntable prototypes in code (/library/plan-viewer, /library/turntable); Plan/Modules/Photos pending Bryce's design pass |
+| Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04; photoreal Cycles turntable + plan-cut frames, same day) | [~] 3D viewer (with real-time scanned planting) + rendered turntable prototypes in code (/library/plan-viewer, /library/turntable); Plan/Modules/Photos pending Bryce's design pass |
 | We deliver to you | /where-we-build | State=Empty/Result | [ ] |
 | Lineup (replaces Find your fit) | /predesigned | Series | [x] 2026-10-04 — pills are real links to /series/*, JS swaps in place (state-driven cross-fade); twin = Card grid + Compare table on the same page |
 | Scale, simply | /commercial | Config=24/48 units | [ ] |
@@ -631,6 +631,16 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Real scanned planting in the real-time viewer (Bryce:
+  "It needs to be real time"). plants.yml fetches Poly Haven CC0
+  plants, merges their separate leaf alpha (merge-alpha.py),
+  compresses (meshopt + WebP) and thins trees (thin-plant.mjs). The
+  viewer (src/components/model/plants.ts) loads a scanned jacaranda
+  pair after the house and dresses the shrub spots as photo clumps
+  skinned with its frond atlas, replacing the painterly cards (still
+  the instant fallback); mip-scaled alpha-to-coverage keeps leaves at
+  distance; everything dissolves in plan. 1.3 MB, viewer visitors
+  only. Docs: PROJECT-LOG decision + lessons, AGENTS planting rule.
 - 2026-10-04 — Photoreal layer for the plan viewer (Bryce: the
   real-time look read as a game; "Start" on offline rendering).
   `scripts/model/render-turntable.py` renders the pipeline GLB with

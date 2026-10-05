@@ -321,6 +321,42 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   behind it). Photoreal planting for the Cycles turntable — Poly Haven
   CC0 plant models scattered in Blender on the runner — is the
   follow-up.
+- Real scanned planting, in REAL TIME (Bryce, 2026-10-05: "It needs to
+  be real time" — the realism belongs in the live viewer, not only the
+  offline turntable). Poly Haven CC0 plant models are fetched by
+  .github/workflows/plants.yml (the sandbox can't reach polyhaven.com):
+  glTF 1k + textures → gltf-transform (meshopt, WebP) →
+  public/models/plants/<id>.glb + plants.json (bytes, source, CC0).
+  Three lessons, in the order they bit:
+  1. Poly Haven ships leaf cut-outs as a SEPARATE alpha map ("Alpha",
+     "leaves_alpha" in files.json) — its glTF diffuse is a plain RGB
+     JPEG — so scripts/model/merge-alpha.py bakes it into an RGBA PNG
+     (and BLEND → MASK) before compression. Without it leaves render
+     as solid quads or, under alpha-to-coverage (whose smoothstep
+     degenerates when alpha never varies), vanish.
+  2. At the viewer's 170 m camera the GPU samples low mips, where a
+     leaf card's alpha averages ~0.3 and a 0.5 cut-off erases the
+     canopy (contact shadows, which ignore alpha, still showed full
+     bushes — the tell). plants.ts scales alpha by the sampled mip
+     level (×(1 + 0.25·lod)) and sharpens it to the pixel footprint
+     around the cut-off before alpha-to-coverage.
+  3. Poly Haven's SHRUBS are wild, leggy sprigs that read as weeds
+     beside a house; its trees are good. So trees are whole scanned
+     models — the jacaranda, thinned by scripts/model/thin-plant.mjs
+     (leaf islands: seeded 15 % kept, each grown ×1.9 about its centre;
+     bark meshopt-simplified; 512 px textures: 242k → 47k triangles,
+     6.3 → 1.3 MB) — and shrubs are PHOTO CLUMPS: the volumetric clump
+     technique from foliage.ts skinned with the jacaranda's own frond
+     atlas (three fronds, picked per card), shading-only vertex colour.
+     Full, garden-like masses with photographic leaves in one draw call.
+  plants.ts loads after the house is up and swaps in for the painterly
+  cards at the same spots (one shared planting plan, `plantingPlan` in
+  foliage.ts); the cards stay as the instant and failure fallback.
+  Trees are InstancedMeshes (one per sub-mesh); every plant dissolves
+  on a world-space hash over the first half of the plan flight, and
+  foliage reflects the sky at 0.45 (full strength silvered it). Weight,
+  only for visitors who open the viewer: 1.3 MB (one tree GLB), ~98k
+  triangles for the whole garden. The fetched shrub GLBs were deleted.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

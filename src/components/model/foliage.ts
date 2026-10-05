@@ -19,6 +19,10 @@ import * as THREE from "three";
 
   Fading: the leaves DISSOLVE (alphaTest rises) as the view goes to plan,
   and the trunks fade — the drawing never carries planting.
+
+  This is now the instant FALLBACK: it draws on the first frame, and the
+  real scanned plants (plants.ts) replace it at the same spots once their
+  GLBs arrive. If they never arrive (offline, error) this stays.
 */
 
 export interface FoliageHandle {
@@ -90,7 +94,18 @@ interface Clump {
   card: number; // card size, m
 }
 
-function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[], col: number[], uv: number[], idx: number[]) {
+/* how a card is skinned: which part of the texture it shows (u0, v0,
+   u1, v1 rects, one picked per card), its height/width ratio, and
+   whether vertex colour TINTS a white dab (painterly) or only SHADES a
+   photographic texture that already carries its colour */
+interface Skin {
+  rects: number[][];
+  aspect: number;
+  tint: boolean;
+}
+const DAB: Skin = { rects: [[0, 0, 1, 1]], aspect: 1, tint: true };
+
+function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[], col: number[], uv: number[], idx: number[], skin: Skin = DAB) {
   const q = new THREE.Quaternion();
   const e = new THREE.Euler();
   const corner = new THREE.Vector3();
@@ -109,16 +124,18 @@ function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[]
     const size = clump.card * (0.75 + rand() * 0.5);
     /* height within the clump: 0 at the base, 1 at the top */
     const h = THREE.MathUtils.clamp((p.y - (clump.c.y - clump.r.y)) / (2 * clump.r.y), 0, 1);
-    base.set(GREENS[Math.floor(rand() * GREENS.length)]);
+    if (skin.tint) base.set(GREENS[Math.floor(rand() * GREENS.length)]);
+    else base.setRGB(0.92 + rand() * 0.16, 0.92 + rand() * 0.16, 0.9 + rand() * 0.12);
     const shade = 0.55 + 0.45 * h; // darker toward the base
+    const [u0, v0, u1, v1] = skin.rects[Math.floor(rand() * skin.rects.length)];
     const vi = pos.length / 3;
     for (const [cx, cy, tu, tv] of [
-      [-0.5, -0.5, 0, 0],
-      [0.5, -0.5, 1, 0],
-      [0.5, 0.5, 1, 1],
-      [-0.5, 0.5, 0, 1],
+      [-0.5, -0.5, u0, v1],
+      [0.5, -0.5, u1, v1],
+      [0.5, 0.5, u1, v0],
+      [-0.5, 0.5, u0, v0],
     ]) {
-      corner.set(cx * size, cy * size, 0).applyQuaternion(q).add(p);
+      corner.set(cx * size, cy * size * skin.aspect, 0).applyQuaternion(q).add(p);
       pos.push(corner.x, corner.y, corner.z);
       /* the volumetric trick: normals from the clump centre (with a lift
          toward the sky so tops catch light) */
@@ -133,28 +150,33 @@ function addClump(clump: Clump, rand: () => number, pos: number[], nrm: number[]
   }
 }
 
-export function buildFoliage(fp: Footprint, seed = 7): FoliageHandle {
-  const rand = rng(seed);
-  const pos: number[] = [];
-  const nrm: number[] = [];
-  const col: number[] = [];
-  const uv: number[] = [];
-  const idx: number[] = [];
-  const trunks: THREE.BufferGeometry[] = [];
+/* THE PLANTING PLAN: where every plant goes, shared by the procedural
+   cards below and the real scanned plants (plants.ts), so swapping one
+   for the other never moves the garden. `size` is the plant's height. */
+export interface Plant {
+  kind: "shrub" | "corner" | "tree";
+  x: number;
+  z: number;
+  size: number;
+  /* plan footprint radii of the procedural clump (x, z) */
+  rx: number;
+  rz: number;
+  yaw: number;
+}
 
+export function plantingPlan(fp: Footprint, seed = 7): Plant[] {
+  const rand = rng(seed);
   const hw = fp.width_m / 2;
   const hd = fp.depth_m / 2;
-
+  const out: Plant[] = [];
   /* shrubs along both long elevations, just outside the walls */
   for (const side of [-1, 1]) {
     let x = -hw + 0.6 + rand() * 1.2;
     while (x < hw - 0.6) {
       const r = 0.45 + rand() * 0.45;
       const h = 0.35 + rand() * 0.35;
-      addClump(
-        { c: new THREE.Vector3(x, h, side * (hd + 0.45 + rand() * 0.5)), r: new THREE.Vector3(r, h, r * (0.7 + rand() * 0.3)), cards: 90, card: 0.5 },
-        rand, pos, nrm, col, uv, idx,
-      );
+      const z = side * (hd + 0.45 + rand() * 0.5);
+      out.push({ kind: "shrub", x, z, size: h * 2, rx: r, rz: r * (0.7 + rand() * 0.3), yaw: rand() * Math.PI * 2 });
       x += 1.2 + rand() * 2.6;
     }
   }
@@ -162,16 +184,73 @@ export function buildFoliage(fp: Footprint, seed = 7): FoliageHandle {
   for (const sx of [-1, 1])
     for (const sz of [-1, 1]) {
       const r = 0.7 + rand() * 0.4;
-      addClump(
-        { c: new THREE.Vector3(sx * (hw + 0.6), r * 0.7, sz * (hd + 0.6)), r: new THREE.Vector3(r, r * 0.7, r), cards: 130, card: 0.56 },
-        rand, pos, nrm, col, uv, idx,
-      );
+      out.push({ kind: "corner", x: sx * (hw + 0.6), z: sz * (hd + 0.6), size: r * 1.4, rx: r, rz: r, yaw: rand() * Math.PI * 2 });
     }
-  /* two trees off the short ends: a trunk and a canopy of several clumps */
+  /* two trees off the short ends */
   for (const sx of [-1, 1]) {
-    const tx = sx * (hw + 3.2 + rand() * 1.5);
-    const tz = (rand() - 0.5) * fp.depth_m * 0.8;
-    const height = 4.5 + rand() * 1.5;
+    const x = sx * (hw + 3.2 + rand() * 1.5);
+    const z = (rand() - 0.5) * fp.depth_m * 0.8;
+    const size = 4.5 + rand() * 1.5;
+    out.push({ kind: "tree", x, z, size, rx: 2, rz: 2, yaw: rand() * Math.PI * 2 });
+  }
+  return out;
+}
+
+/* PHOTO CLUMPS: the same volumetric clumps for the plan's shrub and
+   corner spots, skinned with a real leaf atlas instead of painted dabs
+   (plants.ts feeds it the scanned tree's frond atlas). Returns one
+   geometry; the caller supplies the material. */
+export function buildClumpGeometry(plan: Plant[], skin: Skin, seed = 7): THREE.BufferGeometry {
+  const rand = rng(seed + 2);
+  const pos: number[] = [];
+  const nrm: number[] = [];
+  const col: number[] = [];
+  const uv: number[] = [];
+  const idx: number[] = [];
+  for (const p of plan) {
+    if (p.kind === "shrub") {
+      const h = p.size / 2;
+      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards: 70, card: 0.75 }, rand, pos, nrm, col, uv, idx, skin);
+    } else if (p.kind === "corner") {
+      const r = p.rx;
+      addClump({ c: new THREE.Vector3(p.x, r * 0.7, p.z), r: new THREE.Vector3(r, r * 0.7, r), cards: 100, card: 0.85 }, rand, pos, nrm, col, uv, idx, skin);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute("normal", new THREE.Float32BufferAttribute(nrm, 3));
+  geo.setAttribute("color", new THREE.Float32BufferAttribute(col, 3));
+  geo.setAttribute("uv", new THREE.Float32BufferAttribute(uv, 2));
+  geo.setIndex(idx);
+  geo.computeBoundingSphere();
+  return geo;
+}
+export type { Skin };
+
+export function buildFoliage(fp: Footprint, seed = 7): FoliageHandle {
+  const rand = rng(seed + 1);
+  const pos: number[] = [];
+  const nrm: number[] = [];
+  const col: number[] = [];
+  const uv: number[] = [];
+  const idx: number[] = [];
+  const trunks: THREE.BufferGeometry[] = [];
+
+  for (const p of plantingPlan(fp, seed)) {
+    if (p.kind === "shrub") {
+      const h = p.size / 2;
+      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards: 90, card: 0.5 }, rand, pos, nrm, col, uv, idx);
+      continue;
+    }
+    if (p.kind === "corner") {
+      const r = p.rx;
+      addClump({ c: new THREE.Vector3(p.x, r * 0.7, p.z), r: new THREE.Vector3(r, r * 0.7, r), cards: 130, card: 0.56 }, rand, pos, nrm, col, uv, idx);
+      continue;
+    }
+    /* a tree: a trunk and a canopy of several clumps */
+    const tx = p.x;
+    const tz = p.z;
+    const height = p.size;
     const trunk = new THREE.CylinderGeometry(0.15, 0.24, height * 0.5, 8, 1);
     trunk.translate(tx, height * 0.25, tz);
     trunks.push(trunk);
