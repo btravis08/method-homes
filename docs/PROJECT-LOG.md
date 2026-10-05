@@ -428,6 +428,30 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the walls and 2.8 m round trees (was 4.4 / 3.4). Lesson: ground
   cover at product-shot distance should read as a surface, not
   geometry — scale and saturation both shout.
+- Stable ground, matched planting (Bryce, 2026-10-05: corner shrubs
+  should match the tree colour; drop the no-grass-at-the-door rule; the
+  "AO" still smears as the house spins — "I think it's the house
+  footprint"; the grass edges shimmer, "terribly fake").
+  - The smear WAS the footprint: drei ContactShadows re-renders the
+    house from below every frame with far = the house height, so the
+    roof overhang printed a blurred, footprint-shaped grey patch that
+    swam as the model turned. Removed. Grounding is now a contact
+    darkening baked into the lawn texture along the foot of the walls
+    (wall box from doors.ts `wallBounds`) — static, turns with the
+    home, costs nothing per frame.
+  - The shimmer was everything sub-pixel: hash-frayed alpha-to-coverage
+    edge cells and 1–2 px grass tufts. The lawn is now ONE blended
+    ground plane — macro texture (512², mipmapped, anisotropic) with
+    colour + contact darkening + alpha fading over ~25 cm, times a tiled
+    turf-grain texture — so every pixel is a filtered average. No tufts,
+    no alpha test, no shader noise.
+  - Shrub colour: each leaf look is tinted so its alpha-weighted mean
+    (linear, inside its rects) matches the tree's fronds; shapes still
+    vary, the palette is one.
+  - Grass now covers the door approaches; shrubs still keep them clear.
+  Lesson: in a spinning product view, anything that is re-rendered per
+  frame from a second camera, or that is smaller than a pixel, reads as
+  dirt or fizz. Bake it or filter it.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

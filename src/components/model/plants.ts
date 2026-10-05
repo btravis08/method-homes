@@ -29,7 +29,12 @@ import { buildClumpGeometry, type Plant } from "./foliage";
    leaf atlases — in several SPECIES so neighbouring plants differ. */
 const TREES = ["jacaranda_tree"];
 
-/* the shrub looks, indexed by Plant.species (foliage.ts SPECIES must
+/* COLOUR: every look is tinted so its leaves' average (alpha-weighted,
+   linear, inside its rects) matches the tree's fronds — the planting
+   reads as one palette, shapes vary but no shrub out-colours the trees
+   (Bryce, 2026-10-05). Re-measure if an atlas or the tree changes.
+
+   the shrub looks, indexed by Plant.species (foliage.ts SPECIES must
    match the count). Each is a CC0 Poly Haven leaf atlas (alpha merged;
    v down, as glTF stores it) — `atlas: null` = the scanned tree's own
    fronds — with a colour, card density/size and habit (rise = height
@@ -49,11 +54,11 @@ const LOOKS: Look[] = [
   { name: "feather", atlas: null, rects: [[0.16, 0.03, 1.0, 0.46], [0.0, 0.33, 0.43, 0.7], [0.25, 0.58, 1.0, 0.98]], aspect: 0.5, color: [1, 1, 1], cards: 70, card: 0.75, rise: 1 },
   /* long sage-silver lance leaves (shrub_02), upright; toned down —
      full strength read white in the sun */
-  { name: "willow", atlas: "atlas-willow.webp", rects: [[0.2, 0.03, 0.6, 0.97], [0.55, 0.0, 0.97, 0.88]], aspect: 2.2, color: [0.62, 0.72, 0.7], cards: 120, card: 0.5, rise: 1.35 },
+  { name: "willow", atlas: "atlas-willow.webp", rects: [[0.2, 0.03, 0.6, 0.97], [0.55, 0.0, 0.97, 0.88]], aspect: 2.2, color: [1.04, 1.22, 0.73], cards: 120, card: 0.5, rise: 1.35 },
   /* broad heart leaves (shrub_03), deepened from lime, low and spreading */
-  { name: "heart", atlas: "atlas-heart.webp", rects: [[0.02, 0.02, 0.62, 0.52], [0.02, 0.45, 0.62, 0.95]], aspect: 0.85, color: [0.7, 0.84, 0.6], cards: 110, card: 0.55, rise: 0.7 },
+  { name: "heart", atlas: "atlas-heart.webp", rects: [[0.02, 0.02, 0.62, 0.52], [0.02, 0.45, 0.62, 0.95]], aspect: 0.85, color: [0.67, 0.82, 1.6], cards: 110, card: 0.55, rise: 0.7 },
   /* small rounded leaves (shrub_04), dense tidy dome */
-  { name: "pittosporum", atlas: "atlas-obovate.webp", rects: [[0.0, 0.05, 0.36, 0.95], [0.3, 0.05, 0.67, 0.95]], aspect: 2.4, color: [0.8, 0.9, 0.84], cards: 150, card: 0.42, rise: 0.9 },
+  { name: "pittosporum", atlas: "atlas-obovate.webp", rects: [[0.0, 0.05, 0.36, 0.95], [0.3, 0.05, 0.67, 0.95]], aspect: 2.4, color: [0.69, 0.86, 0.59], cards: 150, card: 0.42, rise: 0.9 },
 ];
 const FRONDS = /leaves/i; // the tree material that carries the fronds
 

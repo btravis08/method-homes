@@ -159,23 +159,22 @@ staging/design use.
   in plan. A leaf that renders as a solid quad or not at all has lost
   its alpha (Poly Haven ships it separately — merge-alpha.py) or is
   losing it in the mips (keep the mip-scaled alpha in plants.ts).
-  Plants stay on PLANT_LAYER, out of the contact shadow (its depth
-  override ignores alpha). No screen-space AO in the viewer — it
-  smeared grey over the ground as the model turned (removed
-  2026-10-05).
+  No screen-space AO and no per-frame contact shadow in the viewer —
+  both smeared grey over the ground as the model turned (removed
+  2026-10-05). Grounding is baked into the lawn texture.
 - Planting rules live in `plantingPlan` (foliage.ts), not in the
   renderers: clusters only (never a row along a wall), each drift
   mixing shrub LOOKS (plants.ts; foliage SPECIES must equal LOOKS'
-  length), and nothing — shrub or grass — in an exterior door's
-  approach (`doorClear`, doors found by doors.ts from the model). A new
+  length), and no shrub in an exterior door's approach (`doorClear`,
+  doors found by doors.ts from the model). Grass may cover it (Bryce,
+  2026-10-05). Shrub looks are tinted to the tree's leaf colour. A new
   model needs no hand placement; if its doors aren't found, check its
   door/wall node names (storey<N>_door / _wall from the pipeline).
 - The lawn (lawn.ts) is one coverage field — change its shape there
-  (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the mat or the tufts. Keep
-  world-space noise grains ≥ ~8 cm: finer ones go sub-pixel at the
-  viewer's distance and shimmer while the model spins. The lawn must
-  read as a calm SURFACE: tufts stay short (≤ ~10 cm) and within a
-  shade of the mat, greens stay grey-green (Bryce, 2026-10-05).
+  (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the texture. It is ONE
+  blended, mipmapped ground plane: no instanced tufts, no alpha test,
+  no per-pixel shader noise — anything sub-pixel shimmers while the
+  model spins. Greens stay soft grey-green (Bryce, 2026-10-05).
 
 ## Design source (Figma) — THE REBRAND
 

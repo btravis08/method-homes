@@ -1,35 +1,35 @@
 import * as THREE from "three";
-import { DOOR_CLEAR, type Door, type Plant } from "./foliage";
+import type { Plant } from "./foliage";
 
 /*
-  ORGANIC LAWN — procedural, no assets.
+  ORGANIC LAWN — procedural, no assets, and STABLE IN MOTION.
 
-  One scalar COVERAGE FIELD decides everything: positive where there is
-  grass, growing toward the home, crossing zero at the lawn's edge.
-  It is the union (max) of
+  One scalar COVERAGE FIELD decides the shape: positive where there is
+  grass, crossing zero at the lawn's edge. It is the union (max) of
     - a rounded rectangle (superellipse) a few metres out from the walls,
     - a soft disc under each tree, so the lawn reaches out and wraps them,
-  with low-frequency noise added, so the edge undulates — bays and
+  plus low-frequency noise, so the edge undulates — bays and
   promontories, never a clean curve.
 
-  Two layers read that field:
-    1. the LAWN MAT, a ground plane whose colour (mottled greens, drying
-       toward the edge) and alpha (coverage) are baked into one small
-       texture; the shader adds a world-space grain to the alpha and cuts
-       it with alpha-to-coverage, so the edge frays into clumps instead
-       of fading like a gradient;
-    2. GRASS TUFTS, one instanced mesh of five-blade tufts scattered with
-       probability rising with coverage: dense by the walls, thinning
-       outward, with a few strays past the edge.
+  The lawn is ONE textured ground plane, nothing else:
+    - a macro texture bakes colour (soft grey-greens, a little drier at
+      the fringe), a CONTACT DARKENING along the foot of the walls (the
+      home's grounding, baked here so nothing is re-rendered as it turns),
+      and alpha (coverage, fading over ~25 cm — a soft edge, not a cut);
+    - a tiled detail texture adds the grain of turf.
+  Both are mipmapped and blended (no alpha test), so as the model spins
+  every pixel is a filtered average — nothing sub-pixel to shimmer. The
+  earlier version (instanced grass tufts, a hash-frayed alpha-to-coverage
+  edge, a per-frame contact shadow) shimmered and smeared on the spin
+  (Bryce, 2026-10-05: "terribly fake").
 
   The lawn rides the model group (turns with the home), lives on the
-  plant layer (out of the contact shadow, which ignores alpha), and
-  DISSOLVES with the planting going to plan — the drawing stays ink.
+  plant layer, and FADES with the planting on the flight to plan — the
+  drawing stays ink.
 */
 
 export interface LawnHandle {
   group: THREE.Group;
-  tufts: number;
   setFade(e: number): void;
   dispose(): void;
 }
@@ -81,16 +81,51 @@ function noise2(seed: number) {
 const MARGIN = 3.4;
 const TREE_SKIRT = 2.8;
 const EDGE_WOBBLE = 0.32; // coverage units of edge noise
-const TUFTS = 7000;
+const EDGE_SOFT: [number, number] = [-0.03, 0.07]; // coverage over which alpha fades 0 → 1 (~25 cm: soft but not a glow)
+const CONTACT = { depth: 0.38, reach: 0.55 }; // wall-foot darkening: strength, falloff (m)
+const DETAIL_TILE = 1.6; // m per repeat of the turf grain
 
-export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed = 7): LawnHandle {
+/* the turf grain: short strokes of lighter and darker blades on a mid
+   grey, tiled. Grey-centred so it modulates the colour without shifting
+   it; strokes near an edge are drawn again on the far side (seamless). */
+function detailTexture(seed: number): THREE.CanvasTexture {
+  const size = 256;
+  const c = document.createElement("canvas");
+  c.width = c.height = size;
+  const g = c.getContext("2d")!;
+  g.fillStyle = "rgb(128,128,128)";
+  g.fillRect(0, 0, size, size);
+  const r = rng(seed);
+  for (let i = 0; i < 2600; i++) {
+    const x = r() * size;
+    const y = r() * size;
+    const v = Math.round(r() < 0.5 ? 92 + r() * 22 : 146 + r() * 26);
+    const a = r() * Math.PI;
+    g.fillStyle = `rgba(${v},${v + 4},${v},0.55)`;
+    for (const ox of [0, -size, size])
+      for (const oy of [0, -size, size]) {
+        g.save();
+        g.translate(x + ox, y + oy);
+        g.rotate(a);
+        g.fillRect(-0.6, -2.2, 1.2, 4.4);
+        g.restore();
+      }
+  }
+  const tex = new THREE.CanvasTexture(c);
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+  tex.anisotropy = 8;
+  tex.colorSpace = THREE.NoColorSpace; // a multiplier, not a colour
+  return tex;
+}
+
+export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null, seed = 7): LawnHandle {
   const hw = fp.width_m / 2;
   const hd = fp.depth_m / 2;
   const trees = plan.filter((p) => p.kind === "tree");
   const nEdge = noise2(seed + 11);
   const nTone = noise2(seed + 23);
 
-  /* the coverage field: > 0 is lawn, larger is thicker */
+  /* the coverage field: > 0 is lawn */
   const ax = hw + MARGIN;
   const az = hd + MARGIN;
   const field = (x: number, z: number) => {
@@ -100,20 +135,15 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
       const d = Math.hypot(x - t.x, z - t.z) / TREE_SKIRT;
       c = Math.max(c, (1 - d) * 1.2);
     }
-    c += nEdge(x * 0.22, z * 0.22) * EDGE_WOBBLE;
-    /* a bare approach to every exterior door: the strip in front of it
-       (as wide as the planting keeps clear) carries no grass, its sides
-       slightly ragged like a worn path */
-    for (const d of doors) {
-      const dx = x - d.x;
-      const dz = z - d.z;
-      const out = dx * d.nx + dz * d.nz;
-      if (out < -0.6) continue;
-      const along = Math.abs(-dx * d.nz + dz * d.nx);
-      const half = d.w / 2 + DOOR_CLEAR * 0.6 + nEdge(out * 0.9 + 31, d.x * 0.3) * 0.12;
-      c = Math.min(c, (along - half) * 2.5);
-    }
-    return c;
+    return c + nEdge(x * 0.22, z * 0.22) * EDGE_WOBBLE;
+  };
+
+  /* distance (m) outside the wall box, for the contact darkening */
+  const wb = walls ?? new THREE.Box3(new THREE.Vector3(-hw, 0, -hd), new THREE.Vector3(hw, 1, hd));
+  const outside = (x: number, z: number) => {
+    const dx = Math.max(wb.min.x - x, 0, x - wb.max.x);
+    const dz = Math.max(wb.min.z - z, 0, z - wb.max.z);
+    return Math.hypot(dx, dz);
   };
 
   /* extent: everything the field could reach, with room for the wobble */
@@ -124,13 +154,11 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
     ez = Math.max(ez, Math.abs(t.z) + TREE_SKIRT + 1.5);
   }
 
-  /* 1. the lawn mat: colour + coverage baked into a small texture */
-  const res = 256;
+  /* the macro texture: colour × contact darkening, alpha = coverage */
+  const res = 512;
   const data = new Uint8Array(res * res * 4);
-  /* muted, slightly cool lawn greens (the sun is strong: these read
-     brighter lit than they look here) and a straw fringe */
   /* soft grey-greens (Bryce: "less green"), close in value so the lawn
-     reads as a calm ground plane, not a texture */
+     reads as a calm ground plane */
   const deep = new THREE.Color("#55624a");
   const mid = new THREE.Color("#5f6c52");
   const light = new THREE.Color("#69755b");
@@ -143,179 +171,79 @@ export function buildLawn(fp: Footprint, plan: Plant[], doors: Door[] = [], seed
       /* row 0 is v = 0, which the rotated plane puts at +z */
       const z = (0.5 - (j + 0.5) / res) * 2 * ez;
       const f = field(x, z);
-      /* mottling: broad patches + finer clumps */
       const t = THREE.MathUtils.clamp(0.5 + nTone(x * 0.35, z * 0.35) * 0.9 + nTone(x * 1.6 + 9, z * 1.6) * 0.35, 0, 1);
       c.copy(deep).lerp(mid, Math.min(1, t * 1.6));
       if (t > 0.62) c.lerp(light, (t - 0.62) / 0.38);
-      /* the fringe dries and yellows a little */
       c.lerp(dry, THREE.MathUtils.clamp(1 - f / 0.35, 0, 1) * 0.35);
+      /* grounding: darker right at the foot of the walls, gone by ~1 m */
+      c.multiplyScalar(1 - CONTACT.depth * Math.exp(-outside(x, z) / CONTACT.reach));
       const k = (j * res + i) * 4;
       c.getRGB(srgb, THREE.SRGBColorSpace);
       data[k] = Math.round(srgb.r * 255);
       data[k + 1] = Math.round(srgb.g * 255);
       data[k + 2] = Math.round(srgb.b * 255);
-      /* alpha 0.5 = the edge; ramps over ~0.25 coverage either side */
-      data[k + 3] = Math.round(THREE.MathUtils.clamp(0.5 + f * 2, 0, 1) * 255);
+      data[k + 3] = Math.round(THREE.MathUtils.smoothstep(f, EDGE_SOFT[0], EDGE_SOFT[1]) * 255);
     }
   }
   const tex = new THREE.DataTexture(data, res, res, THREE.RGBAFormat);
-  /* baked as sRGB bytes, tagged so the shader decodes them */
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.magFilter = THREE.LinearFilter;
   tex.minFilter = THREE.LinearMipmapLinearFilter;
   tex.generateMipmaps = true;
+  tex.anisotropy = 8;
   tex.needsUpdate = true;
+  const detail = detailTexture(seed + 5);
 
-  const fade = { value: 0 };
-  const matMat = new THREE.MeshStandardMaterial({
+  const mat = new THREE.MeshStandardMaterial({
     map: tex,
     roughness: 1,
     metalness: 0,
-    alphaTest: 0.5,
-    alphaToCoverage: true,
+    transparent: true,
+    depthWrite: false,
     envMapIntensity: 0.5,
   });
-  matMat.onBeforeCompile = (s) => {
-    s.uniforms.uDissolve = fade;
+  mat.onBeforeCompile = (s) => {
+    s.uniforms.uDetail = { value: detail };
     s.vertexShader = s.vertexShader
-      .replace("#include <common>", "#include <common>\nvarying vec3 vLawnW;")
-      .replace("#include <project_vertex>", "#include <project_vertex>\nvLawnW = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+      .replace("#include <common>", "#include <common>\nvarying vec2 vLawnXZ;")
+      .replace("#include <project_vertex>", "#include <project_vertex>\nvLawnXZ = transformed.xz;");
     s.fragmentShader = s.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform sampler2D uDetail;\nvarying vec2 vLawnXZ;")
       .replace(
-        "#include <common>",
-        `#include <common>
-        uniform float uDissolve;
-        varying vec3 vLawnW;
-        float lawnHash(vec2 p) { return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }`,
-      )
-      .replace(
-        "#include <alphatest_fragment>",
-        `/* fray the edge: an 8 cm grain jitters the coverage around the
-            cut, so the boundary breaks into clumps of turf, not a smooth
-            line (a finer grain went sub-pixel and shimmered on the spin) */
-        float g = lawnHash(floor(vLawnW.xz * 12.0)) - 0.5;
-        diffuseColor.a = clamp((diffuseColor.a + g * 0.42 - alphaTest) / max(fwidth(diffuseColor.a), 1e-3) * 0.5 + 0.5, 0.0, 1.0);
-        if (lawnHash(floor(vLawnW.xz * 9.0) + 3.1) < uDissolve) discard;
-        if (diffuseColor.a <= 0.0) discard;`,
+        "#include <map_fragment>",
+        `#include <map_fragment>
+        /* turf grain, tiled in the lawn's own space (it turns with the
+           home), filtered so it stays steady in motion */
+        diffuseColor.rgb *= 0.55 + 0.9 * texture2D(uDetail, vLawnXZ / ${DETAIL_TILE.toFixed(2)}).g;`,
       );
   };
-  matMat.customProgramCacheKey = () => "lawn-mat";
-  const matGeo = new THREE.PlaneGeometry(2 * ex, 2 * ez);
-  matGeo.rotateX(-Math.PI / 2);
-  const mat = new THREE.Mesh(matGeo, matMat);
-  mat.name = "lawn_mat";
-  mat.position.y = 0.002;
-
-  /* 2. tufts: five tapered blades fanned around a centre, one triangle
-     each; normals point up so a tuft lights like the turf under it */
-  const blades = 5;
-  const tp: number[] = [];
-  const tc: number[] = [];
-  const tr = rng(seed + 31);
-  /* tufts sit a shade either side of the mat, so they add grain, not
-     a second, louder layer */
-  const base = new THREE.Color("#4c5843");
-  const tip = new THREE.Color("#6b7660");
-  for (let b = 0; b < blades; b++) {
-    const a = (b / blades) * Math.PI * 2 + tr() * 0.8;
-    const w = 0.011;
-    const h = 0.75 + tr() * 0.5;
-    const lean = 0.25 + tr() * 0.35;
-    const ox = Math.cos(a) * 0.02;
-    const oz = Math.sin(a) * 0.02;
-    const px = -Math.sin(a) * w;
-    const pz = Math.cos(a) * w;
-    /* tip leans outward a few cm (absolute, not scaled with the tuft) */
-    tp.push(ox - px, 0, oz - pz, ox + px, 0, oz + pz, ox + Math.cos(a) * lean * 0.12, h, oz + Math.sin(a) * lean * 0.12);
-    tc.push(base.r, base.g, base.b, base.r, base.g, base.b, tip.r, tip.g, tip.b);
-  }
-  const tuftGeo = new THREE.BufferGeometry();
-  tuftGeo.setAttribute("position", new THREE.Float32BufferAttribute(tp, 3));
-  const tn: number[] = [];
-  for (let i = 0; i < tp.length / 3; i++) tn.push(0, 1, 0);
-  tuftGeo.setAttribute("normal", new THREE.Float32BufferAttribute(tn, 3));
-  tuftGeo.setAttribute("color", new THREE.Float32BufferAttribute(tc, 3));
-
-  const tuftMat = new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 0.95, metalness: 0, side: THREE.DoubleSide, envMapIntensity: 0.5 });
-  tuftMat.onBeforeCompile = (s) => {
-    s.uniforms.uDissolve = fade;
-    s.vertexShader = s.vertexShader
-      .replace("#include <common>", "#include <common>\nvarying vec3 vTuftW;")
-      .replace(
-        "#include <project_vertex>",
-        `#include <project_vertex>
-        vec4 tw = vec4(transformed, 1.0);
-        #ifdef USE_INSTANCING
-          tw = instanceMatrix * tw;
-        #endif
-        vTuftW = (modelMatrix * tw).xyz;`,
-      );
-    s.fragmentShader = s.fragmentShader
-      .replace("#include <common>", "#include <common>\nuniform float uDissolve;\nvarying vec3 vTuftW;")
-      .replace(
-        "#include <clipping_planes_fragment>",
-        `#include <clipping_planes_fragment>
-        if (fract(sin(dot(floor(vTuftW.xz * 9.0) + 3.1, vec2(12.9898, 78.233))) * 43758.5453) < uDissolve) discard;`,
-      );
-  };
-  tuftMat.customProgramCacheKey = () => "lawn-tuft";
-
-  /* scatter: probability rises with coverage (thick by the walls, thin
-     at the fringe), a few strays past the edge, none under the home */
-  const pr = rng(seed + 47);
-  const mats: THREE.Matrix4[] = [];
-  const cols: number[] = [];
-  const q = new THREE.Quaternion();
-  const up = new THREE.Vector3(0, 1, 0);
-  const sv = new THREE.Vector3();
-  const tv = new THREE.Vector3();
-  const tint = new THREE.Color();
-  let tries = 0;
-  while (mats.length < TUFTS && tries < TUFTS * 8) {
-    tries++;
-    const x = (pr() * 2 - 1) * ex;
-    const z = (pr() * 2 - 1) * ez;
-    if (Math.abs(x) < hw - 0.05 && Math.abs(z) < hd - 0.05) continue;
-    const f = field(x, z);
-    /* sparse: a fine grain, densest by the walls, a few strays at the edge */
-    const p = f > 0 ? 0.08 + 0.6 * THREE.MathUtils.smoothstep(f, 0, 0.6) : f > -0.12 ? 0.03 : 0;
-    if (pr() > p) continue;
-    q.setFromAxisAngle(up, pr() * Math.PI * 2);
-    /* taller toward the fringe (the mown part is near the house) */
-    /* short (Bryce: tall tufts read out of scale at this distance) */
-    const h = 0.035 + pr() * 0.025 + THREE.MathUtils.clamp(0.4 - f, 0, 0.4) * 0.04;
-    sv.set(0.6 + pr() * 0.3, h, 0.6 + pr() * 0.3);
-    tv.set(x, 0, z);
-    mats.push(new THREE.Matrix4().compose(tv, q, sv));
-    const k = 0.82 + pr() * 0.36;
-    tint.setRGB(k, k * (0.96 + pr() * 0.08), k * 0.92);
-    cols.push(tint.r, tint.g, tint.b);
-  }
-  const tufts = new THREE.InstancedMesh(tuftGeo, tuftMat, mats.length);
-  tufts.name = "lawn_tufts";
-  mats.forEach((m, i) => tufts.setMatrixAt(i, m));
-  tufts.instanceColor = new THREE.InstancedBufferAttribute(new Float32Array(cols), 3);
-  tufts.instanceMatrix.needsUpdate = true;
-  tufts.computeBoundingSphere();
+  mat.customProgramCacheKey = () => "lawn";
+  /* a ground plane drawn first among the blended layers; everything
+     standing on it is opaque or alpha-tested and depth-tests over it */
+  const geo = new THREE.PlaneGeometry(2 * ex, 2 * ez);
+  geo.rotateX(-Math.PI / 2);
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.name = "lawn";
+  mesh.position.y = 0.002;
+  mesh.renderOrder = -1;
 
   const group = new THREE.Group();
   group.name = "lawn";
-  group.add(mat, tufts);
+  group.add(mesh);
 
   return {
     group,
-    tufts: mats.length,
     setFade(e: number) {
+      /* gone over the first half of the flight, like the planting */
       const k = Math.min(1, e * 2);
-      fade.value = k;
+      mat.opacity = 1 - k;
       group.visible = k < 0.999;
     },
     dispose() {
-      matGeo.dispose();
-      matMat.dispose();
+      geo.dispose();
+      mat.dispose();
       tex.dispose();
-      tuftGeo.dispose();
-      tuftMat.dispose();
+      detail.dispose();
       group.removeFromParent();
     },
   };

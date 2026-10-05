@@ -2,10 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
-import { ContactShadows, OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
+import { OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
 import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
 import { buildFoliage, plantingPlan, type Door, type FoliageHandle, type Plant } from "./foliage";
-import { findDoors } from "./doors";
+import { findDoors, wallBounds } from "./doors";
 import { loadPlants, type PlantsHandle } from "./plants";
 import { buildLawn, type LawnHandle } from "./lawn";
 import { ToneMappingMode } from "postprocessing";
@@ -274,8 +274,6 @@ class ViewerState {
   group: THREE.Group | null = null;
   root: THREE.Scene | null = null; // for the debug hook (window.__planViewer)
   controls: { enabled: boolean } | null = null;
-  /* the ground contact shadow: fades out with the floor in plan */
-  shadow: THREE.Object3D | null = null;
   /* desaturation at the end of the chain: 0 in 3D, full grey in plan */
   sat: { saturation: number } | null = null;
   /* painterly planting around the home (foliage.ts); dissolves in plan */
@@ -290,7 +288,6 @@ class ViewerState {
   plantsBase = DEFAULT_PLANTS_BASE;
   private plantsLoading = false;
   private fade = 0;
-  private shadowMats: THREE.Material[] | null = null;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
@@ -375,7 +372,7 @@ class ViewerState {
       this.group.add(this.foliage.group);
     }
     if (this.group && !this.lawn) {
-      this.lawn = buildLawn(this.footprint, this.plan, this.doors);
+      this.lawn = buildLawn(this.footprint, this.plan, wallBounds(scene));
       plantLayer(this.lawn.group);
       this.group.add(this.lawn.group);
     }
@@ -560,20 +557,6 @@ class ViewerState {
     this.lawn?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     if (this.sat) this.sat.saturation = -e;
-    if (this.shadow) {
-      if (this.shadowMats == null) {
-        const found: THREE.Material[] = [];
-        this.shadow.traverse((o) => {
-          if (o instanceof THREE.Mesh && o.material instanceof THREE.Material) {
-            o.material.userData.baseOpacity ??= o.material.opacity;
-            found.push(o.material);
-          }
-        });
-        if (found.length) this.shadowMats = found;
-      }
-      for (const m of this.shadowMats ?? []) m.opacity = (m.userData.baseOpacity as number) * (1 - e);
-      this.shadow.visible = e < 0.99;
-    }
     if (this.progress > 0.001) {
       /* spherical path from the orbit pose to straight above: the polar
          angle closes to the top, the azimuth holds (no camera spin — the
@@ -602,12 +585,12 @@ class ViewerState {
   }
 }
 
-/* PLANTS LIVE ON THEIR OWN LAYER. The ground contact shadow renders the
-   scene with one override depth material that ignores alpha, so every
-   leaf card printed as a solid rectangle, blurred into grey smears that
-   swam across the ground as the home turned. Its camera sees layer 0
-   only; the view camera enables PLANT_LAYER too, so plants still draw
-   (and are lit) but leave the ground to the house's own shadow. */
+/* PLANTS LIVE ON THEIR OWN LAYER, so any pass that renders "the house"
+   from another camera (it was the contact shadow, removed 2026-10-05 for
+   smearing the ground as the home turned) can leave them out. The view
+   camera enables PLANT_LAYER, so plants draw and are lit as normal.
+   Grounding is now baked into the lawn (lawn.ts), static, no per-frame
+   re-render. */
 const PLANT_LAYER = 1;
 function plantLayer(root: THREE.Object3D) {
   root.traverse((o) => o.layers.set(PLANT_LAYER));
@@ -727,15 +710,6 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
               on the brief dip of a mode flight (that read as a quality drop) */}
           <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
           <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey, northDeg: north, reduce, spinning }} />
-          {/* a soft contact shadow grounds the home (hidden under the
-              floor slab in plan view, so nothing to fade) */}
-          <ContactShadows
-            ref={(g) => {
-              const v = vs.current;
-              if (v) v.shadow = g as THREE.Object3D | null;
-            }}
-            position={[0, 0.005, 0]}
-            opacity={0.45} scale={Math.max(fp.width_m, fp.depth_m) * 2.2} blur={2.6} far={fp.height_m} resolution={512} frames={reduce || mode === "plan" ? 1 : Infinity} color="#1a1a18" />
           <OrbitControls
             ref={(c) => {
               const v = vs.current;

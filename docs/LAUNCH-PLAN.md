@@ -631,6 +631,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer ground made stable (Bryce): the per-frame
+  contact shadow (the footprint smear) is gone, replaced by a static
+  darkening baked into the lawn; the lawn is one filtered, blended
+  ground plane (no tufts, no fizzing edge); shrubs tinted to the
+  tree's green; grass now runs up to the doors (shrubs still keep
+  clear).
 - 2026-10-05 — Plan viewer lawn toned down (Bryce: too 3D, out of
   scale, too green): fewer, shorter tufts close to the mat's value, a
   soft grey-green mat, and a tighter reach round the home and trees.

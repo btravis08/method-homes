@@ -20,13 +20,28 @@ const CELL = 0.25;
 const JOIN = 4; // cells: rejoin pieces up to ~1 m apart
 const ON_WALL = 0.45; // m from the wall line to count as exterior
 
-export function findDoors(scene: THREE.Object3D): Door[] {
+/* the ground storey's wall box (house-scene space), or null */
+export function wallBounds(scene: THREE.Object3D): THREE.Box3 | null {
+  const g = groundMeshes(scene);
+  return g ? boxOf(scene, g.wall) : null;
+}
+
+function boxOf(scene: THREE.Object3D, meshes: THREE.Mesh[]): THREE.Box3 {
   scene.updateMatrixWorld(true);
   const inv = new THREE.Matrix4().copy(scene.matrixWorld).invert();
   const rel = new THREE.Matrix4();
-  const v = new THREE.Vector3();
+  const box = new THREE.Box3();
+  for (const w of meshes) {
+    rel.multiplyMatrices(inv, w.matrixWorld);
+    const geo = w.geometry as THREE.BufferGeometry;
+    if (!geo.boundingBox) geo.computeBoundingBox();
+    box.union(geo.boundingBox!.clone().applyMatrix4(rel));
+  }
+  return box;
+}
 
-  /* the lowest storey that has walls is the one people walk in from */
+/* the lowest storey that has walls and doors: the one people walk in from */
+function groundMeshes(scene: THREE.Object3D) {
   const byStorey = new Map<number, { door: THREE.Mesh[]; wall: THREE.Mesh[] }>();
   scene.traverse((o) => {
     if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
@@ -36,16 +51,18 @@ export function findDoors(scene: THREE.Object3D): Door[] {
     if (!byStorey.has(k)) byStorey.set(k, { door: [], wall: [] });
     byStorey.get(k)![m[2] as "door" | "wall"].push(o);
   });
-  const ground = [...byStorey.entries()].filter(([, g]) => g.wall.length && g.door.length).sort((a, b) => a[0] - b[0])[0]?.[1];
-  if (!ground) return [];
+  return [...byStorey.entries()].filter(([, g]) => g.wall.length).sort((a, b) => a[0] - b[0])[0]?.[1] ?? null;
+}
 
-  const walls = new THREE.Box3();
-  for (const w of ground.wall) {
-    rel.multiplyMatrices(inv, w.matrixWorld);
-    const g = w.geometry as THREE.BufferGeometry;
-    if (!g.boundingBox) g.computeBoundingBox();
-    walls.union(g.boundingBox!.clone().applyMatrix4(rel));
-  }
+export function findDoors(scene: THREE.Object3D): Door[] {
+  scene.updateMatrixWorld(true);
+  const inv = new THREE.Matrix4().copy(scene.matrixWorld).invert();
+  const rel = new THREE.Matrix4();
+  const v = new THREE.Vector3();
+
+  const ground = groundMeshes(scene);
+  if (!ground || !ground.door.length) return [];
+  const walls = boxOf(scene, ground.wall);
 
   /* bin door vertices on the plan grid */
   const bins = new Map<string, number[]>(); // key → [minX, minZ, maxX, maxZ]
