@@ -1,0 +1,132 @@
+name: sky
+
+# The plan viewer's sky (reflections + image-based light + sun direction),
+# from Poly Haven (CC0). The sandbox cannot reach polyhaven.com; the
+# runner can.
+#
+#   mode list     → print outdoor HDRIs whose tags suggest trees/greenery
+#                   (id | categories | tags), nothing committed
+#   mode preview  → for each id: a tone-mapped 1024×512 JPEG of the map,
+#                   committed to the `sky-previews` branch (not main) so
+#                   candidates can be looked at before choosing
+#   mode install  → the first id becomes the viewer's sky: prep-env.py
+#                   writes public/models/env (sky.hdr + env.json) on main
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "list | preview | install"
+        required: true
+        default: "list"
+      ids:
+        description: "Comma list of Poly Haven HDRI ids (preview / install)"
+        required: false
+      rotation:
+        description: "Degrees to turn the map about the vertical (install)"
+        required: false
+        default: "120"
+
+permissions:
+  contents: write
+
+jobs:
+  sky:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: List green outdoor HDRIs
+        if: ${{ github.event.inputs.mode == 'list' }}
+        run: |
+          curl -sS "https://api.polyhaven.com/assets?t=hdris" | python3 -c '
+          import json, sys
+          d = json.load(sys.stdin)
+          rows = []
+          for k, v in d.items():
+              cats = [c.lower() for c in v.get("categories", [])]
+              tags = [t.lower() for t in v.get("tags", [])]
+              if "outdoor" not in cats:
+                  continue
+              text = " ".join(cats + tags)
+              green = sum(w in text for w in ("tree", "forest", "park", "garden", "meadow", "grass", "field", "nature", "green", "woods", "countryside", "rural", "hill"))
+              sunny = any(w in text for w in ("sunny", "clear", "partly cloudy", "midday", "noon", "afternoon", "morning"))
+              if green >= 2 and "night" not in text and "indoor" not in text:
+                  rows.append((green + (2 if sunny else 0), k, ",".join(cats), ",".join(tags[:12])))
+          rows.sort(key=lambda r: (-r[0], r[1]))
+          print(f"{len(rows)} candidates")
+          for r in rows[:80]:
+              print(f"{r[0]:2d} {r[1]:40s} | {r[2]} | {r[3]}")
+          '
+
+      - name: Preview candidates
+        if: ${{ github.event.inputs.mode == 'preview' }}
+        run: |
+          set -euo pipefail
+          python -m pip install -q "numpy<2" pillow
+          mkdir -p /tmp/prev
+          IFS=',' read -ra IDS <<< "${{ github.event.inputs.ids }}"
+          for raw in "${IDS[@]}"; do
+            id="$(echo "$raw" | xargs)"; [ -n "$id" ] || continue
+            url=$(curl -sS "https://api.polyhaven.com/files/$id" | python3 -c 'import json,sys; print(json.load(sys.stdin)["hdri"]["1k"]["hdr"]["url"])' || true)
+            [ -n "$url" ] || { echo "$id: no 1k hdr"; continue; }
+            curl -sS -L -o "/tmp/prev/$id.hdr" "$url"
+            python3 - "$id" <<'PY'
+          import sys, importlib.util
+          import numpy as np
+          from PIL import Image
+          spec = importlib.util.spec_from_file_location("prep", "scripts/model/prep-env.py")
+          prep = importlib.util.module_from_spec(spec); spec.loader.exec_module(prep)
+          i = sys.argv[1]
+          img = prep.read_hdr(__import__("pathlib").Path(f"/tmp/prev/{i}.hdr"))
+          # exposure from the median, then a simple filmic-ish curve
+          lum = img.mean(axis=2)
+          img = img * (0.18 / max(np.median(lum), 1e-4))
+          img = img / (1 + img)
+          img = np.clip(img ** (1 / 2.2), 0, 1)
+          Image.fromarray((img * 255).astype(np.uint8)).resize((1024, 512)).save(f"/tmp/prev/{i}.jpg", quality=82)
+          print(i, "preview written")
+          PY
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch -q origin sky-previews || true
+          if git rev-parse -q --verify origin/sky-previews >/dev/null; then git checkout -q -B sky-previews origin/sky-previews; else git checkout -q --orphan sky-previews; git rm -rfq . >/dev/null; fi
+          mkdir -p previews
+          cp /tmp/prev/*.jpg previews/
+          git add previews
+          git commit -q -m "sky previews: ${{ github.event.inputs.ids }}" || echo "nothing new"
+          git push -q origin sky-previews
+
+      - name: Install the sky
+        if: ${{ github.event.inputs.mode == 'install' }}
+        run: |
+          set -euo pipefail
+          python -m pip install -q "numpy<2"
+          id="$(echo "${{ github.event.inputs.ids }}" | cut -d, -f1 | xargs)"
+          url=$(curl -sS "https://api.polyhaven.com/files/$id" | python3 -c 'import json,sys; print(json.load(sys.stdin)["hdri"]["2k"]["hdr"]["url"])')
+          curl -sS -L -o /tmp/sky.hdr "$url"
+          python3 scripts/model/prep-env.py /tmp/sky.hdr public/models/env --width 512 --rotation "${{ github.event.inputs.rotation }}"
+          python3 - "$id" <<'PY'
+          import json, sys
+          p = "public/models/env/env.json"
+          d = json.load(open(p))
+          d["source"] = f"https://polyhaven.com/a/{sys.argv[1]}"
+          d["license"] = "CC0 (Poly Haven)"
+          json.dump(d, open(p, "w"), indent=2)
+          print(json.dumps(d, indent=2))
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A public/models/env
+          git diff --cached --quiet && { echo "env unchanged"; exit 0; }
+          git commit -q -m "models: plan viewer sky → $id (Poly Haven)"
+          git pull --rebase -q origin main
+          git push -q origin HEAD:main

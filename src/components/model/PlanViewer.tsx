@@ -552,9 +552,18 @@ class ViewerState {
       const [rb, ob] = PLAN[cat] ?? PLAN.misc;
       this.a.set(ra);
       this.b.set(rb);
-      mat.color.copy(this.a).lerp(this.b, e);
+      /* surfaces that LEAVE the drawing (floor, roof) keep their own
+         colour while they fade — lerping them toward the plan palette
+         flashed them white on the way out (Bryce, 2026-10-05: "the floor
+         should never be white") */
+      const leaves = ob === 0;
+      mat.color.copy(this.a).lerp(this.b, leaves ? 0 : e);
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
-      if (mat instanceof THREE.MeshPhysicalMaterial) {
+      if (cat === "floor") {
+        /* the floor is simply gone in plan: transparent within the first
+           sixth of the flight, before the cut reaches it */
+        mat.opacity = THREE.MathUtils.lerp(oa, 0, Math.min(1, e / 0.15)) * THREE.MathUtils.lerp(1, above, e);
+      } else if (mat instanceof THREE.MeshPhysicalMaterial) {
         /* glass: clear and refractive in 3D, a flat blue line in plan */
         mat.transmission = THREE.MathUtils.lerp(GLASS_TRANSMISSION, 0, e);
         mat.opacity = THREE.MathUtils.lerp(1, ob, e) * THREE.MathUtils.lerp(1, above, e);
