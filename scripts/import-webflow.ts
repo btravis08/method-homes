@@ -638,7 +638,8 @@ async function importCommercial() {
         lede: clean(r["H1 Header Text"]),
         body,
         ...(hero ? { heroImage: hero } : {}),
-        ...(cases.length ? { caseStudies: cases.map((s) => ({ ...ref(`method-project-${s}`), _key: key() })) } : {}),
+        /* weak: a case study that is still a Webflow draft has no published doc to point at */
+        ...(cases.length ? { caseStudies: cases.map((s) => ({ ...ref(`method-project-${s}`), _weak: true, _key: key() })) } : {}),
         order: num(r.Order) ?? 100,
       },
       bool(r.Draft),
@@ -740,8 +741,9 @@ async function importPosts() {
 async function main() {
   console.log(`${DRY ? "DRY RUN — " : ""}importing ${DIR}/*.csv (${ONLY.join(", ")})${client ? ` into ${client.config().projectId}/${client.config().dataset}` : ""}`);
   await loadExisting();
-  if (ONLY.includes("plans")) await importPlans();
+  /* series before plans: a plan's series reference must resolve */
   if (ONLY.includes("series")) await importSeries();
+  if (ONLY.includes("plans")) await importPlans();
   if (ONLY.includes("projects")) await importProjects();
   if (ONLY.includes("commercial")) await importCommercial();
   if (ONLY.includes("regions")) await importRegions();
