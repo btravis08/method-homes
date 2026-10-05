@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: Fetch and inspect
         run: |
-          set -uo pipefail
+          set +e  # greps with no match must not end the job
           URL="${{ github.event.inputs.url }}"
           UA="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0 Safari/537.36"
           curl -sSL -A "$UA" -o page.html -w "HTTP %{http_code} · %{size_download} B · final %{url_effective}\n" "$URL"
