@@ -115,8 +115,13 @@ interface Footprint { width_m: number; depth_m: number; height_m: number }
 interface Extras { northDeg?: number; storeys?: Storey[]; footprint?: Footprint }
 
 const CUT_ABOVE_FLOOR = 1.2; // metres — the conventional plan cut height
-const FOV_3D = 35;
+/* a long lens far away — Samara's configurator shoots at 5°, which is why
+   their home reads as a flat product render with no perspective splay.
+   Distance scales with 1/tan(fov/2), so the framing stays the same. */
+const FOV_3D = 8;
 const FOV_PLAN = 8; // narrow + far ≈ orthographic
+const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
+const GLASS_TRANSMISSION = 0.92;
 const SPEED = 1.6; // mode transition, 1/s
 const SPIN = 0.15; // rad/s
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
@@ -183,6 +188,13 @@ const SIDING_COLOR = /* glsl */ `
     float k = (1.0 - uPlan) * vertical;
     diffuseColor.rgb *= 1.0 + tone * k;
     diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.45, joint * coverage * k);
+    /* in plan, a horizontal wall face seen from its FRONT is a sill or
+       a wall top — paper, not ink — so openings read as openings. The
+       hollow wall bottoms the cut exposes are seen from their BACK and
+       stay ink, which keeps the cut walls solid. */
+    float horizontal = step(0.85, abs(n.y));
+    float sill = horizontal * (gl_FrontFacing ? 1.0 : 0.0);
+    diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.93, 0.94, 0.92), sill * uPlan);
   }
 `;
 const ROOF_COLOR = /* glsl */ `
@@ -231,7 +243,8 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string) {
 }
 const PLAN: Record<string, [string, number]> = {
   wall: ["#161716", 1], floor: ["#f7f8f4", 1], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
-  door: ["#8b6d52", 1], frame: ["#161716", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
+  /* frames read as openings in the drawing (glass-blue), not as wall */
+  door: ["#8b6d52", 1], frame: ["#b7cdd8", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
 };
 
 interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean; spinning: boolean }
@@ -254,6 +267,9 @@ class ViewerState {
 
   attach(scene: THREE.Object3D, gl: THREE.WebGLRenderer, root: THREE.Scene, initial: Mode) {
     gl.localClippingEnabled = true;
+    /* the transmission pass re-renders the scene behind glass; half
+       resolution is plenty for panes this small on screen */
+    if ("transmissionResolutionScale" in gl) (gl as THREE.WebGLRenderer & { transmissionResolutionScale: number }).transmissionResolutionScale = 0.5;
     this.root = root;
     /* image-based light: a procedural room until (or unless) the HDRI
        copy loads — SkyEnvironment swaps in the real sky */
@@ -277,7 +293,7 @@ class ViewerState {
       const storey = m ? Number(m[1]) : 0;
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
         const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
-        const mat = new THREE.MeshStandardMaterial({
+        const common = {
           color: (RENDER[cat] ?? RENDER.misc)[0],
           roughness: rough,
           metalness: metal,
@@ -288,7 +304,17 @@ class ViewerState {
           /* architecture is planes: flat shading keeps roofs and walls
              crisp instead of smearing light across welded normals */
           flatShading: true,
-        });
+        };
+        /* glass is physical: real transmission (refraction through the
+           pane into the interior) instead of a translucent tint — the
+           same material Samara's configurator uses */
+        const mat =
+          cat === "glass"
+            ? /* flat shading stays ON: the welded pane corners carry averaged
+                 normals, and smooth normals swing the refraction into a
+                 kaleidoscope across each pane */
+              new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.5, thickness: 0.02, roughness: 0.06, metalness: 0 })
+            : new THREE.MeshStandardMaterial(common);
         finish(mat, cat);
         mat.userData.viewer = true;
         (o.material as THREE.Material).dispose?.();
@@ -300,7 +326,7 @@ class ViewerState {
 
   radius() {
     const f = this.footprint;
-    return Math.max(f.width_m, f.depth_m, f.height_m) * 1.6;
+    return Math.max(f.width_m, f.depth_m, f.height_m) * ORBIT_RADIUS;
   }
 
   tick(state: RootState, dt: number, input: Inputs) {
@@ -323,12 +349,21 @@ class ViewerState {
       this.b.set(rb);
       mat.color.copy(this.a).lerp(this.b, e);
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
-      mat.opacity = THREE.MathUtils.lerp(oa, ob, e) * THREE.MathUtils.lerp(1, above, e);
+      if (mat instanceof THREE.MeshPhysicalMaterial) {
+        /* glass: clear and refractive in 3D, a flat blue line in plan */
+        mat.transmission = THREE.MathUtils.lerp(GLASS_TRANSMISSION, 0, e);
+        mat.opacity = THREE.MathUtils.lerp(1, ob, e) * THREE.MathUtils.lerp(1, above, e);
+      } else {
+        mat.opacity = THREE.MathUtils.lerp(oa, ob, e) * THREE.MathUtils.lerp(1, above, e);
+      }
       mat.visible = mat.opacity > 0.01;
       /* the drawing is matte: metal and gloss fade with the palette */
       const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
       mat.roughness = THREE.MathUtils.lerp(rough, 1, e);
       mat.metalness = THREE.MathUtils.lerp(metal, 0, e);
+      /* the sky's blue cast leaves the drawing with the palette: a plan is
+         flat ink on paper, not a lit model */
+      mat.envMapIntensity = THREE.MathUtils.lerp(1, 0.15, e);
       const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
       if (shader) shader.uniforms.uPlan.value = e;
     }
@@ -423,7 +458,21 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   const storeys = habitable.length ? habitable : all;
   const fp = extras.footprint ?? { width_m: 12, depth_m: 10, height_m: 8 };
   const north = northDeg ?? extras.northDeg ?? 0;
-  const radius = Math.max(fp.width_m, fp.depth_m, fp.height_m) * 1.6;
+  const radius = Math.max(fp.width_m, fp.depth_m, fp.height_m) * ORBIT_RADIUS;
+  /* Samara's trick: render at a lower ratio while the pointer is down and
+     restore 200 ms after it lifts, so drags stay fluid on any GPU */
+  const [interacting, setInteracting] = useState(false);
+  const restore = useRef(0);
+  const onDown = () => {
+    window.clearTimeout(restore.current);
+    setInteracting(true);
+    setSpinning(false);
+  };
+  const onUp = () => {
+    setSpinning(true);
+    window.clearTimeout(restore.current);
+    restore.current = window.setTimeout(() => setInteracting(false), 200);
+  };
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -442,11 +491,17 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
     <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
       <div className="aspect-[4/3] w-full md:aspect-[16/9]">
         <Canvas
-          dpr={dpr}
-          camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: 0.1, far: 500 }}
-          gl={{ antialias: true, alpha: true, powerPreference: "low-power", toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 0.95 }}
-          onPointerDown={() => setSpinning(false)}
-          onPointerUp={() => setSpinning(true)}
+          dpr={interacting ? Math.min(dpr, 1.25) : dpr}
+          /* near/far hug the orbit radius: with the camera ~170 m out a
+             0.1 m near plane would starve depth precision and the panes
+             would fight their frames */
+          camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: radius * 0.3, far: radius * 3 }}
+          /* Neutral (Khronos PBR) tone mapping keeps material colour
+             faithful — a product shot, not a film look */
+          gl={{ antialias: true, alpha: true, powerPreference: "low-power", toneMapping: THREE.NeutralToneMapping, toneMappingExposure: 1.0 }}
+          onPointerDown={onDown}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
         >
           <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.4 : 0.45]} />
           {/* the sun: aligned with the HDRI's once env.json arrives */}

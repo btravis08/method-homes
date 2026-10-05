@@ -226,6 +226,31 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   a faint even tone instead of sparkling. Verified at 2 × in headless
   Chromium: 2560 × 1440 backing store, clean edges, seams fading with
   distance, no errors.
+- Borrowed from Samara's configurator (Bryce: "take what we can"):
+  (1) a LONG LENS — FOV 8° with the orbit radius at 7.2 × the model's
+  largest dimension (was 35° at 1.6 ×; distance ∝ 1/tan(fov/2) keeps
+  the framing), so the home reads as a flat product render with no
+  perspective splay, and near/far hug the radius (0.3 × / 3 ×) because
+  a 0.1 m near plane 170 m out starves depth precision and panes fight
+  their frames; (2) RESOLUTION SCALING ON INTERACTION — pixel ratio
+  drops to 1.25 while the pointer is down and restores 200 ms after
+  it lifts (their exact timing), on top of the PerformanceMonitor;
+  (3) PHYSICAL GLASS — MeshPhysicalMaterial with transmission 0.92,
+  IOR 1.5, 2 cm thickness, roughness 0.06, the transmission pass at
+  half resolution; it fades to the flat plan blue by lerping
+  transmission → 0 and opacity → the plan value; (4) NEUTRAL TONE
+  MAPPING (Khronos PBR neutral) at exposure 1 instead of ACES, for
+  faithful material colour. Not borrowed: Draco/KTX2 (we have meshopt
+  and no textures), Svelte, GSAP, lil-gui. Two fixes that fell out:
+  glass keeps FLAT shading (welded pane corners carry averaged normals,
+  and smooth normals swung the refraction into a kaleidoscope across
+  each pane); and in plan the split window frames turn glass-blue
+  while horizontal wall faces seen from their FRONT (sills, wall tops)
+  turn paper and those seen from their BACK (the hollow wall bottoms
+  the cut exposes) stay ink — gl_FrontFacing, not a height threshold,
+  which floor-to-ceiling windows defeated — so windows read as
+  openings instead of black blocks. Materials also lerp envMapIntensity → 0.15 in plan so the
+  sky's blue cast leaves the drawing.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
