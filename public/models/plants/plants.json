@@ -1,7 +1,7 @@
 {
   "jacaranda_tree": {
     "file": "jacaranda_tree.glb",
-    "bytes": 6297164,
+    "bytes": 1298780,
     "name": "jacaranda_tree",
     "authors": [],
     "license": "CC0 (Poly Haven)",
@@ -9,7 +9,7 @@
   },
   "shrub_02": {
     "file": "shrub_02.glb",
-    "bytes": 225296,
+    "bytes": 223744,
     "name": "shrub_02",
     "authors": [],
     "license": "CC0 (Poly Haven)",
@@ -17,7 +17,7 @@
   },
   "shrub_03": {
     "file": "shrub_03.glb",
-    "bytes": 228740,
+    "bytes": 215364,
     "name": "shrub_03",
     "authors": [],
     "license": "CC0 (Poly Haven)",
@@ -25,7 +25,7 @@
   },
   "shrub_04": {
     "file": "shrub_04.glb",
-    "bytes": 185512,
+    "bytes": 178760,
     "name": "shrub_04",
     "authors": [],
     "license": "CC0 (Poly Haven)",
