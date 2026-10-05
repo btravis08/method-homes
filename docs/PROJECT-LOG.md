@@ -186,6 +186,33 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the fallback. The workflow gained an `env` job that refreshes the
   folder from Poly Haven. Budget: a real 512 × 256 sky is a few hundred
   KB, fetched only inside the lazy viewer chunk.
+- First real-HDRI render on Actions (run 37253100387): 72 orbit + 24
+  plan frames at 1440 × 900 / 64 samples, Poly Haven
+  kloofendal_48d_partly_cloudy_puresky at rotation 120°, studio
+  shadow catcher, PBR sets. Six shards took 22–45 min each (≈2.5 min
+  a frame; one shard's 16 frames in 1355 s), the whole run 52 min
+  wall-clock, encode included. Output: **0.58 MB of AVIF for all 96
+  frames** (avg 6 KB — the transparent studio frames compress far
+  better than the lawn set), WebP fallback 3.9 MB, folder 5.0 MB on
+  disk. The frames read as a product shot: dark seamed roof with a
+  soft sky sheen, grey panel siding with reveals, dark window frames
+  around real glass, a hard sun shadow on nothing (the page surface).
+  This sky's sun sits behind the home from the first frames, so the
+  orbit opens on the shaded elevations — a one-number rotation change
+  in the workflow if the sunlit side should greet first.
+- What Samara actually uses (checked from a runner with the new
+  probe-url workflow, 2026-10-05): the configurator at
+  samara.com/adus/configure is a separate Svelte 4 bundle (Vite-hashed
+  index-*.js, ~400 KB+) that renders LIVE in three.js (a 2025 r16x
+  build: WebGLRenderer, MeshPhysicalMaterial with transmission,
+  AgX/ACES tone mapping available) with GSAP for motion, lil-gui left
+  in, Mapbox for the site map; a separate "3D tour" route loads a
+  Draco-compressed GLB (/assets/tour/assets/xl8.glb) with baked
+  texture JPGs. Not Unity, not an image sequence. So their smoothness
+  is the same real-time route as our PlanViewer; their look comes
+  from a detailed authored model with baked textures. The frame
+  turntable remains our photoreal layer; the real-time viewer is the
+  one to invest in for interaction.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
