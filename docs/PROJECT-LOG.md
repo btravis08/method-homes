@@ -131,12 +131,34 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the latter only bit in the final two frames. (6) The lawn's radial
   fade must be in unit-disc coordinates (scale object coords by
   1/radius) or the gradient is 1 m wide.
-- Still to do: run the workflow's render step for real against the
-  sample (runner timing), HDRI option when a host is reachable from
-  Actions (Poly Haven from the runner, not the sandbox), per-series
-  finish presets, a storey selector for multi-storey plans (render
-  one plan sequence per habitable storey), and the plan page
-  preferring the turntable when its manifest exists.
+- Realism pass (2026-10-05, Bryce set Samara's product renders as the
+  bar: bright sun, detailed shadows, HDRI reflections in glass,
+  sheen vs matte). Shipped: (1) the pipeline splits window PANES from
+  FRAMES by each face's surface-style transparency (Revit windows
+  carry an opaque frame style and a ~0.75-transparent glazing style)
+  — new `frame` category, dark anodised in both viewers; (2) `--style
+  studio` (default): a shadow-catcher ground on the transparent film,
+  so the home sits on the page with only its shadow, like Samara's
+  white product shot (lawn stays as `--style lawn`); (3) `--hdri` +
+  `--hdri-rotation` (Environment Texture world; a top Sun lamp fades
+  in with the plan cut because an HDRI's sun can't be moved to noon)
+  and `--textures` (Poly Haven-style diff/rough sets, box-projected
+  from object space since the models have no UVs, multiplied into the
+  procedural finishes); (4) the workflow render step fetches a Poly
+  Haven sky + plaster/metal/concrete sets through api.polyhaven.com
+  (each optional) and takes `frames_dir` so the sample's frames land
+  in public/models/sample/turntable. Verified here on synthetic
+  stand-ins (sandbox can't reach Poly Haven); the real-HDRI run is
+  the Actions dispatch. Honest limit: the renderer is no longer the
+  gap — Samara's detail (mullions, deck, fascia, solar, furniture,
+  trees, pool) is MODEL and SCENE DRESSING. A real Method model
+  through the pipeline is the next test; entourage needs an asset
+  library pass.
+- Still to do: per-series finish presets, a storey selector for
+  multi-storey plans (one plan sequence per habitable storey), the
+  plan page preferring the turntable when its manifest exists, and
+  the hero/landscape style (trees, ground, furniture) once there is a
+  detailed model to dress.
 
 ### 2026-10-04 — Interactive floor plans: IFC → GLB pipeline + 3D plan viewer (prototype, Bryce)
 - Bryce's idea, approved for a sample test: a 3D model of each home

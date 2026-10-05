@@ -1,9 +1,9 @@
 {
   "input": "/home/user/andrewisen/bim-whale-ifc-samples/BasicHouse/IFC/BasicHouse.ifc",
-  "output": "public/models/sample/basic-house.glb",
-  "bytes": 14217244,
+  "output": "/tmp/claude-0/-home-user-claude-test/5eb02c11-e795-5c38-8a91-2d731a7aa54e/scratchpad/render/basic-house.raw.glb",
+  "bytes": 14218432,
   "triangles": 552087,
-  "seconds": 3.1,
+  "seconds": 175.1,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -87,10 +87,16 @@
       "triangles": 12
     },
     {
+      "node": "storey0_frame",
+      "storey": 0,
+      "category": "frame",
+      "triangles": 545383
+    },
+    {
       "node": "storey0_glass",
       "storey": 0,
       "category": "glass",
-      "triangles": 545899
+      "triangles": 516
     },
     {
       "node": "storey0_wall",
@@ -105,5 +111,5 @@
       "triangles": 24
     }
   ],
-  "compressedBytes": 128868
+  "compressedBytes": 130296
 }

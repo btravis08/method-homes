@@ -645,6 +645,12 @@ Notes / defects (issue #): ______
   with the sample house's frames in public/models/sample/turntable/.
   model-pipeline.yml gained a render step (inputs render/frames/
   samples). Docs: PROJECT-LOG decision + lessons, AGENTS 3D rules.
+- 2026-10-05 — Realism pass (Bryce: Samara's renders are the bar).
+  Pipeline splits window panes from frames (new `frame` category);
+  renderer gains `--style studio` (shadow catcher on the transparent
+  film), `--hdri`, `--textures` (box-projected PBR); workflow fetches
+  a Poly Haven sky + texture sets and takes `frames_dir`. First
+  real-HDRI run dispatched against the sample on Actions.
 - 2026-10-04 — 3D plan viewer prototype (Bryce: interactive floor
   plans — the home spins on its vertical axis, "Floor plans" flies to
   a north-up top view and cuts the model into a drawing). IFC → GLB

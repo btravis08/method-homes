@@ -98,6 +98,7 @@ PALETTE = {
     "floor": (0.80, 0.78, 0.74, 1.0),
     "roof": (0.36, 0.36, 0.35, 1.0),
     "glass": (0.62, 0.74, 0.80, 0.55),
+    "frame": (0.16, 0.15, 0.14, 1.0),   # window/curtain-wall frames (split from the panes by surface-style transparency)
     "door": (0.55, 0.43, 0.32, 1.0),
     "stair": (0.70, 0.66, 0.60, 1.0),
     "rail": (0.30, 0.30, 0.29, 1.0),
@@ -248,7 +249,10 @@ def main() -> int:
     settings = ifcopenshell.geom.settings()
     settings.set("use-world-coords", True)
     settings.set("weld-vertices", True)
-    settings.set("apply-default-materials", False)
+    # default materials ON so every face carries a surface style: the pane /
+    # frame split below reads each face's transparency (Revit windows carry
+    # an opaque frame style and a ~0.75-transparent glazing style)
+    settings.set("apply-default-materials", True)
     # Body only: Revit walls also carry a 2D "Axis" curve representation,
     # and converting the whole product fails on it (found on BasicHouse —
     # every wall was lost until the contexts were restricted)
@@ -312,16 +316,33 @@ def main() -> int:
     # pass 2: geometry for the kept set, on every core
     import multiprocessing
 
-    shapes: dict[str, tuple] = {}
+    shapes: dict[str, tuple] = {}  # guid → (verts, faces, per-face transparency | None)
     elements = [w[0] for w in wanted.values()]
     cache = Path(args.cache) if args.cache else None
     if cache and cache.exists():
         with np.load(cache) as z:
             guids = list(z["guids"])
             for guid in guids:
-                shapes[str(guid)] = (z[f"v_{guid}"], z[f"f_{guid}"])
+                # v2 cache entries carry per-face transparency; older
+                # entries are re-extracted so the pane/frame split has it
+                if f"t_{guid}" in z.files:
+                    t = z[f"t_{guid}"]
+                    shapes[str(guid)] = (z[f"v_{guid}"], z[f"f_{guid}"], None if t.size == 0 else t)
         print(f"  geometry from cache {cache} ({len(shapes)} shapes)")
         elements = [el for el in elements if el.GlobalId not in shapes]
+
+    def face_transparency(geometry):
+        """per-face transparency from the surface styles, or None"""
+        try:
+            mats = geometry.materials
+            ids = np.array(geometry.material_ids, dtype=np.int64)
+            if len(mats) == 0 or ids.size == 0:
+                return None
+            tr = np.array([float(getattr(m, "transparency", 0.0) or 0.0) for m in mats], dtype=np.float32)
+            ids = np.clip(ids, 0, len(tr) - 1)
+            return tr[ids]
+        except Exception:
+            return None
     # NOTE: the multi-threaded iterator with include= ran far slower than
     # one-by-one create_shape on the Revit BasicHouse sample (>20 min vs
     # 3.5 min), so it is opt-in (--iterator) until that is understood.
@@ -332,7 +353,7 @@ def main() -> int:
         if it.initialize():
             while True:
                 shape = it.get()
-                shapes[shape.guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3))
+                shapes[shape.guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), face_transparency(shape.geometry))
                 if not it.next():
                     break
     except Exception as exc:  # fall back to one-by-one
@@ -343,15 +364,16 @@ def main() -> int:
             continue
         try:
             shape = ifcopenshell.geom.create_shape(settings, el)
-            shapes[guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3))
+            shapes[guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), face_transparency(shape.geometry))
         except Exception:
             dropped[f"{el.is_a()} (geometry failed)"] += 1
 
     if cache and elements:
         arrays = {"guids": np.array(list(shapes.keys()))}
-        for guid, (v, f) in shapes.items():
+        for guid, (v, f, t) in shapes.items():
             arrays[f"v_{guid}"] = v
             arrays[f"f_{guid}"] = f
+            arrays[f"t_{guid}"] = t if t is not None else np.zeros(0, dtype=np.float32)
         cache.parent.mkdir(parents=True, exist_ok=True)
         np.savez(cache, **arrays)
 
@@ -359,7 +381,7 @@ def main() -> int:
         t = el.is_a()
         if guid not in shapes:
             continue
-        verts, faces = shapes[guid]
+        verts, faces, transp = shapes[guid]
         if len(faces) == 0:
             dropped[f"{t} (empty)"] += 1
             continue
@@ -378,8 +400,21 @@ def main() -> int:
             continue
         st = storey_of(el)
         si = storey_index.get(st.GlobalId, 0) if st is not None else 0
-        mesh = trimesh.Trimesh(vertices=verts, faces=faces, process=False)
-        groups[(si, cat)].append(mesh)
+        # pane / frame split: faces whose surface style is transparent are
+        # glass; the opaque faces of a window are its FRAME (dark), and the
+        # opaque faces of a glazed door stay door. Without styles the whole
+        # element keeps its category as before.
+        parts: list[tuple[str, np.ndarray]] = [(cat, faces)]
+        if cat in ("glass", "door") and transp is not None and len(transp) == len(faces):
+            clear = transp > 0.3
+            if clear.any() and (~clear).any():
+                parts = [("glass", faces[clear]), ("frame" if cat == "glass" else "door", faces[~clear])]
+            elif cat == "glass" and not clear.any():
+                parts = [("frame", faces)]  # a window with no glazing style at all: treat as frame
+        for pcat, pfaces in parts:
+            mesh = trimesh.Trimesh(vertices=verts, faces=pfaces, process=False)
+            mesh.remove_unreferenced_vertices()
+            groups[(si, pcat)].append(mesh)
         kept[t] += 1
         tri_total += len(faces)
 

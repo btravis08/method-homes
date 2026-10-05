@@ -45,6 +45,37 @@ from mathutils import Vector
 
 CUT_ABOVE_FLOOR = 1.2
 CAT_RE = __import__("re").compile(r"^storey(\d+)_(\w+)")
+TEXTURES: Path | None = None  # --textures: folder of PBR sets (<set>/diff.jpg, rough.jpg), box-projected
+
+
+def pbr(nt, set_name: str, scale_m: float):
+    """Image-texture sockets for a Poly Haven-style PBR set, box-projected
+    from object space (the models have no UVs). Returns {} when the set is
+    missing so every material keeps its procedural fallback."""
+    if TEXTURES is None:
+        return {}
+    folder = TEXTURES / set_name
+    out = {}
+    coord = None
+    for key, pattern, colorspace in (("diff", "diff", "sRGB"), ("rough", "rough", "Non-Color")):
+        files = sorted(folder.glob(f"*{pattern}*")) if folder.exists() else []
+        if not files:
+            continue
+        if coord is None:
+            coord = nt.nodes.new("ShaderNodeTexCoord")
+            mapping = nt.nodes.new("ShaderNodeMapping")
+            mapping.inputs["Scale"].default_value = (1 / scale_m, 1 / scale_m, 1 / scale_m)
+            nt.links.new(coord.outputs["Object"], mapping.inputs["Vector"])
+        tex = nt.nodes.new("ShaderNodeTexImage")
+        tex.image = bpy.data.images.load(str(files[0]))
+        tex.image.colorspace_settings.name = colorspace
+        tex.projection = "BOX"
+        tex.projection_blend = 0.25
+        nt.links.new(mapping.outputs[0], tex.inputs["Vector"])
+        out[key] = tex.outputs["Color"]
+    if out:
+        log(f"textures: {set_name} ← {folder} ({', '.join(out)})")
+    return out
 
 
 def log(*a):
@@ -149,9 +180,33 @@ def mat_siding(fade_obj):
     brick.inputs["Color2"].default_value = (0.1, 0.105, 0.11, 1)
     brick.inputs["Mortar"].default_value = (0.06, 0.062, 0.064, 1)
     nt.links.new(comb.outputs["Result"], brick.inputs["Vector"])
-    color = plan_mix(nt, brick.outputs["Color"], (0.008, 0.008, 0.008), fade)
+    render_color = brick.outputs["Color"]
+    tex = pbr(nt, "siding", 2.4)
+    if "diff" in tex:
+        # keep our grey, take the texture's surface variation: multiply by
+        # the texture normalised around mid-grey
+        norm = nt.nodes.new("ShaderNodeMixRGB")
+        norm.blend_type = "MULTIPLY"
+        norm.inputs["Fac"].default_value = 1.0
+        two = nt.nodes.new("ShaderNodeRGB")
+        two.outputs[0].default_value = (2.2, 2.2, 2.2, 1)
+        nt.links.new(tex["diff"], norm.inputs[1])
+        nt.links.new(two.outputs[0], norm.inputs[2])
+        mul = nt.nodes.new("ShaderNodeMixRGB")
+        mul.blend_type = "MULTIPLY"
+        mul.inputs["Fac"].default_value = 1.0
+        nt.links.new(brick.outputs["Color"], mul.inputs[1])
+        nt.links.new(norm.outputs[0], mul.inputs[2])
+        render_color = mul.outputs[0]
+    color = plan_mix(nt, render_color, (0.008, 0.008, 0.008), fade)
     nt.links.new(color, bsdf.inputs["Base Color"])
     bsdf.inputs["Roughness"].default_value = 0.6
+    if "rough" in tex:
+        rr = nt.nodes.new("ShaderNodeMapRange")
+        rr.inputs["To Min"].default_value = 0.45
+        rr.inputs["To Max"].default_value = 0.75
+        nt.links.new(tex["rough"], rr.inputs["Value"])
+        nt.links.new(rr.outputs[0], bsdf.inputs["Roughness"])
     # reveal depth as bump
     bump = nt.nodes.new("ShaderNodeBump")
     bump.inputs["Strength"].default_value = 0.35
@@ -205,6 +260,14 @@ def mat_roof(fade_obj):
     # spread over the whole slope and the roof read silver
     bsdf.inputs["Roughness"].default_value = 0.25
     bsdf.inputs["Specular IOR Level"].default_value = 0.3
+    tex = pbr(nt, "roof", 1.6)
+    if "rough" in tex:
+        # a real coil-coated sheet isn't uniform: the map breaks the glint up
+        rr = nt.nodes.new("ShaderNodeMapRange")
+        rr.inputs["To Min"].default_value = 0.18
+        rr.inputs["To Max"].default_value = 0.4
+        nt.links.new(tex["rough"], rr.inputs["Value"])
+        nt.links.new(rr.outputs[0], bsdf.inputs["Roughness"])
     return m
 
 
@@ -232,7 +295,7 @@ def mat_glass(fade_obj):
 def mat_flat(name, rgb_linear, rough=0.6, metallic=0.0, plan_rgb=None, fade_obj=None):
     m = bpy.data.materials.new(name)
     nt, bsdf, out = node_tree(m)
-    if plan_rgb and fade_obj:
+    if plan_rgb:  # (fade_obj is legacy — the fade is the global Value-node set)
         fade = fade_node(nt, fade_obj)
         base = nt.nodes.new("ShaderNodeRGB")
         base.outputs[0].default_value = (*rgb_linear, 1)
@@ -241,6 +304,37 @@ def mat_flat(name, rgb_linear, rough=0.6, metallic=0.0, plan_rgb=None, fade_obj=
         bsdf.inputs["Base Color"].default_value = (*rgb_linear, 1)
     bsdf.inputs["Roughness"].default_value = rough
     bsdf.inputs["Metallic"].default_value = metallic
+    return m
+
+
+def mat_concrete(fade_obj):
+    """slab edge / floors: matte concrete, textured when a set is given"""
+    m = mat_flat("floor", (0.42, 0.40, 0.37), 0.9, 0.0, (0.80, 0.80, 0.77), fade_obj)
+    nt = m.node_tree
+    tex = pbr(nt, "concrete", 3.0)
+    if "diff" in tex:
+        bsdf = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeBsdfPrincipled")
+        mix = next(n for n in nt.nodes if n.bl_idname == "ShaderNodeMixRGB")  # the plan_mix node
+        mul = nt.nodes.new("ShaderNodeMixRGB")
+        mul.blend_type = "MULTIPLY"
+        mul.inputs["Fac"].default_value = 1.0
+        base = mix.inputs[1].links[0].from_socket
+        nt.links.new(base, mul.inputs[1])
+        two = nt.nodes.new("ShaderNodeRGB")
+        two.outputs[0].default_value = (2.0, 2.0, 2.0, 1)
+        n2 = nt.nodes.new("ShaderNodeMixRGB")
+        n2.blend_type = "MULTIPLY"
+        n2.inputs["Fac"].default_value = 1.0
+        nt.links.new(tex["diff"], n2.inputs[1])
+        nt.links.new(two.outputs[0], n2.inputs[2])
+        nt.links.new(n2.outputs[0], mul.inputs[2])
+        nt.links.new(mul.outputs[0], mix.inputs[1])
+        if "rough" in tex:
+            rr = nt.nodes.new("ShaderNodeMapRange")
+            rr.inputs["To Min"].default_value = 0.7
+            rr.inputs["To Max"].default_value = 0.95
+            nt.links.new(tex["rough"], rr.inputs["Value"])
+            nt.links.new(rr.outputs[0], bsdf.inputs["Roughness"])
     return m
 
 
@@ -303,7 +397,9 @@ def mat_lawn(radius: float):
 
 
 # ---------------------------------------------------------------- scene build
-def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, exposure: float = -0.8):
+def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, exposure: float = -0.8, style: str = "studio", hdri: str | None = None, hdri_rotation: float = 0.0, textures: str | None = None):
+    global TEXTURES
+    TEXTURES = Path(textures) if textures else None
     reset()
     scene = bpy.context.scene
     scene.render.engine = "CYCLES"
@@ -349,8 +445,11 @@ def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, e
         "roof": mat_roof(fade_obj),
         "glass": mat_glass(fade_obj),
         "door": mat_flat("door", (0.03, 0.025, 0.02), 0.45, 0.2, (0.3, 0.2, 0.13), fade_obj),
+        # window frames (the pipeline splits them from the panes): dark
+        # bronze anodised aluminium — a satin metal, not matte paint
+        "frame": mat_flat("frame", (0.022, 0.02, 0.018), 0.38, 0.6, (0.008, 0.008, 0.008), fade_obj),
         "rail": mat_flat("rail", (0.02, 0.02, 0.02), 0.4, 0.7, (0.02, 0.02, 0.02), fade_obj),
-        "floor": mat_flat("floor", (0.42, 0.40, 0.37), 0.9, 0.0, (0.80, 0.80, 0.77), fade_obj),
+        "floor": mat_concrete(fade_obj),
         "stair": mat_flat("stair", (0.3, 0.28, 0.25), 0.8, 0.0, (0.5, 0.48, 0.45), fade_obj),
         "structure": mat_flat("structure", (0.18, 0.18, 0.17), 0.7, 0.0, (0.008, 0.008, 0.008), fade_obj),
         "misc": mat_flat("misc", (0.4, 0.39, 0.37), 0.8, 0.0, (0.5, 0.5, 0.48), fade_obj),
@@ -396,16 +495,29 @@ def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, e
     box.data.materials.append(mat_flat("interior", (0.005, 0.005, 0.006), 0.9))
     box.visible_shadow = False
 
-    # lawn disc. (Hair-particle grass was tried: 9 cm blades are sub-pixel
-    # from the camera's 40 m, so it cost render time and showed nothing —
-    # a two-scale shader does the work at this distance.)
-    radius = max(size.x, size.y) * 2.0  # the fade starts at 0.35 r, past the house ends; the rim leaves the frame
-    bpy.ops.mesh.primitive_circle_add(vertices=96, radius=radius, fill_type="NGON", location=(0, 0, -0.01))
-    lawn = bpy.context.active_object
-    lawn.name = "lawn"
-    lawn.data.materials.append(mat_lawn(radius))
+    # ground
+    radius = max(size.x, size.y) * 2.0
+    if style == "lawn":
+        # lawn disc. (Hair-particle grass was tried: 9 cm blades are
+        # sub-pixel from the camera's 40 m, so it cost render time and
+        # showed nothing — a two-scale shader does the work at this distance.)
+        bpy.ops.mesh.primitive_circle_add(vertices=96, radius=radius, fill_type="NGON", location=(0, 0, -0.01))
+        lawn = bpy.context.active_object
+        lawn.name = "lawn"
+        lawn.data.materials.append(mat_lawn(radius))
+    else:
+        # studio: an invisible shadow catcher — the frame carries only the
+        # home and its shadow (alpha), so it sits on the page surface the
+        # way a product shot sits on white. Reflections of the ground in the
+        # glass still happen because the catcher is a (neutral) surface.
+        bpy.ops.mesh.primitive_plane_add(size=radius * 2, location=(0, 0, -0.005))
+        ground = bpy.context.active_object
+        ground.name = "shadow_catcher"
+        ground.is_shadow_catcher = True
+        ground.data.materials.append(mat_flat("catcher", (0.45, 0.45, 0.44), 0.9))
 
-    # sky + sun (Nishita)
+    # world: an HDRI when given (accurate sky reflections, soft sun), else
+    # Nishita's physical atmosphere
     world = bpy.data.worlds.new("sky")
     scene.world = world
     world.use_nodes = True
@@ -414,19 +526,41 @@ def build(glb: Path, north_deg: float, quick: bool, sky_strength: float = 1.0, e
         wn.nodes.remove(n)
     wout = wn.nodes.new("ShaderNodeOutputWorld")
     bg = wn.nodes.new("ShaderNodeBackground")
-    sky = wn.nodes.new("ShaderNodeTexSky")
-    sky.sky_type = "NISHITA"
-    sky.sun_elevation = math.radians(28)
-    sky.sun_rotation = math.radians(215)
-    sky.sun_intensity = 0.55  # hazier PNW sun: keeps sunlit faces from bleaching under AgX
-    sky.sun_size = math.radians(0.8)
-    sky.altitude = 60
-    sky.air_density = 1.0
-    sky.dust_density = 1.0
-    sky.ozone_density = 1.0
-    bg.inputs["Strength"].default_value = sky_strength
-    wn.links.new(sky.outputs[0], bg.inputs["Color"])
+    sky = None
+    if hdri:
+        env = wn.nodes.new("ShaderNodeTexEnvironment")
+        env.image = bpy.data.images.load(str(hdri))
+        coord = wn.nodes.new("ShaderNodeTexCoord")
+        mapping = wn.nodes.new("ShaderNodeMapping")
+        mapping.inputs["Rotation"].default_value = (0, 0, math.radians(hdri_rotation))
+        wn.links.new(coord.outputs["Generated"], mapping.inputs["Vector"])
+        wn.links.new(mapping.outputs[0], env.inputs["Vector"])
+        wn.links.new(env.outputs[0], bg.inputs["Color"])
+        bg.inputs["Strength"].default_value = sky_strength
+        log(f"HDRI {Path(hdri).name} rotation {hdri_rotation}°")
+    else:
+        sky = wn.nodes.new("ShaderNodeTexSky")
+        sky.sky_type = "NISHITA"
+        sky.sun_elevation = math.radians(28)
+        sky.sun_rotation = math.radians(215)
+        sky.sun_intensity = 0.55  # hazier PNW sun: keeps sunlit faces from bleaching under AgX
+        sky.sun_size = math.radians(0.8)
+        sky.altitude = 60
+        sky.air_density = 1.0
+        sky.dust_density = 1.0
+        sky.ozone_density = 1.0
+        bg.inputs["Strength"].default_value = sky_strength
+        wn.links.new(sky.outputs[0], bg.inputs["Color"])
     wn.links.new(bg.outputs[0], wout.inputs["Surface"])
+
+    # a top light for the plan cut (an HDRI's sun can't be moved to noon):
+    # off during the orbit, faded in with the cut so the opened floors read
+    noon_data = bpy.data.lights.new("noon", "SUN")
+    noon_data.energy = 0.0
+    noon_data.angle = math.radians(3)
+    noon = bpy.data.objects.new("noon", noon_data)
+    scene.collection.objects.link(noon)
+    noon.rotation_euler = (math.radians(4), 0, 0)
 
     # camera
     cam_data = bpy.data.cameras.new("cam")
@@ -477,7 +611,11 @@ def main():
     ap.add_argument("--north", type=float, default=0.0, help="degrees to turn the model so plan view is north-up")
     ap.add_argument("--cut", type=float, default=CUT_ABOVE_FLOOR)
     ap.add_argument("--storey-z", type=float, default=0.0, help="elevation of the storey to cut (m above the lowest floor)")
-    ap.add_argument("--sky", type=float, default=1.0, help="Nishita sky strength")
+    ap.add_argument("--style", choices=["studio", "lawn"], default="studio", help="studio = shadow-catcher ground on the transparent film (product shot); lawn = grass disc")
+    ap.add_argument("--hdri", help="equirectangular .hdr/.exr for the world (else Nishita sky)")
+    ap.add_argument("--hdri-rotation", type=float, default=0.0, help="degrees to turn the HDRI about Z")
+    ap.add_argument("--textures", help="folder of PBR sets: siding/, roof/, concrete/ (Poly Haven-style diff/rough files)")
+    ap.add_argument("--sky", type=float, default=1.0, help="world strength (Nishita sky or HDRI)")
     ap.add_argument("--exposure", type=float, default=-0.8, help="view-transform exposure (stops)")
     ap.add_argument("--quick", action="store_true", help="low samples — for checks")
     ap.add_argument("--only", help="render a single frame id (orbit-00 / plan-23) for checks")
@@ -486,7 +624,8 @@ def main():
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    scene, cam, house, fade_obj, size, storeys = build(Path(args.glb), args.north, args.quick, args.sky, args.exposure)
+    scene, cam, house, fade_obj, size, storeys = build(Path(args.glb), args.north, args.quick, args.sky, args.exposure, args.style, args.hdri, args.hdri_rotation, args.textures)
+    noon = bpy.data.objects.get("noon")
     scene.render.resolution_x = args.width
     scene.render.resolution_y = args.height
     scene.render.resolution_percentage = 100
@@ -510,6 +649,8 @@ def main():
         if args.only and args.only != fid:
             continue
         set_fade(0.0)
+        if noon is not None:
+            noon.data.energy = 0.0
         house.rotation_euler = (0, 0, 0)
         cam.data.type = "PERSP"
         cam.data.lens = 40
@@ -564,6 +705,8 @@ def main():
             o.visible_transmission = cut_progress <= 0
         if sky is not None:
             sky.sun_elevation = math.radians(28 + (86 - 28) * cut_progress)
+        if noon is not None:
+            noon.data.energy = 2.5 * cut_progress  # HDRI worlds: the top light stands in for a noon sun
         house.rotation_euler = (0, 0, north * e)
         set_fade(cut_progress)
         render(scene, out / f"{fid}.png")

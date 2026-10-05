@@ -60,12 +60,12 @@ const ease = (t: number) => 1 - Math.pow(1 - t, 3);
    siding and roof get procedural relief in the shader (see FINISH). */
 const RENDER: Record<string, [string, number]> = {
   wall: ["#7d8083", 1], floor: ["#b9b5ad", 1], roof: ["#141516", 1], glass: ["#8fb0c2", 0.45],
-  door: ["#2a2622", 1], stair: ["#8e8a84", 1], rail: ["#2a2a28", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
+  door: ["#2a2622", 1], frame: ["#1d1c1a", 1], stair: ["#8e8a84", 1], rail: ["#2a2a28", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
 };
 /* PBR per category: [roughness, metalness] */
 const SURFACE: Record<string, [number, number]> = {
   wall: [0.82, 0], floor: [0.95, 0], roof: [0.42, 0.55], glass: [0.12, 0.1],
-  door: [0.5, 0.3], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], misc: [0.9, 0],
+  door: [0.5, 0.3], frame: [0.4, 0.5], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], misc: [0.9, 0],
 };
 
 /*
@@ -151,7 +151,7 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string) {
 }
 const PLAN: Record<string, [string, number]> = {
   wall: ["#161716", 1], floor: ["#f7f8f4", 1], roof: ["#f7f8f4", 0], glass: ["#9dbccb", 0.9],
-  door: ["#8b6d52", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
+  door: ["#8b6d52", 1], frame: ["#161716", 1], stair: ["#b3a897", 1], rail: ["#4d4d4a", 1], structure: ["#161716", 1], misc: ["#b4b4b1", 1],
 };
 
 interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean; spinning: boolean }
