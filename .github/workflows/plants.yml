@@ -1,0 +1,129 @@
+name: plants
+
+# Real plant models for the real-time plan viewer, from Poly Haven (CC0).
+# The sandbox cannot reach polyhaven.com; the runner can.
+#
+#   ids empty → list Poly Haven's nature models (id, name, tags, polycount)
+#               in the job log, nothing committed
+#   ids set   → for each id: download the 1k glTF with its textures, run
+#               gltf-transform (WebP textures ≤ 1024 px, meshopt geometry,
+#               light simplify), and commit public/models/plants/<id>.glb
+#               plus public/models/plants/plants.json (sizes, credits)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: "Comma list of Poly Haven model ids to fetch (empty = list the nature catalogue)"
+        required: false
+      resolution:
+        description: "Source texture resolution to download"
+        required: false
+        default: "1k"
+      texture_size:
+        description: "Max texture edge after compression (px)"
+        required: false
+        default: "1024"
+
+permissions:
+  contents: write
+
+jobs:
+  plants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: List the nature catalogue
+        if: ${{ github.event.inputs.ids == '' }}
+        run: |
+          curl -sS "https://api.polyhaven.com/assets?t=models" | python3 -c '
+          import json, sys
+          d = json.load(sys.stdin)
+          rows = []
+          for k, v in d.items():
+              cats = v.get("categories", [])
+              tags = v.get("tags", [])
+              text = " ".join(cats + tags).lower()
+              if any(w in text for w in ("nature", "plant", "tree", "shrub", "bush", "grass", "foliage", "fern", "flower", "hedge", "succulent")):
+                  rows.append((k, v.get("name", ""), v.get("polycount", 0), ",".join(cats), ",".join(tags[:8])))
+          rows.sort(key=lambda r: r[0])
+          print(f"{len(rows)} plant-like models")
+          for r in rows:
+              print(f"{r[0]:32s} | {r[1]:28s} | polys {r[2]:>8} | {r[3]} | {r[4]}")
+          '
+
+      - name: Fetch and compress
+        if: ${{ github.event.inputs.ids != '' }}
+        run: |
+          set -euo pipefail
+          RES="${{ github.event.inputs.resolution }}"
+          SIZE="${{ github.event.inputs.texture_size }}"
+          mkdir -p public/models/plants /tmp/plants
+          IFS=',' read -ra IDS <<< "${{ github.event.inputs.ids }}"
+          for raw in "${IDS[@]}"; do
+            id="$(echo "$raw" | xargs)"
+            [ -n "$id" ] || continue
+            echo "::group::$id"
+            dir="/tmp/plants/$id"; mkdir -p "$dir"
+            curl -sS "https://api.polyhaven.com/files/$id" > "$dir/files.json"
+            python3 - "$dir" "$RES" <<'PY'
+          import json, os, sys, urllib.request
+          d, res = sys.argv[1], sys.argv[2]
+          f = json.load(open(os.path.join(d, "files.json")))
+          g = f.get("gltf", {})
+          pick = g.get(res) or g.get("1k") or g.get("2k") or next(iter(g.values()))
+          entry = pick["gltf"]
+          urllib.request.urlretrieve(entry["url"], os.path.join(d, "model.gltf"))
+          for rel, inc in (entry.get("include") or {}).items():
+              out = os.path.join(d, rel)
+              os.makedirs(os.path.dirname(out), exist_ok=True)
+              urllib.request.urlretrieve(inc["url"], out)
+          print("downloaded", entry["url"].split("/")[-1], "+", len(entry.get("include") or {}), "files")
+          PY
+            npx -y @gltf-transform/cli@4 optimize "$dir/model.gltf" "public/models/plants/$id.glb" \
+              --compress meshopt --texture-compress webp --texture-size "$SIZE" --simplify-error 0.002 --palette false --join false --flatten false
+            ls -la "public/models/plants/$id.glb"
+            npx -y @gltf-transform/cli@4 inspect "public/models/plants/$id.glb" --format md | head -40 || true
+            echo "::endgroup::"
+          done
+          python3 - <<'PY'
+          import json, os, urllib.request
+          out = {}
+          for f in sorted(os.listdir("public/models/plants")):
+              if not f.endswith(".glb"):
+                  continue
+              pid = f[:-4]
+              try:
+                  info = json.load(urllib.request.urlopen(f"https://api.polyhaven.com/info/{pid}"))
+              except Exception:
+                  info = {}
+              out[pid] = {
+                  "file": f,
+                  "bytes": os.path.getsize(os.path.join("public/models/plants", f)),
+                  "name": info.get("name", pid),
+                  "authors": list((info.get("authors") or {}).keys()),
+                  "license": "CC0 (Poly Haven)",
+                  "source": f"https://polyhaven.com/a/{pid}",
+              }
+          json.dump(out, open("public/models/plants/plants.json", "w"), indent=2)
+          print(json.dumps(out, indent=2))
+          PY
+
+      - name: Commit
+        if: ${{ github.event.inputs.ids != '' }}
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/models/plants
+          git diff --cached --quiet && { echo "nothing changed"; exit 0; }
+          git commit -q -m "models: Poly Haven plants for the real-time viewer (${{ github.event.inputs.ids }})"
+          git pull --rebase -q origin main
+          git push -q origin HEAD:main
