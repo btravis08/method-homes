@@ -51,7 +51,7 @@ function rng(seed: number) {
 }
 
 /* 2D value noise + fBm, seeded through a permutation table */
-function noise2(seed: number) {
+export function noise2(seed: number) {
   const r = rng(seed);
   const perm = new Uint8Array(512);
   const p = Array.from({ length: 256 }, (_, i) => i);
@@ -143,7 +143,7 @@ function detailTexture(seed: number): THREE.CanvasTexture {
   return tex;
 }
 
-export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null, seed = 7): LawnHandle {
+export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null, height: (x: number, z: number) => number = () => 0, seed = 7): LawnHandle {
   const hw = fp.width_m / 2;
   const hd = fp.depth_m / 2;
   const trees = plan.filter((p) => p.kind === "tree");
@@ -269,8 +269,15 @@ export function buildLawn(fp: Footprint, plan: Plant[], walls: THREE.Box3 | null
   mat.customProgramCacheKey = () => "lawn";
   /* a ground plane drawn first among the blended layers; everything
      standing on it is opaque or alpha-tested and depth-tests over it */
-  const geo = new THREE.PlaneGeometry(2 * ex, 2 * ez);
+  /* subdivided (~0.4 m) and displaced by the shared terrain (terrain.ts):
+     level round the home, soft swells beyond; normals recomputed so the
+     low sun picks the relief out */
+  const geo = new THREE.PlaneGeometry(2 * ex, 2 * ez, Math.ceil((2 * ex) / 0.4), Math.ceil((2 * ez) / 0.4));
   geo.rotateX(-Math.PI / 2);
+  const gp = geo.getAttribute("position");
+  for (let i = 0; i < gp.count; i++) gp.setY(i, height(gp.getX(i), gp.getZ(i)));
+  gp.needsUpdate = true;
+  geo.computeVertexNormals();
   const mesh = new THREE.Mesh(geo, mat);
   mesh.name = "lawn";
   mesh.position.y = 0.002;

@@ -256,7 +256,8 @@ export async function loadPlants(base: string, plan: Plant[], signal?: AbortSign
       list.forEach((p, i) => {
         q.setFromAxisAngle(up, p.yaw);
         s.setScalar(p.size);
-        t.set(p.x, 0, p.z);
+        /* sunk 4 cm so the base never shows a gap on a slope */
+        t.set(p.x, (p.y ?? 0) - 0.04, p.z);
         im.setMatrixAt(i, m.compose(t, q, s));
       });
       im.instanceMatrix.needsUpdate = true;

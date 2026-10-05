@@ -524,6 +524,20 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
     colour while fading (lerping to the plan palette flashed them
     white); the floor is fully transparent by the first sixth of the
     flight (measured: colour constant, opacity 1 → 0 early).
+- Subtle topography (Bryce, 2026-10-05: "a little subtle topography …
+  realistically terrain is uneven or curves slightly into hills").
+  src/components/model/terrain.ts: one height function shared by the
+  lawn (its plane is subdivided at ~0.4 m and displaced, normals
+  recomputed so the low sun shades the swells) and the planting (each
+  plan entry gets y = h(x, z); trees sit 4 cm into the ground, clumps
+  are centred on it). Level pad within 0.8 m of the walls, easing to
+  full relief by 3 m — a 6 m ease (first pass) put all the relief
+  outside the lawn, which only reaches ~3.4 m out. Relief: a ~9 m roll
+  of ±0.42 m and a ~3 m undulation of ±0.12 m, biased +0.12 m (the
+  ground tends to rise away from the home), plus a 0.22 m mound under
+  each tree. Measured −0.06 … +0.49 m on the sample. From the default
+  view it reads as light across the lawn; at a low angle the lawn edge
+  rolls and the trees stand on mounds.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

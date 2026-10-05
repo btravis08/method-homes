@@ -174,6 +174,8 @@ export interface Plant {
   rz: number;
   yaw: number;
   species: number;
+  /* ground height where it grows (terrain.ts), filled in by the viewer */
+  y?: number;
 }
 
 /* an exterior door, found in the model (doors.ts): centre on the wall
@@ -323,7 +325,7 @@ export function buildClumpGeometry(plan: Plant[], skin: Skin, seed = 7): THREE.B
     if (p.kind !== "shrub") continue;
     const h = (p.size / 2) * (skin.rise ?? 1);
     const cards = Math.round(THREE.MathUtils.clamp((skin.cards ?? 80) * ((p.rx * p.rz) / 0.49), 24, 220));
-    addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: skin.card ?? 0.7 }, rand, pos, nrm, col, uv, idx, skin);
+    addClump({ c: new THREE.Vector3(p.x, (p.y ?? 0) + h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: skin.card ?? 0.7 }, rand, pos, nrm, col, uv, idx, skin);
   }
   const geo = new THREE.BufferGeometry();
   geo.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
@@ -349,7 +351,7 @@ export function buildFoliage(plan: Plant[], seed = 7): FoliageHandle {
     if (p.kind === "shrub") {
       const h = p.size / 2;
       const cards = Math.round(THREE.MathUtils.clamp(100 * ((p.rx * p.rz) / 0.49), 30, 220));
-      addClump({ c: new THREE.Vector3(p.x, h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: 0.5 }, rand, pos, nrm, col, uv, idx);
+      addClump({ c: new THREE.Vector3(p.x, (p.y ?? 0) + h, p.z), r: new THREE.Vector3(p.rx, h, p.rz), cards, card: 0.5 }, rand, pos, nrm, col, uv, idx);
       continue;
     }
     /* a tree: a trunk and a canopy of several clumps */
@@ -357,9 +359,9 @@ export function buildFoliage(plan: Plant[], seed = 7): FoliageHandle {
     const tz = p.z;
     const height = p.size;
     const trunk = new THREE.CylinderGeometry(0.15, 0.24, height * 0.5, 8, 1);
-    trunk.translate(tx, height * 0.25, tz);
+    trunk.translate(tx, (p.y ?? 0) + height * 0.25, tz);
     trunks.push(trunk);
-    const crown = new THREE.Vector3(tx, height * 0.62, tz);
+    const crown = new THREE.Vector3(tx, (p.y ?? 0) + height * 0.62, tz);
     for (let k = 0; k < 7; k++) {
       const o = new THREE.Vector3((rand() - 0.5) * 1.8, (rand() - 0.35) * 1.5, (rand() - 0.5) * 1.8);
       const r = 1.15 + rand() * 0.55;

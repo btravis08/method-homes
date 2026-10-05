@@ -631,6 +631,8 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer: subtle ground relief (terrain.ts) — level
+  round the home, soft swells and tree mounds beyond; plants sit on it.
 - 2026-10-05 — Plan viewer: new sky (Poly Haven meadow_2: sun, blue
   sky, green tree line) so the windows reflect sky over trees (steered
   reflections, darker glass); per-surface reflection strengths now

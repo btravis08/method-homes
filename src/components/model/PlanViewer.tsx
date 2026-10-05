@@ -8,6 +8,7 @@ import { buildFoliage, plantingPlan, type Door, type FoliageHandle, type Plant }
 import { findDoors, wallBounds } from "./doors";
 import { loadPlants, type PlantsHandle } from "./plants";
 import { buildLawn, type LawnHandle } from "./lawn";
+import { makeTerrain } from "./terrain";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -445,8 +446,12 @@ class ViewerState {
     /* doors first: the plan and the lawn both keep their approaches clear */
     this.doors = findDoors(scene);
     this.plan = plantingPlan(this.footprint, 7, this.doors);
+    /* the ground's gentle relief: every plant stands at its height */
+    const walls = wallBounds(scene);
+    const terrain = makeTerrain(this.footprint, walls, this.plan);
+    for (const p of this.plan) p.y = terrain(p.x, p.z);
     if (this.group && !this.lawn) {
-      this.lawn = buildLawn(this.footprint, this.plan, wallBounds(scene));
+      this.lawn = buildLawn(this.footprint, this.plan, walls, terrain);
       plantLayer(this.lawn.group);
       this.group.add(this.lawn.group);
     }

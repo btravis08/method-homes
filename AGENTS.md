@@ -182,6 +182,10 @@ staging/design use.
   It never spins on its own: the turn is tied to scroll position
   (REST_YAW/SWEEP in PlanViewer.tsx) until the user drags (Bryce,
   2026-10-05).
+- Ground height comes from ONE function (terrain.ts `makeTerrain`):
+  the lawn is displaced by it and every plan entry carries y from it.
+  Anything new placed on the ground reads p.y; keep the pad round the
+  walls level and relief within the lawn's reach.
 - The lawn (lawn.ts) is one coverage field — change its shape there
   (MARGIN, TREE_SKIRT, EDGE_WOBBLE), not in the texture. It is ONE
   blended, mipmapped ground plane: no instanced tufts, no alpha test,
