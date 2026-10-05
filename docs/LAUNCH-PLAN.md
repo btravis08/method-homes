@@ -631,6 +631,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer: new sky (Poly Haven meadow_2: sun, blue
+  sky, green tree line) so the windows reflect sky over trees (steered
+  reflections, darker glass); per-surface reflection strengths now
+  actually apply; the plan's floor goes transparent at once and never
+  whitens. sky.yml added (list / preview / install). Docs: PROJECT-LOG,
+  AGENTS.
 - 2026-10-05 — Plan viewer: no load flash (the view and the page's
   poster hand over once, when house, planting and sky are all ready;
   the painterly stand-ins only appear if the real planting fails) and

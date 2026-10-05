@@ -66,6 +66,11 @@ permissions:
   contents: write
 
 env:
+  # the ONE sky both viewers use (Poly Haven id): renders light with it and
+  # the env job copies it to public/models/env (sky.yml can also install
+  # one directly). meadow_2: sun, blue sky, a ring of green trees — the
+  # windows reflect sky over trees (Bryce, 2026-10-05).
+  SKY_ID: meadow_2
   SANITY_PROJECT_ID: i2wd5pr1
   SANITY_DATASET: production
   SANITY_API_VERSION: "2026-07-01"
@@ -197,7 +202,7 @@ jobs:
             url=$(curl -sS "https://api.polyhaven.com/files/$1" | python -c 'import json,sys,functools; print(functools.reduce(lambda a,k: a[k], sys.argv[1].split("/"), json.load(sys.stdin))["url"])' "$2" 2>/dev/null || true)
             if [ -n "$url" ] && curl -sS -L -o "$3" "$url"; then echo "  $1 ($2) → $3 $(stat -c %s "$3") B"; else echo "  $1 ($2) unavailable"; rm -f "$3"; fi
           }
-          fetch kloofendal_48d_partly_cloudy_puresky hdri/2k/hdr /tmp/assets/sky.hdr
+          fetch "$SKY_ID" hdri/2k/hdr /tmp/assets/sky.hdr
           fetch painted_plaster_wall Diffuse/2k/jpg /tmp/assets/siding/diff.jpg
           fetch painted_plaster_wall Rough/2k/jpg /tmp/assets/siding/rough.jpg
           fetch metal_plate Rough/2k/jpg /tmp/assets/roof/rough.jpg
@@ -234,7 +239,7 @@ jobs:
         run: |
           set -euo pipefail
           python -m pip install -q "numpy<2"
-          url=$(curl -sS "https://api.polyhaven.com/files/kloofendal_48d_partly_cloudy_puresky" | python -c 'import json,sys,functools; print(functools.reduce(lambda a,k: a[k], sys.argv[1].split("/"), json.load(sys.stdin))["url"])' hdri/2k/hdr)
+          url=$(curl -sS "https://api.polyhaven.com/files/$SKY_ID" | python -c 'import json,sys,functools; print(functools.reduce(lambda a,k: a[k], sys.argv[1].split("/"), json.load(sys.stdin))["url"])' hdri/2k/hdr)
           curl -sS -L -o /tmp/sky.hdr "$url"
           # the same rotation render-turntable gets (--hdri-rotation 120) so shadows and reflections line up across viewers
           python scripts/model/prep-env.py /tmp/sky.hdr public/models/env --width 512 --rotation 120

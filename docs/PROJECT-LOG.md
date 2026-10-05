@@ -492,6 +492,38 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
     to the user for good (OrbitControls drag); reduced motion sits at
     rest. Measured: −100° below the fold, −92° entering, 0° centred,
     unchanged after a drag and scroll-up.
+- Green-tree sky + transparent plan floor (Bryce, 2026-10-05: "a better
+  hdri that reflects the sky but also green trees in the reflections";
+  "the floor of the floor plan should never be white … just always be
+  transparent").
+  - Sky: sky.yml lists Poly Haven outdoor HDRIs with greenery, renders
+    previews to the `sky-previews` branch, and installs one (prep-env.py
+    → public/models/env, source + CC0 in env.json). From six previewed
+    (ballawley_park, charolettenbrunn_park, greenwich_park, meadow_2,
+    pretoria_gardens, sunny_country_road) meadow_2 won: sun, blue sky,
+    a full ring of green trees, green grass. model-pipeline.yml now
+    takes the sky from one SKY_ID (meadow_2) for renders and the env
+    job — the Cycles turntable still shows the old sky until re-rendered.
+  - THE BUG behind "reflections do nothing": three uses
+    scene.environmentIntensity for every material that has no envMap of
+    its own — material.envMapIntensity is IGNORED. So the plan-mode
+    reflection fade, and any per-surface strength, never applied. The
+    house's materials now hold the sky themselves (mat.envMap =
+    scene.environment) and ENV_BOOST sets glass 2.4, roof 0.8 (black,
+    not green-cast), the rest 1, all × environmentIntensity (0.9, down
+    from 1.3: meadow_2's bright green ground half lifts the bounce).
+  - Window reflections are ART-DIRECTED: the 8° lens is nearly
+    orthographic, so a flat pane physically reflects one direction —
+    open sky ~30° up, above the trees. The glass's IBL lookup is steered
+    to the horizon band (tree line along the bottom of a pane, sky to
+    the top) with the azimuth sweeping along the facade, so trees run
+    across the glazing and slide as the home turns. Glass is now dark
+    (#1f2a30 — a light base colour read as a matte blue coat over the
+    reflection), transmission 0.35, ior 1.7, specularIntensity 1.6.
+  - Floor: surfaces that leave the drawing (floor, roof) keep their own
+    colour while fading (lerping to the plan palette flashed them
+    white); the floor is fully transparent by the first sixth of the
+    flight (measured: colour constant, opacity 1 → 0 early).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

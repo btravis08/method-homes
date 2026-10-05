@@ -142,6 +142,12 @@ staging/design use.
   the roof from the camera only — switch its ray visibility off for
   the cut or the plan renders black; express the cut in world height.
   Sanity check a `--quick --only orbit-14` frame before a full run.
+- The sky is chosen with sky.yml (list → preview → install) and named
+  once as SKY_ID in model-pipeline.yml (currently meadow_2). In the
+  viewer, set reflection strength through ENV_BOOST — the house's
+  materials hold the env map themselves because three ignores
+  material.envMapIntensity under scene.environment. Window reflections
+  are steered to the tree line (GLASS_REFLECT); keep glass dark.
 - Both viewers share ONE sky: the workflow's `env` job downsamples the
   render HDRI with `scripts/model/prep-env.py` into public/models/env
   (sky.hdr ≈ 512 × 256 + env.json with the sun direction, the render's

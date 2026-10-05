@@ -61,7 +61,10 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
       /* a real sky's diffuse light is modest (mean luminance ≈ 0.7 for
          the Poly Haven partly-cloudy map) — lift it so the shaded sides
          still read, and let the directional light carry the sun */
-      root.environmentIntensity = 1.3;
+      /* meadow_2 has a bright green ground half (the puresky it replaced
+         had none), so its bounce lifts and warms everything: 0.9 keeps the
+         old exposure */
+      root.environmentIntensity = 0.9;
       root.userData.envSource = "hdri";
     } catch {
       /* keep the procedural room */
@@ -141,7 +144,13 @@ const CUT_ABOVE_FLOOR = 1.2; // metres — the conventional plan cut height
 const FOV_3D = 8;
 const FOV_PLAN = 8; // narrow + far ≈ orthographic
 const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
-const GLASS_TRANSMISSION = 0.92;
+/* glass: see-through enough to read the interior, reflective enough to
+   carry the sky and the tree line (Bryce: "reflects the sky but also
+   green trees") */
+const GLASS_TRANSMISSION = 0.35;
+/* per-surface reflection strength in 3D: glass mirrors the meadow; the
+   black roof stays black instead of picking up a green cast */
+const ENV_BOOST: Record<string, number> = { glass: 2.4, roof: 0.8 };
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 /* SCROLL-TIED TURN (Bryce, 2026-10-05: no free spin). As the viewer
    scrolls into view the home turns from REST_YAW − SWEEP to REST_YAW,
@@ -159,7 +168,7 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
    doors, concrete floors. The siding and roof get procedural relief in
    the shader (see FINISH). */
 const RENDER: Record<string, [string, number]> = {
-  wall: ["#e9e5dd", 1], floor: ["#b9b5ad", 1], roof: ["#0e0f10", 1], glass: ["#8fb0c2", 0.45],
+  wall: ["#e9e5dd", 1], floor: ["#b9b5ad", 1], roof: ["#0e0f10", 1], glass: ["#1f2a30", 0.45],
   door: ["#1a1918", 1], frame: ["#111111", 1], stair: ["#8e8a84", 1], rail: ["#1a1a19", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
 };
 /* PBR per category: [roughness, metalness] */
@@ -259,7 +268,47 @@ const ROOF_ROUGHNESS = /* glsl */ `
   roughnessFactor = mix(roughnessFactor, roughnessFactor * 0.6, gRib);
 `;
 
+/* ART-DIRECTED WINDOW REFLECTIONS. The long lens (FOV 8°) is nearly
+   orthographic, so a flat pane reflects ONE direction — from this height
+   ~30° up into open sky, above the tree line: the windows read as flat
+   blue. Archviz practice: steer the reflection. In 3D each pane's
+   reflection is pulled to the horizon band — tree line along the bottom
+   of the pane, sky toward the top — and its azimuth sweeps with position
+   along the facade, so the trees run across the glazing and slide as the
+   home turns. World position comes from the transmission varying; in
+   plan (transmission 0) the steering is compiled out with it. */
+const GLASS_REFLECT = /* glsl */ `
+  #ifdef USE_TRANSMISSION
+  varying vec3 vWorldPosition; // declared here, so it precedes the IBL code
+  vec3 glassHorizon(vec3 r) {
+    vec2 h = normalize(r.xz + vec2(1e-4, 0.0));
+    float a = (vWorldPosition.x + vWorldPosition.z) * 0.12;
+    h = mat2(cos(a), sin(a), -sin(a), cos(a)) * h;
+    float t = clamp((vWorldPosition.y - 0.55) / 2.1, 0.0, 1.0);
+    float el = mix(-0.04, 0.55, t);
+    return vec3(h.x * cos(el), sin(el), h.y * cos(el));
+  }
+  #endif
+`;
+
 function finish(mat: THREE.MeshStandardMaterial, cat: string) {
+  if (cat === "glass") {
+    mat.onBeforeCompile = (shader) => {
+      const chunk = THREE.ShaderChunk.envmap_physical_pars_fragment.replace(
+        "reflectVec = transformDirectionByInverseViewMatrix( reflectVec, viewMatrix );",
+        `reflectVec = transformDirectionByInverseViewMatrix( reflectVec, viewMatrix );
+        #ifdef USE_TRANSMISSION
+          reflectVec = glassHorizon( reflectVec );
+        #endif`,
+      );
+      shader.fragmentShader = shader.fragmentShader
+        .replace("#include <envmap_physical_pars_fragment>", GLASS_REFLECT + chunk)
+        /* …and dropped from the transmission chunk that normally declares it */
+        .replace("#include <transmission_pars_fragment>", THREE.ShaderChunk.transmission_pars_fragment.replace("varying vec3 vWorldPosition;", ""));
+    };
+    mat.customProgramCacheKey = () => "finish-glass";
+    return;
+  }
   if (cat !== "wall" && cat !== "roof") return;
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.uPlan = { value: 0 };
@@ -382,7 +431,7 @@ class ViewerState {
             ? /* flat shading stays ON: the welded pane corners carry averaged
                  normals, and smooth normals swing the refraction into a
                  kaleidoscope across each pane */
-              new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.5, thickness: 0.02, roughness: 0.06, metalness: 0 })
+              new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: ENV_BOOST.glass })
             : new THREE.MeshStandardMaterial(common);
         finish(mat, cat);
         mat.userData.viewer = true;
@@ -577,7 +626,17 @@ class ViewerState {
       mat.metalness = THREE.MathUtils.lerp(metal, 0, e);
       /* the sky's blue cast leaves the drawing with the palette: a plan is
          flat ink on paper, not a lit model */
-      mat.envMapIntensity = THREE.MathUtils.lerp(1, 0.15, e);
+      /* three ignores a material's envMapIntensity when the light comes
+         from scene.environment (it uses scene.environmentIntensity for
+         every material), so the house's materials hold the sky THEMSELVES —
+         only then do the per-surface strengths below (glass mirrors, roof
+         stays black, the drawing goes matte) take effect */
+      const env = this.root?.environment ?? null;
+      if (mat.envMap !== env) {
+        mat.envMap = env;
+        mat.needsUpdate = true;
+      }
+      mat.envMapIntensity = THREE.MathUtils.lerp(ENV_BOOST[cat] ?? 1, 0.15, e) * (this.root?.environmentIntensity ?? 1);
       const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
       if (shader) shader.uniforms.uPlan.value = e;
     }
