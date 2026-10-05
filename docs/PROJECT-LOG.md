@@ -538,6 +538,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   each tree. Measured −0.06 … +0.49 m on the sample. From the default
   view it reads as light across the lawn; at a low angle the lawn edge
   rolls and the trees stand on mounds.
+- SAMARA REALISM PASS (Bryce, 2026-10-05, side-by-side phone shots:
+  "Samara has a relief, you see the house, soft shadows and less stark
+  materials"). Three changes. (1) Relief in the materials: the siding
+  shader is board-and-batten (40.6 cm pitch, a raised batten with a
+  shadow strip beside it, a soft darkening at the wall foot), and the
+  roof's standing-seam ribs are stronger, so seams read from the default
+  view. (2) Real-time soft sun shadows: a variance shadow map (2048,
+  blurred, frustum hugging the site) from the sun light, aligned with
+  the HDRI's sun. House and plants cast; house and lawn receive (glass
+  doesn't cast). Shadows and the 3D saturation fade out with the plan
+  transition. (3) Calmer materials and lighting: a cooler off-white wall
+  (#d7d6d1) and a charcoal roof (#3b3e41) in place of near-black. The
+  shadows were already rendering but were invisible: sky 0.9 +
+  hemisphere 0.4 + fill 0.5 lit the shade almost as brightly as the sun
+  did, because three divides a light's diffuse irradiance by π. The
+  balance is now a product shot's: sky 0.45, hemisphere 0.12, fill 0.15,
+  key sun 7 (slightly warm). The glass reflection boost was raised
+  (4.8) to keep its old strength.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

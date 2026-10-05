@@ -182,6 +182,13 @@ staging/design use.
   It never spins on its own: the turn is tied to scroll position
   (REST_YAW/SWEEP in PlanViewer.tsx) until the user drags (Bryce,
   2026-10-05).
+- Lighting is a product shot's balance: a strong key sun (7, VSM soft
+  shadows) over a modest sky (environmentIntensity 0.45, hemisphere
+  0.12, fill 0.15). Don't lift the ambient terms to brighten the shaded
+  sides: that washes the shadows out, which is what hid them on the
+  first pass. three divides diffuse light by π, so the key must be about
+  3× the sky. Anything new on the ground or the house sets
+  castShadow/receiveShadow, except glass, which doesn't cast.
 - Ground height comes from ONE function (terrain.ts `makeTerrain`):
   the lawn is displaced by it and every plan entry carries y from it.
   Anything new placed on the ground reads p.y; keep the pad round the

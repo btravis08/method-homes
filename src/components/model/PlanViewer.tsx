@@ -65,7 +65,13 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
       /* meadow_2 has a bright green ground half (the puresky it replaced
          had none), so its bounce lifts and warms everything: 0.9 keeps the
          old exposure */
-      root.environmentIntensity = 0.9;
+      /* 0.5 (2026-10-05, the Samara pass): with 0.9 of sky plus a
+         hemisphere and a fill, the shaded sides were lit almost as well
+         as the sunny ones and the soft shadows washed out. A product
+         shot's balance is a strong key and a modest sky (three divides a
+         light's irradiance by π for diffuse, so the sun needs ~7 to out-
+         light the sky about 3:1 on the lawn, as real daylight does). */
+      root.environmentIntensity = 0.45;
       root.userData.envSource = "hdri";
     } catch {
       /* keep the procedural room */
@@ -151,7 +157,9 @@ const ORBIT_RADIUS = 7.2; // × the model's largest dimension (was 1.6 at 35°)
 const GLASS_TRANSMISSION = 0.35;
 /* per-surface reflection strength in 3D: glass mirrors the meadow; the
    black roof stays black instead of picking up a green cast */
-const ENV_BOOST: Record<string, number> = { glass: 2.4, roof: 0.8 };
+/* multiplied by the scene's environmentIntensity (0.45): glass keeps the
+   reflection strength it had at 0.9 × 2.4 */
+const ENV_BOOST: Record<string, number> = { glass: 4.8, roof: 1.2 };
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 /* SCROLL-TIED TURN (Bryce, 2026-10-05: no free spin). As the viewer
    scrolls into view the home turns from REST_YAW − SWEEP to REST_YAW,
@@ -169,7 +177,10 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
    doors, concrete floors. The siding and roof get procedural relief in
    the shader (see FINISH). */
 const RENDER: Record<string, [string, number]> = {
-  wall: ["#e9e5dd", 1], floor: ["#b9b5ad", 1], roof: ["#0e0f10", 1], glass: ["#1f2a30", 0.45],
+  /* off-white cooled from cream, and the "black" roof as black metal
+     actually reads in daylight — a deep charcoal, so its seams show
+     (Bryce, 2026-10-05: Samara's "less stark materials", "relief") */
+  wall: ["#d7d6d1", 1], floor: ["#b9b5ad", 1], roof: ["#3b3e41", 1], glass: ["#1f2a30", 0.45],
   door: ["#1a1918", 1], frame: ["#111111", 1], stair: ["#8e8a84", 1], rail: ["#1a1a19", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
 };
 /* PBR per category: [roughness, metalness] */
@@ -181,9 +192,10 @@ const SURFACE: Record<string, [number, number]> = {
 /*
   FINISH — procedural relief computed from world position, so the
   model needs no UVs or texture files:
-  - siding: 4 × 8 ft fibre-cement panels (1.2192 × 2.4384 m) with a
-    12 mm reveal joint, a touch of per-panel tone variation; applied
-    to vertical faces only
+  - siding: board-and-batten — 38 mm battens every 16 in standing proud
+    of the boards (lit face + shadow strip), per-board tone variation,
+    and a soft occlusion band at the foot of the wall; vertical faces
+    only (was flat 4 × 8 ft panels until 2026-10-05)
   - roof: standing seams every 16 in (0.4064 m) running down the
     slope (derived from the face normal), a 30 mm rib with light and
     shade on its flanks and a lower roughness on the rib; roof planes
@@ -208,24 +220,29 @@ const SIDING_COLOR = /* glsl */ `
        normal — otherwise seams and joints bend across a plane */
     vec3 n = normalize(cross(dFdx(vWorldPos), dFdy(vWorldPos)));
     vec2 uv = abs(n.x) > abs(n.z) ? vec2(vWorldPos.z, vWorldPos.y) : vec2(vWorldPos.x, vWorldPos.y);
-    vec2 panel = vec2(1.2192, 2.4384);
-    vec2 f = fract(uv / panel);
-    vec2 cell = floor(uv / panel);
-    vec2 d = min(f, 1.0 - f) * panel;
-    float dm = min(d.x, d.y);
-    /* analytic anti-aliasing: the reveal is 12 mm wide; the edge ramp is
-       at least one screen pixel wide (fwidth) and the whole line fades
-       as it becomes sub-pixel, so distant joints read as a faint even
-       tone instead of sparkling */
-    float px = max(fwidth(dm), 1e-4);
-    float w = max(0.003, px);
-    float joint = 1.0 - smoothstep(0.006 - w, 0.006 + w, dm);
-    float coverage = clamp(0.012 / px, 0.0, 1.0);
-    float tone = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453) * 0.08 - 0.04;
+    /* BOARD-AND-BATTEN: vertical battens every 16 in (0.4064 m), 38 mm
+       wide, standing proud of the boards — a lit face, a shaded flank and
+       a thin shadow line on the board beside it, so the cladding has
+       relief at any angle. Analytic AA (fwidth ramps + coverage fade) as
+       before, so the lines never sparkle. */
+    float pitch = 0.4064;
+    float bw = 0.019; // half the batten width
+    float fu = fract(uv.x / pitch) * pitch - pitch * 0.5; // −p/2 … p/2, batten centred at 0
+    float px = max(fwidth(uv.x), 1e-4);
+    float w = max(0.002, px);
+    float batten = 1.0 - smoothstep(bw - w, bw + w, abs(fu));
+    float side = smoothstep(bw - w, bw + w, fu) * (1.0 - smoothstep(bw + 0.012 - w, bw + 0.012 + w, fu)); // shadow strip beside it
+    float coverage = clamp(0.038 / px, 0.0, 1.0);
+    float cell = floor(uv.x / pitch);
+    float tone = fract(sin(cell * 12.9898) * 43758.5453) * 0.05 - 0.025;
     float vertical = 1.0 - step(0.85, abs(n.y));
     float k = (1.0 - uPlan) * vertical;
     diffuseColor.rgb *= 1.0 + tone * k;
-    diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * 0.45, joint * coverage * k);
+    diffuseColor.rgb *= 1.0 + (batten * 0.06 - side * 0.28) * coverage * k;
+    /* soft occlusion where the wall meets the ground (~25 cm), baked so
+       it is stable as the home turns */
+    float foot = exp(-max(vWorldPos.y, 0.0) / 0.22);
+    diffuseColor.rgb *= 1.0 - 0.22 * foot * k;
     /* in plan, a horizontal wall face seen from its FRONT is a sill or
        a wall top — paper, not ink — so openings read as openings. The
        hollow wall bottoms the cut exposes are seen from their BACK and
@@ -261,7 +278,9 @@ const ROOF_COLOR = /* glsl */ `
     float plane = step(0.25, abs(n.y));
     float k = (1.0 - uPlan) * plane * coverage;
     gRib = rib * k;
-    diffuseColor.rgb *= 1.0 + rib * k * 0.9 + flank * rib * k * 0.6;
+    /* the rib catches light on one flank and drops shade on the other;
+       on the charcoal base this is what makes the seams read */
+    diffuseColor.rgb *= 1.0 + rib * k * 1.6 + flank * rib * k * 1.1;
   }
 `;
 const ROOF_ROUGHNESS = /* glsl */ `
@@ -339,8 +358,11 @@ class ViewerState {
   group: THREE.Group | null = null;
   root: THREE.Scene | null = null; // for the debug hook (window.__planViewer)
   controls: { enabled: boolean } | null = null;
-  /* desaturation at the end of the chain: 0 in 3D, full grey in plan */
+  /* desaturation at the end of the chain: slight in 3D, full grey in plan */
   sat: { saturation: number } | null = null;
+  /* the sun: its soft shadow map fades out with the 3D view */
+  sunLight: THREE.DirectionalLight | null = null;
+  gl: THREE.WebGLRenderer | null = null; // debug hook (window.__planViewer)
   /* painterly planting around the home (foliage.ts); dissolves in plan */
   foliage: FoliageHandle | null = null;
   /* the real scanned plants (plants.ts): replace the cards once loaded */
@@ -440,6 +462,10 @@ class ViewerState {
         o.material = mat;
       }
       this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey });
+      /* SUN SHADOWS: the home shades itself (eaves on the walls) and the
+         lawn. Glass passes light (no cast), so rooms don't go black. */
+      o.castShadow = cat !== "glass";
+      o.receiveShadow = true;
     });
     this.buildCap(scene, root);
     /* planting rides the model group, so it turns north-up with the home */
@@ -453,6 +479,7 @@ class ViewerState {
     if (this.group && !this.lawn) {
       this.lawn = buildLawn(this.footprint, this.plan, walls, terrain);
       plantLayer(this.lawn.group);
+      this.lawn.group.traverse((o) => (o.receiveShadow = true));
       this.group.add(this.lawn.group);
     }
     this.loadRealPlants();
@@ -495,6 +522,9 @@ class ViewerState {
         this.appear = this.isReady ? 0 : 1;
         h.setFade(Math.max(this.fade, (1 - this.appear) / 2));
         plantLayer(h.group);
+        /* trees and shrubs cast dappled shade (leaf alpha carries into the
+           shadow pass); they don't receive, which keeps leaves clean */
+        h.group.traverse((o) => (o.castShadow = true));
         group.add(h.group);
       })
       .catch(() => {
@@ -684,7 +714,10 @@ class ViewerState {
     }
     this.lawn?.setFade(e);
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
-    if (this.sat) this.sat.saturation = -e;
+    /* a touch calmer than raw in 3D (Samara's "less stark"), no colour in plan */
+    if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(-0.12, -1, e);
+    /* shadows leave with the 3D view: the drawing is flat */
+    if (this.sunLight) this.sunLight.shadow.intensity = 1 - e;
     if (this.progress > 0.001) {
       /* spherical path from the orbit pose to straight above: the polar
          angle closes to the top, the azimuth holds (no camera spin — the
@@ -729,6 +762,7 @@ function wire(vs: React.RefObject<ViewerState | null>, group: THREE.Group | null
   const v = vs.current;
   if (!v) return;
   v.group = group;
+  v.gl = gl;
   v.plantsBase = plantsBase;
   v.attach(scene, gl, root, mode);
   /* inspectable from the console / Playwright: window.__planViewer */
@@ -784,6 +818,8 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   const fp = extras.footprint ?? { width_m: 12, depth_m: 10, height_m: 8 };
   const north = northDeg ?? extras.northDeg ?? 0;
   const radius = Math.max(fp.width_m, fp.depth_m, fp.height_m) * ORBIT_RADIUS;
+  /* the shadow frustum's half-width: the home, its trees and their shade */
+  const shadowSpan = Math.max(fp.width_m, fp.depth_m) / 2 + 9;
   /* Samara's trick: render at a lower ratio while the pointer is down and
      restore 200 ms after it lifts, so drags stay fluid on any GPU */
   const [interacting, setInteracting] = useState(false);
@@ -845,6 +881,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
       {!ready && showLoading && <p className="label absolute bottom-xl left-xl z-10 rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>}
       <div className="aspect-[4/3] w-full transition-opacity duration-700 ease-out md:aspect-[16/9]" style={{ opacity: ready ? 1 : 0 }}>
         <Canvas
+          shadows="variance"
           onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
           dpr={interacting ? Math.min(dpr, 1.25) : dpr}
           /* near/far hug the orbit radius: with the camera ~170 m out a
@@ -863,11 +900,38 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           onPointerUp={onUp}
           onPointerCancel={onUp}
         >
-          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.4 : 0.45]} />
+          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.12 : 0.45]} />
           {/* the sun: aligned with the HDRI's once env.json arrives */}
-          <directionalLight position={sun ? [sun[0] * 30, sun[1] * 30, sun[2] * 30] : [12, 16, 8]} intensity={sun ? 2.2 : 1.25} />
+          {/* SOFT SUN SHADOWS (variance shadow map, blurred): the eaves
+              shade the walls, the home and trees shade the lawn — the depth
+              Samara's renders have and ours lacked. The frustum hugs the
+              site so texels stay ~2 cm; the light stays put while the home
+              turns, so shadows move as they would. */}
+          <directionalLight
+            ref={(l) => {
+              const v = vs.current;
+              if (v) v.sunLight = l;
+            }}
+            position={sun ? [sun[0] * 40, sun[1] * 40, sun[2] * 40] : [12, 16, 8]}
+            /* the key: strong and a touch warm against the cooler sky, so
+               sunlit faces and shade read apart */
+            intensity={sun ? 7 : 1.25}
+            color={sun ? "#fff7ee" : "#ffffff"}
+            castShadow
+            shadow-mapSize={[2048, 2048]}
+            shadow-camera-left={-shadowSpan}
+            shadow-camera-right={shadowSpan}
+            shadow-camera-top={shadowSpan}
+            shadow-camera-bottom={-shadowSpan}
+            shadow-camera-near={5}
+            shadow-camera-far={90}
+            shadow-radius={9}
+            shadow-blurSamples={16}
+            shadow-bias={-0.0004}
+            shadow-normalBias={0.03}
+          />
           {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
-          <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.5 : 0.3} />
+          <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.15 : 0.3} />
           <SkyEnvironment base={envBase} onSun={setSun} onDone={onSkyDone} />
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}

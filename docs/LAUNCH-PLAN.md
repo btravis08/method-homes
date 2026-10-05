@@ -631,6 +631,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-05 — Plan viewer realism (Samara comparison): soft real-time
+  sun shadows, board-and-batten siding and visible roof seams, calmer
+  wall/roof colours, lighting rebalanced to a strong key over a modest
+  sky.
 - 2026-10-05 — Plan viewer: subtle ground relief (terrain.ts) — level
   round the home, soft swells and tree mounds beyond; plants sit on it.
 - 2026-10-05 — Plan viewer: new sky (Poly Haven meadow_2: sun, blue
