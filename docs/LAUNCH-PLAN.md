@@ -199,7 +199,7 @@ contribution wired. Build order follows page priority in §5.
 | Form block | 37508:3799 | sectionFormBlock + ContactForm (simple form “contact” → /api/forms) | NAP from Site Settings beside the form; page becomes ContactPage | [x] 2026-10-04 |
 | Map block | 37508:3828 | sectionMapBlock (rows from Market docs or typed) | named places = areaServed entities; rows link to market pages when `linkRows` is on | [x] 2026-10-04 (links off until /where-we-build ships) |
 | Team grid | 37508:3875 | sectionTeamGrid → teamMember docs (+credentials, linkedin) | Person nodes (jobTitle, sameAs) per member | [x] 2026-10-04 |
-| Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [ ] |
+| Pricing cards → Finish levels | 37525:15191 | series.finishLevels | Offer/PriceSpecification per level | [–] dropped from /pricing 2026-10-08 (Method sells no finish levels); series pages only if Method confirms tiers |
 | Feature list | 37508:4069 | sectionFeatureList | bullets = liftable facts; 3 or 4 columns | [x] 2026-10-03 |
 | Link list | 37508:4097 | sectionLinkList | internal linking hub (descriptive anchors) | [x] 2026-10-04 |
 | Glossary | 37508:4131 | glossary doc (new) | DefinedTerm set on /prefab-101 | [ ] |
@@ -218,7 +218,7 @@ gate after idle. Each has one toggle or slider at most.
 | Section | Page | States | Status |
 |---|---|---|---|
 | Build journey | /process | Step | [ ] |
-| What it costs | /pricing | Path=Predesigned/Custom | [ ] |
+| Cost structure (v3, 37646:61250; replaces What it costs) | /pricing | Site=Simple/Typical/Complex × home-size slider | [~] designed 2026-10-08 from Method's published figures; code pending |
 | Walk the plan | series, plan pages | View=Plan/Modules/Photos (+ 3D view from the IFC pipeline, prototype 2026-10-04; photoreal Cycles turntable + plan-cut frames, same day) | [~] 3D viewer (with real-time scanned planting) + rendered turntable prototypes in code (/library/plan-viewer, /library/turntable); Plan/Modules/Photos pending Bryce's design pass |
 | We deliver to you | /where-we-build | State=Empty/Result | [ ] |
 | Lineup (replaces Find your fit) | /predesigned | Series | [x] 2026-10-04 — pills are real links to /series/*, JS swaps in place (state-driven cross-fade); twin = Card grid + Compare table on the same page |
@@ -363,7 +363,7 @@ Schema = the entity node beyond WebPage + BreadcrumbList.
 | 1 | `/predesigned` | 37565:18408 | series list (+ optional page doc “predesigned” for hero/intro/FAQ/SEO overrides) | CollectionPage + ItemList of series Products + FAQPage | yes | Lineup; Interstitial (Number) | [x] route 2026-10-04; renders the designed defaults until the series docs exist |
 | 1 | `/series/<slug>` ×7 (Elemental 37513:9343, Option 9729, Cabin 10115, M 10501, Paradigm 10887, Method One 11273, Annata 37509:4620) | templates | series doc | Product (+AggregateOffer when a price is published, hasVariant per plan, additionalProperty from specs) + ItemList(plans) + FAQPage | yes | Hero/Series, Sub-nav, Walk the plan, Finish levels | [~] route shipped 2026-10-04 (finish-level cards are the shared-component twin; Walk the plan bespoke pending); content: 7 series docs |
 | 1 | `/series/<slug>/<plan>` (Floor plan detail) | 37509:5006 | plan doc | Product isVariantOf series (+Offer, subjectOf DigitalDocument PDF, dimensions as additionalProperty) | no | Size it up, Walk the plan | [~] route shipped 2026-10-04 (Size it up = Spec table twin with lettered rows; bespoke pending); content: plan docs |
-| 1 | `/pricing` | 37510:5762 | page | FAQPage; Offer refs | yes | What it costs, Finish levels | [ ] |
+| 1 | `/pricing` | 37565:22297 | page | FAQPage; Offer refs | yes | Cost structure; Feature list [Columns=4] as Pricing variables; Spec table as published numbers | [ ] design realigned to methodhomes.net/pricing 2026-10-08 |
 | 1 | `/process` | 37510:6259 | page | HowTo (steps from Process timeline) | yes | Build journey, Set day | [ ] |
 | 1 | `/custom-homes` | 37509:4036 | page | Service | yes | Interstitial | [ ] |
 | 1 | `/contact` (+ /get-started sheet) | 37510:6059 | page + siteSettings | ContactPage + LocalBusiness NAP | yes | Location + newsletter | [~] |
@@ -631,6 +631,11 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-08 — /pricing Figma page realigned to Method's live pricing
+  page: Finish levels and the financing feature list removed, What it
+  costs replaced by Cost structure (soft / modular / site with
+  Method's published figures, site-complexity toggle + size slider),
+  pricing variables, published-numbers table and Method's five FAQs.
 - 2026-10-05 — Webflow CMS export imported: 109 projects, 7 series,
   36 plans, 4 commercial types, 4 custom-region pages, 257 posts
   (scripts/import-webflow.ts via import-webflow.yml). Series and plan

@@ -321,8 +321,11 @@ staging/design use.
   and accordions for detail, large-type numbers — never dashboards,
   wireframe 3D stages, chip walls or data tables. Variants = the
   interaction states; a "How it works" card beside each (pattern,
-  interaction, fallback). Build journey [Step=…] → /process; What it
-  costs [Path=Predesigned|Custom] → /pricing; Walk the plan
+  interaction, fallback). Build journey [Step=…] → /process; Cost structure
+  [Site=Simple|Typical|Complex] → /pricing (v3 set 37646:61250,
+  2026-10-08; supersedes What it costs [Path=Predesigned|Custom],
+  whose percentages and finish-level framing had no source — see the
+  PRICING PAGE RULE below); Walk the plan
   [View=Plan|Modules|Photos] → series + plan pages (replaces Plan
   drawings there); We deliver to you [State=Empty|Result] →
   /where-we-build; Find your fit [State=Default|Filtered] →
@@ -341,8 +344,9 @@ staging/design use.
   the seven series → one photo, sentence, meta line with footnote
   markers, four big numbers, swatches; replaces Find your fit on
   /predesigned), Finish levels (trim-style cards: name, tagline,
-  From…, three numbers, Includes/Optional; replaces Pricing cards on
-  /pricing), Size it up [Plan=…] (lettered dimensions A–H beside a
+  From…, three numbers, Includes/Optional; REMOVED from /pricing
+  2026-10-08 — Method sells no finish levels; the set stays in the
+  library for series pages only if Method confirms tiers), Size it up [Plan=…] (lettered dimensions A–H beside a
   line diagram, plan toggle; on floor-plan pages). In the shared
   library — Hero / Series (breadcrumb, 176px wordmark H1, one photo,
   sentence, meta line, two pills; needs a 'Display XL' text style so
@@ -363,6 +367,21 @@ staging/design use.
   marker; floating photos are 4–6 lazy <img> with real alt text and
   depth-based parallax (0.1–0.3), static under reduced motion; the
   Image kind is never the LCP. At most two per page.
+- PRICING PAGE RULE (Bryce, 2026-10-08: "we're off base"): /pricing
+  mirrors methodhomes.net/pricing (capture in
+  design/reference/method-pricing.{md,png}) — Method prices a project
+  as THREE components, soft costs ($40,000+), modular costs
+  ($300–$450+/sq ft) and site costs (60–150% of modular), plus four
+  pricing variables (location, site complexity, size/design
+  complexity, specifications), a five-question FAQ with real figures
+  (delivery $800+/truck, crane+set+trucking $40–120k, 20–30% savings,
+  why an architect, plans not for sale) and "fixed contract price
+  before construction". Every number on our page is one of those;
+  never invent cost shares, finish tiers or financing products. The
+  only interactive is the Cost structure section (home-size slider ×
+  site toggle recomputing Method's own formula); its 60–80 / 80–120 /
+  120–150% sub-bands are a planning assumption flagged in the set
+  description — confirm with Method before shipping.
 - Authors (decided 2026-10-03): 3–5 REAL people + one organization
   byline for news, each with a landing page at /blog/authors/[slug]
   — the Person entity every byline links to. Figma: `Author hero`

@@ -601,6 +601,38 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   pool refused to acquire the job four times ("not acquired by Runner
   of type hosted") while `ubuntu-22.04` ran at once — the workflow now
   pins 22.04.
+### 2026-10-08 — /pricing realigned to Method's published cost structure (Bryce: "we're off base")
+- Source: methodhomes.net/pricing rendered by fetch-page.yml →
+  design/reference/method-pricing.{md,png}. Method's page = intro
+  (60% faster, ~6 months shorter) · Cost Structure in three
+  components (Soft $40,000+ · Modular $300–$450+/sf · Site 60–150% of
+  modular, each with an inclusions list) · four Pricing Variables
+  (location, site complexity, size & design complexity,
+  specifications) + "fixed contract price before construction" · a
+  five-question FAQ with real figures · CTA + newsletter.
+- Our page had: {low}–{high} placeholders, invented ~{x}% cost shares,
+  "Three finish levels. One factory price." (Method sells no finish
+  levels), a financing feature list (not Method content) and generic
+  FAQs. All replaced.
+- Figma (UX Design page): new component set `Cost structure`
+  37646:61250 (Site=Simple|Typical|Complex × Device, cloned from What
+  it costs 37521:15565) with How-it-works card 37646:61569. Defaults:
+  2,000 sq ft → modular $600k–$900k, soft $40k+, site $480k–$1.08M
+  (typical) → $1.12M–$2.02M all-in; Simple 60–80% / Complex 120–150%
+  bands are a planning assumption (flagged in the set description)
+  to confirm with Method. /pricing set 37565:22297: What it costs →
+  Cost structure, Finish levels removed, Feature list switched to
+  Columns=4 as "What moves the number", Spec table rewritten as
+  "What Method publishes" (8 rows, all sourced), Interstitial = "We
+  arrive at a fixed contract price before construction begins.", FAQ
+  = Method's five questions, CTA = "Ready to start the process?".
+  Order: Hero → Cost structure → variables → published numbers →
+  Process (Bryce's instance, desktop) → Interstitial → FAQ → CTA →
+  Footer. Mobile variant mirrors it.
+- Code: not started (design-dependent work paused for Bryce's Figma
+  pass). When built: section = three DOM-text columns + one slider +
+  one toggle; Sanity `method-page-pricing` body still holds the
+  crawled copy.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
