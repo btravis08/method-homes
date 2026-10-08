@@ -629,6 +629,17 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   Order: Hero → Cost structure → variables → published numbers →
   Process (Bryce's instance, desktop) → Interstitial → FAQ → CTA →
   Footer. Mobile variant mirrors it.
+- Bryce ("don't we need the module that has 'soft costs'"): added
+  `Cost components` set 37651:69373 (Device=Desktop|Mobile, cloned
+  from Feature list [Columns=3]) — Method's own three-column module:
+  photo slot (3:2, placeholder fill), title, price line and the
+  published inclusions list per component, verbatim. Placed right
+  after Cost structure on both /pricing variants (instances
+  37651:69526 / 37651:69551); it is the no-JS twin of the bespoke.
+  Photos still to drop in: design studio, factory floor, crane set.
+  Bryce was editing the desktop /pricing variant live at the same
+  time (Nav/Hero swapped for his Title / Full / Intro components) —
+  left untouched.
 - Code: not started (design-dependent work paused for Bryce's Figma
   pass). When built: section = three DOM-text columns + one slider +
   one toggle; Sanity `method-page-pricing` body still holds the

@@ -381,7 +381,10 @@ staging/design use.
   only interactive is the Cost structure section (home-size slider ×
   site toggle recomputing Method's own formula); its 60–80 / 80–120 /
   120–150% sub-bands are a planning assumption flagged in the set
-  description — confirm with Method before shipping.
+  description — confirm with Method before shipping. Its no-JS twin
+  is `Cost components` (37651:69373): Method's three-column module
+  (photo, title, price line, inclusions list verbatim), placed
+  directly after it — keep the two adjacent.
 - Authors (decided 2026-10-03): 3–5 REAL people + one organization
   byline for news, each with a landing page at /blog/authors/[slug]
   — the Person entity every byline links to. Figma: `Author hero`

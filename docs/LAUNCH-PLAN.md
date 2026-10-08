@@ -636,6 +636,8 @@ Notes / defects (issue #): ______
   costs replaced by Cost structure (soft / modular / site with
   Method's published figures, site-complexity toggle + size slider),
   pricing variables, published-numbers table and Method's five FAQs.
+  Cost components (37651:69373) added as the no-JS twin: Method's
+  three-column soft / modular / site module with inclusion lists.
 - 2026-10-05 — Webflow CMS export imported: 109 projects, 7 series,
   36 plans, 4 commercial types, 4 custom-region pages, 257 posts
   (scripts/import-webflow.ts via import-webflow.yml). Series and plan
