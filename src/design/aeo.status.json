@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T16:14:55.041Z",
+  "generatedAt": "2026-10-08T16:54:09.591Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-06",
+    "since": "2026-09-08",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 6d ago",
+    "model": "Claude web search (manual, session probe) · recorded 8d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,18 +1181,23 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9666666666666667,
-      "detail": "58/60 pages pass",
+      "ratio": 0.9583333333333334,
+      "detail": "57/60 pages pass",
       "pages": [
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2666 ms"
+          "detail": "2043 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2535 ms"
+          "detail": "1981 ms"
+        },
+        {
+          "path": "/custom-homes",
+          "ratio": 0.5,
+          "detail": "1233 ms"
         }
       ]
     },
@@ -2341,7 +2346,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "10 run(s) recorded",
+      "detail": "11 run(s) recorded",
       "pages": []
     },
     {
@@ -2869,12 +2874,13 @@
       "effort": "high",
       "impact": 0,
       "priority": 0.01,
-      "detail": "58/60 pages pass",
+      "detail": "57/60 pages pass",
       "pages": [
-        "/blog/category/articles — 2666 ms",
-        "/about — 2535 ms"
+        "/blog/category/articles — 2043 ms",
+        "/about — 1981 ms",
+        "/custom-homes — 1233 ms"
       ],
-      "pagesAffected": 2
+      "pagesAffected": 3
     }
   ],
   "pages": [
@@ -2986,6 +2992,33 @@
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
     },
     {
+      "path": "/custom-homes",
+      "type": "page",
+      "score": 55,
+      "words": 12,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links"
+      ],
+      "title": "Custom Modular Homes | Method Homes"
+    },
+    {
       "path": "/legacy",
       "type": "page",
       "score": 56,
@@ -3036,32 +3069,6 @@
         "internal-links"
       ],
       "title": "Commercial Projects | Method Homes"
-    },
-    {
-      "path": "/custom-homes",
-      "type": "page",
-      "score": 56,
-      "words": 12,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links"
-      ],
-      "title": "Custom Modular Homes | Method Homes"
     },
     {
       "path": "/faq",
