@@ -319,7 +319,67 @@ def footprint_polygon(verts: np.ndarray, faces: np.ndarray):
     return u.simplify(0.03)
 
 
-def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0):
+def module_cells(polys: list, reach_m: float = 30.0) -> list:
+    """Nearest-footprint regions: a Voronoi partition of the plane seeded
+    by points sampled along every footprint's boundary, so overhangs and
+    eaves outside the footprints fall to the module they are nearest."""
+    import shapely
+    from shapely.geometry import MultiPoint, Point
+    from shapely.ops import unary_union
+
+    pts = []
+    owner = []
+    for k, poly in enumerate(polys):
+        # sample just INSIDE each footprint: adjacent modules share their
+        # seam, and a shared sample point would hand the seam to either
+        inset = poly.buffer(-0.08)
+        ring = (inset if not inset.is_empty and inset.geom_type == "Polygon" else poly).exterior
+        n = max(8, int(ring.length / 0.25))
+        for i in range(n):
+            p = ring.interpolate(i / n, normalized=True)
+            pts.append((p.x, p.y))
+            owner.append(k)
+    env = unary_union(polys).envelope.buffer(reach_m)
+    cells = shapely.voronoi_polygons(MultiPoint(pts), extend_to=env)
+    per: dict[int, list] = {k: [] for k in range(len(polys))}
+    tree = shapely.STRtree([Point(p) for p in pts])
+    for cell in cells.geoms:
+        hit = tree.query(cell.representative_point(), predicate="within")
+        if len(hit) == 0:
+            hit = tree.query_nearest(cell.representative_point())
+        per[owner[int(hit[0])]].append(cell)
+    return [unary_union(per[k]).intersection(env).buffer(0) for k in range(len(polys))]
+
+
+def clip_solid(mesh: "trimesh.Trimesh", cells: list, hit: list) -> dict:
+    """Closed solids are cut with a real boolean (manifold3d) against each
+    candidate module's cell prism — every piece stays a closed solid, so
+    a roof slab keeps its 400 mm edge at a seam (uncapped slicing left
+    two skins with a void between)."""
+    v = mesh.vertices
+    z0, z1 = float(v[:, 2].min()) - 1.0, float(v[:, 2].max()) - float(v[:, 2].min()) + 2.0
+    out = {}
+    for k in hit:
+        cell = cells[k]
+        geoms = list(cell.geoms) if cell.geom_type == "MultiPolygon" else [cell]
+        pieces = []
+        for g in geoms:
+            if g.is_empty or g.area < 0.05:
+                continue
+            prism = trimesh.creation.extrude_polygon(g, z1)
+            prism.apply_translation((0, 0, z0))
+            try:
+                cut = trimesh.boolean.intersection([mesh, prism], engine="manifold")
+            except Exception:
+                return {}
+            if cut is not None and len(cut.faces):
+                pieces.append(cut)
+        if pieces:
+            out[k] = trimesh.util.concatenate(pieces) if len(pieces) > 1 else pieces[0]
+    return out
+
+
+def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0, cells: list | None = None):
     """Split a mesh across module footprints. Returns {module index | None:
     Trimesh}. A mesh wholly inside one footprint is returned as is; one
     that straddles seams is sliced along every footprint edge it overlaps
@@ -346,8 +406,15 @@ def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0):
         return {None: mesh}
     if len(hit) == 1 and inside[hit[0]].all():
         return {hit[0]: mesh}
-    # slice along the edges of the footprints this mesh touches
+    # a closed solid: boolean-cut against the modules' cells (see clip_solid)
+    if cells is not None and mesh.is_watertight:
+        cut = clip_solid(mesh, cells, hit)
+        if cut:
+            return cut
+    # an open shell (walls split by surface colour): slice along the edges
+    # of the footprints this mesh touches and deal the faces out
     m = mesh
+    cap = False
     for k in hit:
         xy = np.asarray(polys[k].exterior.coords)
         for a, b in zip(xy[:-1], xy[1:]):
@@ -363,10 +430,15 @@ def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0):
                 continue
             o = np.array([a[0], a[1], 0.0])
             try:
-                front = trimesh.intersections.slice_mesh_plane(m, n, o, cap=False)
-                back = trimesh.intersections.slice_mesh_plane(m, -n, o, cap=False)
+                front = trimesh.intersections.slice_mesh_plane(m, n, o, cap=cap)
+                back = trimesh.intersections.slice_mesh_plane(m, -n, o, cap=cap)
             except Exception:
-                continue
+                try:
+                    front = trimesh.intersections.slice_mesh_plane(m, n, o, cap=False)
+                    back = trimesh.intersections.slice_mesh_plane(m, -n, o, cap=False)
+                    cap = False
+                except Exception:
+                    continue
             parts = [p for p in (front, back) if p is not None and len(p.faces)]
             if len(parts) == 2:
                 m = trimesh.util.concatenate(parts)
@@ -641,6 +713,7 @@ def main() -> int:
             continue
         modules.append({"index": len(module_polys), "name": m_["name"], "prefab": m_["prefab"], "poly": poly})
         module_polys.append(poly)
+    module_cells_: list = module_cells(module_polys) if module_polys else []
     if modules:
         print(f"  modules: " + ", ".join(f"{m['name']}{'' if m['prefab'] else ' (site-built)'} {m['poly'].area:.0f} m²" for m in modules))
         # which ROOMS each module holds (the other IfcSpaces, by centroid):
@@ -755,7 +828,7 @@ def main() -> int:
             mesh = trimesh.Trimesh(vertices=verts, faces=pfaces, process=False)
             mesh.remove_unreferenced_vertices()
             if module_polys:
-                pieces = partition_mesh(mesh, module_polys)
+                pieces = partition_mesh(mesh, module_polys, cells=module_cells_)
                 if len(pieces) > 1:
                     module_stats["sliced"] += 1
                 for mod, piece in pieces.items():

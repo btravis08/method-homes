@@ -100,7 +100,7 @@ jobs:
         with:
           node-version: 22
       - name: Install the pipeline
-        run: python -m pip install -q ifcopenshell trimesh numpy scipy shapely networkx
+        run: python -m pip install -q ifcopenshell trimesh numpy scipy shapely networkx mapbox-earcut manifold3d
 
       - name: Resolve the IFC source
         id: src
