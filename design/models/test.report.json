@@ -1,79 +1,79 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 670688,
-  "triangles": 26154,
-  "seconds": 85.8,
+  "bytes": 891692,
+  "triangles": 35432,
+  "seconds": 88.1,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
-    "width_m": 88.29,
-    "depth_m": 77.62,
-    "height_m": 24.38
+    "width_m": 28.28,
+    "depth_m": 50.53,
+    "height_m": 6.13
   },
   "storeys": [
     {
       "index": 0,
       "name": "INTERNAL ORIGIN",
-      "elevation_m": -2019.3,
+      "elevation_m": -2037.553,
       "habitable": false
     },
     {
       "index": 1,
       "name": "BASEMENT",
-      "elevation_m": 17.221,
+      "elevation_m": -1.032,
       "habitable": false
     },
     {
       "index": 2,
       "name": "FOUNDATION",
-      "elevation_m": 18.253,
+      "elevation_m": 0.0,
       "habitable": true
     },
     {
       "index": 3,
       "name": "FIRST FLOOR",
-      "elevation_m": 19.812,
+      "elevation_m": 1.559,
       "habitable": true
     },
     {
       "index": 4,
       "name": "GARAGE ROOF",
-      "elevation_m": 22.555,
+      "elevation_m": 4.302,
       "habitable": true
     },
     {
       "index": 5,
       "name": "T.O. ROOF",
-      "elevation_m": 24.371,
+      "elevation_m": 6.118,
       "habitable": false
     },
     {
       "index": 6,
       "name": "MAX HEIGHT",
-      "elevation_m": 24.613,
+      "elevation_m": 6.36,
       "habitable": false
     },
     {
       "index": 7,
       "name": "ROOF",
-      "elevation_m": 25.298,
+      "elevation_m": 7.045,
       "habitable": false
     }
   ],
   "kept": {
-    "IfcWallStandardCase": 177,
-    "IfcFooting": 43,
+    "IfcWallStandardCase": 178,
+    "IfcFooting": 44,
     "IfcDoor": 38,
     "IfcColumn": 33,
-    "IfcSlab": 26,
+    "IfcSlab": 32,
     "IfcWindow": 26,
     "IfcPlate": 21,
     "IfcMember": 20,
-    "IfcWall": 18,
-    "IfcStairFlight": 5,
-    "IfcBeam": 4,
-    "IfcRoof": 4
+    "IfcWall": 20,
+    "IfcRoof": 6,
+    "IfcBeam": 5,
+    "IfcStairFlight": 5
   },
   "dropped": {
     "IfcBuildingElementProxy": 2024,
@@ -84,17 +84,13 @@
     "IfcDistributionPort": 27,
     "IfcGrid": 8,
     "IfcBuildingStorey": 8,
-    "IfcSlab (site-scale element)": 6,
     "IfcStair": 4,
-    "IfcWallStandardCase (site-scale element)": 3,
-    "IfcRoof (site-scale element)": 2,
-    "IfcWall (site-scale element)": 2,
+    "floor (below ground)": 4,
+    "IfcWallStandardCase (outside the roof footprint)": 2,
     "IfcCovering": 1,
     "IfcCurtainWall": 1,
     "IfcBuilding": 1,
-    "IfcSite": 1,
-    "IfcBeam (site-scale element)": 1,
-    "IfcFooting (site-scale element)": 1
+    "IfcSite": 1
   },
   "proxies": [
     {
@@ -14146,168 +14142,25 @@
   "smallDropped": [],
   "siteDropped": [
     {
-      "type": "IfcBeam",
-      "name": "C-Channel:C12X30:2750647",
-      "id": "3ld21GKtT569YIB5xhZVnm",
-      "material": "Black",
-      "extent_m": [
-        0.1,
-        28.5,
-        0.3
-      ]
-    },
-    {
-      "type": "IfcFooting",
-      "name": "Wall Foundation:Bearing Footing - 40\" x 12\":2751568",
-      "id": "3ld21GKtT569YIB5xhZVYN",
-      "material": "Concrete, Cast-in-Place gray",
-      "extent_m": [
-        1.0,
-        31.4,
-        0.3
-      ]
-    },
-    {
-      "type": "IfcRoof",
-      "name": "Basic Roof:R1_Metal Roofing_Vented:2750231",
-      "id": "3ld21GKtT569YIB5xhZVFG",
-      "material": ". Metal Roofing",
-      "extent_m": [
-        18.9,
-        49.0,
-        0.4
-      ]
-    },
-    {
-      "type": "IfcRoof",
-      "name": "Fascia:Fascia-Flat 1x12:3462415",
-      "id": "3b_HZHdNf2hfDcsgaEmiYs",
-      "material": "KYNAR 500 MATTE BLACK SRI23",
-      "extent_m": [
-        26.9,
-        49.0,
-        1.5
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Floor:F1:2750173",
-      "id": "3ld21GKtT569YIB5xhZV8Q",
-      "material": "Reward Flooring Euro Oak Mannu",
-      "extent_m": [
-        17.5,
-        44.9,
-        0.3
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Floor:DECK:2751375",
-      "id": "3ld21GKtT569YIB5xhZVz8",
-      "material": "Reward Flooring Euro Oak Mannu",
-      "extent_m": [
-        15.5,
-        39.1,
-        0.3
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Floor:DECK:2751431",
-      "id": "3ld21GKtT569YIB5xhZVy0",
-      "material": "Reward Flooring Euro Oak Mannu",
-      "extent_m": [
-        7.4,
-        32.6,
-        0.3
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Floor:FC1-Crawlspace Slab:2751485",
-      "id": "3ld21GKtT569YIB5xhZVyw",
-      "material": "Concrete, Cast-in-Place gray",
-      "extent_m": [
-        17.1,
-        37.1,
-        0.2
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Pad:Pad 1:3833648",
-      "id": "37sk8aOWzBwhUVipnV6Vdu",
-      "material": "<Unnamed>",
-      "extent_m": [
-        17.5,
-        47.3,
-        0.0
-      ]
-    },
-    {
-      "type": "IfcSlab",
-      "name": "Pad:Pad 1:3833688",
-      "id": "37sk8aOWzBwhUVipnV6VcG",
-      "material": "<Unnamed>",
-      "extent_m": [
-        8.3,
-        32.4,
-        0.0
-      ]
-    },
-    {
-      "type": "IfcWall",
-      "name": "Basic Wall:W3_INT MRG LN_5-1/2\":2750146",
-      "id": "3ld21GKtT569YIB5xhZV85",
-      "material": ".15/32\" CDX Plywood",
-      "extent_m": [
-        0.2,
-        30.9,
-        2.7
-      ]
-    },
-    {
-      "type": "IfcWall",
-      "name": "Basic Wall:W3_INT MRG LN_5-1/2\":2751361",
-      "id": "3ld21GKtT569YIB5xhZVz6",
-      "material": ".15/32\" CDX Plywood",
-      "extent_m": [
-        0.2,
-        30.9,
-        2.7
-      ]
-    },
-    {
       "type": "IfcWallStandardCase",
-      "name": "Basic Wall:WC1_CONC FND_8\" decorative:2750177",
-      "id": "3ld21GKtT569YIB5xhZV8c",
+      "name": "Basic Wall:WC1_CONC FND_8\" decorative:3743989",
+      "id": "2msxNVBeL9VwNcOACfAfyy",
       "material": ". Concrete, Cast-in-Place gray",
       "extent_m": [
-        0.2,
-        28.8,
-        1.4
+        6.8,
+        7.0,
+        0.9
       ]
     },
     {
       "type": "IfcWallStandardCase",
-      "name": "Basic Wall:W1-A_EXT INSUL_5-1/2\":2750263",
-      "id": "3ld21GKtT569YIB5xhZVFm",
-      "material": "VERTICAL STAINED WOOD SIDING",
+      "name": "Basic Wall:WC1_CONC FND_8\" decorative:3744064",
+      "id": "2msxNVBeL9VwNcOACfAfw9",
+      "material": ". Concrete, Cast-in-Place gray",
       "extent_m": [
-        0.2,
-        26.9,
-        1.2
-      ]
-    },
-    {
-      "type": "IfcWallStandardCase",
-      "name": "Basic Wall:WC1_CONC FND_12\":2751536",
-      "id": "3ld21GKtT569YIB5xhZVZt",
-      "material": "Concrete, Cast-in-Place gray",
-      "extent_m": [
-        0.3,
-        30.8,
-        1.3
+        2.7,
+        3.2,
+        0.9
       ]
     }
   ],
@@ -14322,13 +14175,13 @@
       "node": "storey1_structure",
       "storey": 1,
       "category": "structure",
-      "triangles": 480
+      "triangles": 540
     },
     {
       "node": "storey2_floor",
       "storey": 2,
       "category": "floor",
-      "triangles": 276
+      "triangles": 412
     },
     {
       "node": "storey2_structure",
@@ -14340,7 +14193,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476",
       "storey": 2,
       "category": "wall",
-      "triangles": 654,
+      "triangles": 666,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14357,7 +14210,7 @@
       "node": "storey3_floor",
       "storey": 3,
       "category": "floor",
-      "triangles": 68
+      "triangles": 324
     },
     {
       "node": "storey3_frame",
@@ -14381,13 +14234,13 @@
       "node": "storey3_structure",
       "storey": 3,
       "category": "structure",
-      "triangles": 600
+      "triangles": 676
     },
     {
       "node": "storey3_wall__15-32-cdx-plywood-787878",
       "storey": 3,
       "category": "wall",
-      "triangles": 432,
+      "triangles": 694,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14431,7 +14284,7 @@
       "node": "storey3_wall__concrete-cast-in-place-gray-818476",
       "storey": 3,
       "category": "wall",
-      "triangles": 436,
+      "triangles": 272,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14464,7 +14317,7 @@
       "node": "storey3_wall__vertical-stained-wood-siding-787878",
       "storey": 3,
       "category": "wall",
-      "triangles": 990,
+      "triangles": 1002,
       "material": {
         "key": "vertical-stained-wood-siding-787878",
         "name": "VERTICAL STAINED WOOD SIDING",
@@ -14475,7 +14328,7 @@
       "node": "storey4_roof",
       "storey": 4,
       "category": "roof",
-      "triangles": 2824
+      "triangles": 11404
     },
     {
       "node": "storey4_structure",
@@ -14497,17 +14350,23 @@
   ],
   "keepMaterials": true,
   "materials": {
-    "concrete-cast-in-place-gray-818476": {
-      "name": ". Concrete, Cast-in-Place gray",
-      "color": "#818476",
-      "faces": 1090,
-      "elements": 70
-    },
     "vertical-stained-wood-siding-787878": {
       "name": "VERTICAL STAINED WOOD SIDING",
       "color": "#787878",
-      "faces": 990,
-      "elements": 31
+      "faces": 1002,
+      "elements": 32
+    },
+    "concrete-cast-in-place-gray-818476": {
+      "name": ". Concrete, Cast-in-Place gray",
+      "color": "#818476",
+      "faces": 938,
+      "elements": 70
+    },
+    "15-32-cdx-plywood-787878": {
+      "name": ".15/32\" CDX Plywood",
+      "color": "#787878",
+      "faces": 694,
+      "elements": 33
     },
     "5-8-gwb-level-5-787878": {
       "name": ". 5/8\" GWB (Level 5)",
@@ -14520,12 +14379,6 @@
       "color": "#787878",
       "faces": 432,
       "elements": 19
-    },
-    "15-32-cdx-plywood-787878": {
-      "name": ".15/32\" CDX Plywood",
-      "color": "#787878",
-      "faces": 432,
-      "elements": 31
     },
     "black-0d0d0d": {
       "name": "Black",
@@ -14547,6 +14400,10 @@
     }
   },
   "surfaceStyles": {
+    "roof:#7e7e7e": {
+      "faces": 11248,
+      "elements": 4
+    },
     "door:#8c4c26": {
       "faces": 5896,
       "elements": 11
@@ -14559,33 +14416,29 @@
       "faces": 2944,
       "elements": 26
     },
-    "roof:#7e7e7e": {
-      "faces": 2812,
-      "elements": 3
-    },
     "wall:#787878": {
-      "faces": 2502,
-      "elements": 111
+      "faces": 2776,
+      "elements": 114
     },
     "door:#787878": {
       "faces": 1464,
       "elements": 3
     },
     "wall:#818476": {
-      "faces": 1090,
+      "faces": 938,
       "elements": 70
+    },
+    "structure:#0d0d0d": {
+      "faces": 892,
+      "elements": 37
     },
     "door:#e4e4e4": {
       "faces": 832,
       "elements": 4
     },
-    "structure:#0d0d0d": {
-      "faces": 816,
-      "elements": 36
-    },
     "structure:#818476": {
-      "faces": 732,
-      "elements": 44
+      "faces": 792,
+      "elements": 45
     },
     "glass:#0080c0": {
       "faces": 552,
@@ -14603,6 +14456,10 @@
       "faces": 276,
       "elements": 23
     },
+    "floor:#787878": {
+      "faces": 244,
+      "elements": 5
+    },
     "structure:#787878": {
       "faces": 240,
       "elements": 20
@@ -14611,9 +14468,21 @@
       "faces": 190,
       "elements": 7
     },
+    "roof:#787878": {
+      "faces": 156,
+      "elements": 2
+    },
+    "floor:#666666": {
+      "faces": 120,
+      "elements": 2
+    },
     "wall:#0080c0": {
       "faces": 116,
       "elements": 3
+    },
+    "floor:#505050": {
+      "faces": 92,
+      "elements": 1
     },
     "wall:#808080": {
       "faces": 72,
@@ -14623,9 +14492,9 @@
       "faces": 72,
       "elements": 2
     },
-    "floor:#787878": {
-      "faces": 48,
-      "elements": 2
+    "floor:#323232": {
+      "faces": 52,
+      "elements": 1
     },
     "stair:#818476": {
       "faces": 40,
@@ -14634,15 +14503,7 @@
     "door:#808080": {
       "faces": 24,
       "elements": 2
-    },
-    "floor:#666666": {
-      "faces": 20,
-      "elements": 1
-    },
-    "roof:#787878": {
-      "faces": 12,
-      "elements": 1
     }
   },
-  "compressedBytes": 78504
+  "compressedBytes": 83580
 }
