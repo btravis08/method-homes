@@ -643,6 +643,29 @@ def main() -> int:
         module_polys.append(poly)
     if modules:
         print(f"  modules: " + ", ".join(f"{m['name']}{'' if m['prefab'] else ' (site-built)'} {m['poly'].area:.0f} m²" for m in modules))
+        # which ROOMS each module holds (the other IfcSpaces, by centroid):
+        # the viewer's module story opens on "the module with the kitchen"
+        import shapely
+
+        chosen_ids = {m_["space"].id() for m_ in module_spaces(model)}
+        for m_ in modules:
+            m_["rooms"] = []
+        for sp in model.by_type("IfcSpace"):
+            if sp.id() in chosen_ids or not getattr(sp, "Representation", None):
+                continue
+            label = (sp.LongName or sp.Name or "").strip()
+            if not label:
+                continue
+            try:
+                shp = ifcopenshell.geom.create_shape(settings, sp)
+                sv = np.array(shp.geometry.verts, dtype=np.float64).reshape(-1, 3)
+                c = shapely.points(sv[:, :2].mean(axis=0))
+            except Exception:
+                continue
+            best = min(modules, key=lambda m: float(m["poly"].distance(c)))
+            if float(best["poly"].distance(c)) <= 0.5:
+                best["rooms"].append(label)
+        print("  rooms: " + "; ".join(f"{m['name']}: {', '.join(m['rooms']) or '—'}" for m in modules))
     module_stats: Counter = Counter()
 
     # surface-style inventory per category (always reported) and the
@@ -807,7 +830,7 @@ def main() -> int:
         mx, my = m_["poly"].centroid.x, m_["poly"].centroid.y
         b = m_["poly"].bounds
         centre = [round(float(mx - cx), 3), round(float(-(my - cy)), 3)]
-        info = {"index": m_["index"], "name": m_["name"], "prefab": m_["prefab"], "centre": centre, "size_m": [round(float(b[2] - b[0]), 2), round(float(b[3] - b[1]), 2)]}
+        info = {"index": m_["index"], "name": m_["name"], "prefab": m_["prefab"], "centre": centre, "size_m": [round(float(b[2] - b[0]), 2), round(float(b[3] - b[1]), 2)], "rooms": m_.get("rooms", [])}
         modules_out.append(info)
         node_name = f"module{m_['index']}"
         module_nodes[m_["index"]] = node_name
