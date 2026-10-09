@@ -133,12 +133,14 @@ CATALOG_RE = re.compile(r"^[A-Z]{1,4}\d{2,}[A-Z0-9-]*$")
 # footprint and the neighbourhood every other kept element must share
 ENVELOPE = ("wall", "roof", "floor", "glass", "frame", "door", "stair")
 OUTLIER_M = 15.0  # kept elements further than this from the envelope are site context, not the home
-# a SINGLE wall/slab element longer or taller than this is site work (the
-# Method sample carried an 88 m × 20 m cast-in-place retaining wall as an
-# IfcWall on the FIRST FLOOR storey — it dragged the ground 17 m down and
-# the footprint to 88 m); the longest module wall is ~18 m
-SITE_MAX_LEN_M = 25.0
-SITE_MAX_HEIGHT_M = 7.5
+# the CORE is the roofs' plan extent (+margin): the Method sample carried
+# an 88 m cast-in-place retaining wall as IfcWall segments on the FIRST
+# FLOOR storey — same type and storey as the house, so only "is it under
+# the roof?" tells them apart. (A length test failed: this home's main
+# roof is 49 m long.) Wall/floor meshes entirely below the ground storey
+# are the segments running down the slope.
+CORE_MARGIN_M = 3.0
+BELOW_GROUND_M = 1.5
 
 
 ROOF_NAME = re.compile(r"roof|\btak\b|plåttak|dach|toit|tetto|cubierta", re.IGNORECASE)
@@ -463,6 +465,31 @@ def main() -> int:
         cache.parent.mkdir(parents=True, exist_ok=True)
         np.savez(cache, **arrays)
 
+    # the CORE in plan: the roofs' extent (+margin), or the walls of the
+    # busiest storey when the model has no IfcRoof — everything kept must
+    # touch it, or it is site work (see CORE_MARGIN_M)
+    def xy_box(v):
+        lo_, hi_ = v.min(axis=0), v.max(axis=0)
+        return (lo_[0], lo_[1], hi_[0], hi_[1])
+
+    boxes = [xy_box(shapes[g][0]) for g, (el, cat) in wanted.items() if g in shapes and cat == "roof" and len(shapes[g][1])]
+    if not boxes:
+        by_storey: Counter = Counter()
+        for g, (el, cat) in wanted.items():
+            if g in shapes and cat == "wall":
+                st_ = storey_of(el)
+                by_storey[st_.GlobalId if st_ is not None else None] += len(shapes[g][1])
+        top = by_storey.most_common(1)[0][0] if by_storey else None
+        for g, (el, cat) in wanted.items():
+            if g in shapes and cat == "wall":
+                st_ = storey_of(el)
+                if (st_.GlobalId if st_ is not None else None) == top:
+                    boxes.append(xy_box(shapes[g][0]))
+    core = None
+    if boxes:
+        a = np.array(boxes, dtype=np.float64)
+        core = (a[:, 0].min() - CORE_MARGIN_M, a[:, 1].min() - CORE_MARGIN_M, a[:, 2].max() + CORE_MARGIN_M, a[:, 3].max() + CORE_MARGIN_M)
+
     # surface-style inventory per category (always reported) and the
     # per-material wall split (--keep-materials): key → {name, rgb, faces}
     styles_seen: dict[str, dict] = defaultdict(lambda: {"faces": 0, "elements": set()})
@@ -500,11 +527,12 @@ def main() -> int:
             small.append({"type": t, "name": el.Name, "id": el.GlobalId, "size_m": round(size, 2)})
             dropped[f"{t} (small)"] += 1
             continue
-        ext = verts.max(axis=0) - verts.min(axis=0)  # IFC is Z-up here
-        if cat in ("wall", "floor", "roof", "structure") and not allowed and (max(ext[0], ext[1]) > SITE_MAX_LEN_M or ext[2] > SITE_MAX_HEIGHT_M):
-            site.append({"type": t, "name": el.Name, "id": el.GlobalId, "material": element_material_name(el), "extent_m": [round(float(x), 1) for x in ext]})
-            dropped[f"{t} (site-scale element)"] += 1
-            continue
+        if core is not None and cat != "roof" and not allowed:
+            lo2, hi2 = verts.min(axis=0), verts.max(axis=0)
+            if hi2[0] < core[0] or lo2[0] > core[2] or hi2[1] < core[1] or lo2[1] > core[3]:
+                site.append({"type": t, "name": el.Name, "id": el.GlobalId, "material": element_material_name(el), "extent_m": [round(float(x), 1) for x in (hi2 - lo2)]})
+                dropped[f"{t} (outside the roof footprint)"] += 1
+                continue
         st = storey_of(el)
         si = storey_index.get(st.GlobalId, 0) if st is not None else 0
         # pane / frame split: faces whose surface style is transparent are
@@ -582,13 +610,26 @@ def main() -> int:
             del groups[key]
     for cat_name, n in outliers.items():
         dropped[f"{cat_name} (outlier, >{OUTLIER_M:g} m from the envelope)"] += n
+    # the ground: the lowest storey that holds WALLS (foundation walls
+    # count; footings below it stay underground, below y = 0)
+    wall_storeys = {si for (si, cat, _) in groups if cat == "wall"}
+    ground = [s["elevation"] for i, s in enumerate(storeys) if i in wall_storeys]
+    base_z = min(ground) if ground else float(env_lo[2])
+    # wall/floor meshes entirely below the ground are the retaining-wall
+    # segments stepping down the slope, not the home
+    for key in list(groups):
+        if key[1] in ("wall", "floor"):
+            keep_ms = [m for m in groups[key] if float(m.vertices[:, 2].max()) >= base_z - BELOW_GROUND_M]
+            n_below = len(groups[key]) - len(keep_ms)
+            if n_below:
+                dropped[f"{key[1]} (below ground)"] += n_below
+            if keep_ms:
+                groups[key] = keep_ms
+            else:
+                del groups[key]
     all_v = np.vstack([m.vertices for ms in groups.values() for m in ms])
     lo, hi = all_v.min(axis=0), all_v.max(axis=0)
     cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
-    # the ground: the lowest storey that holds envelope geometry, or the
-    # envelope's own lowest point if the storey is lower still
-    used = {si for (si, cat, _) in groups if cat in ENVELOPE} or {si for (si, _, _) in groups}
-    base_z = min([s["elevation"] for i, s in enumerate(storeys) if i in used] + [float(env_lo[2])]) if storeys else float(env_lo[2])
     # Z-up (x, y, z) → Y-up (x, z, -y)
     to_yup = np.array([[1, 0, 0, -cx], [0, 0, 1, -base_z], [0, -1, 0, cy], [0, 0, 0, 1]], dtype=np.float64)
 
