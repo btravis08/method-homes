@@ -774,7 +774,8 @@ class ViewerState {
       const rot = THREE.MathUtils.degToRad(input.northDeg);
       const wr = Math.abs(f.width_m * Math.cos(rot)) + Math.abs(f.depth_m * Math.sin(rot));
       const dr = Math.abs(f.width_m * Math.sin(rot)) + Math.abs(f.depth_m * Math.cos(rot));
-      const fit = Math.max(dr, wr / Math.max(cam.aspect, 0.5)) * 1.12;
+      /* the plan fills 80% of the container's limiting axis (Bryce, 2026-10-09) */
+      const fit = Math.max(dr, wr / Math.max(cam.aspect, 0.5)) / 0.8;
       const topDistance = fit / (2 * Math.tan(THREE.MathUtils.degToRad(FOV_PLAN / 2)));
       this.sph.setFromVector3(this.orbitPos);
       const phi = THREE.MathUtils.lerp(this.sph.phi, 0.012, e);
@@ -791,7 +792,10 @@ class ViewerState {
         cam.fov = FOV_3D;
         cam.updateProjectionMatrix();
       }
-      const r = this.radius();
+      /* a portrait container (phones: 75svh tall, 428 wide) sees a narrower
+         slice — back the camera off by the inverse aspect so the long home
+         is not cropped at the sides (2026-10-09) */
+      const r = this.radius() * Math.max(1, 1 / Math.max(cam.aspect, 0.3));
       const len = cam.position.length();
       if (len < r * 0.8 || len > r * 1.25) cam.position.setLength(r);
     }
@@ -947,7 +951,9 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   return (
     <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
       {!ready && showLoading && <p className="label absolute bottom-xl left-xl z-10 rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>}
-      <div className="aspect-[4/3] w-full transition-opacity duration-700 ease-out md:aspect-[16/9]" style={{ opacity: ready ? 1 : 0 }}>
+      {/* 75% of the viewport height on phones (Bryce, 2026-10-09), 16:9 from
+          md up; a viewport fraction has no spacing token by nature */}
+      <div className="h-[75svh] w-full transition-opacity duration-700 ease-out md:aspect-[16/9] md:h-auto" style={{ opacity: ready ? 1 : 0 }}>
         <Canvas
           shadows="variance"
           onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
@@ -1037,8 +1043,10 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
         </Canvas>
       </div>
 
-      {/* mode + storey controls: DOM, library-styled */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 flex flex-wrap items-center justify-between gap-lg p-xl">
+      {/* mode + storey controls: DOM, library-styled; centred along the
+          bottom edge, 20 px up (Bryce, 2026-10-09 — between the xl and 2xl
+          tokens, so 1.25rem is set outright) */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-[1.25rem] flex flex-wrap items-center justify-center gap-lg px-xl">
         <div role="group" aria-label="View" className="pointer-events-auto flex items-center gap-xxs rounded-(--radius-full) bg-line-2 p-xxs">
           {(["3d", "plan"] as Mode[]).map((m) => (
             <button

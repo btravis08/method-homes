@@ -753,6 +753,14 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   cropped. It now fits the north-up footprint (turned by northDeg,
   longer screen axis against the viewport aspect, 12% air). Run
   37875183832 re-flagged the storeys: only FIRST FLOOR habitable.
+- Mobile layout (Bryce, 2026-10-09): the viewer container is 75svh on
+  phones (16:9 from md up), the plan fills 80% of the container's
+  limiting axis (fit ÷ 0.8), and the controls sit centred along the
+  bottom edge 20 px up (1.25rem — between the xl and 2xl tokens, set
+  outright). Measured with Playwright at 428×926: container 695 px
+  (0.75), controls gap 20 px, centre offset 0. The 3D orbit radius
+  now scales by the inverse aspect in portrait so the 50 m home is
+  not cropped at the sides.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
