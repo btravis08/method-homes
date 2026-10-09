@@ -14,6 +14,7 @@ import { author, post, postCategory } from "./blog";
 import { plan, series } from "./catalog";
 import { glossary } from "./glossary";
 import { commercialType, market } from "./markets";
+import { model3d } from "./model3d";
 import { press } from "./press";
 import { product } from "./product";
 import { project } from "./project";
@@ -43,6 +44,7 @@ const base = [
   navigation,
   siteSettings,
   blockContent,
+  model3d,
   ...sectionTypes,
 ];
 

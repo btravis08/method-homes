@@ -644,17 +644,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   pass). When built: section = three DOM-text columns + one slider +
   one toggle; Sanity `method-page-pricing` body still holds the
   crawled copy.
-### 2026-10-09 — IFC intake slot: `plan.sourceModel` (Bryce has a 50 MB Method IFC)
-- model-pipeline.yml already resolved `sourceModel.asset->url` from the
-  plan document, but the schema never had the field — the only way in
-  was a public `ifc_url`. Added `sourceModel` (file, accept .ifc) to
-  the plan's Drawings & files group. Upload in the Studio, then
-  dispatch model-pipeline with the plan's slug. Sanity assets are
-  unlisted CDN URLs, so Method's model never lands in the public repo
-  (GitHub also warns at 50 MB). Bryce's IFC carries siding materials
-  to keep — ifc-to-glb.py currently re-materials by category
-  (`apply-default-materials`), so a material-preserving path is the
-  next pipeline change once the file is in.
+### 2026-10-09 — IFC intake: `model3d` documents (Bryce has a 50 MB Method IFC)
+- model-pipeline.yml resolved `sourceModel.asset->url` from the plan
+  document, but the schema never had the field — the only way in was
+  a public `ifc_url`. First pass added `plan.sourceModel`; Bryce
+  corrected the model: "i am not going to upload models to the
+  series. this will be a bespoke interactive component." So: new
+  `model3d` document type (src/sanity/schemaTypes/model3d.ts; Studio
+  → 3D models) with name, slug, Source model (IFC), Keep source siding
+  materials, Web model (GLB), north rotation; the plan field was
+  removed again. Workflow: slug now names a model3d document (plan
+  kept as legacy fallback) for both the IFC lookup and the GLB
+  attach. Sanity assets are unlisted CDN URLs, so Method's model never
+  lands in the public repo (GitHub also warns at 50 MB). Bryce's IFC
+  carries siding materials to keep — ifc-to-glb.py currently
+  re-materials by category (`apply-default-materials`), so a
+  material-preserving path honouring `keepMaterials` is the next
+  pipeline change once the file is in; the bespoke viewer section
+  then references the model3d doc.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

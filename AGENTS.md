@@ -140,14 +140,19 @@ staging/design use.
   a GLB: the pipeline is what strips furniture/services, re-materials
   by category, normalises units/orientation and stores storeys +
   TrueNorth in the glTF extras the viewer depends on.
-- IFC INTAKE (2026-10-09): client IFCs go on the plan document's
-  `sourceModel` field (Studio → Floor plan → Drawings & files →
-  Source model (IFC)); the workflow resolves it by slug when
-  `ifc_url` is empty. Sanity's asset CDN is unlisted, so Method's
+- IFC INTAKE (2026-10-09): models are NOT attached to series or floor
+  plans (Bryce: "this will be a bespoke interactive component"). They
+  live in their own `model3d` documents (Studio → 3D models): name,
+  slug, Source model (IFC), Keep source siding materials, Web model
+  (GLB), north rotation. Upload the IFC there, dispatch
+  model-pipeline with the document's slug; the workflow resolves the
+  IFC by slug (model3d first, plan as legacy fallback) and writes the
+  GLB + northDeg back. Sanity's asset CDN is unlisted, so Method's
   models never enter this public repo (GitHub warns at 50 MB anyway).
   Method's files carry siding materials to KEEP — the category
   re-material step must learn to pass real IfcSurfaceStyle colours
-  through for siding before the next conversion.
+  through for siding (honour `keepMaterials`) before the next
+  conversion. The bespoke viewer section references a model3d doc.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

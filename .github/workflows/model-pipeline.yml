@@ -1,8 +1,8 @@
 name: model-pipeline
 
 # IFC → web GLB for the 3D plan viewer, plus the photoreal turntable,
-# unattended. Give it an IFC (a URL, or a Floor plan slug whose document
-# carries a `sourceModel` file) and:
+# unattended. Give it an IFC (a URL, or the slug of a `model3d` document
+# — the Studio's "3D models" — whose `sourceModel` file is the IFC) and:
 #
 #   convert  runs scripts/model/ifc-to-glb.py + gltf-transform, commits
 #            public/models/<slug>.glb + design/models/<slug>.report.json
@@ -23,10 +23,10 @@ on:
   workflow_dispatch:
     inputs:
       slug:
-        description: "Floor plan slug (names the output; also looked up in Sanity when ifc_url is empty). May be nested, e.g. sample/basic-house"
+        description: "3D model slug (names the output; the model3d document with this slug supplies the IFC when ifc_url is empty). May be nested, e.g. sample/basic-house"
         required: true
       ifc_url:
-        description: "URL of the IFC to convert (optional when the plan document has a sourceModel)"
+        description: "URL of the IFC to convert (optional when the 3D model document has a Source model)"
         required: false
       allow:
         description: "Comma list of element names/GlobalIds to keep even if small"
@@ -35,7 +35,7 @@ on:
         description: "Comma list of element names/GlobalIds to drop"
         required: false
       attach:
-        description: "Upload the GLB to Sanity and attach it to the plan (needs a write token)"
+        description: "Upload the GLB to Sanity and attach it to the 3D model document (needs a write token)"
         type: boolean
         default: true
       render:
@@ -102,9 +102,9 @@ jobs:
           set -euo pipefail
           URL="${{ github.event.inputs.ifc_url }}"
           if [ -z "$URL" ]; then
-            URL=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type==\"plan\" && slug.current==\"${{ github.event.inputs.slug }}\"][0]{ \"url\": sourceModel.asset->url }")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; print(json.load(sys.stdin)["result"]["url"] or "")')
+            URL=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type in [\"model3d\",\"plan\"] && slug.current==\"${{ github.event.inputs.slug }}\" && defined(sourceModel)][0]{ \"url\": sourceModel.asset->url }")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; r=json.load(sys.stdin)["result"]; print((r or {}).get("url") or "")')
           fi
-          [ -n "$URL" ] || { echo "no IFC: pass ifc_url or upload a Source model (IFC) on the plan"; exit 1; }
+          [ -n "$URL" ] || { echo "no IFC: pass ifc_url or upload a Source model (IFC) on the 3D model document with this slug"; exit 1; }
           echo "url=$URL" >> "$GITHUB_OUTPUT"
           curl -sS -L -o source.ifc "$URL"
           ls -la source.ifc
@@ -140,7 +140,7 @@ jobs:
           path: /tmp/source.raw.glb
           retention-days: 1
 
-      - name: Attach to the plan in Sanity
+      - name: Attach to the 3D model document in Sanity
         if: ${{ github.event.inputs.attach == 'true' && env.SANITY_AUTH_TOKEN != '' }}
         env:
           SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
@@ -150,8 +150,8 @@ jobs:
           ASSET=$(curl -sS -X POST "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/assets/files/$SANITY_DATASET?filename=$(basename "$SLUG").glb" \
             -H "Authorization: Bearer $SANITY_AUTH_TOKEN" -H "Content-Type: model/gltf-binary" --data-binary "@public/models/$SLUG.glb" | python -c 'import json,sys; print(json.load(sys.stdin)["document"]["_id"])')
           NORTH=$(python -c "import json; print(json.load(open('design/models/$SLUG.report.json'))['northDeg'])")
-          ID=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type==\"plan\" && slug.current==\"$SLUG\"][0]._id")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; print(json.load(sys.stdin)["result"] or "")')
-          [ -n "$ID" ] || { echo "no plan document with slug $SLUG — GLB committed, not attached"; exit 0; }
+          ID=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type in [\"model3d\",\"plan\"] && slug.current==\"$SLUG\"] | order(_type asc)[0]._id")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; print(json.load(sys.stdin)["result"] or "")')
+          [ -n "$ID" ] || { echo "no 3D model (or plan) document with slug $SLUG — GLB committed, not attached"; exit 0; }
           curl -sS -X POST "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/mutate/$SANITY_DATASET" \
             -H "Authorization: Bearer $SANITY_AUTH_TOKEN" -H "Content-Type: application/json" \
             -d "{\"mutations\":[{\"patch\":{\"id\":\"$ID\",\"set\":{\"model\":{\"_type\":\"file\",\"asset\":{\"_type\":\"reference\",\"_ref\":\"$ASSET\"}},\"northDeg\":$NORTH}}}]}" | head -c 300; echo

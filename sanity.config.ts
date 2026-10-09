@@ -196,6 +196,11 @@ S.listItem()
                 ),
             ]),
         ),
+      S.listItem()
+        .title("3D models")
+        .icon(icons["cube"])
+        .schemaType("model3d")
+        .child(S.documentTypeList("model3d").title("3D models")),
       ...(designops.features.projects
         ? [
 S.listItem()
