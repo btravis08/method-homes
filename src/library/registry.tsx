@@ -457,6 +457,25 @@ export const SECTIONS: SectionEntry[] = [
     ),
   },
   {
+    slug: "plan-viewer-method",
+    title: "3D plan viewer — Method model",
+    group: "Page sections",
+    description: "Method's own IFC (Studio → 3D models → “test”, 2026-10-09) through the same pipeline with --keep-materials: walls split by their Revit material names (vertical stained wood siding, board-form concrete, cast-in-place concrete, black trim, glass), interior layers white, the finish chosen by name because the IFC carries material identity, not colour. Stain colour is a placeholder until Method confirms it.",
+    modes: ["light"],
+    tall: true,
+    render: () => (
+      <section data-mode="light" className="w-full bg-surface px-4 py-8xl text-ink md:px-7xl md:py-10xl">
+        <div className="mx-auto flex w-full max-w-page flex-col gap-3xl">
+          <div className="flex flex-col gap-xl">
+            <p className="label text-ink-3">Walk the plan</p>
+            <h2 className="font-display text-headline-md text-ink">Method reference home — 3D and floor plan</h2>
+          </div>
+          <LazyPlanViewer src="/models/test.glb" alt="Method reference home, single storey with a garage wing" />
+        </div>
+      </section>
+    ),
+  },
+  {
     slug: "turntable",
     title: "Rendered turntable",
     group: "Page sections",
