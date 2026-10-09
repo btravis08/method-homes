@@ -1,63 +1,63 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 971992,
-  "triangles": 38620,
-  "seconds": 92.4,
+  "bytes": 897252,
+  "triangles": 35608,
+  "seconds": 69.1,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
     "width_m": 88.29,
     "depth_m": 77.62,
-    "height_m": 2043.68
+    "height_m": 24.38
   },
   "storeys": [
     {
       "index": 0,
       "name": "INTERNAL ORIGIN",
-      "elevation_m": 0.0,
+      "elevation_m": -2019.3,
       "habitable": false
     },
     {
       "index": 1,
       "name": "BASEMENT",
-      "elevation_m": 2036.521,
+      "elevation_m": 17.221,
       "habitable": false
     },
     {
       "index": 2,
       "name": "FOUNDATION",
-      "elevation_m": 2037.553,
+      "elevation_m": 18.253,
       "habitable": true
     },
     {
       "index": 3,
       "name": "FIRST FLOOR",
-      "elevation_m": 2039.112,
+      "elevation_m": 19.812,
       "habitable": true
     },
     {
       "index": 4,
       "name": "GARAGE ROOF",
-      "elevation_m": 2041.855,
+      "elevation_m": 22.555,
       "habitable": true
     },
     {
       "index": 5,
       "name": "T.O. ROOF",
-      "elevation_m": 2043.671,
+      "elevation_m": 24.371,
       "habitable": false
     },
     {
       "index": 6,
       "name": "MAX HEIGHT",
-      "elevation_m": 2043.913,
+      "elevation_m": 24.613,
       "habitable": false
     },
     {
       "index": 7,
       "name": "ROOF",
-      "elevation_m": 2044.598,
+      "elevation_m": 25.298,
       "habitable": false
     }
   ],
@@ -73,11 +73,10 @@
     "IfcWall": 20,
     "IfcRoof": 6,
     "IfcBeam": 5,
-    "IfcStairFlight": 5,
-    "IfcBuildingElementProxy": 2
+    "IfcStairFlight": 5
   },
   "dropped": {
-    "IfcBuildingElementProxy": 2022,
+    "IfcBuildingElementProxy": 2024,
     "IfcFlowTerminal": 164,
     "IfcFurnishingElement": 151,
     "IfcOpeningElement": 87,
@@ -341,7 +340,8 @@
       "name": "T24IF905SP:T24IF905SP:2750684",
       "id": "3ld21GKtT569YIB5xhZVmR",
       "size_m": 2.13,
-      "kept": true
+      "kept": false,
+      "reason": "name"
     },
     {
       "name": "MH_SE-Dishwasher:24\"w x 34 1/2\"h x 24\"d:2750685",
@@ -368,7 +368,8 @@
       "name": "T24IF905SP:T24IF905SP:2750692",
       "id": "3ld21GKtT569YIB5xhZVmZ",
       "size_m": 2.13,
-      "kept": true
+      "kept": false,
+      "reason": "name"
     },
     {
       "name": "Enscape AssetDefinition - Bush 012 English Laurel:Enscape AssetDefinition - Bush 012 English Laurel:2750787",
@@ -14139,12 +14140,6 @@
   "smallDropped": [],
   "nodes": [
     {
-      "node": "storey0_misc",
-      "storey": 0,
-      "category": "misc",
-      "triangles": 3012
-    },
-    {
       "node": "storey0_structure",
       "storey": 0,
       "category": "structure",
@@ -14399,10 +14394,6 @@
       "faces": 2776,
       "elements": 114
     },
-    "misc:#535350": {
-      "faces": 2016,
-      "elements": 2
-    },
     "door:#787878": {
       "faces": 1464,
       "elements": 3
@@ -14410,10 +14401,6 @@
     "wall:#818476": {
       "faces": 1114,
       "elements": 72
-    },
-    "misc:#f4f4f4": {
-      "faces": 908,
-      "elements": 2
     },
     "structure:#0d0d0d": {
       "faces": 892,
@@ -14471,10 +14458,6 @@
       "faces": 92,
       "elements": 1
     },
-    "misc:#bdbbb9": {
-      "faces": 88,
-      "elements": 2
-    },
     "wall:#808080": {
       "faces": 72,
       "elements": 4
@@ -14496,5 +14479,5 @@
       "elements": 2
     }
   },
-  "compressedBytes": 87508
+  "compressedBytes": 83892
 }
