@@ -748,6 +748,11 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   walls plus an opening (door/window/frame) on it; the viewer reads
   the mesh names so older GLBs behave the same. One storey → no pills,
   plan cut at FIRST FLOOR.
+- Plan framing: the top-down distance was a flat ×6 of the longer
+  footprint side, which at FOV 8° shows 42 m — the 50 m long axis was
+  cropped. It now fits the north-up footprint (turned by northDeg,
+  longer screen axis against the viewport aspect, 12% air). Run
+  37875183832 re-flagged the storeys: only FIRST FLOOR habitable.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

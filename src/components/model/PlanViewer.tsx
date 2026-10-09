@@ -767,7 +767,15 @@ class ViewerState {
          angle closes to the top, the azimuth holds (no camera spin — the
          only turn is the model settling north-up), the radius eases to
          the plan distance. Deterministic in e, so no chase and no snap. */
-      const topDistance = Math.max(f.width_m, f.depth_m) * 6;
+      /* the plan distance FITS the north-up footprint in the frame: the
+         footprint turned by northDeg, the longer screen axis against the
+         viewport aspect, 12% air. (A flat ×6 cropped the Method home's
+         50 m long axis top and bottom, 2026-10-09.) */
+      const rot = THREE.MathUtils.degToRad(input.northDeg);
+      const wr = Math.abs(f.width_m * Math.cos(rot)) + Math.abs(f.depth_m * Math.sin(rot));
+      const dr = Math.abs(f.width_m * Math.sin(rot)) + Math.abs(f.depth_m * Math.cos(rot));
+      const fit = Math.max(dr, wr / Math.max(cam.aspect, 0.5)) * 1.12;
+      const topDistance = fit / (2 * Math.tan(THREE.MathUtils.degToRad(FOV_PLAN / 2)));
       this.sph.setFromVector3(this.orbitPos);
       const phi = THREE.MathUtils.lerp(this.sph.phi, 0.012, e);
       const r = THREE.MathUtils.lerp(this.sph.radius, topDistance, e);
