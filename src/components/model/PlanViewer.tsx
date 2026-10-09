@@ -126,8 +126,20 @@ export interface PlanViewerProps {
   /* degrees to rotate about the vertical axis so plan view is north-up
      (overrides the GLB's extras.northDeg) */
   northDeg?: number;
-  mode?: "3d" | "plan";
-  onModeChange?: (mode: "3d" | "plan") => void;
+  mode?: Mode;
+  onModeChange?: (mode: Mode) => void;
+  /* the toggle's steps, in order (default 3D / Floor plan, plus Modules
+     when the GLB has module nodes); "single" shows one module alone */
+  modes?: Mode[];
+  labels?: Partial<Record<Mode, string>>;
+  /* the module the "single" step shows: a room it holds ("KITCHEN") or
+     its own name ("MOD D"), matched case-insensitively */
+  focusRoom?: string;
+  /* how far the modules pull apart (positions scale by 1 + gap) */
+  explodeGap?: number;
+  /* dashed N–S / E–W lines across the gaps between adjacent modules
+     while they are apart, showing where they connect */
+  connectors?: boolean;
   className?: string;
   /* folder with env.json + the HDR (prep-env.py); default /models/env */
   envBase?: string;
@@ -146,7 +158,11 @@ export interface PlanViewerProps {
   descent?: boolean;
 }
 
-type Mode = "3d" | "plan";
+/* "modules" (Bryce, 2026-10-09): the prefab modules pull apart from the
+   footprint centre so each reads as its own shipped box — the pipeline
+   groups geometry under `module<K>` nodes (extras: centre) when the IFC
+   carries that structure; the button appears only when the GLB has them */
+export type Mode = "3d" | "plan" | "modules" | "single";
 interface Storey { index: number; name: string; elevation_m: number; habitable?: boolean }
 interface Footprint { width_m: number; depth_m: number; height_m: number }
 interface Extras { northDeg?: number; storeys?: Storey[]; footprint?: Footprint }
@@ -503,10 +519,36 @@ class ViewerState {
   private plantsLoading = false;
   private fade = 0;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
+  /* GROUND (Bryce, 2026-10-09: "remove the foundation, or hide anything
+     below the terrain"): the pipeline's ground is the lowest storey with
+     walls — on Method's model the FOUNDATION level, so the footings and
+     the crawl-space walls stood a storey tall under the home. The viewer
+     now puts the ground GROUND_BELOW_FLOOR under the lowest habitable
+     storey (a short plinth, like a home on a crawl space reads from the
+     street), drops the model by that much, and clips everything below
+     the lawn so nothing pokes through its relief. */
+  groundOffset = 0;
+  ground = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.02);
+  /* EXPLODE: module nodes slide out along the line from the footprint
+     centre to their own centre — positions scale about the centre, so a
+     row of modules gets even gaps. 0 = assembled, 1 = pulled apart. */
+  modules: { node: THREE.Object3D; index: number; name: string; centre: THREE.Vector3; size: THREE.Vector2; rooms: string[]; mats: THREE.Material[]; vis: number }[] = [];
+  explode = 0;
+  explodeGap = EXPLODE_GAP;
+  /* SINGLE (the module story, Bryce, 2026-10-09: "renders a single
+     module… the module that has the kitchen"): the other modules fade
+     out, the home slides so the focus module sits on the orbit centre
+     and the orbit tightens to its size */
+  focus: number | null = null;
+  single = 0;
+  /* dashed connectors between adjacent modules while they are apart */
+  connectors: THREE.Group | null = null;
+  wantConnectors = false;
+  adjacency: { a: number; b: number; axis: "x" | "z"; at: number }[] = [];
   /* `source` = the GLB's own colour when the pipeline kept the IFC's
      siding material (node `storey0_wall__cedar-siding-8a6a4b`); the
      category palette otherwise */
-  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null }[] = [];
+  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null; module: number | null }[] = [];
   /* the active look's material + grade parameters (set by the component) */
   lookPreset: Look = LOOKS[DEFAULT_LOOK];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
@@ -542,6 +584,19 @@ class ViewerState {
     if (extras.storeys?.length) this.storeys = extras.storeys;
     if (extras.footprint) this.footprint = extras.footprint;
     this.plane.constant = this.footprint.height_m + 1;
+    {
+      /* the same "lived-in" test the storey pills use: a storey with a
+         door or a window on it */
+      const lived = new Set<number>();
+      scene.traverse((o) => {
+        const lm = o.name.match(/^storey(\d+)_(door|glass|frame)\b/);
+        if (lm) lived.add(Number(lm[1]));
+      });
+      const hab = this.storeys.filter((st) => st.habitable !== false && (lived.size === 0 || lived.has(st.index)));
+      const floor = hab.length ? Math.min(...hab.map((st) => st.elevation_m)) : 0;
+      this.groundOffset = Math.max(0, floor - GROUND_BELOW_FLOOR);
+      scene.position.y = -this.groundOffset;
+    }
     this.progress = initial === "plan" ? 1 : 0;
     this.mats = [];
     scene.traverse((o) => {
@@ -550,7 +605,9 @@ class ViewerState {
          node whose glTF material carries the IFC's real siding colour
          (ifc-to-glb --keep-materials, 2026-10-09): that colour is kept
          instead of the palette's off-white */
-      const m = o.name.match(/^storey(\d+)_([a-z]+)(?:__(.+))?$/);
+      /* …and a trailing ~m<K> when the pipeline grouped the node under a
+         prefab module (see MODULES) */
+      const m = o.name.match(/^storey(\d+)_([a-z]+)(?:__(.+?))?(?:~m\d+)?$/);
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
       const sourceMat = o.material as THREE.MeshStandardMaterial;
@@ -582,7 +639,7 @@ class ViewerState {
           transparent: true,
           opacity: (RENDER[cat] ?? RENDER.misc)[1],
           side: THREE.DoubleSide,
-          clippingPlanes: [this.plane],
+          clippingPlanes: [this.plane, this.ground],
           /* architecture is planes: flat shading keeps roofs and walls
              crisp instead of smearing light across welded normals */
           flatShading: true,
@@ -604,12 +661,82 @@ class ViewerState {
         (o.material as THREE.Material).dispose?.();
         o.material = mat;
       }
-      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey, source });
+      let module: number | null = null;
+      for (let q: THREE.Object3D | null = o.parent; q; q = q.parent) {
+        const pm = q.name.match(/^module(\d+)$/);
+        if (pm) {
+          module = Number(pm[1]);
+          break;
+        }
+      }
+      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey, source, module });
       /* SUN SHADOWS: the home shades itself (eaves on the walls) and the
          lawn. Glass passes light (no cast), so rooms don't go black. */
       o.castShadow = cat !== "glass";
       o.receiveShadow = true;
     });
+    this.modules = [];
+    type ModuleInfo = { index: number; name?: string; centre?: number[]; size_m?: number[]; rooms?: string[] };
+    const moduleList = (extras as { modules?: ModuleInfo[] }).modules ?? [];
+    scene.traverse((o) => {
+      const mm = o.name.match(/^module(\d+)$/);
+      if (!mm) return;
+      const index = Number(mm[1]);
+      /* centre + size: the node's own extras, else the scene's module list
+         (trimesh writes scene extras, not node extras), else the bounds */
+      const info = { ...(moduleList.find((x) => x.index === index) ?? {}), ...(o.userData as ModuleInfo) };
+      const box = new THREE.Box3().setFromObject(o);
+      const c = info.centre;
+      const centre = c && c.length >= 2 ? new THREE.Vector3(c[0], 0, c[1]) : box.getCenter(new THREE.Vector3()).setY(0);
+      const sz = info.size_m;
+      const size = sz && sz.length >= 2 ? new THREE.Vector2(sz[0], sz[1]) : new THREE.Vector2(box.max.x - box.min.x, box.max.z - box.min.z);
+      const mats: THREE.Material[] = [];
+      this.modules.push({ node: o, index, name: info.name ?? o.name, centre, size, rooms: info.rooms ?? [], mats, vis: 1 });
+    });
+    for (const entry of this.mats) {
+      if (entry.module == null) continue;
+      this.modules.find((m) => m.index === entry.module)?.mats.push(entry.mat);
+    }
+    /* neighbours: axis-aligned footprints whose edges meet (within 0.6 m)
+       and overlap at least 1 m along the seam */
+    this.adjacency = [];
+    for (let i = 0; i < this.modules.length; i++) {
+      for (let j = i + 1; j < this.modules.length; j++) {
+        const A = this.modules[i];
+        const B = this.modules[j];
+        const dx = Math.abs(A.centre.x - B.centre.x) - (A.size.x + B.size.x) / 2;
+        const dz = Math.abs(A.centre.z - B.centre.z) - (A.size.y + B.size.y) / 2;
+        const ovz = Math.min(A.centre.z + A.size.y / 2, B.centre.z + B.size.y / 2) - Math.max(A.centre.z - A.size.y / 2, B.centre.z - B.size.y / 2);
+        const ovx = Math.min(A.centre.x + A.size.x / 2, B.centre.x + B.size.x / 2) - Math.max(A.centre.x - A.size.x / 2, B.centre.x - B.size.x / 2);
+        if (Math.abs(dx) < 0.6 && ovz > 1) this.adjacency.push({ a: i, b: j, axis: "x", at: (Math.max(A.centre.z - A.size.y / 2, B.centre.z - B.size.y / 2) + Math.min(A.centre.z + A.size.y / 2, B.centre.z + B.size.y / 2)) / 2 });
+        else if (Math.abs(dz) < 0.6 && ovx > 1) this.adjacency.push({ a: i, b: j, axis: "z", at: (Math.max(A.centre.x - A.size.x / 2, B.centre.x - B.size.x / 2) + Math.min(A.centre.x + A.size.x / 2, B.centre.x + B.size.x / 2)) / 2 });
+      }
+    }
+    if (this.connectors) {
+      this.connectors.removeFromParent();
+      this.connectors.traverse((o) => {
+        if (o instanceof THREE.Mesh) {
+          o.geometry.dispose();
+          (o.material as THREE.Material).dispose();
+        }
+      });
+      this.connectors = null;
+    }
+    if (this.adjacency.length && this.wantConnectors) {
+      /* one flat ink strip per seam (GL lines are a pixel wide — invisible
+         at this lens); a unit box, scaled to the gap each frame */
+      const group = new THREE.Group();
+      group.name = "connectors";
+      const geo = new THREE.BoxGeometry(1, 0.03, 0.16);
+      for (let i = 0; i < this.adjacency.length; i++) {
+        const strip = new THREE.Mesh(geo, new THREE.MeshBasicMaterial({ color: PLAN.wall[0], transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+        strip.visible = false;
+        strip.renderOrder = 5;
+        group.add(strip);
+      }
+      scene.add(group);
+      this.connectors = group;
+    }
     this.buildCap(scene, root);
     /* planting rides the model group, so it turns north-up with the home */
     /* doors first: the plan and the lawn both keep their approaches clear */
@@ -713,7 +840,10 @@ class ViewerState {
     }
     const solids: THREE.Mesh[] = [];
     scene.traverse((o) => {
-      if (o instanceof THREE.Mesh && /_(wall|structure)$/.test(o.name) && !o.userData.capped) solids.push(o);
+      /* material-split walls (…__<material>) are OPEN shells — one node per
+         surface colour — so the solid count cannot work on them; they
+         fill the drawing with their undersides instead (see GROUND below) */
+      if (o instanceof THREE.Mesh && /_(wall|structure)(?:~m\d+)?$/.test(o.name) && !o.userData.capped) solids.push(o);
     });
     const counter = (side: THREE.Side, op: THREE.StencilOp) =>
       new THREE.MeshBasicMaterial({
@@ -722,6 +852,9 @@ class ViewerState {
         colorWrite: false,
         depthWrite: false,
         depthTest: false,
+        /* the cut plane only: the stencil count needs the whole solid,
+           including the part the ground plane hides — clipping its
+           underside away left every wall uncounted (no ink fill) */
         clippingPlanes: [this.plane],
         stencilWrite: true,
         stencilFunc: THREE.AlwaysStencilFunc,
@@ -783,8 +916,73 @@ class ViewerState {
     }
 
     /* section cut descends from above the roof to the storey's cut height */
-    const cutY = (this.storeys[input.storey]?.elevation_m ?? 0) + CUT_ABOVE_FLOOR;
+    const cutY = (this.storeys[input.storey]?.elevation_m ?? 0) - this.groundOffset + CUT_ABOVE_FLOOR;
     this.plane.constant = THREE.MathUtils.lerp(f.height_m + 1, cutY, e);
+    /* GROUND: the clip that buries the foundation in 3D lifts away in
+       plan — the cut walls' undersides are the drawing's ink, and the
+       ones that reach down to the footings were being clipped off */
+    this.ground.constant = THREE.MathUtils.lerp(0.02, 100, e);
+
+    /* modules: pull apart / reassemble at the flight's pace */
+    if (this.modules.length) {
+      const xt = input.mode === "modules" ? 1 : 0;
+      const xd = xt - this.explode;
+      this.explode = Math.abs(xd) < 0.001 ? xt : this.explode + Math.sign(xd) * Math.min(Math.abs(xd), dt * speed);
+      const xe = ease(this.explode) * this.explodeGap;
+      for (const m of this.modules) m.node.position.set(m.centre.x * xe, 0, m.centre.z * xe);
+      /* the lawn stretches with the spread, so no module hangs off it */
+      if (this.lawn) this.lawn.group.scale.set(1 + xe, 1, 1 + xe);
+      /* single: everything but the focus module fades, and the home slides
+         so that module sits on the orbit centre */
+      const st = input.mode === "single" && this.focus != null ? 1 : 0;
+      const sd = st - this.single;
+      this.single = Math.abs(sd) < 0.001 ? st : this.single + Math.sign(sd) * Math.min(Math.abs(sd), dt * speed);
+      const se = ease(this.single);
+      const fm = this.modules.find((m) => m.index === this.focus);
+      if (this.group) this.group.position.set(fm ? -fm.centre.x * se : 0, 0, fm ? -fm.centre.z * se : 0);
+      for (const m of this.modules) {
+        const want = st && m.index !== this.focus ? 0 : 1;
+        m.vis = Math.abs(want - m.vis) < 0.001 ? want : m.vis + Math.sign(want - m.vis) * Math.min(Math.abs(want - m.vis), dt * speed);
+      }
+      /* connectors across the gaps, only while the modules are apart */
+      if (this.connectors) {
+        const scale = 1 + xe;
+        const op = ease(this.explode) * (1 - e);
+        const y = 0.08;
+        this.adjacency.forEach((adj, i) => {
+          const strip = this.connectors!.children[i] as THREE.Mesh;
+          const A = this.modules[adj.a];
+          const B = this.modules[adj.b];
+          /* the SEAM line: it runs along the joint (N–S for east–west
+             neighbours, E–W for north–south ones), through the gap and
+             out past both modules by `beyond`, like a grid line on the
+             lawn — readable from the air even where the roofs overhang */
+          const beyond = 3;
+          if (adj.axis === "x") {
+            const left = A.centre.x < B.centre.x ? A : B;
+            const right = left === A ? B : A;
+            const x = (left.centre.x * scale + left.size.x / 2 + right.centre.x * scale - right.size.x / 2) / 2;
+            const z0 = Math.min(A.centre.z * scale - A.size.y / 2, B.centre.z * scale - B.size.y / 2) - beyond;
+            const z1 = Math.max(A.centre.z * scale + A.size.y / 2, B.centre.z * scale + B.size.y / 2) + beyond;
+            strip.position.set(x, y, (z0 + z1) / 2);
+            strip.rotation.y = Math.PI / 2;
+            strip.scale.set(z1 - z0, 1, 1);
+          } else {
+            const near = A.centre.z < B.centre.z ? A : B;
+            const far = near === A ? B : A;
+            const z = (near.centre.z * scale + near.size.y / 2 + far.centre.z * scale - far.size.y / 2) / 2;
+            const x0 = Math.min(A.centre.x * scale - A.size.x / 2, B.centre.x * scale - B.size.x / 2) - beyond;
+            const x1 = Math.max(A.centre.x * scale + A.size.x / 2, B.centre.x * scale + B.size.x / 2) + beyond;
+            strip.position.set((x0 + x1) / 2, y, z);
+            strip.rotation.y = 0;
+            strip.scale.set(x1 - x0, 1, 1);
+          }
+          (strip.material as THREE.MeshBasicMaterial).opacity = op;
+          strip.visible = op > 0.01;
+        });
+        this.connectors.visible = op > 0.01;
+      }
+    }
 
     /* palette: render → drawing; storeys above the chosen one fade */
     for (const { mat, cat, storey, source } of this.mats) {
@@ -832,6 +1030,24 @@ class ViewerState {
       mat.envMapIntensity = THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), 0.15, e) * (this.root?.environmentIntensity ?? 1);
       const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
       if (shader) shader.uniforms.uPlan.value = e;
+    }
+    for (const m of this.modules) {
+      if (m.vis >= 1) continue;
+      for (const mat of m.mats) {
+        const mm = mat as THREE.MeshStandardMaterial;
+        mm.opacity *= m.vis;
+        mm.visible = mm.opacity > 0.01;
+      }
+    }
+    /* …and what belongs to no module (deck rails, posts, site work) leaves
+       with them, so the single module stands alone */
+    if (this.single > 0) {
+      const keep = 1 - ease(this.single);
+      for (const { mat, module } of this.mats) {
+        if (module != null) continue;
+        mat.opacity *= keep;
+        mat.visible = mat.opacity > 0.01;
+      }
     }
 
     /* yaw: spin in 3D, settle to north-up in plan */
@@ -906,7 +1122,10 @@ class ViewerState {
       /* a portrait container (phones: 75svh tall, 428 wide) sees a narrower
          slice — back the camera off by the inverse aspect so the long home
          is not cropped at the sides (2026-10-09) */
-      const r = this.radius() * Math.max(1, 1 / Math.max(cam.aspect, 0.3));
+      const fm = this.modules.find((m) => m.index === this.focus);
+      /* the module's diagonal (it is seen three-quarter on) plus air */
+      const rSingle = fm ? Math.max(Math.hypot(fm.size.x, fm.size.y) * 1.15, f.height_m * 1.6) * ORBIT_RADIUS : this.radius();
+      const r = THREE.MathUtils.lerp(this.radius(), rSingle, ease(this.single)) * Math.max(1, 1 / Math.max(cam.aspect, 0.3)) * (1 + ease(this.explode) * this.explodeGap);
       if (this.scenery) {
         /* scroll progress through the pinned wrapper: 0 as its top meets
            the viewport top, 1 when its bottom does */
@@ -945,18 +1164,30 @@ class ViewerState {
           return;
         }
       }
-      if (Math.abs(cam.fov - FOV_3D) > 0.01) {
+      /* near/far hug the CURRENT orbit radius: the single-module orbit
+         is a quarter of the home's, and the home sat inside the near
+         plane until these followed it */
+      const near = this.scenery ? cam.near : r * 0.3;
+      const far = this.scenery ? cam.far : r * 3;
+      if (Math.abs(cam.fov - FOV_3D) > 0.01 || Math.abs(cam.near - near) > 0.01 || Math.abs(cam.far - far) > 0.01) {
         cam.fov = FOV_3D;
+        cam.near = near;
+        cam.far = far;
         cam.updateProjectionMatrix();
       }
       const len = cam.position.length();
-      if (len < r * 0.8 || len > r * 1.25) cam.position.setLength(r);
+      /* while the orbit radius is animating (single ↔ home, apart ↔
+         together) the camera rides it every frame — no snaps */
+      const moving = (this.single > 0 && this.single < 1) || (this.explode > 0 && this.explode < 1);
+      if (moving || len < r * 0.8 || len > r * 1.25) cam.position.setLength(r);
     }
   }
 }
 
 /* the descent's start lens and its landing pose — the Canvas camera's
    initial position [0.8, 0.45, 0.6]·r in spherical terms */
+const GROUND_BELOW_FLOOR = 0.3; // m of plinth showing under the lowest habitable floor
+const EXPLODE_GAP = 0.35; // module positions scale by 1 + this when pulled apart
 const FOV_AERIAL = 42;
 const ARRIVE_PHI = Math.acos(0.45 / Math.hypot(0.8, 0.45, 0.6));
 const ARRIVE_THETA = Math.atan2(0.8, 0.6);
@@ -1009,8 +1240,8 @@ function House({ src, vs, input, plantsBase }: { src: string; vs: React.RefObjec
   );
 }
 
-export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase, plantsBase = DEFAULT_PLANTS_BASE, onReady, showLoading = true, look: lookProp, descent = false }: PlanViewerProps) {
-  const [mode, setMode] = useState<Mode>(initialMode);
+export function PlanViewer({ src, northDeg, mode: initialMode, onModeChange, modes: modesProp, labels, focusRoom, explodeGap = EXPLODE_GAP, connectors = false, className = "", envBase, plantsBase = DEFAULT_PLANTS_BASE, onReady, showLoading = true, look: lookProp, descent = false }: PlanViewerProps) {
+  const [mode, setMode] = useState<Mode>(initialMode ?? modesProp?.[0] ?? "3d");
   const [arrived, setArrived] = useState(!descent);
   const lenis = useLenis();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -1049,6 +1280,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
     vs.current = new ViewerState();
   }
   vs.current.lookPreset = look;
+  vs.current.wantConnectors = connectors;
   vs.current.wantScenery = descent;
   vs.current.onArrive = setArrived;
   const { scene } = useGLTF(src);
@@ -1074,6 +1306,18 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
      landed under the ground and showed nothing. Default to the first
      habitable storey instead. */
   const current = storeys.some((s) => s.index === storey) ? storey : (storeys[0]?.index ?? 0);
+  let hasModules = false;
+  scene.traverse((o) => {
+    if (/^module\d+$/.test(o.name)) hasModules = true;
+  });
+  const modes: Mode[] = (modesProp ?? (hasModules ? ["3d", "plan", "modules"] : ["3d", "plan"])).filter((m) => hasModules || (m !== "modules" && m !== "single"));
+  /* the focus module: by a room it holds, else by its own name */
+  const moduleInfos = (extras as { modules?: { index: number; name?: string; rooms?: string[] }[] }).modules ?? [];
+  const want = focusRoom?.trim().toLowerCase();
+  const focus = want ? (moduleInfos.find((m) => (m.rooms ?? []).some((r) => r.toLowerCase() === want)) ?? moduleInfos.find((m) => (m.name ?? "").toLowerCase() === want))?.index ?? null : null;
+  vs.current.focus = focus;
+  vs.current.explodeGap = explodeGap;
+  const label = (m: Mode) => labels?.[m] ?? (m === "3d" ? "3D" : m === "plan" ? "Floor plan" : m === "modules" ? "Modules" : focusRoom ? `${focusRoom[0].toUpperCase()}${focusRoom.slice(1).toLowerCase()} module` : "One module");
   const fp = extras.footprint ?? { width_m: 12, depth_m: 10, height_m: 8 };
   const north = northDeg ?? extras.northDeg ?? 0;
   const radius = Math.max(fp.width_m, fp.depth_m, fp.height_m) * ORBIT_RADIUS;
@@ -1242,7 +1486,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
       )}
       <div className={`pointer-events-none absolute inset-x-0 bottom-[1.25rem] flex flex-wrap items-center justify-center gap-lg px-xl transition-opacity duration-500 ${arrived ? "opacity-100" : "opacity-0"}`} aria-hidden={!arrived}>
         <div role="group" aria-label="View" className={`${arrived ? "pointer-events-auto" : "pointer-events-none"} flex items-center gap-xxs rounded-(--radius-full) bg-line-2 p-xxs`}>
-          {(["3d", "plan"] as Mode[]).map((m) => (
+          {modes.map((m) => (
             <button
               key={m}
               type="button"
@@ -1250,7 +1494,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
               onClick={() => change(m)}
               className={`relative rounded-(--radius-full) px-2xl py-md text-body-sm font-medium transition-colors ${mode === m ? "bg-surface text-ink" : "text-ink-3 hover:text-ink"}`}
             >
-              {m === "3d" ? "3D" : "Floor plan"}
+              {label(m)}
             </button>
           ))}
         </div>

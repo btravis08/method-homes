@@ -14,7 +14,8 @@ import { useEffect, useRef, useState } from "react";
 
 const PlanViewer = dynamic(() => import("./PlanViewer").then((m) => m.PlanViewer), { ssr: false });
 
-export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", descent = false, look }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string; descent?: boolean; look?: "daylight" | "golden" | "overcast" }) {
+type Mode = "3d" | "plan" | "modules" | "single";
+export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", descent = false, look, modes, labels, focusRoom, explodeGap, connectors }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string; descent?: boolean; look?: "daylight" | "golden" | "overcast"; modes?: Mode[]; labels?: Partial<Record<Mode, string>>; focusRoom?: string; explodeGap?: number; connectors?: boolean }) {
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   /* the 3D view mounts UNDER the poster and only replaces it once it has
@@ -52,7 +53,7 @@ export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", des
 
   return (
     <div ref={ref} className={`relative w-full ${descent ? "h-full" : ""} ${className}`}>
-      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} descent={descent} look={look} />}
+      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} descent={descent} look={look} modes={modes} labels={labels} focusRoom={focusRoom} explodeGap={explodeGap} connectors={connectors} />}
       <div
         aria-hidden={shown}
         className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} w-full overflow-hidden bg-surface-2 transition-opacity duration-700 ease-out ${descent ? "h-full" : "aspect-[4/3] rounded-md md:aspect-[16/9]"}`}

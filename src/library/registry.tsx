@@ -462,6 +462,26 @@ export const SECTIONS: SectionEntry[] = [
     ),
   },
   {
+    slug: "module-story",
+    title: "Module story — kitchen module → modules → home → floor plan",
+    group: "Page sections",
+    description: "The prefab story in four steps (Bryce, 2026-10-09): the module that holds the kitchen on its own; the modules eased apart along their seams with dashed lines showing where they connect; the modules come together as the finished home; then the floor plan. Modules come from the IFC's area scheme (MOD A–G plus the site-built pieces).",
+    modes: ["light"],
+    tall: true,
+    timed: true,
+    render: () => (
+      <section data-mode="light" className="w-full bg-surface px-4 py-8xl text-ink md:px-7xl md:py-10xl">
+        <div className="mx-auto flex w-full max-w-page flex-col gap-3xl">
+          <div className="flex flex-col gap-xl">
+            <p className="label text-ink-3">Built in modules</p>
+            <h2 className="font-display text-headline-md text-ink">One module, the set, the home, the plan</h2>
+          </div>
+          <LazyPlanViewer src="/models/test.glb" alt="Method reference home, module by module" modes={["single", "modules", "3d", "plan"]} labels={{ single: "Kitchen module", modules: "Modules", "3d": "Home", plan: "Floor plan" }} focusRoom="KITCHEN" explodeGap={0.18} connectors />
+        </div>
+      </section>
+    ),
+  },
+  {
     slug: "plan-viewer-method",
     title: "3D plan viewer — Method model",
     group: "Page sections",

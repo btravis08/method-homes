@@ -201,6 +201,24 @@ staging/design use.
   bake.py's CLASSES (tile, tint, normal strength), not in the viewer.
   Never commit raw/decoded GLBs; the sandbox can test the bake on a
   meshopt-decoded copy (`.y.tmp.mjs`) with `pip install bpy`.
+- MODULES (2026-10-09): prefab modules come from the IFC's AREA spaces
+  (IfcSpace "MOD A"… and their group siblings; MODULE_NAME_RE /
+  MODULE_SKIP_RE in ifc-to-glb.py), never from element tags. Elements
+  spanning a seam are sliced along footprint edges; the GLB carries
+  `module<K>` parent nodes, children `storey<N>_<cat>[__<mat>]~m<K>`,
+  and `extras.modules`. Any regex on node names must accept the `~m<K>`
+  suffix (viewer, doors.ts, bake.py). The viewer's Modules button
+  appears only when module nodes exist; the ground is the lowest
+  HABITABLE storey − 0.3 m (GROUND_BELOW_FLOOR) with a clip plane at
+  the lawn — the foundation stays in the GLB, just underground.
+- PLAN INK comes from the cut walls' undersides, NOT the stencil cap
+  (material-split walls are open shells; the cap only works on closed
+  `_wall`/`_structure` nodes). Anything that hides wall undersides in
+  plan — clipping planes, ground offsets — empties the drawing. The
+  ground clip lifts with the plan cut for that reason. The viewer's
+  story props (modes/labels/focusRoom/explodeGap/connectors) are how
+  a library entry composes a different toggle; keep "single" needing
+  `extras.modules[].rooms` from the pipeline.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

@@ -631,6 +631,12 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — Module story exploration (/library/module-story): the
+  kitchen module alone → modules eased apart with seam connectors →
+  the assembled home → the floor plan.
+- 2026-10-09 — Plan viewer: foundation hidden below the lawn; new
+  "Modules" view pulls the prefab modules apart (pipeline partitions the
+  IFC by its MOD A–G area footprints).
 - 2026-10-09 — Plan viewer fidelity: the model pipeline now bakes real
   PBR materials by class (wood, concrete, plaster, metal) and an
   ambient-occlusion atlas into the web GLB; the viewer honours them.

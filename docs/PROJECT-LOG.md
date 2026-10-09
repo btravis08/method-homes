@@ -817,6 +817,57 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   real colours (concrete, black, glass) still decide the colour-keyed
   classes (doors, structure). Workflow inputs: bake (default on),
   ao_size (2048 ≈ 3 cm/texel on the 50 m home).
+- Foundation hidden (Bryce, 2026-10-09: "remove the foundation, or hide
+  anything below the terrain"): the pipeline's ground is the lowest
+  storey with walls — Method's FOUNDATION level — so footings and
+  crawl-space walls stood a storey tall under the home. The viewer now
+  sets ground 0.3 m under the lowest habitable storey (a short plinth),
+  drops the model by that offset and clips everything below the lawn
+  (second clipping plane); the plan cut compensates. Pipeline unchanged
+  so older GLBs behave the same.
+- Modules view (Bryce, 2026-10-09: "a third button… the 3D model is
+  split into its separate modules and pulled apart… clearly identified
+  as distinct prefab modules"): ifc-inspect (new workflow + script)
+  showed Method's Revit model carries NO module tag on elements, but its
+  area scheme has IfcSpaces "MOD A"–"MOD G" plus SITE BUILT LIVING,
+  UNCOVERED DECK and GARAGE in one group ("Gross Building"). ifc-to-glb
+  now reads those footprints (shapely), deals every element to the
+  footprint it sits in, SLICES anything spanning a seam (roof, floor
+  slab, long walls) along the footprint edges, sends overhang faces with
+  the nearest module, and exports a `module<K>` parent node per module
+  (children named `…~m<K>`; `extras.modules` carries name / prefab /
+  centre / size). The viewer offers "Modules" only when the GLB has
+  them: positions scale about the footprint centre (EXPLODE_GAP 0.35 →
+  even gaps along a row), the lawn stretches with the spread, the orbit
+  backs off; everything reassembles on the way back. Every node-name
+  regex (viewer, doors.ts, bake.py) now tolerates the `~m<K>` suffix —
+  and the stencil-cap regex gained the material suffix it had been
+  missing since --keep-materials, so cut walls fill solid again.
+- Module story (Bryce, 2026-10-09: "another exploration that just
+  renders a single module… the module that has the kitchen… then
+  multiple modules spread apart slightly along their connecting lines…
+  then the full model… then the floor plan"): `/library/module-story`.
+  The pipeline now lists which ROOMS each module holds (the other
+  IfcSpaces by centroid; the kitchen is in MOD B) so the viewer finds
+  the focus module by room name. PlanViewer grew a "single" mode plus
+  `modes` / `labels` / `focusRoom` / `explodeGap` / `connectors` props:
+  in single, every other module and everything outside modules fades,
+  the home slides so the focus module sits on the orbit centre, the
+  orbit tightens to the module's diagonal (and near/far follow the
+  live radius — the module sat inside the near plane at first); the
+  spread step uses a small gap (0.18) with flat ink strips tying each
+  adjacent pair across its seam (neighbours = axis-aligned footprints
+  whose edges meet and overlap ≥1 m; GL lines were a pixel wide and
+  invisible at this lens).
+- Plan fill regression + root cause (2026-10-09): the drawing's black
+  walls were never the stencil cap on this model — `--keep-materials`
+  splits walls into OPEN shells (one node per surface colour), so the
+  solid count sums to zero (painted-counter diagnostic); the ink was
+  the cut walls' UNDERSIDES. The foundation ground clip removed them
+  for walls reaching the footings, so the plan went hollow. Fix: the
+  ground clip lifts away with the plan cut (`ground.constant` 0.02 →
+  100 over e); caps stay limited to closed solids (`_wall` / `_structure`
+  without a material suffix).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

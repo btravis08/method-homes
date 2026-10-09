@@ -45,7 +45,7 @@ function groundMeshes(scene: THREE.Object3D) {
   const byStorey = new Map<number, { door: THREE.Mesh[]; wall: THREE.Mesh[] }>();
   scene.traverse((o) => {
     if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
-    const m = o.name.match(/^storey(\d+)_(door|wall)$/);
+    const m = o.name.match(/^storey(\d+)_(door|wall)(?:~m\d+)?$/);
     if (!m) return;
     const k = Number(m[1]);
     if (!byStorey.has(k)) byStorey.set(k, { door: [], wall: [] });
