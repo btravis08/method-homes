@@ -857,7 +857,16 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   const all = extras.storeys ?? [{ index: 0, name: "Ground", elevation_m: 0 }];
   /* only levels with walls get a pill (Revit exports its roof level as
      a storey; a plan cut there shows the roof slab) */
-  const habitable = all.filter((s) => s.habitable !== false);
+  /* …and only levels with an opening on them (a door or a window): walls
+     alone are a foundation or a parapet. Read off the mesh names so an
+     older GLB whose extras still flag those levels behaves the same
+     (Bryce, 2026-10-09: "only the first floor, no toggle") */
+  const lived = new Set<number>();
+  scene.traverse((o) => {
+    const m = o.name.match(/^storey(\d+)_(door|glass|frame)\b/);
+    if (m) lived.add(Number(m[1]));
+  });
+  const habitable = all.filter((s) => s.habitable !== false && (lived.size === 0 || lived.has(s.index)));
   const storeys = habitable.length ? habitable : all;
   /* the storey state is the RAW index into extras.storeys (what the mesh
      names and the cut height use). Until a pill is pressed it is 0 — and

@@ -741,6 +741,13 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   IFC carries ~260 Enscape pines and ~1,600 bushes as named
   proxies (position + size, no foliage) — a planting plan we could
   honour with the Poly Haven scans instead of the random scatter.
+- Live at /library/plan-viewer-method. Bryce: "Only the first floor,
+  no toggle". FOUNDATION (stem walls) and GARAGE ROOF (a parapet) were
+  flagged habitable because they hold walls. Rule tightened in the
+  pipeline AND guarded in the viewer: a storey is habitable only with
+  walls plus an opening (door/window/frame) on it; the viewer reads
+  the mesh names so older GLBs behave the same. One storey → no pills,
+  plan cut at FIRST FLOOR.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

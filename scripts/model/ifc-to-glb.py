@@ -669,7 +669,10 @@ def main() -> int:
         # habitable = has walls/doors/windows on it (Revit exports its roof
         # level as a storey; the viewer offers only habitable ones)
         "storeys": [
-            {"index": i, "name": s["name"], "elevation_m": round(s["elevation"] - base_z, 3), "habitable": any(k[0] == i and k[1] in ("wall", "door", "glass") for k in groups)}
+            # habitable = a level you walk: walls AND an opening (door or
+            # window). Walls alone are a foundation or a parapet (the Method
+            # sample's FOUNDATION and GARAGE ROOF levels, 2026-10-09)
+            {"index": i, "name": s["name"], "elevation_m": round(s["elevation"] - base_z, 3), "habitable": any(k[0] == i and k[1] == "wall" for k in groups) and any(k[0] == i and k[1] in ("door", "glass", "frame") for k in groups)}
             for i, s in enumerate(storeys)
         ],
         "footprint": footprint,
