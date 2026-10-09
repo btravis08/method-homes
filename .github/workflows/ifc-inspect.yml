@@ -1,0 +1,52 @@
+name: ifc-inspect
+
+# What structure does a 3D model's IFC carry? Resolves the IFC like
+# model-pipeline does (the `model3d` document's Source model, by slug)
+# and prints scripts/model/ifc-inspect.py's digest — storeys, groups and
+# assemblies, module-looking names and properties, slabs per storey — to
+# the job log. Nothing is committed. Names and counts only: the repo is
+# public and the model is a client's.
+
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "3D model slug (the model3d document whose Source model is the IFC)"
+        required: true
+      ifc_url:
+        description: "URL of the IFC (optional when the document has a Source model)"
+        required: false
+
+permissions:
+  contents: read
+
+env:
+  SANITY_PROJECT_ID: i2wd5pr1
+  SANITY_DATASET: production
+  SANITY_API_VERSION: "2026-07-01"
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install IfcOpenShell
+        run: python -m pip install -q ifcopenshell
+      - name: Resolve the IFC source
+        env:
+          SANITY_AUTH_TOKEN: ${{ secrets.SANITY_AUTH_TOKEN }}
+        run: |
+          set -euo pipefail
+          URL="${{ github.event.inputs.ifc_url }}"
+          if [ -z "$URL" ]; then
+            URL=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type in [\"model3d\",\"plan\"] && slug.current==\"${{ github.event.inputs.slug }}\" && defined(sourceModel)][0]{ \"url\": sourceModel.asset->url }")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; r=json.load(sys.stdin)["result"]; print((r or {}).get("url") or "")')
+          fi
+          [ -n "$URL" ] || { echo "no IFC for slug ${{ github.event.inputs.slug }}"; exit 1; }
+          curl -sS -L -o source.ifc "$URL"
+          ls -la source.ifc
+      - name: Inspect
+        run: python scripts/model/ifc-inspect.py source.ifc
