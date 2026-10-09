@@ -662,6 +662,28 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   material-preserving path honouring `keepMaterials` is the next
   pipeline change once the file is in; the bespoke viewer section
   then references the model3d doc.
+- First pass on Bryce's file (`test`, "2026.10.08_Project
+  Reference.ifc", 53 MB, IFC2x3 from Revit, run 37865601311, 96 s
+  convert): 567 elements kept / 2,400 dropped, 274k tris → 580 KB.
+  Two gotchas the sample never had: (1) the building sits at a
+  SURVEYED elevation (+2,036 m; levels BASEMENT · FOUNDATION · FIRST
+  FLOOR · GARAGE ROOF · T.O. ROOF · MAX HEIGHT · ROOF) while an
+  "INTERNAL ORIGIN" storey sits at 0 — the old base_z took the lowest
+  storey and reported a 2,044 m tall footprint; the ground is now the
+  lowest storey that holds envelope geometry. (2) 137 Enscape bushes,
+  3 Tesla Model S and a Thermador column (proxy "T24IF905SP") passed
+  the size gate as "misc" (227k of the 274k tris, 145 m footprint) —
+  PROXY_DENY now covers Enscape/RPC assets, vehicles, planting words
+  and catalogue-number names, and the footprint ignores misc.
+- Pipeline change: `--keep-materials` splits the wall category by
+  source surface style (one node per storey × siding colour,
+  `storey3_wall__<material>-<hex>`, glTF baseColor = the IFC's
+  diffuse, element IfcMaterial name in extras.nodes[].material and
+  report.materials); cladding coverings count as wall in that mode;
+  the report always lists `surfaceStyles` per category. The viewer
+  reads the suffix and keeps the GLB colour for those nodes (plan
+  mode still lerps to the drawing palette); the workflow passes the
+  flag from model3d.keepMaterials.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

@@ -106,6 +106,10 @@ jobs:
           fi
           [ -n "$URL" ] || { echo "no IFC: pass ifc_url or upload a Source model (IFC) on the 3D model document with this slug"; exit 1; }
           echo "url=$URL" >> "$GITHUB_OUTPUT"
+          # keep the IFC's siding materials when the 3D model document says so (default on for model3d)
+          KEEP=$(curl -sS "https://$SANITY_PROJECT_ID.api.sanity.io/v$SANITY_API_VERSION/data/query/$SANITY_DATASET?query=$(python -c 'import urllib.parse,sys;print(urllib.parse.quote(sys.argv[1]))' "*[_type==\"model3d\" && slug.current==\"${{ github.event.inputs.slug }}\"][0].keepMaterials")" -H "Authorization: Bearer $SANITY_AUTH_TOKEN" | python -c 'import json,sys; r=json.load(sys.stdin)["result"]; print("true" if r is not False and r is not None else "false")' 2>/dev/null || echo false)
+          echo "keep_materials=$KEEP" >> "$GITHUB_OUTPUT"
+          echo "keep materials: $KEEP"
           curl -sS -L -o source.ifc "$URL"
           ls -la source.ifc
 
@@ -116,6 +120,7 @@ jobs:
           SLUG="${{ github.event.inputs.slug }}"
           mkdir -p "$(dirname "public/models/$SLUG.glb")" "$(dirname "design/models/$SLUG.report.json")"
           python scripts/model/ifc-to-glb.py source.ifc /tmp/source.raw.glb --report "design/models/$SLUG.report.json" \
+            $([ "${{ steps.src.outputs.keep_materials }}" = "true" ] && echo --keep-materials) \
             ${{ github.event.inputs.allow && format('--allow "{0}"', github.event.inputs.allow) || '' }} \
             ${{ github.event.inputs.deny && format('--deny "{0}"', github.event.inputs.deny) || '' }}
           npx -y @gltf-transform/cli@4 optimize /tmp/source.raw.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001 --palette false --join false --flatten false

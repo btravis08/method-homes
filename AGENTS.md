@@ -149,10 +149,18 @@ staging/design use.
   IFC by slug (model3d first, plan as legacy fallback) and writes the
   GLB + northDeg back. Sanity's asset CDN is unlisted, so Method's
   models never enter this public repo (GitHub warns at 50 MB anyway).
-  Method's files carry siding materials to KEEP — the category
-  re-material step must learn to pass real IfcSurfaceStyle colours
-  through for siding (honour `keepMaterials`) before the next
-  conversion. The bespoke viewer section references a model3d doc.
+  Method's files carry siding materials to KEEP: `--keep-materials`
+  (passed from model3d.keepMaterials) splits walls by source surface
+  style into `storey<N>_wall__<material>-<hex>` nodes whose glTF
+  colour the viewer honours. Method/Revit gotchas learned on the
+  first file (2026-10-09): the model sits at its surveyed elevation
+  (+2,036 m) with an "INTERNAL ORIGIN" level at 0 — ground = lowest
+  storey holding envelope geometry, never the lowest storey; Enscape
+  assets, RPC trees, cars and appliance catalogue numbers arrive as
+  IfcBuildingElementProxy and must be denied by name (PROXY_DENY),
+  and the footprint ignores misc proxies. Read `surfaceStyles` in the
+  report before judging a model's materials. The bespoke viewer
+  section references a model3d doc.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

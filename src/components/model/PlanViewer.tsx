@@ -391,7 +391,10 @@ class ViewerState {
   private plantsLoading = false;
   private fade = 0;
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0), 100);
-  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number }[] = [];
+  /* `source` = the GLB's own colour when the pipeline kept the IFC's
+     siding material (node `storey0_wall__cedar-siding-8a6a4b`); the
+     category palette otherwise */
+  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null }[] = [];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
   footprint: Footprint = { width_m: 12, depth_m: 10, height_m: 8 };
   progress = 0; // 0 = 3D, 1 = plan
@@ -429,13 +432,19 @@ class ViewerState {
     this.mats = [];
     scene.traverse((o) => {
       if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
-      const m = o.name.match(/^storey(\d+)_(\w+)$/);
+      /* storey<N>_<category>[__<material-key>] — the suffix marks a wall
+         node whose glTF material carries the IFC's real siding colour
+         (ifc-to-glb --keep-materials, 2026-10-09): that colour is kept
+         instead of the palette's off-white */
+      const m = o.name.match(/^storey(\d+)_([a-z]+)(?:__(.+))?$/);
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
+      const sourceMat = o.material as THREE.MeshStandardMaterial;
+      const source = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? sourceMat.color.clone() : (sourceMat?.userData.source as THREE.Color | undefined) ?? null;
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
         const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
         const common = {
-          color: (RENDER[cat] ?? RENDER.misc)[0],
+          color: source ?? (RENDER[cat] ?? RENDER.misc)[0],
           roughness: rough,
           metalness: metal,
           transparent: true,
@@ -458,10 +467,11 @@ class ViewerState {
             : new THREE.MeshStandardMaterial(common);
         finish(mat, cat);
         mat.userData.viewer = true;
+        if (source) mat.userData.source = source;
         (o.material as THREE.Material).dispose?.();
         o.material = mat;
       }
-      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey });
+      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey, source });
       /* SUN SHADOWS: the home shades itself (eaves on the walls) and the
          lawn. Glass passes light (no cast), so rooms don't go black. */
       o.castShadow = cat !== "glass";
@@ -631,10 +641,11 @@ class ViewerState {
     this.plane.constant = THREE.MathUtils.lerp(f.height_m + 1, cutY, e);
 
     /* palette: render → drawing; storeys above the chosen one fade */
-    for (const { mat, cat, storey } of this.mats) {
+    for (const { mat, cat, storey, source } of this.mats) {
       const [ra, oa] = RENDER[cat] ?? RENDER.misc;
       const [rb, ob] = PLAN[cat] ?? PLAN.misc;
-      this.a.set(ra);
+      if (source) this.a.copy(source);
+      else this.a.set(ra);
       this.b.set(rb);
       /* surfaces that LEAVE the drawing (floor, roof) keep their own
          colour while they fade — lerping them toward the plan palette

@@ -17,6 +17,13 @@ What it does, in order (see docs/PROJECT-LOG.md 2026-10-04):
   3. Re-materials by CATEGORY (wall, floor, roof, glass, door, stair,
      rail, structure, misc): the viewer applies its own palette, so
      source materials, textures and baked light never reach the web.
+     With --keep-materials (model3d.keepMaterials, 2026-10-09) the WALL
+     category is instead split by its source surface style: one node per
+     storey × siding material (`storey0_wall__cedar-siding-8a6a4b`), its
+     glTF material carrying the IFC's diffuse colour and the element's
+     IfcMaterial name, so the viewer shows Method's real siding. Cladding
+     coverings (IfcCovering CLADDING) are kept as wall in that mode. The
+     report always lists the surface styles seen per category.
   4. Groups geometry per storey × category (one mesh each) so the
      viewer can cut and hide storeys independently; records each
      storey's name and elevation.
@@ -112,8 +119,13 @@ import re
 
 PROXY_DENY = re.compile(
     r"refrigerator|fridge|freezer|range|cook|oven|stove|dishwasher|washer|dryer|microwave|hood|sink|basin|toilet|wc|bath|tub|shower|"
-    r"furniture|chair|table|bed|sofa|couch|desk|shelf|cabinet|casework|counter|vanity|mirror|lamp|light|plant|tree|car|vehicle|person|"
-    r"model text|text|tag|label|symbol|annotation",
+    r"furniture|chair|table|bed|sofa|couch|desk|shelf|cabinet|casework|counter|vanity|mirror|lamp|light|plant|tree|car\b|vehicle|person|"
+    r"model text|text|tag|label|symbol|annotation|"
+    # entourage from the Method sample (2026-10-09): Enscape asset
+    # libraries (bushes, trees), RPC trees, cars named after their model
+    r"enscape|asset ?definition|\brpc\b|tesla|truck|bush|shrub|grass|hedge|"
+    # appliance catalogue numbers exported as proxies ("T24IF905SP")
+    r"^[A-Z]{1,3}\d{2,}[A-Z0-9-]*$",
     re.IGNORECASE,
 )
 
@@ -121,7 +133,7 @@ PROXY_DENY = re.compile(
 ROOF_NAME = re.compile(r"roof|\btak\b|plåttak|dach|toit|tetto|cubierta", re.IGNORECASE)
 
 
-def category_for(element, aggregate_parent=None) -> str | None:
+def category_for(element, aggregate_parent=None, keep_materials: bool = False) -> str | None:
     t = element.is_a()
     for prefix in DROP_PREFIXES:
         if t.startswith(prefix):
@@ -146,8 +158,49 @@ def category_for(element, aggregate_parent=None) -> str | None:
         if predefined == "ROOF" or (aggregate_parent is not None and aggregate_parent.is_a("IfcRoof")) or ROOF_NAME.search(name):
             return "roof"
     if element.is_a("IfcCovering"):
-        return "floor" if predefined in ("FLOORING", None) else None
+        if predefined in ("FLOORING", None):
+            return "floor"
+        # siding modelled as cladding rides with the walls when the source
+        # materials are kept (it IS the material we are keeping)
+        return "wall" if (keep_materials and predefined == "CLADDING") else None
     return cat
+
+
+def element_material_name(element) -> str | None:
+    """The human name of the element's material: a plain IfcMaterial, the
+    OUTER layer of a layer set (Revit lists layers exterior → interior),
+    the first of a list, or the first constituent."""
+    try:
+        mat = ifc_element.get_material(element)
+    except Exception:
+        return None
+    if mat is None:
+        return None
+    try:
+        if mat.is_a("IfcMaterial"):
+            return mat.Name
+        if mat.is_a("IfcMaterialLayerSetUsage"):
+            mat = mat.ForLayerSet
+        if mat.is_a("IfcMaterialLayerSet"):
+            layers = [l for l in (mat.MaterialLayers or []) if l.Material]
+            return (layers[0].Material.Name if layers else None) or mat.LayerSetName
+        if mat.is_a("IfcMaterialList"):
+            ms = mat.Materials or []
+            return ms[0].Name if ms else None
+        if mat.is_a("IfcMaterialConstituentSet"):
+            cs = mat.MaterialConstituents or []
+            return (cs[0].Material.Name if cs and cs[0].Material else None) or mat.Name
+        if mat.is_a("IfcMaterialProfileSetUsage"):
+            ps = mat.ForProfileSet.MaterialProfiles or []
+            return ps[0].Material.Name if ps and ps[0].Material else None
+    except Exception:
+        return None
+    return getattr(mat, "Name", None)
+
+
+def slugify(text: str) -> str:
+    s = re.sub(r"[^a-z0-9]+", "-", (text or "").lower()).strip("-")
+    return s[:40] or "material"
 
 
 # ---- geometry ----------------------------------------------------------------
@@ -236,6 +289,7 @@ def main() -> int:
     ap.add_argument("--proxy-min-size", type=float, default=1.5, help="IfcBuildingElementProxy survives only above this size (m)")
     ap.add_argument("--iterator", action="store_true", help="use the multi-threaded geometry iterator (slower on some Revit exports)")
     ap.add_argument("--cache", help="npz file to cache extracted geometry between runs (export tweaks skip the geometry pass)")
+    ap.add_argument("--keep-materials", action="store_true", help="split walls by their source surface style and carry the IFC's siding colours + material names into the GLB (model3d.keepMaterials)")
     args = ap.parse_args()
 
     t0 = time.time()
@@ -286,7 +340,7 @@ def main() -> int:
     dropped = Counter()
     proxies = []
     small = []
-    groups: dict[tuple[int, str], list[trimesh.Trimesh]] = defaultdict(list)
+    groups: dict[tuple[int, str, str | None], list[trimesh.Trimesh]] = defaultdict(list)  # (storey, category, material key | None)
     tri_total = 0
 
     # aggregate parents (IfcRoof → its slabs, stairs → flights…)
@@ -302,7 +356,7 @@ def main() -> int:
         if t in drop_types or el.GlobalId in deny or (el.Name and el.Name in deny):
             dropped[t] += 1
             continue
-        cat = category_for(el, parent_of.get(el.id()))
+        cat = category_for(el, parent_of.get(el.id()), args.keep_materials)
         if cat is None and t in extra_keep:
             cat = extra_keep[t]
         if cat is None:
@@ -316,33 +370,52 @@ def main() -> int:
     # pass 2: geometry for the kept set, on every core
     import multiprocessing
 
-    shapes: dict[str, tuple] = {}  # guid → (verts, faces, per-face transparency | None)
+    shapes: dict[str, tuple] = {}  # guid → (verts, faces, per-face transparency | None, per-face rgb (n,3) | None)
     elements = [w[0] for w in wanted.values()]
     cache = Path(args.cache) if args.cache else None
     if cache and cache.exists():
         with np.load(cache) as z:
             guids = list(z["guids"])
             for guid in guids:
-                # v2 cache entries carry per-face transparency; older
-                # entries are re-extracted so the pane/frame split has it
-                if f"t_{guid}" in z.files:
+                # v3 cache entries carry per-face transparency AND colour;
+                # older entries are re-extracted so the material split has them
+                if f"t_{guid}" in z.files and f"c_{guid}" in z.files:
                     t = z[f"t_{guid}"]
-                    shapes[str(guid)] = (z[f"v_{guid}"], z[f"f_{guid}"], None if t.size == 0 else t)
+                    c = z[f"c_{guid}"]
+                    shapes[str(guid)] = (z[f"v_{guid}"], z[f"f_{guid}"], None if t.size == 0 else t, None if c.size == 0 else c)
         print(f"  geometry from cache {cache} ({len(shapes)} shapes)")
         elements = [el for el in elements if el.GlobalId not in shapes]
 
-    def face_transparency(geometry):
-        """per-face transparency from the surface styles, or None"""
+    def style_rgb(style):
+        """diffuse colour of an IfcOpenShell style as (r, g, b) in 0–1, or None"""
+        d = getattr(style, "diffuse", None)
+        if d is None:
+            return None
+        try:
+            return (float(d.r()), float(d.g()), float(d.b()))
+        except Exception:
+            try:
+                r, g, b = tuple(d)[:3]
+                return (float(r), float(g), float(b))
+            except Exception:
+                return None
+
+    def face_styles(geometry):
+        """per-face (transparency, rgb) from the surface styles, or (None, None)"""
         try:
             mats = geometry.materials
             ids = np.array(geometry.material_ids, dtype=np.int64)
             if len(mats) == 0 or ids.size == 0:
-                return None
+                return None, None
             tr = np.array([float(getattr(m, "transparency", 0.0) or 0.0) for m in mats], dtype=np.float32)
+            rgb = np.array([style_rgb(m) or (np.nan, np.nan, np.nan) for m in mats], dtype=np.float32)
             ids = np.clip(ids, 0, len(tr) - 1)
-            return tr[ids]
+            return tr[ids], rgb[ids]
         except Exception:
-            return None
+            return None, None
+
+    def face_transparency(geometry):
+        return face_styles(geometry)[0]
     # NOTE: the multi-threaded iterator with include= ran far slower than
     # one-by-one create_shape on the Revit BasicHouse sample (>20 min vs
     # 3.5 min), so it is opt-in (--iterator) until that is understood.
@@ -353,7 +426,7 @@ def main() -> int:
         if it.initialize():
             while True:
                 shape = it.get()
-                shapes[shape.guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), face_transparency(shape.geometry))
+                shapes[shape.guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), *face_styles(shape.geometry))
                 if not it.next():
                     break
     except Exception as exc:  # fall back to one-by-one
@@ -364,24 +437,38 @@ def main() -> int:
             continue
         try:
             shape = ifcopenshell.geom.create_shape(settings, el)
-            shapes[guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), face_transparency(shape.geometry))
+            shapes[guid] = (np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3), np.array(shape.geometry.faces, dtype=np.int64).reshape(-1, 3), *face_styles(shape.geometry))
         except Exception:
             dropped[f"{el.is_a()} (geometry failed)"] += 1
 
     if cache and elements:
         arrays = {"guids": np.array(list(shapes.keys()))}
-        for guid, (v, f, t) in shapes.items():
+        for guid, (v, f, t, c) in shapes.items():
             arrays[f"v_{guid}"] = v
             arrays[f"f_{guid}"] = f
             arrays[f"t_{guid}"] = t if t is not None else np.zeros(0, dtype=np.float32)
+            arrays[f"c_{guid}"] = c if c is not None else np.zeros(0, dtype=np.float32)
         cache.parent.mkdir(parents=True, exist_ok=True)
         np.savez(cache, **arrays)
+
+    # surface-style inventory per category (always reported) and the
+    # per-material wall split (--keep-materials): key → {name, rgb, faces}
+    styles_seen: dict[str, dict] = defaultdict(lambda: {"faces": 0, "elements": set()})
+    materials: dict[str, dict] = {}
+
+    def material_key(el, rgb) -> str:
+        name = element_material_name(el) or (el.ObjectType or el.Name or "wall").split(":")[0]
+        hexcol = "%02x%02x%02x" % tuple(int(round(max(0.0, min(1.0, c)) * 255)) for c in rgb)
+        key = f"{slugify(name)}-{hexcol}"
+        if key not in materials:
+            materials[key] = {"name": name, "color": f"#{hexcol}", "rgb": [round(float(c), 4) for c in rgb], "faces": 0, "elements": 0}
+        return key
 
     for guid, (el, cat) in wanted.items():
         t = el.is_a()
         if guid not in shapes:
             continue
-        verts, faces, transp = shapes[guid]
+        verts, faces, transp, rgb = shapes[guid]
         if len(faces) == 0:
             dropped[f"{t} (empty)"] += 1
             continue
@@ -404,17 +491,43 @@ def main() -> int:
         # glass; the opaque faces of a window are its FRAME (dark), and the
         # opaque faces of a glazed door stay door. Without styles the whole
         # element keeps its category as before.
-        parts: list[tuple[str, np.ndarray]] = [(cat, faces)]
+        parts: list[tuple[str, np.ndarray, str | None]] = [(cat, faces, None)]
         if cat in ("glass", "door") and transp is not None and len(transp) == len(faces):
             clear = transp > 0.3
             if clear.any() and (~clear).any():
-                parts = [("glass", faces[clear]), ("frame" if cat == "glass" else "door", faces[~clear])]
+                parts = [("glass", faces[clear], None), ("frame" if cat == "glass" else "door", faces[~clear], None)]
             elif cat == "glass" and not clear.any():
-                parts = [("frame", faces)]  # a window with no glazing style at all: treat as frame
-        for pcat, pfaces in parts:
+                parts = [("frame", faces, None)]  # a window with no glazing style at all: treat as frame
+        elif cat == "wall" and args.keep_materials and rgb is not None and len(rgb) == len(faces):
+            # one part per distinct source colour (rounded to 8 bits), so a
+            # wall whose faces carry two sidings keeps both
+            ok = ~np.isnan(rgb).any(axis=1)
+            parts = []
+            if (~ok).any():
+                parts.append(("wall", faces[~ok], None))
+            if ok.any():
+                q = np.round(rgb[ok] * 255).astype(np.int32)
+                keys = q[:, 0] * 65536 + q[:, 1] * 256 + q[:, 2]
+                for k in np.unique(keys):
+                    sel = keys == k
+                    mkey = material_key(el, rgb[ok][sel][0])
+                    materials[mkey]["elements"] += 1
+                    parts.append(("wall", faces[ok][sel], mkey))
+        # inventory of the surface styles seen, by category
+        if rgb is not None and len(rgb) == len(faces):
+            ok = ~np.isnan(rgb).any(axis=1)
+            if ok.any():
+                q = np.round(rgb[ok] * 255).astype(np.int32)
+                for k, n in zip(*np.unique(q[:, 0] * 65536 + q[:, 1] * 256 + q[:, 2], return_counts=True)):
+                    skey = f"{cat}:#{int(k):06x}"
+                    styles_seen[skey]["faces"] += int(n)
+                    styles_seen[skey]["elements"].add(el.GlobalId)
+        for pcat, pfaces, mkey in parts:
             mesh = trimesh.Trimesh(vertices=verts, faces=pfaces, process=False)
             mesh.remove_unreferenced_vertices()
-            groups[(si, pcat)].append(mesh)
+            groups[(si, pcat, mkey)].append(mesh)
+            if mkey:
+                materials[mkey]["faces"] += int(len(pfaces))
         kept[t] += 1
         tri_total += len(faces)
 
@@ -422,24 +535,34 @@ def main() -> int:
         sys.exit("nothing kept — check the IfcTypes in the file")
 
     # ---- normalise: centre footprint, floor at 0, Z-up → Y-up
-    all_v = np.vstack([m.vertices for ms in groups.values() for m in ms])
+    # the ENVELOPE (everything but misc proxies) defines the footprint and
+    # the ground: the Method sample carried its building at +2,036 m (a
+    # surveyed site elevation) with an "INTERNAL ORIGIN" storey at 0, so
+    # taking the lowest storey of the whole project put the home two
+    # kilometres in the air. Only storeys that actually hold envelope
+    # geometry count, and the footprint ignores entourage.
+    envelope = [m for (si, cat, _), ms in groups.items() if cat != "misc" for m in ms] or [m for ms in groups.values() for m in ms]
+    all_v = np.vstack([m.vertices for m in envelope])
     lo, hi = all_v.min(axis=0), all_v.max(axis=0)
     cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
-    base_z = min([s["elevation"] for s in storeys] + [lo[2]]) if storeys else lo[2]
+    used = {si for (si, cat, _) in groups if cat != "misc"} or {si for (si, _, _) in groups}
+    base_z = min([s["elevation"] for i, s in enumerate(storeys) if i in used] + [lo[2]]) if storeys else lo[2]
     # Z-up (x, y, z) → Y-up (x, z, -y)
     to_yup = np.array([[1, 0, 0, -cx], [0, 0, 1, -base_z], [0, -1, 0, cy], [0, 0, 0, 1]], dtype=np.float64)
 
     scene = trimesh.Scene()
     scene.metadata["extras"] = {}
     nodes = []
-    for (si, cat), meshes in sorted(groups.items()):
+    for (si, cat, mkey), meshes in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2] or "")):
         merged = trimesh.util.concatenate(meshes) if len(meshes) > 1 else meshes[0]
         merged.apply_transform(to_yup)
         merged.merge_vertices()
         r, g, b, a = PALETTE[cat]
+        if mkey:
+            r, g, b = materials[mkey]["rgb"]
         merged.visual = trimesh.visual.TextureVisuals(
             material=trimesh.visual.material.PBRMaterial(
-                name=f"{cat}",
+                name=f"{cat}__{mkey}" if mkey else f"{cat}",
                 baseColorFactor=[int(r * 255), int(g * 255), int(b * 255), int(a * 255)],
                 metallicFactor=0.0,
                 roughnessFactor=0.9 if cat != "glass" else 0.2,
@@ -447,10 +570,13 @@ def main() -> int:
                 doubleSided=True,
             )
         )
-        name = f"storey{si}_{cat}"
+        name = f"storey{si}_{cat}" + (f"__{mkey}" if mkey else "")
         storey = storeys[si] if si < len(storeys) else {"name": "Storey", "elevation": 0.0}
         scene.add_geometry(merged, node_name=name, geom_name=name)
-        nodes.append({"node": name, "storey": si, "category": cat, "triangles": int(len(merged.faces))})
+        node = {"node": name, "storey": si, "category": cat, "triangles": int(len(merged.faces))}
+        if mkey:
+            node["material"] = {"key": mkey, "name": materials[mkey]["name"], "color": materials[mkey]["color"]}
+        nodes.append(node)
 
     footprint = {"width_m": round(float(hi[0] - lo[0]), 2), "depth_m": round(float(hi[1] - lo[1]), 2), "height_m": round(float(hi[2] - base_z), 2)}
     extras = {
@@ -460,11 +586,13 @@ def main() -> int:
         # habitable = has walls/doors/windows on it (Revit exports its roof
         # level as a storey; the viewer offers only habitable ones)
         "storeys": [
-            {"index": i, "name": s["name"], "elevation_m": round(s["elevation"] - base_z, 3), "habitable": any((i, c) in groups for c in ("wall", "door", "glass"))}
+            {"index": i, "name": s["name"], "elevation_m": round(s["elevation"] - base_z, 3), "habitable": any(k[0] == i and k[1] in ("wall", "door", "glass") for k in groups)}
             for i, s in enumerate(storeys)
         ],
         "footprint": footprint,
         "nodes": nodes,
+        "keepMaterials": bool(args.keep_materials),
+        "materials": {k: {"name": v["name"], "color": v["color"]} for k, v in materials.items()},
     }
     scene.metadata["extras"] = extras
 
@@ -488,6 +616,12 @@ def main() -> int:
         "proxies": proxies,
         "smallDropped": small[:50],
         "nodes": nodes,
+        "keepMaterials": bool(args.keep_materials),
+        # the wall materials carried into the GLB (empty unless --keep-materials)
+        "materials": {k: {"name": v["name"], "color": v["color"], "faces": v["faces"], "elements": v["elements"]} for k, v in sorted(materials.items(), key=lambda kv: -kv[1]["faces"])},
+        # every surface style seen on kept elements, by category — the
+        # diagnostic for "what does this model actually carry?"
+        "surfaceStyles": {k: {"faces": v["faces"], "elements": len(v["elements"])} for k, v in sorted(styles_seen.items(), key=lambda kv: -kv[1]["faces"])[:60]},
     }
     if args.report:
         Path(args.report).parent.mkdir(parents=True, exist_ok=True)
@@ -499,6 +633,8 @@ def main() -> int:
         print(f"  drop  {v:4d}  {k}")
     if proxies:
         print(f"  proxies ({len(proxies)}): " + ", ".join(f"{p['name'] or p['id']} {p['size_m']}m {'✓' if p['kept'] else '✗'}" for p in proxies[:10]))
+    if materials:
+        print(f"  wall materials kept ({len(materials)}): " + ", ".join(f"{v['name']} {v['color']} ({v['faces']} faces)" for v in list(report['materials'].values())[:8]))
     return 0
 
 
