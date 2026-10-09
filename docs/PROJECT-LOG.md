@@ -730,6 +730,17 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   below the ground storey (lowest storey holding walls) are the
   slope segments. Footings now sit below y = 0, underground, as they
   should. Sample house still converts intact (43 kept, Betong wall).
+- Pass five (run 37868762859): footprint 28.3 × 50.5 × 6.1 m,
+  FOUNDATION at 0, 35k tris, 84 KB; two decorative foundation-wall
+  stubs and four below-ground slabs dropped. The 3D view is Method's
+  home: dark roofs, stained vertical siding, board-form concrete,
+  glass walls, decks. The plan view was BLANK: the viewer's storey
+  state starts at 0 = "INTERNAL ORIGIN" (−2,037 m), so the cut sat
+  under the ground and every storey above it was hidden — it now
+  defaults to the first habitable storey (`current`). Entourage: the
+  IFC carries ~260 Enscape pines and ~1,600 bushes as named
+  proxies (position + size, no foliage) — a planting plan we could
+  honour with the Poly Haven scans instead of the random scatter.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

@@ -859,6 +859,13 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
      a storey; a plan cut there shows the roof slab) */
   const habitable = all.filter((s) => s.habitable !== false);
   const storeys = habitable.length ? habitable : all;
+  /* the storey state is the RAW index into extras.storeys (what the mesh
+     names and the cut height use). Until a pill is pressed it is 0 — and
+     on a Revit export the storey at 0 is "INTERNAL ORIGIN", two
+     kilometres below the house (Method sample, 2026-10-09): the plan cut
+     landed under the ground and showed nothing. Default to the first
+     habitable storey instead. */
+  const current = storeys.some((s) => s.index === storey) ? storey : (storeys[0]?.index ?? 0);
   const fp = extras.footprint ?? { width_m: 12, depth_m: 10, height_m: 8 };
   const north = northDeg ?? extras.northDeg ?? 0;
   const radius = Math.max(fp.width_m, fp.depth_m, fp.height_m) * ORBIT_RADIUS;
@@ -980,7 +987,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}
           <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
-          <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey, northDeg: north, reduce }} />
+          <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey: current, northDeg: north, reduce }} />
           <OrbitControls
             ref={(c) => {
               const v = vs.current;
@@ -1034,9 +1041,9 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
               <button
                 key={s.index}
                 type="button"
-                aria-pressed={storey === s.index}
+                aria-pressed={current === s.index}
                 onClick={() => setStorey(s.index)}
-                className={`rounded-(--radius-full) px-2xl py-md text-body-sm font-medium transition-colors ${storey === s.index ? "bg-surface text-ink" : "text-ink-3 hover:text-ink"}`}
+                className={`rounded-(--radius-full) px-2xl py-md text-body-sm font-medium transition-colors ${current === s.index ? "bg-surface text-ink" : "text-ink-3 hover:text-ink"}`}
               >
                 {s.name}
               </button>
