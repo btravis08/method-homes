@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T16:54:09.657Z",
+  "generatedAt": "2026-10-09T16:32:08.789Z",
   "ran": false,
   "reason": "not configured — set GSC_SERVICE_ACCOUNT_JSON and GSC_SITE_URL (Actions secrets) and add the service account as a Search Console user",
   "questions": [],
