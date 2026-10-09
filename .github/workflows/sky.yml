@@ -26,6 +26,10 @@ on:
         description: "Degrees to turn the map about the vertical (install)"
         required: false
         default: "120"
+      out:
+        description: "Folder under public/models to install into (install) — env = the default sky, env-golden / env-overcast = look presets"
+        required: false
+        default: "env"
 
 permissions:
   contents: write
@@ -113,10 +117,11 @@ jobs:
           id="$(echo "${{ github.event.inputs.ids }}" | cut -d, -f1 | xargs)"
           url=$(curl -sS "https://api.polyhaven.com/files/$id" | python3 -c 'import json,sys; print(json.load(sys.stdin)["hdri"]["2k"]["hdr"]["url"])')
           curl -sS -L -o /tmp/sky.hdr "$url"
-          python3 scripts/model/prep-env.py /tmp/sky.hdr public/models/env --width 512 --rotation "${{ github.event.inputs.rotation }}"
+          OUT="public/models/${{ github.event.inputs.out }}"
+          python3 scripts/model/prep-env.py /tmp/sky.hdr "$OUT" --width 512 --rotation "${{ github.event.inputs.rotation }}"
           python3 - "$id" <<'PY'
           import json, sys
-          p = "public/models/env/env.json"
+          p = "public/models/${{ github.event.inputs.out }}/env.json"
           d = json.load(open(p))
           d["source"] = f"https://polyhaven.com/a/{sys.argv[1]}"
           d["license"] = "CC0 (Poly Haven)"
@@ -125,8 +130,8 @@ jobs:
           PY
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A public/models/env
+          git add -A "$OUT"
           git diff --cached --quiet && { echo "env unchanged"; exit 0; }
-          git commit -q -m "models: plan viewer sky → $id (Poly Haven)"
+          git commit -q -m "models: plan viewer sky ${{ github.event.inputs.out }} → $id (Poly Haven)"
           git pull --rebase -q origin main
           git push -q origin HEAD:main
