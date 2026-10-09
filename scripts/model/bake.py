@@ -48,7 +48,7 @@ from pathlib import Path
 import bpy
 from mathutils import Vector
 
-NAME_RE = re.compile(r"^storey(\d+)_([a-z]+)(?:__(.+))?$")
+NAME_RE = re.compile(r"^storey(\d+)_([a-z]+)(?:__(.+?))?(?:~m\d+)?$")  # ~m<K>: the node sits under prefab module K
 
 # class → texture set folder, tile size (m per repeat), base-colour tint
 # (multiplies the diffuse; LINEAR values — Principled takes linear, so the

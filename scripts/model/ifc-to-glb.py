@@ -258,6 +258,139 @@ def storey_elevation(storey, unit_scale: float) -> float:
         return float(getattr(storey, "Elevation", 0.0) or 0.0) * unit_scale
 
 
+# ---------------------------------------------------------------- MODULES
+# (Bryce, 2026-10-09: "split into its separate prefab modules and pulled
+# apart"). Method's Revit model carries no module tag on elements; what it
+# has is an area scheme — IfcSpace objects named "MOD A" … "MOD G" plus
+# the site-built pieces ("SITE BUILT LIVING", "UNCOVERED DECK", "GARAGE"),
+# all members of one IfcGroup ("Gross Building"). Those footprints decide
+# which module every element belongs to; an element that spans a seam (the
+# roof, the main floor slab, a long wall) is SLICED along the footprint
+# edges and each piece goes with its module. Pieces outside every footprint
+# (eave overhangs) ride with the nearest one. The GLB then carries a
+# `module<K>` parent node per module (children named `…~m<K>`) and
+# `extras.modules` for the viewer's exploded view.
+MODULE_NAME_RE = re.compile(r"^\s*(mod(ule)?)\b", re.I)
+MODULE_SKIP_RE = re.compile(r"roof|driveway|\blot\b|yard|site\s*$|parking", re.I)
+
+
+def module_spaces(model) -> list:
+    """IfcSpaces that are modules (or their site-built siblings), with a
+    `prefab` flag: every space in a group that holds a MOD-named space,
+    minus roof/driveway areas; or just the MOD-named spaces when they are
+    not grouped."""
+    label = lambda sp: (sp.LongName or sp.Name or "").strip()
+    mods = [sp for sp in model.by_type("IfcSpace") if MODULE_NAME_RE.match(label(sp))]
+    if not mods:
+        return []
+    chosen: dict[int, object] = {sp.id(): sp for sp in mods}
+    for rel in model.by_type("IfcRelAssignsToGroup"):
+        members = list(rel.RelatedObjects or [])
+        if any(m.id() in chosen for m in members):
+            for m in members:
+                if m.is_a("IfcSpace") and not MODULE_SKIP_RE.search(label(m)):
+                    chosen[m.id()] = m
+    out = []
+    for sp in chosen.values():
+        out.append({"space": sp, "name": label(sp), "prefab": bool(MODULE_NAME_RE.match(label(sp)))})
+    out.sort(key=lambda m: (not m["prefab"], m["name"]))
+    return out
+
+
+def footprint_polygon(verts: np.ndarray, faces: np.ndarray):
+    """the 2D (x, y) footprint of a mesh: union of its triangles, largest
+    part, lightly simplified"""
+    from shapely.geometry import Polygon
+    from shapely.ops import unary_union
+
+    tris = []
+    for f in faces:
+        t = verts[f][:, :2]
+        if abs((t[1][0] - t[0][0]) * (t[2][1] - t[0][1]) - (t[2][0] - t[0][0]) * (t[1][1] - t[0][1])) < 1e-6:
+            continue
+        tris.append(Polygon(t))
+    if not tris:
+        return None
+    u = unary_union(tris).buffer(0.01).buffer(-0.01)
+    if u.geom_type == "MultiPolygon":
+        u = max(u.geoms, key=lambda g: g.area)
+    if u.is_empty or u.area < 1.0:
+        return None
+    return u.simplify(0.03)
+
+
+def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0):
+    """Split a mesh across module footprints. Returns {module index | None:
+    Trimesh}. A mesh wholly inside one footprint is returned as is; one
+    that straddles seams is sliced along every footprint edge it overlaps
+    and its faces are dealt out by centroid (outside faces go to the
+    nearest footprint within `snap_m`, else to None)."""
+    import shapely
+
+    from shapely.geometry import box as shapely_box
+
+    v = mesh.vertices
+    lo, hi = v.min(axis=0), v.max(axis=0)
+    # candidates by footprint overlap with the mesh's box — a roof's
+    # vertices all sit on its overhang, outside every module
+    bbox = shapely_box(lo[0], lo[1], hi[0], hi[1])
+    hit = [k for k, poly in enumerate(polys) if poly.intersects(bbox)]
+    inside = np.zeros((len(polys), len(v)), dtype=bool)
+    for k in hit:
+        inside[k] = shapely.contains_xy(polys[k], v[:, 0], v[:, 1])
+    if not hit:
+        c = shapely.points(v[:, :2].mean(axis=0))
+        d = np.array([float(poly.distance(c)) for poly in polys]) if polys else np.array([])
+        if d.size and d.min() <= snap_m:
+            return {int(d.argmin()): mesh}
+        return {None: mesh}
+    if len(hit) == 1 and inside[hit[0]].all():
+        return {hit[0]: mesh}
+    # slice along the edges of the footprints this mesh touches
+    m = mesh
+    for k in hit:
+        xy = np.asarray(polys[k].exterior.coords)
+        for a, b in zip(xy[:-1], xy[1:]):
+            d = b - a
+            L = float(np.hypot(*d))
+            if L < 0.05:
+                continue
+            # skip edges whose line misses the mesh's box entirely
+            n = np.array([-d[1] / L, d[0] / L, 0.0])
+            corners = np.array([[x, y, 0.0] for x in (lo[0], hi[0]) for y in (lo[1], hi[1])])
+            side = (corners - np.array([a[0], a[1], 0.0])) @ n
+            if side.min() > 0 or side.max() < 0:
+                continue
+            o = np.array([a[0], a[1], 0.0])
+            try:
+                front = trimesh.intersections.slice_mesh_plane(m, n, o, cap=False)
+                back = trimesh.intersections.slice_mesh_plane(m, -n, o, cap=False)
+            except Exception:
+                continue
+            parts = [p for p in (front, back) if p is not None and len(p.faces)]
+            if len(parts) == 2:
+                m = trimesh.util.concatenate(parts)
+    cent = m.triangles_center
+    label = np.full(len(cent), -1, dtype=np.int64)
+    pts = shapely.points(cent[:, :2])
+    for k, poly in enumerate(polys):
+        sel = (label < 0) & shapely.contains_xy(poly, cent[:, 0], cent[:, 1])
+        label[sel] = k
+    out_sel = label < 0
+    if out_sel.any():
+        # faces outside every footprint (overhangs, eave corners) belong to
+        # the element that touches a module: they go with the nearest one
+        dist = np.stack([shapely.distance(poly, pts[out_sel]) for poly in polys], axis=1)
+        label[np.flatnonzero(out_sel)] = dist.argmin(axis=1)
+    result = {}
+    for k in np.unique(label):
+        sel = label == k
+        sub = trimesh.Trimesh(vertices=m.vertices, faces=m.faces[sel], process=False)
+        sub.remove_unreferenced_vertices()
+        result[None if k < 0 else int(k)] = sub
+    return result
+
+
 def with_extras(glb: bytes, extras: dict) -> bytes:
     """Put `extras` on the glTF root and on scene 0 (three's GLTFLoader
     exposes scene extras as scene.userData)."""
@@ -354,7 +487,7 @@ def main() -> int:
     proxies = []
     small = []
     site = []  # single elements too long/tall to be part of the home (retaining walls, site slabs) — allow by name if one is wrong
-    groups: dict[tuple[int, str, str | None], list[trimesh.Trimesh]] = defaultdict(list)  # (storey, category, material key | None)
+    groups: dict[tuple[int, str, str | None, int | None], list[trimesh.Trimesh]] = defaultdict(list)  # (storey, category, material key | None, module | None)
     tri_total = 0
 
     # aggregate parents (IfcRoof → its slabs, stairs → flights…)
@@ -490,6 +623,28 @@ def main() -> int:
         a = np.array(boxes, dtype=np.float64)
         core = (a[:, 0].min() - CORE_MARGIN_M, a[:, 1].min() - CORE_MARGIN_M, a[:, 2].max() + CORE_MARGIN_M, a[:, 3].max() + CORE_MARGIN_M)
 
+    # module footprints (see MODULES above): IfcSpace areas → polygons
+    modules: list[dict] = []
+    module_polys: list = []
+    for mi, m_ in enumerate(module_spaces(model)):
+        sp = m_["space"]
+        poly = None
+        try:
+            if getattr(sp, "Representation", None):
+                shp = ifcopenshell.geom.create_shape(settings, sp)
+                sv = np.array(shp.geometry.verts, dtype=np.float64).reshape(-1, 3)
+                sf = np.array(shp.geometry.faces, dtype=np.int64).reshape(-1, 3)
+                poly = footprint_polygon(sv, sf)
+        except Exception as exc:
+            print(f"  module {m_['name']!r}: no footprint ({exc})", file=sys.stderr)
+        if poly is None:
+            continue
+        modules.append({"index": len(module_polys), "name": m_["name"], "prefab": m_["prefab"], "poly": poly})
+        module_polys.append(poly)
+    if modules:
+        print(f"  modules: " + ", ".join(f"{m['name']}{'' if m['prefab'] else ' (site-built)'} {m['poly'].area:.0f} m²" for m in modules))
+    module_stats: Counter = Counter()
+
     # surface-style inventory per category (always reported) and the
     # per-material wall split (--keep-materials): key → {name, rgb, faces}
     styles_seen: dict[str, dict] = defaultdict(lambda: {"faces": 0, "elements": set()})
@@ -573,7 +728,15 @@ def main() -> int:
         for pcat, pfaces, mkey in parts:
             mesh = trimesh.Trimesh(vertices=verts, faces=pfaces, process=False)
             mesh.remove_unreferenced_vertices()
-            groups[(si, pcat, mkey)].append(mesh)
+            if module_polys:
+                pieces = partition_mesh(mesh, module_polys)
+                if len(pieces) > 1:
+                    module_stats["sliced"] += 1
+                for mod, piece in pieces.items():
+                    groups[(si, pcat, mkey, mod)].append(piece)
+                    module_stats[f"m{mod}" if mod is not None else "none"] += 1
+            else:
+                groups[(si, pcat, mkey, None)].append(mesh)
             if mkey:
                 materials[mkey]["faces"] += int(len(pfaces))
         kept[t] += 1
@@ -589,7 +752,7 @@ def main() -> int:
     # taking the lowest storey of the whole project put the home two
     # kilometres in the air. Only storeys that actually hold envelope
     # geometry count, and the footprint ignores entourage.
-    envelope = [m for (si, cat, _), ms in groups.items() if cat in ENVELOPE for m in ms] or [m for ms in groups.values() for m in ms]
+    envelope = [m for (si, cat, _, _m), ms in groups.items() if cat in ENVELOPE for m in ms] or [m for ms in groups.values() for m in ms]
     env_v = np.vstack([m.vertices for m in envelope])
     env_lo, env_hi = env_v.min(axis=0), env_v.max(axis=0)
     # anything kept that sits outside the envelope's neighbourhood is
@@ -612,7 +775,7 @@ def main() -> int:
         dropped[f"{cat_name} (outlier, >{OUTLIER_M:g} m from the envelope)"] += n
     # the ground: the lowest storey that holds WALLS (foundation walls
     # count; footings below it stay underground, below y = 0)
-    wall_storeys = {si for (si, cat, _) in groups if cat == "wall"}
+    wall_storeys = {si for (si, cat, _, _m) in groups if cat == "wall"}
     ground = [s["elevation"] for i, s in enumerate(storeys) if i in wall_storeys]
     base_z = min(ground) if ground else float(env_lo[2])
     # wall/floor meshes entirely below the ground are the retaining-wall
@@ -636,7 +799,23 @@ def main() -> int:
     scene = trimesh.Scene()
     scene.metadata["extras"] = {}
     nodes = []
-    for (si, cat, mkey), meshes in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2] or "")):
+    # one empty parent node per module (identity transform); the viewer
+    # slides these apart. Centres are in the normalised Y-up frame.
+    module_nodes: dict[int, str] = {}
+    modules_out = []
+    for m_ in modules:
+        mx, my = m_["poly"].centroid.x, m_["poly"].centroid.y
+        b = m_["poly"].bounds
+        centre = [round(float(mx - cx), 3), round(float(-(my - cy)), 3)]
+        info = {"index": m_["index"], "name": m_["name"], "prefab": m_["prefab"], "centre": centre, "size_m": [round(float(b[2] - b[0]), 2), round(float(b[3] - b[1]), 2)]}
+        modules_out.append(info)
+        node_name = f"module{m_['index']}"
+        module_nodes[m_["index"]] = node_name
+        try:
+            scene.graph.update(frame_to=node_name, frame_from=scene.graph.base_frame, matrix=np.eye(4), extras=info)
+        except TypeError:
+            scene.graph.update(frame_to=node_name, frame_from=scene.graph.base_frame, matrix=np.eye(4))
+    for (si, cat, mkey, mod), meshes in sorted(groups.items(), key=lambda kv: (kv[0][0], kv[0][1], kv[0][2] or "", -1 if kv[0][3] is None else kv[0][3])):
         merged = trimesh.util.concatenate(meshes) if len(meshes) > 1 else meshes[0]
         merged.apply_transform(to_yup)
         merged.merge_vertices()
@@ -653,12 +832,17 @@ def main() -> int:
                 doubleSided=True,
             )
         )
-        name = f"storey{si}_{cat}" + (f"__{mkey}" if mkey else "")
+        name = f"storey{si}_{cat}" + (f"__{mkey}" if mkey else "") + (f"~m{mod}" if mod is not None else "")
         storey = storeys[si] if si < len(storeys) else {"name": "Storey", "elevation": 0.0}
-        scene.add_geometry(merged, node_name=name, geom_name=name)
+        if mod is not None and mod in module_nodes:
+            scene.add_geometry(merged, node_name=name, geom_name=name, parent_node_name=module_nodes[mod])
+        else:
+            scene.add_geometry(merged, node_name=name, geom_name=name)
         node = {"node": name, "storey": si, "category": cat, "triangles": int(len(merged.faces))}
         if mkey:
             node["material"] = {"key": mkey, "name": materials[mkey]["name"], "color": materials[mkey]["color"]}
+        if mod is not None:
+            node["module"] = mod
         nodes.append(node)
 
     footprint = {"width_m": round(float(hi[0] - lo[0]), 2), "depth_m": round(float(hi[1] - lo[1]), 2), "height_m": round(float(hi[2] - base_z), 2)}
@@ -679,6 +863,7 @@ def main() -> int:
         "nodes": nodes,
         "keepMaterials": bool(args.keep_materials),
         "materials": {k: {"name": v["name"], "color": v["color"]} for k, v in materials.items()},
+        "modules": modules_out,
     }
     scene.metadata["extras"] = extras
 
@@ -704,6 +889,8 @@ def main() -> int:
         "siteDropped": site,
         "nodes": nodes,
         "keepMaterials": bool(args.keep_materials),
+        "modules": modules_out,
+        "moduleStats": dict(module_stats),
         # the wall materials carried into the GLB (empty unless --keep-materials)
         "materials": {k: {"name": v["name"], "color": v["color"], "faces": v["faces"], "elements": v["elements"]} for k, v in sorted(materials.items(), key=lambda kv: -kv[1]["faces"])},
         # every surface style seen on kept elements, by category — the
