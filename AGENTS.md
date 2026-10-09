@@ -158,9 +158,16 @@ staging/design use.
   storey holding envelope geometry, never the lowest storey; Enscape
   assets, RPC trees, cars and appliance catalogue numbers arrive as
   IfcBuildingElementProxy and must be denied by name (PROXY_DENY),
-  and the footprint ignores misc proxies. Read `surfaceStyles` in the
-  report before judging a model's materials. The bespoke viewer
-  section references a model3d doc.
+  and the footprint ignores misc proxies — the ENVELOPE categories
+  (wall/roof/floor/glass/frame/door/stair) define ground + footprint
+  and anything kept >15 m from their box is dropped as an outlier.
+  IFC carries material IDENTITY not appearance: Revit paints most
+  layers default grey #787878, so PlanViewer's `materialFinish`
+  decides the finish BY NAME (siding → STAIN placeholder + relief,
+  gypsum/plywood → interior white, concrete/black → the IFC colour
+  when real). Read `surfaceStyles` + `materials` in the report before
+  judging a model's materials; ask Method for the actual stain. The
+  bespoke viewer section references a model3d doc.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

@@ -123,11 +123,16 @@ PROXY_DENY = re.compile(
     r"model text|text|tag|label|symbol|annotation|"
     # entourage from the Method sample (2026-10-09): Enscape asset
     # libraries (bushes, trees), RPC trees, cars named after their model
-    r"enscape|asset ?definition|\brpc\b|tesla|truck|bush|shrub|grass|hedge|"
-    # appliance catalogue numbers exported as proxies ("T24IF905SP")
-    r"^[A-Z]{1,3}\d{2,}[A-Z0-9-]*$",
+    r"enscape|asset ?definition|\brpc\b|tesla|truck|bush|shrub|grass|hedge",
     re.IGNORECASE,
 )
+# appliance catalogue numbers exported as proxy families ("T24IF905SP")
+CATALOG_RE = re.compile(r"^[A-Z]{1,4}\d{2,}[A-Z0-9-]*$")
+
+# the categories that ARE the home — they define the ground, the
+# footprint and the neighbourhood every other kept element must share
+ENVELOPE = ("wall", "roof", "floor", "glass", "frame", "door", "stair")
+OUTLIER_M = 15.0  # kept elements further than this from the envelope are site context, not the home
 
 
 ROOF_NAME = re.compile(r"roof|\btak\b|plåttak|dach|toit|tetto|cubierta", re.IGNORECASE)
@@ -475,7 +480,10 @@ def main() -> int:
         size = bbox_size(verts)
         allowed = el.GlobalId in allow or (el.Name and el.Name in allow)
         if t == "IfcBuildingElementProxy":
-            named_out = bool(PROXY_DENY.search(el.Name or "")) and not allowed
+            # Revit names a proxy "Family:Type:Id" — the catalogue-number
+            # test runs on the family alone ("T24IF905SP:T24IF905SP:2750684")
+            family = (el.Name or "").split(":")[0].strip()
+            named_out = (bool(PROXY_DENY.search(el.Name or "")) or bool(CATALOG_RE.match(family))) and not allowed
             keep_proxy = allowed or (size >= args.proxy_min_size and not named_out)
             proxies.append({"name": el.Name, "id": el.GlobalId, "size_m": round(size, 2), "kept": keep_proxy, **({"reason": "name"} if named_out else {})})
             if not keep_proxy:
@@ -541,12 +549,34 @@ def main() -> int:
     # taking the lowest storey of the whole project put the home two
     # kilometres in the air. Only storeys that actually hold envelope
     # geometry count, and the footprint ignores entourage.
-    envelope = [m for (si, cat, _), ms in groups.items() if cat != "misc" for m in ms] or [m for ms in groups.values() for m in ms]
-    all_v = np.vstack([m.vertices for m in envelope])
+    envelope = [m for (si, cat, _), ms in groups.items() if cat in ENVELOPE for m in ms] or [m for ms in groups.values() for m in ms]
+    env_v = np.vstack([m.vertices for m in envelope])
+    env_lo, env_hi = env_v.min(axis=0), env_v.max(axis=0)
+    # anything kept that sits outside the envelope's neighbourhood is
+    # context (a column at the Revit internal origin two kilometres
+    # below the house, a fence at the lot line): drop it, say so
+    outliers = Counter()
+    for key in list(groups):
+        kept_ms = []
+        for m in groups[key]:
+            mlo, mhi = m.vertices.min(axis=0), m.vertices.max(axis=0)
+            if (mhi < env_lo - OUTLIER_M).any() or (mlo > env_hi + OUTLIER_M).any():
+                outliers[key[1]] += 1
+                continue
+            kept_ms.append(m)
+        if kept_ms:
+            groups[key] = kept_ms
+        else:
+            del groups[key]
+    for cat_name, n in outliers.items():
+        dropped[f"{cat_name} (outlier, >{OUTLIER_M:g} m from the envelope)"] += n
+    all_v = np.vstack([m.vertices for ms in groups.values() for m in ms])
     lo, hi = all_v.min(axis=0), all_v.max(axis=0)
     cx, cy = (lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2
-    used = {si for (si, cat, _) in groups if cat != "misc"} or {si for (si, _, _) in groups}
-    base_z = min([s["elevation"] for i, s in enumerate(storeys) if i in used] + [lo[2]]) if storeys else lo[2]
+    # the ground: the lowest storey that holds envelope geometry, or the
+    # envelope's own lowest point if the storey is lower still
+    used = {si for (si, cat, _) in groups if cat in ENVELOPE} or {si for (si, _, _) in groups}
+    base_z = min([s["elevation"] for i, s in enumerate(storeys) if i in used] + [float(env_lo[2])]) if storeys else float(env_lo[2])
     # Z-up (x, y, z) → Y-up (x, z, -y)
     to_yup = np.array([[1, 0, 0, -cx], [0, 0, 1, -base_z], [0, -1, 0, cy], [0, 0, 0, 1]], dtype=np.float64)
 

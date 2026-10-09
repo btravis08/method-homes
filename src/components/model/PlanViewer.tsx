@@ -206,8 +206,37 @@ const PRELUDE = /* glsl */ `
   varying vec3 vWorldPos;
   varying vec3 vWorldNrm;
   uniform float uPlan;
+  uniform float uRelief;
   float gRib = 0.0;
 `;
+
+/*
+  SOURCE MATERIALS (ifc-to-glb --keep-materials, 2026-10-09). Method's
+  Revit export names every wall layer ("VERTICAL STAINED WOOD SIDING",
+  "Board Form Concrete", ". 5/8\" GWB (Level 5)") but paints most of
+  them Revit's default shaded grey (#787878) — the IFC carries the
+  material IDENTITY, not its appearance. So the finish is decided by
+  NAME, and the IFC colour is used only when it is a real one (the
+  cast-in-place concrete's #818476, trim's #0d0d0d).
+  STAIN is a placeholder until Method says what the siding is stained.
+*/
+const STAIN = "#5a4634";
+const INTERIOR = "#efece6";
+const isDefaultGrey = (c: THREE.Color) => {
+  const { r, g, b } = c;
+  const spread = Math.max(r, g, b) - Math.min(r, g, b);
+  return spread < 0.03 && r > 0.4 && r < 0.56;
+};
+function materialFinish(key: string, source: THREE.Color): { color: THREE.Color; relief: boolean; rough?: number; metal?: number } {
+  const k = key.toLowerCase();
+  const real = !isDefaultGrey(source);
+  if (/siding|cedar|clapboard|shiplap|\bwood\b|timber/.test(k)) return { color: new THREE.Color(real ? source : STAIN), relief: true, rough: 0.78 };
+  if (/gwb|gypsum|drywall|plaster|plywood|cdx|osb|sheathing|insulation|stud|default-wall/.test(k)) return { color: new THREE.Color(INTERIOR), relief: false, rough: 0.9 };
+  if (/concrete|cmu|block|masonry|brick|stone/.test(k)) return { color: new THREE.Color(real ? source : "#9a978f"), relief: false, rough: 0.95 };
+  if (/black|steel|metal|fascia|trim|aluminum|aluminium/.test(k)) return { color: new THREE.Color(real ? source : "#111111"), relief: false, rough: 0.4, metal: 0.5 };
+  if (/glass|glazing/.test(k)) return { color: new THREE.Color(RENDER.glass[0]), relief: false, rough: 0.12, metal: 0.1 };
+  return { color: new THREE.Color(real ? source : RENDER.wall[0]), relief: true };
+}
 const VERTEX_WORLD = /* glsl */ `
   #include <project_vertex>
   vWorldPos = (modelMatrix * vec4(transformed, 1.0)).xyz;
@@ -236,7 +265,7 @@ const SIDING_COLOR = /* glsl */ `
     float cell = floor(uv.x / pitch);
     float tone = fract(sin(cell * 12.9898) * 43758.5453) * 0.05 - 0.025;
     float vertical = 1.0 - step(0.85, abs(n.y));
-    float k = (1.0 - uPlan) * vertical;
+    float k = (1.0 - uPlan) * vertical * uRelief; // uRelief 0: a flat material (concrete, interior layers) — the sill logic below still applies
     diffuseColor.rgb *= 1.0 + tone * k;
     diffuseColor.rgb *= 1.0 + (batten * 0.06 - side * 0.28) * coverage * k;
     /* soft occlusion where the wall meets the ground (~25 cm), baked so
@@ -311,7 +340,7 @@ const GLASS_REFLECT = /* glsl */ `
   #endif
 `;
 
-function finish(mat: THREE.MeshStandardMaterial, cat: string) {
+function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true) {
   if (cat === "glass") {
     mat.onBeforeCompile = (shader) => {
       const chunk = THREE.ShaderChunk.envmap_physical_pars_fragment.replace(
@@ -332,13 +361,14 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string) {
   if (cat !== "wall" && cat !== "roof") return;
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.uPlan = { value: 0 };
+    shader.uniforms.uRelief = { value: relief ? 1 : 0 };
     shader.vertexShader = PRELUDE + shader.vertexShader.replace("#include <project_vertex>", VERTEX_WORLD);
     shader.fragmentShader = PRELUDE + shader.fragmentShader
       .replace("#include <color_fragment>", cat === "wall" ? SIDING_COLOR : ROOF_COLOR)
       .replace("#include <roughnessmap_fragment>", cat === "roof" ? ROOF_ROUGHNESS : "#include <roughnessmap_fragment>");
     mat.userData.shader = shader;
   };
-  mat.customProgramCacheKey = () => `finish-${cat}`;
+  mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}`;
 }
 const PLAN: Record<string, [string, number]> = {
   /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
@@ -440,13 +470,14 @@ class ViewerState {
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
       const sourceMat = o.material as THREE.MeshStandardMaterial;
-      const source = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? sourceMat.color.clone() : (sourceMat?.userData.source as THREE.Color | undefined) ?? null;
+      const fin = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? materialFinish(m[3], sourceMat.color) : null;
+      const source = fin?.color ?? (sourceMat?.userData.source as THREE.Color | undefined) ?? null;
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
         const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
         const common = {
           color: source ?? (RENDER[cat] ?? RENDER.misc)[0],
-          roughness: rough,
-          metalness: metal,
+          roughness: fin?.rough ?? rough,
+          metalness: fin?.metal ?? metal,
           transparent: true,
           opacity: (RENDER[cat] ?? RENDER.misc)[1],
           side: THREE.DoubleSide,
@@ -465,9 +496,10 @@ class ViewerState {
                  kaleidoscope across each pane */
               new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: ENV_BOOST.glass })
             : new THREE.MeshStandardMaterial(common);
-        finish(mat, cat);
+        finish(mat, cat, fin ? fin.relief : true);
         mat.userData.viewer = true;
         if (source) mat.userData.source = source;
+        if (fin) mat.userData.finish = { rough: mat.roughness, metal: mat.metalness };
         (o.material as THREE.Material).dispose?.();
         o.material = mat;
       }
@@ -667,7 +699,8 @@ class ViewerState {
       }
       mat.visible = mat.opacity > 0.01;
       /* the drawing is matte: metal and gloss fade with the palette */
-      const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
+      const own = mat.userData.finish as { rough: number; metal: number } | undefined;
+      const [rough, metal] = own ? [own.rough, own.metal] : (SURFACE[cat] ?? SURFACE.misc);
       mat.roughness = THREE.MathUtils.lerp(rough, 1, e);
       mat.metalness = THREE.MathUtils.lerp(metal, 0, e);
       /* the sky's blue cast leaves the drawing with the palette: a plan is

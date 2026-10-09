@@ -684,6 +684,31 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   reads the suffix and keeps the GLB colour for those nodes (plan
   mode still lerps to the drawing palette); the workflow passes the
   flag from model3d.keepMaterials.
+- Second pass (run 37866977542, 92 s): entourage gone — 38.6k tris,
+  87 KB. The wall split WORKS and tells the real story: Method's
+  Revit export names every wall layer — "VERTICAL STAINED WOOD
+  SIDING" (32 elements), "Board Form Concrete", ". Concrete,
+  Cast-in-Place gray", ". 5/8\" GWB (Level 5)", ".15/32\" CDX
+  Plywood", "Black", "Glass", "Default Wall" — but paints almost all
+  of them Revit's default shaded grey #787878; only the cast-in-place
+  concrete (#818476) and the black trim (#0d0d0d) carry a real colour.
+  The IFC carries material IDENTITY, not appearance (Enscape textures
+  never reach IFC). So the viewer now picks the finish BY NAME
+  (`materialFinish`): siding/wood → stained wood with the board
+  relief (STAIN #5a4634 is a PLACEHOLDER — ask Method for the stain),
+  gypsum/plywood/sheathing → interior white, flat; concrete → the
+  IFC colour or a concrete grey, flat; black/metal/trim → black,
+  semi-metallic; glass walls → the glass tint; anything else → the
+  IFC colour if real, else the palette off-white. Relief is a shader
+  uniform (uRelief) so flat layers keep the plan-mode sill logic.
+- Still wrong after pass two: height 2,043 m / footprint 88 m. Storey
+  0 ("INTERNAL ORIGIN", z = 0) held 240 tris of IfcColumn/footing and
+  two Thermador proxies (the catalogue regex missed "Family:Type:Id"
+  names), so "a storey with non-misc geometry" still included it.
+  Fix: the ENVELOPE categories (wall/roof/floor/glass/frame/door/
+  stair) define the ground and the footprint; anything kept further
+  than 15 m from the envelope's box is dropped as an outlier and
+  counted in the report; the catalogue test runs on the family name.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
