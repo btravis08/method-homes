@@ -363,6 +363,10 @@ def module_cells(polys: list, reach_m: float = 30.0) -> list:
     for k in range(len(polys)):
         try:
             cell = shapely.make_valid(union(per[k])).intersection(env)
+            # the Voronoi midline between two sampled edges zigzags at half
+            # the sample spacing: straighten it, or the cut end of a slab
+            # comes out serrated
+            cell = cell.simplify(0.12, preserve_topology=True)
         except Exception:
             cell = polys[k].buffer(1.0)  # a near-footprint fallback cell
         out.append(cell)

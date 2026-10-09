@@ -868,6 +868,36 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   ground clip lifts away with the plan cut (`ground.constant` 0.02 →
   100 over e); caps stay limited to closed solids (`_wall` / `_structure`
   without a material suffix).
+- Module story, round two (Bryce, 2026-10-09 notes): steps retitled
+  The Module / The Assembly / The Finished Home (Floor plan kept
+  fourth). The first two are a WHITE MODEL — one pale tone per
+  category, no relief, no sky in the surfaces, no lawn or planting
+  (`diagram` progress + `uDiagram` uniform) — and the finishes, grass
+  and planting fade in on The Finished Home. The Assembly shows PREFAB
+  modules only (site-built pieces and anything outside a module wait
+  for the finished home), ghosts every module but the focus one at
+  30%, and doubles the spread (explodeGap 0.36). Every progress value
+  (single, explode, diagram, plan) eases independently at the flight
+  speed, so Module → Assembly slides the kitchen module into its place
+  and Module → Finished Home is one continuous move. Materials
+  reverted: the texture bake is opt-in (pipeline input, default off);
+  the procedural finishes are the look again. The pipeline reports
+  each module's composition by IFC type (`extras.modules[].elements`)
+  so the module count can be checked against the file. Bryce's
+  screenshot of the kitchen module showed the roof as "thin planes
+  with nothing in between": uncapped slicing left the 400 mm roof
+  slab open at the seam (two skins, a void). Closed solids are now
+  cut with a manifold3d boolean against each module's CELL — the
+  nearest-footprint Voronoi region (seeds sampled 8 cm inside each
+  footprint so a shared seam is never handed to the neighbour) — and
+  every piece stays a closed solid with its full edge; open shells
+  (walls split by surface colour) keep the face-dealing slice. There
+  are no rafters or framing members in Method's IFC — the Revit roof
+  is one monolithic layered slab — so a solid edge is all the file
+  can show. The white model is lit like a study model — sun eased to 2.2,
+  a flat ambient fill of 1.1, 55% shadow strength, 1.4× sky fill — so
+  its shaded faces read pale; under the product-shot sun they went
+  slate.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

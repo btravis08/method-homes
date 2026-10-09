@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — Module story round two: white-model Module and
+  Assembly steps, prefab-only ghosted assembly, finishes and grass fade
+  in on The Finished Home; texture bake made opt-in.
 - 2026-10-09 — Module story exploration (/library/module-story): the
   kitchen module alone → modules eased apart with seam connectors →
   the assembled home → the floor plan.

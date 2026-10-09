@@ -230,6 +230,7 @@ const PRELUDE = /* glsl */ `
   varying vec3 vWorldNrm;
   uniform float uPlan;
   uniform float uRelief;
+  uniform float uDiagram;
   float gRib = 0.0;
 `;
 
@@ -325,7 +326,7 @@ const SIDING_COLOR = /* glsl */ `
     float cell = floor(uv.x / pitch);
     float tone = fract(sin(cell * 12.9898) * 43758.5453) * 0.05 - 0.025;
     float vertical = 1.0 - step(0.85, abs(n.y));
-    float k = (1.0 - uPlan) * vertical * uRelief; // uRelief 0: a flat material (concrete, interior layers) — the sill logic below still applies
+    float k = (1.0 - uPlan) * (1.0 - uDiagram) * vertical * uRelief; // uRelief 0: a flat material (concrete, interior layers) — the sill logic below still applies
     diffuseColor.rgb *= 1.0 + tone * k;
     diffuseColor.rgb *= 1.0 + (batten * 0.06 - side * 0.28) * coverage * k;
     /* soft occlusion where the wall meets the ground (~25 cm), baked so
@@ -365,7 +366,7 @@ const ROOF_COLOR = /* glsl */ `
     float coverage = clamp(0.03 / px, 0.0, 1.0);
     float flank = clamp((f - c) / max(0.015, px), -1.0, 1.0);
     float plane = step(0.25, abs(n.y));
-    float k = (1.0 - uPlan) * plane * coverage;
+    float k = (1.0 - uPlan) * (1.0 - uDiagram) * plane * coverage;
     gRib = rib * k;
     /* the rib catches light on one flank and drops shade on the other;
        on the charcoal base this is what makes the seams read */
@@ -409,7 +410,7 @@ const GLASS_REFLECT = /* glsl */ `
 const TEXTURE_PLAN = /* glsl */ `
   #include <map_fragment>
   #ifdef USE_MAP
-    diffuseColor.rgb = mix(diffuseColor.rgb, diffuse, uPlan);
+    diffuseColor.rgb = mix(diffuseColor.rgb, diffuse, max(uPlan, uDiagram));
   #endif
 `;
 const AO_DIRECT = /* glsl */ `
@@ -445,6 +446,7 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.uPlan = { value: 0 };
     shader.uniforms.uRelief = { value: relief ? 1 : 0 };
+    shader.uniforms.uDiagram = { value: 0 };
     shader.vertexShader = PRELUDE + shader.vertexShader.replace("#include <project_vertex>", VERTEX_WORLD);
     let frag = shader.fragmentShader;
     if (structural) {
@@ -458,6 +460,16 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
   };
   mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}-${textured ? "tex" : "plain"}`;
 }
+/* DIAGRAM (Bryce, 2026-10-09: "the module and the assembly should not
+   have ground beneath… show the primitive elements that make up the
+   home. Once you toggle to the finished home the materials render in
+   and the foliage/grass appears"): a white model — one pale tone, no
+   relief, no sky in the surfaces, no lawn or planting — for the story's
+   first two steps; the finishes fade in on "The Finished Home". */
+const DIAGRAM: Record<string, string> = {
+  wall: "#ebe9e4", floor: "#dedcd6", roof: "#d6d4cf", glass: "#c9d1d4",
+  door: "#d2d0cb", frame: "#bcbab5", stair: "#d9d7d1", rail: "#bdbbb6", structure: "#d4d2cc", misc: "#d9d7d1",
+};
 const PLAN: Record<string, [string, number]> = {
   /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
      — with the slab gone, each cut wall shows its own underside as a
@@ -532,7 +544,7 @@ class ViewerState {
   /* EXPLODE: module nodes slide out along the line from the footprint
      centre to their own centre — positions scale about the centre, so a
      row of modules gets even gaps. 0 = assembled, 1 = pulled apart. */
-  modules: { node: THREE.Object3D; index: number; name: string; centre: THREE.Vector3; size: THREE.Vector2; rooms: string[]; mats: THREE.Material[]; vis: number }[] = [];
+  modules: { node: THREE.Object3D; index: number; name: string; prefab: boolean; centre: THREE.Vector3; size: THREE.Vector2; rooms: string[]; mats: THREE.Material[]; vis: number }[] = [];
   explode = 0;
   explodeGap = EXPLODE_GAP;
   /* SINGLE (the module story, Bryce, 2026-10-09: "renders a single
@@ -541,6 +553,10 @@ class ViewerState {
      and the orbit tightens to its size */
   focus: number | null = null;
   single = 0;
+  diagram = 0;
+  fillLight: THREE.AmbientLight | null = null;
+  /* ghost opacity for the modules around the focus one in the assembly */
+  ghost = 0.3;
   /* dashed connectors between adjacent modules while they are apart */
   connectors: THREE.Group | null = null;
   wantConnectors = false;
@@ -557,6 +573,7 @@ class ViewerState {
   yaw = 0;
   private a = new THREE.Color();
   private b = new THREE.Color();
+  private c = new THREE.Color();
   private look = new THREE.Vector3();
   /* the flight is a pure function of progress between the orbit pose the
      user left and the top view: spherical path, azimuth held */
@@ -676,7 +693,7 @@ class ViewerState {
       o.receiveShadow = true;
     });
     this.modules = [];
-    type ModuleInfo = { index: number; name?: string; centre?: number[]; size_m?: number[]; rooms?: string[] };
+    type ModuleInfo = { index: number; name?: string; prefab?: boolean; centre?: number[]; size_m?: number[]; rooms?: string[] };
     const moduleList = (extras as { modules?: ModuleInfo[] }).modules ?? [];
     scene.traverse((o) => {
       const mm = o.name.match(/^module(\d+)$/);
@@ -691,7 +708,7 @@ class ViewerState {
       const sz = info.size_m;
       const size = sz && sz.length >= 2 ? new THREE.Vector2(sz[0], sz[1]) : new THREE.Vector2(box.max.x - box.min.x, box.max.z - box.min.z);
       const mats: THREE.Material[] = [];
-      this.modules.push({ node: o, index, name: info.name ?? o.name, centre, size, rooms: info.rooms ?? [], mats, vis: 1 });
+      this.modules.push({ node: o, index, name: info.name ?? o.name, prefab: info.prefab !== false, centre, size, rooms: info.rooms ?? [], mats, vis: 1 });
     });
     for (const entry of this.mats) {
       if (entry.module == null) continue;
@@ -923,6 +940,13 @@ class ViewerState {
        ones that reach down to the footings were being clipped off */
     this.ground.constant = THREE.MathUtils.lerp(0.02, 100, e);
 
+    /* diagram: the white model for the story's module and assembly steps */
+    {
+      const dtg = input.mode === "single" || input.mode === "modules" ? 1 : 0;
+      const dd = dtg - this.diagram;
+      this.diagram = Math.abs(dd) < 0.001 ? dtg : this.diagram + Math.sign(dd) * Math.min(Math.abs(dd), dt * speed);
+    }
+    const dg = ease(this.diagram);
     /* modules: pull apart / reassemble at the flight's pace */
     if (this.modules.length) {
       const xt = input.mode === "modules" ? 1 : 0;
@@ -940,8 +964,14 @@ class ViewerState {
       const se = ease(this.single);
       const fm = this.modules.find((m) => m.index === this.focus);
       if (this.group) this.group.position.set(fm ? -fm.centre.x * se : 0, 0, fm ? -fm.centre.z * se : 0);
+      /* the assembly shows the PREFAB modules only — site-built pieces and
+         anything outside a module (decks, rails, site work) belong to the
+         finished home — and ghosts every module but the focus one */
+      const assembly = input.mode === "modules" ? 1 : 0;
       for (const m of this.modules) {
-        const want = st && m.index !== this.focus ? 0 : 1;
+        let want = 1;
+        if (st && m.index !== this.focus) want = 0;
+        else if (assembly && m.index !== this.focus) want = m.prefab ? this.ghost : 0;
         m.vis = Math.abs(want - m.vis) < 0.001 ? want : m.vis + Math.sign(want - m.vis) * Math.min(Math.abs(want - m.vis), dt * speed);
       }
       /* connectors across the gaps, only while the modules are apart */
@@ -997,6 +1027,7 @@ class ViewerState {
          should never be white") */
       const leaves = ob === 0;
       mat.color.copy(this.a).lerp(this.b, leaves ? 0 : e);
+      if (dg > 0) mat.color.lerp(this.c.set(DIAGRAM[cat] ?? DIAGRAM.misc), dg * (1 - e));
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
       if (cat === "floor") {
         /* the floor is simply gone in plan: transparent within the first
@@ -1013,8 +1044,8 @@ class ViewerState {
       /* the drawing is matte: metal and gloss fade with the palette */
       const own = mat.userData.finish as { rough: number; metal: number } | undefined;
       const [rough, metal] = own ? [own.rough, own.metal] : (SURFACE[cat] ?? SURFACE.misc);
-      mat.roughness = THREE.MathUtils.lerp(rough, 1, e);
-      mat.metalness = THREE.MathUtils.lerp(metal, 0, e);
+      mat.roughness = THREE.MathUtils.lerp(rough, 1, Math.max(e, dg));
+      mat.metalness = THREE.MathUtils.lerp(metal, 0, Math.max(e, dg));
       /* the sky's blue cast leaves the drawing with the palette: a plan is
          flat ink on paper, not a lit model */
       /* three ignores a material's envMapIntensity when the light comes
@@ -1027,9 +1058,16 @@ class ViewerState {
         mat.envMap = env;
         mat.needsUpdate = true;
       }
-      mat.envMapIntensity = THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), 0.15, e) * (this.root?.environmentIntensity ?? 1);
-      const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
-      if (shader) shader.uniforms.uPlan.value = e;
+      /* the white model keeps most of the sky's fill (it is what lights
+         its shaded faces — without it they went black), just not the
+         glass boost */
+      mat.envMapIntensity = THREE.MathUtils.lerp(THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), 1.4, dg), 0.15, e) * (this.root?.environmentIntensity ?? 1);
+      if (mat instanceof THREE.MeshPhysicalMaterial) mat.transmission = THREE.MathUtils.lerp(GLASS_TRANSMISSION, 0, Math.max(e, dg));
+      const shader = mat.userData.shader as { uniforms: { uPlan: { value: number }; uDiagram?: { value: number } } } | undefined;
+      if (shader) {
+        shader.uniforms.uPlan.value = e;
+        if (shader.uniforms.uDiagram) shader.uniforms.uDiagram.value = dg;
+      }
     }
     for (const m of this.modules) {
       if (m.vis >= 1) continue;
@@ -1041,8 +1079,8 @@ class ViewerState {
     }
     /* …and what belongs to no module (deck rails, posts, site work) leaves
        with them, so the single module stands alone */
-    if (this.single > 0) {
-      const keep = 1 - ease(this.single);
+    if (this.diagram > 0) {
+      const keep = 1 - dg;
       for (const { mat, module } of this.mats) {
         if (module != null) continue;
         mat.opacity *= keep;
@@ -1081,18 +1119,31 @@ class ViewerState {
       this.cap.visible = e > 0.01;
     }
     this.fade = e;
-    this.foliage?.setFade(e);
+    const gone = Math.max(e, dg); // the drawing and the white model both stand on nothing
+    this.foliage?.setFade(gone);
     if (this.plants) {
       this.appear = Math.min(1, this.appear + dt / 0.5);
-      this.plants.setFade(Math.max(e, (1 - this.appear) / 2));
+      this.plants.setFade(Math.max(gone, (1 - this.appear) / 2));
     }
-    this.lawn?.setFade(e);
+    this.lawn?.setFade(gone);
     this.scenery?.setFade(e); // the wilderness leaves with the drawing
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     /* a touch calmer than raw in 3D (Samara's "less stark"), no colour in plan */
     if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(this.lookPreset.saturation, -1, e);
     /* shadows leave with the 3D view: the drawing is flat */
-    if (this.sunLight) this.sunLight.shadow.intensity = 1 - e;
+    if (this.sunLight) {
+      this.sunLight.shadow.intensity = (1 - e) * (1 - 0.45 * dg); // softer on the white model
+      /* the white model is lit like a study model — a gentler sun and a
+         flat fill — so its shaded faces read pale, not slate */
+      this.sunLight.intensity = THREE.MathUtils.lerp(this.lookPreset.sun.intensity, 2.2, dg);
+    }
+    if (this.root) {
+      if (!this.fillLight) {
+        this.fillLight = new THREE.AmbientLight("#ffffff", 0);
+        this.root.add(this.fillLight);
+      }
+      this.fillLight.intensity = 1.1 * dg;
+    }
     if (this.progress > 0.001) {
       /* spherical path from the orbit pose to straight above: the polar
          angle closes to the top, the azimuth holds (no camera spin — the
