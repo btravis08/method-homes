@@ -3,7 +3,7 @@
   "output": "/tmp/source.raw.glb",
   "bytes": 891696,
   "triangles": 35432,
-  "seconds": 89.7,
+  "seconds": 98.2,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -14505,5 +14505,119 @@
       "elements": 2
     }
   },
-  "compressedBytes": 83584
+  "bake": {
+    "materials": {
+      "wood": {
+        "set": "wood",
+        "maps": [
+          "diff",
+          "rough",
+          "nor"
+        ],
+        "tile_m": 1.8
+      },
+      "plywood": {
+        "set": "plywood",
+        "maps": [
+          "diff",
+          "rough",
+          "nor"
+        ],
+        "tile_m": 2.4
+      },
+      "plaster": {
+        "set": "plaster",
+        "maps": [
+          "diff",
+          "rough",
+          "nor"
+        ],
+        "tile_m": 2.2
+      },
+      "concrete": {
+        "set": "concrete",
+        "maps": [
+          "diff",
+          "rough",
+          "nor"
+        ],
+        "tile_m": 2.6
+      },
+      "floor": {
+        "set": "floor",
+        "maps": [
+          "diff",
+          "rough",
+          "nor"
+        ],
+        "tile_m": 3.2
+      },
+      "metal": {
+        "set": "metal",
+        "maps": [
+          "rough"
+        ],
+        "tile_m": 1.2
+      },
+      "black": {
+        "set": "metal",
+        "maps": [
+          "rough"
+        ],
+        "tile_m": 0.8
+      },
+      "glass": {
+        "set": null,
+        "maps": [],
+        "tile_m": 1
+      }
+    },
+    "classes": {
+      "concrete": [
+        "storey0_structure",
+        "storey1_structure",
+        "storey2_structure",
+        "storey2_wall__concrete-cast-in-place-gray-818476",
+        "storey3_structure",
+        "storey3_wall__board-form-concrete-787878",
+        "storey3_wall__concrete-cast-in-place-gray-818476",
+        "storey4_structure"
+      ],
+      "floor": [
+        "storey2_floor",
+        "storey3_floor",
+        "storey3_stair"
+      ],
+      "wood": [
+        "storey3_door",
+        "storey3_wall__15-32-cdx-plywood-787878",
+        "storey3_wall__glass-0080c0",
+        "storey3_wall__vertical-stained-wood-siding-787878"
+      ],
+      "black": [
+        "storey3_frame",
+        "storey3_wall__black-0d0d0d",
+        "storey4_wall__black-0d0d0d"
+      ],
+      "glass": [
+        "storey3_glass"
+      ],
+      "plaster": [
+        "storey3_wall__5-8-gwb-level-5-787878",
+        "storey3_wall__default-wall-808080"
+      ],
+      "metal": [
+        "storey4_roof"
+      ]
+    },
+    "ao": {
+      "size": 2048,
+      "samples": 128,
+      "distance_m": 4.0,
+      "seconds": 87.5
+    },
+    "seconds": 89.0,
+    "bytes": 12373484
+  },
+  "compressedBytes": 1938388
 }
