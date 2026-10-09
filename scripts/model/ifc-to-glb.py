@@ -133,6 +133,12 @@ CATALOG_RE = re.compile(r"^[A-Z]{1,4}\d{2,}[A-Z0-9-]*$")
 # footprint and the neighbourhood every other kept element must share
 ENVELOPE = ("wall", "roof", "floor", "glass", "frame", "door", "stair")
 OUTLIER_M = 15.0  # kept elements further than this from the envelope are site context, not the home
+# a SINGLE wall/slab element longer or taller than this is site work (the
+# Method sample carried an 88 m × 20 m cast-in-place retaining wall as an
+# IfcWall on the FIRST FLOOR storey — it dragged the ground 17 m down and
+# the footprint to 88 m); the longest module wall is ~18 m
+SITE_MAX_LEN_M = 25.0
+SITE_MAX_HEIGHT_M = 7.5
 
 
 ROOF_NAME = re.compile(r"roof|\btak\b|plåttak|dach|toit|tetto|cubierta", re.IGNORECASE)
@@ -345,6 +351,7 @@ def main() -> int:
     dropped = Counter()
     proxies = []
     small = []
+    site = []  # single elements too long/tall to be part of the home (retaining walls, site slabs) — allow by name if one is wrong
     groups: dict[tuple[int, str, str | None], list[trimesh.Trimesh]] = defaultdict(list)  # (storey, category, material key | None)
     tri_total = 0
 
@@ -492,6 +499,11 @@ def main() -> int:
         elif size < args.min_size and not allowed:
             small.append({"type": t, "name": el.Name, "id": el.GlobalId, "size_m": round(size, 2)})
             dropped[f"{t} (small)"] += 1
+            continue
+        ext = verts.max(axis=0) - verts.min(axis=0)  # IFC is Z-up here
+        if cat in ("wall", "floor", "roof", "structure") and not allowed and (max(ext[0], ext[1]) > SITE_MAX_LEN_M or ext[2] > SITE_MAX_HEIGHT_M):
+            site.append({"type": t, "name": el.Name, "id": el.GlobalId, "material": element_material_name(el), "extent_m": [round(float(x), 1) for x in ext]})
+            dropped[f"{t} (site-scale element)"] += 1
             continue
         st = storey_of(el)
         si = storey_index.get(st.GlobalId, 0) if st is not None else 0
@@ -645,6 +657,7 @@ def main() -> int:
         "dropped": dict(dropped.most_common()),
         "proxies": proxies,
         "smallDropped": small[:50],
+        "siteDropped": site,
         "nodes": nodes,
         "keepMaterials": bool(args.keep_materials),
         # the wall materials carried into the GLB (empty unless --keep-materials)
