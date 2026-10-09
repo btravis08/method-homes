@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 3336408,
+  "bytes": 3337048,
   "triangles": 35432,
-  "seconds": 93.5,
+  "seconds": 74.0,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -15511,6 +15511,13 @@
       "size_m": [
         4.11,
         17.13
+      ],
+      "rooms": [
+        "OFFICE",
+        "BATH 1",
+        "BED 1",
+        "BATH 2",
+        "BED 2"
       ]
     },
     {
@@ -15524,6 +15531,11 @@
       "size_m": [
         4.11,
         12.54
+      ],
+      "rooms": [
+        "KITCHEN",
+        "ROOF",
+        "ROOF"
       ]
     },
     {
@@ -15537,6 +15549,10 @@
       "size_m": [
         4.11,
         11.67
+      ],
+      "rooms": [
+        "PRIMARY BED",
+        "PRIMARY WALKIN CLOSET"
       ]
     },
     {
@@ -15550,6 +15566,10 @@
       "size_m": [
         4.12,
         16.54
+      ],
+      "rooms": [
+        "BATH 3",
+        "BED 3"
       ]
     },
     {
@@ -15563,6 +15583,12 @@
       "size_m": [
         4.11,
         18.06
+      ],
+      "rooms": [
+        "ENTRY",
+        "MUSIC",
+        "PANTRY",
+        "PWDR"
       ]
     },
     {
@@ -15576,6 +15602,10 @@
       "size_m": [
         4.11,
         9.11
+      ],
+      "rooms": [
+        "MUDROOM",
+        "PRIMARY BATH"
       ]
     },
     {
@@ -15589,6 +15619,9 @@
       "size_m": [
         9.19,
         4.22
+      ],
+      "rooms": [
+        "FAMILY ROOM"
       ]
     },
     {
@@ -15602,6 +15635,9 @@
       "size_m": [
         8.43,
         10.37
+      ],
+      "rooms": [
+        "GARAGE"
       ]
     },
     {
@@ -15615,6 +15651,10 @@
       "size_m": [
         9.19,
         11.81
+      ],
+      "rooms": [
+        "DINING",
+        "LIVING"
       ]
     },
     {
@@ -15628,7 +15668,8 @@
       "size_m": [
         9.17,
         27.36
-      ]
+      ],
+      "rooms": []
     }
   ],
   "moduleStats": {
@@ -16032,10 +16073,10 @@
       "size": 2048,
       "samples": 128,
       "distance_m": 4.0,
-      "seconds": 322.3
+      "seconds": 257.4
     },
-    "seconds": 325.7,
+    "seconds": 260.0,
     "bytes": 17155268
   },
-  "compressedBytes": 3027896
+  "compressedBytes": 3028540
 }
