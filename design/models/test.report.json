@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 891692,
+  "bytes": 891696,
   "triangles": 35432,
-  "seconds": 88.1,
+  "seconds": 89.7,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -28,7 +28,7 @@
       "index": 2,
       "name": "FOUNDATION",
       "elevation_m": 0.0,
-      "habitable": true
+      "habitable": false
     },
     {
       "index": 3,
@@ -40,7 +40,7 @@
       "index": 4,
       "name": "GARAGE ROOF",
       "elevation_m": 4.302,
-      "habitable": true
+      "habitable": false
     },
     {
       "index": 5,
@@ -14505,5 +14505,5 @@
       "elements": 2
     }
   },
-  "compressedBytes": 83580
+  "compressedBytes": 83584
 }
