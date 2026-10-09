@@ -709,6 +709,27 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   stair) define the ground and the footprint; anything kept further
   than 15 m from the envelope's box is dropped as an outlier and
   counted in the report; the catalogue test runs on the family name.
+- Pass three still read 88 m × 24 m. Decoding the GLB (gltf-transform
+  dequantize + getBounds per node — meshopt-quantized positions are
+  meaningless raw) showed the home at ~27 × 49 m and ONE wall node
+  spanning x −44…42, y 0…21: an 88 m cast-in-place concrete retaining
+  wall, exported as an IfcWall on the FIRST FLOOR storey, so it was
+  "envelope" by type. Pass four: a single wall/slab/roof/structure
+  element longer than 25 m or taller than 7.5 m is site work
+  (`siteDropped` in the report, allow by name to keep one). The
+  viewer check of pass three already showed the home with brown
+  siding and a dark roof; the plan view was blank because the ground
+  sat 17 m below the house.
+- Pass four's length test was WRONG for this home: its main roof is
+  49 m long, the floor 45 m, walls 31 m — the filter dropped the roof,
+  decks and the long walls and still missed the retaining wall (it is
+  many short segments stepping down the slope). Pass five uses the
+  CORE instead: the roofs' plan extent + 3 m (walls of the busiest
+  storey when a model has no IfcRoof); anything that does not touch
+  it is site work (`siteDropped`), and wall/floor meshes entirely
+  below the ground storey (lowest storey holding walls) are the
+  slope segments. Footings now sit below y = 0, underground, as they
+  should. Sample house still converts intact (43 kept, Betong wall).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
