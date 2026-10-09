@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 3337048,
+  "bytes": 3339584,
   "triangles": 35432,
-  "seconds": 74.0,
+  "seconds": 101.4,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -15518,7 +15518,17 @@
         "BED 1",
         "BATH 2",
         "BED 2"
-      ]
+      ],
+      "elements": {
+        "IfcDoor": 15,
+        "sliced": 25,
+        "IfcFooting": 6,
+        "IfcRoof": 4,
+        "IfcSlab": 4,
+        "IfcWall": 3,
+        "IfcWallStandardCase": 19,
+        "IfcWindow": 6
+      }
     },
     {
       "index": 1,
@@ -15536,7 +15546,15 @@
         "KITCHEN",
         "ROOF",
         "ROOF"
-      ]
+      ],
+      "elements": {
+        "IfcFooting": 6,
+        "sliced": 29,
+        "IfcRoof": 4,
+        "IfcSlab": 4,
+        "IfcWall": 2,
+        "IfcWallStandardCase": 20
+      }
     },
     {
       "index": 2,
@@ -15553,7 +15571,17 @@
       "rooms": [
         "PRIMARY BED",
         "PRIMARY WALKIN CLOSET"
-      ]
+      ],
+      "elements": {
+        "IfcDoor": 5,
+        "IfcFooting": 8,
+        "sliced": 31,
+        "IfcRoof": 3,
+        "IfcSlab": 5,
+        "IfcWall": 6,
+        "IfcWallStandardCase": 19,
+        "IfcWindow": 2
+      }
     },
     {
       "index": 3,
@@ -15570,7 +15598,18 @@
       "rooms": [
         "BATH 3",
         "BED 3"
-      ]
+      ],
+      "elements": {
+        "IfcBeam": 1,
+        "IfcDoor": 9,
+        "sliced": 24,
+        "IfcFooting": 12,
+        "IfcRoof": 2,
+        "IfcSlab": 6,
+        "IfcWall": 1,
+        "IfcWallStandardCase": 35,
+        "IfcWindow": 22
+      }
     },
     {
       "index": 4,
@@ -15589,7 +15628,17 @@
         "MUSIC",
         "PANTRY",
         "PWDR"
-      ]
+      ],
+      "elements": {
+        "IfcDoor": 5,
+        "sliced": 38,
+        "IfcFooting": 11,
+        "IfcRoof": 3,
+        "IfcSlab": 6,
+        "IfcWall": 5,
+        "IfcWallStandardCase": 27,
+        "IfcWindow": 16
+      }
     },
     {
       "index": 5,
@@ -15606,7 +15655,17 @@
       "rooms": [
         "MUDROOM",
         "PRIMARY BATH"
-      ]
+      ],
+      "elements": {
+        "IfcDoor": 3,
+        "IfcFooting": 3,
+        "sliced": 18,
+        "IfcRoof": 2,
+        "IfcSlab": 5,
+        "IfcWall": 2,
+        "IfcWallStandardCase": 14,
+        "IfcWindow": 2
+      }
     },
     {
       "index": 6,
@@ -15622,7 +15681,16 @@
       ],
       "rooms": [
         "FAMILY ROOM"
-      ]
+      ],
+      "elements": {
+        "IfcDoor": 6,
+        "IfcFooting": 7,
+        "sliced": 26,
+        "IfcRoof": 3,
+        "IfcSlab": 4,
+        "IfcWall": 3,
+        "IfcWallStandardCase": 20
+      }
     },
     {
       "index": 7,
@@ -15638,7 +15706,19 @@
       ],
       "rooms": [
         "GARAGE"
-      ]
+      ],
+      "elements": {
+        "IfcBeam": 1,
+        "IfcDoor": 4,
+        "sliced": 26,
+        "IfcFooting": 6,
+        "IfcRoof": 3,
+        "IfcSlab": 7,
+        "IfcStairFlight": 1,
+        "IfcWall": 3,
+        "IfcWallStandardCase": 15,
+        "IfcWindow": 4
+      }
     },
     {
       "index": 8,
@@ -15655,7 +15735,17 @@
       "rooms": [
         "DINING",
         "LIVING"
-      ]
+      ],
+      "elements": {
+        "IfcColumn": 1,
+        "IfcDoor": 8,
+        "IfcFooting": 15,
+        "sliced": 29,
+        "IfcRoof": 4,
+        "IfcSlab": 4,
+        "IfcWall": 4,
+        "IfcWallStandardCase": 40
+      }
     },
     {
       "index": 9,
@@ -15669,7 +15759,16 @@
         9.17,
         27.36
       ],
-      "rooms": []
+      "rooms": [],
+      "elements": {
+        "IfcColumn": 1,
+        "IfcFooting": 2,
+        "sliced": 10,
+        "IfcRoof": 5,
+        "IfcSlab": 2,
+        "IfcWall": 1,
+        "IfcWallStandardCase": 13
+      }
     }
   ],
   "moduleStats": {
@@ -15685,6 +15784,17 @@
     "sliced": 85,
     "m5": 31,
     "m1": 36
+  },
+  "outsideModules": {
+    "IfcBeam": 3,
+    "IfcColumn": 31,
+    "IfcFooting": 1,
+    "IfcMember": 20,
+    "IfcPlate": 21,
+    "IfcSlab": 22,
+    "IfcStairFlight": 4,
+    "IfcWall": 1,
+    "IfcWallStandardCase": 17
   },
   "materials": {
     "vertical-stained-wood-siding-787878": {
@@ -15842,241 +15952,5 @@
       "elements": 2
     }
   },
-  "bake": {
-    "materials": {
-      "wood": {
-        "set": "wood",
-        "maps": [
-          "diff",
-          "rough",
-          "nor"
-        ],
-        "tile_m": 1.8
-      },
-      "plywood": {
-        "set": "plywood",
-        "maps": [
-          "diff",
-          "rough",
-          "nor"
-        ],
-        "tile_m": 2.4
-      },
-      "plaster": {
-        "set": "plaster",
-        "maps": [
-          "diff",
-          "rough",
-          "nor"
-        ],
-        "tile_m": 2.2
-      },
-      "concrete": {
-        "set": "concrete",
-        "maps": [
-          "diff",
-          "rough",
-          "nor"
-        ],
-        "tile_m": 2.6
-      },
-      "floor": {
-        "set": "floor",
-        "maps": [
-          "diff",
-          "rough",
-          "nor"
-        ],
-        "tile_m": 3.2
-      },
-      "metal": {
-        "set": "metal",
-        "maps": [
-          "rough"
-        ],
-        "tile_m": 1.2
-      },
-      "black": {
-        "set": "metal",
-        "maps": [
-          "rough"
-        ],
-        "tile_m": 0.8
-      },
-      "glass": {
-        "set": null,
-        "maps": [],
-        "tile_m": 1
-      }
-    },
-    "classes": {
-      "concrete": [
-        "storey1_structure~m0",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m0",
-        "storey0_structure~m1",
-        "storey1_structure~m1",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m1",
-        "storey3_wall__board-form-concrete-787878~m1",
-        "storey0_structure~m2",
-        "storey1_structure~m2",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m2",
-        "storey3_wall__board-form-concrete-787878~m2",
-        "storey3_wall__concrete-cast-in-place-gray-818476~m2",
-        "storey1_structure~m3",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m3",
-        "storey3_wall__concrete-cast-in-place-gray-818476~m3",
-        "storey4_structure~m3",
-        "storey1_structure~m4",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m4",
-        "storey3_wall__board-form-concrete-787878~m4",
-        "storey1_structure~m5",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m5",
-        "storey0_structure~m6",
-        "storey1_structure~m6",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m6",
-        "storey3_wall__board-form-concrete-787878~m6",
-        "storey3_wall__concrete-cast-in-place-gray-818476~m6",
-        "storey1_structure~m7",
-        "storey2_structure~m7",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m7",
-        "storey3_structure~m7",
-        "storey3_wall__board-form-concrete-787878~m7",
-        "storey0_structure~m8",
-        "storey1_structure~m8",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m8",
-        "storey3_wall__board-form-concrete-787878~m8",
-        "storey0_structure~m9",
-        "storey2_structure~m9",
-        "storey2_wall__concrete-cast-in-place-gray-818476~m9",
-        "storey3_wall__board-form-concrete-787878~m9",
-        "storey3_wall__concrete-cast-in-place-gray-818476~m9",
-        "storey0_structure",
-        "storey2_structure",
-        "storey2_wall__concrete-cast-in-place-gray-818476",
-        "storey3_structure",
-        "storey3_wall__board-form-concrete-787878",
-        "storey3_wall__concrete-cast-in-place-gray-818476"
-      ],
-      "floor": [
-        "storey2_floor~m0",
-        "storey3_floor~m0",
-        "storey2_floor~m1",
-        "storey3_floor~m1",
-        "storey2_floor~m2",
-        "storey3_floor~m2",
-        "storey2_floor~m3",
-        "storey3_floor~m3",
-        "storey2_floor~m4",
-        "storey3_floor~m4",
-        "storey2_floor~m5",
-        "storey3_floor~m5",
-        "storey2_floor~m6",
-        "storey3_floor~m6",
-        "storey2_floor~m7",
-        "storey3_floor~m7",
-        "storey3_stair~m7",
-        "storey2_floor~m8",
-        "storey3_floor~m8",
-        "storey2_floor~m9",
-        "storey3_floor~m9",
-        "storey2_floor",
-        "storey3_stair"
-      ],
-      "wood": [
-        "storey3_door~m0",
-        "storey3_wall__15-32-cdx-plywood-787878~m0",
-        "storey3_wall__glass-0080c0~m0",
-        "storey3_wall__vertical-stained-wood-siding-787878~m0",
-        "storey3_wall__15-32-cdx-plywood-787878~m1",
-        "storey3_wall__vertical-stained-wood-siding-787878~m1",
-        "storey3_door~m2",
-        "storey3_wall__15-32-cdx-plywood-787878~m2",
-        "storey3_wall__vertical-stained-wood-siding-787878~m2",
-        "storey3_door~m3",
-        "storey3_wall__15-32-cdx-plywood-787878~m3",
-        "storey3_wall__glass-0080c0~m3",
-        "storey3_wall__vertical-stained-wood-siding-787878~m3",
-        "storey3_door~m4",
-        "storey3_wall__15-32-cdx-plywood-787878~m4",
-        "storey3_wall__vertical-stained-wood-siding-787878~m4",
-        "storey3_door~m5",
-        "storey3_wall__15-32-cdx-plywood-787878~m5",
-        "storey3_wall__glass-0080c0~m5",
-        "storey3_wall__vertical-stained-wood-siding-787878~m5",
-        "storey3_door~m6",
-        "storey3_wall__15-32-cdx-plywood-787878~m6",
-        "storey3_door~m7",
-        "storey3_wall__15-32-cdx-plywood-787878~m7",
-        "storey3_wall__vertical-stained-wood-siding-787878~m7",
-        "storey3_door~m8",
-        "storey3_wall__15-32-cdx-plywood-787878~m8",
-        "storey3_wall__vertical-stained-wood-siding-787878~m8",
-        "storey3_wall__vertical-stained-wood-siding-787878~m9",
-        "storey3_wall__vertical-stained-wood-siding-787878"
-      ],
-      "black": [
-        "storey3_frame~m0",
-        "storey4_wall__black-0d0d0d~m1",
-        "storey3_frame~m2",
-        "storey4_wall__black-0d0d0d~m2",
-        "storey3_frame~m3",
-        "storey3_frame~m4",
-        "storey3_wall__black-0d0d0d~m4",
-        "storey3_frame~m5",
-        "storey3_wall__black-0d0d0d~m6",
-        "storey4_wall__black-0d0d0d~m6",
-        "storey3_frame~m7",
-        "storey3_wall__black-0d0d0d~m7",
-        "storey3_wall__black-0d0d0d~m8",
-        "storey4_wall__black-0d0d0d~m8",
-        "storey3_wall__black-0d0d0d"
-      ],
-      "glass": [
-        "storey3_glass~m0",
-        "storey3_glass~m2",
-        "storey3_glass~m3",
-        "storey3_glass~m4",
-        "storey3_glass~m5",
-        "storey3_glass~m6",
-        "storey3_glass~m7",
-        "storey3_glass~m8",
-        "storey3_glass"
-      ],
-      "plaster": [
-        "storey3_wall__5-8-gwb-level-5-787878~m0",
-        "storey3_wall__5-8-gwb-level-5-787878~m1",
-        "storey3_wall__5-8-gwb-level-5-787878~m2",
-        "storey3_wall__5-8-gwb-level-5-787878~m3",
-        "storey3_wall__default-wall-808080~m3",
-        "storey3_wall__5-8-gwb-level-5-787878~m4",
-        "storey3_wall__default-wall-808080~m4",
-        "storey3_wall__5-8-gwb-level-5-787878~m5",
-        "storey3_wall__5-8-gwb-level-5-787878~m6",
-        "storey3_wall__5-8-gwb-level-5-787878~m7",
-        "storey3_wall__5-8-gwb-level-5-787878~m8",
-        "storey3_wall__default-wall-808080~m8"
-      ],
-      "metal": [
-        "storey4_roof~m0",
-        "storey4_roof~m1",
-        "storey4_roof~m2",
-        "storey4_roof~m3",
-        "storey4_roof~m4",
-        "storey4_roof~m5",
-        "storey4_roof~m6",
-        "storey4_roof~m7",
-        "storey4_roof~m8",
-        "storey4_roof~m9"
-      ]
-    },
-    "ao": {
-      "size": 2048,
-      "samples": 128,
-      "distance_m": 4.0,
-      "seconds": 257.4
-    },
-    "seconds": 260.0,
-    "bytes": 17155268
-  },
-  "compressedBytes": 3028540
+  "compressedBytes": 345996
 }
