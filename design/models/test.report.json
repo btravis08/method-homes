@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 2827816,
+  "bytes": 3158084,
   "triangles": 35432,
-  "seconds": 97.3,
+  "seconds": 95.4,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -84,8 +84,8 @@
     "IfcDistributionPort": 27,
     "IfcGrid": 8,
     "IfcBuildingStorey": 8,
+    "floor (below ground)": 5,
     "IfcStair": 4,
-    "floor (below ground)": 4,
     "IfcWallStandardCase (outside the roof footprint)": 2,
     "IfcCovering": 1,
     "IfcCurtainWall": 1,
@@ -14166,44 +14166,45 @@
   ],
   "nodes": [
     {
-      "node": "storey0_structure",
+      "node": "storey0_structure~m1",
       "storey": 0,
       "category": "structure",
-      "triangles": 12
+      "triangles": 16,
+      "module": 1
     },
     {
       "node": "storey0_structure~m2",
       "storey": 0,
       "category": "structure",
-      "triangles": 48,
+      "triangles": 60,
       "module": 2
     },
     {
       "node": "storey0_structure~m6",
       "storey": 0,
       "category": "structure",
-      "triangles": 52,
+      "triangles": 64,
       "module": 6
     },
     {
       "node": "storey0_structure~m8",
       "storey": 0,
       "category": "structure",
-      "triangles": 160,
+      "triangles": 168,
       "module": 8
     },
     {
       "node": "storey0_structure~m9",
       "storey": 0,
       "category": "structure",
-      "triangles": 28,
+      "triangles": 104,
       "module": 9
     },
     {
       "node": "storey1_structure~m0",
       "storey": 1,
       "category": "structure",
-      "triangles": 288,
+      "triangles": 334,
       "module": 0
     },
     {
@@ -14217,14 +14218,14 @@
       "node": "storey1_structure~m2",
       "storey": 1,
       "category": "structure",
-      "triangles": 164,
+      "triangles": 176,
       "module": 2
     },
     {
       "node": "storey1_structure~m3",
       "storey": 1,
       "category": "structure",
-      "triangles": 1272,
+      "triangles": 1378,
       "module": 3
     },
     {
@@ -14252,7 +14253,7 @@
       "node": "storey1_structure~m7",
       "storey": 1,
       "category": "structure",
-      "triangles": 52,
+      "triangles": 72,
       "module": 7
     },
     {
@@ -14263,16 +14264,23 @@
       "module": 8
     },
     {
+      "node": "storey1_structure~m9",
+      "storey": 1,
+      "category": "structure",
+      "triangles": 12,
+      "module": 9
+    },
+    {
       "node": "storey2_floor",
       "storey": 2,
       "category": "floor",
-      "triangles": 216
+      "triangles": 12
     },
     {
       "node": "storey2_floor~m0",
       "storey": 2,
       "category": "floor",
-      "triangles": 1264,
+      "triangles": 1324,
       "module": 0
     },
     {
@@ -14286,28 +14294,28 @@
       "node": "storey2_floor~m2",
       "storey": 2,
       "category": "floor",
-      "triangles": 1382,
+      "triangles": 1394,
       "module": 2
     },
     {
       "node": "storey2_floor~m3",
       "storey": 2,
       "category": "floor",
-      "triangles": 2412,
+      "triangles": 2460,
       "module": 3
     },
     {
       "node": "storey2_floor~m4",
       "storey": 2,
       "category": "floor",
-      "triangles": 2789,
+      "triangles": 2813,
       "module": 4
     },
     {
       "node": "storey2_floor~m5",
       "storey": 2,
       "category": "floor",
-      "triangles": 117,
+      "triangles": 129,
       "module": 5
     },
     {
@@ -14321,7 +14329,7 @@
       "node": "storey2_floor~m7",
       "storey": 2,
       "category": "floor",
-      "triangles": 102,
+      "triangles": 126,
       "module": 7
     },
     {
@@ -14335,34 +14343,69 @@
       "node": "storey2_floor~m9",
       "storey": 2,
       "category": "floor",
-      "triangles": 12,
+      "triangles": 52,
       "module": 9
     },
     {
       "node": "storey2_structure",
       "storey": 2,
       "category": "structure",
-      "triangles": 368
+      "triangles": 12
+    },
+    {
+      "node": "storey2_structure~m0",
+      "storey": 2,
+      "category": "structure",
+      "triangles": 24,
+      "module": 0
+    },
+    {
+      "node": "storey2_structure~m2",
+      "storey": 2,
+      "category": "structure",
+      "triangles": 68,
+      "module": 2
+    },
+    {
+      "node": "storey2_structure~m3",
+      "storey": 2,
+      "category": "structure",
+      "triangles": 212,
+      "module": 3
+    },
+    {
+      "node": "storey2_structure~m4",
+      "storey": 2,
+      "category": "structure",
+      "triangles": 72,
+      "module": 4
+    },
+    {
+      "node": "storey2_structure~m5",
+      "storey": 2,
+      "category": "structure",
+      "triangles": 24,
+      "module": 5
     },
     {
       "node": "storey2_structure~m7",
       "storey": 2,
       "category": "structure",
-      "triangles": 12,
+      "triangles": 48,
       "module": 7
     },
     {
       "node": "storey2_structure~m9",
       "storey": 2,
       "category": "structure",
-      "triangles": 12,
+      "triangles": 36,
       "module": 9
     },
     {
       "node": "storey2_wall__concrete-cast-in-place-gray-818476",
       "storey": 2,
       "category": "wall",
-      "triangles": 36,
+      "triangles": 12,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14373,7 +14416,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m0",
       "storey": 2,
       "category": "wall",
-      "triangles": 221,
+      "triangles": 305,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14385,7 +14428,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m1",
       "storey": 2,
       "category": "wall",
-      "triangles": 124,
+      "triangles": 136,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14397,7 +14440,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m2",
       "storey": 2,
       "category": "wall",
-      "triangles": 117,
+      "triangles": 153,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14409,7 +14452,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m3",
       "storey": 2,
       "category": "wall",
-      "triangles": 694,
+      "triangles": 768,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14433,7 +14476,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m5",
       "storey": 2,
       "category": "wall",
-      "triangles": 40,
+      "triangles": 60,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14445,7 +14488,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m6",
       "storey": 2,
       "category": "wall",
-      "triangles": 98,
+      "triangles": 122,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14457,7 +14500,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m7",
       "storey": 2,
       "category": "wall",
-      "triangles": 48,
+      "triangles": 84,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14469,7 +14512,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m8",
       "storey": 2,
       "category": "wall",
-      "triangles": 156,
+      "triangles": 184,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14481,7 +14524,7 @@
       "node": "storey2_wall__concrete-cast-in-place-gray-818476~m9",
       "storey": 2,
       "category": "wall",
-      "triangles": 64,
+      "triangles": 88,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -14507,7 +14550,7 @@
       "node": "storey3_door~m3",
       "storey": 3,
       "category": "door",
-      "triangles": 2326,
+      "triangles": 2374,
       "module": 3
     },
     {
@@ -14549,7 +14592,7 @@
       "node": "storey3_floor~m0",
       "storey": 3,
       "category": "floor",
-      "triangles": 1305,
+      "triangles": 1705,
       "module": 0
     },
     {
@@ -14563,21 +14606,21 @@
       "node": "storey3_floor~m2",
       "storey": 3,
       "category": "floor",
-      "triangles": 1045,
+      "triangles": 1061,
       "module": 2
     },
     {
       "node": "storey3_floor~m3",
       "storey": 3,
       "category": "floor",
-      "triangles": 2448,
+      "triangles": 3201,
       "module": 3
     },
     {
       "node": "storey3_floor~m4",
       "storey": 3,
       "category": "floor",
-      "triangles": 2394,
+      "triangles": 2907,
       "module": 4
     },
     {
@@ -14591,28 +14634,28 @@
       "node": "storey3_floor~m6",
       "storey": 3,
       "category": "floor",
-      "triangles": 1061,
+      "triangles": 1173,
       "module": 6
     },
     {
       "node": "storey3_floor~m7",
       "storey": 3,
       "category": "floor",
-      "triangles": 465,
+      "triangles": 483,
       "module": 7
     },
     {
       "node": "storey3_floor~m8",
       "storey": 3,
       "category": "floor",
-      "triangles": 491,
+      "triangles": 796,
       "module": 8
     },
     {
       "node": "storey3_floor~m9",
       "storey": 3,
       "category": "floor",
-      "triangles": 56,
+      "triangles": 2033,
       "module": 9
     },
     {
@@ -14651,17 +14694,18 @@
       "module": 5
     },
     {
+      "node": "storey3_frame~m6",
+      "storey": 3,
+      "category": "frame",
+      "triangles": 8,
+      "module": 6
+    },
+    {
       "node": "storey3_frame~m7",
       "storey": 3,
       "category": "frame",
       "triangles": 224,
       "module": 7
-    },
-    {
-      "node": "storey3_glass",
-      "storey": 3,
-      "category": "glass",
-      "triangles": 252
     },
     {
       "node": "storey3_glass~m0",
@@ -14688,7 +14732,7 @@
       "node": "storey3_glass~m4",
       "storey": 3,
       "category": "glass",
-      "triangles": 132,
+      "triangles": 312,
       "module": 4
     },
     {
@@ -14709,7 +14753,7 @@
       "node": "storey3_glass~m7",
       "storey": 3,
       "category": "glass",
-      "triangles": 24,
+      "triangles": 108,
       "module": 7
     },
     {
@@ -14720,36 +14764,87 @@
       "module": 8
     },
     {
-      "node": "storey3_stair",
+      "node": "storey3_stair~m0",
       "storey": 3,
       "category": "stair",
-      "triangles": 304
+      "triangles": 57,
+      "module": 0
+    },
+    {
+      "node": "storey3_stair~m3",
+      "storey": 3,
+      "category": "stair",
+      "triangles": 119,
+      "module": 3
+    },
+    {
+      "node": "storey3_stair~m5",
+      "storey": 3,
+      "category": "stair",
+      "triangles": 64,
+      "module": 5
     },
     {
       "node": "storey3_stair~m7",
       "storey": 3,
       "category": "stair",
-      "triangles": 40,
+      "triangles": 154,
       "module": 7
     },
     {
-      "node": "storey3_structure",
+      "node": "storey3_structure~m2",
       "storey": 3,
       "category": "structure",
-      "triangles": 600
+      "triangles": 204,
+      "module": 2
+    },
+    {
+      "node": "storey3_structure~m3",
+      "storey": 3,
+      "category": "structure",
+      "triangles": 1608,
+      "module": 3
+    },
+    {
+      "node": "storey3_structure~m4",
+      "storey": 3,
+      "category": "structure",
+      "triangles": 436,
+      "module": 4
+    },
+    {
+      "node": "storey3_structure~m5",
+      "storey": 3,
+      "category": "structure",
+      "triangles": 68,
+      "module": 5
+    },
+    {
+      "node": "storey3_structure~m6",
+      "storey": 3,
+      "category": "structure",
+      "triangles": 72,
+      "module": 6
     },
     {
       "node": "storey3_structure~m7",
       "storey": 3,
       "category": "structure",
-      "triangles": 76,
+      "triangles": 224,
       "module": 7
+    },
+    {
+      "node": "storey3_structure~m9",
+      "storey": 3,
+      "category": "structure",
+      "triangles": 68,
+      "module": 9
     },
     {
       "node": "storey3_wall__15-32-cdx-plywood-787878~m0",
       "storey": 3,
       "category": "wall",
-      "triangles": 131,
+      "triangles": 646,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14761,7 +14856,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m1",
       "storey": 3,
       "category": "wall",
-      "triangles": 104,
+      "triangles": 262,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14773,7 +14868,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m2",
       "storey": 3,
       "category": "wall",
-      "triangles": 104,
+      "triangles": 201,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14785,7 +14880,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m3",
       "storey": 3,
       "category": "wall",
-      "triangles": 333,
+      "triangles": 591,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14797,7 +14892,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m4",
       "storey": 3,
       "category": "wall",
-      "triangles": 320,
+      "triangles": 614,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14809,7 +14904,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m5",
       "storey": 3,
       "category": "wall",
-      "triangles": 136,
+      "triangles": 144,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14821,7 +14916,7 @@
       "node": "storey3_wall__15-32-cdx-plywood-787878~m6",
       "storey": 3,
       "category": "wall",
-      "triangles": 96,
+      "triangles": 116,
       "material": {
         "key": "15-32-cdx-plywood-787878",
         "name": ".15/32\" CDX Plywood",
@@ -14917,13 +15012,25 @@
       "node": "storey3_wall__5-8-gwb-level-5-787878~m5",
       "storey": 3,
       "category": "wall",
-      "triangles": 48,
+      "triangles": 60,
       "material": {
         "key": "5-8-gwb-level-5-787878",
         "name": ". 5/8\" GWB (Level 5)",
         "color": "#787878"
       },
       "module": 5
+    },
+    {
+      "node": "storey3_wall__5-8-gwb-level-5-787878~m6",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 24,
+      "material": {
+        "key": "5-8-gwb-level-5-787878",
+        "name": ". 5/8\" GWB (Level 5)",
+        "color": "#787878"
+      },
+      "module": 6
     },
     {
       "node": "storey3_wall__5-8-gwb-level-5-787878~m7",
@@ -14941,7 +15048,7 @@
       "node": "storey3_wall__5-8-gwb-level-5-787878~m8",
       "storey": 3,
       "category": "wall",
-      "triangles": 36,
+      "triangles": 48,
       "material": {
         "key": "5-8-gwb-level-5-787878",
         "name": ". 5/8\" GWB (Level 5)",
@@ -14950,7 +15057,7 @@
       "module": 8
     },
     {
-      "node": "storey3_wall__black-0d0d0d",
+      "node": "storey3_wall__black-0d0d0d~m0",
       "storey": 3,
       "category": "wall",
       "triangles": 12,
@@ -14958,7 +15065,8 @@
         "key": "black-0d0d0d",
         "name": "Black",
         "color": "#0d0d0d"
-      }
+      },
+      "module": 0
     },
     {
       "node": "storey3_wall__black-0d0d0d~m4",
@@ -14985,10 +15093,22 @@
       "module": 6
     },
     {
+      "node": "storey3_wall__black-0d0d0d~m7",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 12,
+      "material": {
+        "key": "black-0d0d0d",
+        "name": "Black",
+        "color": "#0d0d0d"
+      },
+      "module": 7
+    },
+    {
       "node": "storey3_wall__black-0d0d0d~m8",
       "storey": 3,
       "category": "wall",
-      "triangles": 110,
+      "triangles": 122,
       "material": {
         "key": "black-0d0d0d",
         "name": "Black",
@@ -14997,15 +15117,16 @@
       "module": 8
     },
     {
-      "node": "storey3_wall__board-form-concrete-787878",
+      "node": "storey3_wall__black-0d0d0d~m9",
       "storey": 3,
       "category": "wall",
-      "triangles": 12,
+      "triangles": 28,
       "material": {
-        "key": "board-form-concrete-787878",
-        "name": "Board Form Concrete",
-        "color": "#787878"
-      }
+        "key": "black-0d0d0d",
+        "name": "Black",
+        "color": "#0d0d0d"
+      },
+      "module": 9
     },
     {
       "node": "storey3_wall__board-form-concrete-787878~m1",
@@ -15023,7 +15144,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m2",
       "storey": 3,
       "category": "wall",
-      "triangles": 36,
+      "triangles": 44,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15035,7 +15156,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m4",
       "storey": 3,
       "category": "wall",
-      "triangles": 104,
+      "triangles": 164,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15047,7 +15168,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m6",
       "storey": 3,
       "category": "wall",
-      "triangles": 100,
+      "triangles": 112,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15059,7 +15180,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m7",
       "storey": 3,
       "category": "wall",
-      "triangles": 86,
+      "triangles": 88,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15071,7 +15192,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m8",
       "storey": 3,
       "category": "wall",
-      "triangles": 132,
+      "triangles": 148,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15083,7 +15204,7 @@
       "node": "storey3_wall__board-form-concrete-787878~m9",
       "storey": 3,
       "category": "wall",
-      "triangles": 36,
+      "triangles": 68,
       "material": {
         "key": "board-form-concrete-787878",
         "name": "Board Form Concrete",
@@ -15092,21 +15213,22 @@
       "module": 9
     },
     {
-      "node": "storey3_wall__concrete-cast-in-place-gray-818476",
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m0",
       "storey": 3,
       "category": "wall",
-      "triangles": 168,
+      "triangles": 14,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
         "color": "#818476"
-      }
+      },
+      "module": 0
     },
     {
       "node": "storey3_wall__concrete-cast-in-place-gray-818476~m2",
       "storey": 3,
       "category": "wall",
-      "triangles": 12,
+      "triangles": 76,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -15118,7 +15240,7 @@
       "node": "storey3_wall__concrete-cast-in-place-gray-818476~m3",
       "storey": 3,
       "category": "wall",
-      "triangles": 24,
+      "triangles": 912,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -15127,10 +15249,34 @@
       "module": 3
     },
     {
-      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m6",
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m4",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 122,
+      "material": {
+        "key": "concrete-cast-in-place-gray-818476",
+        "name": ". Concrete, Cast-in-Place gray",
+        "color": "#818476"
+      },
+      "module": 4
+    },
+    {
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m5",
       "storey": 3,
       "category": "wall",
       "triangles": 12,
+      "material": {
+        "key": "concrete-cast-in-place-gray-818476",
+        "name": ". Concrete, Cast-in-Place gray",
+        "color": "#818476"
+      },
+      "module": 5
+    },
+    {
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m6",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 44,
       "material": {
         "key": "concrete-cast-in-place-gray-818476",
         "name": ". Concrete, Cast-in-Place gray",
@@ -15139,7 +15285,7 @@
       "module": 6
     },
     {
-      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m9",
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m7",
       "storey": 3,
       "category": "wall",
       "triangles": 56,
@@ -15148,13 +15294,37 @@
         "name": ". Concrete, Cast-in-Place gray",
         "color": "#818476"
       },
+      "module": 7
+    },
+    {
+      "node": "storey3_wall__concrete-cast-in-place-gray-818476~m9",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 88,
+      "material": {
+        "key": "concrete-cast-in-place-gray-818476",
+        "name": ". Concrete, Cast-in-Place gray",
+        "color": "#818476"
+      },
       "module": 9
+    },
+    {
+      "node": "storey3_wall__default-wall-808080~m3",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 67,
+      "material": {
+        "key": "default-wall-808080",
+        "name": "Default Wall",
+        "color": "#808080"
+      },
+      "module": 3
     },
     {
       "node": "storey3_wall__default-wall-808080~m4",
       "storey": 3,
       "category": "wall",
-      "triangles": 12,
+      "triangles": 77,
       "material": {
         "key": "default-wall-808080",
         "name": "Default Wall",
@@ -15211,21 +15381,10 @@
       "module": 5
     },
     {
-      "node": "storey3_wall__vertical-stained-wood-siding-787878",
-      "storey": 3,
-      "category": "wall",
-      "triangles": 12,
-      "material": {
-        "key": "vertical-stained-wood-siding-787878",
-        "name": "VERTICAL STAINED WOOD SIDING",
-        "color": "#787878"
-      }
-    },
-    {
       "node": "storey3_wall__vertical-stained-wood-siding-787878~m0",
       "storey": 3,
       "category": "wall",
-      "triangles": 229,
+      "triangles": 241,
       "material": {
         "key": "vertical-stained-wood-siding-787878",
         "name": "VERTICAL STAINED WOOD SIDING",
@@ -15234,10 +15393,22 @@
       "module": 0
     },
     {
+      "node": "storey3_wall__vertical-stained-wood-siding-787878~m1",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 12,
+      "material": {
+        "key": "vertical-stained-wood-siding-787878",
+        "name": "VERTICAL STAINED WOOD SIDING",
+        "color": "#787878"
+      },
+      "module": 1
+    },
+    {
       "node": "storey3_wall__vertical-stained-wood-siding-787878~m2",
       "storey": 3,
       "category": "wall",
-      "triangles": 88,
+      "triangles": 96,
       "material": {
         "key": "vertical-stained-wood-siding-787878",
         "name": "VERTICAL STAINED WOOD SIDING",
@@ -15249,7 +15420,7 @@
       "node": "storey3_wall__vertical-stained-wood-siding-787878~m3",
       "storey": 3,
       "category": "wall",
-      "triangles": 1553,
+      "triangles": 1956,
       "material": {
         "key": "vertical-stained-wood-siding-787878",
         "name": "VERTICAL STAINED WOOD SIDING",
@@ -15261,7 +15432,7 @@
       "node": "storey3_wall__vertical-stained-wood-siding-787878~m4",
       "storey": 3,
       "category": "wall",
-      "triangles": 252,
+      "triangles": 391,
       "material": {
         "key": "vertical-stained-wood-siding-787878",
         "name": "VERTICAL STAINED WOOD SIDING",
@@ -15280,6 +15451,18 @@
         "color": "#787878"
       },
       "module": 5
+    },
+    {
+      "node": "storey3_wall__vertical-stained-wood-siding-787878~m6",
+      "storey": 3,
+      "category": "wall",
+      "triangles": 8,
+      "material": {
+        "key": "vertical-stained-wood-siding-787878",
+        "name": "VERTICAL STAINED WOOD SIDING",
+        "color": "#787878"
+      },
+      "module": 6
     },
     {
       "node": "storey3_wall__vertical-stained-wood-siding-787878~m7",
@@ -15370,7 +15553,7 @@
       "node": "storey4_roof~m7",
       "storey": 4,
       "category": "roof",
-      "triangles": 9706,
+      "triangles": 9922,
       "module": 7
     },
     {
@@ -15388,11 +15571,42 @@
       "module": 9
     },
     {
+      "node": "storey4_structure~m0",
+      "storey": 4,
+      "category": "structure",
+      "triangles": 78,
+      "module": 0
+    },
+    {
       "node": "storey4_structure~m3",
       "storey": 4,
       "category": "structure",
-      "triangles": 76,
+      "triangles": 1478,
       "module": 3
+    },
+    {
+      "node": "storey4_wall__black-0d0d0d~m1",
+      "storey": 4,
+      "category": "wall",
+      "triangles": 20,
+      "material": {
+        "key": "black-0d0d0d",
+        "name": "Black",
+        "color": "#0d0d0d"
+      },
+      "module": 1
+    },
+    {
+      "node": "storey4_wall__black-0d0d0d~m2",
+      "storey": 4,
+      "category": "wall",
+      "triangles": 8,
+      "material": {
+        "key": "black-0d0d0d",
+        "name": "Black",
+        "color": "#0d0d0d"
+      },
+      "module": 2
     },
     {
       "node": "storey4_wall__black-0d0d0d~m6",
@@ -15441,13 +15655,16 @@
         "BED 2"
       ],
       "elements": {
+        "IfcBeam": 1,
+        "sliced": 34,
+        "IfcColumn": 2,
         "IfcDoor": 15,
-        "sliced": 21,
         "IfcFooting": 6,
         "IfcRoof": 4,
-        "IfcSlab": 4,
+        "IfcSlab": 9,
+        "IfcStairFlight": 1,
         "IfcWall": 3,
-        "IfcWallStandardCase": 17,
+        "IfcWallStandardCase": 24,
         "IfcWindow": 6
       }
     },
@@ -15469,12 +15686,12 @@
         "ROOF"
       ],
       "elements": {
-        "IfcFooting": 5,
-        "sliced": 24,
+        "IfcFooting": 6,
+        "sliced": 36,
         "IfcRoof": 4,
         "IfcSlab": 4,
         "IfcWall": 2,
-        "IfcWallStandardCase": 16
+        "IfcWallStandardCase": 24
       }
     },
     {
@@ -15494,13 +15711,15 @@
         "PRIMARY WALKIN CLOSET"
       ],
       "elements": {
+        "IfcBeam": 2,
+        "sliced": 50,
+        "IfcColumn": 8,
         "IfcDoor": 5,
-        "IfcFooting": 7,
-        "sliced": 24,
+        "IfcFooting": 9,
         "IfcRoof": 3,
-        "IfcSlab": 4,
-        "IfcWall": 5,
-        "IfcWallStandardCase": 15,
+        "IfcSlab": 10,
+        "IfcWall": 7,
+        "IfcWallStandardCase": 28,
         "IfcWindow": 2
       }
     },
@@ -15521,14 +15740,16 @@
         "BED 3"
       ],
       "elements": {
-        "IfcBeam": 1,
+        "IfcBeam": 2,
+        "sliced": 32,
+        "IfcColumn": 11,
         "IfcDoor": 9,
-        "sliced": 19,
-        "IfcFooting": 11,
+        "IfcFooting": 12,
         "IfcRoof": 2,
-        "IfcSlab": 5,
+        "IfcSlab": 10,
+        "IfcStairFlight": 2,
         "IfcWall": 1,
-        "IfcWallStandardCase": 32,
+        "IfcWallStandardCase": 39,
         "IfcWindow": 22
       }
     },
@@ -15551,13 +15772,17 @@
         "PWDR"
       ],
       "elements": {
+        "IfcBeam": 1,
+        "sliced": 48,
+        "IfcColumn": 5,
         "IfcDoor": 5,
-        "sliced": 27,
         "IfcFooting": 11,
+        "IfcMember": 15,
+        "IfcPlate": 15,
         "IfcRoof": 3,
-        "IfcSlab": 6,
-        "IfcWall": 3,
-        "IfcWallStandardCase": 27,
+        "IfcSlab": 8,
+        "IfcWall": 7,
+        "IfcWallStandardCase": 32,
         "IfcWindow": 16
       }
     },
@@ -15578,13 +15803,16 @@
         "PRIMARY BATH"
       ],
       "elements": {
+        "IfcBeam": 1,
+        "sliced": 29,
+        "IfcColumn": 1,
         "IfcDoor": 3,
-        "IfcFooting": 3,
-        "sliced": 16,
+        "IfcFooting": 4,
         "IfcRoof": 2,
-        "IfcSlab": 5,
-        "IfcWall": 2,
-        "IfcWallStandardCase": 14,
+        "IfcSlab": 6,
+        "IfcStairFlight": 2,
+        "IfcWall": 4,
+        "IfcWallStandardCase": 17,
         "IfcWindow": 2
       }
     },
@@ -15604,13 +15832,15 @@
         "FAMILY ROOM"
       ],
       "elements": {
+        "IfcBeam": 1,
+        "sliced": 36,
         "IfcDoor": 6,
-        "IfcFooting": 6,
-        "sliced": 21,
+        "IfcFooting": 7,
         "IfcRoof": 3,
         "IfcSlab": 4,
-        "IfcWall": 3,
-        "IfcWallStandardCase": 17
+        "IfcWall": 4,
+        "IfcWallStandardCase": 26,
+        "IfcWindow": 1
       }
     },
     {
@@ -15629,15 +15859,18 @@
         "GARAGE"
       ],
       "elements": {
-        "IfcBeam": 1,
+        "IfcBeam": 2,
+        "sliced": 39,
+        "IfcColumn": 3,
         "IfcDoor": 4,
-        "sliced": 17,
-        "IfcFooting": 4,
-        "IfcRoof": 2,
-        "IfcSlab": 7,
-        "IfcStairFlight": 1,
+        "IfcFooting": 6,
+        "IfcMember": 6,
+        "IfcPlate": 7,
+        "IfcRoof": 3,
+        "IfcSlab": 9,
+        "IfcStairFlight": 3,
         "IfcWall": 3,
-        "IfcWallStandardCase": 10,
+        "IfcWallStandardCase": 21,
         "IfcWindow": 4
       }
     },
@@ -15659,13 +15892,13 @@
       ],
       "elements": {
         "IfcColumn": 1,
+        "sliced": 42,
         "IfcDoor": 8,
-        "IfcFooting": 14,
-        "sliced": 19,
+        "IfcFooting": 15,
         "IfcRoof": 3,
         "IfcSlab": 4,
         "IfcWall": 4,
-        "IfcWallStandardCase": 37
+        "IfcWallStandardCase": 42
       }
     },
     {
@@ -15682,40 +15915,35 @@
       ],
       "rooms": [],
       "elements": {
-        "IfcColumn": 1,
-        "IfcFooting": 2,
+        "IfcBeam": 1,
+        "sliced": 32,
+        "IfcColumn": 4,
+        "IfcFooting": 7,
         "IfcRoof": 5,
-        "sliced": 6,
-        "IfcSlab": 2,
-        "IfcWall": 1,
-        "IfcWallStandardCase": 13
+        "IfcSlab": 7,
+        "IfcWall": 2,
+        "IfcWallStandardCase": 21
       }
     }
   ],
   "moduleStats": {
-    "none": 120,
-    "m7": 36,
-    "m3": 83,
-    "m9": 24,
-    "m8": 71,
-    "m0": 55,
-    "m2": 41,
-    "m6": 39,
-    "m4": 71,
-    "sliced": 61,
-    "m5": 31,
-    "m1": 31
+    "sliced": 142,
+    "m2": 74,
+    "m6": 52,
+    "m9": 47,
+    "m3": 110,
+    "m4": 118,
+    "m5": 42,
+    "m7": 71,
+    "m0": 71,
+    "m8": 77,
+    "none": 3,
+    "m1": 40
   },
   "outsideModules": {
-    "IfcBeam": 3,
-    "IfcColumn": 31,
-    "IfcFooting": 1,
-    "IfcMember": 20,
-    "IfcPlate": 21,
-    "IfcSlab": 22,
-    "IfcStairFlight": 4,
-    "IfcWall": 1,
-    "IfcWallStandardCase": 17
+    "IfcColumn": 1,
+    "IfcSlab": 1,
+    "IfcWallStandardCase": 1
   },
   "materials": {
     "vertical-stained-wood-siding-787878": {
@@ -15873,5 +16101,5 @@
       "elements": 2
     }
   },
-  "compressedBytes": 325448
+  "compressedBytes": 373740
 }
