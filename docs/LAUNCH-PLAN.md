@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — Plan viewer fidelity: the model pipeline now bakes real
+  PBR materials by class (wood, concrete, plaster, metal) and an
+  ambient-occlusion atlas into the web GLB; the viewer honours them.
 - 2026-10-09 — Plan viewer LOOK presets (daylight / golden / overcast:
   sky, sun, tone mapper, grade, stain) and the scroll-driven aerial
   DESCENT prototype at /library/descent (procedural terrain, forest

@@ -795,6 +795,28 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   of in the iframe. Also: never pipe `npm run build` into `head` — the
   closed pipe kills the build before the prerender manifest is
   written, and `npm start` then fails to boot (bit twice today).
+- Real materials + baked occlusion (Bryce, 2026-10-09: "it appears low
+  quality and doesn't have materials… wood grains, concrete textures,
+  ambient occlusion"; "if it's concrete apply a concrete material,
+  metal metal, wood wood"): a BAKE step in model-pipeline between
+  ifc-to-glb and gltf-transform. `scripts/model/bake.py` (Blender as a
+  module) classifies every node by name into wood / plywood / plaster /
+  concrete / floor / metal / black / glass with the viewer's own name
+  rules, gives each class a Poly Haven PBR set (diff/normal/rough, CC0,
+  fetched by candidate list so a renamed asset just falls through)
+  box-projected from WORLD metres at a per-class tile size (wood grain
+  turned to run up the siding), unwraps a second UV set and bakes a
+  Cycles ambient-occlusion atlas (ground plane as occluder) exported as
+  the glTF occlusion texture on TEXCOORD_1. `carry-extras.mjs` puts the
+  raw GLB's extras back (Blender mangles the storey list). Textures ship
+  WebP ≤1k via gltf-transform. The viewer carries a baked GLB's maps
+  into its own materials (tint = the base-colour factor), fades the
+  texture to flat ink with the plan palette, and lets the occlusion
+  shade the SUN too (55%) — contact and eave darkening is what sells
+  solidity. Roof seams stay procedural over a roughness map; the IFC's
+  real colours (concrete, black, glass) still decide the colour-keyed
+  classes (doors, structure). Workflow inputs: bake (default on),
+  ao_size (2048 ≈ 3 cm/texel on the 50 m home).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

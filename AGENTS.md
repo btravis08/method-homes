@@ -188,6 +188,19 @@ staging/design use.
 - BUILD HYGIENE: never pipe `npm run build` through `head` — the closed
   pipe kills the build mid-way (no prerender-manifest, `npm start`
   dies). Redirect to a log and grep that.
+- BAKED MATERIALS (2026-10-09): the web GLB is textured + occluded by
+  `scripts/model/bake.py` on the pipeline runner (bpy): material CLASS
+  by node name (wood/plywood/plaster/concrete/floor/metal/black/glass —
+  keep its regexes in step with PlanViewer's materialFinish), Poly
+  Haven sets by candidate list in model-pipeline.yml (add candidates,
+  don't hardcode one id), world-box UVs at a per-class tile, AO atlas
+  on TEXCOORD_1, extras carried back by carry-extras.mjs. The viewer
+  treats any GLB whose materials carry maps as baked: it keeps the
+  maps, uses the base-colour factor as tint, fades textures with uPlan
+  and applies AO to direct light (AO_DIRECT). Retune materials in
+  bake.py's CLASSES (tile, tint, normal strength), not in the viewer.
+  Never commit raw/decoded GLBs; the sandbox can test the bake on a
+  meshopt-decoded copy (`.y.tmp.mjs`) with `pip install bpy`.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

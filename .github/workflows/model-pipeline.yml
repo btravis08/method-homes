@@ -61,6 +61,14 @@ on:
         description: "Also refresh public/models/env (the raster viewer's web-sized copy of the render HDRI + sun direction)"
         type: boolean
         default: true
+      bake:
+        description: "Bake real materials (Poly Haven PBR sets by material class) + an ambient-occlusion atlas into the web GLB"
+        type: boolean
+        default: true
+      ao_size:
+        description: "Ambient-occlusion atlas size in px for the bake (2048 is ~3 cm/texel on a 50 m home)"
+        required: false
+        default: "2048"
 
 permissions:
   contents: write
@@ -78,7 +86,7 @@ env:
 jobs:
   convert:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     outputs:
       north: ${{ steps.report.outputs.north }}
     steps:
@@ -114,7 +122,6 @@ jobs:
           ls -la source.ifc
 
       - name: Convert
-        id: report
         run: |
           set -euo pipefail
           SLUG="${{ github.event.inputs.slug }}"
@@ -123,7 +130,69 @@ jobs:
             $([ "${{ steps.src.outputs.keep_materials }}" = "true" ] && echo --keep-materials) \
             ${{ github.event.inputs.allow && format('--allow "{0}"', github.event.inputs.allow) || '' }} \
             ${{ github.event.inputs.deny && format('--deny "{0}"', github.event.inputs.deny) || '' }}
-          npx -y @gltf-transform/cli@4 optimize /tmp/source.raw.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress false --simplify-error 0.001 --palette false --join false --flatten false
+          cp /tmp/source.raw.glb /tmp/web.glb
+
+      # ---- BAKE (Bryce, 2026-10-09: "wood grains, concrete textures, AO"):
+      #      Blender as a module gives every node a real PBR set by its
+      #      material class and bakes an occlusion atlas; the raw GLB's
+      #      extras are carried back over afterwards
+      - name: Install Blender (bpy) for the bake
+        if: ${{ github.event.inputs.bake == 'true' }}
+        run: python -m pip install -q bpy==4.5.14
+      - name: Fetch PBR sets by material class (Poly Haven, CC0)
+        if: ${{ github.event.inputs.bake == 'true' }}
+        run: |
+          set -uo pipefail
+          # each class tries its candidates in order (the catalogue shifts);
+          # a class with no download stays a flat colour in the bake
+          fetch() { # fetch <asset-id> <key/path/in/json> <out-file>
+            url=$(curl -sS "https://api.polyhaven.com/files/$1" | python -c 'import json,sys,functools; print(functools.reduce(lambda a,k: a[k], sys.argv[1].split("/"), json.load(sys.stdin))["url"])' "$2" 2>/dev/null || true)
+            [ -n "$url" ] && curl -sS -f -L -o "$3" "$url" && echo "  $1 ($2) → $3 $(stat -c %s "$3") B" && return 0
+            rm -f "$3"; return 1
+          }
+          fetch_set() { # fetch_set <class> <candidate ids…>
+            local cls="$1"; shift; local out="/tmp/assets/$cls"; mkdir -p "$out"
+            for id in "$@"; do
+              if fetch "$id" Diffuse/1k/jpg "$out/diff.jpg"; then
+                fetch "$id" nor_gl/1k/jpg "$out/nor.jpg" || true
+                fetch "$id" Rough/1k/jpg "$out/rough.jpg" || true
+                echo "$cls ← $id"; return 0
+              fi
+            done
+            echo "$cls: no candidate available"; return 0
+          }
+          fetch_set wood wood_table_001 rough_wood dark_wood oak_veneer_01 weathered_planks wood_floor_deck
+          fetch_set plywood plywood oak_veneer_01 wood_table_001
+          fetch_set plaster painted_plaster_wall plastered_wall_02 plaster_wall_02 white_plaster_02
+          fetch_set concrete concrete_wall_008 concrete_wall_006 concrete_wall_007 rough_concrete concrete_layers_02
+          fetch_set floor concrete_floor_worn_001 concrete_floor_02 concrete_floor_painted
+          fetch_set metal metal_plate painted_metal_shutter corrugated_iron_03
+          du -sh /tmp/assets/* || true
+      - name: Bake materials + ambient occlusion
+        if: ${{ github.event.inputs.bake == 'true' }}
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.inputs.slug }}"
+          python scripts/model/bake.py /tmp/source.raw.glb /tmp/baked.glb --textures /tmp/assets --ao "${{ github.event.inputs.ao_size }}" --report /tmp/bake.json
+          # gltf-transform in a scratch package (not the repo's full install)
+          mkdir -p /tmp/gt && cp scripts/model/carry-extras.mjs /tmp/gt/
+          (cd /tmp/gt && npm init -y > /dev/null && npm i --no-audit --no-fund @gltf-transform/core@4 @gltf-transform/extensions@4 > /dev/null)
+          node /tmp/gt/carry-extras.mjs /tmp/source.raw.glb /tmp/baked.glb /tmp/web.glb /tmp/bake.json
+          python - <<'PY'
+          import json
+          slug = "${{ github.event.inputs.slug }}"
+          r = json.load(open(f"design/models/{slug}.report.json"))
+          r["bake"] = json.load(open("/tmp/bake.json"))
+          json.dump(r, open(f"design/models/{slug}.report.json", "w"), indent=2)
+          PY
+
+      - name: Optimise the web model
+        id: report
+        run: |
+          set -euo pipefail
+          SLUG="${{ github.event.inputs.slug }}"
+          # textures (when baked) go WebP at ≤1k: a set is ~100 KB a map
+          npx -y @gltf-transform/cli@4 optimize /tmp/web.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress webp --texture-size 1024 --simplify-error 0.001 --palette false --join false --flatten false
           ls -la "public/models/$SLUG.glb"
           python - <<'PY'
           import json, os

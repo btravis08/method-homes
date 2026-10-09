@@ -384,7 +384,29 @@ const GLASS_REFLECT = /* glsl */ `
   #endif
 `;
 
-function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true) {
+/* BAKED MODELS (scripts/model/bake.py, 2026-10-09): the GLB arrives with
+   real texture sets (wood grain, concrete, plaster — world-box-projected
+   UVs) and an ambient-occlusion atlas on uv1. The texture fades to the
+   flat ink with the palette, and the occlusion also shades the sun a
+   little — contact darkening at the foot of a wall and under the eaves
+   is most of what makes a surface read as solid. */
+const TEXTURE_PLAN = /* glsl */ `
+  #include <map_fragment>
+  #ifdef USE_MAP
+    diffuseColor.rgb = mix(diffuseColor.rgb, diffuse, uPlan);
+  #endif
+`;
+const AO_DIRECT = /* glsl */ `
+  #include <aomap_fragment>
+  #ifdef USE_AOMAP
+  {
+    float bakedAo = (texture2D(aoMap, vAoMapUv).r - 1.0) * aoMapIntensity + 1.0;
+    reflectedLight.directDiffuse *= mix(1.0, bakedAo, 0.55 * (1.0 - uPlan));
+  }
+  #endif
+`;
+
+function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, textured = false) {
   if (cat === "glass") {
     mat.onBeforeCompile = (shader) => {
       const chunk = THREE.ShaderChunk.envmap_physical_pars_fragment.replace(
@@ -402,17 +424,23 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true) {
     mat.customProgramCacheKey = () => "finish-glass";
     return;
   }
-  if (cat !== "wall" && cat !== "roof") return;
+  const structural = cat === "wall" || cat === "roof";
+  if (!structural && !textured) return;
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.uPlan = { value: 0 };
     shader.uniforms.uRelief = { value: relief ? 1 : 0 };
     shader.vertexShader = PRELUDE + shader.vertexShader.replace("#include <project_vertex>", VERTEX_WORLD);
-    shader.fragmentShader = PRELUDE + shader.fragmentShader
-      .replace("#include <color_fragment>", cat === "wall" ? SIDING_COLOR : ROOF_COLOR)
-      .replace("#include <roughnessmap_fragment>", cat === "roof" ? ROOF_ROUGHNESS : "#include <roughnessmap_fragment>");
+    let frag = shader.fragmentShader;
+    if (structural) {
+      frag = frag
+        .replace("#include <color_fragment>", cat === "wall" ? SIDING_COLOR : ROOF_COLOR)
+        .replace("#include <roughnessmap_fragment>", cat === "roof" ? ROOF_ROUGHNESS : "#include <roughnessmap_fragment>");
+    }
+    if (textured) frag = frag.replace("#include <map_fragment>", TEXTURE_PLAN).replace("#include <aomap_fragment>", AO_DIRECT);
+    shader.fragmentShader = PRELUDE + frag;
     mat.userData.shader = shader;
   };
-  mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}`;
+  mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}-${textured ? "tex" : "plain"}`;
 }
 const PLAN: Record<string, [string, number]> = {
   /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
@@ -526,14 +554,31 @@ class ViewerState {
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
       const sourceMat = o.material as THREE.MeshStandardMaterial;
+      /* a baked GLB (bake.py) carries its own texture sets + AO atlas:
+         those come across, and its base-colour factor is the tint */
+      const baked = !!sourceMat && !sourceMat.userData.viewer && !!(sourceMat.map || sourceMat.aoMap || sourceMat.normalMap || sourceMat.roughnessMap);
       const fin = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? materialFinish(m[3], sourceMat.color, this.lookPreset.stain) : null;
-      const source = fin?.color ?? (sourceMat?.userData.source as THREE.Color | undefined) ?? null;
+      const source = baked ? sourceMat.color.clone() : (fin?.color ?? (sourceMat?.userData.source as THREE.Color | undefined) ?? null);
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
         const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
+        const maps = baked
+          ? {
+              map: sourceMat.map ?? null,
+              normalMap: sourceMat.normalMap ?? null,
+              normalScale: sourceMat.normalScale?.clone(),
+              roughnessMap: sourceMat.roughnessMap ?? null,
+              /* the roughness jpg is greyscale, so its blue channel would
+                 scale metalness too — the factor alone decides that */
+              metalnessMap: null,
+              aoMap: sourceMat.aoMap ?? null,
+              aoMapIntensity: 1,
+            }
+          : {};
         const common = {
+          ...maps,
           color: source ?? (RENDER[cat] ?? RENDER.misc)[0],
-          roughness: fin?.rough ?? rough,
-          metalness: fin?.metal ?? metal,
+          roughness: baked ? (sourceMat.roughnessMap ? 1 : sourceMat.roughness) : (fin?.rough ?? rough),
+          metalness: baked ? sourceMat.metalness : (fin?.metal ?? metal),
           transparent: true,
           opacity: (RENDER[cat] ?? RENDER.misc)[1],
           side: THREE.DoubleSide,
@@ -552,10 +597,10 @@ class ViewerState {
                  kaleidoscope across each pane */
               new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: this.lookPreset.glassBoost })
             : new THREE.MeshStandardMaterial(common);
-        finish(mat, cat, fin ? fin.relief : true);
+        finish(mat, cat, fin ? fin.relief : true, baked && cat !== "glass");
         mat.userData.viewer = true;
         if (source) mat.userData.source = source;
-        if (fin) mat.userData.finish = { rough: mat.roughness, metal: mat.metalness };
+        if (fin || baked) mat.userData.finish = { rough: mat.roughness, metal: mat.metalness };
         (o.material as THREE.Material).dispose?.();
         o.material = mat;
       }
