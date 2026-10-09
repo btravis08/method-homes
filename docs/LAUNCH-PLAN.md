@@ -631,6 +631,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — Plan viewer LOOK presets (daylight / golden / overcast:
+  sky, sun, tone mapper, grade, stain) and the scroll-driven aerial
+  DESCENT prototype at /library/descent (procedural terrain, forest
+  and cloud sheets; pinned section, no markers, SKIP).
 - 2026-10-09 — New `model3d` document (Studio → 3D models) holds the
   Source model (IFC) and the pipeline's GLB for the bespoke viewer;
   not attached to series or plans. model-pipeline resolves by its

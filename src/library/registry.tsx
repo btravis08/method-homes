@@ -476,6 +476,23 @@ export const SECTIONS: SectionEntry[] = [
     ),
   },
   {
+    slug: "descent",
+    title: "Aerial descent — scroll into the home",
+    group: "Page sections",
+    description: "Prototype (2026-10-09, after ownprimland.com's pinned aerial): a 300svh pinned section. Scroll flies the camera from above a procedural wilderness — ridge-noise terrain, thousands of instanced pines, three drifting noise-cloud sheets you pass through, sky-coloured haze — down a spiral to the framed view of Method's home, where the viewer becomes the usual one (drag to turn, floor plan). Mid-page moment, no markers; Skip jumps to the end.",
+    modes: ["light"],
+    tall: true,
+    render: () => (
+      <section data-mode="light" className="w-full bg-surface text-ink">
+        <div data-descent className="relative h-[300svh] w-full">
+          <div className="sticky top-0 h-[100svh] w-full">
+            <LazyPlanViewer src="/models/test.glb" alt="Method reference home from the air" descent className="h-full" />
+          </div>
+        </div>
+      </section>
+    ),
+  },
+  {
     slug: "turntable",
     title: "Rendered turntable",
     group: "Page sections",

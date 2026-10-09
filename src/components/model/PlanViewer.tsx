@@ -3,12 +3,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
-import { EffectComposer, HueSaturation, ToneMapping } from "@react-three/postprocessing";
+import { BrightnessContrast, EffectComposer, HueSaturation, ToneMapping, Vignette } from "@react-three/postprocessing";
 import { buildFoliage, plantingPlan, type Door, type FoliageHandle, type Plant } from "./foliage";
 import { findDoors, wallBounds } from "./doors";
 import { loadPlants, type PlantsHandle } from "./plants";
 import { buildLawn, type LawnHandle } from "./lawn";
 import { makeTerrain } from "./terrain";
+import { buildScenery, type SceneryHandle } from "./scenery";
+import { useLenis } from "lenis/react";
 import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
@@ -34,7 +36,7 @@ function sunDirection(sun: EnvMeta["sun"]): [number, number, number] {
    reports the sun so the shadow light can line up with the reflections.
    (A plain function: three.js mutation stays out of component code for
    the React Compiler's immutability lint.) Returns a cleanup. */
-function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun: (dir: [number, number, number]) => void, onDone: () => void) {
+function loadSky(base: string, intensity: number, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun: (dir: [number, number, number]) => void, onDone: () => void) {
   let live = true;
   let env: THREE.Texture | null = null;
   (async () => {
@@ -71,7 +73,7 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
          shot's balance is a strong key and a modest sky (three divides a
          light's irradiance by π for diffuse, so the sun needs ~7 to out-
          light the sky about 3:1 on the lawn, as real daylight does). */
-      root.environmentIntensity = 0.45;
+      root.environmentIntensity = intensity; // 0.45 for the daylight look; each Look sets its own
       root.userData.envSource = "hdri";
     } catch {
       /* keep the procedural room */
@@ -87,9 +89,9 @@ function loadSky(base: string, gl: THREE.WebGLRenderer, root: THREE.Scene, onSun
   };
 }
 
-function SkyEnvironment({ base, onSun, onDone }: { base: string; onSun: (dir: [number, number, number]) => void; onDone: () => void }) {
+function SkyEnvironment({ base, intensity, onSun, onDone }: { base: string; intensity: number; onSun: (dir: [number, number, number]) => void; onDone: () => void }) {
   const { gl, scene: root } = useThree();
-  useEffect(() => loadSky(base, gl, root, onSun, onDone), [base, gl, root, onSun, onDone]);
+  useEffect(() => loadSky(base, intensity, gl, root, onSun, onDone), [base, intensity, gl, root, onSun, onDone]);
   return null;
 }
 
@@ -137,6 +139,11 @@ export interface PlanViewerProps {
   /* show the built-in "Loading 3D view…" label (off when a wrapper,
      e.g. LazyPlanViewer, keeps its own poster up until onReady) */
   showLoading?: boolean;
+  /* lighting / grade preset (LOOKS); `?look=` in the URL overrides for previews */
+  look?: LookName;
+  /* aerial descent: the viewer fills its sticky parent inside a tall
+     [data-descent] wrapper and flies in from above the clouds on scroll */
+  descent?: boolean;
 }
 
 type Mode = "3d" | "plan";
@@ -222,15 +229,52 @@ const PRELUDE = /* glsl */ `
 */
 const STAIN = "#5a4634";
 const INTERIOR = "#efece6";
+
+/*
+  LOOKS (Bryce, 2026-10-09: time of day + weather, materials, grade) —
+  one preset bundles the sky folder (prep-env.py output), the sun and
+  fills, the environment strength, the post grade (tone curve,
+  saturation, contrast, vignette) and the material accents (siding
+  stain, glass reflection strength). `daylight` is the look the viewer
+  had; the others are candidates to pick from side by side. A preset
+  is chosen by the `look` prop or, for previews, `?look=` in the URL.
+*/
+export type LookName = "daylight" | "golden" | "overcast";
+export interface Look {
+  envBase: string;
+  envIntensity: number;
+  sun: { intensity: number; color: string };
+  hemi: number;
+  fill: number;
+  tone: ToneMappingMode;
+  saturation: number;
+  brightness: number;
+  contrast: number;
+  vignette: number;
+  stain: string;
+  glassBoost: number;
+}
+export const LOOKS: Record<LookName, Look> = {
+  /* the product-shot daylight tuned on 2026-10-05: partly cloudy sky,
+     warm strong key, calm saturation */
+  daylight: { envBase: "/models/env", envIntensity: 0.45, sun: { intensity: 7, color: "#fff7ee" }, hemi: 0.12, fill: 0.15, tone: ToneMappingMode.NEUTRAL, saturation: -0.12, brightness: 0, contrast: 0, vignette: 0, stain: STAIN, glassBoost: 4.8 },
+  /* golden hour: low warm sun (sunrise HDRI), long shadows, glowing
+     glass, filmic AgX roll-off, a touch more colour and a soft vignette */
+  golden: { envBase: "/models/env-golden", envIntensity: 0.55, sun: { intensity: 5.5, color: "#ffc98a" }, hemi: 0.1, fill: 0.08, tone: ToneMappingMode.AGX, saturation: 0.04, brightness: 0.01, contrast: 0.06, vignette: 0.28, stain: "#6a4b33", glassBoost: 6.5 },
+  /* overcast: a bright even sky carries the light, the sun is a faint
+     direction for soft shadows, cooler and quieter grade */
+  overcast: { envBase: "/models/env-overcast", envIntensity: 0.95, sun: { intensity: 1.4, color: "#eef2f8" }, hemi: 0.3, fill: 0.2, tone: ToneMappingMode.NEUTRAL, saturation: -0.26, brightness: 0.02, contrast: -0.04, vignette: 0.12, stain: "#5c4a3c", glassBoost: 3.2 },
+};
+export const DEFAULT_LOOK: LookName = "daylight";
 const isDefaultGrey = (c: THREE.Color) => {
   const { r, g, b } = c;
   const spread = Math.max(r, g, b) - Math.min(r, g, b);
   return spread < 0.03 && r > 0.4 && r < 0.56;
 };
-function materialFinish(key: string, source: THREE.Color): { color: THREE.Color; relief: boolean; rough?: number; metal?: number } {
+function materialFinish(key: string, source: THREE.Color, stain: string = STAIN): { color: THREE.Color; relief: boolean; rough?: number; metal?: number } {
   const k = key.toLowerCase();
   const real = !isDefaultGrey(source);
-  if (/siding|cedar|clapboard|shiplap|\bwood\b|timber/.test(k)) return { color: new THREE.Color(real ? source : STAIN), relief: true, rough: 0.78 };
+  if (/siding|cedar|clapboard|shiplap|\bwood\b|timber/.test(k)) return { color: new THREE.Color(real ? source : stain), relief: true, rough: 0.78 };
   if (/gwb|gypsum|drywall|plaster|plywood|cdx|osb|sheathing|insulation|stud|default-wall/.test(k)) return { color: new THREE.Color(INTERIOR), relief: false, rough: 0.9 };
   if (/concrete|cmu|block|masonry|brick|stone/.test(k)) return { color: new THREE.Color(real ? source : "#9a978f"), relief: false, rough: 0.95 };
   if (/black|steel|metal|fascia|trim|aluminum|aluminium/.test(k)) return { color: new THREE.Color(real ? source : "#111111"), relief: false, rough: 0.4, metal: 0.5 };
@@ -412,6 +456,16 @@ class ViewerState {
   private appear = 1; // plants' dissolve-in, 0 → 1
   /* the scroll-tied turn; `dragged` freezes it once the user takes over */
   dragged = false;
+  /* AERIAL DESCENT (scenery.ts): when the viewer sits in a pinned
+     [data-descent] wrapper, scroll progress through it flies the camera
+     from high above the clouds down to the framed view. `arrived` hands
+     control back to the user; the mode toggle appears then. */
+  wantScenery = false;
+  scenery: SceneryHandle | null = null;
+  descent = 1; // raw scroll progress, 1 = arrived
+  private descentDamped = 1;
+  arrived = true;
+  onArrive: ((arrived: boolean) => void) | null = null;
   checkReady() {
     if (this.isReady || !this.plantsSettled || !this.skySettled || !this.group) return;
     this.isReady = true;
@@ -425,6 +479,8 @@ class ViewerState {
      siding material (node `storey0_wall__cedar-siding-8a6a4b`); the
      category palette otherwise */
   mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null }[] = [];
+  /* the active look's material + grade parameters (set by the component) */
+  lookPreset: Look = LOOKS[DEFAULT_LOOK];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
   footprint: Footprint = { width_m: 12, depth_m: 10, height_m: 8 };
   progress = 0; // 0 = 3D, 1 = plan
@@ -470,7 +526,7 @@ class ViewerState {
       const cat = m ? m[2] : "misc";
       const storey = m ? Number(m[1]) : 0;
       const sourceMat = o.material as THREE.MeshStandardMaterial;
-      const fin = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? materialFinish(m[3], sourceMat.color) : null;
+      const fin = m?.[3] && sourceMat?.color && !sourceMat.userData.viewer ? materialFinish(m[3], sourceMat.color, this.lookPreset.stain) : null;
       const source = fin?.color ?? (sourceMat?.userData.source as THREE.Color | undefined) ?? null;
       if (!(o.material instanceof THREE.MeshStandardMaterial && o.material.userData.viewer)) {
         const [rough, metal] = SURFACE[cat] ?? SURFACE.misc;
@@ -494,7 +550,7 @@ class ViewerState {
             ? /* flat shading stays ON: the welded pane corners carry averaged
                  normals, and smooth normals swing the refraction into a
                  kaleidoscope across each pane */
-              new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: ENV_BOOST.glass })
+              new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: this.lookPreset.glassBoost })
             : new THREE.MeshStandardMaterial(common);
         finish(mat, cat, fin ? fin.relief : true);
         mat.userData.viewer = true;
@@ -523,6 +579,19 @@ class ViewerState {
       plantLayer(this.lawn.group);
       this.lawn.group.traverse((o) => (o.receiveShadow = true));
       this.group.add(this.lawn.group);
+    }
+    if (this.group && this.wantScenery && !this.scenery) {
+      /* the basin must clear the landing camera's reach in portrait too
+         (the orbit backs off by 1/aspect there) */
+      this.scenery = buildScenery(this.footprint, this.radius() * Math.sin(ARRIVE_PHI) * 1.7);
+      this.scenery.group.traverse((o) => (o.receiveShadow = o.name === "terrain"));
+      this.group.add(this.scenery.group);
+      /* haze in the page's own surface colour: far ridges dissolve into the
+         page, never a horizon line. Exp² so the home 400 m off is clear and
+         the valley 1.2 km below the aerial camera sits in a light haze. */
+      root.fog = new THREE.FogExp2("#f3f2ee", 0.0001);
+      this.arrived = false;
+      this.descent = this.descentDamped = 0;
     }
     this.loadRealPlants();
     this.checkReady();
@@ -715,7 +784,7 @@ class ViewerState {
         mat.envMap = env;
         mat.needsUpdate = true;
       }
-      mat.envMapIntensity = THREE.MathUtils.lerp(ENV_BOOST[cat] ?? 1, 0.15, e) * (this.root?.environmentIntensity ?? 1);
+      mat.envMapIntensity = THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), 0.15, e) * (this.root?.environmentIntensity ?? 1);
       const shader = mat.userData.shader as { uniforms: { uPlan: { value: number } } } | undefined;
       if (shader) shader.uniforms.uPlan.value = e;
     }
@@ -744,7 +813,7 @@ class ViewerState {
 
     /* camera: orbit (OrbitControls) in 3D, flight to the top in plan */
     const cam = state.camera as THREE.PerspectiveCamera;
-    if (this.controls) this.controls.enabled = this.progress < 0.02;
+    if (this.controls) this.controls.enabled = this.progress < 0.02 && this.arrived;
     /* the section fill rides the cut plane (plane: −y + c = 0 → y = c) */
     if (this.cap) {
       this.cap.position.y = this.plane.constant;
@@ -757,9 +826,10 @@ class ViewerState {
       this.plants.setFade(Math.max(e, (1 - this.appear) / 2));
     }
     this.lawn?.setFade(e);
+    this.scenery?.setFade(e); // the wilderness leaves with the drawing
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     /* a touch calmer than raw in 3D (Samara's "less stark"), no colour in plan */
-    if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(-0.12, -1, e);
+    if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(this.lookPreset.saturation, -1, e);
     /* shadows leave with the 3D view: the drawing is flat */
     if (this.sunLight) this.sunLight.shadow.intensity = 1 - e;
     if (this.progress > 0.001) {
@@ -788,19 +858,64 @@ class ViewerState {
       cam.updateProjectionMatrix();
     } else {
       this.hasOrbitPos = false;
-      if (Math.abs(cam.fov - FOV_3D) > 0.01) {
-        cam.fov = FOV_3D;
-        cam.updateProjectionMatrix();
-      }
       /* a portrait container (phones: 75svh tall, 428 wide) sees a narrower
          slice — back the camera off by the inverse aspect so the long home
          is not cropped at the sides (2026-10-09) */
       const r = this.radius() * Math.max(1, 1 / Math.max(cam.aspect, 0.3));
+      if (this.scenery) {
+        /* scroll progress through the pinned wrapper: 0 as its top meets
+           the viewport top, 1 when its bottom does */
+        const wrap = state.gl.domElement.closest("[data-descent]") as HTMLElement | null;
+        let p = 1;
+        if (wrap) {
+          const rc = wrap.getBoundingClientRect();
+          const vh = window.innerHeight || 1;
+          p = THREE.MathUtils.clamp(-rc.top / Math.max(1, rc.height - vh), 0, 1);
+        }
+        this.descent = p;
+        this.descentDamped = input.reduce || !this.isReady ? p : this.descentDamped + (p - this.descentDamped) * (1 - Math.exp(-dt * DESCENT_DAMP));
+        /* smoothstep, not the cubic page ease: the first quarter of the
+           scroll must already move the camera */
+        const d = THREE.MathUtils.smoothstep(this.descentDamped, 0, 1);
+        this.scenery.setFade(e);
+        this.scenery.update(cam.position.y, this.descentDamped, state.clock.elapsedTime);
+        const arrived = d > 0.995;
+        if (arrived !== this.arrived) {
+          this.arrived = arrived;
+          this.onArrive?.(arrived);
+        }
+        if (!arrived) {
+          /* from straight above the cloud deck (wide lens) down a spiral to
+             the framed three-quarter view (the 8° lens): radius eases in log
+             space so the fall feels even, the azimuth unwinds ~50° */
+          const startR = Math.max(3000, r * 8);
+          const radius = Math.exp(THREE.MathUtils.lerp(Math.log(startR), Math.log(r), d));
+          const phi = THREE.MathUtils.lerp(0.05, ARRIVE_PHI, d);
+          const theta = ARRIVE_THETA + 0.9 * (1 - d);
+          cam.position.setFromSphericalCoords(radius, phi, theta);
+          cam.fov = THREE.MathUtils.lerp(FOV_AERIAL, FOV_3D, d);
+          this.look.set(0, THREE.MathUtils.lerp(0, f.height_m * 0.4, d), 0);
+          cam.lookAt(this.look);
+          cam.updateProjectionMatrix();
+          return;
+        }
+      }
+      if (Math.abs(cam.fov - FOV_3D) > 0.01) {
+        cam.fov = FOV_3D;
+        cam.updateProjectionMatrix();
+      }
       const len = cam.position.length();
       if (len < r * 0.8 || len > r * 1.25) cam.position.setLength(r);
     }
   }
 }
+
+/* the descent's start lens and its landing pose — the Canvas camera's
+   initial position [0.8, 0.45, 0.6]·r in spherical terms */
+const FOV_AERIAL = 42;
+const ARRIVE_PHI = Math.acos(0.45 / Math.hypot(0.8, 0.45, 0.6));
+const ARRIVE_THETA = Math.atan2(0.8, 0.6);
+const DESCENT_DAMP = 6; // 1/s
 
 /* PLANTS LIVE ON THEIR OWN LAYER, so any pass that renders "the house"
    from another camera (it was the contact shadow, removed 2026-10-05 for
@@ -849,8 +964,32 @@ function House({ src, vs, input, plantsBase }: { src: string; vs: React.RefObjec
   );
 }
 
-export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase = DEFAULT_ENV_BASE, plantsBase = DEFAULT_PLANTS_BASE, onReady, showLoading = true }: PlanViewerProps) {
+export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChange, className = "", envBase, plantsBase = DEFAULT_PLANTS_BASE, onReady, showLoading = true, look: lookProp, descent = false }: PlanViewerProps) {
   const [mode, setMode] = useState<Mode>(initialMode);
+  const [arrived, setArrived] = useState(!descent);
+  const lenis = useLenis();
+  const rootRef = useRef<HTMLDivElement>(null);
+  /* SKIP: jump to the end of the pinned wrapper (through Lenis when it runs
+     the page, so the easing is the site's) */
+  const skip = () => {
+    const wrap = rootRef.current?.closest("[data-descent]") as HTMLElement | null;
+    if (!wrap) return;
+    const top = wrap.getBoundingClientRect().top + window.scrollY + wrap.offsetHeight - window.innerHeight;
+    if (lenis) lenis.scrollTo(top);
+    else window.scrollTo({ top, behavior: "smooth" });
+  };
+  /* the look: prop, else ?look= (previews), else daylight — fixed for the
+     component's life so the sky loads once */
+  const [lookName] = useState<LookName>(() => {
+    if (lookProp) return lookProp;
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("look");
+      if (q && q in LOOKS) return q as LookName;
+    }
+    return DEFAULT_LOOK;
+  });
+  const look = LOOKS[lookName];
+  const skyBase = envBase ?? look.envBase;
   const [storey, setStorey] = useState(0);
   /* the canvas fades in once, when everything has settled (no flash) */
   const [ready, setReady] = useState(false);
@@ -864,6 +1003,9 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   if (vs.current == null) {
     vs.current = new ViewerState();
   }
+  vs.current.lookPreset = look;
+  vs.current.wantScenery = descent;
+  vs.current.onArrive = setArrived;
   const { scene } = useGLTF(src);
   const extras = (scene.userData as Extras | undefined) ?? {};
   const all = extras.storeys ?? [{ index: 0, name: "Ground", elevation_m: 0 }];
@@ -949,11 +1091,11 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
   };
 
   return (
-    <div className={`relative w-full overflow-hidden rounded-md bg-surface-2 ${className}`} data-mode-3d={mode}>
+    <div ref={rootRef} className={`relative w-full overflow-hidden bg-surface-2 ${descent ? "h-full" : "rounded-md"} ${className}`} data-mode-3d={mode}>
       {!ready && showLoading && <p className="label absolute bottom-xl left-xl z-10 rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3">Loading 3D view…</p>}
       {/* 75% of the viewport height on phones (Bryce, 2026-10-09), 16:9 from
           md up; a viewport fraction has no spacing token by nature */}
-      <div className="h-[75svh] w-full transition-opacity duration-700 ease-out md:aspect-[16/9] md:h-auto" style={{ opacity: ready ? 1 : 0 }}>
+      <div className={`w-full transition-opacity duration-700 ease-out ${descent ? "h-full" : "h-[75svh] md:aspect-[16/9] md:h-auto"}`} style={{ opacity: ready ? 1 : 0 }}>
         <Canvas
           shadows="variance"
           onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
@@ -961,7 +1103,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           /* near/far hug the orbit radius: with the camera ~170 m out a
              0.1 m near plane would starve depth precision and the panes
              would fight their frames */
-          camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: radius * 0.3, far: radius * 3 }}
+          camera={{ position: [radius * 0.8, radius * 0.45, radius * 0.6], fov: FOV_3D, near: descent ? 20 : radius * 0.3, far: descent ? 14000 : radius * 3 }}
           /* Neutral (Khronos PBR) tone mapping keeps material colour
              faithful — a product shot, not a film look */
           /* premultipliedAlpha false: the post chain writes STRAIGHT alpha
@@ -974,7 +1116,7 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
           onPointerUp={onUp}
           onPointerCancel={onUp}
         >
-          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? 0.12 : 0.45]} />
+          <hemisphereLight args={["#f4f3ef", "#6d6c68", sun ? look.hemi : 0.45]} />
           {/* the sun: aligned with the HDRI's once env.json arrives */}
           {/* SOFT SUN SHADOWS (variance shadow map, blurred): the eaves
               shade the walls, the home and trees shade the lawn — the depth
@@ -989,8 +1131,8 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
             position={sun ? [sun[0] * 40, sun[1] * 40, sun[2] * 40] : [12, 16, 8]}
             /* the key: strong and a touch warm against the cooler sky, so
                sunlit faces and shade read apart */
-            intensity={sun ? 7 : 1.25}
-            color={sun ? "#fff7ee" : "#ffffff"}
+            intensity={sun ? look.sun.intensity : 1.25}
+            color={sun ? look.sun.color : "#ffffff"}
             castShadow
             shadow-mapSize={[2048, 2048]}
             shadow-camera-left={-shadowSpan}
@@ -1005,8 +1147,8 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
             shadow-normalBias={0.03}
           />
           {/* fill from the opposite side so the shaded elevations keep their panel reveals */}
-          <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? 0.15 : 0.3} />
-          <SkyEnvironment base={envBase} onSun={setSun} onDone={onSkyDone} />
+          <directionalLight position={sun ? [-sun[0] * 30, 8, -sun[2] * 30] : [-10, 6, -8]} intensity={sun ? look.fill : 0.3} />
+          <SkyEnvironment base={skyBase} intensity={look.envIntensity} onSun={setSun} onDone={onSkyDone} />
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}
           <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
@@ -1031,7 +1173,9 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
               the ground that swam as the house turned (removed 2026-10-05,
               Bryce). */}
           <EffectComposer multisampling={4} stencilBuffer enableNormalPass={false}>
-            <ToneMapping mode={ToneMappingMode.NEUTRAL} />
+            <ToneMapping mode={look.tone} />
+            {(look.brightness !== 0 || look.contrast !== 0) && <BrightnessContrast brightness={look.brightness} contrast={look.contrast} />}
+            {look.vignette > 0 && <Vignette offset={0.3} darkness={look.vignette} />}
             <HueSaturation
               ref={(s) => {
                 const v = vs.current;
@@ -1046,8 +1190,13 @@ export function PlanViewer({ src, northDeg, mode: initialMode = "3d", onModeChan
       {/* mode + storey controls: DOM, library-styled; centred along the
           bottom edge, 20 px up (Bryce, 2026-10-09 — between the xl and 2xl
           tokens, so 1.25rem is set outright) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-[1.25rem] flex flex-wrap items-center justify-center gap-lg px-xl">
-        <div role="group" aria-label="View" className="pointer-events-auto flex items-center gap-xxs rounded-(--radius-full) bg-line-2 p-xxs">
+      {descent && !arrived && (
+        <button type="button" onClick={skip} className="label pointer-events-auto absolute bottom-[1.25rem] left-1/2 -translate-x-1/2 rounded-(--radius-full) bg-surface px-2xl py-md text-ink-3 transition-colors hover:text-ink">
+          Skip
+        </button>
+      )}
+      <div className={`pointer-events-none absolute inset-x-0 bottom-[1.25rem] flex flex-wrap items-center justify-center gap-lg px-xl transition-opacity duration-500 ${arrived ? "opacity-100" : "opacity-0"}`} aria-hidden={!arrived}>
+        <div role="group" aria-label="View" className={`${arrived ? "pointer-events-auto" : "pointer-events-none"} flex items-center gap-xxs rounded-(--radius-full) bg-line-2 p-xxs`}>
           {(["3d", "plan"] as Mode[]).map((m) => (
             <button
               key={m}

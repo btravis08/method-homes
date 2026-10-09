@@ -168,6 +168,18 @@ staging/design use.
   when real). Read `surfaceStyles` + `materials` in the report before
   judging a model's materials; ask Method for the actual stain. The
   bespoke viewer section references a model3d doc.
+- VIEWER LOOKS + DESCENT (2026-10-09): rendering style is a LOOK
+  preset in PlanViewer (daylight/golden/overcast — sky folder, sun,
+  hemisphere/fill, tone mapper, grade, vignette, stain, glass boost);
+  add a look there, install its sky with sky.yml's `out` input, never
+  tweak lights inline. The aerial descent (`descent` prop, section
+  wrapper `[data-descent]` pinned with a sticky 100svh child) reads
+  its progress from that wrapper — no scroll markers, no GSAP. Its
+  scenery (`scenery.ts`) is procedural and sized from the landing
+  camera's reach: keep the basin flat past `radius()·sin(ARRIVE_PHI)`
+  (portrait backs off by 1/aspect) or the ridges wall off the home.
+  Clouds are shader sheets at CLOUD_ALTITUDES below the 3 km start
+  and above the landing height; keep that order when retuning.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

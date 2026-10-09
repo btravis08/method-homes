@@ -761,6 +761,32 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   (0.75), controls gap 20 px, centre offset 0. The 3D orbit radius
   now scales by the inverse aspect in portrait so the 50 m home is
   not cropped at the sides.
+- Look presets (Bryce, 2026-10-09, "1, 3 m, and 5" from the rendering
+  options: time of day/weather, materials, grade): PlanViewer LOOKS =
+  daylight (the existing noon sky, Neutral tone mapping), golden
+  (spruit_sunrise HDRI at `/models/env-golden`, warm low sun, AgX,
+  slight vignette) and overcast (kloppenheim_06_puresky at
+  `/models/env-overcast`, soft hemisphere light, desaturated). A look
+  bundles sky, sun colour/intensity, hemisphere + fill, tone mapper,
+  saturation/brightness/contrast grade, vignette, siding stain and the
+  glass boost. `look` prop on LazyPlanViewer / `?look=` URL override;
+  skies installed by the sky workflow's new `out` input.
+- Aerial descent (Bryce, 2026-10-09, after ownprimland.com — "mid
+  page, no markers"): `/library/descent` pins the viewer for 300svh;
+  scroll progress through the `[data-descent]` wrapper drives the
+  camera from 3 km straight above the cloud deck (42° lens) down a
+  log-spaced spiral through three procedural cloud sheets (noise fbm
+  in the fragment shader, each whiting out as the camera passes) to
+  the viewer's usual landing pose (the 8° lens), where the orbit and
+  the 3D/Floor plan toggle take over. The wilderness is procedural
+  (`scenery.ts`): a 200² heightfield of ridge noise flattened across a
+  basin sized to the landing camera's reach (first capture landed
+  behind a rock face — the ridges began 150 m out while the 8° lens
+  sits ~330 m out), vertex-coloured by height/slope, 12k instanced
+  low-poly pines denser toward the basin, FogExp2 in the page surface
+  colour so far ridges dissolve into the page. A SKIP pill scrolls to
+  the end (Lenis); reduced-motion users get the progress without the
+  damping. Everything fades with the plan cut like the lawn.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

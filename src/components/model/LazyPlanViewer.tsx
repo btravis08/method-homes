@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 
 const PlanViewer = dynamic(() => import("./PlanViewer").then((m) => m.PlanViewer), { ssr: false });
 
-export function LazyPlanViewer({ src, poster, alt, northDeg, className = "" }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string }) {
+export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", descent = false, look }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string; descent?: boolean; look?: "daylight" | "golden" | "overcast" }) {
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   /* the 3D view mounts UNDER the poster and only replaces it once it has
@@ -51,11 +51,11 @@ export function LazyPlanViewer({ src, poster, alt, northDeg, className = "" }: {
   }, [ready]);
 
   return (
-    <div ref={ref} className={`relative w-full ${className}`}>
-      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} />}
+    <div ref={ref} className={`relative w-full ${descent ? "h-full" : ""} ${className}`}>
+      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} descent={descent} look={look} />}
       <div
         aria-hidden={shown}
-        className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} aspect-[4/3] w-full overflow-hidden rounded-md bg-surface-2 transition-opacity duration-700 ease-out md:aspect-[16/9]`}
+        className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} w-full overflow-hidden bg-surface-2 transition-opacity duration-700 ease-out ${descent ? "h-full" : "aspect-[4/3] rounded-md md:aspect-[16/9]"}`}
         style={{ opacity: shown ? 0 : 1 }}
       >
         {poster ? (
