@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — Floor plan gained a Source model (IFC) upload; the
+  model-pipeline workflow reads it by plan slug. For Method's 50 MB
+  IFC with siding materials.
 - 2026-10-08 — /pricing Figma page realigned to Method's live pricing
   page: Finish levels and the financing feature list removed, What it
   costs replaced by Cost structure (soft / modular / site with

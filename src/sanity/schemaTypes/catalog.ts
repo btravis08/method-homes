@@ -256,6 +256,14 @@ export const plan = defineType({
       options: { accept: ".glb,model/gltf-binary" },
       description: "The web model from the IFC pipeline (scripts/model/ifc-to-glb.py → gltf-transform). Under 2 MB. Powers the 3D / Floor plan viewer; the drawing and photo stay the fallback.",
     }),
+    defineField({
+      name: "sourceModel",
+      title: "Source model (IFC)",
+      type: "file",
+      group: "files",
+      options: { accept: ".ifc,application/x-step,model/ifc" },
+      description: "The BIM export from Method (IFC 2x3 or 4; tens of MB is fine). Not served to visitors — the model-pipeline workflow reads it from here (dispatch with this plan's slug) and writes the web GLB above.",
+    }),
     defineField({ name: "northDeg", title: "North rotation (°)", type: "number", group: "files", description: "Override for the model's stored TrueNorth: degrees to turn the model so plan view is north-up." }),
     defineField({
       name: "pdf",
