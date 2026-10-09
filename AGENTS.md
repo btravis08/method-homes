@@ -180,6 +180,14 @@ staging/design use.
   (portrait backs off by 1/aspect) or the ridges wall off the home.
   Clouds are shader sheets at CLOUD_ALTITUDES below the 3 km start
   and above the landing height; keep that order when retuning.
+- SCROLL-PINNED LIBRARY ENTRIES are `fullPage: true` in the registry:
+  the viewer's iframe cannot scroll on iOS (it expands to its content),
+  so a pinned section inside it never moves. Full-page entries render
+  bare with a ← Library pill. Verify such sections on the real
+  `/library/<slug>` URL (no `?frame=1`) at a phone viewport.
+- BUILD HYGIENE: never pipe `npm run build` through `head` — the closed
+  pipe kills the build mid-way (no prerender-manifest, `npm start`
+  dies). Redirect to a log and grep that.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

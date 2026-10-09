@@ -30,13 +30,20 @@ export default async function SectionPage({
   const entry = bySlug(slug);
   if (!entry) notFound();
 
-  if (frame === "1") {
+  if (frame === "1" || entry.fullPage) {
     const active = (entry.modes.includes(mode as Mode) ? mode : entry.modes[0]) as Mode;
     return (
       <div data-mode={active} className="min-h-screen w-full bg-surface text-ink">
         {entry.render(active)}
         {/* ?audit=1 exposes window.__sdrAudit() for the audit script */}
         {audit === "1" && <TokenAuditBridge />}
+        {/* a full-page entry has no viewer shell, so it carries its own
+            way back to the catalogue */}
+        {frame !== "1" && entry.fullPage && (
+          <a href="/library" className="label fixed left-4 top-4 z-10 rounded-(--radius-full) bg-surface/90 px-2xl py-md text-ink-3 backdrop-blur hover:text-ink">
+            ← Library
+          </a>
+        )}
       </div>
     );
   }

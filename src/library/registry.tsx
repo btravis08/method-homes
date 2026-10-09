@@ -82,6 +82,11 @@ export interface SectionEntry {
      breakpoint means that device frame hasn't been exported (or
      doesn't exist in the design yet). */
   comps?: Partial<Record<Breakpoint, { width: number; height: number }>>;
+  /* scroll-pinned sections render as their own page in the viewer, not
+     inside its iframe: iOS expands an iframe to its content height, so
+     nothing inside one ever scrolls (the descent sat at frame 0 on a
+     phone, 2026-10-09) */
+  fullPage?: boolean;
   render: (mode: Mode) => ReactNode;
 }
 
@@ -477,6 +482,7 @@ export const SECTIONS: SectionEntry[] = [
   },
   {
     slug: "descent",
+    fullPage: true,
     title: "Aerial descent — scroll into the home",
     group: "Page sections",
     description: "Prototype (2026-10-09, after ownprimland.com's pinned aerial): a 300svh pinned section. Scroll flies the camera from above a procedural wilderness — ridge-noise terrain, thousands of instanced pines, three drifting noise-cloud sheets you pass through, sky-coloured haze — down a spiral to the framed view of Method's home, where the viewer becomes the usual one (drag to turn, floor plan). Mid-page moment, no markers; Skip jumps to the end.",

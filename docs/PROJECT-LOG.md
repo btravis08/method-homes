@@ -787,6 +787,14 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   colour so far ridges dissolve into the page. A SKIP pill scrolls to
   the end (Lenis); reduced-motion users get the progress without the
   damping. Everything fades with the plan cut like the lawn.
+- Descent on device (Bryce, 2026-10-09, "It doesn't zoom in on scroll"):
+  the library viewer iframes every entry, and iOS expands an iframe to
+  its content height, so nothing inside one scrolls — the descent sat
+  at its first frame. Registry entries can now be `fullPage`: the
+  viewer renders them as their own page (with a ← Library pill) instead
+  of in the iframe. Also: never pipe `npm run build` into `head` — the
+  closed pipe kills the build before the prerender manifest is
+  written, and `npm start` then fails to boot (bit twice today).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
