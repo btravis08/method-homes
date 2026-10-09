@@ -416,7 +416,11 @@ def partition_mesh(mesh: "trimesh.Trimesh", polys: list, snap_m: float = 1.0, ce
     # candidates by footprint overlap with the mesh's box — a roof's
     # vertices all sit on its overhang, outside every module
     bbox = shapely_box(lo[0], lo[1], hi[0], hi[1])
-    hit = [k for k, poly in enumerate(polys) if poly.intersects(bbox)]
+    # candidates by CELL when cells exist (a roof overhang can lie in a
+    # cell whose footprint never touches the mesh — it was being dropped,
+    # leaving holes in the roof), else by footprint
+    regions = cells if cells is not None else polys
+    hit = [k for k, region in enumerate(regions) if region.intersects(bbox)]
     inside = np.zeros((len(polys), len(v)), dtype=bool)
     for k in hit:
         inside[k] = shapely.contains_xy(polys[k], v[:, 0], v[:, 1])
