@@ -348,7 +348,25 @@ def module_cells(polys: list, reach_m: float = 30.0) -> list:
         if len(hit) == 0:
             hit = tree.query_nearest(cell.representative_point())
         per[owner[int(hit[0])]].append(cell)
-    return [unary_union(per[k]).intersection(env).buffer(0) for k in range(len(polys))]
+    def union(geoms):
+        # the Voronoi cells form a valid coverage; plain unary_union can hit
+        # a GEOS TopologyException on their shared edges (run 38002125209)
+        try:
+            return shapely.coverage_union_all(geoms)
+        except Exception:
+            try:
+                return unary_union([shapely.make_valid(g) for g in geoms])
+            except Exception:
+                return unary_union([g.buffer(1e-3) for g in geoms])
+
+    out = []
+    for k in range(len(polys)):
+        try:
+            cell = shapely.make_valid(union(per[k])).intersection(env)
+        except Exception:
+            cell = polys[k].buffer(1.0)  # a near-footprint fallback cell
+        out.append(cell)
+    return out
 
 
 def clip_solid(mesh: "trimesh.Trimesh", cells: list, hit: list) -> dict:
@@ -713,7 +731,12 @@ def main() -> int:
             continue
         modules.append({"index": len(module_polys), "name": m_["name"], "prefab": m_["prefab"], "poly": poly})
         module_polys.append(poly)
-    module_cells_: list = module_cells(module_polys) if module_polys else []
+    module_cells_: list | None = None
+    if module_polys:
+        try:
+            module_cells_ = module_cells(module_polys)
+        except Exception as exc:  # the uncapped slice still works without cells
+            print(f"  module cells unavailable ({exc}); seams stay uncapped", file=sys.stderr)
     if modules:
         print(f"  modules: " + ", ".join(f"{m['name']}{'' if m['prefab'] else ' (site-built)'} {m['poly'].area:.0f} m²" for m in modules))
         # which ROOMS each module holds (the other IfcSpaces, by centroid):
