@@ -667,6 +667,9 @@ def main() -> int:
                 best["rooms"].append(label)
         print("  rooms: " + "; ".join(f"{m['name']}: {', '.join(m['rooms']) or '—'}" for m in modules))
     module_stats: Counter = Counter()
+    # what each module is made of, by IFC type (an element sliced across
+    # a seam counts in every module it reaches, and once in `sliced`)
+    module_detail: dict = defaultdict(Counter)
 
     # surface-style inventory per category (always reported) and the
     # per-material wall split (--keep-materials): key → {name, rgb, faces}
@@ -758,6 +761,9 @@ def main() -> int:
                 for mod, piece in pieces.items():
                     groups[(si, pcat, mkey, mod)].append(piece)
                     module_stats[f"m{mod}" if mod is not None else "none"] += 1
+                    module_detail[mod][t] += 1
+                    if len(pieces) > 1:
+                        module_detail[mod]["sliced"] += 1
             else:
                 groups[(si, pcat, mkey, None)].append(mesh)
             if mkey:
@@ -830,7 +836,7 @@ def main() -> int:
         mx, my = m_["poly"].centroid.x, m_["poly"].centroid.y
         b = m_["poly"].bounds
         centre = [round(float(mx - cx), 3), round(float(-(my - cy)), 3)]
-        info = {"index": m_["index"], "name": m_["name"], "prefab": m_["prefab"], "centre": centre, "size_m": [round(float(b[2] - b[0]), 2), round(float(b[3] - b[1]), 2)], "rooms": m_.get("rooms", [])}
+        info = {"index": m_["index"], "name": m_["name"], "prefab": m_["prefab"], "centre": centre, "size_m": [round(float(b[2] - b[0]), 2), round(float(b[3] - b[1]), 2)], "rooms": m_.get("rooms", []), "elements": dict(module_detail.get(m_["index"], {}))}
         modules_out.append(info)
         node_name = f"module{m_['index']}"
         module_nodes[m_["index"]] = node_name
@@ -914,6 +920,7 @@ def main() -> int:
         "keepMaterials": bool(args.keep_materials),
         "modules": modules_out,
         "moduleStats": dict(module_stats),
+        "outsideModules": dict(module_detail.get(None, {})),
         # the wall materials carried into the GLB (empty unless --keep-materials)
         "materials": {k: {"name": v["name"], "color": v["color"], "faces": v["faces"], "elements": v["elements"]} for k, v in sorted(materials.items(), key=lambda kv: -kv[1]["faces"])},
         # every surface style seen on kept elements, by category — the

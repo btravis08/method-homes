@@ -62,9 +62,9 @@ on:
         type: boolean
         default: true
       bake:
-        description: "Bake real materials (Poly Haven PBR sets by material class) + an ambient-occlusion atlas into the web GLB"
+        description: "Bake real materials (Poly Haven PBR sets by material class) + an ambient-occlusion atlas into the web GLB (off: the viewer's procedural finishes — Bryce, 2026-10-09)"
         type: boolean
-        default: true
+        default: false
       ao_size:
         description: "Ambient-occlusion atlas size in px for the bake (2048 is ~3 cm/texel on a 50 m home)"
         required: false
