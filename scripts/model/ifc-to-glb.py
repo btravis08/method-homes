@@ -733,8 +733,11 @@ def main() -> int:
             dropped[t] += 1
             continue
         cat = category_for(el, parent_of.get(el.id()), args.keep_materials)
-        if cat is None and fitout_rooms:
-            cat = fitout_category(el)
+        if fitout_rooms and (cat is None or t == "IfcBuildingElementProxy"):
+            # a proxy is "misc" by type (kept only when large) — a named
+            # appliance is fit-out first, so the size and name tests below
+            # don't throw the refrigerator out
+            cat = fitout_category(el) or cat
         if cat is None and t in extra_keep:
             cat = extra_keep[t]
         if cat is None:
@@ -972,6 +975,13 @@ def main() -> int:
                 continue
         st = storey_of(el)
         si = storey_index.get(st.GlobalId, 0) if st is not None else 0
+        if st is None and storeys:
+            # furnishing and proxies often carry no storey container: the
+            # storey is the highest one at or under the element's base
+            base = float(verts[:, 2].min()) + 0.3
+            under = [i for i, s in enumerate(storeys) if s["elevation"] <= base]
+            if under:
+                si = max(under, key=lambda i: storeys[i]["elevation"])
         # pane / frame split: faces whose surface style is transparent are
         # glass; the opaque faces of a window are its FRAME (dark), and the
         # opaque faces of a glazed door stay door. Without styles the whole
