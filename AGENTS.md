@@ -219,6 +219,17 @@ staging/design use.
   story props (modes/labels/focusRoom/explodeGap/connectors) are how
   a library entry composes a different toggle; keep "single" needing
   `extras.modules[].rooms` from the pipeline.
+- HOW IT WORKS (2026-10-09): the module story's production layout is
+  `HowItWorks.tsx` (Figma 37656:61297 in the Method library file,
+  9nqsOUuF2UrgukNYok3Oko): it owns the step toggle and drives the
+  viewer with `mode` + `hideControls` + `fill` + `distance` (2.3 — the
+  ring wants the model at a third of the frame) + `occlusion` (N8AO,
+  opt-in: it is a full pass and slows software GL captures to ~8 min
+  a step — capture two steps, not four). The assembly shows PREFAB
+  modules only, ghosted at 55%, with dotted corner-to-corner lines at
+  25% ink; the cavity block under each module's roof is synthesised in
+  the viewer because the IFC has no framing. Hotspots and the callout
+  card carry placeholder copy until Method supplies it.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

@@ -33,6 +33,7 @@ import { SubNav } from "@/components/home/SubNav";
 import { Lineup } from "@/components/home/Lineup";
 import { ContactForm } from "@/components/forms/ContactForm";
 import { LazyPlanViewer } from "@/components/model/LazyPlanViewer";
+import { HowItWorks } from "@/components/model/HowItWorks";
 import { TurntableViewer } from "@/components/model/TurntableViewer";
 import sampleTurntable from "../../public/models/sample/turntable/manifest.json";
 import { ExperimentSection } from "@/components/experiment/ExperimentSection";
@@ -460,6 +461,18 @@ export const SECTIONS: SectionEntry[] = [
         </div>
       </section>
     ),
+  },
+  {
+    slug: "how-it-works",
+    fullPage: true,
+    title: "How it works — the module story in the Figma frame",
+    group: "Page sections",
+    description: "The Figma \"How it works\" section (node 37656:61297): the step toggle on top, a ring with four hotspots around the 3D view, a callout card at the upper right. The Module (white study model), The Assembly (seven prefab modules, ghosts around the solid kitchen module, dotted corner-to-corner lines at 25% ink), The Finished Home. Screen-space occlusion on. Callout copy is placeholder.",
+    modes: ["light"],
+    tall: true,
+    timed: true,
+    figmaNodeId: "37656:61297",
+    render: () => <HowItWorks />,
   },
   {
     slug: "module-story",

@@ -631,6 +631,9 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-09 — How it works section after the Figma frame (ring,
+  hotspots, callout, top toggle); solid module cuts with cavity blocks,
+  visible ghosts, dotted corner connectors, screen-space occlusion.
 - 2026-10-09 — Module story round two: white-model Module and
   Assembly steps, prefab-only ghosted assembly, finishes and grass fade
   in on The Finished Home; texture bake made opt-in.

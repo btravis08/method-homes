@@ -898,6 +898,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   a flat ambient fill of 1.1, 55% shadow strength, 1.4× sky fill — so
   its shaded faces read pale; under the product-shot sun they went
   slate.
+- How it works section (Bryce, 2026-10-09, Figma 37656:61297 in
+  9nqsOUuF2UrgukNYok3Oko): `/library/how-it-works` is the module
+  story in the Figma frame — step toggle on top, a 921/1440 ring with
+  four square "+" hotspots on it (10:30, 8:30, 6 and 3:30 o'clock), a
+  callout card at the upper right (placeholder copy), the 3D view
+  filling the frame (PlanViewer `fill` + `hideControls`, the section
+  drives `mode`); mobile stacks view / step dots / card / toggle. 3D:
+  ghosts at 55% so all seven prefab modules read (the IFC's area scheme
+  holds exactly seven: MOD A–G, plus Garage, Site Built Living and
+  Uncovered Deck as site-built), the focus module a shade darker,
+  dotted corner-to-corner lines between adjacent modules at 25% ink,
+  a solid CAVITY block per module between its wall tops and roof
+  underside (Method's Revit roof is a slab over an unmodelled rafter
+  zone — it read as a lid floating over a thin ceiling), N8AO
+  screen-space occlusion (opt-in `occlusion` prop) and sun shadows
+  kept in the white model. Pipeline: candidate modules by CELL, not
+  footprint — a roof overhang in a cell whose footprint never touched
+  the mesh was dropped and left holes in the roof.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

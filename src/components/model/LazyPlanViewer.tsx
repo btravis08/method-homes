@@ -15,7 +15,7 @@ import { useEffect, useRef, useState } from "react";
 const PlanViewer = dynamic(() => import("./PlanViewer").then((m) => m.PlanViewer), { ssr: false });
 
 type Mode = "3d" | "plan" | "modules" | "single";
-export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", descent = false, look, modes, labels, focusRoom, explodeGap, connectors }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string; descent?: boolean; look?: "daylight" | "golden" | "overcast"; modes?: Mode[]; labels?: Partial<Record<Mode, string>>; focusRoom?: string; explodeGap?: number; connectors?: boolean }) {
+export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", descent = false, look, modes, labels, focusRoom, explodeGap, connectors, mode, onModeChange, hideControls, occlusion, fill = false, distance, distanceSingle }: { src: string; poster?: string; alt?: string; northDeg?: number; className?: string; descent?: boolean; look?: "daylight" | "golden" | "overcast"; modes?: Mode[]; labels?: Partial<Record<Mode, string>>; focusRoom?: string; explodeGap?: number; connectors?: boolean; mode?: Mode; onModeChange?: (m: Mode) => void; hideControls?: boolean; occlusion?: boolean; fill?: boolean; distance?: number; distanceSingle?: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   /* the 3D view mounts UNDER the poster and only replaces it once it has
@@ -52,11 +52,11 @@ export function LazyPlanViewer({ src, poster, alt, northDeg, className = "", des
   }, [ready]);
 
   return (
-    <div ref={ref} className={`relative w-full ${descent ? "h-full" : ""} ${className}`}>
-      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} descent={descent} look={look} modes={modes} labels={labels} focusRoom={focusRoom} explodeGap={explodeGap} connectors={connectors} />}
+    <div ref={ref} className={`relative w-full ${descent || fill ? "h-full" : ""} ${className}`}>
+      {ready && <PlanViewer src={src} northDeg={northDeg} onReady={() => setShown(true)} showLoading={false} descent={descent} look={look} modes={modes} labels={labels} focusRoom={focusRoom} explodeGap={explodeGap} connectors={connectors} mode={mode} onModeChange={onModeChange} hideControls={hideControls} occlusion={occlusion} fill={fill} distance={distance} distanceSingle={distanceSingle} />}
       <div
         aria-hidden={shown}
-        className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} w-full overflow-hidden bg-surface-2 transition-opacity duration-700 ease-out ${descent ? "h-full" : "aspect-[4/3] rounded-md md:aspect-[16/9]"}`}
+        className={`${ready ? "pointer-events-none absolute inset-0" : "relative"} w-full overflow-hidden transition-opacity duration-700 ease-out ${descent || fill ? "h-full bg-transparent" : "aspect-[4/3] rounded-md bg-surface-2 md:aspect-[16/9]"}`}
         style={{ opacity: shown ? 0 : 1 }}
       >
         {poster ? (
