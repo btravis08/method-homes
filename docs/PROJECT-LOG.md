@@ -916,6 +916,16 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   kept in the white model. Pipeline: candidate modules by CELL, not
   footprint — a roof overhang in a cell whose footprint never touched
   the mesh was dropped and left holes in the roof.
+- How it works, mobile + cards (Bryce, 2026-10-10): the mobile comp
+  (node 37660:63233) is a viewport-high panel — model in the upper
+  half, then a bottom stack with 24 px gaps: the card indicator, the
+  centred callout card, the toggle stretched full width ("The Home").
+  Phones get the model closer (distance 1.0 / distanceSingle 1.15 vs
+  1.45 / 2.3 on desktop — "the module double, the assembly 1.5×, the
+  home 1.4×"). Every step carries FIVE cards; the indicator animates
+  Apple-style — the active bar fills over `cardSeconds` (5 s), then the
+  next card fades in — and only runs while the section is on screen
+  (IntersectionObserver). Copy is placeholder.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
