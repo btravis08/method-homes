@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 3158084,
-  "triangles": 35432,
-  "seconds": 95.4,
+  "bytes": 3336812,
+  "triangles": 42936,
+  "seconds": 102.0,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -65,6 +65,7 @@
     "IfcWallStandardCase": 178,
     "IfcFooting": 44,
     "IfcDoor": 38,
+    "IfcFurnishingElement": 35,
     "IfcColumn": 33,
     "IfcSlab": 32,
     "IfcWindow": 26,
@@ -73,15 +74,18 @@
     "IfcWall": 20,
     "IfcRoof": 6,
     "IfcBeam": 5,
-    "IfcStairFlight": 5
+    "IfcStairFlight": 5,
+    "IfcFlowTerminal": 1
   },
   "dropped": {
     "IfcBuildingElementProxy": 2024,
-    "IfcFlowTerminal": 164,
-    "IfcFurnishingElement": 151,
+    "IfcFlowTerminal": 151,
     "IfcOpeningElement": 87,
+    "IfcFurnishingElement (fit-out outside kitchen|pantry)": 62,
+    "IfcFurnishingElement": 54,
     "IfcSpace": 34,
     "IfcDistributionPort": 27,
+    "IfcFlowTerminal (fit-out outside kitchen|pantry)": 12,
     "IfcGrid": 8,
     "IfcBuildingStorey": 8,
     "floor (below ground)": 5,
@@ -14166,6 +14170,34 @@
   ],
   "nodes": [
     {
+      "node": "storey0_cabinet~m1",
+      "storey": 0,
+      "category": "cabinet",
+      "triangles": 6068,
+      "module": 1
+    },
+    {
+      "node": "storey0_cabinet~m4",
+      "storey": 0,
+      "category": "cabinet",
+      "triangles": 452,
+      "module": 4
+    },
+    {
+      "node": "storey0_counter~m1",
+      "storey": 0,
+      "category": "counter",
+      "triangles": 116,
+      "module": 1
+    },
+    {
+      "node": "storey0_fixture~m1",
+      "storey": 0,
+      "category": "fixture",
+      "triangles": 868,
+      "module": 1
+    },
+    {
       "node": "storey0_structure~m1",
       "storey": 0,
       "category": "structure",
@@ -15691,7 +15723,9 @@
         "IfcRoof": 4,
         "IfcSlab": 4,
         "IfcWall": 2,
-        "IfcWallStandardCase": 24
+        "IfcWallStandardCase": 24,
+        "IfcFlowTerminal": 1,
+        "IfcFurnishingElement": 32
       }
     },
     {
@@ -15783,7 +15817,8 @@
         "IfcSlab": 8,
         "IfcWall": 7,
         "IfcWallStandardCase": 32,
-        "IfcWindow": 16
+        "IfcWindow": 16,
+        "IfcFurnishingElement": 3
       }
     },
     {
@@ -15926,19 +15961,23 @@
       }
     }
   ],
+  "fitout": [
+    "KITCHEN 11",
+    "PANTRY 02"
+  ],
   "moduleStats": {
     "sliced": 142,
     "m2": 74,
     "m6": 52,
     "m9": 47,
     "m3": 110,
-    "m4": 118,
+    "m4": 121,
     "m5": 42,
     "m7": 71,
     "m0": 71,
     "m8": 77,
     "none": 3,
-    "m1": 40
+    "m1": 73
   },
   "outsideModules": {
     "IfcColumn": 1,
@@ -16008,6 +16047,10 @@
       "faces": 4668,
       "elements": 16
     },
+    "cabinet:#f1d6b8": {
+      "faces": 4220,
+      "elements": 31
+    },
     "glass:#0d0d0d": {
       "faces": 2944,
       "elements": 26
@@ -16020,6 +16063,14 @@
       "faces": 1464,
       "elements": 3
     },
+    "cabinet:#0d0d0d": {
+      "faces": 1200,
+      "elements": 12
+    },
+    "cabinet:#c8c1b5": {
+      "faces": 1088,
+      "elements": 10
+    },
     "wall:#818476": {
       "faces": 938,
       "elements": 70
@@ -16027,6 +16078,10 @@
     "structure:#0d0d0d": {
       "faces": 892,
       "elements": 37
+    },
+    "fixture:#cfc9c2": {
+      "faces": 868,
+      "elements": 1
     },
     "door:#e4e4e4": {
       "faces": 832,
@@ -16080,6 +16135,10 @@
       "faces": 92,
       "elements": 1
     },
+    "counter:#787878": {
+      "faces": 92,
+      "elements": 1
+    },
     "wall:#808080": {
       "faces": 72,
       "elements": 4
@@ -16099,7 +16158,15 @@
     "door:#808080": {
       "faces": 24,
       "elements": 2
+    },
+    "counter:#b2b2b2": {
+      "faces": 24,
+      "elements": 2
+    },
+    "cabinet:#e4e4e4": {
+      "faces": 12,
+      "elements": 1
     }
   },
-  "compressedBytes": 373740
+  "compressedBytes": 391740
 }
