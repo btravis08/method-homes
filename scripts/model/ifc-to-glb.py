@@ -111,7 +111,102 @@ PALETTE = {
     "rail": (0.30, 0.30, 0.29, 1.0),
     "structure": (0.60, 0.58, 0.55, 1.0),
     "misc": (0.75, 0.73, 0.70, 1.0),
+    # FIT-OUT categories (--fitout): the viewer finishes them (walnut
+    # grain, black stone, brushed steel, wood trim) — these are fallbacks
+    "cabinet": (0.36, 0.22, 0.14, 1.0),
+    "counter": (0.08, 0.08, 0.08, 1.0),
+    "appliance": (0.75, 0.76, 0.77, 1.0),
+    "fixture": (0.90, 0.90, 0.89, 1.0),
+    "trim": (0.62, 0.45, 0.30, 1.0),
 }
+
+# ---- FIT-OUT (Bryce, 2026-10-10: "a stainless refrigerator in the
+# refrigerator nook, walnut cabinetry with black countertops in the
+# kitchen wall"). Revit models carry the casework, appliances and fixtures
+# the pipeline otherwise drops as furnishing. --fitout <room regex> keeps
+# them where they stand in a matching room (KITCHEN, PANTRY), typed by
+# name into the categories above, plus a wood frame round every unfilled
+# opening in those rooms' walls (--fitout-frames).
+FITOUT_APPLIANCE = re.compile(r"refrig|fridge|freezer|range|cook|oven|stove|dishwasher|microwave|hood|wine|ice ?maker", re.I)
+FITOUT_FIXTURE = re.compile(r"faucet|tap\b|gooseneck|toilet|\bwc\b|tub|shower|lavatory|\bPL[-_]|plumb", re.I)
+FITOUT_COUNTER = re.compile(r"counter|worktop|benchtop|\btop\b|island top|backsplash", re.I)
+FITOUT_CASEWORK = re.compile(r"cabinet|casework|cupboard|drawer|pantry|shelf|shelving|vanity|island|base\b|upper|wall unit|tall unit|end.panel|\bCW[-_]", re.I)
+# loose furniture is not the fit-out: it stays out of the kitchen module
+# (Method's model seats the island and dining table with real chairs)
+FITOUT_LOOSE = re.compile(r"chair|stool|sofa|couch|bed\b|bed[-_ ]|nightstand|rug|pillow|cushion|mirror|table|lamp|plant|art\b|\bFN[-_]", re.I)
+FITOUT_MIN_M = 0.12  # a faucet is 0.2 m; keep down to this
+FITOUT_COUNTER_MAX_M = 0.35  # a "counter" taller than this is a cabinet carrying its top
+
+
+def fitout_category(element) -> str | None:
+    """the fit-out category of a furnishing / terminal / proxy, by name
+    (counter vs cabinet is settled by height once the geometry is in)"""
+    t = element.is_a()
+    text = " ".join(s for s in (element.Name, element.ObjectType, getattr(element, "Tag", None)) if s)
+    family = (element.Name or "").split(":")[0].strip()
+    if t.startswith(("IfcFurnishing", "IfcFurniture", "IfcSystemFurniture")):
+        if FITOUT_LOOSE.search(text) and not FITOUT_CASEWORK.search(text):
+            return None
+        if FITOUT_APPLIANCE.search(text) or CATALOG_RE.match(family):
+            return "appliance"
+        if FITOUT_COUNTER.search(text):
+            return "counter"
+        if FITOUT_FIXTURE.search(text):
+            return "fixture"
+        return "cabinet"
+    if t.startswith("IfcFlowTerminal"):
+        if FITOUT_FIXTURE.search(text):
+            return "fixture"
+        if FITOUT_APPLIANCE.search(text):
+            return "appliance"
+        return None  # lights, diffusers, outlets
+    if t == "IfcBuildingElementProxy":
+        if FITOUT_APPLIANCE.search(text) or CATALOG_RE.match(family):
+            return "appliance"
+        if FITOUT_FIXTURE.search(text):
+            return "fixture"
+        if FITOUT_COUNTER.search(text) and FITOUT_CASEWORK.search(text):
+            return "counter"
+        if FITOUT_CASEWORK.search(text):
+            return "cabinet"
+    return None
+
+
+def opening_frame(verts: np.ndarray, depth_m: float = 0.04, reveal_m: float = 0.12) -> "trimesh.Trimesh | None":
+    """a wood casing round an opening: four boards lining the opening's
+    perimeter (jambs, head, sill), `depth_m` into the opening and
+    `reveal_m` through the wall — built from the opening's axis-aligned
+    extents (Revit openings are boxes; the thinnest horizontal extent is
+    the wall's thickness)"""
+    lo, hi = verts.min(axis=0), verts.max(axis=0)
+    ext = hi - lo
+    if ext[2] < 0.5 or max(ext[0], ext[1]) < 0.3:
+        return None  # a duct penetration, not a doorway
+    through = 0 if ext[0] < ext[1] else 1  # axis through the wall
+    along = 1 - through
+    thick = min(float(ext[through]), reveal_m)
+    c_through = (lo[through] + hi[through]) / 2
+    boards = []
+
+    def box(a0, a1, z0, z1):
+        size = [0.0, 0.0, z1 - z0]
+        size[along] = a1 - a0
+        size[through] = thick
+        centre = [0.0, 0.0, (z0 + z1) / 2]
+        centre[along] = (a0 + a1) / 2
+        centre[through] = c_through
+        b = trimesh.creation.box(extents=size)
+        b.apply_translation(centre)
+        return b
+
+    a0, a1 = float(lo[along]), float(hi[along])
+    z0, z1 = float(lo[2]), float(hi[2])
+    boards.append(box(a0, a0 + depth_m, z0, z1))  # jamb
+    boards.append(box(a1 - depth_m, a1, z0, z1))  # jamb
+    boards.append(box(a0, a1, z1 - depth_m, z1))  # head
+    if z0 > 0.05:
+        boards.append(box(a0, a1, z0, z0 + depth_m))  # sill (not on a doorway at floor level)
+    return trimesh.util.concatenate(boards)
 
 
 # untyped Revit "generic models" that are never part of the envelope
@@ -534,7 +629,10 @@ def main() -> int:
     ap.add_argument("--iterator", action="store_true", help="use the multi-threaded geometry iterator (slower on some Revit exports)")
     ap.add_argument("--cache", help="npz file to cache extracted geometry between runs (export tweaks skip the geometry pass)")
     ap.add_argument("--keep-materials", action="store_true", help="split walls by their source surface style and carry the IFC's siding colours + material names into the GLB (model3d.keepMaterials)")
+    ap.add_argument("--fitout", default="", help="regex of room names whose casework, appliances and fixtures are kept (e.g. 'kitchen|pantry'); empty = none")
+    ap.add_argument("--fitout-frames", action="store_true", help="with --fitout: a wood casing round every unfilled opening in those rooms' walls")
     args = ap.parse_args()
+    fitout_re = re.compile(args.fitout, re.I) if args.fitout else None
 
     t0 = time.time()
     model = ifcopenshell.open(args.ifc)
@@ -594,17 +692,56 @@ def main() -> int:
         for child in rel.RelatedObjects or []:
             parent_of[child.id()] = rel.RelatingObject
 
+    # the FIT-OUT rooms (--fitout): their footprints decide which casework
+    # and openings are kept, by centroid
+    fitout_rooms: list = []
+    if fitout_re is not None:
+        for sp in model.by_type("IfcSpace"):
+            label_ = f"{sp.LongName or ''} {sp.Name or ''}"
+            if not fitout_re.search(label_) or not getattr(sp, "Representation", None):
+                continue
+            try:
+                shp = ifcopenshell.geom.create_shape(settings, sp)
+                sv = np.array(shp.geometry.verts, dtype=np.float64).reshape(-1, 3)
+                sf = np.array(shp.geometry.faces, dtype=np.int64).reshape(-1, 3)
+                poly = footprint_polygon(sv, sf)
+                if poly is not None:
+                    fitout_rooms.append((label_.strip(), poly, float(sv[:, 2].min()), float(sv[:, 2].max())))
+            except Exception:
+                continue
+        print(f"  fit-out rooms: " + (", ".join(f"{n} {p.area:.0f} m²" for n, p, _, _ in fitout_rooms) or "none matched"))
+
+    def in_fitout_room(verts: np.ndarray, slack: float = 0.3) -> bool:
+        import shapely
+
+        if not fitout_rooms:
+            return False
+        c = shapely.points(verts[:, :2].mean(axis=0))
+        zc = float(verts[:, 2].mean())
+        return any(p.distance(c) <= slack and z0 - 1.0 <= zc <= z1 + 1.0 for _, p, z0, z1 in fitout_rooms)
+
+    FITOUT_CATS = ("cabinet", "counter", "appliance", "fixture", "trim")
+
     # pass 1: decide by type (cheap) — only kept elements get geometry
     wanted: dict[str, tuple] = {}
+    openings: list = []  # (opening element, host wall) for --fitout-frames
     for el in model.by_type("IfcProduct"):
         t = el.is_a()
         if t in drop_types or el.GlobalId in deny or (el.Name and el.Name in deny):
             dropped[t] += 1
             continue
         cat = category_for(el, parent_of.get(el.id()), args.keep_materials)
+        if cat is None and fitout_rooms:
+            cat = fitout_category(el)
         if cat is None and t in extra_keep:
             cat = extra_keep[t]
         if cat is None:
+            if t == "IfcOpeningElement" and args.fitout_frames and fitout_rooms and getattr(el, "Representation", None):
+                # an opening with no door or window in it is a cased opening
+                filled = any(rel.RelatedBuildingElement is not None for rel in (getattr(el, "HasFillings", None) or []))
+                host = next((rel.RelatingBuildingElement for rel in (getattr(el, "VoidsElements", None) or [])), None)
+                if not filled and host is not None and host.is_a("IfcWall"):
+                    openings.append(el)
             dropped[t] += 1
             continue
         if not getattr(el, "Representation", None):
@@ -798,7 +935,20 @@ def main() -> int:
             continue
         size = bbox_size(verts)
         allowed = el.GlobalId in allow or (el.Name and el.Name in allow)
-        if t == "IfcBuildingElementProxy":
+        if cat in FITOUT_CATS:
+            # fit-out lives in its room: anything of these categories
+            # standing elsewhere (a bathroom vanity, a laundry) is dropped,
+            # and the small-size floor is lower (a faucet is 0.2 m)
+            if not allowed and (not in_fitout_room(verts) or size < FITOUT_MIN_M):
+                dropped[f"{t} (fit-out outside {args.fitout})"] += 1
+                continue
+            # a counter is the thin slab on top; Revit's "Counter Top" island
+            # family is the whole island, and the kitchen counter family
+            # carries its sink — those are cabinets wearing a counter
+            if cat in ("counter", "cabinet"):
+                height = float(verts[:, 2].max() - verts[:, 2].min())
+                cat = "counter" if height <= FITOUT_COUNTER_MAX_M else "cabinet"
+        elif t == "IfcBuildingElementProxy":
             # Revit names a proxy "Family:Type:Id" — the catalogue-number
             # test runs on the family alone ("T24IF905SP:T24IF905SP:2750684")
             family = (el.Name or "").split(":")[0].strip()
@@ -874,6 +1024,36 @@ def main() -> int:
                 materials[mkey]["faces"] += int(len(pfaces))
         kept[t] += 1
         tri_total += len(faces)
+
+    # --fitout-frames: a wood casing round each cased opening in the
+    # fit-out rooms' walls (the openings' own geometry is the void)
+    if openings:
+        n_frames = 0
+        for op in openings:
+            try:
+                shape = ifcopenshell.geom.create_shape(settings, op)
+                ov = np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3)
+            except Exception:
+                continue
+            if not len(ov) or not in_fitout_room(ov, slack=0.6):
+                continue
+            frame = opening_frame(ov)
+            if frame is None:
+                continue
+            host = next((rel.RelatingBuildingElement for rel in (getattr(op, "VoidsElements", None) or [])), None)
+            st = storey_of(host) if host is not None else None
+            si = storey_index.get(st.GlobalId, 0) if st is not None else 0
+            if module_polys:
+                pieces = partition_mesh(frame, module_polys, cells=module_cells_)
+                for mod, piece in pieces.items():
+                    groups[(si, "trim", None, mod)].append(piece)
+                    module_detail[mod]["IfcOpeningElement (casing)"] += 1
+            else:
+                groups[(si, "trim", None, None)].append(frame)
+            kept["IfcOpeningElement (casing)"] += 1
+            tri_total += len(frame.faces)
+            n_frames += 1
+        print(f"  fit-out frames: {n_frames} of {len(openings)} cased openings")
 
     if not groups:
         sys.exit("nothing kept — check the IfcTypes in the file")
@@ -997,6 +1177,7 @@ def main() -> int:
         "keepMaterials": bool(args.keep_materials),
         "materials": {k: {"name": v["name"], "color": v["color"]} for k, v in materials.items()},
         "modules": modules_out,
+        "fitout": [n for n, _, _, _ in fitout_rooms],
     }
     scene.metadata["extras"] = extras
 
@@ -1023,6 +1204,7 @@ def main() -> int:
         "nodes": nodes,
         "keepMaterials": bool(args.keep_materials),
         "modules": modules_out,
+        "fitout": [n for n, _, _, _ in fitout_rooms],
         "moduleStats": dict(module_stats),
         "outsideModules": dict(module_detail.get(None, {})),
         # the wall materials carried into the GLB (empty unless --keep-materials)

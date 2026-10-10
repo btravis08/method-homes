@@ -643,6 +643,9 @@ Notes / defects (issue #): ______
 - 2026-10-10 — How it works: module steps restyled after Samara's
   product shot (white siding, dark roof system and mullions, high-key
   light, soft relief under the model).
+- 2026-10-10 — Kitchen fit-out: the pipeline keeps the model's own
+  casework, appliances and fixtures in fit-out rooms (walnut, black
+  counters, stainless, wood casings), and the module's floor is oak.
 - 2026-10-09 — How it works section after the Figma frame (ring,
   hotspots, callout, top toggle); solid module cuts with cavity blocks,
   visible ghosts, dotted corner connectors, screen-space occlusion.

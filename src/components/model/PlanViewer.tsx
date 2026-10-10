@@ -179,7 +179,7 @@ export interface PlanViewerProps {
 export type Mode = "3d" | "plan" | "modules" | "single";
 interface Storey { index: number; name: string; elevation_m: number; habitable?: boolean }
 interface Footprint { width_m: number; depth_m: number; height_m: number }
-interface Extras { northDeg?: number; storeys?: Storey[]; footprint?: Footprint }
+interface Extras { northDeg?: number; storeys?: Storey[]; footprint?: Footprint; fitout?: string[]; modules?: { index: number; rooms?: string[] }[] }
 
 const CUT_ABOVE_FLOOR = 1.2; // metres — the conventional plan cut height
 /* a long lens far away — Samara's configurator shoots at 5°, which is why
@@ -196,7 +196,7 @@ const GLASS_TRANSMISSION = 0.35;
    black roof stays black instead of picking up a green cast */
 /* multiplied by the scene's environmentIntensity (0.45): glass keeps the
    reflection strength it had at 0.9 × 2.4 */
-const ENV_BOOST: Record<string, number> = { glass: 4.8, roof: 1.2 };
+const ENV_BOOST: Record<string, number> = { glass: 4.8, roof: 1.2, appliance: 1.8, counter: 1.3 };
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
 /* GHOSTS (Bryce, 2026-10-10: "make the assembly fade in more smoothly
    from 0 opacity… make the transparent ones truly transparent"): the
@@ -230,12 +230,64 @@ const RENDER: Record<string, [string, number]> = {
      (Bryce, 2026-10-05: Samara's "less stark materials", "relief") */
   wall: ["#d7d6d1", 1], floor: ["#b9b5ad", 1], roof: ["#3b3e41", 1], glass: ["#1f2a30", 0.45],
   door: ["#1a1918", 1], frame: ["#111111", 1], stair: ["#8e8a84", 1], rail: ["#1a1a19", 1], structure: ["#6f6c67", 1], misc: ["#a6a39d", 1],
+  /* FIT-OUT (Bryce, 2026-10-10: "a stainless refrigerator in the nook,
+     walnut cabinetry with black countertops", "hardwood floors", wood
+     frames): the pipeline's --fitout categories, finished here */
+  cabinet: ["#4a3324", 1], counter: ["#141414", 1], appliance: ["#b4b7b9", 1], fixture: ["#e6e5e1", 1], trim: ["#8a6a4b", 1], hardwood: ["#a98a62", 1],
 };
 /* PBR per category: [roughness, metalness] */
 const SURFACE: Record<string, [number, number]> = {
   wall: [0.82, 0], floor: [0.95, 0], roof: [0.42, 0.55], glass: [0.12, 0.1],
   door: [0.5, 0.3], frame: [0.4, 0.5], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], cavity: [0.42, 0.55], misc: [0.9, 0],
+  cabinet: [0.55, 0], counter: [0.22, 0.05], appliance: [0.32, 0.85], fixture: [0.3, 0.35], trim: [0.6, 0], hardwood: [0.45, 0],
 };
+/* a plank floor: boards 140 mm wide along the room's long axis, end
+   joints staggered every ~1.2 m, per-board tone and a soft grain streak;
+   computed from world position like the siding, so no UVs are needed.
+   Flattens with the drawing (uPlan), stays in the product shot. */
+const PLANK_COLOR = /* glsl */ `
+  #include <color_fragment>
+  {
+    vec3 n = normalize(cross(dFdx(vWorldPos), dFdy(vWorldPos)));
+    float flat_ = step(0.85, abs(n.y));
+    vec2 uv = vec2(vWorldPos.x, vWorldPos.z);
+    vec2 along = uPlankAxis; // unit vector along the boards
+    vec2 across = vec2(-along.y, along.x);
+    float a = dot(uv, along);
+    float c = dot(uv, across);
+    float bw = 0.14;
+    float row = floor(c / bw);
+    float rc = fract(c / bw);
+    float stagger = fract(sin(row * 7.13) * 311.7) * 1.2;
+    float seg = floor((a + stagger) / 1.2);
+    float sa = fract((a + stagger) / 1.2);
+    float px = max(fwidth(c), 1e-4);
+    float w = max(0.004, px);
+    float gap = 1.0 - smoothstep(0.0, w * 2.0, min(rc, 1.0 - rc) * bw) ; // the dark joint between boards
+    float endgap = 1.0 - smoothstep(0.0, w * 2.0, min(sa, 1.0 - sa) * 1.2);
+    float tone = fract(sin(row * 12.9898 + seg * 78.233) * 43758.5453) * 0.22 - 0.11;
+    float grain = sin(a * 55.0 + sin(c * 23.0 + row) * 1.5) * 0.035 + sin(a * 170.0 + row * 3.0) * 0.015;
+    float coverage = clamp(0.03 / px, 0.0, 1.0);
+    float k = (1.0 - uPlan) * flat_;
+    diffuseColor.rgb *= 1.0 + (tone + grain) * k;
+    diffuseColor.rgb *= 1.0 - 0.45 * max(gap, endgap) * coverage * k;
+  }
+`;
+/* walnut: long streaky grain along the piece, darker at the pores */
+const GRAIN_COLOR = /* glsl */ `
+  #include <color_fragment>
+  {
+    vec3 n = normalize(cross(dFdx(vWorldPos), dFdy(vWorldPos)));
+    vec2 uv = abs(n.y) > 0.7 ? vec2(vWorldPos.x, vWorldPos.z) : (abs(n.x) > abs(n.z) ? vec2(vWorldPos.z, vWorldPos.y) : vec2(vWorldPos.x, vWorldPos.y));
+    float wave = sin(uv.y * 9.0 + sin(uv.x * 3.0) * 2.0);
+    float g = sin(uv.x * 120.0 + wave * 6.0) * 0.5 + 0.5;
+    float pores = smoothstep(0.75, 1.0, sin(uv.x * 380.0 + wave * 9.0) * 0.5 + 0.5);
+    float px = max(fwidth(uv.x), 1e-4);
+    float coverage = clamp(0.01 / px, 0.0, 1.0);
+    float k = (1.0 - uPlan) * coverage;
+    diffuseColor.rgb *= 1.0 + (g * 0.14 - 0.07 - pores * 0.12) * k;
+  }
+`;
 
 /*
   FINISH — procedural relief computed from world position, so the
@@ -256,6 +308,7 @@ const PRELUDE = /* glsl */ `
   uniform float uPlan;
   uniform float uRelief;
   uniform float uDiagram;
+  uniform vec2 uPlankAxis;
   float gRib = 0.0;
 `;
 
@@ -450,7 +503,7 @@ const AO_DIRECT = /* glsl */ `
   #endif
 `;
 
-function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, textured = false) {
+function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, textured = false, wood: "plank" | "grain" | null = null, plankAxis: [number, number] = [0, 1]) {
   if (cat === "glass") {
     mat.onBeforeCompile = (shader) => {
       const chunk = THREE.ShaderChunk.envmap_physical_pars_fragment.replace(
@@ -469,23 +522,26 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
     return;
   }
   const structural = cat === "wall" || cat === "roof";
-  if (!structural && !textured) return;
+  if (!structural && !textured && !wood) return;
   mat.onBeforeCompile = (shader) => {
     shader.uniforms.uPlan = { value: 0 };
     shader.uniforms.uRelief = { value: relief ? 1 : 0 };
     shader.uniforms.uDiagram = { value: 0 };
+    shader.uniforms.uPlankAxis = { value: new THREE.Vector2(plankAxis[0], plankAxis[1]) };
     shader.vertexShader = PRELUDE + shader.vertexShader.replace("#include <project_vertex>", VERTEX_WORLD);
     let frag = shader.fragmentShader;
     if (structural) {
       frag = frag
         .replace("#include <color_fragment>", cat === "wall" ? SIDING_COLOR : ROOF_COLOR)
         .replace("#include <roughnessmap_fragment>", cat === "roof" ? ROOF_ROUGHNESS : "#include <roughnessmap_fragment>");
+    } else if (wood) {
+      frag = frag.replace("#include <color_fragment>", wood === "plank" ? PLANK_COLOR : GRAIN_COLOR);
     }
     if (textured) frag = frag.replace("#include <map_fragment>", TEXTURE_PLAN).replace("#include <aomap_fragment>", AO_DIRECT);
     shader.fragmentShader = PRELUDE + frag;
     mat.userData.shader = shader;
   };
-  mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}-${textured ? "tex" : "plain"}`;
+  mat.customProgramCacheKey = () => `finish-${cat}-${relief ? "relief" : "flat"}-${textured ? "tex" : "plain"}-${wood ?? "bare"}-${plankAxis.join(",")}`;
 }
 /* DIAGRAM (Bryce, 2026-10-09: "the module and the assembly should not
    have ground beneath… show the primitive elements that make up the
@@ -505,6 +561,9 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
 const DIAGRAM: Record<string, string> = {
   wall: "#e9e8e4", floor: "#d9d7d2", roof: "#36383a", glass: "#363b3e",
   door: "#d9d4cb", frame: "#1f2021", stair: "#cfccc6", rail: "#2a2b2c", structure: "#d6d4cf", cavity: "#303234", misc: "#d2d0ca",
+  /* the fit-out keeps its real finishes in the product shot: that is
+     the point of showing the kitchen module (walnut, black, steel, oak) */
+  cabinet: "#4a3324", counter: "#141414", appliance: "#b4b7b9", fixture: "#e6e5e1", trim: "#8a6a4b", hardwood: "#a98a62",
 };
 /* the white model's study lighting: a soft fill (AmbientLight — three
    divides it by π on a Lambert surface, so 1.4 lights a 0.76-albedo face
@@ -648,6 +707,8 @@ const PLAN: Record<string, [string, number]> = {
   wall: ["#111111", 1], floor: ["#f7f7f7", 0], roof: ["#f7f7f7", 0], glass: ["#c4c4c4", 0.9],
   /* frames read as openings in the drawing (light grey), not as wall */
   door: ["#7a7a7a", 1], frame: ["#c8c8c8", 1], stair: ["#a9a9a9", 1], rail: ["#4d4d4d", 1], structure: ["#111111", 1], misc: ["#b4b4b4", 1],
+  /* fit-out is drawn as fixtures are on a plan: mid-grey outlines of fill */
+  cabinet: ["#9a9a9a", 1], counter: ["#6a6a6a", 1], appliance: ["#8a8a8a", 1], fixture: ["#b4b4b4", 1], trim: ["#7a7a7a", 1], hardwood: ["#f7f7f7", 0],
 };
 
 interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean }
@@ -760,7 +821,10 @@ class ViewerState {
   /* `source` = the GLB's own colour when the pipeline kept the IFC's
      siding material (node `storey0_wall__cedar-siding-8a6a4b`); the
      category palette otherwise */
-  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null; module: number | null }[] = [];
+  /* dark = a wall whose source material is black/metal (Method's parapet
+     "Black" wall): it keeps a dark tone in the product shot instead of
+     turning siding-white */
+  mats: { mat: THREE.MeshStandardMaterial; cat: string; storey: number; source: THREE.Color | null; module: number | null; dark?: boolean }[] = [];
   /* the active look's material + grade parameters (set by the component) */
   lookPreset: Look = LOOKS[DEFAULT_LOOK];
   storeys: Storey[] = [{ index: 0, name: "Ground", elevation_m: 0 }];
@@ -812,6 +876,21 @@ class ViewerState {
     }
     this.progress = initial === "plan" ? 1 : 0;
     this.mats = [];
+    /* HARDWOOD (Bryce, 2026-10-10: "hardwood floors" on the kitchen
+       module): the floor slabs of the modules that hold a fit-out room
+       (the GLB's extras say which rooms; the focus module otherwise)
+       become oak planks, laid along the module's long axis */
+    const fitRooms = new Set((extras.fitout ?? []).map((r) => r.toLowerCase()));
+    const hardwoodModules = new Set<number>();
+    for (const mi of extras.modules ?? []) {
+      if ((mi.rooms ?? []).some((r) => (fitRooms.size ? fitRooms.has(r.toLowerCase()) : /kitchen/i.test(r)))) hardwoodModules.add(mi.index);
+    }
+    if (!hardwoodModules.size && this.focus != null) hardwoodModules.add(this.focus);
+    const moduleAxis = (idx: number): [number, number] => {
+      const mi = (scene.userData as { modules?: { index: number; size_m?: number[] }[] }).modules?.find((x) => x.index === idx);
+      const s = mi?.size_m;
+      return s && s.length >= 2 && s[0] > s[1] ? [1, 0] : [0, 1];
+    };
     scene.traverse((o) => {
       if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
       /* storey<N>_<category>[__<material-key>] — the suffix marks a wall
@@ -820,8 +899,11 @@ class ViewerState {
          instead of the palette's off-white */
       /* …and a trailing ~m<K> when the pipeline grouped the node under a
          prefab module (see MODULES) */
-      const m = o.name.match(/^storey(\d+)_([a-z]+)(?:__(.+?))?(?:~m\d+)?$/);
-      const cat = m ? m[2] : "misc";
+      const m = o.name.match(/^storey(\d+)_([a-z]+)(?:__(.+?))?(?:~m(\d+))?$/);
+      const moduleOf = m?.[4] != null ? Number(m[4]) : null;
+      /* a fit-out module's floor is hardwood (its own category, so the
+         palette, plan and drawing all know it) */
+      const cat = m ? (m[2] === "floor" && moduleOf != null && hardwoodModules.has(moduleOf) ? "hardwood" : m[2]) : "misc";
       const storey = m ? Number(m[1]) : 0;
       const sourceMat = o.material as THREE.MeshStandardMaterial;
       /* a baked GLB (bake.py) carries its own texture sets + AO atlas:
@@ -867,7 +949,8 @@ class ViewerState {
                  kaleidoscope across each pane */
               new THREE.MeshPhysicalMaterial({ ...common, opacity: 1, transmission: GLASS_TRANSMISSION, ior: 1.7, thickness: 0.02, roughness: 0.03, metalness: 0, specularIntensity: 1.6, envMapIntensity: this.lookPreset.glassBoost })
             : new THREE.MeshStandardMaterial(common);
-        finish(mat, cat, fin ? fin.relief : true, baked && cat !== "glass");
+        const wood = cat === "hardwood" ? "plank" : cat === "cabinet" || cat === "trim" ? "grain" : null;
+        finish(mat, cat, fin ? fin.relief : true, baked && cat !== "glass", wood, cat === "hardwood" && moduleOf != null ? moduleAxis(moduleOf) : [0, 1]);
         mat.userData.viewer = true;
         if (source) mat.userData.source = source;
         if (fin || baked) mat.userData.finish = { rough: mat.roughness, metal: mat.metalness };
@@ -882,7 +965,7 @@ class ViewerState {
           break;
         }
       }
-      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey, source, module });
+      this.mats.push({ mat: o.material as THREE.MeshStandardMaterial, cat, storey, source, module, dark: cat === "wall" && !!m?.[3] && /black|steel|metal|fascia|trim/.test(m[3].toLowerCase()) });
       /* SUN SHADOWS: the home shades itself (eaves on the walls) and the
          lawn. Glass passes light (no cast), so rooms don't go black. */
       o.castShadow = cat !== "glass";
@@ -945,25 +1028,40 @@ class ViewerState {
     for (const m of this.modules) {
       let wallTop = -Infinity;
       let roofBottom = Infinity;
+      const roofBox = new THREE.Box3();
+      /* extents in the MODULE's frame: the GLB's geometry is quantised
+         (meshopt), so a geometry bounding box is in ±1 units and the real
+         size lives in the mesh matrix — read it through the matrices
+         (until 2026-10-10 the band was computed from the raw box and sat
+         a metre underground, clipped away) */
+      m.node.updateMatrixWorld(true);
+      const inv = new THREE.Matrix4().copy(m.node.matrixWorld).invert();
+      const box = new THREE.Box3();
       m.node.traverse((o) => {
         if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
         o.geometry.computeBoundingBox();
-        const bb = o.geometry.boundingBox!;
-        if (/_wall/.test(o.name)) wallTop = Math.max(wallTop, bb.max.y);
-        if (/_roof/.test(o.name)) roofBottom = Math.min(roofBottom, bb.min.y);
+        box.copy(o.geometry.boundingBox!).applyMatrix4(new THREE.Matrix4().copy(inv).multiply(o.matrixWorld));
+        if (/_wall/.test(o.name)) wallTop = Math.max(wallTop, box.max.y);
+        if (/_roof/.test(o.name)) {
+          roofBottom = Math.min(roofBottom, box.min.y);
+          roofBox.union(box);
+        }
       });
       if (!isFinite(wallTop) || !isFinite(roofBottom)) continue;
-      /* the walls usually run up to the roof underside, so the void is the
-         rafter zone INSIDE them, above the ceiling: a band under the roof */
-      const top = Math.min(roofBottom, wallTop);
-      const h = roofBottom - wallTop > 0.12 ? roofBottom - wallTop : CAVITY_BAND;
-      const geo = new THREE.BoxGeometry(Math.max(0.5, m.size.x - 0.3), h, Math.max(0.5, m.size.y - 0.3));
+      /* only a REAL void gets a block (a roof floating above the wall
+         tops): where the walls run up to the roof underside, as Method's
+         do, the roof's own slab is the structure and a band inside the
+         room would hang in the kitchen (Bryce, 2026-10-10: "cap the open
+         areas of the roof structure") */
+      const h = roofBottom - wallTop;
+      if (h < 0.12) continue;
+      const geo = new THREE.BoxGeometry(Math.max(0.5, roofBox.max.x - roofBox.min.x - 0.04), h, Math.max(0.5, roofBox.max.z - roofBox.min.z - 0.04));
       /* the band reads as the roof system's fascia: dark in the product
          shot and in the finished home alike (its roof is charcoal metal) */
       const mat = new THREE.MeshStandardMaterial({ color: DIAGRAM.cavity, roughness: 1, metalness: 0, transparent: true, clippingPlanes: [this.plane, this.ground] });
       const block = new THREE.Mesh(geo, mat);
       block.name = `cavity~m${m.index}`;
-      block.position.set(m.centre.x, roofBottom - wallTop > 0.12 ? wallTop + h / 2 : top - h / 2, m.centre.z);
+      block.position.set((roofBox.min.x + roofBox.max.x) / 2, wallTop + h / 2, (roofBox.min.z + roofBox.max.z) / 2);
       block.castShadow = true;
       block.receiveShadow = true;
       m.node.add(block);
@@ -1341,7 +1439,7 @@ class ViewerState {
     }
 
     /* palette: render → drawing; storeys above the chosen one fade */
-    for (const { mat, cat, storey, source, module } of this.mats) {
+    for (const { mat, cat, storey, source, module, dark } of this.mats) {
       const [ra, oa] = RENDER[cat] ?? RENDER.misc;
       const [rb, ob] = PLAN[cat] ?? PLAN.misc;
       if (source) this.a.copy(source);
@@ -1354,12 +1452,12 @@ class ViewerState {
       const leaves = ob === 0;
       mat.color.copy(this.a).lerp(this.b, leaves ? 0 : e);
       if (dg > 0) {
-        mat.color.lerp(this.c.set(DIAGRAM[cat] ?? DIAGRAM.misc), dg * (1 - e));
+        mat.color.lerp(this.c.set(dark ? DIAGRAM.roof : (DIAGRAM[cat] ?? DIAGRAM.misc)), dg * (1 - e));
         /* (the focus module used to be toned down against the ghosts;
            at a 16% ghost fill it needs no help, and the siding stays white) */
       }
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
-      if (cat === "floor") {
+      if (cat === "floor" || cat === "hardwood") {
         /* the floor is simply gone in plan: transparent within the first
            sixth of the flight, before the cut reaches it */
         mat.opacity = THREE.MathUtils.lerp(oa, 0, Math.min(1, e / 0.15)) * THREE.MathUtils.lerp(1, above, e);

@@ -986,6 +986,34 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   its standing-seam ribs (the shader's uDiagram no longer flattens the
   roof). The focus module's tone-down against the ghosts is gone (the
   siding stays white).
+- 2026-10-10, late — KITCHEN FIT-OUT (Bryce: "add [wood] frames,
+  hardwood floors, cap the open areas of the roof structure, a
+  stainless refrigerator in the refrigerator nook, walnut cabinetry
+  with black countertops in the kitchen wall"). The ifc-inspect
+  fit-out scan showed Method's Revit model already carries all of it:
+  `MH_CW-*` casework (base, tall, upper, end panels, the kitchen
+  counter with its sink, the island), two Thermador `T24IF905SP`
+  column units, a 36" range, hood, dishwasher and a gooseneck faucet —
+  all of which the pipeline had been dropping as furnishing. So
+  nothing is invented: `ifc-to-glb --fitout <room regex>` keeps
+  furnishing / flow-terminal / appliance-proxy elements whose centroid
+  stands in a matching IfcSpace (KITCHEN, PANTRY), typed by name into
+  cabinet / counter / appliance / fixture (counter vs cabinet settled
+  by height — Revit's island family is the whole island), with loose
+  furniture (chairs, stools, tables) left out; `--fitout-frames` adds a
+  wood casing (jambs, head, sill) round every UNFILLED opening in
+  those rooms' walls. The viewer finishes the categories (walnut with
+  a streaky grain shader, black stone, brushed steel at metalness
+  0.85 with extra sky, white fixtures, wood trim) and keeps them real
+  in the product shot; the floor slab of a fit-out module becomes
+  `hardwood` — oak planks 140 mm wide laid along the module's long
+  axis with staggered joints, world-projected like the siding so the
+  UV-less GLB needs nothing. Found on the way: the cavity band had
+  been computed from meshopt-quantised geometry boxes and sat a metre
+  underground, clipped; it now reads extents through the matrices and
+  only fills a REAL void (Method's walls run to the roof underside, so
+  a band would have hung in the kitchen). The black parapet wall keeps
+  a dark tone in the product shot (`dark` flag from its material key).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

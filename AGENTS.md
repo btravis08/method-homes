@@ -235,6 +235,20 @@ staging/design use.
   25% ink; the cavity block under each module's roof is synthesised in
   the viewer because the IFC has no framing. Hotspots and the callout
   card carry placeholder copy until Method supplies it.
+- FIT-OUT: `ifc-to-glb --fitout "<room regex>" [--fitout-frames]`
+  (model-pipeline input `fitout`, default kitchen|pantry) keeps the
+  IFC's casework/appliances/fixtures standing in matching IfcSpaces as
+  categories cabinet / counter / appliance / fixture / trim — the
+  viewer finishes them (RENDER/SURFACE/PLAN/DIAGRAM all carry the
+  categories; `finish(..., wood)` adds the grain/plank shaders). The
+  floor of a fit-out module is category `hardwood` (set at attach from
+  extras.fitout ∩ module rooms, else the focus module). Never model
+  kitchen boxes by hand: run ifc-inspect.yml first — its fit-out scan
+  lists what the model carries. Loose furniture stays out.
+- CAVITY / EXTENTS: never read a GLB mesh's `geometry.boundingBox` as
+  metres — meshopt quantisation puts it in ±1 units; go through the
+  mesh matrices (see the cavity block). A cavity block only fills a
+  real wall-top→roof-underside void.
 - MODULE STEP LOOK = Samara's product shot (Bryce, 2026-10-10): white
   siding, near-black roof + cavity fascia (`cavity` category), black
   frames, dark panes, high-key light (DIAGRAM_FILL carries it, the sun
