@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-09T16:32:08.729Z",
+  "generatedAt": "2026-10-10T15:34:32.008Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-09",
+    "since": "2026-09-10",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 9d ago",
+    "model": "Claude web search (manual, session probe) · recorded 10d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1187,22 +1187,22 @@
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2376 ms"
+          "detail": "2318 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2048 ms"
+          "detail": "2040 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2142 ms"
+          "detail": "1969 ms"
         },
         {
-          "path": "/blog",
+          "path": "/legacy",
           "ratio": 0.5,
-          "detail": "832 ms"
+          "detail": "804 ms"
         }
       ]
     },
@@ -2351,7 +2351,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "12 run(s) recorded",
+      "detail": "13 run(s) recorded",
       "pages": []
     },
     {
@@ -2855,10 +2855,10 @@
       "priority": 0.02,
       "detail": "56/60 pages pass",
       "pages": [
-        "/blog/2013-green-washington-awards — 2376 ms",
-        "/blog/category/articles — 2048 ms",
-        "/about — 2142 ms",
-        "/blog — 832 ms"
+        "/blog/2013-green-washington-awards — 2318 ms",
+        "/blog/category/articles — 2040 ms",
+        "/about — 1969 ms",
+        "/legacy — 804 ms"
       ],
       "pagesAffected": 4
     },
@@ -2944,6 +2944,33 @@
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
+      "path": "/legacy",
+      "type": "page",
+      "score": 55,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
+    },
+    {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
       "score": 55,
@@ -2996,32 +3023,6 @@
         "references"
       ],
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/legacy",
-      "type": "page",
-      "score": 56,
-      "words": 201,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "metadata-coverage",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "A New Legacy — Sun Day Red | Method Homes"
     },
     {
       "path": "/commercial",
@@ -4289,7 +4290,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 82,
+      "score": 83,
       "words": 68,
       "schema": [
         "Organization",
@@ -4302,7 +4303,6 @@
         "open-graph",
         "h1",
         "landmarks",
-        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
