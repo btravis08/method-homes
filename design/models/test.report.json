@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 3514496,
-  "triangles": 50364,
-  "seconds": 145.3,
+  "bytes": 3526004,
+  "triangles": 50508,
+  "seconds": 137.5,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -76,6 +76,7 @@
     "IfcBeam": 5,
     "IfcBuildingElementProxy": 5,
     "IfcStairFlight": 5,
+    "IfcOpeningElement (casing)": 3,
     "IfcFlowTerminal": 1
   },
   "dropped": {
@@ -14366,6 +14367,34 @@
       "module": 9
     },
     {
+      "node": "storey2_trim~m1",
+      "storey": 2,
+      "category": "trim",
+      "triangles": 36,
+      "module": 1
+    },
+    {
+      "node": "storey2_trim~m2",
+      "storey": 2,
+      "category": "trim",
+      "triangles": 36,
+      "module": 2
+    },
+    {
+      "node": "storey2_trim~m6",
+      "storey": 2,
+      "category": "trim",
+      "triangles": 36,
+      "module": 6
+    },
+    {
+      "node": "storey2_trim~m8",
+      "storey": 2,
+      "category": "trim",
+      "triangles": 36,
+      "module": 8
+    },
+    {
       "node": "storey2_wall__concrete-cast-in-place-gray-818476",
       "storey": 2,
       "category": "wall",
@@ -14838,6 +14867,13 @@
       "category": "structure",
       "triangles": 68,
       "module": 9
+    },
+    {
+      "node": "storey3_trim~m4",
+      "storey": 3,
+      "category": "trim",
+      "triangles": 96,
+      "module": 4
     },
     {
       "node": "storey3_wall__15-32-cdx-plywood-787878~m0",
@@ -15693,7 +15729,8 @@
         "IfcWall": 2,
         "IfcWallStandardCase": 24,
         "IfcFlowTerminal": 1,
-        "IfcFurnishingElement": 32
+        "IfcFurnishingElement": 32,
+        "IfcOpeningElement (casing)": 1
       }
     },
     {
@@ -15722,7 +15759,8 @@
         "IfcSlab": 10,
         "IfcWall": 7,
         "IfcWallStandardCase": 28,
-        "IfcWindow": 2
+        "IfcWindow": 2,
+        "IfcOpeningElement (casing)": 1
       }
     },
     {
@@ -15786,7 +15824,8 @@
         "IfcWall": 7,
         "IfcWallStandardCase": 32,
         "IfcWindow": 16,
-        "IfcFurnishingElement": 3
+        "IfcFurnishingElement": 3,
+        "IfcOpeningElement (casing)": 2
       }
     },
     {
@@ -15843,7 +15882,8 @@
         "IfcSlab": 4,
         "IfcWall": 4,
         "IfcWallStandardCase": 26,
-        "IfcWindow": 1
+        "IfcWindow": 1,
+        "IfcOpeningElement (casing)": 1
       }
     },
     {
@@ -15901,7 +15941,8 @@
         "IfcRoof": 3,
         "IfcSlab": 4,
         "IfcWall": 4,
-        "IfcWallStandardCase": 42
+        "IfcWallStandardCase": 42,
+        "IfcOpeningElement (casing)": 1
       }
     },
     {
@@ -16156,5 +16197,5 @@
       "elements": 1
     }
   },
-  "compressedBytes": 400572
+  "compressedBytes": 408980
 }
