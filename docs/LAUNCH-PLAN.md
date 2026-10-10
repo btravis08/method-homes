@@ -631,6 +631,10 @@ Notes / defects (issue #): ______
 
 ## 10. Change log
 
+- 2026-10-10 — How it works: the white model now stands on a shadow
+  catcher with a contact gradient round each module, under a darker
+  palette and rebalanced study lighting (the pale silhouette rim was the
+  lit roof blowing past the page tone).
 - 2026-10-09 — How it works section after the Figma frame (ring,
   hotspots, callout, top toggle); solid module cuts with cavity blocks,
   visible ghosts, dotted corner connectors, screen-space occlusion.

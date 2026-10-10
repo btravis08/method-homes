@@ -230,6 +230,14 @@ staging/design use.
   25% ink; the cavity block under each module's roof is synthesised in
   the viewer because the IFC has no framing. Hotspots and the callout
   card carry placeholder copy until Method supplies it.
+- WHITE MODEL GROUNDING: the diagram steps stand on a `plinth` in
+  PlanViewer — a ShadowMaterial catcher plus an analytic contact-gradient
+  plane fed the module rects each frame (PLINTH_* constants). Keep the
+  DIAGRAM palette's lit faces UNDER the page tone: anything that
+  tone-maps brighter than `--surface` reads as a cut-out rim on the
+  transparent canvas. The lighting is DIAGRAM_FILL / _SUN / _ENV —
+  three divides an AmbientLight by π on Lambert surfaces, so size the
+  fill from the shaded-face target, not from the sun.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when

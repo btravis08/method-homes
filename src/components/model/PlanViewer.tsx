@@ -479,10 +479,60 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
    and the foliage/grass appears"): a white model — one pale tone, no
    relief, no sky in the surfaces, no lawn or planting — for the story's
    first two steps; the finishes fade in on "The Finished Home". */
+/* Tones sit a step UNDER the page (Bryce, 2026-10-10: "a white border
+   around the edge… cut out in photoshop"): the first palette's lit roof
+   tone-mapped to a white brighter than the page, so the silhouette read
+   as a pale rim. Lit faces now land around #ddd, shaded ones mid-grey. */
 const DIAGRAM: Record<string, string> = {
-  wall: "#ebe9e4", floor: "#dedcd6", roof: "#d6d4cf", glass: "#c9d1d4",
-  door: "#d2d0cb", frame: "#bcbab5", stair: "#d9d7d1", rail: "#bdbbb6", structure: "#d4d2cc", misc: "#d9d7d1",
+  wall: "#e2dfd8", floor: "#d6d3cc", roof: "#cfccc5", glass: "#c3cbce",
+  door: "#cbc9c3", frame: "#b5b3ae", stair: "#d2d0ca", rail: "#b6b4af", structure: "#cdcbc5", misc: "#d2d0ca",
 };
+/* the white model's study lighting: a soft fill (AmbientLight — three
+   divides it by π on a Lambert surface, so 1.4 lights a 0.76-albedo face
+   to ~0.34 linear, a mid grey, not slate) under a sun gentle enough that
+   the roof top stays under the page tone */
+/* the sky dome lights the roof top far harder than the walls (it is
+   bright overhead, dark at the horizon), which is what snapped the model
+   from white to slate — so the sky is held low and the flat fill high */
+const DIAGRAM_FILL = 1.8;
+const DIAGRAM_SUN = 2.0;
+const DIAGRAM_ENV = 0.5;
+/* the ground under the white model (Bryce, 2026-10-10: "cast shadow /
+   relief on the ground perhaps?"): no lawn — the model stands on the
+   page — so a shadow catcher takes the sun's shadow and a second plane
+   paints a soft contact gradient round each module's footprint (the
+   grounding a real white model has from its base, and the one thing
+   screen-space AO cannot give a transparent ground). Both are ink at
+   low alpha over the page. */
+const PLINTH_SHADOW = 0.3;
+const PLINTH_CONTACT = 0.26;
+const PLINTH_REACH = 2.4; // m the contact gradient runs out from a footprint
+const PLINTH_MAX = 16; // rects the contact shader takes
+const CONTACT_VERT = /* glsl */ `
+  varying vec3 vPos;
+  void main() {
+    vPos = position;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+  }`;
+const CONTACT_FRAG = /* glsl */ `
+  uniform vec4 uRects[${PLINTH_MAX}];
+  uniform float uWeights[${PLINTH_MAX}];
+  uniform int uCount;
+  uniform float uOpacity;
+  uniform float uReach;
+  varying vec3 vPos;
+  void main() {
+    float a = 0.0;
+    for (int i = 0; i < ${PLINTH_MAX}; i++) {
+      if (i >= uCount) break;
+      vec4 r = uRects[i];
+      vec2 d = abs(vPos.xz - r.xy) - r.zw;
+      float dist = length(max(d, 0.0));
+      float k = 1.0 - smoothstep(0.0, uReach, dist);
+      a = max(a, k * k * uWeights[i]);
+    }
+    gl_FragColor = vec4(0.0, 0.0, 0.0, a * uOpacity);
+  }`;
 const PLAN: Record<string, [string, number]> = {
   /* walls are solid black fills; the floor fades out (Bryce, 2026-10-05)
      — with the slab gone, each cut wall shows its own underside as a
@@ -568,6 +618,8 @@ class ViewerState {
   single = 0;
   diagram = 0;
   fillLight: THREE.AmbientLight | null = null;
+  /* the white model's ground: shadow catcher + contact gradient */
+  plinth: { shadow: THREE.Mesh; shadowMat: THREE.ShadowMaterial; contact: THREE.Mesh; contactMat: THREE.ShaderMaterial } | null = null;
   /* ghost opacity for the modules around the focus one in the assembly
      (the Figma boxes read clearly — light, not faint) */
   ghost = 0.55;
@@ -810,6 +862,41 @@ class ViewerState {
       this.connectors = group;
     }
     this.buildCap(scene, root);
+    if (this.group && !this.plinth) {
+      /* large enough for the spread assembly; group space, so its x/z are
+         the modules' own (the group turns and slides with the home) */
+      const f = this.footprint;
+      const span = Math.max(f.width_m, f.depth_m) * (1 + this.explodeGap) + 2 * PLINTH_REACH + 8;
+      const geo = new THREE.PlaneGeometry(span, span);
+      geo.rotateX(-Math.PI / 2);
+      const shadowMat = new THREE.ShadowMaterial({ color: "#000000", opacity: 0, transparent: true, depthWrite: false });
+      const shadow = new THREE.Mesh(geo, shadowMat);
+      shadow.name = "plinth-shadow";
+      shadow.position.y = 0.05;
+      shadow.receiveShadow = true;
+      shadow.renderOrder = 2;
+      shadow.visible = false;
+      const contactMat = new THREE.ShaderMaterial({
+        vertexShader: CONTACT_VERT,
+        fragmentShader: CONTACT_FRAG,
+        uniforms: {
+          uRects: { value: Array.from({ length: PLINTH_MAX }, () => new THREE.Vector4()) },
+          uWeights: { value: new Array<number>(PLINTH_MAX).fill(0) },
+          uCount: { value: 0 },
+          uOpacity: { value: 0 },
+          uReach: { value: PLINTH_REACH },
+        },
+        transparent: true,
+        depthWrite: false,
+      });
+      const contact = new THREE.Mesh(geo, contactMat);
+      contact.name = "plinth-contact";
+      contact.position.y = 0.04;
+      contact.renderOrder = 1;
+      contact.visible = false;
+      this.group.add(contact, shadow);
+      this.plinth = { shadow, shadowMat, contact, contactMat };
+    }
     /* planting rides the model group, so it turns north-up with the home */
     /* doors first: the plan and the lawn both keep their approaches clear */
     this.doors = findDoors(scene);
@@ -1117,7 +1204,7 @@ class ViewerState {
       /* the white model keeps most of the sky's fill (it is what lights
          its shaded faces — without it they went black), just not the
          glass boost */
-      mat.envMapIntensity = THREE.MathUtils.lerp(THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), 1.4, dg), 0.15, e) * (this.root?.environmentIntensity ?? 1);
+      mat.envMapIntensity = THREE.MathUtils.lerp(THREE.MathUtils.lerp(cat === "glass" ? this.lookPreset.glassBoost : (ENV_BOOST[cat] ?? 1), DIAGRAM_ENV, dg), 0.15, e) * (this.root?.environmentIntensity ?? 1);
       if (mat instanceof THREE.MeshPhysicalMaterial) mat.transmission = THREE.MathUtils.lerp(GLASS_TRANSMISSION, 0, Math.max(e, dg));
       const shader = mat.userData.shader as { uniforms: { uPlan: { value: number }; uDiagram?: { value: number } } } | undefined;
       if (shader) {
@@ -1188,17 +1275,45 @@ class ViewerState {
     if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(this.lookPreset.saturation, -1, e);
     /* shadows leave with the 3D view: the drawing is flat */
     if (this.sunLight) {
-      this.sunLight.shadow.intensity = (1 - e) * (1 - 0.15 * dg); // shadows stay — they are what makes the white model read
+      this.sunLight.shadow.intensity = 1 - e; // shadows stay at full in the white model — they are what makes it read
       /* the white model is lit like a study model — a gentler sun and a
-         flat fill — so its shaded faces read pale, not slate */
-      this.sunLight.intensity = THREE.MathUtils.lerp(this.lookPreset.sun.intensity, 2.4, dg);
+         soft fill — so its shaded faces read mid-grey, not slate */
+      this.sunLight.intensity = THREE.MathUtils.lerp(this.lookPreset.sun.intensity, DIAGRAM_SUN, dg);
     }
     if (this.root) {
       if (!this.fillLight) {
         this.fillLight = new THREE.AmbientLight("#ffffff", 0);
         this.root.add(this.fillLight);
       }
-      this.fillLight.intensity = 0.9 * dg;
+      this.fillLight.intensity = DIAGRAM_FILL * dg;
+    }
+    /* the ground under the white model: the sun's shadow and the contact
+       gradient round each standing module, fading with the drawing and
+       the finished home (whose lawn carries its own grounding) */
+    if (this.plinth) {
+      const on = dg * (1 - e);
+      const p = this.plinth;
+      p.shadowMat.opacity = PLINTH_SHADOW * on;
+      p.contactMat.uniforms.uOpacity.value = PLINTH_CONTACT * on;
+      p.shadow.visible = p.contact.visible = on > 0.01;
+      if (on > 0.01) {
+        const rects = p.contactMat.uniforms.uRects.value as THREE.Vector4[];
+        const weights = p.contactMat.uniforms.uWeights.value as number[];
+        let n = 0;
+        for (const m of this.modules) {
+          if (n >= PLINTH_MAX || m.vis < 0.02) continue;
+          rects[n].set(m.centre.x + m.node.position.x, m.centre.z + m.node.position.z, m.size.x / 2, m.size.y / 2);
+          weights[n] = m.vis;
+          n++;
+        }
+        if (n === 0) {
+          /* a model with no module map grounds on its footprint */
+          rects[0].set(0, 0, f.width_m / 2, f.depth_m / 2);
+          weights[0] = 1;
+          n = 1;
+        }
+        p.contactMat.uniforms.uCount.value = n;
+      }
     }
     if (this.progress > 0.001) {
       /* spherical path from the orbit pose to straight above: the polar

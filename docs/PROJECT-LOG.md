@@ -926,6 +926,18 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   Apple-style — the active bar fills over `cardSeconds` (5 s), then the
   next card fades in — and only runs while the section is on screen
   (IntersectionObserver). Copy is placeholder.
+- 2026-10-10 — the white model grounded and relit (Bryce: the Module
+  step on a phone was "shockingly poor quality… a white border around
+  the edge… cast shadow / relief on the ground perhaps? More realistic
+  shading?"). The viewer now stands the module and assembly steps on a
+  plinth of two transparent planes: a shadow catcher (ShadowMaterial,
+  30% ink) for the sun's shadow and a contact-gradient shader that
+  darkens the page out to 2.4 m round each standing module's footprint
+  (weighted by the module's visibility, so ghosts ground faintly). The
+  rim was exposure, not compositing: the lit roof tone-mapped brighter
+  than the page. The palette dropped a step (lit faces ~#ddd) and the
+  study lighting is fill 1.4 / sun 2.0 / sky 1.0 with shadows at full,
+  so faces grade through mid-grey instead of snapping white to slate.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
