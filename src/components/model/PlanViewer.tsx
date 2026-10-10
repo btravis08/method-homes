@@ -15,6 +15,7 @@ import { ToneMappingMode } from "postprocessing";
 import * as THREE from "three";
 import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import { HDRLoader } from "three/examples/jsm/loaders/HDRLoader.js";
+import { mergeGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 
 /* the web-sized copy of the render HDRI (scripts/model/prep-env.py →
    public/models/env/{sky.hdr, env.json}); the viewer falls back to the
@@ -197,6 +198,16 @@ const GLASS_TRANSMISSION = 0.35;
    reflection strength it had at 0.9 × 2.4 */
 const ENV_BOOST: Record<string, number> = { glass: 4.8, roof: 1.2 };
 const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
+/* GHOSTS (Bryce, 2026-10-10: "make the assembly fade in more smoothly
+   from 0 opacity… make the transparent ones truly transparent"): the
+   modules round the focus one appear from nothing over ~2 s on an
+   eased curve, settle at a glassy GHOST fill, and carry a thin outline
+   (every edge sharper than GHOST_EDGE_ANGLE) at GHOST_EDGE ink so a
+   near-transparent box still reads as a box. */
+const GHOST = 0.16;
+const GHOST_EDGE = 0.32;
+const GHOST_EDGE_ANGLE = 32; // degrees
+const FADE_SPEED = 0.5; // 1/s (2 s appearance)
 /* SCROLL-TIED TURN (Bryce, 2026-10-05: no free spin). As the viewer
    scrolls into view the home turns from REST_YAW − SWEEP to REST_YAW,
    reaching rest when the viewer is centred in the window; scrolling back
@@ -686,7 +697,11 @@ class ViewerState {
   /* EXPLODE: module nodes slide out along the line from the footprint
      centre to their own centre — positions scale about the centre, so a
      row of modules gets even gaps. 0 = assembled, 1 = pulled apart. */
-  modules: { node: THREE.Object3D; index: number; name: string; prefab: boolean; centre: THREE.Vector3; size: THREE.Vector2; rooms: string[]; mats: THREE.Material[]; vis: number }[] = [];
+  /* vis = the module's rendered opacity factor; t = its eased appearance
+     (0 hidden → 1 shown, at FADE_SPEED); level = the opacity it shows at
+     when present (1, or GHOST in the assembly); edges = its outline,
+     drawn while it is a ghost so a near-transparent module still reads */
+  modules: { node: THREE.Object3D; index: number; name: string; prefab: boolean; centre: THREE.Vector3; size: THREE.Vector2; rooms: string[]; mats: THREE.Material[]; vis: number; t: number; level: number; cast: boolean; edges: THREE.LineSegments | null }[] = [];
   explode = 0;
   explodeGap = EXPLODE_GAP;
   /* SINGLE (the module story, Bryce, 2026-10-09: "renders a single
@@ -708,8 +723,9 @@ class ViewerState {
   /* the white model's ground: shadow catcher + contact gradient */
   plinth: { shadow: THREE.Mesh; shadowMat: THREE.ShadowMaterial; contact: THREE.Mesh; contactMat: THREE.ShaderMaterial } | null = null;
   /* ghost opacity for the modules around the focus one in the assembly
-     (the Figma boxes read clearly — light, not faint) */
-  ghost = 0.55;
+     (Bryce, 2026-10-10: "truly transparent") — their outlines carry the
+     reading instead (GHOST_EDGE ink) */
+  ghost = GHOST;
   /* a solid block per module between its wall tops and its roof
      underside: Method's Revit roof is a slab over an unmodelled rafter
      zone, so the module read as a lid floating over a thin ceiling */
@@ -867,7 +883,7 @@ class ViewerState {
       const sz = info.size_m;
       const size = sz && sz.length >= 2 ? new THREE.Vector2(sz[0], sz[1]) : new THREE.Vector2(box.max.x - box.min.x, box.max.z - box.min.z);
       const mats: THREE.Material[] = [];
-      this.modules.push({ node: o, index, name: info.name ?? o.name, prefab: info.prefab !== false, centre, size, rooms: info.rooms ?? [], mats, vis: 1 });
+      this.modules.push({ node: o, index, name: info.name ?? o.name, prefab: info.prefab !== false, centre, size, rooms: info.rooms ?? [], mats, vis: 1, t: 1, level: 1, cast: true, edges: null });
     });
     for (const entry of this.mats) {
       if (entry.module == null) continue;
@@ -931,6 +947,31 @@ class ViewerState {
       m.mats.push(mat);
       this.mats.push({ mat, cat: "structure", storey: 0, source: new THREE.Color(DIAGRAM.structure), module: m.index });
       this.cavities.push(block);
+    }
+    /* ghost outlines: one line set per module from its walls, roof, floor
+       and cavity block (openings and fittings would only clutter it) */
+    for (const m of this.modules) {
+      const parts: THREE.BufferGeometry[] = [];
+      m.node.updateMatrixWorld(true);
+      m.node.traverse((o) => {
+        if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
+        if (!/_(wall|roof|floor)\b|^cavity/.test(o.name)) return;
+        const eg = new THREE.EdgesGeometry(o.geometry, GHOST_EDGE_ANGLE);
+        /* into the module node's frame (the meshes may sit on sub-nodes) */
+        const rel = new THREE.Matrix4().copy(m.node.matrixWorld).invert().multiply(o.matrixWorld);
+        eg.applyMatrix4(rel);
+        parts.push(eg);
+      });
+      if (!parts.length) continue;
+      const geo = mergeGeometries(parts);
+      for (const p of parts) p.dispose();
+      if (!geo) continue;
+      const lines = new THREE.LineSegments(geo, new THREE.LineBasicMaterial({ color: "#000000", transparent: true, opacity: 0, depthWrite: false, toneMapped: false }));
+      lines.name = `edges~m${m.index}`;
+      lines.renderOrder = 4;
+      lines.visible = false;
+      m.node.add(lines);
+      m.edges = lines;
     }
     if (this.adjacency.length && this.wantConnectors) {
       /* corner-to-corner lines: for each adjacent pair, the two bottom and
@@ -1204,7 +1245,39 @@ class ViewerState {
         let want = 1;
         if (st && m.index !== this.focus) want = 0;
         else if (assembly && m.index !== this.focus) want = m.prefab ? this.ghost : 0;
-        m.vis = Math.abs(want - m.vis) < 0.001 ? want : m.vis + Math.sign(want - m.vis) * Math.min(Math.abs(want - m.vis), dt * speed);
+        /* presence eases in and out at FADE_SPEED (from nothing, not from
+           a step); the level it shows at moves at the flight's pace, and
+           holds its last value while the module fades out */
+        const tt = want > 0 ? 1 : 0;
+        /* a module appearing from nothing starts AT the level it is
+           wanted at (no lerp down from solid while it is invisible) */
+        if (want > 0 && m.t < 0.001) m.level = want;
+        m.t = Math.abs(tt - m.t) < 0.001 ? tt : m.t + Math.sign(tt - m.t) * Math.min(Math.abs(tt - m.t), dt * (input.reduce ? 1000 : FADE_SPEED));
+        if (want > 0) m.level = Math.abs(want - m.level) < 0.001 ? want : m.level + Math.sign(want - m.level) * Math.min(Math.abs(want - m.level), dt * speed);
+        m.vis = m.level * ease(m.t);
+        /* a ghost throws no shadow: the shadow map ignores opacity, so a
+           16% box was shading the plinth as hard as the solid module.
+           receiveShadow goes too — under a variance shadow map three
+           renders every RECEIVER into the shadow map as well
+           (WebGLShadowMap: castShadow || receiveShadow && VSM), so a
+           receiving ghost still cast */
+        const cast = m.vis > 0.5;
+        if (cast !== m.cast) {
+          m.cast = cast;
+          m.node.traverse((o) => {
+            if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
+            o.castShadow = cast && !/_glass\b/.test(o.name);
+            o.receiveShadow = cast;
+          });
+        }
+        if (m.edges) {
+          /* the outline belongs to the ghost: full at the GHOST level,
+             gone as the level climbs to solid, and gone with the drawing */
+          const ghostly = THREE.MathUtils.clamp(1 - (m.level - GHOST) / (1 - GHOST), 0, 1);
+          const op = GHOST_EDGE * ease(m.t) * ghostly * dg * (1 - e);
+          (m.edges.material as THREE.LineBasicMaterial).opacity = op;
+          m.edges.visible = op > 0.01;
+        }
       }
       /* connectors across the gaps, only while the modules are apart */
       if (this.connectors) {
@@ -1304,6 +1377,8 @@ class ViewerState {
     }
     for (const m of this.modules) {
       if (m.vis >= 1) continue;
+      /* (ghosts keep writing depth: without it every interior face of a
+         double-sided wall blends through, and the box goes dark) */
       for (const mat of m.mats) {
         const mm = mat as THREE.MeshStandardMaterial;
         mm.opacity *= m.vis;

@@ -226,7 +226,12 @@ staging/design use.
   ring wants the model at a third of the frame) + `occlusion` (N8AO,
   opt-in: it is a full pass and slows software GL captures to ~8 min
   a step — capture two steps, not four). The assembly shows PREFAB
-  modules only, ghosted at 55%, with dotted corner-to-corner lines at
+  modules only, as near-transparent ghosts (GHOST fill 16% + an
+  EdgesGeometry outline at 32% ink, fading in from nothing over 2 s at
+  FADE_SPEED — opacity is per-module `t`/`level`, never a step; a ghost
+  has castShadow AND receiveShadow off, because the variance shadow
+  map renders receivers too and a receiving ghost still casts), spread
+  by explodeGap 0.6, with dotted corner-to-corner lines at
   25% ink; the cavity block under each module's roof is synthesised in
   the viewer because the IFC has no framing. Hotspots and the callout
   card carry placeholder copy until Method supplies it.

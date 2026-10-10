@@ -953,6 +953,24 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   compressed to nothing). Found on the way: the single step's focus
   slide was applied outside the group's yaw, so the module swung round
   the home's centre through the scroll sweep — it now spins in place.
+- 2026-10-10, evening — assembly ghosts reworked (Bryce: "fade in more
+  smoothly from 0 opacity… spread the modules out even more and make
+  the transparent ones truly transparent"). Each module now carries an
+  eased presence `t` (2 s at FADE_SPEED) and a `level` (1, or GHOST
+  0.16 in the assembly): opacity = level × ease(t), so the ghosts grow
+  from nothing on a curve instead of stepping to 55% at the flight's
+  pace. At 16% a box would vanish, so every ghost draws its outline
+  (EdgesGeometry of walls, roof, floor and cavity block at 32°, 32%
+  ink), full at the ghost level and gone as the level climbs to solid
+  or the drawing takes over. The spread is explodeGap 0.6 (was 0.36)
+  in both the section and the module-story entry. A ghost neither
+  casts NOR RECEIVES shadows: the shadow map ignores opacity, and under
+  a variance shadow map three renders every receiver into the shadow
+  map too (WebGLShadowMap: `castShadow || receiveShadow && VSM`), so
+  castShadow=false alone changed nothing and the 16% boxes went on
+  shading the plinth as hard as the solid module. (Dropping their depth
+  writes was tried against the AO and reverted: every interior face of
+  a double-sided wall then blended through and the boxes went dark.)
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

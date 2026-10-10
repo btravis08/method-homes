@@ -163,7 +163,7 @@ export function HowItWorks({ src = "/models/test.glb", focusRoom = "KITCHEN", st
       alt="Method home, module by module"
       modes={steps.map((s) => s.mode)}
       focusRoom={focusRoom}
-      explodeGap={0.36}
+      explodeGap={0.6}
       connectors
       occlusion
       hideControls

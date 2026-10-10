@@ -489,7 +489,7 @@ export const SECTIONS: SectionEntry[] = [
             <p className="label text-ink-3">Built in modules</p>
             <h2 className="font-display text-headline-md text-ink">One module, the set, the home, the plan</h2>
           </div>
-          <LazyPlanViewer src="/models/test.glb" alt="Method reference home, module by module" modes={["single", "modules", "3d", "plan"]} labels={{ single: "The Module", modules: "The Assembly", "3d": "The Finished Home", plan: "Floor plan" }} focusRoom="KITCHEN" explodeGap={0.36} connectors />
+          <LazyPlanViewer src="/models/test.glb" alt="Method reference home, module by module" modes={["single", "modules", "3d", "plan"]} labels={{ single: "The Module", modules: "The Assembly", "3d": "The Finished Home", plan: "Floor plan" }} focusRoom="KITCHEN" explodeGap={0.6} connectors />
         </div>
       </section>
     ),
