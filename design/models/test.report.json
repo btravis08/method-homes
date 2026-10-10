@@ -1,9 +1,9 @@
 {
   "input": "source.ifc",
   "output": "/tmp/source.raw.glb",
-  "bytes": 3336812,
-  "triangles": 42936,
-  "seconds": 102.0,
+  "bytes": 3514496,
+  "triangles": 50364,
+  "seconds": 145.3,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -74,11 +74,12 @@
     "IfcWall": 20,
     "IfcRoof": 6,
     "IfcBeam": 5,
+    "IfcBuildingElementProxy": 5,
     "IfcStairFlight": 5,
     "IfcFlowTerminal": 1
   },
   "dropped": {
-    "IfcBuildingElementProxy": 2024,
+    "IfcBuildingElementProxy": 2018,
     "IfcFlowTerminal": 151,
     "IfcOpeningElement": 87,
     "IfcFurnishingElement (fit-out outside kitchen|pantry)": 62,
@@ -94,7 +95,8 @@
     "IfcCovering": 1,
     "IfcCurtainWall": 1,
     "IfcBuilding": 1,
-    "IfcSite": 1
+    "IfcSite": 1,
+    "IfcBuildingElementProxy (fit-out outside kitchen|pantry)": 1
   },
   "proxies": [
     {
@@ -339,41 +341,6 @@
       "name": "Enscape AssetDefinition - Bush 074 Curry Plant:Enscape AssetDefinition - Bush 074 Curry Plant:2750661",
       "id": "3ld21GKtT569YIB5xhZVm2",
       "size_m": 0.95,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "T24IF905SP:T24IF905SP:2750684",
-      "id": "3ld21GKtT569YIB5xhZVmR",
-      "size_m": 2.13,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "MH_SE-Dishwasher:24\"w x 34 1/2\"h x 24\"d:2750685",
-      "id": "3ld21GKtT569YIB5xhZVmQ",
-      "size_m": 0.88,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "MH_SE-Range-Gas-36:MH_SE-Range-Gas-36:2750686",
-      "id": "3ld21GKtT569YIB5xhZVmP",
-      "size_m": 0.94,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "MH_SE-Hood-Wall_Chimney-Low:MH_SE-Hood-Wall_Chimney-Low:2750688",
-      "id": "3ld21GKtT569YIB5xhZVmd",
-      "size_m": 1.07,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "T24IF905SP:T24IF905SP:2750692",
-      "id": "3ld21GKtT569YIB5xhZVmZ",
-      "size_m": 2.13,
       "kept": false,
       "reason": "name"
     },
@@ -2598,13 +2565,6 @@
       "name": "Enscape AssetDefinition - Bush 008 Regular:Enscape AssetDefinition - Bush 008 Regular:2751687",
       "id": "3ld21GKtT569YIB5xhZVW0",
       "size_m": 1.47,
-      "kept": false,
-      "reason": "name"
-    },
-    {
-      "name": "MH_SE-Rangetop-BBQ-48:MH_SE-Rangetop-BBQ-48:2751774",
-      "id": "3ld21GKtT569YIB5xhZVdP",
-      "size_m": 1.49,
       "kept": false,
       "reason": "name"
     },
@@ -14170,34 +14130,6 @@
   ],
   "nodes": [
     {
-      "node": "storey0_cabinet~m1",
-      "storey": 0,
-      "category": "cabinet",
-      "triangles": 6068,
-      "module": 1
-    },
-    {
-      "node": "storey0_cabinet~m4",
-      "storey": 0,
-      "category": "cabinet",
-      "triangles": 452,
-      "module": 4
-    },
-    {
-      "node": "storey0_counter~m1",
-      "storey": 0,
-      "category": "counter",
-      "triangles": 116,
-      "module": 1
-    },
-    {
-      "node": "storey0_fixture~m1",
-      "storey": 0,
-      "category": "fixture",
-      "triangles": 868,
-      "module": 1
-    },
-    {
       "node": "storey0_structure~m1",
       "storey": 0,
       "category": "structure",
@@ -14565,6 +14497,34 @@
       "module": 9
     },
     {
+      "node": "storey3_appliance~m1",
+      "storey": 3,
+      "category": "appliance",
+      "triangles": 7428,
+      "module": 1
+    },
+    {
+      "node": "storey3_cabinet~m1",
+      "storey": 3,
+      "category": "cabinet",
+      "triangles": 6068,
+      "module": 1
+    },
+    {
+      "node": "storey3_cabinet~m4",
+      "storey": 3,
+      "category": "cabinet",
+      "triangles": 452,
+      "module": 4
+    },
+    {
+      "node": "storey3_counter~m1",
+      "storey": 3,
+      "category": "counter",
+      "triangles": 116,
+      "module": 1
+    },
+    {
       "node": "storey3_door~m0",
       "storey": 3,
       "category": "door",
@@ -14619,6 +14579,13 @@
       "category": "door",
       "triangles": 1072,
       "module": 8
+    },
+    {
+      "node": "storey3_fixture~m1",
+      "storey": 3,
+      "category": "fixture",
+      "triangles": 868,
+      "module": 1
     },
     {
       "node": "storey3_floor~m0",
@@ -15718,6 +15685,7 @@
         "ROOF"
       ],
       "elements": {
+        "IfcBuildingElementProxy": 5,
         "IfcFooting": 6,
         "sliced": 36,
         "IfcRoof": 4,
@@ -15975,9 +15943,9 @@
     "m5": 42,
     "m7": 71,
     "m0": 71,
+    "m1": 78,
     "m8": 77,
-    "none": 3,
-    "m1": 73
+    "none": 3
   },
   "outsideModules": {
     "IfcColumn": 1,
@@ -16051,6 +16019,10 @@
       "faces": 4220,
       "elements": 31
     },
+    "appliance:#91afbe": {
+      "faces": 3840,
+      "elements": 1
+    },
     "glass:#0d0d0d": {
       "faces": 2944,
       "elements": 26
@@ -16058,6 +16030,10 @@
     "wall:#787878": {
       "faces": 2776,
       "elements": 114
+    },
+    "appliance:#535350": {
+      "faces": 2016,
+      "elements": 2
     },
     "door:#787878": {
       "faces": 1464,
@@ -16075,6 +16051,10 @@
       "faces": 938,
       "elements": 70
     },
+    "appliance:#f4f4f4": {
+      "faces": 908,
+      "elements": 2
+    },
     "structure:#0d0d0d": {
       "faces": 892,
       "elements": 37
@@ -16090,6 +16070,10 @@
     "structure:#818476": {
       "faces": 792,
       "elements": 45
+    },
+    "appliance:#b2b2b2": {
+      "faces": 576,
+      "elements": 2
     },
     "glass:#0080c0": {
       "faces": 552,
@@ -16139,6 +16123,10 @@
       "faces": 92,
       "elements": 1
     },
+    "appliance:#bdbbb9": {
+      "faces": 88,
+      "elements": 2
+    },
     "wall:#808080": {
       "faces": 72,
       "elements": 4
@@ -16168,5 +16156,5 @@
       "elements": 1
     }
   },
-  "compressedBytes": 391740
+  "compressedBytes": 400572
 }
