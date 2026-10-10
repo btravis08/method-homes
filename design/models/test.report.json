@@ -3,7 +3,7 @@
   "output": "/tmp/source.raw.glb",
   "bytes": 3526004,
   "triangles": 50508,
-  "seconds": 137.5,
+  "seconds": 136.4,
   "schema": "IFC2X3",
   "northDeg": -0.0,
   "footprint": {
@@ -16197,5 +16197,5 @@
       "elements": 1
     }
   },
-  "compressedBytes": 408980
+  "compressedBytes": 501448
 }
