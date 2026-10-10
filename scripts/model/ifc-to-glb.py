@@ -1052,8 +1052,13 @@ def main() -> int:
             if not len(ov):
                 why["empty"] += 1
                 continue
-            if not in_fitout_room(ov, slack=0.6):
-                why["outside the fit-out rooms"] += 1
+            # an opening sits IN a wall, and a wall is a room boundary —
+            # the kitchen's openings centre in the living room beside it
+            # as often as not — so the test is the MODULE that holds a
+            # fit-out room, not the room itself
+            fit_mods = [m_ for m_ in modules if any(fitout_re.search(r) for r in m_.get("rooms", []))] if fitout_re else []
+            if not in_fitout_room(ov, slack=0.6) and not (fit_mods and any(float(m_["poly"].distance(shapely.points(ov[:, :2].mean(axis=0)))) <= 0.6 for m_ in fit_mods)):
+                why["outside the fit-out rooms and modules"] += 1
                 continue
             frame = opening_frame(ov)
             if frame is None:
