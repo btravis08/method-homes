@@ -201,6 +201,7 @@ const SPEED = 0.85; // mode transition, 1/s (≈1.2 s flight)
    scrolls into view the home turns from REST_YAW − SWEEP to REST_YAW,
    reaching rest when the viewer is centred in the window; scrolling back
    unwinds it. The first drag hands control to the user for good. */
+const UP = new THREE.Vector3(0, 1, 0);
 const REST_YAW = 0; // rad: the framed three-quarter view
 const SWEEP = THREE.MathUtils.degToRad(100);
 const YAW_DAMP = 7; // 1/s: how quickly the turn catches up with the scroll
@@ -494,9 +495,87 @@ const DIAGRAM: Record<string, string> = {
 /* the sky dome lights the roof top far harder than the walls (it is
    bright overhead, dark at the horizon), which is what snapped the model
    from white to slate — so the sky is held low and the flat fill high */
-const DIAGRAM_FILL = 1.8;
-const DIAGRAM_SUN = 2.0;
+/* sized so a wall SQUARE to the sun (fill + sun × 0.9 + sky) still
+   tone-maps under the page: the phone saw the sunlit side blow out to
+   white where the sandbox camera had shown the shaded side */
+const DIAGRAM_FILL = 1.3;
+const DIAGRAM_SUN = 1.4;
 const DIAGRAM_ENV = 0.5;
+
+/* OPAQUE BACKDROP (Bryce, 2026-10-10, phone: a bright halo round the
+   white model, "cut out in photoshop"). The halo is alpha compositing:
+   the post chain hands the browser edge pixels whose colour and alpha
+   don't agree (sRGB-encoded premultiplied values from the MSAA resolve),
+   and iOS Safari composites them brighter than either side. In `fill`
+   mode the canvas now clears to the page's own background colour, so
+   no browser does alpha math on the picture at all. The colour the
+   scene clears to is the PRE-IMAGE of the page colour through the post
+   chain (Neutral tone map → saturation → sRGB), solved here, so the
+   canvas is indistinguishable from the page around it. */
+const srgbToLinear = (c: number) => (c < 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+const linearToSrgb = (c: number) => (c < 0.0031308 ? c * 12.92 : 1.055 * Math.pow(c, 1 / 2.4) - 0.055);
+/* three's NeutralToneMapping (Khronos PBR Neutral), exposure 1 */
+function neutralToneMap(c: [number, number, number]): [number, number, number] {
+  const start = 0.8 - 0.04;
+  const desat = 0.15;
+  const x = Math.min(c[0], c[1], c[2]);
+  const offset = x < 0.08 ? x - 6.25 * x * x : 0.04;
+  let r = c[0] - offset, g = c[1] - offset, b = c[2] - offset;
+  const peak = Math.max(r, g, b);
+  if (peak < start) return [r, g, b];
+  const d = 1 - start;
+  const newPeak = 1 - (d * d) / (peak + d - start);
+  const k = newPeak / peak;
+  r *= k; g *= k; b *= k;
+  const m = 1 - 1 / (desat * (peak - newPeak) + 1);
+  return [r + (newPeak - r) * m, g + (newPeak - g) * m, b + (newPeak - b) * m];
+}
+/* postprocessing's HueSaturation (hue 0): c += (avg − c) · k */
+function saturate(c: [number, number, number], s: number): [number, number, number] {
+  const avg = (c[0] + c[1] + c[2]) / 3;
+  const k = s > 0 ? 1 - 1 / (1.001 - s) : -s;
+  return [c[0] + (avg - c[0]) * k, c[1] + (avg - c[1]) * k, c[2] + (avg - c[2]) * k];
+}
+/* the linear scene colour that the chain maps onto `page` (sRGB 0–1):
+   undo sRGB and saturation in closed form, the tone map by damped
+   fixed-point iteration (its slope is < 1 everywhere, so this converges) */
+function backdropPreimage(page: [number, number, number], s: number, out: THREE.Color) {
+  const lin: [number, number, number] = [srgbToLinear(page[0]), srgbToLinear(page[1]), srgbToLinear(page[2])];
+  const avg = (lin[0] + lin[1] + lin[2]) / 3;
+  const k = s > 0 ? 1 - 1 / (1.001 - s) : -s;
+  const t: [number, number, number] = k >= 0.999 ? [avg, avg, avg] : [(lin[0] - avg * k) / (1 - k), (lin[1] - avg * k) / (1 - k), (lin[2] - avg * k) / (1 - k)];
+  const L: [number, number, number] = [t[0], t[1], t[2]];
+  for (let i = 0; i < 80; i++) {
+    const n = neutralToneMap(L);
+    L[0] += t[0] - n[0]; L[1] += t[1] - n[1]; L[2] += t[2] - n[2];
+  }
+  out.setRGB(Math.max(0, L[0]), Math.max(0, L[1]), Math.max(0, L[2]), THREE.LinearSRGBColorSpace);
+}
+/* the LINEAR alpha of black that darkens the backdrop by `ink` (0–1) in
+   DISPLAY space: the backdrop's pre-image sits above the tone map's
+   knee, where a linear 30% cut compresses to almost nothing, so the
+   plinth's ink is specified on the page and converted here */
+function inkAlpha(page: [number, number, number], s: number, ink: number): number {
+  const a = new THREE.Color();
+  const b = new THREE.Color();
+  backdropPreimage(page, s, a);
+  backdropPreimage([page[0] * (1 - ink), page[1] * (1 - ink), page[2] * (1 - ink)], s, b);
+  const la = (a.r + a.g + a.b) / 3;
+  const lb = (b.r + b.g + b.b) / 3;
+  return la > 0 ? THREE.MathUtils.clamp(1 - lb / la, 0, 1) : ink;
+}
+/* the colour behind an element: the nearest ancestor with a painted
+   background (CSS rgb()/rgba() string → sRGB 0–1), or null */
+function pageColourBehind(el: HTMLElement | null): [number, number, number] | null {
+  for (let node = el?.parentElement ?? null; node; node = node.parentElement) {
+    const bg = getComputedStyle(node).backgroundColor;
+    const m = bg.match(/rgba?\(\s*([\d.]+)[,\s]+([\d.]+)[,\s]+([\d.]+)(?:[,\s/]+([\d.]+))?\s*\)/);
+    if (!m) continue;
+    if (m[4] !== undefined && Number(m[4]) < 0.999) continue;
+    return [Number(m[1]) / 255, Number(m[2]) / 255, Number(m[3]) / 255];
+  }
+  return null;
+}
 /* the ground under the white model (Bryce, 2026-10-10: "cast shadow /
    relief on the ground perhaps?"): no lawn — the model stands on the
    page — so a shadow catcher takes the sun's shadow and a second plane
@@ -504,8 +583,8 @@ const DIAGRAM_ENV = 0.5;
    grounding a real white model has from its base, and the one thing
    screen-space AO cannot give a transparent ground). Both are ink at
    low alpha over the page. */
-const PLINTH_SHADOW = 0.3;
-const PLINTH_CONTACT = 0.26;
+const PLINTH_SHADOW = 0.24;
+const PLINTH_CONTACT = 0.22;
 const PLINTH_REACH = 2.4; // m the contact gradient runs out from a footprint
 const PLINTH_MAX = 16; // rects the contact shader takes
 const CONTACT_VERT = /* glsl */ `
@@ -616,8 +695,16 @@ class ViewerState {
      and the orbit tightens to its size */
   focus: number | null = null;
   single = 0;
+  private focusShift = new THREE.Vector3();
   diagram = 0;
   fillLight: THREE.AmbientLight | null = null;
+  /* the page colour the canvas clears to in fill mode (null = transparent) */
+  backdrop: [number, number, number] | null = null;
+  private bgColor = new THREE.Color();
+  private bgKey = "";
+  /* the plinth's linear alphas for its display-space ink on this backdrop */
+  private inkShadow = PLINTH_SHADOW;
+  private inkContact = PLINTH_CONTACT;
   /* the white model's ground: shadow catcher + contact gradient */
   plinth: { shadow: THREE.Mesh; shadowMat: THREE.ShadowMaterial; contact: THREE.Mesh; contactMat: THREE.ShaderMaterial } | null = null;
   /* ghost opacity for the modules around the focus one in the assembly
@@ -1105,7 +1192,10 @@ class ViewerState {
       this.single = Math.abs(sd) < 0.001 ? st : this.single + Math.sign(sd) * Math.min(Math.abs(sd), dt * speed);
       const se = ease(this.single);
       const fm = this.modules.find((m) => m.index === this.focus);
-      if (this.group) this.group.position.set(fm ? -fm.centre.x * se : 0, 0, fm ? -fm.centre.z * se : 0);
+      /* the slide is applied AFTER the yaw below, in the turned frame, so
+         the focus module spins on the spot (applied before it, the module
+         swung round the home's centre through the scroll sweep) */
+      this.focusShift.set(fm ? -fm.centre.x * se : 0, 0, fm ? -fm.centre.z * se : 0);
       /* the assembly shows the PREFAB modules only — site-built pieces and
          anything outside a module (decks, rails, site work) belong to the
          finished home — and ghosts every module but the focus one */
@@ -1251,6 +1341,7 @@ class ViewerState {
       const twoPi = Math.PI * 2;
       const diff = ((((north - this.yaw + Math.PI) % twoPi) + twoPi) % twoPi) - Math.PI;
       this.group.rotation.y = this.yaw + diff * e;
+      this.group.position.copy(this.focusShift).applyAxisAngle(UP, this.group.rotation.y);
     }
 
     /* camera: orbit (OrbitControls) in 3D, flight to the top in plan */
@@ -1273,6 +1364,25 @@ class ViewerState {
     /* the plan has no colour: saturation goes to −1 (full grey) on landing */
     /* a touch calmer than raw in 3D (Samara's "less stark"), no colour in plan */
     if (this.sat) this.sat.saturation = THREE.MathUtils.lerp(this.lookPreset.saturation, -1, e);
+    /* opaque backdrop: re-solve only when the page colour or the chain's
+       saturation moves */
+    if (this.root) {
+      if (this.backdrop) {
+        const s = this.sat?.saturation ?? 0;
+        const key = `${this.backdrop.join(",")}|${s.toFixed(4)}`;
+        if (key !== this.bgKey) {
+          this.bgKey = key;
+          backdropPreimage(this.backdrop, s, this.bgColor);
+          this.inkShadow = inkAlpha(this.backdrop, s, PLINTH_SHADOW);
+          this.inkContact = inkAlpha(this.backdrop, s, PLINTH_CONTACT);
+        }
+        if (this.root.background !== this.bgColor) this.root.background = this.bgColor;
+      } else {
+        if (this.root.background === this.bgColor) this.root.background = null;
+        this.inkShadow = PLINTH_SHADOW;
+        this.inkContact = PLINTH_CONTACT;
+      }
+    }
     /* shadows leave with the 3D view: the drawing is flat */
     if (this.sunLight) {
       this.sunLight.shadow.intensity = 1 - e; // shadows stay at full in the white model — they are what makes it read
@@ -1293,8 +1403,8 @@ class ViewerState {
     if (this.plinth) {
       const on = dg * (1 - e);
       const p = this.plinth;
-      p.shadowMat.opacity = PLINTH_SHADOW * on;
-      p.contactMat.uniforms.uOpacity.value = PLINTH_CONTACT * on;
+      p.shadowMat.opacity = this.inkShadow * on;
+      p.contactMat.uniforms.uOpacity.value = this.inkContact * on;
       p.shadow.visible = p.contact.visible = on > 0.01;
       if (on > 0.01) {
         const rects = p.contactMat.uniforms.uRects.value as THREE.Vector4[];
@@ -1513,6 +1623,13 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
   vs.current.wantConnectors = connectors;
   vs.current.wantScenery = descent;
   vs.current.onArrive = setArrived;
+  /* fill mode: the canvas clears to the page colour behind it (read from
+     the DOM once mounted; the section's data-mode fixes it) */
+  useEffect(() => {
+    const v = vs.current;
+    if (!v) return;
+    v.backdrop = fill ? pageColourBehind(rootRef.current) : null;
+  }, [fill]);
   const { scene } = useGLTF(src);
   const extras = (scene.userData as Extras | undefined) ?? {};
   const all = extras.storeys ?? [{ index: 0, name: "Ground", elevation_m: 0 }];

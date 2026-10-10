@@ -938,6 +938,21 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   than the page. The palette dropped a step (lit faces ~#ddd) and the
   study lighting is fill 1.4 / sun 2.0 / sky 1.0 with shadows at full,
   so faces grade through mid-grey instead of snapping white to slate.
+- 2026-10-10, later — Bryce's phone showed what the sandbox could not:
+  a bright halo round the silhouette and the sunlit side blown out to
+  white. The halo is alpha compositing (the MSAA resolve hands iOS
+  Safari edge pixels whose colour and alpha disagree), so in fill mode
+  the canvas is now OPAQUE: it clears to the page colour behind it,
+  solved as the pre-image through the post chain (Neutral tone map →
+  saturation → sRGB, `backdropPreimage`), so the canvas edge is
+  invisible and no browser does alpha math on the picture. The fill and
+  sun dropped again (1.3 / 1.4) so a wall square to the sun stays under
+  the page tone. The plinth's ink is specified in display space and
+  converted to a linear alpha through the same inversion (the backdrop's
+  pre-image sits above the tone map's knee, where a 30% linear cut had
+  compressed to nothing). Found on the way: the single step's focus
+  slide was applied outside the group's yaw, so the module swung round
+  the home's centre through the scroll sweep — it now spins in place.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

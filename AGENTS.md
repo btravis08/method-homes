@@ -237,7 +237,15 @@ staging/design use.
   tone-maps brighter than `--surface` reads as a cut-out rim on the
   transparent canvas. The lighting is DIAGRAM_FILL / _SUN / _ENV —
   three divides an AmbientLight by π on Lambert surfaces, so size the
-  fill from the shaded-face target, not from the sun.
+  fill from the shaded-face target, not from the sun — and check a wall
+  SQUARE to the sun, not just the roof.
+- OPAQUE CANVAS IN FILL MODE: PlanViewer clears to the page colour
+  behind it (`pageColourBehind` → `backdropPreimage`, the inverse of
+  the post chain) instead of a transparent canvas. iOS Safari composites
+  the post chain's transparent edges as a bright halo ("cut out in
+  photoshop"); Chrome shows a dark one. Don't go back to alpha for a
+  canvas that sits on a flat page — and if the chain gains a pass
+  (vignette, brightness), extend `backdropPreimage` to invert it.
 - IfcOpenShell: restrict to the Body context (`context-ids`) — Revit
   products also carry 2D Axis representations that fail conversion
   for the whole element. Keep the geometry cache (`--cache`) when
