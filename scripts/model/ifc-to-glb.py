@@ -1041,16 +1041,23 @@ def main() -> int:
     # fit-out rooms' walls (the openings' own geometry is the void)
     if openings:
         n_frames = 0
+        why: Counter = Counter()
         for op in openings:
             try:
                 shape = ifcopenshell.geom.create_shape(settings, op)
                 ov = np.array(shape.geometry.verts, dtype=np.float64).reshape(-1, 3)
-            except Exception:
+            except Exception as exc:
+                why[f"geometry failed: {str(exc)[:60]}"] += 1
                 continue
-            if not len(ov) or not in_fitout_room(ov, slack=0.6):
+            if not len(ov):
+                why["empty"] += 1
+                continue
+            if not in_fitout_room(ov, slack=0.6):
+                why["outside the fit-out rooms"] += 1
                 continue
             frame = opening_frame(ov)
             if frame is None:
+                why["too small (a penetration)"] += 1
                 continue
             host = next((rel.RelatingBuildingElement for rel in (getattr(op, "VoidsElements", None) or [])), None)
             st = storey_of(host) if host is not None else None
@@ -1065,7 +1072,7 @@ def main() -> int:
             kept["IfcOpeningElement (casing)"] += 1
             tri_total += len(frame.faces)
             n_frames += 1
-        print(f"  fit-out frames: {n_frames} of {len(openings)} cased openings")
+        print(f"  fit-out frames: {n_frames} of {len(openings)} cased openings" + (" — " + ", ".join(f"{n} {k}" for k, n in why.most_common()) if why else ""))
 
     if not groups:
         sys.exit("nothing kept — check the IfcTypes in the file")
