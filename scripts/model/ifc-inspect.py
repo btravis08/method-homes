@@ -115,6 +115,62 @@ def main(path: str):
             parts += list(rel.RelatedObjects)
         print(f"  {r.Name!r} → {len(parts)} parts")
 
+    # FIT-OUT (Bryce, 2026-10-10: a stainless refrigerator in the nook,
+    # walnut cabinetry with black counters on the kitchen wall): what the
+    # model carries for casework, appliances and fixtures, and which
+    # module area each sits in — so the pipeline can keep the real ones
+    # instead of inventing boxes. Names, sizes and the module only.
+    print("\n== fit-out candidates (furnishing / flow terminals / appliance-named proxies / openings) by module")
+    try:
+        import ifcopenshell.geom as geom
+        import numpy as np
+
+        settings = geom.settings()
+        settings.set("use-world-coords", True)
+        mods = []
+        for sp in f.by_type("IfcSpace"):
+            nm = (sp.Name or sp.LongName or "")
+            if re.match(r"^\s*MOD\s*[A-Z]\b", nm, re.I) or re.search(r"site built|living|garage|deck", nm, re.I):
+                try:
+                    shp = geom.create_shape(settings, sp)
+                    v = np.array(shp.geometry.verts).reshape(-1, 3)
+                    mods.append((nm.strip(), v[:, 0].min(), v[:, 0].max(), v[:, 1].min(), v[:, 1].max()))
+                except Exception:
+                    continue
+        print(f"  {len(mods)} module/area spaces resolved")
+        appl = re.compile(r"refrig|fridge|freezer|range|cook|oven|stove|dishwasher|microwave|hood|sink|faucet|^[A-Z]{1,4}\d{2,}[A-Z0-9-]*$", re.I)
+        rows = []
+        for p in f.by_type("IfcProduct"):
+            t = p.is_a()
+            name = f"{p.Name or ''}"
+            fam = (p.ObjectType or "").split(":")[0]
+            kind = None
+            if t.startswith("IfcFurnishing"):
+                kind = "furnishing"
+            elif t.startswith("IfcFlowTerminal"):
+                kind = "terminal"
+            elif t == "IfcOpeningElement":
+                kind = "opening"
+            elif t == "IfcBuildingElementProxy" and (appl.search(name) or appl.search(fam) or appl.search(name.split(":")[0])):
+                kind = "proxy-appliance"
+            if not kind or not getattr(p, "Representation", None):
+                continue
+            try:
+                shp = geom.create_shape(settings, p)
+                v = np.array(shp.geometry.verts).reshape(-1, 3)
+                cx, cy = float(v[:, 0].mean()), float(v[:, 1].mean())
+                ext = (v.max(axis=0) - v.min(axis=0)).round(2).tolist()
+            except Exception:
+                continue
+            where = next((nm for nm, x0, x1, y0, y1 in mods if x0 <= cx <= x1 and y0 <= cy <= y1), "-")
+            rows.append((where, kind, t, name[:60], fam[:40], ext))
+        rows.sort(key=lambda r: (r[0], r[1], r[3]))
+        for where, kind, t, name, fam, ext in rows[:500]:
+            print(f"  [{where:>18}] {kind:16} {t:24} {name!r} / {fam!r} {ext}")
+        print(f"  {len(rows)} candidates")
+    except Exception as e:  # noqa: BLE001
+        print(f"  (fit-out scan failed: {e})")
+
 
 if __name__ == "__main__":
     main(sys.argv[1])
