@@ -120,6 +120,8 @@ PALETTE = {
     "trim": (0.62, 0.45, 0.30, 1.0),
 }
 
+import re  # noqa: E402 — the proxy rules below import it again; the fit-out rules need it first
+
 # ---- FIT-OUT (Bryce, 2026-10-10: "a stainless refrigerator in the
 # refrigerator nook, walnut cabinetry with black countertops in the
 # kitchen wall"). Revit models carry the casework, appliances and fixtures
