@@ -197,7 +197,11 @@ jobs:
           set -euo pipefail
           SLUG="${{ github.event.inputs.slug }}"
           # textures (when baked) go WebP at ≤1k: a set is ~100 KB a map
-          npx -y @gltf-transform/cli@4 optimize /tmp/web.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress webp --texture-size 1024 --simplify-error 0.001 --palette false --join false --flatten false
+          # simplify at the tool's default tolerance (0.0001 of the mesh radius
+          # ≈ 5 mm on this home). 0.001 was a 5 cm budget: the kitchen roof
+          # went 2,095 → 337 triangles and mullions crumbled (Bryce,
+          # 2026-10-10: "jagged edges, low fidelity")
+          npx -y @gltf-transform/cli@4 optimize /tmp/web.glb "public/models/$SLUG.glb" --compress meshopt --texture-compress webp --texture-size 1024 --simplify-error 0.0001 --palette false --join false --flatten false
           ls -la "public/models/$SLUG.glb"
           python - <<'PY'
           import json, os
