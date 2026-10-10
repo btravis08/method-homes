@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame, useThree, type RootState } from "@react-three/fiber";
 import { OrbitControls, PerformanceMonitor, useGLTF } from "@react-three/drei";
-import { BrightnessContrast, EffectComposer, HueSaturation, N8AO, ToneMapping, Vignette } from "@react-three/postprocessing";
+import { BrightnessContrast, EffectComposer, HueSaturation, N8AO, SMAA, ToneMapping, Vignette } from "@react-three/postprocessing";
 import { buildFoliage, plantingPlan, type Door, type FoliageHandle, type Plant } from "./foliage";
 import { findDoors, wallBounds } from "./doors";
 import { loadPlants, type PlantsHandle } from "./plants";
@@ -1815,8 +1815,17 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
   const [sun, setSun] = useState<[number, number, number] | null>(null);
   /* render at full device pixels (edges and the procedural reveals stay
      crisp); PerformanceMonitor steps it down only when the frame rate
-     actually sags, and back up when it recovers */
-  const [dpr, setDpr] = useState(2);
+     actually sags, and back up when it recovers. NATIVE is the screen's
+     own ratio (an iPhone is 3×; the old fixed 2 was already under it —
+     Bryce, 2026-10-10: "jagged edges"), capped at 3. The white-model
+     steps are cheap to draw, so they hold native whatever the monitor
+     says; the finished home may step down to DPR_LOW. */
+  const [native] = useState(() => (typeof window !== "undefined" ? Math.min(window.devicePixelRatio || 1, 3) : 2));
+  const [phone] = useState(() => typeof window !== "undefined" && window.matchMedia?.("(pointer: coarse)").matches);
+  const [dpr, setDpr] = useState(native);
+  const dprLow = Math.max(1.25, native * 0.6);
+  /* MSAA on the post chain: 8× where the GPU allows, else what it has */
+  const [samples, setSamples] = useState(4);
   const vs = useRef<ViewerState | null>(null);
   if (vs.current == null) {
     vs.current = new ViewerState();
@@ -1939,8 +1948,11 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
       <div className={`w-full transition-opacity duration-700 ease-out ${descent || fill ? "h-full" : "h-[75svh] md:aspect-[16/9] md:h-auto"}`} style={{ opacity: ready ? 1 : 0 }}>
         <Canvas
           shadows="variance"
-          onCreated={({ camera }) => camera.layers.enable(PLANT_LAYER)}
-          dpr={interacting ? Math.min(dpr, 1.25) : dpr}
+          onCreated={({ camera, gl }) => {
+            camera.layers.enable(PLANT_LAYER);
+            setSamples(Math.max(1, Math.min(8, gl.capabilities.maxSamples)));
+          }}
+          dpr={interacting ? Math.min(dpr, 1.25) : mode === "single" || mode === "modules" ? native : dpr}
           /* near/far hug the orbit radius: with the camera ~170 m out a
              0.1 m near plane would starve depth precision and the panes
              would fight their frames */
@@ -1992,7 +2004,7 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
           <SkyEnvironment base={skyBase} intensity={look.envIntensity} onSun={setSun} onDone={onSkyDone} />
           {/* resolution steps down only on a sustained low frame rate, never
               on the brief dip of a mode flight (that read as a quality drop) */}
-          <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(1.25)} onIncline={() => setDpr(2)} flipflops={2} onFallback={() => setDpr(1.25)} />
+          <PerformanceMonitor ms={1500} iterations={6} threshold={0.6} onDecline={() => setDpr(dprLow)} onIncline={() => setDpr(native)} flipflops={2} onFallback={() => setDpr(dprLow)} />
           <House src={src} vs={vs} plantsBase={plantsBase} input={{ mode, storey: current, northDeg: north, reduce }} />
           <OrbitControls
             ref={(c) => {
@@ -2013,8 +2025,12 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
               No ambient occlusion: screen-space AO painted grey patches on
               the ground that swam as the house turned (removed 2026-10-05,
               Bryce). */}
-          <EffectComposer multisampling={4} stencilBuffer enableNormalPass={false}>
-            {occlusion && <N8AO aoRadius={1.6} intensity={2.2} distanceFalloff={0.6} quality="medium" halfRes />}
+          {/* EDGES (Bryce, 2026-10-10): MSAA up to 8× on the composer's buffer,
+              SMAA at the end of the chain for what MSAA misses (shader
+              edges, the plank joints), full-resolution occlusion on desktop
+              (half on phones — their pixels are many and their GPUs small) */}
+          <EffectComposer multisampling={samples} stencilBuffer enableNormalPass={false}>
+            {occlusion && <N8AO aoRadius={1.6} intensity={2.2} distanceFalloff={0.6} quality="medium" halfRes={phone} />}
             <ToneMapping mode={look.tone} />
             {(look.brightness !== 0 || look.contrast !== 0) && <BrightnessContrast brightness={look.brightness} contrast={look.contrast} />}
             {look.vignette > 0 && <Vignette offset={0.3} darkness={look.vignette} />}
@@ -2025,6 +2041,7 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
               }}
               saturation={0}
             />
+            <SMAA />
           </EffectComposer>
         </Canvas>
       </div>

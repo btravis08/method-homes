@@ -245,6 +245,11 @@ staging/design use.
   extras.fitout ∩ module rooms, else the focus module). Never model
   kitchen boxes by hand: run ifc-inspect.yml first — its fit-out scan
   lists what the model carries. Loose furniture stays out.
+- FIDELITY: the optimise step's `--simplify-error` stays at the tool's
+  default 0.0001 — it is a fraction of the MESH RADIUS, so on a 50 m
+  home 0.001 is a 5 cm budget that crumbles mullions (2026-10-10). The
+  viewer renders at native DPR (capped 3), holds it on the module
+  steps, and runs MSAA up to 8× + SMAA; N8AO is half-res on phones only.
 - CAVITY / EXTENTS: never read a GLB mesh's `geometry.boundingBox` as
   metres — meshopt quantisation puts it in ±1 units; go through the
   mesh matrices (see the cavity block). A cavity block only fills a

@@ -1014,6 +1014,17 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   only fills a REAL void (Method's walls run to the roof underside, so
   a band would have hung in the kitchen). The black parapet wall keeps
   a dark tone in the product shot (`dark` flag from its material key).
+- 2026-10-10, late — FIDELITY (Bryce: "jagged edges, low fidelity").
+  The biggest cause was the optimiser: `--simplify-error 0.001` is
+  0.1% of the mesh radius, a 5 cm budget on a 50 m home (the kitchen
+  roof had gone 2,095 → 337 triangles; mullions and frame returns
+  crumbled). It now runs at the tool's default 0.0001 (~5 mm). In the
+  viewer: the canvas renders at the screen's NATIVE ratio (capped 3;
+  the fixed 2 was under an iPhone's 3), the module steps hold native
+  whatever the performance monitor says (the white model is cheap),
+  the post chain's MSAA goes to 8× where the GPU allows, an SMAA pass
+  closes the chain for what MSAA misses (shader edges, plank joints),
+  and N8AO runs at full resolution on desktop (half on phones).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
