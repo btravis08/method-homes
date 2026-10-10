@@ -233,13 +233,13 @@ const RENDER: Record<string, [string, number]> = {
   /* FIT-OUT (Bryce, 2026-10-10: "a stainless refrigerator in the nook,
      walnut cabinetry with black countertops", "hardwood floors", wood
      frames): the pipeline's --fitout categories, finished here */
-  cabinet: ["#4a3324", 1], counter: ["#141414", 1], appliance: ["#b4b7b9", 1], fixture: ["#e6e5e1", 1], trim: ["#8a6a4b", 1], hardwood: ["#a98a62", 1],
+  cabinet: ["#4a3324", 1], counter: ["#141414", 1], appliance: ["#b4b7b9", 1], fixture: ["#e6e5e1", 1], trim: ["#8a6a4b", 1], hardwood: ["#a98a62", 1], chassis: ["#2b2c2e", 1],
 };
 /* PBR per category: [roughness, metalness] */
 const SURFACE: Record<string, [number, number]> = {
   wall: [0.82, 0], floor: [0.95, 0], roof: [0.42, 0.55], glass: [0.12, 0.1],
   door: [0.5, 0.3], frame: [0.4, 0.5], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], cavity: [0.42, 0.55], misc: [0.9, 0],
-  cabinet: [0.55, 0], counter: [0.22, 0.05], appliance: [0.32, 0.85], fixture: [0.3, 0.35], trim: [0.6, 0], hardwood: [0.45, 0],
+  cabinet: [0.55, 0], counter: [0.22, 0.05], appliance: [0.32, 0.85], fixture: [0.3, 0.35], trim: [0.6, 0], hardwood: [0.45, 0], chassis: [0.55, 0.35],
 };
 /* a plank floor: boards 140 mm wide along the room's long axis, end
    joints staggered every ~1.2 m, per-board tone and a soft grain streak;
@@ -270,6 +270,9 @@ const PLANK_COLOR = /* glsl */ `
     float coverage = clamp(0.03 / px, 0.0, 1.0);
     float k = (1.0 - uPlan) * flat_;
     diffuseColor.rgb *= 1.0 + (tone + grain) * k;
+    /* the slab's SIDES are the module's steel rim, not oak (Bryce,
+       2026-10-10: "the floor should have thickness") */
+    diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.028, 0.029, 0.031), (1.0 - flat_) * (1.0 - uPlan));
     diffuseColor.rgb *= 1.0 - 0.45 * max(gap, endgap) * coverage * k;
   }
 `;
@@ -563,7 +566,7 @@ const DIAGRAM: Record<string, string> = {
   door: "#d9d4cb", frame: "#1f2021", stair: "#cfccc6", rail: "#2a2b2c", structure: "#d6d4cf", cavity: "#303234", misc: "#d2d0ca",
   /* the fit-out keeps its real finishes in the product shot: that is
      the point of showing the kitchen module (walnut, black, steel, oak) */
-  cabinet: "#4a3324", counter: "#141414", appliance: "#b4b7b9", fixture: "#e6e5e1", trim: "#8a6a4b", hardwood: "#a98a62",
+  cabinet: "#4a3324", counter: "#141414", appliance: "#b4b7b9", fixture: "#e6e5e1", trim: "#8a6a4b", hardwood: "#a98a62", chassis: "#2b2c2e",
 };
 /* the white model's study lighting: a soft fill (AmbientLight — three
    divides it by π on a Lambert surface, so 1.4 lights a 0.76-albedo face
@@ -578,13 +581,19 @@ const DIAGRAM: Record<string, string> = {
 /* high-key, like the product shot: the fill carries the light and the
    sun only grades the faces (siding 0.77 albedo: 2.2/π·0.77 ≈ 0.54 in
    shade, ≈0.7 facing the sun, the roof top ≈0.84 — all under the page) */
-const DIAGRAM_FILL = 2.2;
+/* 2.2 → 1.5 (2026-10-10): the bay light now carries part of the exposure
+   and casts, so the fill drops to let its shadows read */
+const DIAGRAM_FILL = 1.25;
 const DIAGRAM_SUN = 0.9;
 const DIAGRAM_ENV = 0.5;
+const BAY_LIGHT = 1.5;
+/* the module rises onto a dark steel base inset from its slab */
+const DIAGRAM_LIFT = 0.3;
+const CHASSIS_INSET = 0.22;
 /* the product shot's light comes from high overhead, a touch to the
    front-left: a short shadow pooled under the module (the relief), not
    a long one across the page */
-const DIAGRAM_SUN_DIR: [number, number, number] = [0.28, 1, 0.2];
+const DIAGRAM_SUN_DIR: [number, number, number] = [0.16, 1, 0.1]; // steeper still (2026-10-10: "tighter to the structure")
 
 /* OPAQUE BACKDROP (Bryce, 2026-10-10, phone: a bright halo round the
    white model, "cut out in photoshop"). The halo is alpha compositing:
@@ -669,9 +678,10 @@ function pageColourBehind(el: HTMLElement | null): [number, number, number] | nu
    low alpha over the page. */
 /* the product shot's relief is a soft pool under the model, not a long
    cast shadow: contact up, shadow down, reach in */
-const PLINTH_SHADOW = 0.1;
-const PLINTH_CONTACT = 0.3;
-const PLINTH_REACH = 1.8; // m the contact gradient runs out from a footprint
+/* tight to the structure (Bryce, 2026-10-10): a 0.6 m pool, darker at the edge */
+const PLINTH_SHADOW = 0.14;
+const PLINTH_CONTACT = 0.42;
+const PLINTH_REACH = 0.6; // m the contact gradient runs out from a footprint
 const PLINTH_MAX = 16; // rects the contact shader takes
 const CONTACT_VERT = /* glsl */ `
   varying vec3 vPos;
@@ -708,7 +718,7 @@ const PLAN: Record<string, [string, number]> = {
   /* frames read as openings in the drawing (light grey), not as wall */
   door: ["#7a7a7a", 1], frame: ["#c8c8c8", 1], stair: ["#a9a9a9", 1], rail: ["#4d4d4d", 1], structure: ["#111111", 1], misc: ["#b4b4b4", 1],
   /* fit-out is drawn as fixtures are on a plan: mid-grey outlines of fill */
-  cabinet: ["#9a9a9a", 1], counter: ["#6a6a6a", 1], appliance: ["#8a8a8a", 1], fixture: ["#b4b4b4", 1], trim: ["#7a7a7a", 1], hardwood: ["#f7f7f7", 0],
+  cabinet: ["#9a9a9a", 1], counter: ["#6a6a6a", 1], appliance: ["#8a8a8a", 1], fixture: ["#b4b4b4", 1], trim: ["#7a7a7a", 1], hardwood: ["#f7f7f7", 0], chassis: ["#f7f7f7", 0],
 };
 
 interface Inputs { mode: Mode; storey: number; northDeg: number; reduce: boolean }
@@ -802,6 +812,12 @@ class ViewerState {
   /* the plinth's linear alphas for its display-space ink on this backdrop */
   private inkShadow = PLINTH_SHADOW;
   private inkContact = PLINTH_CONTACT;
+  /* the storey the modules stand on (see attach) */
+  baseStorey = 0;
+  /* the product shot's steel bases, one per module */
+  chassis: THREE.Mesh[] = [];
+  /* the shadow-casting light into the module's open side */
+  bayLight: THREE.DirectionalLight | null = null;
   /* the white model's ground: shadow catcher + contact gradient */
   plinth: { shadow: THREE.Mesh; shadowMat: THREE.ShadowMaterial; contact: THREE.Mesh; contactMat: THREE.ShaderMaterial } | null = null;
   /* ghost opacity for the modules around the focus one in the assembly
@@ -873,6 +889,10 @@ class ViewerState {
       const floor = hab.length ? Math.min(...hab.map((st) => st.elevation_m)) : 0;
       this.groundOffset = Math.max(0, floor - GROUND_BELOW_FLOOR);
       scene.position.y = -this.groundOffset;
+      /* the storey the modules stand on: everything of a module below it
+         (the FOUNDATION's stem walls, footings) is site work and leaves
+         with the product shot */
+      this.baseStorey = hab.length ? hab.reduce((a, b) => (b.elevation_m < a.elevation_m ? b : a)).index : 0;
     }
     this.progress = initial === "plan" ? 1 : 0;
     this.mats = [];
@@ -1068,6 +1088,95 @@ class ViewerState {
       m.mats.push(mat);
       this.mats.push({ mat, cat: "cavity", storey: 0, source: new THREE.Color(RENDER.roof[0]), module: m.index });
       this.cavities.push(block);
+    }
+    /* CHASSIS (Bryce, 2026-10-10: "the floor should have thickness,
+       potentially be inset so there's a shadow relief"): in the product
+       shot each module lifts DIAGRAM_LIFT onto a dark steel base inset
+       CHASSIS_INSET from its walls, so the slab shows its edge and a
+       shadow line runs under it. The base is a child of the module node
+       at −lift, so it stays on the ground as the module rises. */
+    for (const c of this.chassis) {
+      c.removeFromParent();
+      c.geometry.dispose();
+      (c.material as THREE.Material).dispose();
+    }
+    this.chassis = [];
+    /* SLAB CAPS (Bryce, 2026-10-10: "the floor has no thickness… the roof
+       elements still show thin planes that are uncapped"). Measured on
+       the kitchen module: the roof slab carries 0.2 m² of edge faces and
+       the floor slab 0.4 m² against ~12 m² a closed slab would have —
+       Revit exported both as two parallel planes. The walls are closed.
+       So each module gets a dark box filling its floor slab (bottom →
+       just under the oak) and one filling its roof slab (soffit → just
+       under the ribbed top, found as the next populated vertex level),
+       in every mode; the caps' sides are what the eye reads as thickness. */
+    for (const m of this.modules) {
+      const inv = new THREE.Matrix4().copy(m.node.matrixWorld).invert();
+      const box = new THREE.Box3();
+      const walls = new THREE.Box3();
+      const floor = new THREE.Box3();
+      const roof = new THREE.Box3();
+      const roofLevels = new Map<number, number>();
+      const p = new THREE.Vector3();
+      m.node.traverse((o) => {
+        if (!(o instanceof THREE.Mesh) || o.userData.stencil) return;
+        const sm = o.name.match(/^storey(\d+)_(wall|floor|hardwood|roof)\b/);
+        if (!sm || Number(sm[1]) < this.baseStorey) return;
+        const rel = new THREE.Matrix4().copy(inv).multiply(o.matrixWorld);
+        o.geometry.computeBoundingBox();
+        box.copy(o.geometry.boundingBox!).applyMatrix4(rel);
+        if (sm[2] === "wall") walls.union(box);
+        else if (sm[2] === "roof") {
+          roof.union(box);
+          const pos = o.geometry.attributes.position;
+          for (let i = 0; i < pos.count; i++) {
+            p.fromBufferAttribute(pos, i).applyMatrix4(rel);
+            const k = Math.round(p.y * 50); // 2 cm bins
+            roofLevels.set(k, (roofLevels.get(k) ?? 0) + 1);
+          }
+        } else floor.union(box);
+      });
+      const add = (name: string, geo: THREE.BufferGeometry, cat: "chassis" | "cavity", colour: string, at: THREE.Vector3, opacity: number, hidden = false) => {
+        const mat = new THREE.MeshStandardMaterial({ color: colour, roughness: cat === "chassis" ? 0.55 : SURFACE.cavity[0], metalness: cat === "chassis" ? 0.35 : SURFACE.cavity[1], transparent: true, opacity, clippingPlanes: [this.plane, this.ground] });
+        const mesh = new THREE.Mesh(geo, mat);
+        mesh.name = `${name}~m${m.index}`;
+        mesh.position.copy(at);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        mesh.visible = !hidden;
+        m.node.add(mesh);
+        m.mats.push(mat);
+        this.mats.push({ mat, cat, storey: this.baseStorey, source: new THREE.Color(colour), module: m.index });
+        return mesh;
+      };
+      if (!floor.isEmpty() && floor.max.y - floor.min.y > 0.05) {
+        /* the floor cassette: the slab's own extents, its top 2 cm under
+           the oak so the planks keep the surface */
+        const h = floor.max.y - floor.min.y - 0.02;
+        add("floorcap", new THREE.BoxGeometry(Math.max(0.3, floor.max.x - floor.min.x - 0.02), h, Math.max(0.3, floor.max.z - floor.min.z - 0.02)), "chassis", DIAGRAM.chassis, new THREE.Vector3((floor.min.x + floor.max.x) / 2, floor.min.y + h / 2, (floor.min.z + floor.max.z) / 2), 1);
+      }
+      if (!roof.isEmpty()) {
+        /* the roof slab: from the soffit to the next vertex level that
+           holds a real share of the roof's vertices (the slab top; a
+           parapet above it is sparse by comparison) */
+        const bottomBin = Math.round(roof.min.y * 50);
+        const most = Math.max(...roofLevels.values());
+        const tops = [...roofLevels.entries()].filter(([k, n]) => k >= bottomBin + 6 && n >= most * 0.2).map(([k]) => k).sort((a, b) => a - b);
+        const top = tops.length ? tops[0] / 50 : Math.min(roof.max.y, roof.min.y + 0.4);
+        const h = top - roof.min.y - 0.03;
+        if (h > 0.05) add("roofcap", new THREE.BoxGeometry(Math.max(0.3, roof.max.x - roof.min.x - 0.03), h, Math.max(0.3, roof.max.z - roof.min.z - 0.03)), "cavity", DIAGRAM.cavity, new THREE.Vector3((roof.min.x + roof.max.x) / 2, roof.min.y + 0.01 + h / 2, (roof.min.z + roof.max.z) / 2), 1);
+      }
+      /* CHASSIS (Bryce, 2026-10-10: "potentially be inset so there's a
+         shadow relief"): in the product shot the module lifts DIAGRAM_LIFT
+         onto a dark steel base inset CHASSIS_INSET from the slab, so a
+         shadow line runs under the cassette. A child of the module node,
+         it keeps the ground as the module rises (see tick). */
+      const base = floor.isEmpty() ? walls : floor;
+      if (base.isEmpty()) continue;
+      const w = Math.max(0.5, base.max.x - base.min.x - 2 * CHASSIS_INSET);
+      const d = Math.max(0.5, base.max.z - base.min.z - 2 * CHASSIS_INSET);
+      const chassis = add("chassis", new THREE.BoxGeometry(w, DIAGRAM_LIFT, d), "chassis", DIAGRAM.chassis, new THREE.Vector3((base.min.x + base.max.x) / 2, -DIAGRAM_LIFT / 2, (base.min.z + base.max.z) / 2), 0, true);
+      this.chassis.push(chassis);
     }
     /* ghost outlines: one line set per module from its walls, roof, floor
        and cavity block (openings and fittings would only clutter it) */
@@ -1344,7 +1453,16 @@ class ViewerState {
       const xd = xt - this.explode;
       this.explode = Math.abs(xd) < 0.001 ? xt : this.explode + Math.sign(xd) * Math.min(Math.abs(xd), dt * speed);
       const xe = ease(this.explode) * this.explodeGap;
-      for (const m of this.modules) m.node.position.set(m.centre.x * xe, 0, m.centre.z * xe);
+      /* the product shot lifts each module onto its chassis */
+      for (const m of this.modules) m.node.position.set(m.centre.x * xe, DIAGRAM_LIFT * dg, m.centre.z * xe);
+      for (const c of this.chassis) {
+        /* the base keeps the ground while the module rises: its centre
+           sits at half the CURRENT lift below the node */
+        c.position.y = -(DIAGRAM_LIFT * dg) / 2;
+        c.scale.y = Math.max(0.001, dg);
+        c.visible = dg > 0.02;
+        (c.material as THREE.MeshStandardMaterial).opacity = dg;
+      }
       /* the lawn stretches with the spread, so no module hangs off it */
       if (this.lawn) this.lawn.group.scale.set(1 + xe, 1, 1 + xe);
       /* single: everything but the focus module fades, and the home slides
@@ -1511,7 +1629,18 @@ class ViewerState {
        with them, so the single module stands alone */
     if (this.diagram > 0) {
       const keep = 1 - dg;
-      for (const { mat, module } of this.mats) {
+      for (const { mat, module, storey, cat } of this.mats) {
+        /* a module's foundation (stem walls, footings below the storey it
+           stands on) is site work: gone with the product shot, where the
+           chassis takes its place */
+        if (module != null && storey < this.baseStorey && cat !== "chassis") {
+          mat.opacity *= keep;
+          mat.visible = mat.opacity > 0.01;
+          continue;
+        }
+        /* (the floor cassette and roof cap are category chassis / cavity
+           too, but stay in every mode; only the lifting base is diagram-only,
+           and its mesh visibility is driven with the lift) */
         if (module != null) continue;
         mat.opacity *= keep;
         mat.visible = mat.opacity > 0.01;
@@ -1600,7 +1729,38 @@ class ViewerState {
         this.root.add(this.fillLight);
       }
       this.fillLight.intensity = DIAGRAM_FILL * dg;
+      /* BAY LIGHT (Bryce, 2026-10-10: "I'm not seeing any shadows from
+         walls cast inside the home"): a shadowless fill cannot shade a
+         room. A second sun stands off the camera's side, 35° up and 30°
+         round, and casts into the open side of the module so the walls,
+         island and tall units throw soft shadows across the floor. */
+      if (!this.bayLight) {
+        const l = new THREE.DirectionalLight("#ffffff", 0);
+        l.castShadow = true;
+        l.shadow.mapSize.set(2048, 2048);
+        const span = Math.max(this.footprint.width_m, this.footprint.depth_m) / 2 + 9;
+        l.shadow.camera.left = -span;
+        l.shadow.camera.right = span;
+        l.shadow.camera.top = span;
+        l.shadow.camera.bottom = -span;
+        l.shadow.camera.near = 5;
+        l.shadow.camera.far = 90;
+        l.shadow.radius = 4;
+        l.shadow.blurSamples = 12;
+        l.shadow.bias = -0.0004;
+        l.shadow.normalBias = 0.03;
+        this.root.add(l);
+        this.root.add(l.target);
+        this.bayLight = l;
+      }
+      const cam = state.camera.position;
+      const az = Math.atan2(cam.x, cam.z) + THREE.MathUtils.degToRad(30);
+      const el = THREE.MathUtils.degToRad(35);
+      this.bayLight.position.set(Math.sin(az) * Math.cos(el) * 40, Math.sin(el) * 40, Math.cos(az) * Math.cos(el) * 40);
+      this.bayLight.intensity = BAY_LIGHT * dg * (1 - e);
+      this.bayLight.visible = this.bayLight.intensity > 0.01;
     }
+    if (this.sunLight) this.sunLight.shadow.radius = THREE.MathUtils.lerp(9, 4, dg); // a tighter shadow under the product shot
     /* the ground under the white model: the sun's shadow and the contact
        gradient round each standing module, fading with the drawing and
        the finished home (whose lawn carries its own grounding) */

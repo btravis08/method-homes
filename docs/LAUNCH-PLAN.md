@@ -643,6 +643,9 @@ Notes / defects (issue #): ______
 - 2026-10-10 — How it works: module steps restyled after Samara's
   product shot (white siding, dark roof system and mullions, high-key
   light, soft relief under the model).
+- 2026-10-10 — Module steps: foundation hidden, module on an inset
+  steel chassis with a visible slab edge, tighter ground shadow, and a
+  shadow-casting bay light so the interior casts.
 - 2026-10-10 — Fidelity: model simplification back to the default 5 mm
   tolerance (was 5 cm); native device pixels, 8× MSAA + SMAA, full-res
   AO on desktop.

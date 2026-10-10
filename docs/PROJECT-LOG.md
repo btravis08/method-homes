@@ -1025,6 +1025,33 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   the post chain's MSAA goes to 8× where the GPU allows, an SMAA pass
   closes the chain for what MSAA misses (shader edges, plank joints),
   and N8AO runs at full resolution on desktop (half on phones).
+- 2026-10-10, night — CHASSIS + INTERIOR SHADOWS (Bryce: "the floor has
+  no thickness… should be inset so there's a shadow relief… the shadow
+  should be much tighter to the structure… no shadows cast inside").
+  What read as a flush white plane was the FOUNDATION stem wall running
+  up under the module in siding white. In the product shot a module's
+  geometry below the storey it stands on (`baseStorey`, the lowest
+  habitable floor) now leaves with the site work, the module lifts
+  DIAGRAM_LIFT (0.22 m) onto a dark steel chassis inset 0.2 m from its
+  walls, and the plank shader paints the slab's sides as the steel rim —
+  so the floor shows its 0.34 m edge with a shadow line under it. The
+  plinth pool tightened to 0.6 m (contact 0.42) and the sun went
+  steeper with a sharper map (VSM radius 9 → 4). For the interior, a
+  shadowless ambient fill cannot shade a room: a second shadow-casting
+  "bay light" stands 35° up and 30° round from the camera's side so it
+  throws into the open side, and the fill dropped 2.2 → 1.5 so the
+  island, tall units and stub walls cast across the oak floor.
+- 2026-10-10, later still — SLAB CAPS (Bryce: "the floor still has no
+  thickness… the roof elements still show thin planes that are
+  uncapped"). Measured on the kitchen module's meshes: the roof slab
+  carries 0.2 m² of edge faces and the floor slab 0.4 m² where a closed
+  slab would have ~12 m² — Revit exported both as two parallel planes;
+  the walls are closed (148 m²). Each module now gets a dark box
+  filling its floor slab (bottom → 2 cm under the oak) and one filling
+  its roof slab (soffit → the next populated vertex level, found from a
+  2 cm histogram of the roof's vertices so a parapet doesn't fool it),
+  in every mode. The chassis lift grew to 0.3 m, the bay light to 1.5
+  with the fill at 1.25 so interior shadows read.
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and

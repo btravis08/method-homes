@@ -245,6 +245,18 @@ staging/design use.
   extras.fitout ∩ module rooms, else the focus module). Never model
   kitchen boxes by hand: run ifc-inspect.yml first — its fit-out scan
   lists what the model carries. Loose furniture stays out.
+- SLAB CAPS: Revit exports this model's floor and roof slabs as two
+  parallel planes with no edges (walls are closed). PlanViewer fills
+  each module's floor slab (`floorcap`, category chassis) and roof slab
+  (`roofcap`, category cavity) with a box in every mode — measure edge
+  area before assuming a mesh is closed.
+- MODULE CHASSIS: in diagram mode each module lifts DIAGRAM_LIFT onto a
+  `chassis` block (category chassis, child of the module node) and its
+  foundation-storey geometry (storey < `baseStorey`) fades out; the
+  plank shader darkens the slab's vertical faces as the steel rim.
+  Interior shadows come from `bayLight` (camera-relative, casts) with
+  the ambient fill held low enough for them to read — raising
+  DIAGRAM_FILL washes them out again.
 - FIDELITY: the optimise step's `--simplify-error` stays at the tool's
   default 0.0001 — it is a fraction of the MESH RADIUS, so on a 50 m
   home 0.001 is a 5 cm budget that crumbles mullions (2026-10-10). The
