@@ -234,7 +234,7 @@ const RENDER: Record<string, [string, number]> = {
 /* PBR per category: [roughness, metalness] */
 const SURFACE: Record<string, [number, number]> = {
   wall: [0.82, 0], floor: [0.95, 0], roof: [0.42, 0.55], glass: [0.12, 0.1],
-  door: [0.5, 0.3], frame: [0.4, 0.5], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], misc: [0.9, 0],
+  door: [0.5, 0.3], frame: [0.4, 0.5], stair: [0.9, 0], rail: [0.45, 0.6], structure: [0.8, 0], cavity: [0.42, 0.55], misc: [0.9, 0],
 };
 
 /*
@@ -391,7 +391,9 @@ const ROOF_COLOR = /* glsl */ `
     float coverage = clamp(0.03 / px, 0.0, 1.0);
     float flank = clamp((f - c) / max(0.015, px), -1.0, 1.0);
     float plane = step(0.25, abs(n.y));
-    float k = (1.0 - uPlan) * (1.0 - uDiagram) * plane * coverage;
+    /* the seams stay in the product shot (Samara's dark roof shows its
+       ribs); only the drawing flattens them */
+    float k = (1.0 - uPlan) * plane * coverage;
     gRib = rib * k;
     /* the rib catches light on one flank and drops shade on the other;
        on the charcoal base this is what makes the seams read */
@@ -495,9 +497,14 @@ function finish(mat: THREE.MeshStandardMaterial, cat: string, relief = true, tex
    around the edge… cut out in photoshop"): the first palette's lit roof
    tone-mapped to a white brighter than the page, so the silhouette read
    as a pale rim. Lit faces now land around #ddd, shaded ones mid-grey. */
+/* SAMARA PRODUCT SHOT (Bryce, 2026-10-10, hello.samara.com: "dark
+   mullions, light gray siding, a relief under the model, subtle ambient
+   occlusion, dark roof system"): not a one-tone clay model any more —
+   near-white siding, a near-black roof with its fascia band (the cavity
+   block), black window frames and dark panes, in flat high-key light. */
 const DIAGRAM: Record<string, string> = {
-  wall: "#e2dfd8", floor: "#d6d3cc", roof: "#cfccc5", glass: "#c3cbce",
-  door: "#cbc9c3", frame: "#b5b3ae", stair: "#d2d0ca", rail: "#b6b4af", structure: "#cdcbc5", misc: "#d2d0ca",
+  wall: "#e9e8e4", floor: "#d9d7d2", roof: "#36383a", glass: "#363b3e",
+  door: "#d9d4cb", frame: "#1f2021", stair: "#cfccc6", rail: "#2a2b2c", structure: "#d6d4cf", cavity: "#303234", misc: "#d2d0ca",
 };
 /* the white model's study lighting: a soft fill (AmbientLight — three
    divides it by π on a Lambert surface, so 1.4 lights a 0.76-albedo face
@@ -509,9 +516,16 @@ const DIAGRAM: Record<string, string> = {
 /* sized so a wall SQUARE to the sun (fill + sun × 0.9 + sky) still
    tone-maps under the page: the phone saw the sunlit side blow out to
    white where the sandbox camera had shown the shaded side */
-const DIAGRAM_FILL = 1.3;
-const DIAGRAM_SUN = 1.4;
+/* high-key, like the product shot: the fill carries the light and the
+   sun only grades the faces (siding 0.77 albedo: 2.2/π·0.77 ≈ 0.54 in
+   shade, ≈0.7 facing the sun, the roof top ≈0.84 — all under the page) */
+const DIAGRAM_FILL = 2.2;
+const DIAGRAM_SUN = 0.9;
 const DIAGRAM_ENV = 0.5;
+/* the product shot's light comes from high overhead, a touch to the
+   front-left: a short shadow pooled under the module (the relief), not
+   a long one across the page */
+const DIAGRAM_SUN_DIR: [number, number, number] = [0.28, 1, 0.2];
 
 /* OPAQUE BACKDROP (Bryce, 2026-10-10, phone: a bright halo round the
    white model, "cut out in photoshop"). The halo is alpha compositing:
@@ -594,9 +608,11 @@ function pageColourBehind(el: HTMLElement | null): [number, number, number] | nu
    grounding a real white model has from its base, and the one thing
    screen-space AO cannot give a transparent ground). Both are ink at
    low alpha over the page. */
-const PLINTH_SHADOW = 0.24;
-const PLINTH_CONTACT = 0.22;
-const PLINTH_REACH = 2.4; // m the contact gradient runs out from a footprint
+/* the product shot's relief is a soft pool under the model, not a long
+   cast shadow: contact up, shadow down, reach in */
+const PLINTH_SHADOW = 0.1;
+const PLINTH_CONTACT = 0.3;
+const PLINTH_REACH = 1.8; // m the contact gradient runs out from a footprint
 const PLINTH_MAX = 16; // rects the contact shader takes
 const CONTACT_VERT = /* glsl */ `
   varying vec3 vPos;
@@ -645,6 +661,11 @@ class ViewerState {
   sat: { saturation: number } | null = null;
   /* the sun: its soft shadow map fades out with the 3D view */
   sunLight: THREE.DirectionalLight | null = null;
+  /* the look's sun direction (from the sky's env.json; null until it
+     arrives) — the product shot lifts the sun toward overhead so the
+     shadow pools under the module instead of streaking across the page */
+  sunDir: [number, number, number] | null = null;
+  private sunPos = new THREE.Vector3();
   gl: THREE.WebGLRenderer | null = null; // debug hook (window.__planViewer)
   /* painterly planting around the home (foliage.ts); dissolves in plan */
   foliage: FoliageHandle | null = null;
@@ -937,7 +958,9 @@ class ViewerState {
       const top = Math.min(roofBottom, wallTop);
       const h = roofBottom - wallTop > 0.12 ? roofBottom - wallTop : CAVITY_BAND;
       const geo = new THREE.BoxGeometry(Math.max(0.5, m.size.x - 0.3), h, Math.max(0.5, m.size.y - 0.3));
-      const mat = new THREE.MeshStandardMaterial({ color: DIAGRAM.structure, roughness: 1, metalness: 0, transparent: true, clippingPlanes: [this.plane, this.ground] });
+      /* the band reads as the roof system's fascia: dark in the product
+         shot and in the finished home alike (its roof is charcoal metal) */
+      const mat = new THREE.MeshStandardMaterial({ color: DIAGRAM.cavity, roughness: 1, metalness: 0, transparent: true, clippingPlanes: [this.plane, this.ground] });
       const block = new THREE.Mesh(geo, mat);
       block.name = `cavity~m${m.index}`;
       block.position.set(m.centre.x, roofBottom - wallTop > 0.12 ? wallTop + h / 2 : top - h / 2, m.centre.z);
@@ -945,7 +968,7 @@ class ViewerState {
       block.receiveShadow = true;
       m.node.add(block);
       m.mats.push(mat);
-      this.mats.push({ mat, cat: "structure", storey: 0, source: new THREE.Color(DIAGRAM.structure), module: m.index });
+      this.mats.push({ mat, cat: "cavity", storey: 0, source: new THREE.Color(RENDER.roof[0]), module: m.index });
       this.cavities.push(block);
     }
     /* ghost outlines: one line set per module from its walls, roof, floor
@@ -1332,7 +1355,8 @@ class ViewerState {
       mat.color.copy(this.a).lerp(this.b, leaves ? 0 : e);
       if (dg > 0) {
         mat.color.lerp(this.c.set(DIAGRAM[cat] ?? DIAGRAM.misc), dg * (1 - e));
-        if (module != null && module === this.focus && this.modules.length > 1) mat.color.multiplyScalar(1 - 0.22 * dg * (1 - e));
+        /* (the focus module used to be toned down against the ghosts;
+           at a 16% ghost fill it needs no help, and the siding stays white) */
       }
       const above = input.mode === "plan" && storey > input.storey ? 0 : 1;
       if (cat === "floor") {
@@ -1464,6 +1488,13 @@ class ViewerState {
       /* the white model is lit like a study model — a gentler sun and a
          soft fill — so its shaded faces read mid-grey, not slate */
       this.sunLight.intensity = THREE.MathUtils.lerp(this.lookPreset.sun.intensity, DIAGRAM_SUN, dg);
+      if (dg > 0) {
+        const b = this.sunDir ?? [12 / 40, 16 / 40, 8 / 40];
+        this.sunPos.set(THREE.MathUtils.lerp(b[0], DIAGRAM_SUN_DIR[0], dg), THREE.MathUtils.lerp(b[1], DIAGRAM_SUN_DIR[1], dg), THREE.MathUtils.lerp(b[2], DIAGRAM_SUN_DIR[2], dg)).normalize().multiplyScalar(40);
+        this.sunLight.position.copy(this.sunPos);
+      } else if (this.sunDir) {
+        this.sunLight.position.set(this.sunDir[0] * 40, this.sunDir[1] * 40, this.sunDir[2] * 40);
+      }
     }
     if (this.root) {
       if (!this.fillLight) {
@@ -1698,6 +1729,7 @@ export function PlanViewer({ src, northDeg, mode: modeProp, onModeChange, modes:
   vs.current.wantConnectors = connectors;
   vs.current.wantScenery = descent;
   vs.current.onArrive = setArrived;
+  vs.current.sunDir = sun;
   /* fill mode: the canvas clears to the page colour behind it (read from
      the DOM once mounted; the section's data-mode fixes it) */
   useEffect(() => {

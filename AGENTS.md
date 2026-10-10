@@ -235,6 +235,12 @@ staging/design use.
   25% ink; the cavity block under each module's roof is synthesised in
   the viewer because the IFC has no framing. Hotspots and the callout
   card carry placeholder copy until Method supplies it.
+- MODULE STEP LOOK = Samara's product shot (Bryce, 2026-10-10): white
+  siding, near-black roof + cavity fascia (`cavity` category), black
+  frames, dark panes, high-key light (DIAGRAM_FILL carries it, the sun
+  only grades and lifts toward overhead — DIAGRAM_SUN_DIR — so its
+  shadow pools under the module), roof ribs kept, relief from AO + the
+  plinth pool. Don't drift it back to a one-tone clay model.
 - WHITE MODEL GROUNDING: the diagram steps stand on a `plinth` in
   PlanViewer — a ShadowMaterial catcher plus an analytic contact-gradient
   plane fed the module rects each frame (PLINTH_* constants). Keep the

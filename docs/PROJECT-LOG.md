@@ -971,6 +971,21 @@ How to re-measure: dispatch the **aeo** workflow (GitHub Actions, branch main) �
   shading the plinth as hard as the solid module. (Dropping their depth
   writes was tried against the AO and reverted: every interior face of
   a double-sided wall then blended through and the boxes went dark.)
+- 2026-10-10, night — the module steps restyled after Samara's product
+  shot (Bryce, hello.samara.com: "dark mullions, light gray siding, a
+  relief under the model, subtle ambient occlusion, dark roof system").
+  The DIAGRAM palette is no longer one clay tone: near-white siding
+  (#e9e8e4), a near-black roof (#2a2b2c) with the cavity band as its
+  fascia (new `cavity` category, charcoal in the finished home too),
+  black frames, dark panes. Lighting is high-key — fill 2.2, sun 0.9 —
+  so the sun only grades the siding and the relief comes from AO and
+  the plinth, which is now a soft pool (contact 0.3 over 1.8 m, cast
+  shadow 0.1) rather than a long shadow: the sun itself lifts toward
+  overhead in the product shot (DIAGRAM_SUN_DIR, lerped from the sky's
+  direction) so the shadow pools under the module, and the roof keeps
+  its standing-seam ribs (the shader's uDiagram no longer flattens the
+  roof). The focus module's tone-down against the ghosts is gone (the
+  siding stays white).
 - Still to do: per-series finish presets, a storey selector for
   multi-storey plans (one plan sequence per habitable storey), the
   plan page preferring the turntable when its manifest exists, and
