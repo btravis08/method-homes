@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-13T17:07:54.317Z",
+  "generatedAt": "2026-10-14T14:40:58.955Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-13",
+    "since": "2026-09-14",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 13d ago",
+    "model": "Claude web search (manual, session probe) · recorded 14d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,33 +1181,33 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9333333333333333,
+      "ratio": 0.925,
       "detail": "55/60 pages pass",
       "pages": [
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2330 ms"
+          "detail": "2356 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2118 ms"
+          "detail": "2289 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2168 ms"
+          "detail": "2301 ms"
+        },
+        {
+          "path": "/blog/783",
+          "ratio": 0,
+          "detail": "1911 ms"
         },
         {
           "path": "/blog",
           "ratio": 0.5,
-          "detail": "827 ms"
-        },
-        {
-          "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
-          "ratio": 0.5,
-          "detail": "1425 ms"
+          "detail": "847 ms"
         }
       ]
     },
@@ -2356,7 +2356,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "16 run(s) recorded",
+      "detail": "17 run(s) recorded",
       "pages": []
     },
     {
@@ -2856,15 +2856,15 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "effort": "high",
-      "impact": 0,
+      "impact": 0.1,
       "priority": 0.02,
       "detail": "55/60 pages pass",
       "pages": [
-        "/blog/2013-green-washington-awards — 2330 ms",
-        "/blog/category/articles — 2118 ms",
-        "/about — 2168 ms",
-        "/blog — 827 ms",
-        "/blog/alaska-custom-cabin-girdwood-prefab-set — 1425 ms"
+        "/blog/2013-green-washington-awards — 2356 ms",
+        "/blog/category/articles — 2289 ms",
+        "/about — 2301 ms",
+        "/blog/783 — 1911 ms",
+        "/blog — 847 ms"
       ],
       "pagesAffected": 5
     },
@@ -3566,6 +3566,34 @@
       "title": "Berkshires Custom Install Video — Honors Journal | Method Homes"
     },
     {
+      "path": "/blog/783",
+      "type": "post",
+      "score": 62,
+      "words": 135,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "bylines",
+        "references"
+      ],
+      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
+    },
+    {
       "path": "/custom-regions-mountain-modern-homes",
       "type": "page",
       "score": 62,
@@ -3612,33 +3640,6 @@
         "internal-links"
       ],
       "title": "Island and Waterfront Homes | Method Homes"
-    },
-    {
-      "path": "/blog/783",
-      "type": "post",
-      "score": 64,
-      "words": 135,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "landmarks",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "bylines",
-        "references"
-      ],
-      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
@@ -3690,34 +3691,6 @@
       "title": "City and Urban | Method Homes"
     },
     {
-      "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
-      "type": "post",
-      "score": 65,
-      "words": 198,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "open-graph",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "Alaska Custom Cabin: Girdwood Prefab Set — Honors Journal | Method Homes"
-    },
-    {
       "path": "/custom-homes-valley-and-vineyard-homes",
       "type": "page",
       "score": 65,
@@ -3765,6 +3738,33 @@
         "references"
       ],
       "title": "Architectural Digest: See How 16 Families are Rebuilding After the LA Fires — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/blog/alaska-custom-cabin-girdwood-prefab-set",
+      "type": "post",
+      "score": 66,
+      "words": 198,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "open-graph",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "Alaska Custom Cabin: Girdwood Prefab Set — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/anchor-homes-prefab-modular-homes-from-around-the-world-our-top-3-picks-for-2025",
