@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T16:38:29.201Z",
+  "generatedAt": "2026-10-20T14:29:09.146Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-19",
+    "since": "2026-09-20",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 19d ago",
+    "model": "Claude web search (manual, session probe) · recorded 20d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1187,22 +1187,22 @@
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2299 ms"
+          "detail": "2314 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2064 ms"
+          "detail": "2065 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "1955 ms"
+          "detail": "2047 ms"
         },
         {
-          "path": "/blog",
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
           "ratio": 0.5,
-          "detail": "811 ms"
+          "detail": "917 ms"
         }
       ]
     },
@@ -2351,7 +2351,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "22 run(s) recorded",
+      "detail": "23 run(s) recorded",
       "pages": []
     },
     {
@@ -2855,10 +2855,10 @@
       "priority": 0.02,
       "detail": "56/60 pages pass",
       "pages": [
-        "/blog/2013-green-washington-awards — 2299 ms",
-        "/blog/category/articles — 2064 ms",
-        "/about — 1955 ms",
-        "/blog — 811 ms"
+        "/blog/2013-green-washington-awards — 2314 ms",
+        "/blog/category/articles — 2065 ms",
+        "/about — 2047 ms",
+        "/blog/2014-palm-springs-modernism-week-in-review — 917 ms"
       ],
       "pagesAffected": 4
     },
@@ -3942,6 +3942,32 @@
       "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
     },
     {
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
+      "type": "post",
+      "score": 69,
+      "words": 532,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
+    },
+    {
       "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 69,
@@ -4044,31 +4070,6 @@
         "bylines"
       ],
       "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/blog/2014-palm-springs-modernism-week-in-review",
-      "type": "post",
-      "score": 70,
-      "words": 532,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
@@ -4289,7 +4290,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 82,
+      "score": 83,
       "words": 68,
       "schema": [
         "Organization",
@@ -4302,7 +4303,6 @@
         "open-graph",
         "h1",
         "landmarks",
-        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
