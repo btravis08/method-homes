@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-21T14:38:36.752Z",
+  "generatedAt": "2026-10-22T14:39:12.919Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-21",
+    "since": "2026-09-22",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 21d ago",
+    "model": "Claude web search (manual, session probe) · recorded 22d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,28 +1181,43 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9583333333333334,
-      "detail": "56/60 pages pass",
+      "ratio": 0.9166666666666666,
+      "detail": "53/60 pages pass",
       "pages": [
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "1923 ms"
+          "detail": "2356 ms"
         },
         {
           "path": "/blog/category/articles",
-          "ratio": 0.5,
-          "detail": "1690 ms"
+          "ratio": 0,
+          "detail": "2112 ms"
         },
         {
           "path": "/about",
-          "ratio": 0.5,
-          "detail": "1657 ms"
+          "ratio": 0,
+          "detail": "2109 ms"
         },
         {
-          "path": "/commercial-project-types-affordable-workforce-housing",
+          "path": "/",
           "ratio": 0.5,
-          "detail": "1241 ms"
+          "detail": "945 ms"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0.5,
+          "detail": "968 ms"
+        },
+        {
+          "path": "/blog",
+          "ratio": 0.5,
+          "detail": "914 ms"
+        },
+        {
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0.5,
+          "detail": "1559 ms"
         }
       ]
     },
@@ -2351,7 +2366,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "24 run(s) recorded",
+      "detail": "25 run(s) recorded",
       "pages": []
     },
     {
@@ -2846,6 +2861,26 @@
       "pagesAffected": 2
     },
     {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0.1,
+      "priority": 0.02,
+      "detail": "53/60 pages pass",
+      "pages": [
+        "/blog/2013-green-washington-awards — 2356 ms",
+        "/blog/category/articles — 2112 ms",
+        "/about — 2109 ms",
+        "/ — 945 ms",
+        "/legacy — 968 ms",
+        "/blog — 914 ms",
+        "/blog/2014-palm-springs-modernism-week-in-review — 1559 ms"
+      ],
+      "pagesAffected": 7
+    },
+    {
       "id": "broken-links",
       "pillar": "technical",
       "title": "Internal links resolve",
@@ -2870,23 +2905,6 @@
         "/get-started — 200, noindex"
       ],
       "pagesAffected": 1
-    },
-    {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0,
-      "priority": 0.01,
-      "detail": "56/60 pages pass",
-      "pages": [
-        "/blog/2013-green-washington-awards — 1923 ms",
-        "/blog/category/articles — 1690 ms",
-        "/about — 1657 ms",
-        "/commercial-project-types-affordable-workforce-housing — 1241 ms"
-      ],
-      "pagesAffected": 4
     }
   ],
   "pages": [
@@ -2919,7 +2937,7 @@
     {
       "path": "/about",
       "type": "page",
-      "score": 55,
+      "score": 54,
       "words": 21,
       "schema": [
         "Organization",
@@ -2942,6 +2960,33 @@
         "internal-links"
       ],
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
+    },
+    {
+      "path": "/legacy",
+      "type": "page",
+      "score": 55,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
     },
     {
       "path": "/custom-regions-island-and-waterfront-homes",
@@ -2996,32 +3041,6 @@
         "references"
       ],
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/legacy",
-      "type": "page",
-      "score": 56,
-      "words": 201,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "metadata-coverage",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "A New Legacy — Sun Day Red | Method Homes"
     },
     {
       "path": "/commercial",
@@ -3310,30 +3329,28 @@
       "title": "Pricing | Method Homes"
     },
     {
-      "path": "/commercial-project-types-affordable-workforce-housing",
-      "type": "page",
+      "path": "/",
+      "type": "home",
       "score": 58,
-      "words": 39,
+      "words": 684,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
         "WebSite",
-        "WebPage",
-        "BreadcrumbList"
+        "WebPage"
       ],
       "fails": [
-        "title",
         "open-graph",
         "landmarks",
         "ttfb",
         "answer-first",
-        "question-headings",
         "faq",
-        "depth",
+        "readability",
         "structures",
-        "internal-links"
+        "internal-links",
+        "freshness"
       ],
-      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
+      "title": "Method Homes — Architect-designed prefab homes"
     },
     {
       "path": "/blog/793",
@@ -3388,27 +3405,29 @@
       "title": "Partnerships with Architects and Developers | Method Homes"
     },
     {
-      "path": "/",
-      "type": "home",
+      "path": "/commercial-project-types-affordable-workforce-housing",
+      "type": "page",
       "score": 59,
-      "words": 684,
+      "words": 39,
       "schema": [
         "Organization",
         "HomeAndConstructionBusiness",
         "WebSite",
-        "WebPage"
+        "WebPage",
+        "BreadcrumbList"
       ],
       "fails": [
+        "title",
         "open-graph",
         "landmarks",
         "answer-first",
+        "question-headings",
         "faq",
-        "readability",
+        "depth",
         "structures",
-        "internal-links",
-        "freshness"
+        "internal-links"
       ],
-      "title": "Method Homes — Architect-designed prefab homes"
+      "title": "Method Homes builds multi-unit workforce housing that is affordable, accessible, and efficient. | Method Homes"
     },
     {
       "path": "/commercial-project-types-classrooms-and-school-additions",
@@ -3943,6 +3962,32 @@
       "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
     },
     {
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
+      "type": "post",
+      "score": 69,
+      "words": 532,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
+    },
+    {
       "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 69,
@@ -4045,31 +4090,6 @@
         "bylines"
       ],
       "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/blog/2014-palm-springs-modernism-week-in-review",
-      "type": "post",
-      "score": 70,
-      "words": 532,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
@@ -4290,7 +4310,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 83,
+      "score": 82,
       "words": 68,
       "schema": [
         "Organization",
@@ -4303,6 +4323,7 @@
         "open-graph",
         "h1",
         "landmarks",
+        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
@@ -4329,7 +4350,7 @@
     {
       "path": "/blog/category/articles",
       "type": "category",
-      "score": 90,
+      "score": 89,
       "words": 481,
       "schema": [
         "Organization",
