@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-27T15:32:14.571Z",
+  "generatedAt": "2026-10-28T16:16:05.683Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-27",
+    "since": "2026-09-28",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 27d ago",
+    "model": "Claude web search (manual, session probe) · recorded 28d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,33 +1181,33 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.9416666666666667,
+      "ratio": 0.9333333333333333,
       "detail": "55/60 pages pass",
       "pages": [
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2444 ms"
+          "detail": "2380 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2349 ms"
+          "detail": "2096 ms"
+        },
+        {
+          "path": "/about",
+          "ratio": 0,
+          "detail": "2101 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "821 ms"
+          "detail": "836 ms"
         },
         {
-          "path": "/about",
+          "path": "/blog",
           "ratio": 0.5,
-          "detail": "1024 ms"
-        },
-        {
-          "path": "/blog/783",
-          "ratio": 0.5,
-          "detail": "1506 ms"
+          "detail": "882 ms"
         }
       ]
     },
@@ -2356,7 +2356,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "30 run(s) recorded",
+      "detail": "31 run(s) recorded",
       "pages": []
     },
     {
@@ -2860,11 +2860,11 @@
       "priority": 0.02,
       "detail": "55/60 pages pass",
       "pages": [
-        "/blog/2013-green-washington-awards — 2444 ms",
-        "/blog/category/articles — 2349 ms",
-        "/legacy — 821 ms",
-        "/about — 1024 ms",
-        "/blog/783 — 1506 ms"
+        "/blog/2013-green-washington-awards — 2380 ms",
+        "/blog/category/articles — 2096 ms",
+        "/about — 2101 ms",
+        "/legacy — 836 ms",
+        "/blog — 882 ms"
       ],
       "pagesAffected": 5
     },
@@ -2923,6 +2923,33 @@
       "title": "Get started | Method Homes"
     },
     {
+      "path": "/about",
+      "type": "page",
+      "score": 54,
+      "words": 21,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "landmarks",
+        "ttfb",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links"
+      ],
+      "title": "Building Custom Modular Homes Since 2008 | Method Homes"
+    },
+    {
       "path": "/legacy",
       "type": "page",
       "score": 55,
@@ -2948,33 +2975,6 @@
         "freshness"
       ],
       "title": "A New Legacy — Sun Day Red | Method Homes"
-    },
-    {
-      "path": "/about",
-      "type": "page",
-      "score": 55,
-      "words": 21,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "landmarks",
-        "ttfb",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links"
-      ],
-      "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
       "path": "/custom-regions-island-and-waterfront-homes",
@@ -3592,34 +3592,6 @@
       "title": "Method Homes has experience in building modern modular homes in a vast range of mountainous locations such as Lake Tahoe, the Tetons, and Sun Valley, ID. | Method Homes"
     },
     {
-      "path": "/blog/783",
-      "type": "post",
-      "score": 63,
-      "words": 135,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "description",
-        "open-graph",
-        "landmarks",
-        "ttfb",
-        "answer-first",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "bylines",
-        "references"
-      ],
-      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
-    },
-    {
       "path": "/custom-homes-island-and-waterfront-homes",
       "type": "page",
       "score": 63,
@@ -3641,6 +3613,33 @@
         "internal-links"
       ],
       "title": "Island and Waterfront Homes | Method Homes"
+    },
+    {
+      "path": "/blog/783",
+      "type": "post",
+      "score": 64,
+      "words": 135,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "description",
+        "open-graph",
+        "landmarks",
+        "answer-first",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "bylines",
+        "references"
+      ],
+      "title": "Lake Whatcom lower exterior shot. — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin",
@@ -4297,7 +4296,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 83,
+      "score": 82,
       "words": 68,
       "schema": [
         "Organization",
@@ -4310,6 +4309,7 @@
         "open-graph",
         "h1",
         "landmarks",
+        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
