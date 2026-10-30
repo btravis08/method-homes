@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-29T16:24:28.218Z",
+  "generatedAt": "2026-10-30T16:12:30.204Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 68,
@@ -229,7 +229,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-29",
+    "since": "2026-09-30",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +240,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 29d ago",
+    "model": "Claude web search (manual, session probe) · recorded 30d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1181,23 +1181,38 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.95,
-      "detail": "57/60 pages pass",
+      "ratio": 0.925,
+      "detail": "54/60 pages pass",
       "pages": [
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2443 ms"
+          "detail": "2573 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2068 ms"
+          "detail": "2199 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2068 ms"
+          "detail": "2294 ms"
+        },
+        {
+          "path": "/legacy",
+          "ratio": 0.5,
+          "detail": "860 ms"
+        },
+        {
+          "path": "/blog",
+          "ratio": 0.5,
+          "detail": "912 ms"
+        },
+        {
+          "path": "/blog/2014-palm-springs-modernism-week-in-review",
+          "ratio": 0.5,
+          "detail": "811 ms"
         }
       ]
     },
@@ -2346,7 +2361,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "32 run(s) recorded",
+      "detail": "33 run(s) recorded",
       "pages": []
     },
     {
@@ -2841,6 +2856,25 @@
       "pagesAffected": 2
     },
     {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0.1,
+      "priority": 0.02,
+      "detail": "54/60 pages pass",
+      "pages": [
+        "/blog/2013-green-washington-awards — 2573 ms",
+        "/blog/category/articles — 2199 ms",
+        "/about — 2294 ms",
+        "/legacy — 860 ms",
+        "/blog — 912 ms",
+        "/blog/2014-palm-springs-modernism-week-in-review — 811 ms"
+      ],
+      "pagesAffected": 6
+    },
+    {
       "id": "broken-links",
       "pillar": "technical",
       "title": "Internal links resolve",
@@ -2865,22 +2899,6 @@
         "/get-started — 200, noindex"
       ],
       "pagesAffected": 1
-    },
-    {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0,
-      "priority": 0.01,
-      "detail": "57/60 pages pass",
-      "pages": [
-        "/blog/2013-green-washington-awards — 2443 ms",
-        "/blog/category/articles — 2068 ms",
-        "/about — 2068 ms"
-      ],
-      "pagesAffected": 3
     }
   ],
   "pages": [
@@ -2938,6 +2956,33 @@
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
+      "path": "/legacy",
+      "type": "page",
+      "score": 55,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
+    },
+    {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
       "score": 55,
@@ -2990,32 +3035,6 @@
         "references"
       ],
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/legacy",
-      "type": "page",
-      "score": 56,
-      "words": 201,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "metadata-coverage",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "A New Legacy — Sun Day Red | Method Homes"
     },
     {
       "path": "/commercial",
@@ -3936,6 +3955,32 @@
       "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
     },
     {
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
+      "type": "post",
+      "score": 69,
+      "words": 532,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
+    },
+    {
       "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 69,
@@ -4038,31 +4083,6 @@
         "bylines"
       ],
       "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/blog/2014-palm-springs-modernism-week-in-review",
-      "type": "post",
-      "score": 70,
-      "words": 532,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
@@ -4283,7 +4303,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 83,
+      "score": 82,
       "words": 68,
       "schema": [
         "Organization",
@@ -4296,6 +4316,7 @@
         "open-graph",
         "h1",
         "landmarks",
+        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
