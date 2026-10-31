@@ -1,8 +1,8 @@
 {
-  "generatedAt": "2026-10-30T16:12:30.204Z",
+  "generatedAt": "2026-10-31T15:30:45.073Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
-  "score": 68,
+  "score": 66,
   "level": 4,
   "levelByScore": 4,
   "levelName": "Established",
@@ -23,6 +23,15 @@
       "label": "bylines with Person schema on 80% of articles",
       "min": 0.8,
       "actual": 0,
+      "met": false
+    },
+    {
+      "pillar": "measurement",
+      "level": 3,
+      "check": "prompt-insights",
+      "label": "prompt insights recorded",
+      "min": 1,
+      "actual": 0.5,
       "met": false
     }
   ],
@@ -93,29 +102,21 @@
       ]
     },
     "measurement": {
-      "score": 88,
-      "level": 5,
-      "levelByScore": 5,
-      "gatedTo": null,
+      "score": 74,
+      "level": 2,
+      "levelByScore": 4,
+      "gatedTo": 2,
       "weight": 15,
       "checks": 5,
-      "passing": 3,
+      "passing": 2,
       "gates": [
         {
           "level": 3,
           "check": "prompt-insights",
           "label": "prompt insights recorded",
           "min": 1,
-          "actual": 1,
-          "met": true
-        },
-        {
-          "level": 4,
-          "check": "analytics",
-          "label": "web analytics live",
-          "min": 1,
-          "actual": 1,
-          "met": true
+          "actual": 0.5,
+          "met": false
         }
       ]
     }
@@ -229,7 +230,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-09-30",
+    "since": "2026-10-01",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -240,7 +241,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 30d ago",
+    "model": "Claude web search (manual, session probe) · recorded 31d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1187,32 +1188,32 @@
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2573 ms"
+          "detail": "2336 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2199 ms"
+          "detail": "2192 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2294 ms"
+          "detail": "2046 ms"
         },
         {
           "path": "/legacy",
           "ratio": 0.5,
-          "detail": "860 ms"
+          "detail": "871 ms"
         },
         {
           "path": "/blog",
           "ratio": 0.5,
-          "detail": "912 ms"
+          "detail": "814 ms"
         },
         {
-          "path": "/blog/2014-palm-springs-modernism-week-in-review",
+          "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
           "ratio": 0.5,
-          "detail": "811 ms"
+          "detail": "856 ms"
         }
       ]
     },
@@ -2361,7 +2362,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "33 run(s) recorded",
+      "detail": "34 run(s) recorded",
       "pages": []
     },
     {
@@ -2372,8 +2373,8 @@
       "title": "Tracked prompts probed for mentions and citations",
       "fix": "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.",
       "scope": "site",
-      "ratio": 1,
-      "detail": "mention rate 67%, citation rate 17%, share of voice 33% over 6 prompts (4 not yet recorded) (manual)",
+      "ratio": 0.5,
+      "detail": "mention rate 67%, citation rate 17%, share of voice 33% over 6 prompts (4 not yet recorded) (manual, >30 days old)",
       "pages": []
     },
     {
@@ -2475,6 +2476,18 @@
         "/blog/a-new-blog-method-homes-completes-spencer-lake-cabin — 0 question heading(s)"
       ],
       "pagesAffected": 54
+    },
+    {
+      "id": "prompt-insights",
+      "pillar": "measurement",
+      "title": "Tracked prompts probed for mentions and citations",
+      "fix": "Set ANTHROPIC_API_KEY as an Actions secret for a nightly probe, or re-record src/design/aeo.prompts.manual.json by asking an answer engine the tracked prompts — this is the visibility score and citation rate.",
+      "effort": "low",
+      "impact": 2.1,
+      "priority": 2.08,
+      "detail": "mention rate 67%, citation rate 17%, share of voice 33% over 6 prompts (4 not yet recorded) (manual, >30 days old)",
+      "pages": [],
+      "pagesAffected": 0
     },
     {
       "id": "answer-first",
@@ -2865,12 +2878,12 @@
       "priority": 0.02,
       "detail": "54/60 pages pass",
       "pages": [
-        "/blog/2013-green-washington-awards — 2573 ms",
-        "/blog/category/articles — 2199 ms",
-        "/about — 2294 ms",
-        "/legacy — 860 ms",
-        "/blog — 912 ms",
-        "/blog/2014-palm-springs-modernism-week-in-review — 811 ms"
+        "/blog/2013-green-washington-awards — 2336 ms",
+        "/blog/category/articles — 2192 ms",
+        "/about — 2046 ms",
+        "/legacy — 871 ms",
+        "/blog — 814 ms",
+        "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour — 856 ms"
       ],
       "pagesAffected": 6
     },
@@ -3903,6 +3916,33 @@
       "title": "Bellingham Herald — Honors Journal | Method Homes"
     },
     {
+      "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "type": "post",
+      "score": 68,
+      "words": 160,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "ttfb",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
+    },
+    {
       "path": "/blog/blog-kickoff",
       "type": "post",
       "score": 68,
@@ -3955,32 +3995,6 @@
       "title": "Blue Ridge Cabin Foundation — Honors Journal | Method Homes"
     },
     {
-      "path": "/blog/2014-palm-springs-modernism-week-in-review",
-      "type": "post",
-      "score": 69,
-      "words": 532,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
-    },
-    {
       "path": "/blog/backyard-cottage-design-challenge-and-the-winners-are",
       "type": "post",
       "score": 69,
@@ -4005,32 +4019,6 @@
         "bylines"
       ],
       "title": "Backyard Cottage Design Challenge- and the winners are... — Honors Journal | Method Homes"
-    },
-    {
-      "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
-      "type": "post",
-      "score": 69,
-      "words": 160,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "question-headings",
-        "faq",
-        "depth",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/blown-in-cellulose",
@@ -4083,6 +4071,31 @@
         "bylines"
       ],
       "title": "Cabinets being installed in Method Factory — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/blog/2014-palm-springs-modernism-week-in-review",
+      "type": "post",
+      "score": 70,
+      "words": 532,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "2014 Palm Springs Modernism Week in Review — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/a-modular-mansion-replaces-fire-destroyed-estate-in-californias-napa-valley",
