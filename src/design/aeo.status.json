@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-31T15:30:45.073Z",
+  "generatedAt": "2026-11-01T16:18:49.918Z",
   "origin": "https://method-homes.vercel.app",
   "model": "Four pillars after Webflow AEO (Content · Technical · Authority · Measurement); score = pillar scores × pillar weights; level 1–5",
   "score": 66,
@@ -230,7 +230,7 @@
   "traffic": {
     "available": true,
     "days": 30,
-    "since": "2026-10-01",
+    "since": "2026-10-02",
     "botHits": 0,
     "aiSessions": 0,
     "bots": [],
@@ -241,7 +241,7 @@
   "prompts": {
     "ran": true,
     "manual": true,
-    "model": "Claude web search (manual, session probe) · recorded 31d ago",
+    "model": "Claude web search (manual, session probe) · recorded 32d ago",
     "recordedAt": "2026-10-01T00:30:00Z",
     "prompts": 10,
     "answered": 6,
@@ -1182,38 +1182,23 @@
       "title": "Server responds within 800 ms",
       "fix": "Cache/ISR the route; crawlers abandon slow origins.",
       "scope": "page",
-      "ratio": 0.925,
-      "detail": "54/60 pages pass",
+      "ratio": 0.95,
+      "detail": "57/60 pages pass",
       "pages": [
         {
           "path": "/blog/2013-green-washington-awards",
           "ratio": 0,
-          "detail": "2336 ms"
+          "detail": "2249 ms"
         },
         {
           "path": "/blog/category/articles",
           "ratio": 0,
-          "detail": "2192 ms"
+          "detail": "2033 ms"
         },
         {
           "path": "/about",
           "ratio": 0,
-          "detail": "2046 ms"
-        },
-        {
-          "path": "/legacy",
-          "ratio": 0.5,
-          "detail": "871 ms"
-        },
-        {
-          "path": "/blog",
-          "ratio": 0.5,
-          "detail": "814 ms"
-        },
-        {
-          "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
-          "ratio": 0.5,
-          "detail": "856 ms"
+          "detail": "1865 ms"
         }
       ]
     },
@@ -2362,7 +2347,7 @@
       "fix": "Keep the aeo workflow on its nightly schedule so the trend is real.",
       "scope": "site",
       "ratio": 1,
-      "detail": "34 run(s) recorded",
+      "detail": "35 run(s) recorded",
       "pages": []
     },
     {
@@ -2869,25 +2854,6 @@
       "pagesAffected": 2
     },
     {
-      "id": "ttfb",
-      "pillar": "technical",
-      "title": "Server responds within 800 ms",
-      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
-      "effort": "high",
-      "impact": 0.1,
-      "priority": 0.02,
-      "detail": "54/60 pages pass",
-      "pages": [
-        "/blog/2013-green-washington-awards — 2336 ms",
-        "/blog/category/articles — 2192 ms",
-        "/about — 2046 ms",
-        "/legacy — 871 ms",
-        "/blog — 814 ms",
-        "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour — 856 ms"
-      ],
-      "pagesAffected": 6
-    },
-    {
       "id": "broken-links",
       "pillar": "technical",
       "title": "Internal links resolve",
@@ -2912,6 +2878,22 @@
         "/get-started — 200, noindex"
       ],
       "pagesAffected": 1
+    },
+    {
+      "id": "ttfb",
+      "pillar": "technical",
+      "title": "Server responds within 800 ms",
+      "fix": "Cache/ISR the route; crawlers abandon slow origins.",
+      "effort": "high",
+      "impact": 0,
+      "priority": 0.01,
+      "detail": "57/60 pages pass",
+      "pages": [
+        "/blog/2013-green-washington-awards — 2249 ms",
+        "/blog/category/articles — 2033 ms",
+        "/about — 1865 ms"
+      ],
+      "pagesAffected": 3
     }
   ],
   "pages": [
@@ -2969,33 +2951,6 @@
       "title": "Building Custom Modular Homes Since 2008 | Method Homes"
     },
     {
-      "path": "/legacy",
-      "type": "page",
-      "score": 55,
-      "words": 201,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "WebPage"
-      ],
-      "fails": [
-        "metadata-coverage",
-        "open-graph",
-        "h1",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "structures",
-        "entity-clarity",
-        "internal-links",
-        "freshness"
-      ],
-      "title": "A New Legacy — Sun Day Red | Method Homes"
-    },
-    {
       "path": "/custom-regions-island-and-waterfront-homes",
       "type": "page",
       "score": 55,
@@ -3048,6 +3003,32 @@
         "references"
       ],
       "title": "Bainbridge Island Option — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/legacy",
+      "type": "page",
+      "score": 56,
+      "words": 201,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "WebPage"
+      ],
+      "fails": [
+        "metadata-coverage",
+        "open-graph",
+        "h1",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "structures",
+        "entity-clarity",
+        "internal-links",
+        "freshness"
+      ],
+      "title": "A New Legacy — Sun Day Red | Method Homes"
     },
     {
       "path": "/commercial",
@@ -3916,33 +3897,6 @@
       "title": "Bellingham Herald — Honors Journal | Method Homes"
     },
     {
-      "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
-      "type": "post",
-      "score": 68,
-      "words": 160,
-      "schema": [
-        "Organization",
-        "HomeAndConstructionBusiness",
-        "WebSite",
-        "BlogPosting",
-        "BreadcrumbList"
-      ],
-      "fails": [
-        "title",
-        "description",
-        "landmarks",
-        "ttfb",
-        "question-headings",
-        "faq",
-        "depth",
-        "readability",
-        "structures",
-        "entity-clarity",
-        "bylines"
-      ],
-      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
-    },
-    {
       "path": "/blog/blog-kickoff",
       "type": "post",
       "score": 68,
@@ -4019,6 +3973,32 @@
         "bylines"
       ],
       "title": "Backyard Cottage Design Challenge- and the winners are... — Honors Journal | Method Homes"
+    },
+    {
+      "path": "/blog/berkshires-custom-residence-board-formed-concrete-foundation-pour",
+      "type": "post",
+      "score": 69,
+      "words": 160,
+      "schema": [
+        "Organization",
+        "HomeAndConstructionBusiness",
+        "WebSite",
+        "BlogPosting",
+        "BreadcrumbList"
+      ],
+      "fails": [
+        "title",
+        "description",
+        "landmarks",
+        "question-headings",
+        "faq",
+        "depth",
+        "readability",
+        "structures",
+        "entity-clarity",
+        "bylines"
+      ],
+      "title": "Berkshires Custom Residence: Board-formed Concrete Foundation Pour — Honors Journal | Method Homes"
     },
     {
       "path": "/blog/blown-in-cellulose",
@@ -4316,7 +4296,7 @@
     {
       "path": "/blog",
       "type": "index",
-      "score": 82,
+      "score": 83,
       "words": 68,
       "schema": [
         "Organization",
@@ -4329,7 +4309,6 @@
         "open-graph",
         "h1",
         "landmarks",
-        "ttfb",
         "depth"
       ],
       "title": "Journal | Method Homes"
